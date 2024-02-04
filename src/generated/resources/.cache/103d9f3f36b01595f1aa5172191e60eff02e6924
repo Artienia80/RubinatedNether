@@ -1,0 +1,7 @@
+// 1.20.1	2024-02-04T21:20:28.8986695	Registries
+1f59cd6c9bb30d5ca652c3211438e2c8148bf6a7 data/netherifymod/forge/biome_modifier/add_molten_ruby_ore.json
+1d53a8f106dd7c866433a7ac677faa0192f70a3d data/netherifymod/forge/biome_modifier/add_nether_ruby_ore.json
+7af8dc02bcb0c9a8aae465f28e975ead438db116 data/netherifymod/worldgen/configured_feature/molten_ruby_ore.json
+8643cc011e9d13c4c9f9a738d6961d75a6897156 data/netherifymod/worldgen/configured_feature/nether_ruby_ore.json
+7668ded402cdde69bbdc747103a8016850b4931f data/netherifymod/worldgen/placed_feature/molten_ruby_ore_placed.json
+f30366869a88be08da516325958626c28ff06655 data/netherifymod/worldgen/placed_feature/nether_ruby_ore_placed.json

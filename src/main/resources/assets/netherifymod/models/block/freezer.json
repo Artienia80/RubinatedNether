@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "netherifymod:block/freezer_front",
+    "side": "netherifymod:block/freezer_side",
+    "top": "netherifymod:block/freezer_top",
+    "bottom": "netherifymod:block/freezer_bottom"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "#$#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:cut_copper"
+    },
+    "$": {
+      "item": "minecraft:ice"
+    }
+  },
+
+  "result": {
+    "item": "netherifymod:freezer"
+  }
+}

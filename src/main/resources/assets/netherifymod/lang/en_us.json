@@ -1,0 +1,11 @@
+{
+  "item.netherifymod.ruby": "Ruby",
+  "item.netherifymod.raw_ruby": "Molten Ruby",
+
+  "block.netherifymod.ruby_block": "Block of Ruby",
+  "block.netherifymod.raw_ruby_block": "Block of Molten Ruby",
+  "block.netherifymod.molten_ruby_ore": "Molten Ruby Ore",
+  "block.netherifymod.nether_ruby_ore": "Nether Ruby Ore",
+
+  "block.netherifymod.freezer": "Freezer"
+}
