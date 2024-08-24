@@ -26,6 +26,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         blockWithItem(ModBlocks.MOLTEN_RUBY_ORE);
         blockWithItem(ModBlocks.NETHER_RUBY_ORE);
+        blockWithItem(ModBlocks.RUBINATED_BLACKSTONE);
 
         simpleBlockWithItem(ModBlocks.FREEZER.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/freezer")));

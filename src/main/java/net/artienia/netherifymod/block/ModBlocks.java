@@ -27,12 +27,17 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).mapColor(MapColor.FIRE)));
     public static final RegistryObject<Block> RAW_RUBY_BLOCK = registerBlock("raw_ruby_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.RAW_IRON_BLOCK).mapColor(MapColor.FIRE)));
+
     public static final RegistryObject<Block> MOLTEN_RUBY_ORE = registerBlock("molten_ruby_ore",
             () -> new MagmaXP(BlockBehaviour.Properties.copy(Blocks.MAGMA_BLOCK)
                     .strength(2f).requiresCorrectToolForDrops(), UniformInt.of(4, 8)));
     public static final RegistryObject<Block> NETHER_RUBY_ORE = registerBlock("nether_ruby_ore",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.NETHERRACK)
                     .strength(2f).requiresCorrectToolForDrops(), UniformInt.of(3, 6)));
+    public static final RegistryObject<Block> RUBINATED_BLACKSTONE = registerBlock("rubinated_blackstone",
+            () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.BLACKSTONE)
+                    .strength(2f).requiresCorrectToolForDrops(), UniformInt.of(3, 6)));
+
     public static final RegistryObject<Block> FREEZER = registerBlock("freezer",
             () -> new FreezerBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK).noOcclusion()));
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

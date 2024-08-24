@@ -21,17 +21,22 @@ import java.util.List;
 public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_RUBY_ORE_KEY = registerKey("nether_ruby_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOLTEN_RUBY_ORE_KEY = registerKey("molten_ruby_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RUBINATED_BLACKSTONE_KEY = registerKey("rubinated_blackstone");
 
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         RuleTest netherrackReplacables = new BlockMatchTest(Blocks.NETHERRACK);
         RuleTest magmaReplacables = new BlockMatchTest(Blocks.MAGMA_BLOCK);
+        RuleTest gildedReplacables = new BlockMatchTest(Blocks.GILDED_BLACKSTONE);
+
 
 
         register(context, NETHER_RUBY_ORE_KEY, Feature.ORE, new OreConfiguration(netherrackReplacables,
                 ModBlocks.NETHER_RUBY_ORE.get().defaultBlockState(), 3));
         register(context, MOLTEN_RUBY_ORE_KEY, Feature.ORE, new OreConfiguration(magmaReplacables,
                 ModBlocks.MOLTEN_RUBY_ORE.get().defaultBlockState(), 6));
+        register(context, RUBINATED_BLACKSTONE_KEY, Feature.ORE, new OreConfiguration(gildedReplacables,
+                ModBlocks.RUBINATED_BLACKSTONE.get().defaultBlockState(), 25));
 
     }
 

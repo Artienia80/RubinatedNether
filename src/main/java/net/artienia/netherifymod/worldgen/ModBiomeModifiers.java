@@ -15,6 +15,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ADD_NETHER_RUBY_ORE = registerKey("add_nether_ruby_ore");
     public static final ResourceKey<BiomeModifier> ADD_MOLTEN_RUBY_ORE = registerKey("add_molten_ruby_ore");
+    public static final ResourceKey<BiomeModifier> ADD_RUBINATED_BLACKSTONE = registerKey("add_rubinated_blackstone");
+
 
 
 
@@ -31,6 +33,11 @@ public class ModBiomeModifiers {
         context.register(ADD_MOLTEN_RUBY_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(BiomeTags.IS_NETHER),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.MOLTEN_RUBY_ORE_PLACED_KEY)),
+                GenerationStep.Decoration.VEGETAL_DECORATION));
+
+        context.register(ADD_RUBINATED_BLACKSTONE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(BiomeTags.IS_NETHER),
+                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.RUBINATED_BLACKSTONE_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
 
     }

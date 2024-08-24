@@ -18,6 +18,7 @@ import java.util.List;
 public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> NETHER_RUBY_ORE_PLACED_KEY = registerKey("nether_ruby_ore_placed");
     public static final ResourceKey<PlacedFeature> MOLTEN_RUBY_ORE_PLACED_KEY = registerKey("molten_ruby_ore_placed");
+    public static final ResourceKey<PlacedFeature> RUBINATED_BLACKSTONE_PLACED_KEY = registerKey("rubinated_blackstone_placed");
 
 
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
@@ -27,8 +28,11 @@ public class ModPlacedFeatures {
                 ModOrePlacement.commonOrePlacement(1,
                         HeightRangePlacement.triangle(VerticalAnchor.absolute(100), VerticalAnchor.absolute(125))));
         register(context, MOLTEN_RUBY_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MOLTEN_RUBY_ORE_KEY),
+                ModOrePlacement.commonOrePlacement(150,
+                        HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(50))));
+        register(context, RUBINATED_BLACKSTONE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.RUBINATED_BLACKSTONE_KEY),
                 ModOrePlacement.commonOrePlacement(250,
-                        HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(40))));
+                        HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(200))));
     }
 
 

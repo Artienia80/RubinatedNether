@@ -35,6 +35,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                 block -> createEmeraldLikeOreDrops(ModBlocks.NETHER_RUBY_ORE.get(), ModItems.RUBY.get()));
         this.add(ModBlocks.MOLTEN_RUBY_ORE.get(),
                 block -> createCopperLikeOreDrops(ModBlocks.MOLTEN_RUBY_ORE.get(), ModItems.RAW_RUBY.get()));
+        this.add(ModBlocks.RUBINATED_BLACKSTONE.get(),
+                block -> createCopperLikeOreDrops(ModBlocks.RUBINATED_BLACKSTONE.get(), ModItems.RUBY_SHARD.get()));
 
         this.dropSelf(ModBlocks.FREEZER.get());
     }
@@ -43,7 +45,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         return createSilkTouchDispatchTable(pBlock,
                 this.applyExplosionDecay(pBlock,
                         LootItem.lootTableItem(item)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 5.0F)))
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
                                 .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
     }
 
