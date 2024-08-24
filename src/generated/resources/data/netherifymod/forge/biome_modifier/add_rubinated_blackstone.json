@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_nether",
+  "features": "netherifymod:rubinated_blackstone_placed",
+  "step": "vegetal_decoration"
+}

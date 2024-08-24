@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "netherifymod:ruby"
+    }
+  ],
+  "result": {
+    "item": "netherifymod:ruby_shard",
+    "count": 9
+  }
+}
