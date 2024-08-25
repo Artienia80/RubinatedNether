@@ -27,6 +27,9 @@ public class ModBlocks {
                 return 15;
             })));
 
+    public static final RegistryObject<Block> BLEEDING_OBSIDIAN = registerBlock("bleeding_obsidian",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.CRYING_OBSIDIAN).mapColor(MapColor.FIRE)));
+
     public static final RegistryObject<Block> MOLTEN_RUBY_ORE = registerBlock("molten_ruby_ore",
             () -> new MagmaXP(BlockBehaviour.Properties.copy(Blocks.MAGMA_BLOCK)
                     .strength(2f).requiresCorrectToolForDrops(), UniformInt.of(4, 8)));

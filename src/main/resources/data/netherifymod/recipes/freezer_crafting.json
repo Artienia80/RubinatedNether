@@ -3,15 +3,18 @@
   "category": "building",
   "pattern": [
     "###",
-    "#$#",
-    "###"
+    "#I#",
+    "BBB"
   ],
   "key": {
     "#": {
-      "item": "minecraft:cut_copper"
+      "item": "minecraft:copper_block"
     },
-    "$": {
+    "I": {
       "item": "minecraft:ice"
+    },
+    "B": {
+      "item": "minecraft:basalt"
     }
   },
 

@@ -85,6 +85,7 @@ public class NetherifyMod
             event.accept(ModBlocks.MOLTEN_RUBY_ORE);
             event.accept(ModBlocks.NETHER_RUBY_ORE);
             event.accept(ModBlocks.RUBINATED_BLACKSTONE);
+            event.accept(ModBlocks.BLEEDING_OBSIDIAN);
 
         }
 

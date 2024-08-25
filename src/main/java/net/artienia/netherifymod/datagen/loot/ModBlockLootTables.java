@@ -30,6 +30,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     protected void generate() {
         this.dropSelf(ModBlocks.RUBY_BLOCK.get());
         this.dropSelf(ModBlocks.RAW_RUBY_BLOCK.get());
+        this.dropSelf(ModBlocks.BLEEDING_OBSIDIAN.get());
 
         this.add(ModBlocks.NETHER_RUBY_ORE.get(),
                 block -> createEmeraldLikeOreDrops(ModBlocks.NETHER_RUBY_ORE.get(), ModItems.RUBY.get()));
@@ -39,6 +40,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                 block -> createCopperLikeOreDrops(ModBlocks.RUBINATED_BLACKSTONE.get(), ModItems.RUBY_SHARD.get()));
 
         this.dropSelf(ModBlocks.FREEZER.get());
+
     }
 
     protected LootTable.Builder createCopperLikeOreDrops(Block pBlock, Item item) {
