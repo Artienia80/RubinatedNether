@@ -1,7 +1,0 @@
-{
-  "render_type": "minecraft:translucent",
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "netherifymod:block/ruby_glass"
-  }
-}

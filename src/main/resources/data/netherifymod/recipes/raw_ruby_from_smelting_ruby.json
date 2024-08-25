@@ -4,7 +4,7 @@
   "cookingtime": 200,
   "experience": 0.7,
   "ingredient": {
-    "item": "netherifymod:ruby"
+    "item": "rubinated_nether:ruby"
   },
-  "result": "netherifymod:molten_ruby"
+  "result": "rubinated_nether:molten_ruby"
 }

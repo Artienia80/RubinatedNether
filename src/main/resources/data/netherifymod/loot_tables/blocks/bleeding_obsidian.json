@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "netherifymod:bleeding_obsidian"
+          "name": "rubinated_nether:bleeding_obsidian"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "netherifymod:blocks/bleeding_obsidian"
+  "random_sequence": "rubinated_nether:blocks/bleeding_obsidian"
 }

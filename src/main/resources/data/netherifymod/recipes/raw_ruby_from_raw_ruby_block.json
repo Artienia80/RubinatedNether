@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "netherifymod:molten_ruby_block"
+      "item": "rubinated_nether:molten_ruby_block"
     }
   ],
   "result": {
-    "item": "netherifymod:molten_ruby",
+    "item": "rubinated_nether:molten_ruby",
     "count": 9
   }
 }

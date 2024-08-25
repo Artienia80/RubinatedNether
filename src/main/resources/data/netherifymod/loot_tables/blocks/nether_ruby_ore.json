@@ -24,7 +24,7 @@
                   }
                 }
               ],
-              "name": "netherifymod:nether_ruby_ore"
+              "name": "rubinated_nether:nether_ruby_ore"
             },
             {
               "type": "minecraft:item",
@@ -47,7 +47,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "netherifymod:ruby"
+              "name": "rubinated_nether:ruby"
             }
           ]
         }
@@ -55,5 +55,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "netherifymod:blocks/nether_ruby_ore"
+  "random_sequence": "rubinated_nether:blocks/nether_ruby_ore"
 }

@@ -11,12 +11,12 @@
       "item": "minecraft:obsidian"
     },
     "R": {
-      "item": "netherifymod:ruby"
+      "item": "rubinated_nether:ruby"
     }
   },
 
   "result": {
-    "item": "netherifymod:bleeding_obsidian",
+    "item": "rubinated_nether:bleeding_obsidian",
     "count": 8
   }
 }

@@ -1,14 +1,14 @@
 {
   "values": [
-    "netherifymod:ruby",
-    "netherifymod:molten_ruby",
-    "netherifymod:ruby_shard",
-    "netherifymod:ruby_block",
-    "netherifymod:molten_ruby_block",
-    "netherifymod:nether_ruby_ore",
-    "netherifymod:molten_ruby_ore",
-    "netherifymod:bleeding_obsidian",
-    "netherifymod:ruby_glass",
-    "netherifymod:rubinated_blackstone"
+    "rubinated_nether:ruby",
+    "rubinated_nether:molten_ruby",
+    "rubinated_nether:ruby_shard",
+    "rubinated_nether:ruby_block",
+    "rubinated_nether:molten_ruby_block",
+    "rubinated_nether:nether_ruby_ore",
+    "rubinated_nether:molten_ruby_ore",
+    "rubinated_nether:bleeding_obsidian",
+    "rubinated_nether:ruby_glass",
+    "rubinated_nether:rubinated_blackstone"
   ]
 }

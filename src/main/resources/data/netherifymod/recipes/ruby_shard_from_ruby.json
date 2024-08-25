@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "netherifymod:ruby"
+      "item": "rubinated_nether:ruby"
     }
   ],
   "result": {
-    "item": "netherifymod:ruby_shard",
+    "item": "rubinated_nether:ruby_shard",
     "count": 9
   }
 }

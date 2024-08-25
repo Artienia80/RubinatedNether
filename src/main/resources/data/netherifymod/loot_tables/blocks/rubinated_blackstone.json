@@ -24,7 +24,7 @@
                   }
                 }
               ],
-              "name": "netherifymod:rubinated_blackstone"
+              "name": "rubinated_nether:rubinated_blackstone"
             },
             {
               "type": "minecraft:alternatives",
@@ -54,11 +54,11 @@
                       "function": "minecraft:set_count"
                     }
                   ],
-                  "name": "netherifymod:ruby_shard"
+                  "name": "rubinated_nether:ruby_shard"
                 },
                 {
                   "type": "minecraft:item",
-                  "name": "netherifymod:rubinated_blackstone"
+                  "name": "rubinated_nether:rubinated_blackstone"
                 }
               ],
               "conditions": [
@@ -73,5 +73,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "netherifymod:blocks/rubinated_blackstone"
+  "random_sequence": "rubinated_nether:blocks/rubinated_blackstone"
 }

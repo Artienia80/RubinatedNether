@@ -1,0 +1,18 @@
+{
+  "item.rubinated_nether.ruby": "Ruby",
+  "item.rubinated_nether.molten_ruby": "Molten Ruby",
+  "item.rubinated_nether.ruby_shard": "Ruby Shard",
+
+
+  "block.rubinated_nether.ruby_block": "Block of Ruby",
+  "block.rubinated_nether.molten_ruby_block": "Block of Molten Ruby",
+  "block.rubinated_nether.molten_ruby_ore": "Molten Ruby Ore",
+  "block.rubinated_nether.nether_ruby_ore": "Nether Ruby Ore",
+  "block.rubinated_nether.rubinated_blackstone": "Rubinated Blackstone",
+  "block.rubinated_nether.bleeding_obsidian": "Bleeding Obsidian",
+  "block.rubinated_nether.ruby_glass": "Ruby Glass",
+
+
+
+  "block.rubinated_nether.freezer": "Freezer"
+}

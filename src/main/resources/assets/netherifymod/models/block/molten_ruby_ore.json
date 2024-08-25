@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "netherifymod:block/molten_ruby_ore"
-  }
-}

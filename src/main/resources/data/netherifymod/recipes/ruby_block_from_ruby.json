@@ -8,10 +8,10 @@
   ],
   "key": {
     "#": {
-      "item": "netherifymod:ruby"
+      "item": "rubinated_nether:ruby"
     }
   },
   "result": {
-    "item": "netherifymod:ruby_block"
+    "item": "rubinated_nether:ruby_block"
   }
 }

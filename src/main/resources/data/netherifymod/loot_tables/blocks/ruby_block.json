@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "netherifymod:ruby_block"
+          "name": "rubinated_nether:ruby_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "netherifymod:blocks/ruby_block"
+  "random_sequence": "rubinated_nether:blocks/ruby_block"
 }
