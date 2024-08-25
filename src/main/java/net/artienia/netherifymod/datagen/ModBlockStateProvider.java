@@ -24,6 +24,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.RUBY_BLOCK);
         blockWithItem(ModBlocks.RAW_RUBY_BLOCK);
         blockWithItem(ModBlocks.BLEEDING_OBSIDIAN);
+        blockWithItem(ModBlocks.RUBY_GLASS);
+
 
         blockWithItem(ModBlocks.MOLTEN_RUBY_ORE);
         blockWithItem(ModBlocks.NETHER_RUBY_ORE);

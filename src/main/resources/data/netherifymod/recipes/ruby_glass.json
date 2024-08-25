@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "#R#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glass"
+    },
+    "R": {
+      "item": "netherifymod:ruby_shard"
+    }
+  },
+
+  "result": {
+    "item": "netherifymod:ruby_glass",
+    "count": 8
+  }
+}

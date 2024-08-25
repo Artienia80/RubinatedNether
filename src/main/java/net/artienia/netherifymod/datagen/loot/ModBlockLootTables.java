@@ -31,6 +31,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.RUBY_BLOCK.get());
         this.dropSelf(ModBlocks.RAW_RUBY_BLOCK.get());
         this.dropSelf(ModBlocks.BLEEDING_OBSIDIAN.get());
+        this.dropSelf(ModBlocks.RUBY_GLASS.get());
+
 
         this.add(ModBlocks.NETHER_RUBY_ORE.get(),
                 block -> createEmeraldLikeOreDrops(ModBlocks.NETHER_RUBY_ORE.get(), ModItems.RUBY.get()));

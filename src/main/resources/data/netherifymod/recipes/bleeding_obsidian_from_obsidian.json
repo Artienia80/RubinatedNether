@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "#R#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:obsidian"
+    },
+    "R": {
+      "item": "netherifymod:ruby"
+    }
+  },
+
+  "result": {
+    "item": "netherifymod:bleeding_obsidian",
+    "count": 8
+  }
+}

@@ -2,8 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:diamond"
+    "O": {
+      "item": "minecraft:obsidian"
     },
     "C": {
       "item": "netherifymod:ruby"
@@ -14,8 +14,8 @@
   },
   "pattern": [
     "CSC",
-    "#C#",
-    "###"
+    "COC",
+    "CCC"
   ],
   "result": {
     "count": 2,

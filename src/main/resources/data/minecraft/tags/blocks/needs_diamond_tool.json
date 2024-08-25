@@ -4,6 +4,8 @@
     "netherifymod:raw_ruby_block",
     "netherifymod:molten_ruby_ore",
     "netherifymod:nether_ruby_ore",
+    "netherifymod:bleeding_obsidian",
+    "netherifymod:ruby_glass",
     "netherifymod:rubinated_blackstone"
   ]
 }

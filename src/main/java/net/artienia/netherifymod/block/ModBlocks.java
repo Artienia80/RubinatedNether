@@ -29,6 +29,9 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> BLEEDING_OBSIDIAN = registerBlock("bleeding_obsidian",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.CRYING_OBSIDIAN).mapColor(MapColor.FIRE)));
+    public static final RegistryObject<Block> RUBY_GLASS = registerBlock("ruby_glass",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TINTED_GLASS).mapColor(MapColor.FIRE).explosionResistance(6F)));
+
 
     public static final RegistryObject<Block> MOLTEN_RUBY_ORE = registerBlock("molten_ruby_ore",
             () -> new MagmaXP(BlockBehaviour.Properties.copy(Blocks.MAGMA_BLOCK)

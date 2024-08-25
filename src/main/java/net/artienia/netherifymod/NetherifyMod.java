@@ -78,6 +78,7 @@ public class NetherifyMod
         }
         if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS){
             event.accept(ModBlocks.RUBY_BLOCK);
+            event.accept(ModBlocks.RUBY_GLASS);
             event.accept(ModBlocks.FREEZER);
         }
         if(event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS){
