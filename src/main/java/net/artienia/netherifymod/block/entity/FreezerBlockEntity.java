@@ -173,7 +173,7 @@ public class FreezerBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private boolean hasRecipe() {
-        boolean hasCraftingItem = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == ModItems.RAW_RUBY.get();
+        boolean hasCraftingItem = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == ModItems.MOLTEN_RUBY.get();
         ItemStack result = new ItemStack(ModItems.RUBY.get());
 
         return hasCraftingItem && canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());

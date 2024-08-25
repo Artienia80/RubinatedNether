@@ -72,7 +72,7 @@ public class NetherifyMod
     {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
             event.accept(ModItems.RUBY);
-            event.accept(ModItems.RAW_RUBY);
+            event.accept(ModItems.MOLTEN_RUBY);
             event.accept(ModItems.RUBY_SHARD);
 
         }
@@ -82,7 +82,7 @@ public class NetherifyMod
             event.accept(ModBlocks.FREEZER);
         }
         if(event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS){
-            event.accept(ModBlocks.RAW_RUBY_BLOCK);
+            event.accept(ModBlocks.MOLTEN_RUBY_BLOCK);
             event.accept(ModBlocks.MOLTEN_RUBY_ORE);
             event.accept(ModBlocks.NETHER_RUBY_ORE);
             event.accept(ModBlocks.RUBINATED_BLACKSTONE);

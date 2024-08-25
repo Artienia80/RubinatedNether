@@ -15,7 +15,7 @@ public class ModItems {
     public static final RegistryObject<Item> RUBY = ITEMS.register("ruby",
             () -> new Item(new Item.Properties()));
 
-    public static final RegistryObject<Item> RAW_RUBY = ITEMS.register("raw_ruby",
+    public static final RegistryObject<Item> MOLTEN_RUBY = ITEMS.register("molten_ruby",
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> RUBY_SHARD = ITEMS.register("ruby_shard",

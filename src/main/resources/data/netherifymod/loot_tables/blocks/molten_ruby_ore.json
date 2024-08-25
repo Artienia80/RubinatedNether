@@ -47,7 +47,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "netherifymod:raw_ruby"
+              "name": "netherifymod:molten_ruby"
             }
           ]
         }

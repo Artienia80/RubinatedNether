@@ -28,7 +28,7 @@ public class ModBlocks {
     .Properties.copy(Blocks.IRON_BLOCK)
     .mapColor(MapColor.FIRE)
     ));
-    public static final RegistryObject<Block> RAW_RUBY_BLOCK = registerBlock("raw_ruby_block", () -> new RotatedPillarBlock(BlockBehaviour
+    public static final RegistryObject<Block> MOLTEN_RUBY_BLOCK = registerBlock("molten_ruby_block", () -> new RotatedPillarBlock(BlockBehaviour
     .Properties.copy(Blocks.RAW_IRON_BLOCK)
     .mapColor(MapColor.FIRE)
     .lightLevel((p_220871_) -> {return 15;})

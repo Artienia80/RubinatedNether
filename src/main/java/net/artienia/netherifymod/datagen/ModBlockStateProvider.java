@@ -22,7 +22,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         blockWithItem(ModBlocks.RUBY_BLOCK);
-        blockWithItem(ModBlocks.RAW_RUBY_BLOCK);
+        blockWithItem(ModBlocks.MOLTEN_RUBY_BLOCK);
         blockWithItem(ModBlocks.BLEEDING_OBSIDIAN);
         blockWithItem(ModBlocks.RUBY_GLASS);
 

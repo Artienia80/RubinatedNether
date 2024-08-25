@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "netherifymod:block/raw_ruby_block_top",
-    "side": "netherifymod:block/raw_ruby_block_side"
-  }
-}

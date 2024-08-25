@@ -8,10 +8,10 @@
   ],
   "key": {
     "#": {
-      "item": "netherifymod:raw_ruby"
+      "item": "netherifymod:molten_ruby"
     }
   },
   "result": {
-    "item": "netherifymod:raw_ruby_block"
+    "item": "netherifymod:molten_ruby_block"
   }
 }

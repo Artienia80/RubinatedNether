@@ -29,7 +29,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     @Override
     protected void generate() {
         this.dropSelf(ModBlocks.RUBY_BLOCK.get());
-        this.dropSelf(ModBlocks.RAW_RUBY_BLOCK.get());
+        this.dropSelf(ModBlocks.MOLTEN_RUBY_BLOCK.get());
         this.dropSelf(ModBlocks.BLEEDING_OBSIDIAN.get());
         this.dropSelf(ModBlocks.RUBY_GLASS.get());
 
@@ -37,7 +37,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.NETHER_RUBY_ORE.get(),
                 block -> createEmeraldLikeOreDrops(ModBlocks.NETHER_RUBY_ORE.get(), ModItems.RUBY.get()));
         this.add(ModBlocks.MOLTEN_RUBY_ORE.get(),
-                block -> createCopperLikeOreDrops(ModBlocks.MOLTEN_RUBY_ORE.get(), ModItems.RAW_RUBY.get()));
+                block -> createCopperLikeOreDrops(ModBlocks.MOLTEN_RUBY_ORE.get(), ModItems.MOLTEN_RUBY.get()));
         this.add(ModBlocks.RUBINATED_BLACKSTONE.get(),
                 block -> createCopperLikeOreDrops(ModBlocks.RUBINATED_BLACKSTONE.get(), ModItems.RUBY_SHARD.get()));
 
