@@ -16,6 +16,10 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.BlockGetter;
+
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, NetherifyMod.MOD_ID);
 
@@ -39,6 +43,7 @@ public class ModBlocks {
     .mapColor(MapColor.FIRE)
     .explosionResistance(100F)
     .noOcclusion()
+    .isRedstoneConductor((BlockState state, BlockGetter getter, BlockPos pos) -> {return false;})
     ));
 
     public static final RegistryObject<Block> MOLTEN_RUBY_ORE = registerBlock("molten_ruby_ore", () -> new MagmaXP(BlockBehaviour
