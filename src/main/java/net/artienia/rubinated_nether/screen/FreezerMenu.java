@@ -27,12 +27,16 @@ public class FreezerMenu extends RecipeBookMenu<Container> {
     private final RecipeType<? extends AbstractCookingRecipe> recipeType;
     private final RecipeBookType recipeBookType;
 
-    public FreezerMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+    public FreezerMenu(int containerId, Inventory playerInventory) {
+        this(ModMenuTypes.FREEZER_MENU.get(), ModRecipeTypes.FREEZING.get(), ModRecipeBookTypes.FREEZER, containerId, playerInventory);
     }
 
     public FreezerMenu(int containerId, Inventory playerInventory, Container freezerContainer, ContainerData data) {
         this(ModMenuTypes.FREEZER_MENU.get(), ModRecipeTypes.FREEZING.get(), ModRecipeBookTypes.FREEZER, containerId, playerInventory, freezerContainer, data);
+    }
+
+    protected FreezerMenu(MenuType<?> menuType, RecipeType<? extends AbstractCookingRecipe> recipeType, RecipeBookType recipeBookType, int containerId, Inventory playerInventory) {
+        this(menuType, recipeType, recipeBookType, containerId, playerInventory, new SimpleContainer(3), new SimpleContainerData(4));
     }
 
     public FreezerMenu(MenuType<?> menuType, RecipeType<? extends AbstractCookingRecipe> recipeType, RecipeBookType recipeBookType, int containerId, Inventory playerInventory, Container container, ContainerData data) {
