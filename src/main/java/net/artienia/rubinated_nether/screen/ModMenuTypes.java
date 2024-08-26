@@ -1,6 +1,7 @@
 package net.artienia.rubinated_nether.screen;
 
 import net.artienia.rubinated_nether.RubinatedNether;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -15,11 +16,11 @@ public class ModMenuTypes {
             DeferredRegister.create(ForgeRegistries.MENU_TYPES, RubinatedNether.MOD_ID);
 
     public static final RegistryObject<MenuType<FreezerMenu>> FREEZER_MENU =
-            registerMenuType("freezer_menu", FreezerMenu::new);
+            register("freezer_menu", FreezerMenu::new);
 
 
-    private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
-        return MENUS.register(name, () -> IForgeMenuType.create(factory));
+    private static<T extends AbstractContainerMenu> RegistryObject<MenuType<T>> register(String name, MenuType.MenuSupplier<T> menu) {
+        return MENUS.register(name, () -> new MenuType<>(menu, FeatureFlags.VANILLA_SET));
     }
 
     public static void register(IEventBus eventBus) {

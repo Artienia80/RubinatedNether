@@ -15,6 +15,7 @@ public class ModBlockEntities {
     public static final RegistryObject<BlockEntityType<FreezerBlockEntity>> FREEZER_BE =
             BLOCK_ENTITIES.register("freezer_be", () ->
                     BlockEntityType.Builder.of(FreezerBlockEntity::new, ModBlocks.FREEZER.get()).build(null));
+
     public static void register(IEventBus eventBus){
         BLOCK_ENTITIES.register(eventBus);
     }

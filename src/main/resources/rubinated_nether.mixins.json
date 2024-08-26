@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.artienia.rubinated_nether.mixin",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "rubinated_nether.refmap.json",
+  "mixins": [
+    "AbstractFurnaceBlockEntityAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -2,10 +2,13 @@ package net.artienia.rubinated_nether.block.custom;
 
 import net.artienia.rubinated_nether.block.entity.FreezerBlockEntity;
 import net.artienia.rubinated_nether.block.entity.ModBlockEntities;
+import net.artienia.rubinated_nether.block.entity.ModBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -35,21 +38,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-public class FreezerBlock extends BaseEntityBlock {
-    public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
-    public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.Plane.HORIZONTAL);
-    public static final BooleanProperty LIT = BooleanProperty.create("lit");
-
+public class FreezerBlock extends AbstractFurnaceBlock {
 
     public FreezerBlock(Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState((BlockState)((BlockState)((BlockState)this.stateDefinition.any()).setValue(FACING, Direction.NORTH)).setValue(LIT, false));
-
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return SHAPE;
     }
 
     @Override
@@ -57,74 +49,38 @@ public class FreezerBlock extends BaseEntityBlock {
         return RenderShape.MODEL;
     }
 
+
     @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
-        if (pState.getBlock() != pNewState.getBlock()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof FreezerBlockEntity) {
-                ((FreezerBlockEntity) blockEntity).drops();
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new FreezerBlockEntity(pos, state);
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        return level.isClientSide() ? null : createTickerHelper(blockEntityType, ModBlockEntityTypes.FREEZER.get(), FreezerBlockEntity::serverTick);
+    }
+
+    @Override
+    protected void openContainer(Level level, BlockPos pos, Player player) {
+        if (!level.isClientSide()) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof FreezerBlockEntity freezerBlockEntity) {
+                player.openMenu(freezerBlockEntity);
             }
         }
-
-        super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
-
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return (BlockState)this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
-    }
-
-    public BlockState rotate(BlockState pState, Rotation pRotation) {
-        return (BlockState)pState.setValue(FACING, pRotation.rotate((Direction)pState.getValue(FACING)));
-    }
-
-    public BlockState mirror(BlockState pState, Mirror pMirror) {
-        return pState.rotate(pMirror.getRotation((Direction)pState.getValue(FACING)));
-    }
-
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(new Property[]{FACING, LIT});
-    }
-
-    public boolean isLit(BlockState state) {
-        return state.getValue(LIT);
-    }
-
-    public void toggleLit(BlockState state, Level world, BlockPos pos) {
-        boolean lit = state.getValue(LIT);
-        world.setBlock(pos, state.setValue(LIT, !lit), 3);
-    }
-
-
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (!pLevel.isClientSide()) {
-            BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(entity instanceof FreezerBlockEntity) {
-                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (FreezerBlockEntity)entity, pPos);
-            } else {
-                throw new IllegalStateException("Our Container provider is missing!");
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (state.getValue(LIT)) {
+            double x = pos.getX() + 0.5;
+            double y = pos.getY() + 1.0 + (random.nextFloat() * 6.0) / 16.0;
+            double z = pos.getZ() + 0.5;
+            level.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
+            for (int i = 0; i < 10; ++i) {
+                level.addParticle(ParticleTypes.SNOWFLAKE, x, y, z, 0.0, 0.0, 0.0);
             }
         }
-
-        return InteractionResult.sidedSuccess(pLevel.isClientSide());
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new FreezerBlockEntity(pPos, pState);
-    }
-
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if(pLevel.isClientSide()) {
-            return null;
-        }
-
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.FREEZER_BE.get(),
-                (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
     }
 }
 
