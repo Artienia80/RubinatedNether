@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,25 +26,26 @@ public class ModBlocks {
 
 
     public static final RegistryObject<Block> RUBY_BLOCK = registerBlock("ruby_block", () -> new Block(BlockBehaviour
-    .Properties.copy(Blocks.IRON_BLOCK)
+    .Properties.copy(Blocks.NETHERITE_BLOCK)
     .mapColor(MapColor.FIRE)
     ));
     public static final RegistryObject<Block> MOLTEN_RUBY_BLOCK = registerBlock("molten_ruby_block", () -> new RotatedPillarBlock(BlockBehaviour
-    .Properties.copy(Blocks.RAW_IRON_BLOCK)
+    .Properties.copy(Blocks.ANCIENT_DEBRIS)
     .mapColor(MapColor.FIRE)
     .lightLevel((p_220871_) -> {return 15;})
     ));
 
-    public static final RegistryObject<Block> BLEEDING_OBSIDIAN = registerBlock("bleeding_obsidian", () -> new GlassBlock(BlockBehaviour
+    public static final RegistryObject<Block> BLEEDING_OBSIDIAN = registerBlock("bleeding_obsidian", () -> new Block(BlockBehaviour
     .Properties.copy(Blocks.CRYING_OBSIDIAN)
     .mapColor(MapColor.FIRE)
+    .pushReaction(PushReaction.BLOCK)
     ));
     public static final RegistryObject<Block> RUBY_GLASS = registerBlock("ruby_glass", () -> new GlassBlock(BlockBehaviour
     .Properties.copy(Blocks.GLASS)
     .mapColor(MapColor.FIRE)
     .explosionResistance(100F)
     .noOcclusion()
-    .isRedstoneConductor((BlockState state, BlockGetter getter, BlockPos pos) -> {return false;})
+    .isRedstoneConductor(ModBlocks::never)
     ));
 
     public static final RegistryObject<Block> MOLTEN_RUBY_ORE = registerBlock("molten_ruby_ore", () -> new MagmaXP(BlockBehaviour
@@ -79,5 +81,9 @@ public class ModBlocks {
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
+    }
+
+    public static boolean never(BlockState state, BlockGetter getter, BlockPos pos){
+        return false;
     }
 }

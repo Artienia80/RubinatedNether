@@ -12,7 +12,8 @@
   "block.rubinated_nether.bleeding_obsidian": "Bleeding Obsidian",
   "block.rubinated_nether.ruby_glass": "Ruby Glass",
 
-
+  "advancements.nether.obtain_bleeding_obsidian.description": "Obtain Bleeding Obsidian",
+  "advancements.nether.obtain_bleeding_obsidian.title": "Who is Hurting Onions?",
 
   "block.rubinated_nether.freezer": "Freezer"
 }
