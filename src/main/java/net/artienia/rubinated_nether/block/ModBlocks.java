@@ -47,6 +47,13 @@ public class ModBlocks {
     .noOcclusion()
     .isRedstoneConductor(ModBlocks::never)
     ));
+    public static final RegistryObject<Block> RUBY_CHANDELIER = registerBlock("ruby_chandelier", () -> new Chandelier(BlockBehaviour
+    .Properties.copy(Blocks.COPPER_BLOCK)
+    .mapColor(MapColor.FIRE)
+    .noOcclusion()
+    .isViewBlocking(ModBlocks::never)
+    .lightLevel((p_220871_) -> {return 15;})
+    ));
 
     public static final RegistryObject<Block> MOLTEN_RUBY_ORE = registerBlock("molten_ruby_ore", () -> new MagmaXP(BlockBehaviour
     .Properties.copy(Blocks.MAGMA_BLOCK)

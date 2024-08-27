@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    " A ",
+    "CBC",
+    " C "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:chain"
+    },
+    "B": {
+      "item": "minecraft:copper_block"
+    },
+    "R": {
+      "item": "rubinated_nether:ruby"
+    }
+  },
+
+  "result": {
+    "item": "rubinated_nether:ruby_glass",
+    "count": 8
+  }
+}
