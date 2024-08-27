@@ -13,13 +13,12 @@
     "B": {
       "item": "minecraft:copper_block"
     },
-    "R": {
+    "C": {
       "item": "rubinated_nether:ruby"
     }
   },
 
   "result": {
-    "item": "rubinated_nether:ruby_chandelier",
-    "count": 8
+    "item": "rubinated_nether:ruby_chandelier"
   }
 }
