@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "AB ",
+    "CDE",
+    "AB "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:copper_block"
+    },
+    "B": {
+      "item": "minecraft:copper_ingot"
+    },
+    "C": {
+      "item": "minecraft:redstone_dust"
+    },
+    "D": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "E": {
+      "item": "rubinated_nether:ruby"
+    }
+  },
+
+  "result": {
+    "item": "rubinated_nether:ruby_laser"
+  }
+}
