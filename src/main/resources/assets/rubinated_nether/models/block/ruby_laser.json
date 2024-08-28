@@ -4,7 +4,7 @@
 	"render_type": "minecraft:cutout",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "rubinated_nether:block/laser_crystal",
+		"0": "rubinated_nether:block/ruby_block",
 		"1": "rubinated_nether:block/chandelier/blank",
 		"2": "rubinated_nether:block/ruby_laser_front",
 		"3": "rubinated_nether:block/ruby_laser_side",
@@ -55,12 +55,12 @@
 			"to": [13, 16, 13],
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
 			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#0"},
-				"east": {"uv": [0, 0, 16, 16], "rotation": 270, "texture": "#0"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"west": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#0"},
-				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#0"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
+				"north": {"uv": [3, 3, 13, 13], "rotation": 180, "texture": "#0"},
+				"east": {"uv": [3, 3, 13, 13], "rotation": 270, "texture": "#0"},
+				"south": {"uv": [3, 3, 13, 13], "texture": "#0"},
+				"west": {"uv": [3, 3, 13, 13], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [3, 3, 13, 13], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [3, 3, 13, 13], "texture": "#0"}
 			}
 		}
 	]
