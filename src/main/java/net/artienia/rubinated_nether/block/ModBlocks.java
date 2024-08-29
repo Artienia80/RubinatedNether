@@ -78,6 +78,7 @@ public class ModBlocks {
     .Properties.copy(Blocks.COPPER_BLOCK)
     .noOcclusion()
     ));
+    public static final RegistryObject<LanternBlock> RUBY_LANTERN = registerBlock("ruby_lantern", () -> new LanternBlock(BlockBehaviour.Properties.copy(Blocks.LANTERN)));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

@@ -81,6 +81,7 @@ public class RubinatedNether
             event.accept(ModBlocks.RUBY_GLASS);
             event.accept(ModBlocks.RUBY_CHANDELIER);
             event.accept(ModBlocks.FREEZER);
+            event.accept(ModBlocks.RUBY_LANTERN);
         }
         if(event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS){
             event.accept(ModBlocks.MOLTEN_RUBY_BLOCK);
@@ -89,6 +90,9 @@ public class RubinatedNether
             event.accept(ModBlocks.RUBINATED_BLACKSTONE);
             event.accept(ModBlocks.BLEEDING_OBSIDIAN);
 
+        }
+        if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS){
+            event.accept(ModBlocks.RUBY_LASER);
         }
 
     }
