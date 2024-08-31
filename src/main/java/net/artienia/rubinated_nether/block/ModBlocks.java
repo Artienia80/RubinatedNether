@@ -3,9 +3,11 @@ package net.artienia.rubinated_nether.block;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.custom.FreezerBlock;
 import net.artienia.rubinated_nether.item.ModItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -15,15 +17,13 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.function.Supplier;
-
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.BlockGetter;
 
+import java.util.function.Supplier;
+
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, RubinatedNether.MOD_ID);
-
 
     public static final RegistryObject<Block> RUBY_BLOCK = registerBlock("ruby_block", () -> new Block(BlockBehaviour
     .Properties.copy(Blocks.NETHERITE_BLOCK)
@@ -40,13 +40,22 @@ public class ModBlocks {
     .mapColor(MapColor.FIRE)
     .pushReaction(PushReaction.BLOCK)
     ));
-    public static final RegistryObject<Block> RUBY_GLASS = registerBlock("ruby_glass", () -> new GlassBlock(BlockBehaviour
+    public static final RegistryObject<StainedGlassBlock> RUBY_GLASS = registerBlock("ruby_glass", () -> new StainedGlassBlock(DyeColor.RED, BlockBehaviour
     .Properties.copy(Blocks.GLASS)
     .mapColor(MapColor.FIRE)
     .explosionResistance(100F)
     .noOcclusion()
     .isRedstoneConductor(ModBlocks::never)
     ));
+    public static final RegistryObject<StainedGlassPaneBlock> RUBY_GLASS_PANE = registerBlock("ruby_glass_pane", () -> new StainedGlassPaneBlock(DyeColor.RED, Block
+    .Properties.copy(Blocks.GLASS)
+    .mapColor(MapColor.FIRE)
+    .explosionResistance(100F)
+    .noOcclusion()
+    .isRedstoneConductor(ModBlocks::never)
+    .isViewBlocking(ModBlocks::never)
+    ));
+
     public static final RegistryObject<Block> RUBY_CHANDELIER = registerBlock("ruby_chandelier", () -> new Chandelier(BlockBehaviour
     .Properties.copy(Blocks.COPPER_BLOCK)
     .mapColor(MapColor.FIRE)
