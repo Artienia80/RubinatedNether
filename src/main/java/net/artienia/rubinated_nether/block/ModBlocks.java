@@ -83,7 +83,7 @@ public class ModBlocks {
     .Properties.copy(Blocks.COPPER_BLOCK)
     .noOcclusion()
     ));
-    public static final RegistryObject<Block> RUBY_LASER = registerBlock("ruby_laser", () -> new RotatedPillarBlock(BlockBehaviour
+    public static final RegistryObject<Block> RUBY_LASER = registerBlock("ruby_laser", () -> new ObserverBlock(BlockBehaviour
     .Properties.copy(Blocks.COPPER_BLOCK)
     .noOcclusion()
     ));
