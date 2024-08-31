@@ -2,19 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "pattern": [
-    " A ",
-    "CBC",
-    " C "
+    "AAA",
+    "ABA",
+    "AAA"
   ],
   "key": {
     "A": {
-      "item": "minecraft:chain"
+      "item": "rubinated_nether:ruby_lantern"
     },
     "B": {
       "item": "minecraft:copper_block"
-    },
-    "C": {
-      "item": "rubinated_nether:ruby"
     }
   },
 

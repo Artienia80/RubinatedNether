@@ -20,5 +20,8 @@
   "advancement.rubinated_nether.obtain_bleeding_obsidian.description": "Obtain Bleeding Obsidian",
   "advancement.rubinated_nether.obtain_bleeding_obsidian.title": "Blood For The Blood God",
 
+  "death.attack.fallingBlock": "%1$s was embraced by a falling chandelier",
+  "death.attack.fallingBlock.player": "%1$s was embraced by a falling chandelier whilst fighting %2$s",
+
   "block.rubinated_nether.freezer": "Freezer"
 }
