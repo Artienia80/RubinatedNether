@@ -71,9 +71,8 @@ public class RubinatedNether
         }
 
         if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS){
+            event.accept(ModBlocks.MOLTEN_RUBY_BLOCK);
             event.accept(ModBlocks.RUBY_BLOCK);
-            event.accept(ModBlocks.RUBY_GLASS);
-            event.accept(ModBlocks.FREEZER);
         }
 
         if(event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS){
@@ -82,6 +81,16 @@ public class RubinatedNether
             event.accept(ModBlocks.NETHER_RUBY_ORE);
             event.accept(ModBlocks.RUBINATED_BLACKSTONE);
             event.accept(ModBlocks.BLEEDING_OBSIDIAN);
+        }
+        if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS){
+            event.accept(ModBlocks.RUBY_GLASS);
+            event.accept(ModBlocks.RUBY_GLASS_PANE);
+            event.accept(ModBlocks.RUBY_CHANDELIER);
+            event.accept(ModBlocks.RUBY_LANTERN);
+            event.accept(ModBlocks.FREEZER);
+        }
+        if(event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS){
+            event.accept(ModBlocks.RUBY_LASER);
         }
 
     }

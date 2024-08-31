@@ -1,0 +1,7 @@
+{
+  "render_type": "minecraft:cutout",
+  "parent": "minecraft:block/template_hanging_lantern",
+  "textures": {
+    "lantern": "rubinated_nether:block/ruby_lantern"
+  }
+}

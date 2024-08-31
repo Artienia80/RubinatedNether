@@ -1,18 +1,12 @@
 package net.artienia.rubinated_nether.datagen;
-
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.ModBlocks;
-import net.minecraft.client.model.Model;
+import net.artienia.rubinated_nether.item.ModItems;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
-import java.util.function.Function;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -21,18 +15,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        blockWithItem(ModBlocks.RUBY_BLOCK);
-        blockWithItem(ModBlocks.MOLTEN_RUBY_BLOCK);
-        blockWithItem(ModBlocks.BLEEDING_OBSIDIAN);
-        blockWithItem(ModBlocks.RUBY_GLASS);
+        // blockWithItem(ModBlocks.RUBY_BLOCK);
+        // blockWithItem(ModBlocks.BLEEDING_OBSIDIAN);
+        // blockWithItem(ModBlocks.RUBY_GLASS);
+        //paneBlock(ModBlocks.RUBY_GLASS_PANE.get(), modLoc("block/ruby_glass"), modLoc("block/ruby_glass_pane_top"));
+        paneBlockWithRenderType(ModBlocks.RUBY_GLASS_PANE.get(), modLoc("block/ruby_glass"), modLoc("block/ruby_glass_pane_top"), "minecraft:translucent");
 
-
-        blockWithItem(ModBlocks.MOLTEN_RUBY_ORE);
-        blockWithItem(ModBlocks.NETHER_RUBY_ORE);
-        blockWithItem(ModBlocks.RUBINATED_BLACKSTONE);
-
-        simpleBlockWithItem(ModBlocks.FREEZER.get(),
-                new ModelFile.UncheckedModelFile(modLoc("block/freezer")));
+        // blockWithItem(ModBlocks.MOLTEN_RUBY_ORE);
+        // blockWithItem(ModBlocks.NETHER_RUBY_ORE);
+        // blockWithItem(ModBlocks.RUBINATED_BLACKSTONE);
     }
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject) {

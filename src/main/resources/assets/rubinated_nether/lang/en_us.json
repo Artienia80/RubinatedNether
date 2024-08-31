@@ -11,9 +11,17 @@
   "block.rubinated_nether.rubinated_blackstone": "Rubinated Blackstone",
   "block.rubinated_nether.bleeding_obsidian": "Bleeding Obsidian",
   "block.rubinated_nether.ruby_glass": "Ruby Glass",
+  "block.rubinated_nether.ruby_glass_pane": "Ruby Glass Pane",
+  "block.rubinated_nether.ruby_chandelier": "Ruby Chandelier",
+  "block.rubinated_nether.ruby_laser": "Ruby Laser",
+  "block.rubinated_nether.ruby_lantern": "Ruby Lantern",
 
-  "advancements.nether.obtain_bleeding_obsidian.description": "Obtain Bleeding Obsidian",
-  "advancements.nether.obtain_bleeding_obsidian.title": "Who is Hurting Onions?",
+
+  "advancement.rubinated_nether.obtain_bleeding_obsidian.description": "Obtain Bleeding Obsidian",
+  "advancement.rubinated_nether.obtain_bleeding_obsidian.title": "Blood For The Blood God",
+
+  "death.attack.fallingBlock": "%1$s was embraced by a falling chandelier",
+  "death.attack.fallingBlock.player": "%1$s was embraced by a falling chandelier whilst fighting %2$s",
 
   "block.rubinated_nether.freezer": "Freezer"
 }

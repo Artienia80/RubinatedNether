@@ -32,6 +32,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.MOLTEN_RUBY_BLOCK.get());
         this.dropSelf(ModBlocks.BLEEDING_OBSIDIAN.get());
         this.dropSelf(ModBlocks.RUBY_GLASS.get());
+        this.dropSelf(ModBlocks.RUBY_CHANDELIER.get());
+        this.dropSelf(ModBlocks.RUBY_LANTERN.get());
 
 
         this.add(ModBlocks.NETHER_RUBY_ORE.get(),
