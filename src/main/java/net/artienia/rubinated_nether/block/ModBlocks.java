@@ -63,6 +63,12 @@ public class ModBlocks {
     .isViewBlocking(ModBlocks::never)
     .lightLevel((p_220871_) -> {return 15;})
     ));
+    public static final RegistryObject<Block> RUBY_LAVA_LAMP = registerBlock("ruby_lava_lamp", () -> new RotatedPillarBlock(BlockBehaviour
+    .Properties.copy(Blocks.COPPER_BLOCK)
+    .mapColor(MapColor.FIRE)
+    .noOcclusion()
+    .lightLevel((p_220871_) -> {return 15;})
+    ));
 
     public static final RegistryObject<Block> MOLTEN_RUBY_ORE = registerBlock("molten_ruby_ore", () -> new MagmaXP(BlockBehaviour
     .Properties.copy(Blocks.MAGMA_BLOCK)
