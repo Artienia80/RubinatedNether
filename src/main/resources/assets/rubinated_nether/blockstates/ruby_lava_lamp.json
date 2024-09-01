@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "rubinated_nether:block/ruby_lava_lamp",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "rubinated_nether:block/ruby_lava_lamp"
+    },
+    "axis=z": {
+      "model": "rubinated_nether:block/ruby_lava_lamp",
+      "x": 90
+    }
+  }
+}
