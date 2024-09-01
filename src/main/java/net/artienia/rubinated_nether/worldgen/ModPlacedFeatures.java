@@ -26,13 +26,13 @@ public class ModPlacedFeatures {
 
         register(context, NETHER_RUBY_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.NETHER_RUBY_ORE_KEY),
                 ModOrePlacement.commonOrePlacement(1,
-                        HeightRangePlacement.triangle(VerticalAnchor.absolute(100), VerticalAnchor.absolute(125))));
+                        HeightRangePlacement.triangle(VerticalAnchor.belowTop(30), VerticalAnchor.belowTop(0))));
         register(context, MOLTEN_RUBY_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MOLTEN_RUBY_ORE_KEY),
-                ModOrePlacement.commonOrePlacement(150,
-                        HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(50))));
+                ModOrePlacement.commonOrePlacement(100,
+                        HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(40))));
         register(context, RUBINATED_BLACKSTONE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.RUBINATED_BLACKSTONE_KEY),
                 ModOrePlacement.commonOrePlacement(250,
-                        HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(200))));
+                        HeightRangePlacement.triangle(VerticalAnchor.absolute(32), VerticalAnchor.absolute(200))));
     }
 
 

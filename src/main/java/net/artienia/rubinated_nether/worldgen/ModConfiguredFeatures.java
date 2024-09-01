@@ -30,7 +30,7 @@ public class ModConfiguredFeatures {
         register(context, NETHER_RUBY_ORE_KEY, Feature.ORE, new OreConfiguration(netherrackReplacables,
                 ModBlocks.NETHER_RUBY_ORE.get().defaultBlockState(), 3));
         register(context, MOLTEN_RUBY_ORE_KEY, Feature.ORE, new OreConfiguration(magmaReplacables,
-                ModBlocks.MOLTEN_RUBY_ORE.get().defaultBlockState(), 6));
+                ModBlocks.MOLTEN_RUBY_ORE.get().defaultBlockState(), 5));
         register(context, RUBINATED_BLACKSTONE_KEY, Feature.ORE, new OreConfiguration(gildedReplacables,
                 ModBlocks.RUBINATED_BLACKSTONE.get().defaultBlockState(), 25));
 
