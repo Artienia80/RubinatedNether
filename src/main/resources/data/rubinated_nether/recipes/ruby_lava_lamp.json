@@ -8,10 +8,10 @@
   ],
   "key": {
     "A": {
-      "item": "rubinated_nether:molten_ruby"
+      "item": "minecraft:copper_ingot"
     },
     "B": {
-      "item": "minecraft:copper_ingot"
+      "item": "rubinated_nether:molten_ruby"
     },
     "C": {
       "item": "rubinated_nether:ruby_glass_pane"
