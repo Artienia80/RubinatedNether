@@ -11,7 +11,9 @@ import net.artienia.rubinated_nether.recipe.ModRecipeTypes;
 import net.artienia.rubinated_nether.screen.FreezerScreen;
 import net.artienia.rubinated_nether.screen.ModMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -73,6 +75,7 @@ public class RubinatedNether
         if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS){
             event.accept(ModBlocks.MOLTEN_RUBY_BLOCK);
             event.accept(ModBlocks.RUBY_BLOCK);
+            event.accept(ModBlocks.BLEEDING_OBSIDIAN);
         }
 
         if(event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS){
@@ -80,7 +83,7 @@ public class RubinatedNether
             event.accept(ModBlocks.MOLTEN_RUBY_ORE);
             event.accept(ModBlocks.NETHER_RUBY_ORE);
             event.accept(ModBlocks.RUBINATED_BLACKSTONE);
-            event.accept(ModBlocks.BLEEDING_OBSIDIAN);
+            event.accept(Blocks.FROSTED_ICE);
         }
         if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS){
             event.accept(ModBlocks.RUBY_GLASS);
@@ -114,9 +117,11 @@ public class RubinatedNether
     }
 
     private void registerFuels() {
-        FreezerBlockEntity.addItemFreezingTime(Blocks.ICE, 400);
-        FreezerBlockEntity.addItemFreezingTime(Blocks.FROSTED_ICE, 600);
-        FreezerBlockEntity.addItemFreezingTime(Blocks.BLUE_ICE, 800);
-        FreezerBlockEntity.addItemFreezingTime(Blocks.PACKED_ICE, 1000);
+        FreezerBlockEntity.addItemFreezingTime(Items.SNOWBALL, 50);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.SNOW_BLOCK, 200);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.FROSTED_ICE, 400);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.ICE, 800);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.BLUE_ICE, 1600);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.PACKED_ICE, 3200);
     }
 }

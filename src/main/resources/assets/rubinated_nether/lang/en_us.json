@@ -24,5 +24,7 @@
   "death.attack.fallingBlock": "%1$s was embraced by a falling chandelier",
   "death.attack.fallingBlock.player": "%1$s was embraced by a falling chandelier whilst fighting %2$s",
 
-  "block.rubinated_nether.freezer": "Freezer"
+  "block.rubinated_nether.freezer": "Freezer",
+  "menu.rubinated_nether.freezer": "Freezer",
+  "gui.rubinated_nether.recipebook.toggleRecipes.freezable": "Showing Freezable"
 }
