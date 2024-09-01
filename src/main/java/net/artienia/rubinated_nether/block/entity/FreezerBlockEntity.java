@@ -1,200 +1,117 @@
 package net.artienia.rubinated_nether.block.entity;
 
-import net.artienia.rubinated_nether.item.ModItems;
+import net.artienia.rubinated_nether.RubinatedNether;
+import net.artienia.rubinated_nether.mixin.AbstractFurnaceBlockEntityAccessor;
+import net.artienia.rubinated_nether.recipe.FreezingRecipe;
+import net.artienia.rubinated_nether.recipe.ModRecipeTypes;
 import net.artienia.rubinated_nether.screen.FreezerMenu;
-import net.artienia.rubinated_nether.screen.FreezerScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.RecipeHolder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITagManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class FreezerBlockEntity extends BlockEntity implements MenuProvider {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(2);
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
-    private static final int INPUT_SLOT = 0;
-    private static final int OUTPUT_SLOT = 1;
 
-    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
-    protected final ContainerData data;
-    private int progress = 0;
-    private int maxProgress = 150;
+public class FreezerBlockEntity extends AbstractFreezerBlockEntity implements MenuProvider {
+    private static final Map<Item, Integer> freezingMap = new LinkedHashMap<>();
 
-    public FreezerBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.FREEZER_BE.get(), pPos, pBlockState);
-        this.data = new ContainerData() {
-            @Override
-            public int get(int pIndex) {
-                return switch (pIndex) {
-                    case 0 -> FreezerBlockEntity.this.progress;
-                    case 1 -> FreezerBlockEntity.this.maxProgress;
-                    default -> 0;
-                };
-            }
-
-            @Override
-            public void set(int pIndex, int pValue) {
-                switch (pIndex) {
-                    case 0 -> FreezerBlockEntity.this.progress = pValue;
-                    case 1 -> FreezerBlockEntity.this.maxProgress = pValue;
-                }
-            }
-
-            @Override
-            public int getCount() {
-                return 2;
-            }
-        };
-    }
-
-    public static final BooleanProperty LIT = BooleanProperty.create("lit");
-    public void toggleLit(BlockState state, Level world, BlockPos pos) {
-        boolean lit = state.getValue(LIT);
-        world.setBlock(pos, state.setValue(LIT, !lit), 3);
+    public FreezerBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlockEntityTypes.FREEZER.get(), pos, state, ModRecipeTypes.FREEZING.get());
     }
 
     @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap == ForgeCapabilities.ITEM_HANDLER) {
-            return lazyItemHandler.cast();
-        }
-
-        return super.getCapability(cap, side);
+    public Component getDefaultName() {
+        return Component.translatable("menu." + RubinatedNether.MOD_ID + ".freezer");
     }
 
     @Override
-    public void onLoad() {
-        super.onLoad();
-        lazyItemHandler = LazyOptional.of(() -> itemHandler);
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory) {
+        return new FreezerMenu(id, playerInventory, this, this.dataAccess);
     }
 
     @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        lazyItemHandler.invalidate();
-    }
-
-    public void drops() {
-        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
-        for(int i = 0; i < itemHandler.getSlots(); i++) {
-            inventory.setItem(i, itemHandler.getStackInSlot(i));
-        }
-        Containers.dropContents(this.level, this.worldPosition, inventory);
-    }
-
-    @Override
-    public Component getDisplayName() {
-        return Component.translatable("block.rubinated_nether.freezer");
-    }
-
-    @Nullable
-    @Override
-    public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new FreezerMenu(pContainerId, pPlayerInventory, this, this.data);
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inventory", itemHandler.serializeNBT());
-        pTag.putInt("freezer.progress", progress);
-
-        super.saveAdditional(pTag);
-    }
-
-    @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
-        itemHandler.deserializeNBT(pTag.getCompound("inventory"));
-        progress = pTag.getInt("freezer.progress");
-    }
-
-    public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.Plane.HORIZONTAL);
-
-
-    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if(hasRecipe()) {
-            increaseCraftingProgress();
-            setChanged(pLevel, pPos, pState);
-            if (!pState.getValue(LIT)){
-                toggleLit(pState, pLevel, pPos);
-            }
-            if(hasProgressFinished()) {
-                craftItem();
-                resetProgress();
-                pLevel.playSound(null, pPos, SoundEvents.POINTED_DRIPSTONE_DRIP_WATER, SoundSource.BLOCKS, 1.0F, 1.0F);
-            }
+    public int getBurnDuration(ItemStack fuelStack) {
+        if (fuelStack.isEmpty() || !getFreezingMap().containsKey(fuelStack.getItem())) {
+            return 0;
         } else {
-            resetProgress();
-            if (pState.getValue(LIT)){
-                toggleLit(pState, pLevel, pPos);
-
-            }
+            return getFreezingMap().get(fuelStack.getItem());
         }
     }
 
-    private void resetProgress() {
-
-        progress = 0;
+    public static Map<Item, Integer> getFreezingMap() {
+        return freezingMap;
     }
 
-    private void craftItem() {
-        ItemStack result = new ItemStack(ModItems.RUBY.get(), 1);
-        this.itemHandler.extractItem(INPUT_SLOT, 1, false);
-
-        this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
-                this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
+    public static void addItemFreezingTime(ItemLike itemProvider, int burnTime) {
+        Item item = itemProvider.asItem();
+        getFreezingMap().put(item, burnTime);
     }
 
-    private boolean hasRecipe() {
-        boolean hasCraftingItem = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == ModItems.MOLTEN_RUBY.get();
-        ItemStack result = new ItemStack(ModItems.RUBY.get());
-
-        return hasCraftingItem && canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
+    public static void addItemsFreezingTime(ItemLike[] itemProviders, int burnTime) {
+        Stream.of(itemProviders).map(ItemLike::asItem).forEach((item) -> getFreezingMap().put(item, burnTime));
     }
 
-    private boolean canInsertItemIntoOutputSlot(Item item) {
-        return this.itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() || this.itemHandler.getStackInSlot(OUTPUT_SLOT).is(item);
+    public static void addItemTagFreezingTime(TagKey<Item> itemTag, int burnTime) {
+        ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
+        if (tags != null) {
+            tags.getTag(itemTag).stream().forEach((item) -> getFreezingMap().put(item, burnTime));
+        }
     }
 
-    private boolean canInsertAmountIntoOutputSlot(int count) {
-        return this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + count <= this.itemHandler.getStackInSlot(OUTPUT_SLOT).getMaxStackSize();
+    public static void removeItemFreezingTime(ItemLike itemProvider) {
+        Item item = itemProvider.asItem();
+        getFreezingMap().remove(item);
     }
 
-    private boolean hasProgressFinished() {
-
-        return progress >= maxProgress;
+    public static void removeItemsFreezingTime(ItemLike[] itemProviders) {
+        Stream.of(itemProviders).map(ItemLike::asItem).forEach((item) -> getFreezingMap().remove(item));
     }
 
-    private void increaseCraftingProgress() {
-
-        progress++;
+    public static void removeItemTagFreezingTime(TagKey<Item> itemTag) {
+        ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
+        if (tags != null) {
+            tags.getTag(itemTag).stream().forEach((item) -> getFreezingMap().remove(item));
+        }
     }
-
 }

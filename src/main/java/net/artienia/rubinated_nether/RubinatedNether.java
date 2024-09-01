@@ -2,13 +2,17 @@ package net.artienia.rubinated_nether;
 
 import com.mojang.logging.LogUtils;
 import net.artienia.rubinated_nether.block.ModBlocks;
+import net.artienia.rubinated_nether.block.entity.FreezerBlockEntity;
 import net.artienia.rubinated_nether.block.entity.ModBlockEntities;
+import net.artienia.rubinated_nether.block.entity.ModBlockEntityTypes;
 import net.artienia.rubinated_nether.item.ModItems;
+import net.artienia.rubinated_nether.recipe.ModRecipeSerializers;
+import net.artienia.rubinated_nether.recipe.ModRecipeTypes;
 import net.artienia.rubinated_nether.screen.FreezerScreen;
 import net.artienia.rubinated_nether.screen.ModMenuTypes;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -39,6 +43,10 @@ public class RubinatedNether
         ModBlocks.register((modEventBus));
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+        ModBlockEntityTypes.register(modEventBus);
+        ModRecipeTypes.register(modEventBus);
+        ModRecipeSerializers.register(modEventBus);
+
 
         modEventBus.addListener(this::commonSetup);
 
@@ -49,8 +57,8 @@ public class RubinatedNether
         modEventBus.addListener(this::addCreative);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        this.registerFuels();
     }
 
     // Add the example block item to the building blocks tab
@@ -60,19 +68,19 @@ public class RubinatedNether
             event.accept(ModItems.RUBY);
             event.accept(ModItems.MOLTEN_RUBY);
             event.accept(ModItems.RUBY_SHARD);
-
         }
+
         if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS){
             event.accept(ModBlocks.MOLTEN_RUBY_BLOCK);
             event.accept(ModBlocks.RUBY_BLOCK);
         }
+
         if(event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS){
             event.accept(ModBlocks.MOLTEN_RUBY_BLOCK);
             event.accept(ModBlocks.MOLTEN_RUBY_ORE);
             event.accept(ModBlocks.NETHER_RUBY_ORE);
             event.accept(ModBlocks.RUBINATED_BLACKSTONE);
             event.accept(ModBlocks.BLEEDING_OBSIDIAN);
-
         }
         if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS){
             event.accept(ModBlocks.RUBY_GLASS);
@@ -101,11 +109,14 @@ public class RubinatedNether
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-            // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
-
             MenuScreens.register(ModMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
         }
+    }
+
+    private void registerFuels() {
+        FreezerBlockEntity.addItemFreezingTime(Blocks.ICE, 400);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.FROSTED_ICE, 600);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.BLUE_ICE, 800);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.PACKED_ICE, 1000);
     }
 }
