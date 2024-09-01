@@ -19,6 +19,10 @@ public class ModMenuTypes {
             register("freezer_menu", FreezerMenu::new);
 
 
+    private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> factory, @SuppressWarnings("SameParameterValue") String name) {
+        return MENUS.register(name, ()-> IForgeMenuType.create(factory));
+    }
+
     private static<T extends AbstractContainerMenu> RegistryObject<MenuType<T>> register(String name, MenuType.MenuSupplier<T> menu) {
         return MENUS.register(name, () -> new MenuType<>(menu, FeatureFlags.VANILLA_SET));
     }

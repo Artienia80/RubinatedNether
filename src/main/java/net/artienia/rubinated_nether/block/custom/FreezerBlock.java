@@ -1,5 +1,6 @@
 package net.artienia.rubinated_nether.block.custom;
 
+import net.artienia.rubinated_nether.block.entity.AbstractFreezerBlockEntity;
 import net.artienia.rubinated_nether.block.entity.FreezerBlockEntity;
 import net.artienia.rubinated_nether.block.entity.ModBlockEntities;
 import net.artienia.rubinated_nether.block.entity.ModBlockEntityTypes;
@@ -36,6 +37,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class FreezerBlock extends AbstractFurnaceBlock {
@@ -49,7 +51,6 @@ public class FreezerBlock extends AbstractFurnaceBlock {
         return RenderShape.MODEL;
     }
 
-
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new FreezerBlockEntity(pos, state);
@@ -57,7 +58,7 @@ public class FreezerBlock extends AbstractFurnaceBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return level.isClientSide() ? null : createTickerHelper(blockEntityType, ModBlockEntityTypes.FREEZER.get(), FreezerBlockEntity::serverTick);
+        return level.isClientSide() ? null : createTickerHelper(blockEntityType, ModBlockEntityTypes.FREEZER.get(), AbstractFreezerBlockEntity::serverTick);
     }
 
     @Override
@@ -76,10 +77,7 @@ public class FreezerBlock extends AbstractFurnaceBlock {
             double x = pos.getX() + 0.5;
             double y = pos.getY() + 1.0 + (random.nextFloat() * 6.0) / 16.0;
             double z = pos.getZ() + 0.5;
-            level.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
-            for (int i = 0; i < 10; ++i) {
-                level.addParticle(ParticleTypes.SNOWFLAKE, x, y, z, 0.0, 0.0, 0.0);
-            }
+            level.addParticle(ParticleTypes.SNOWFLAKE, x, y, z, 0.0, 0.0, 0.0);
         }
     }
 }

@@ -8,7 +8,6 @@ import net.artienia.rubinated_nether.block.entity.ModBlockEntityTypes;
 import net.artienia.rubinated_nether.item.ModItems;
 import net.artienia.rubinated_nether.recipe.ModRecipeSerializers;
 import net.artienia.rubinated_nether.recipe.ModRecipeTypes;
-import net.artienia.rubinated_nether.screen.AbstractFreezerScreen;
 import net.artienia.rubinated_nether.screen.FreezerScreen;
 import net.artienia.rubinated_nether.screen.ModMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -47,6 +46,7 @@ public class RubinatedNether
         ModBlockEntityTypes.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
+
 
         modEventBus.addListener(this::commonSetup);
 

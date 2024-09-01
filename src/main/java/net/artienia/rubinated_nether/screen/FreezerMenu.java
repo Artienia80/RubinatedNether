@@ -1,10 +1,8 @@
 package net.artienia.rubinated_nether.screen;
 
-import net.artienia.rubinated_nether.block.ModBlocks;
 import net.artienia.rubinated_nether.block.entity.FreezerBlockEntity;
 import net.artienia.rubinated_nether.recipe.FreezingRecipe;
 import net.artienia.rubinated_nether.recipe.ModRecipeTypes;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,34 +10,26 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class FreezerMenu extends RecipeBookMenu<Container> {
     private final Container container;
     private final ContainerData data;
     protected final Level level;
-    private final RecipeType<? extends AbstractCookingRecipe> recipeType;
+    private final RecipeType<? extends FreezingRecipe> recipeType;
     private final RecipeBookType recipeBookType;
 
     public FreezerMenu(int containerId, Inventory playerInventory) {
-        this(ModMenuTypes.FREEZER_MENU.get(), ModRecipeTypes.FREEZING.get(), ModRecipeBookTypes.FREEZER, containerId, playerInventory);
+        this(ModMenuTypes.FREEZER_MENU.get(), ModRecipeTypes.FREEZING.get(), ModRecipeBookTypes.FREEZER, containerId, playerInventory, new SimpleContainer(3), new SimpleContainerData(4));
     }
 
     public FreezerMenu(int containerId, Inventory playerInventory, Container freezerContainer, ContainerData data) {
         this(ModMenuTypes.FREEZER_MENU.get(), ModRecipeTypes.FREEZING.get(), ModRecipeBookTypes.FREEZER, containerId, playerInventory, freezerContainer, data);
     }
 
-    protected FreezerMenu(MenuType<?> menuType, RecipeType<? extends AbstractCookingRecipe> recipeType, RecipeBookType recipeBookType, int containerId, Inventory playerInventory) {
-        this(menuType, recipeType, recipeBookType, containerId, playerInventory, new SimpleContainer(3), new SimpleContainerData(4));
-    }
-
-    public FreezerMenu(MenuType<?> menuType, RecipeType<? extends AbstractCookingRecipe> recipeType, RecipeBookType recipeBookType, int containerId, Inventory playerInventory, Container container, ContainerData data) {
+    public FreezerMenu(MenuType<?> menuType, RecipeType<? extends FreezingRecipe> recipeType, RecipeBookType recipeBookType, int containerId, Inventory playerInventory, Container container, ContainerData data) {
         super(menuType, containerId);
         this.recipeType = recipeType;
         this.recipeBookType = recipeBookType;
@@ -49,7 +39,7 @@ public class FreezerMenu extends RecipeBookMenu<Container> {
         this.data = data;
         this.level = playerInventory.player.level();
         this.addSlot(new Slot(container, 0, 56, 17));
-        this.addSlot(new FreezerFuelSlot(this, container, 1, 56, 53)); // Used instead of FurnaceFuelSlot to get around buckets being allowed as fuel.
+        this.addSlot(new FreezerFuelSlot(this, container, 1, 56, 53));
         this.addSlot(new FurnaceResultSlot(playerInventory.player, container, 2, 116, 35));
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
@@ -62,47 +52,40 @@ public class FreezerMenu extends RecipeBookMenu<Container> {
         this.addDataSlots(data);
     }
 
-    @Override
-    public void fillCraftSlotsStackedContents(StackedContents contents) {
-        if (this.container instanceof StackedContentsCompatible stackedContentsCompatible) {
-            stackedContentsCompatible.fillStackedContents(contents);
-        }
+    public boolean isCrafting() {
+        return data.get(0) > 0;
     }
 
-    @Override
-    public void clearCraftingContent() {
-        this.getSlot(0).set(ItemStack.EMPTY);
-        this.getSlot(2).set(ItemStack.EMPTY);
+    public boolean hasFuel() {
+        return data.get(2) > 0;
     }
 
-    @Override
-    public boolean recipeMatches(Recipe<? super Container> recipe) {
-        return recipe.matches(this.container, this.level);
+    public int getScaledProgress() {
+        // these are from the cases set in the matching block entity class file
+        int progress = this.data.get(0);
+        int maxProgress = this.data.get(1);
+        // the pixel length or height of the progress arrow/bar in this GUI
+        // if your arrow/bar is vertical, you need the height, otherwise you need the length
+        int progressArrowSize = 22;
+
+        // this calculates how much of that progress arrow/bar needs to be rendered in the GUI
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
 
-    @Override
-    public int getResultSlotIndex() {
-        return 2;
+    public int getScaledFuelProgress() {
+        // these are from the cases set in the matching block entity class file
+        int fuelTime = this.data.get(2);
+        int fuelDuration = this.data.get(3);
+        // the pixel length or height of the progress arrow/bar in this GUI
+        // if your arrow/bar is vertical, you need the height, otherwise you need the length
+        int fuelScaleSize = 60;
+
+        // this calculates how much of that progress arrow/bar needs to be rendered in the GUI
+        return fuelDuration != 0 ? (int)(((float)fuelTime / (float)fuelDuration) * fuelScaleSize) : 0;
     }
 
-    @Override
-    public int getGridWidth() {
-        return 1;
-    }
-
-    @Override
-    public int getGridHeight() {
-        return 1;
-    }
-
-    @Override
-    public int getSize() {
-        return 3;
-    }
-
-    @Override
-    public boolean stillValid(Player player) {
-        return this.container.stillValid(player);
+    public boolean isFuel(ItemStack stack) {
+        return FreezerBlockEntity.getFreezingMap().containsKey(stack.getItem());
     }
 
     /**
@@ -161,9 +144,6 @@ public class FreezerMenu extends RecipeBookMenu<Container> {
         return this.level.getRecipeManager().getRecipeFor((RecipeType<FreezingRecipe>) this.recipeType, new SimpleContainer(stack), this.level).isPresent();
     }
 
-    public boolean isFuel(ItemStack stack) {
-        return FreezerBlockEntity.getFreezingMap().containsKey(stack.getItem());
-    }
 
     public int getBurnProgress() {
         int i = this.data.get(2);
@@ -191,5 +171,48 @@ public class FreezerMenu extends RecipeBookMenu<Container> {
     @Override
     public boolean shouldMoveToInventory(int slot) {
         return slot != 1;
+    }
+
+    @Override
+    public void fillCraftSlotsStackedContents(StackedContents contents) {
+        if (this.container instanceof StackedContentsCompatible stackedContentsCompatible) {
+            stackedContentsCompatible.fillStackedContents(contents);
+        }
+    }
+
+    @Override
+    public void clearCraftingContent() {
+        this.getSlot(0).set(ItemStack.EMPTY);
+        this.getSlot(2).set(ItemStack.EMPTY);
+    }
+
+    @Override
+    public boolean recipeMatches(Recipe<? super Container> recipe) {
+        return recipe.matches(this.container, this.level);
+    }
+
+    @Override
+    public int getResultSlotIndex() {
+        return 2;
+    }
+
+    @Override
+    public int getGridWidth() {
+        return 1;
+    }
+
+    @Override
+    public int getGridHeight() {
+        return 1;
+    }
+
+    @Override
+    public int getSize() {
+        return 3;
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        return this.container.stillValid(player);
     }
 }
