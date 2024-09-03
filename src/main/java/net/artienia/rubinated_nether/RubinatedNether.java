@@ -1,5 +1,6 @@
 package net.artienia.rubinated_nether;
 
+import com.aetherteam.aether.block.AetherBlocks;
 import com.mojang.logging.LogUtils;
 import net.artienia.rubinated_nether.block.ModBlocks;
 import net.artienia.rubinated_nether.block.entity.FreezerBlockEntity;
@@ -19,6 +20,7 @@ import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -117,5 +119,9 @@ public class RubinatedNether
         FreezerBlockEntity.addItemFreezingTime(Blocks.FROSTED_ICE, 600);
         FreezerBlockEntity.addItemFreezingTime(Blocks.BLUE_ICE, 800);
         FreezerBlockEntity.addItemFreezingTime(Blocks.PACKED_ICE, 1000);
+
+        if(ModList.get().isLoaded("aether")){
+            FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 600);
+        }
     }
 }

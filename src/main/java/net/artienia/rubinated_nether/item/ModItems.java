@@ -2,7 +2,6 @@ package net.artienia.rubinated_nether.item;
 
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
