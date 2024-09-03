@@ -1,46 +1,45 @@
+Rubinated Nether is a Vanilla+ mod adding Minecraft's scrapped Ruby. This mod adds several utility and decoration blocks, with a revamped Nether Progression.
 
-Source installation information for modders
--------------------------------------------
-This code follows the Minecraft Forge installation methodology. It will apply
-some small patches to the vanilla MCP source code, giving you and it access 
-to some of the data and functions you need to build a successful mod.
+Current Features
+Obtain Rubies!
+Within the Nether you may find Rubies near the Lava Ocean, near the Nether Roof or in Piglin Bastions. Harvest them with a diamond pickaxe.
 
-Note also that the patches are built against "un-renamed" MCP source code (aka
-SRG Names) - this means that you will not be able to read them directly against
-normal code.
+Freeze Rubies!
+Using the Freezer, you can freeze Molten Rubies into Rubies, Ice into it's colder variants, Magma Cream into Slimeballs and Magma Blocks into Obsidian. Freezing Snow yields the (un)obtainable Frosted Ice.
 
-Setup Process:
-==============================
+Barter with Piglins!
+Break Rubies into Ruby Shards for a more economical and efficenct way to Barter with Piglins.
 
-Step 1: Open your command-line and browse to the folder where you extracted the zip file.
+Secure your Base!
+Craft Ruby Glass for a blast-proof window, or Bleeding Obsidian to invite nightmares.
 
-Step 2: You're left with a choice.
-If you prefer to use Eclipse:
-1. Run the following command: `gradlew genEclipseRuns` (`./gradlew genEclipseRuns` if you are on Mac/Linux)
-2. Open Eclipse, Import > Existing Gradle Project > Select Folder 
-   or run `gradlew eclipse` to generate the project.
+Brighten your Day!
+Ruby Chandeliers, Ruby Lanterns and Ruby Lava Lamp are all stylish decorations to light up your surroundings! Blocks of Molten Ruby also glow!
 
-If you prefer to use IntelliJ:
-1. Open IDEA, and import project.
-2. Select your build.gradle file and have it import.
-3. Run the following command: `gradlew genIntellijRuns` (`./gradlew genIntellijRuns` if you are on Mac/Linux)
-4. Refresh the Gradle Project in IDEA if required.
+Upcoming Features
+1.21.x Port
+Overhauled, Unique Piglin Bartering
+Ruby Laser
+Rubination Enchanting (Better Enchantments with a costly downside!)
+Nether Reactors and Conduit
+Rubinated Aether
+Mod Compatibility
+???
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can 
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+Other Information
+Can I use this mod within my modpack?
+Yes you can! We'd be more than happy for you to do so!
 
-Mapping Names:
-=============================
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license, if you do not agree with it you can change your mapping names to other crowdsourced names in your 
-build.gradle. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/MinecraftForge/MCPConfig/blob/master/Mojang.md
+What versions and launchers is Rubinated Nether compatible with?
+1.20.1 for (Neo)Forge and 1.21.x for Neoforge in the near future. 1.20.1 will be discontinued once the 1.21.x port is achieved.
 
-Additional Resources: 
-=========================
-Community Documentation: https://mcforge.readthedocs.io/en/latest/gettingstarted/  
-LexManos' Install Video: https://www.youtube.com/watch?v=8VEdtQLuLO0  
-Forge Forum: https://forums.minecraftforge.net/  
-Forge Discord: https://discord.gg/UvedJ9m  
+Dependencies?
+This mod requires no dependencies, however it is reccomended to use JEI or other mods as the recipe book is currently partially implented for recipes.
+
+Developers?
+Artienia - Lead Developer
+Juniii - Modeller and Co-developer
+Darksonic - Co-developer
+
+Ruby Armor and Tools Please?
+No, this is never going to be added. This is that that type of mod.
