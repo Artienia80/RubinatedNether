@@ -87,6 +87,7 @@ public class RubinatedNether
         if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS){
             event.accept(ModBlocks.RUBY_GLASS);
             event.accept(ModBlocks.RUBY_GLASS_PANE);
+            event.accept(ModBlocks.RUBY_LAVA_LAMP);
             event.accept(ModBlocks.RUBY_CHANDELIER);
             event.accept(ModBlocks.RUBY_LANTERN);
             event.accept(ModBlocks.FREEZER);

@@ -18,7 +18,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         // blockWithItem(ModBlocks.RUBY_BLOCK);
         // blockWithItem(ModBlocks.BLEEDING_OBSIDIAN);
         // blockWithItem(ModBlocks.RUBY_GLASS);
-        //paneBlock(ModBlocks.RUBY_GLASS_PANE.get(), modLoc("block/ruby_glass"), modLoc("block/ruby_glass_pane_top"));
         paneBlockWithRenderType(ModBlocks.RUBY_GLASS_PANE.get(), modLoc("block/ruby_glass"), modLoc("block/ruby_glass_pane_top"), "minecraft:translucent");
 
         // blockWithItem(ModBlocks.MOLTEN_RUBY_ORE);
