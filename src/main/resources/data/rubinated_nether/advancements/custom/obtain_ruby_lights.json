@@ -1,0 +1,42 @@
+{
+  "parent": "rubinated_nether:custom/obtain_molten_ruby",
+  "criteria": {
+    "obtain_ruby_lights": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "rubinated_nether:ruby_chandelier"
+            ]
+          },
+          {
+            "items": [
+              "rubinated_nether:ruby_lava_lamp"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "rubinated_nether:ruby_lava_lamp"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.obtain_ruby_lights.title"
+    },
+    "description": {
+      "translate": "advancements.rubinated_nether.obtain_ruby_lights.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "obtain_ruby_lights"
+    ]
+  ]
+}

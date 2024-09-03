@@ -1,13 +1,13 @@
 {
-  "parent": "minecraft:nether/obtain_crying_obsidian",
+  "parent": "minecraft:nether/find_bastion",
   "criteria": {
-    "obtain_bleeding_obsidian": {
+    "obtain_rubinated_blackstone": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "rubinated_nether:bleeding_obsidian"
+              "rubinated_nether:rubinated_blackstone"
             ]
           }
         ]
@@ -16,13 +16,13 @@
   },
   "display": {
     "icon": {
-      "item": "rubinated_nether:bleeding_obsidian"
+      "item": "rubinated_nether:rubinated_blackstone"
     },
     "title": {
-      "translate": "advancements.rubinated_nether.obtain_bleeding_obsidian.title"
+      "translate": "advancements.rubinated_nether.obtain_rubinated_blackstone.title"
     },
     "description": {
-      "translate": "advancements.rubinated_nether.obtain_bleeding_obsidian.description"
+      "translate": "advancements.rubinated_nether.obtain_rubinated_blackstone.description"
     },
     "frame": "task",
     "show_toast": true,
@@ -31,7 +31,7 @@
   },
   "requirements": [
     [
-      "obtain_bleeding_obsidian"
+      "obtain_rubinated_blackstone"
     ]
   ]
 }
