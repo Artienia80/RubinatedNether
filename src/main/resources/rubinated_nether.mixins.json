@@ -6,5 +6,8 @@
   "refmap": "rubinated_nether.refmap.json",
   "mixins": [
     "AbstractFurnaceBlockEntityAccessor"
-  ]
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }
