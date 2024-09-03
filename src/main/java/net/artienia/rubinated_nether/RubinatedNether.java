@@ -49,6 +49,7 @@ public class RubinatedNether
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
 
+        //Merge test
 
         modEventBus.addListener(this::commonSetup);
 
