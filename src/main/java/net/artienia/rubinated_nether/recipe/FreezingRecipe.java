@@ -1,5 +1,6 @@
 package net.artienia.rubinated_nether.recipe;
 
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -10,6 +11,11 @@ public class FreezingRecipe extends AbstractCookingRecipe {
     public FreezingRecipe(ResourceLocation id, String group, ModBookCategory category, Ingredient ingredient, ItemStack result, float experience, int freezingTime) {
         super(ModRecipeTypes.FREEZING.get(), id, group, CookingBookCategory.MISC, ingredient, result, experience, freezingTime);
         this.category = category;
+    }
+
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return super.getIngredients();
     }
 
     public ItemStack getResult() {
