@@ -4,7 +4,7 @@
   "cookingtime": 400,
   "experience": 1.0,
   "ingredient": {
-    "item": "minecraft:obsidian"
+    "item": "minecraft:magma_block"
   },
-  "result": "minecraft:magma_block"
+  "result": "minecraft:obsidian"
 }
