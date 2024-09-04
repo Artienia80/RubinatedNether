@@ -41,5 +41,8 @@
 
   "block.rubinated_nether.freezer": "Freezer",
   "menu.rubinated_nether.freezer": "Freezer",
-  "gui.rubinated_nether.recipebook.toggleRecipes.freezable": "Showing Freezable"
+  "gui.rubinated_nether.recipebook.toggleRecipes.freezable": "Showing Freezable",
+
+  "gui.rubinated_nether.jei.freezer": "Freezing",
+  "gui.rubinated_nether.jei.fuel": "Fuels"
 }

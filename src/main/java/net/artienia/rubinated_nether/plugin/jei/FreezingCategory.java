@@ -11,6 +11,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.artienia.rubinated_nether.RubinatedNether;
+import net.artienia.rubinated_nether.block.ModBlocks;
 import net.artienia.rubinated_nether.block.entity.FreezerBlockEntity;
 import net.artienia.rubinated_nether.item.ModItems;
 import net.artienia.rubinated_nether.recipe.FreezingRecipe;
@@ -24,9 +25,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class FreezingCategory implements IRecipeCategory<FreezingRecipe> {
-    public static final ResourceLocation FLAME_TEXTURE = new ResourceLocation(RubinatedNether.MOD_ID, "textures/gui/sprites/lit_progress.png");
-    public static final ResourceLocation ARROW_TEXTURE = new ResourceLocation(RubinatedNether.MOD_ID, "textures/gui/sprites/burn_progress.png");
-
     public static final ResourceLocation UID = new ResourceLocation(RubinatedNether.MOD_ID, "freezing");
     public static final ResourceLocation TEXTURE = new ResourceLocation(RubinatedNether.MOD_ID, "textures/gui/freezer_gui.png");
 
@@ -39,7 +37,7 @@ public class FreezingCategory implements IRecipeCategory<FreezingRecipe> {
 
     public FreezingCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(TEXTURE, 55, 16, 82, 54);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModItems.RUBY.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.FREEZER.get().asItem()));
         this.fuelIndicator = helper.createDrawable(TEXTURE, 176, 0, 14, 13);
         this.animatedProgressArrow = helper.createAnimatedDrawable(helper.createDrawable(TEXTURE, 176, 14, 23, 16), 100, IDrawableAnimated.StartDirection.LEFT, false);
     }
@@ -51,7 +49,7 @@ public class FreezingCategory implements IRecipeCategory<FreezingRecipe> {
 
     @Override
     public Component getTitle() {
-        return Component.translatable("menu."+ RubinatedNether.MOD_ID +".freezer");
+        return Component.translatable("gui."+ RubinatedNether.MOD_ID +".jei.freezer");
     }
 
     @Override
