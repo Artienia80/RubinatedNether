@@ -34,9 +34,9 @@
                   "conditions": [
                     {
                       "chances": [
-                        0.1,
-                        0.14285715,
                         0.25,
+                        0.333,
+                        0.5,
                         1.0
                       ],
                       "condition": "minecraft:table_bonus",
@@ -48,8 +48,8 @@
                       "add": false,
                       "count": {
                         "type": "minecraft:uniform",
-                        "max": 5.0,
-                        "min": 2.0
+                        "max": 9.0,
+                        "min": 6.0
                       },
                       "function": "minecraft:set_count"
                     }

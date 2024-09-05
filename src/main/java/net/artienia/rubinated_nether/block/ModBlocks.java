@@ -80,9 +80,9 @@ public class ModBlocks {
     .strength(2f).requiresCorrectToolForDrops(), UniformInt.of(3, 6)
     ));
     public static final RegistryObject<Block> RUBINATED_BLACKSTONE = registerBlock("rubinated_blackstone", () -> new DropExperienceBlock(BlockBehaviour
-    .Properties.copy(Blocks.BLACKSTONE)
+    .Properties.copy(Blocks.GILDED_BLACKSTONE)
     .strength(2f)
-    .requiresCorrectToolForDrops(), UniformInt.of(3, 6)
+    .requiresCorrectToolForDrops()
     ));
 
     public static final RegistryObject<Block> FREEZER = registerBlock("freezer", () -> new FreezerBlock(BlockBehaviour
