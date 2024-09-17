@@ -69,35 +69,36 @@ public class RubinatedNether
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
-            event.accept(ModItems.RUBY);
-            event.accept(ModItems.MOLTEN_RUBY);
-            event.accept(ModItems.RUBY_SHARD);
+            ModItems.RUBY.get();
+            ModItems.MOLTEN_RUBY.get();
+            ModItems.RUBY_SHARD.get();
         }
 
         if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS){
-            event.accept(ModBlocks.MOLTEN_RUBY_BLOCK);
-            event.accept(ModBlocks.RUBY_BLOCK);
-            event.accept(ModBlocks.BLEEDING_OBSIDIAN);
+            ModBlocks.MOLTEN_RUBY_BLOCK.get();
+            ModBlocks.RUBY_BLOCK.get();
+            ModBlocks.RUBINATED_BLACKSTONE.get();
         }
 
         if(event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS){
-            event.accept(ModBlocks.MOLTEN_RUBY_BLOCK);
-            event.accept(ModBlocks.MOLTEN_RUBY_ORE);
-            event.accept(ModBlocks.NETHER_RUBY_ORE);
-            event.accept(ModBlocks.RUBINATED_BLACKSTONE);
-            event.accept(ModBlocks.BLEEDING_OBSIDIAN);
+            ModBlocks.MOLTEN_RUBY_BLOCK.get();
+            ModBlocks.MOLTEN_RUBY_ORE.get();
+            ModBlocks.NETHER_RUBY_ORE.get();
+            ModBlocks.RUBINATED_BLACKSTONE.get();
+            ModBlocks.BLEEDING_OBSIDIAN.get();
             event.accept(Blocks.FROSTED_ICE);
         }
         if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS){
-            event.accept(ModBlocks.RUBY_GLASS);
-            event.accept(ModBlocks.RUBY_GLASS_PANE);
-            event.accept(ModBlocks.RUBY_LAVA_LAMP);
-            event.accept(ModBlocks.RUBY_CHANDELIER);
-            event.accept(ModBlocks.RUBY_LANTERN);
-            event.accept(ModBlocks.FREEZER);
+            ModBlocks.RUBY_GLASS.get();
+            ModBlocks.RUBY_GLASS_PANE.get();
+            ModBlocks.RUBY_LAVA_LAMP.get();
+            ModBlocks.RUBY_CHANDELIER.get();
+            ModBlocks.RUBY_LANTERN.get();
+            ModBlocks.FREEZER.get();
         }
         if(event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS){
-            event.accept(ModBlocks.RUBY_LASER);
+            ModBlocks.RUBY_LASER.get();
+
         }
 
     }
