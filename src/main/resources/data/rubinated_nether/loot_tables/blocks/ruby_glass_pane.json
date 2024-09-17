@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "rubinated_nether:ruby_glass_pane"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "rubinated_nether:blocks/ruby_glass_pane"
+}

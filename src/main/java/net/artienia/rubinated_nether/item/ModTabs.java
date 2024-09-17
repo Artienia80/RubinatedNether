@@ -20,19 +20,29 @@ public class ModTabs {
                         event.accept(ModItems.RUBY.get());
                         event.accept(ModItems.MOLTEN_RUBY.get());
                         event.accept(ModItems.RUBY_SHARD.get());
+
+                        event.accept(ModBlocks.NETHER_RUBY_ORE.get());
+                        event.accept(ModBlocks.MOLTEN_RUBY_ORE.get());
+                        event.accept(ModBlocks.RUBINATED_BLACKSTONE.get());
+
                         event.accept(ModBlocks.RUBY_BLOCK.get());
                         event.accept(ModBlocks.MOLTEN_RUBY_BLOCK.get());
-                        event.accept(ModBlocks.MOLTEN_RUBY_ORE.get());
-                        event.accept(ModBlocks.NETHER_RUBY_ORE.get());
-                        event.accept(ModBlocks.RUBINATED_BLACKSTONE.get());
+
                         event.accept(ModBlocks.BLEEDING_OBSIDIAN.get());
-                        event.accept(ModItems.FROSTED_ICE.get());
+
                         event.accept(ModBlocks.RUBY_GLASS.get());
                         event.accept(ModBlocks.RUBY_GLASS_PANE.get());
-                        event.accept(ModBlocks.RUBY_LAVA_LAMP.get());
-                        event.accept(ModBlocks.RUBY_CHANDELIER.get());
+                        event.accept(ModBlocks.MOLTEN_RUBY_GLASS.get());
+                        event.accept(ModBlocks.MOLTEN_RUBY_GLASS_PANE.get());
+
+
                         event.accept(ModBlocks.RUBY_LANTERN.get());
+                        event.accept(ModBlocks.RUBY_CHANDELIER.get());
+                        event.accept(ModBlocks.RUBY_LAVA_LAMP.get());
+
                         event.accept(ModBlocks.FREEZER.get());
+                        event.accept(ModItems.FROSTED_ICE.get());
+
                         event.accept(ModBlocks.RUBY_LASER.get());
                             })).build());
 

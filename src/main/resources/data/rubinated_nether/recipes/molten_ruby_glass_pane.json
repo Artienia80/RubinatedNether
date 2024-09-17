@@ -3,20 +3,15 @@
   "category": "building",
   "pattern": [
     "###",
-    "#R#",
     "###"
   ],
   "key": {
     "#": {
-      "item": "minecraft:glass"
-    },
-    "R": {
-      "item": "rubinated_nether:ruby"
+      "item": "rubinated_nether:molten_ruby_glass"
     }
   },
-
   "result": {
-    "item": "rubinated_nether:ruby_glass",
-    "count": 8
+    "item": "rubinated_nether:molten_ruby_glass_pane",
+    "count": 16
   }
 }

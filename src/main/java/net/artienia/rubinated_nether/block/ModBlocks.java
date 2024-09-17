@@ -40,6 +40,7 @@ public class ModBlocks {
     .mapColor(MapColor.FIRE)
     .pushReaction(PushReaction.BLOCK)
     ));
+
     public static final RegistryObject<StainedGlassBlock> RUBY_GLASS = registerBlock("ruby_glass", () -> new StainedGlassBlock(DyeColor.RED, BlockBehaviour
     .Properties.copy(Blocks.GLASS)
     .mapColor(MapColor.FIRE)
@@ -55,6 +56,25 @@ public class ModBlocks {
     .isRedstoneConductor(ModBlocks::never)
     .isViewBlocking(ModBlocks::never)
     ));
+
+    public static final RegistryObject<StainedGlassBlock> MOLTEN_RUBY_GLASS = registerBlock("molten_ruby_glass", () -> new StainedGlassBlock(DyeColor.ORANGE, BlockBehaviour
+            .Properties.copy(Blocks.GLASS)
+            .mapColor(MapColor.FIRE)
+            .explosionResistance(100F)
+            .noOcclusion()
+            .isRedstoneConductor(ModBlocks::never)
+            .lightLevel((p_220871_) -> {return 10;})
+    ));
+    public static final RegistryObject<StainedGlassPaneBlock> MOLTEN_RUBY_GLASS_PANE = registerBlock("molten_ruby_glass_pane", () -> new StainedGlassPaneBlock(DyeColor.ORANGE, Block
+            .Properties.copy(Blocks.GLASS)
+            .mapColor(MapColor.FIRE)
+            .explosionResistance(100F)
+            .noOcclusion()
+            .isRedstoneConductor(ModBlocks::never)
+            .isViewBlocking(ModBlocks::never)
+            .lightLevel((p_220871_) -> {return 10;})
+    ));
+
 
     public static final RegistryObject<Block> RUBY_CHANDELIER = registerBlock("ruby_chandelier", () -> new Chandelier(BlockBehaviour
     .Properties.copy(Blocks.COPPER_BLOCK)
