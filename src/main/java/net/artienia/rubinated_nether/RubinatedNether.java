@@ -7,6 +7,7 @@ import net.artienia.rubinated_nether.block.entity.FreezerBlockEntity;
 import net.artienia.rubinated_nether.block.entity.ModBlockEntities;
 import net.artienia.rubinated_nether.block.entity.ModBlockEntityTypes;
 import net.artienia.rubinated_nether.item.ModItems;
+import net.artienia.rubinated_nether.item.ModTabs;
 import net.artienia.rubinated_nether.recipe.ModRecipeSerializers;
 import net.artienia.rubinated_nether.recipe.ModRecipeTypes;
 import net.artienia.rubinated_nether.screen.FreezerScreen;
@@ -45,62 +46,21 @@ public class RubinatedNether
 
         ModItems.register(modEventBus);
         ModBlocks.register((modEventBus));
+        ModTabs.init(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
         ModBlockEntityTypes.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
 
-
         modEventBus.addListener(this::commonSetup);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-
-        // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         this.registerFuels();
-    }
-
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
-        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
-            ModItems.RUBY.get();
-            ModItems.MOLTEN_RUBY.get();
-            ModItems.RUBY_SHARD.get();
-        }
-
-        if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS){
-            ModBlocks.MOLTEN_RUBY_BLOCK.get();
-            ModBlocks.RUBY_BLOCK.get();
-            ModBlocks.RUBINATED_BLACKSTONE.get();
-        }
-
-        if(event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS){
-            ModBlocks.MOLTEN_RUBY_BLOCK.get();
-            ModBlocks.MOLTEN_RUBY_ORE.get();
-            ModBlocks.NETHER_RUBY_ORE.get();
-            ModBlocks.RUBINATED_BLACKSTONE.get();
-            ModBlocks.BLEEDING_OBSIDIAN.get();
-            event.accept(Blocks.FROSTED_ICE);
-        }
-        if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS){
-            ModBlocks.RUBY_GLASS.get();
-            ModBlocks.RUBY_GLASS_PANE.get();
-            ModBlocks.RUBY_LAVA_LAMP.get();
-            ModBlocks.RUBY_CHANDELIER.get();
-            ModBlocks.RUBY_LANTERN.get();
-            ModBlocks.FREEZER.get();
-        }
-        if(event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS){
-            ModBlocks.RUBY_LASER.get();
-
-        }
-
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

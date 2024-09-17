@@ -12,17 +12,13 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.ModBlocks;
-import net.artienia.rubinated_nether.block.entity.FreezerBlockEntity;
-import net.artienia.rubinated_nether.item.ModItems;
 import net.artienia.rubinated_nether.recipe.FreezingRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 
 public class FreezingCategory implements IRecipeCategory<FreezingRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(RubinatedNether.MOD_ID, "freezing");
