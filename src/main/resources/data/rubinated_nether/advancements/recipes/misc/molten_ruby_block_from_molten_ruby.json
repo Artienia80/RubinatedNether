@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:raw_ruby_block_from_raw_ruby"
+        "recipe": "rubinated_nether:molten_ruby_block_from_molten_ruby"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:raw_ruby_block_from_raw_ruby"
+      "rubinated_nether:molten_ruby_block_from_molten_ruby"
     ]
   }
 }
