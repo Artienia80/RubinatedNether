@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_nether",
+  "features": "rubinated_nether:molten_ruby_ore_placed",
+  "step": "vegetal_decoration"
+}

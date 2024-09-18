@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,lit=false": {
+      "model": "rubinated_nether:block/freezer",
+      "y": 90
+    },
+    "facing=east,lit=true": {
+      "model": "rubinated_nether:block/freezer_on",
+      "y": 90
+    },
+    "facing=north,lit=false": {
+      "model": "rubinated_nether:block/freezer"
+    },
+    "facing=north,lit=true": {
+      "model": "rubinated_nether:block/freezer_on"
+    },
+    "facing=south,lit=false": {
+      "model": "rubinated_nether:block/freezer",
+      "y": 180
+    },
+    "facing=south,lit=true": {
+      "model": "rubinated_nether:block/freezer_on",
+      "y": 180
+    },
+    "facing=west,lit=false": {
+      "model": "rubinated_nether:block/freezer",
+      "y": 270
+    },
+    "facing=west,lit=true": {
+      "model": "rubinated_nether:block/freezer_on",
+      "y": 270
+    }
+  }
+}

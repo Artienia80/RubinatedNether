@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "AAA",
+    "CBC",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:copper_ingot"
+    },
+    "B": {
+      "item": "rubinated_nether:molten_ruby"
+    },
+    "C": {
+      "item": "rubinated_nether:ruby_glass_pane"
+    }
+  },
+
+  "result": {
+    "item": "rubinated_nether:ruby_lava_lamp",
+    "count": 6
+  }
+}

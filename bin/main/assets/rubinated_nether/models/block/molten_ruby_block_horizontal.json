@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "rubinated_nether:block/molten_ruby_block_top",
+    "side": "rubinated_nether:block/molten_ruby_block_side"
+  }
+}

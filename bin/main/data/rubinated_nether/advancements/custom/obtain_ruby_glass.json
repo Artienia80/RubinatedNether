@@ -1,0 +1,37 @@
+{
+  "parent": "rubinated_nether:custom/obtain_ruby",
+  "criteria": {
+    "obtain_ruby_glass": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "rubinated_nether:ruby_glass"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "rubinated_nether:ruby_glass"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.obtain_ruby_glass.title"
+    },
+    "description": {
+      "translate": "advancements.rubinated_nether.obtain_ruby_glass.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "obtain_ruby_glass"
+    ]
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:nether/obtain_crying_obsidian",
+  "criteria": {
+    "obtain_bleeding_obsidian": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "rubinated_nether:bleeding_obsidian"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "rubinated_nether:bleeding_obsidian"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.obtain_bleeding_obsidian.title"
+    },
+    "description": {
+      "translate": "advancements.rubinated_nether.obtain_bleeding_obsidian.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "obtain_bleeding_obsidian"
+    ]
+  ]
+}
