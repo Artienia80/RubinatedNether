@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "#M#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glass"
+    },
+    "M": {
+      "item": "rubinated_nether:molten_ruby"
+    }
+  },
+
+  "result": {
+    "item": "rubinated_nether:molten_ruby_glass",
+    "count": 8
+  }
+}

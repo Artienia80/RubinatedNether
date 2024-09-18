@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "rubinated_nether:ruby_lantern"
+    },
+    "B": {
+      "item": "minecraft:copper_block"
+    }
+  },
+
+  "result": {
+    "item": "rubinated_nether:ruby_chandelier"
+  }
+}

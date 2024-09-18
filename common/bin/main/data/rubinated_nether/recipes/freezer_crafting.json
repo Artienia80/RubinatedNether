@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "# #",
+    "BBB"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:copper_block"
+    },
+    "B": {
+      "item": "minecraft:basalt"
+    }
+  },
+
+  "result": {
+    "item": "rubinated_nether:freezer"
+  }
+}

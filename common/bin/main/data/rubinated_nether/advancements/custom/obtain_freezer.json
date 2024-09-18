@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:nether/root",
+  "criteria": {
+    "obtain_freezer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "rubinated_nether:freezer"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "rubinated_nether:freezer"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.obtain_freezer.title"
+    },
+    "description": {
+      "translate": "advancements.rubinated_nether.obtain_freezer.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "obtain_freezer"
+    ]
+  ]
+}

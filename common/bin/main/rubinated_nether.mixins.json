@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "net.artienia.rubinated_nether.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "mixins": [
+    "AbstractFurnaceBlockEntityAccessor",
+    "PiglinAiMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

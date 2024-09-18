@@ -1,0 +1,27 @@
+{
+  "feature": "rubinated_nether:nether_ruby_ore",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 1
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:trapezoid",
+        "max_inclusive": {
+          "below_top": 0
+        },
+        "min_inclusive": {
+          "below_top": 30
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

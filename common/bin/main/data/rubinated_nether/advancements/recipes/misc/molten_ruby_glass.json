@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_glass": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:glass"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_molten_ruby": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "rubinated_nether:molten_ruby"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "rubinated_nether:molten_ruby_glass"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_glass",
+      "has_molten_ruby"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "rubinated_nether:molten_ruby_glass"
+    ]
+  }
+}

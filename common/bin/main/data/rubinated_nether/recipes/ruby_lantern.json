@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "AAA",
+    "ARA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:copper_ingot"
+    },
+    "R": {
+      "item": "rubinated_nether:molten_ruby"
+    }
+  },
+
+  "result": {
+    "item": "rubinated_nether:ruby_lantern",
+    "count": 8
+  }
+}

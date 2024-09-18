@@ -1,0 +1,37 @@
+{
+  "parent": "rubinated_nether:custom/obtain_freezer",
+  "criteria": {
+    "obtain_frosted_ice": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "rubinated_nether:frosted_ice"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "rubinated_nether:frosted_ice"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.obtain_frosted_ice.title"
+    },
+    "description": {
+      "translate": "advancements.rubinated_nether.obtain_frosted_ice.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "obtain_frosted_ice"
+    ]
+  ]
+}

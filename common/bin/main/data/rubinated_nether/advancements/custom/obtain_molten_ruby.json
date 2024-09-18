@@ -1,0 +1,37 @@
+{
+  "parent": "rubinated_nether:custom/obtain_freezer",
+  "criteria": {
+    "obtain_molten_ruby": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "rubinated_nether:molten_ruby"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "rubinated_nether:molten_ruby"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.obtain_molten_ruby.title"
+    },
+    "description": {
+      "translate": "advancements.rubinated_nether.obtain_molten_ruby.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "obtain_molten_ruby"
+    ]
+  ]
+}

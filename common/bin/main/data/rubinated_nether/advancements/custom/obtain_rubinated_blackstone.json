@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:nether/find_bastion",
+  "criteria": {
+    "obtain_rubinated_blackstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "rubinated_nether:rubinated_blackstone"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "rubinated_nether:rubinated_blackstone"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.obtain_rubinated_blackstone.title"
+    },
+    "description": {
+      "translate": "advancements.rubinated_nether.obtain_rubinated_blackstone.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "obtain_rubinated_blackstone"
+    ]
+  ]
+}
