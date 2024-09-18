@@ -55,8 +55,8 @@ public class Chandelier extends Block {
         BlockState blockstate = pLevel.getBlockState(blockpos$mutableblockpos);
         FallingBlockEntity fallingblockentity = FallingBlockEntity.fall(pLevel, blockpos$mutableblockpos, blockstate);
         int i = Math.max(1 + pPos.getY() - blockpos$mutableblockpos.getY(), 6);
-        float f = 1.0F * (float)i;
-        fallingblockentity.setHurtsEntities(f, 40);
+        float f = 0.22F * (float)i;
+        fallingblockentity.setHurtsEntities(f, 500);
     }
 }
 
