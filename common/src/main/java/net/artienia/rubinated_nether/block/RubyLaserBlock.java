@@ -1,10 +1,12 @@
 package net.artienia.rubinated_nether.block;
 
 import net.artienia.rubinated_nether.block.entity.RubyLaserBlockEntity;
+import net.artienia.rubinated_nether.utils.ShapeUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -17,10 +19,21 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+import java.util.stream.Stream;
 
 @SuppressWarnings("deprecation")
 public class RubyLaserBlock extends DirectionalBlock implements EntityBlock {
+
+    public static final Map<Direction, VoxelShape> SHAPES = ShapeUtils.allDirections(Shapes.or(
+        box(0, 0, 0, 16, 6, 16),
+        box(2, 0, 2, 14, 16, 14)
+    ));
 
     public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
 
@@ -30,6 +43,17 @@ public class RubyLaserBlock extends DirectionalBlock implements EntityBlock {
             .setValue(FACING, Direction.NORTH)
             .setValue(POWER, 0)
         );
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPES.get(state.getValue(FACING));
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
     @Override
