@@ -18,7 +18,7 @@ public class RubyLensOverlay {
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
         if(player != null && minecraft.options.getCameraType().isFirstPerson() && player.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.RUBY_LENS.get())) {
-            Window window = Minecraft.getInstance().getWindow();
+            Window window = minecraft.getWindow();
             RenderSystem.enableBlend();
             graphics.blit(RUBY_OVERLAY, 0, 0, -150, 0, 0, window.getWidth(), window.getHeight(), 512, 256);
         }
