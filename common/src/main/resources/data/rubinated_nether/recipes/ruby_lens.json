@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "RCR",
+    "C C",
+    "   "
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "R": {
+      "item": "rubinated_nether:ruby_glass_pane"
+    }
+  },
+
+  "result": {
+    "item": "rubinated_nether:ruby_lens",
+    "count": 1
+  }
+}

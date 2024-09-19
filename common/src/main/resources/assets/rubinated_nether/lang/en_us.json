@@ -2,6 +2,8 @@
   "item.rubinated_nether.ruby": "Ruby",
   "item.rubinated_nether.molten_ruby": "Molten Ruby",
   "item.rubinated_nether.ruby_shard": "Ruby Shard",
+  "item.rubinated_nether.ruby_lens": "Ruby Lens",
+
 
 
   "block.rubinated_nether.ruby_block": "Block of Ruby",
@@ -37,6 +39,10 @@
   "advancements.rubinated_nether.obtain_ruby_glass.description": "Craft the blast-resistant Ruby Glass",
   "advancements.rubinated_nether.obtain_frosted_ice.title": "Re-Obtainable",
   "advancements.rubinated_nether.obtain_frosted_ice.description": "Freeze a Snow Block into Frosted Ice",
+  "advancements.rubinated_nether.wear_lens.title": "Rose Colored Glasses",
+  "advancements.rubinated_nether.wear_lens.description": "Equip a pair of Ruby Lenses to see laser beams.",
+  "advancements.rubinated_nether.obtain_ruby_laser.title": "Tag, you're it!",
+  "advancements.rubinated_nether.obtain_ruby_laser.description": "Craft the Ruby Laser",
 
   "death.attack.fallingBlock": "%1$s was embraced by a falling chandelier",
   "death.attack.fallingBlock.player": "%1$s was embraced by a falling chandelier whilst fighting %2$s",
