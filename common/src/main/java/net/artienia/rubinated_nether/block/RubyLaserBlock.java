@@ -1,24 +1,27 @@
 package net.artienia.rubinated_nether.block;
 
 import net.artienia.rubinated_nether.block.entity.RubyLaserBlockEntity;
+import net.artienia.rubinated_nether.item.ModItems;
 import net.artienia.rubinated_nether.utils.ShapeUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.ObserverBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -61,6 +64,21 @@ public class RubyLaserBlock extends DirectionalBlock implements EntityBlock {
         BlockEntity be = level.getBlockEntity(pos);
         if(!(be instanceof RubyLaserBlockEntity laser)) return;
         level.setBlockAndUpdate(pos, state.setValue(POWER, laser.getPowerLevel()));
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if(!(level.getBlockEntity(pos) instanceof RubyLaserBlockEntity blockEntity)) return InteractionResult.PASS;
+        ItemStack stack = player.getItemInHand(hand);
+        if(stack.is(Blocks.GLASS.asItem())) {
+            blockEntity.setVisible(true);
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        } else if(stack.is(ModBlocks.RUBY_GLASS_PANE.get().asItem())) {
+            blockEntity.setVisible(false);
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        return InteractionResult.PASS;
     }
 
     @Override

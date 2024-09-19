@@ -2,9 +2,12 @@ package net.artienia.rubinated_nether.block.entity;
 
 import net.artienia.rubinated_nether.block.ModBlocks;
 import net.artienia.rubinated_nether.block.RubyLaserBlock;
+import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -16,9 +19,11 @@ import java.util.Map;
 public class RubyLaserBlockEntity extends BlockEntity {
 
     private static final Map<Direction, AABB> FACE_RANGES = new EnumMap<>(Direction.class);
+    private static final String VISIBLE_KEY = "alwaysVisible";
 
     private int powerLevel;
     private int blockRange = -1;
+    private boolean visible = false;
 
     static {
         for(Direction direction : Direction.values()) {
@@ -59,12 +64,39 @@ public class RubyLaserBlockEntity extends BlockEntity {
 
         int blockDistance = Mth.clamp(Mth.floor(lastDistance.getValue()), 0, 15);
         powerLevel = 15 - blockDistance;
-        if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
+        if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER) && (!level.isClientSide)) {
             level.scheduleTick(getBlockPos(), ModBlocks.RUBY_LASER.get(), 2);
         }
     }
 
     public int getPowerLevel() {
         return powerLevel;
+    }
+
+    public int getBlockRange() {
+        return (blockRange == -1) ? 15 : Mth.clamp(blockRange, 0, 15);
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+        setChanged();
+
+        if(level != null && !level.isClientSide) {
+            // TODO: Sync to client if necessary
+        }
+    }
+
+    public boolean alwaysVisible() {
+        return level.getBlockState(getBlockPos().relative(getBlockState().getValue(RubyLaserBlock.FACING))).is(Blocks.GLASS);
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        tag.putBoolean(VISIBLE_KEY, visible);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        visible = tag.getBoolean(VISIBLE_KEY);
     }
 }
