@@ -18,7 +18,7 @@ public class RubyLaserBlockEntity extends BlockEntity {
     private static final Map<Direction, AABB> FACE_RANGES = new EnumMap<>(Direction.class);
 
     private int powerLevel;
-    private int blockRange;
+    private int blockRange = -1;
 
     static {
         for(Direction direction : Direction.values()) {
@@ -37,8 +37,9 @@ public class RubyLaserBlockEntity extends BlockEntity {
         Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
 
         // Only re check blocks ever 8th game tick
-        if(level.getGameTime() % 8 == 0) {
+        if(blockRange == -1 || level.getGameTime() % 8 == 0) {
             BlockPos.MutableBlockPos mutableBlockPos = worldPosition.mutable();
+            blockRange = 0;
             for (int i = 0; i < 15; i++) {
                 mutableBlockPos.move(facing);
                 if (level.getBlockState(mutableBlockPos).canOcclude()) break;
