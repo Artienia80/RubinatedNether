@@ -42,8 +42,9 @@ public class ModTabs {
                         event.accept(ModBlocks.FREEZER.get());
                         event.accept(ModItems.FROSTED_ICE.get());
 
+                        event.accept(ModItems.RUBY_LENS.get());
                         event.accept(ModBlocks.RUBY_LASER.get());
-                            })).build());
+                    })).build());
 
     public static void init() {
         TABS.register();
