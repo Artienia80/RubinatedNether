@@ -8,7 +8,7 @@ modId = "${mod_id}"
 version = "${version}"
 displayName = "${name}"
 logoFile = "assets/rubinated_nether/icon.png"
-authors = "Artienia, Juniper, Darksonic300"
+authors = "Artienia, Juniper, Darksonic300, Serine"
 description = '''
 ${description}
 '''
