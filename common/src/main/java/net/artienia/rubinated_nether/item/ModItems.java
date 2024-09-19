@@ -4,6 +4,7 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
@@ -26,7 +27,7 @@ public class ModItems {
             () -> new BlockItem(Blocks.FROSTED_ICE, new Item.Properties()));
 
     public static final RegistrySupplier<Item> RUBY_LENS = ITEMS.register("ruby_lens",
-            () -> new RubyLens(new Item.Properties().stacksTo(1)));
+            () -> new RubyLens(RubyLensMaterial.RUBY_LENS, ArmorItem.Type.HELMET, new Item.Properties().stacksTo(1)));
 
     public static void register() {
         ITEMS.register();
