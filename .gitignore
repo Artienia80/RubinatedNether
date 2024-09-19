@@ -119,3 +119,8 @@ run/
 /common/src/generated/.cache/
 /src/
 /descriptions/
+
+# Bin folders
+/forge/bin
+/common/bin
+/fabric/bin
