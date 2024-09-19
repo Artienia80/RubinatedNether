@@ -23,7 +23,8 @@
     ]
   },
   "mixins": [
-    "rubinated_nether.mixins.json"
+    "rubinated_nether.mixins.json",
+    "rubinated_nether.fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.16.0",

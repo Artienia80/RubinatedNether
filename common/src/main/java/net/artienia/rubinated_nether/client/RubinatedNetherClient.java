@@ -18,7 +18,5 @@ public class RubinatedNetherClient {
         MenuRegistry.registerScreenFactory(ModMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
         // Register ruby laser renderer
         BlockEntityRendererRegistry.register(ModBlockEntityTypes.RUBY_LASER.get(), RubyLaserRenderer::new);
-        // Register HUD renderer
-        ClientGuiEvent.RENDER_HUD.register(RubyLensOverlay::renderHud);
     }
 }
