@@ -1,22 +1,15 @@
 package net.artienia.rubinated_nether.block.entity;
 
-import dev.architectury.platform.Platform;
+import net.artienia.rubinated_nether.ModTags;
 import net.artienia.rubinated_nether.block.ModBlocks;
 import net.artienia.rubinated_nether.block.RubyLaserBlock;
 import net.artienia.rubinated_nether.platform.PlatformUtils;
-import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
-import net.minecraft.world.level.block.BeaconBlock;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.StainedGlassBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -35,6 +28,7 @@ public class RubyLaserBlockEntity extends BlockEntity {
     private boolean visible = false;
     private float[] color;
     private boolean colored = false;
+    private boolean silly = false;
 
     static {
         for(Direction direction : Direction.values()) {
@@ -62,13 +56,18 @@ public class RubyLaserBlockEntity extends BlockEntity {
                 blockRange = i;
             }
 
+            // Ignore what IDEA says its stupid
             BlockState state = level.getBlockState(worldPosition.relative(facing));
-            visible = state.is(PlatformUtils.getGlassTag());
-            if(visible && state.getBlock() instanceof BeaconBeamBlock) {
+            silly = state.is(ModTags.Blocks.RUBY_GLASS);
+            visible = silly || state.is(PlatformUtils.getGlassTag());
+
+            if(visible && !silly && state.getBlock() instanceof BeaconBeamBlock) {
                 DyeColor dye = ((BeaconBeamBlock) state.getBlock()).getColor();
                 color = dye.getTextureDiffuseColors();
                 colored = true;
-            } else colored = false;
+            } else {
+                colored = false;
+            }
         }
 
         // Further processing only needs to be done server-side
@@ -110,6 +109,10 @@ public class RubyLaserBlockEntity extends BlockEntity {
 
     public boolean isColored() {
         return colored;
+    }
+
+    public boolean isSilly() {
+        return silly;
     }
 
     public float[] getColor() {

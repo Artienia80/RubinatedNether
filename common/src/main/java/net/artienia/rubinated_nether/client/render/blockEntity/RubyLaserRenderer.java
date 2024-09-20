@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
@@ -59,8 +60,16 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
             poseStack.translate(-0.5f, -0.5f, -0.5f);
 
             int i = blockEntity.getBlockRange() + 2;
-            boolean colored = blockEntity.isColored();
-            float[] color = colored ? blockEntity.getColor() : NO_COLOR;
+            boolean colored = blockEntity.isColored() || blockEntity.isSilly();
+            float[] color;
+
+            if(blockEntity.isColored()) {
+                color = blockEntity.getColor();
+            } else if(blockEntity.isSilly()) {
+                float hue = lerpedTime % 20f / 20f;
+                int col = Mth.hsvToRgb(hue, .8f, 1f);
+                color = new float[]{FastColor.ARGB32.red(col), FastColor.ARGB32.green(col) , FastColor.ARGB32.blue(col)};
+            } else color = NO_COLOR;
 
             // Use fallback render type if shaders in use because beacon beam broken
             VertexConsumer consumer = buffer.getBuffer(getRenderType(colored));
