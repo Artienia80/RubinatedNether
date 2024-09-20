@@ -1,7 +1,5 @@
-package net.artienia.rubinated_nether.client.hud;
+package net.artienia.rubinated_nether.client.render;
 
-import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.item.ModItems;
 import net.minecraft.client.Minecraft;

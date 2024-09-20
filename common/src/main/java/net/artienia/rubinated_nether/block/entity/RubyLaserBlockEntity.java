@@ -69,6 +69,11 @@ public class RubyLaserBlockEntity extends BlockEntity {
         }
     }
 
+    // This overrides a forge thing
+    public AABB getRenderBoundingBox() {
+        return FACE_RANGES.get(getBlockState().getValue(RubyLaserBlock.FACING)).move(worldPosition);
+    }
+
     public int getPowerLevel() {
         return powerLevel;
     }

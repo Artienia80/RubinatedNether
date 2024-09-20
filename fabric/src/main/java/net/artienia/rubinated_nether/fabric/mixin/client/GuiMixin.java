@@ -1,11 +1,9 @@
 package net.artienia.rubinated_nether.fabric.mixin.client;
 
-import net.artienia.rubinated_nether.client.hud.RubyLensOverlay;
+import net.artienia.rubinated_nether.client.render.RubyLensOverlay;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;

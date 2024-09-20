@@ -2,12 +2,9 @@ package net.artienia.rubinated_nether.forge.client;
 
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.client.RubinatedNetherClient;
-import net.artienia.rubinated_nether.client.hud.RubyLensOverlay;
-import net.minecraft.client.gui.GuiGraphics;
+import net.artienia.rubinated_nether.client.render.RubyLensOverlay;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

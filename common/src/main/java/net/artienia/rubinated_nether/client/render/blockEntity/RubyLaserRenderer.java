@@ -1,4 +1,4 @@
-package net.artienia.rubinated_nether.client.blockEntityRenderers;
+package net.artienia.rubinated_nether.client.render.blockEntity;
 
 import com.mojang.blaze3d.vertex.*;
 import net.artienia.rubinated_nether.RubinatedNether;
@@ -56,10 +56,10 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 
             int i = blockEntity.getBlockRange() + 2;
             VertexConsumer consumer = buffer.getBuffer(RenderType.beaconBeam(LASER_TEXTURE, true));
-            renderFace(poseStack, consumer, .4f, 0, .6f, .6f, i, .6f, 1f, 1f, 1f, lerpedTime, Direction.NORTH);
-            renderFace(poseStack, consumer, .6f, 0, .4f, .4f, i, .4f, 1f, 1f, 1f, lerpedTime, Direction.SOUTH);
-            renderFace(poseStack, consumer, .4f, 0, .4f, .4f, i, .6f, 1f, 1f, 1f, lerpedTime, Direction.EAST);
-            renderFace(poseStack, consumer, .6f, 0, .6f, .6f, i, .4f, 1f, 1f, 1f, lerpedTime, Direction.WEST);
+            renderFace(poseStack, consumer, .4f, 1, .6f, .6f, i, .6f, 1f, 1f, 1f, lerpedTime, Direction.NORTH);
+            renderFace(poseStack, consumer, .6f, 1, .4f, .4f, i, .4f, 1f, 1f, 1f, lerpedTime, Direction.SOUTH);
+            renderFace(poseStack, consumer, .4f, 1, .4f, .4f, i, .6f, 1f, 1f, 1f, lerpedTime, Direction.EAST);
+            renderFace(poseStack, consumer, .6f, 1, .6f, .6f, i, .4f, 1f, 1f, 1f, lerpedTime, Direction.WEST);
             poseStack.popPose();
         }
 
