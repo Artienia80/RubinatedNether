@@ -11,15 +11,9 @@ import java.util.function.BooleanSupplier;
 @Environment(EnvType.CLIENT)
 public class ShaderHelper {
 
-    private static BooleanSupplier shaderPackInUse;
+    private static final BooleanSupplier shaderPackInUse;
 
-    public static boolean isShaderPackInUse() {
-        if(shaderPackInUse == null) init();
-        return shaderPackInUse.getAsBoolean();
-    }
-
-    @SuppressWarnings("deprecation")
-    private static void init() {
+    static {
         if (Platform.isModLoaded("iris") || Platform.isModLoaded("oculus")) {
             shaderPackInUse = () -> IrisApi.getInstance().isShaderPackInUse();
         } else if (Package.getPackage("net.optifine") != null) {
@@ -27,6 +21,10 @@ public class ShaderHelper {
         } else {
             shaderPackInUse = () -> false;
         }
+    }
+
+    public static boolean isShaderPackInUse() {
+        return shaderPackInUse.getAsBoolean();
     }
 
     /**
