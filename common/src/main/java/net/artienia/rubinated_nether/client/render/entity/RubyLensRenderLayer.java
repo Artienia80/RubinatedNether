@@ -1,6 +1,7 @@
 package net.artienia.rubinated_nether.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.item.ModItems;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
@@ -15,7 +16,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class RubyLensRenderLayer<T extends LivingEntity, M extends EntityModel<T> & HeadedModel> extends RenderLayer<T, M> {
 
-    public static final ResourceLocation RUBY_LENS_TEXTURE = new ResourceLocation("textures/item/ruby_lens.png");
+    public static final ResourceLocation RUBY_LENS_TEXTURE = RubinatedNether.id("textures/item/ruby_lens.png");
 
     private final M baseModel;
     private final RubyLensModel<T> lensModel;
