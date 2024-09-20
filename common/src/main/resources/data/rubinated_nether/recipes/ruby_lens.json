@@ -11,7 +11,7 @@
       "item": "minecraft:copper_ingot"
     },
     "R": {
-      "item": "rubinated_nether:ruby_glass_pane"
+      "tag": "rubinated_nether:ruby_glass_pane_tag"
     }
   },
 
