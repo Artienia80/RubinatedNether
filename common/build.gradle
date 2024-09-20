@@ -36,4 +36,6 @@ dependencies {
     // MixinExtras
     compileOnly annotationProcessor("io.github.llamalad7:mixinextras-common:${rootProject.mixin_extras_version}")
 
+    // Iris Shaders (only needed for shader test, api is identical to oculus)
+    modCompileOnly("maven.modrinth:iris:1.7.2+1.20.1")
 }

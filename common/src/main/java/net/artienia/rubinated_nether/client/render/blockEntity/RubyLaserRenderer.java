@@ -5,6 +5,7 @@ import dev.architectury.platform.Platform;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.RubyLaserBlock;
 import net.artienia.rubinated_nether.block.entity.RubyLaserBlockEntity;
+import net.artienia.rubinated_nether.client.render.ShaderHelper;
 import net.artienia.rubinated_nether.item.ModItems;
 import net.artienia.rubinated_nether.platform.PlatformUtils;
 import net.minecraft.client.Minecraft;
@@ -58,7 +59,11 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
             poseStack.translate(-0.5f, -0.5f, -0.5f);
 
             int i = blockEntity.getBlockRange() + 2;
-            VertexConsumer consumer = buffer.getBuffer(RenderType.beaconBeam(LASER_TEXTURE, true));
+
+            // Use fallback render type if shaders in use because beacon beam broken
+            RenderType renderType = ShaderHelper.isShaderPackInUse() ? RenderType.entityTranslucentCull(LASER_TEXTURE) : RenderType.beaconBeam(LASER_TEXTURE, true);
+            VertexConsumer consumer = buffer.getBuffer(renderType);
+
             renderFace(poseStack, consumer, .4f, 1, .6f, .6f, i, .6f, 1f, 1f, 1f, lerpedTime, Direction.NORTH);
             renderFace(poseStack, consumer, .6f, 1, .4f, .4f, i, .4f, 1f, 1f, 1f, lerpedTime, Direction.SOUTH);
             renderFace(poseStack, consumer, .4f, 1, .4f, .4f, i, .6f, 1f, 1f, 1f, lerpedTime, Direction.EAST);

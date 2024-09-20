@@ -60,6 +60,10 @@ subprojects {
             name = "Ladysnake"
             url = "https://maven.ladysnake.org/releases"
         }
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+        }
     }
 
     loom {
