@@ -15,8 +15,8 @@ public enum RubyLensMaterial implements ArmorMaterial {
 		map.put(ArmorItem.Type.BOOTS, 2);
 		map.put(ArmorItem.Type.LEGGINGS, 5);
 		map.put(ArmorItem.Type.CHESTPLATE, 6);
-		map.put(ArmorItem.Type.HELMET, 2);
-	}), 9, SoundEvents.ARMOR_EQUIP_IRON, 0.0F, () -> Ingredient.of(ModItems.RUBY.get()));
+		map.put(ArmorItem.Type.HELMET, 1);
+	}), 30, SoundEvents.ARMOR_EQUIP_GOLD, 0.0F, () -> Ingredient.of(ModItems.RUBY.get()));
 
 	private static final EnumMap<ArmorItem.Type, Integer> DURABILITY_MAP = Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
 		map.put(ArmorItem.Type.BOOTS, 13);
