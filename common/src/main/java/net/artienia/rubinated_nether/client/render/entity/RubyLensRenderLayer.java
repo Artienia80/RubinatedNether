@@ -16,7 +16,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class RubyLensRenderLayer<T extends LivingEntity, M extends EntityModel<T> & HeadedModel> extends RenderLayer<T, M> {
 
-    public static final ResourceLocation RUBY_LENS_TEXTURE = RubinatedNether.id("textures/item/ruby_lens.png");
+    public static final ResourceLocation RUBY_LENS_TEXTURE = RubinatedNether.id("textures/models/wearable/ruby_lens.png");
 
     private final M baseModel;
     private final RubyLensModel<T> lensModel;
