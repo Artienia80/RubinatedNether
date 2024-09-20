@@ -23,7 +23,7 @@ public class RubyLensRenderLayer<T extends LivingEntity, M extends EntityModel<T
     public RubyLensRenderLayer(RenderLayerParent<T, M> renderer, EntityModelSet models, M baseModel) {
         super(renderer);
         this.baseModel = baseModel;
-        lensModel = new RubyLensModel<>(RubyLensModel.createBodyLayer().bakeRoot());
+        lensModel = new RubyLensModel<>(models.bakeLayer(RubyLensModel.LAYER_LOCATION));
     }
 
     @Override
