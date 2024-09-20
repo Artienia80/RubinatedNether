@@ -1,6 +1,7 @@
 package net.artienia.rubinated_nether.platform;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class PlatformUtils {
@@ -14,6 +15,11 @@ public class PlatformUtils {
     @ExpectPlatform
     public static ItemStack getCraftingRemainder(ItemStack stack) {
         throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean rubyLensEquipped(Player player) {
+        return false;
     }
 
 }

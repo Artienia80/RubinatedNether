@@ -1,6 +1,6 @@
 package net.artienia.rubinated_nether.fabric.mixin.client;
 
-import net.artienia.rubinated_nether.client.render.RubyLensOverlay;
+import net.artienia.rubinated_nether.client.render.hud.RubyLensOverlay;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,10 +1,12 @@
 package net.artienia.rubinated_nether.client.render.blockEntity;
 
 import com.mojang.blaze3d.vertex.*;
+import dev.architectury.platform.Platform;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.RubyLaserBlock;
 import net.artienia.rubinated_nether.block.entity.RubyLaserBlockEntity;
 import net.artienia.rubinated_nether.item.ModItems;
+import net.artienia.rubinated_nether.platform.PlatformUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -17,6 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -32,7 +35,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
         ClientLevel level = Minecraft.getInstance().level;
         if(player == null || level == null) return;
 
-        if(blockEntity.alwaysVisible() || player.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.RUBY_LENS.get())) {
+        if(blockEntity.alwaysVisible() || PlatformUtils.rubyLensEquipped(player)) {
 
             poseStack.pushPose();
             poseStack.translate(0.5f, 0.5f, 0.5f);

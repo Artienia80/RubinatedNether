@@ -1,15 +1,13 @@
 package net.artienia.rubinated_nether.fabric;
 
+import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.worldgen.ModPlacedFeatures;
 import net.fabricmc.api.ModInitializer;
-
-import net.artienia.rubinated_nether.RubinatedNether;
 import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
 public final class RubinatedNetherFabric implements ModInitializer {

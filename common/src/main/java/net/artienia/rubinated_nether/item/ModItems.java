@@ -27,7 +27,7 @@ public class ModItems {
             () -> new BlockItem(Blocks.FROSTED_ICE, new Item.Properties()));
 
     public static final RegistrySupplier<Item> RUBY_LENS = ITEMS.register("ruby_lens",
-            () -> new RubyLens(RubyLensMaterial.RUBY_LENS, ArmorItem.Type.HELMET, new Item.Properties().stacksTo(1)));
+            () -> new RubyLens(new Item.Properties().stacksTo(1)));
 
     public static void register() {
         ITEMS.register();
