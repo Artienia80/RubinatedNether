@@ -1,12 +1,10 @@
 package net.artienia.rubinated_nether.client.render.blockEntity;
 
 import com.mojang.blaze3d.vertex.*;
-import dev.architectury.platform.Platform;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.RubyLaserBlock;
 import net.artienia.rubinated_nether.block.entity.RubyLaserBlockEntity;
 import net.artienia.rubinated_nether.client.render.ShaderHelper;
-import net.artienia.rubinated_nether.item.ModItems;
 import net.artienia.rubinated_nether.platform.PlatformUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -20,14 +18,15 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEntity> {
 
+
     private static final ResourceLocation LASER_TEXTURE = RubinatedNether.id("textures/misc/ruby_laser_beam.png");
+    private static final ResourceLocation LASER_TEXTURE_GREYSCALE = RubinatedNether.id("textures/misc/ruby_laser_beam_greyscale.png");
+    private static final float[] NO_COLOR = new float[]{1f, 1f, 1f};
 
     public RubyLaserRenderer(BlockEntityRendererProvider.Context context) {}
 
@@ -60,27 +59,29 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
             poseStack.translate(-0.5f, -0.5f, -0.5f);
 
             int i = blockEntity.getBlockRange() + 2;
+            boolean colored = blockEntity.isColored();
+            float[] color = colored ? blockEntity.getColor() : NO_COLOR;
 
             // Use fallback render type if shaders in use because beacon beam broken
-            RenderType renderType = ShaderHelper.isShaderPackInUse() ? RenderType.entityTranslucentEmissive(LASER_TEXTURE) : RenderType.beaconBeam(LASER_TEXTURE, true);
-            VertexConsumer consumer = buffer.getBuffer(renderType);
+            VertexConsumer consumer = buffer.getBuffer(getRenderType(colored));
 
-            renderFace(poseStack, consumer, .4f, 1, .6f, .6f, i, .6f, 1f, 1f, 1f, lerpedTime, Direction.NORTH);
-            renderFace(poseStack, consumer, .6f, 1, .4f, .4f, i, .4f, 1f, 1f, 1f, lerpedTime, Direction.SOUTH);
-            renderFace(poseStack, consumer, .4f, 1, .4f, .4f, i, .6f, 1f, 1f, 1f, lerpedTime, Direction.EAST);
-            renderFace(poseStack, consumer, .6f, 1, .6f, .6f, i, .4f, 1f, 1f, 1f, lerpedTime, Direction.WEST);
+            renderFace(poseStack, consumer, .4f, 1, .6f, .6f, i, .6f, color, lerpedTime, Direction.NORTH);
+            renderFace(poseStack, consumer, .6f, 1, .4f, .4f, i, .4f, color, lerpedTime, Direction.SOUTH);
+            renderFace(poseStack, consumer, .4f, 1, .4f, .4f, i, .6f, color, lerpedTime, Direction.EAST);
+            renderFace(poseStack, consumer, .6f, 1, .6f, .6f, i, .4f, color, lerpedTime, Direction.WEST);
             poseStack.popPose();
         }
 
     }
 
-    private void renderFace(PoseStack matrices, VertexConsumer buffer, float minX, float minY, float minZ, float maxX, float maxY, float maxZ, float r, float g, float b, float ticks, Direction face) {
+    private void renderFace(PoseStack matrices, VertexConsumer buffer, float minX, float minY, float minZ, float maxX, float maxY, float maxZ, float[] color, float ticks, Direction face) {
         PoseStack.Pose pose = matrices.last();
         float maxV = maxY / 15f;
         float endAlpha = Mth.clamp(1f - maxV, 0, 1);
 
         float v0 = 1 - (ticks % 150f) / 150;
         float v1 = v0 + (maxV * 0.4f);
+        float r = color[0], g = color[1], b = color[2];
 
         buffer.vertex(pose.pose(), minX, minY, minZ).color(r, g, b, 1f).uv(0, v0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT)
             .normal(pose.normal(), face.getStepX(), face.getStepY(), face.getStepZ()).endVertex();
@@ -90,5 +91,10 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
             .normal(pose.normal(), face.getStepX(), face.getStepY(), face.getStepZ()).endVertex();
         buffer.vertex(pose.pose(), minX, maxY, minZ).color(r, g, b, endAlpha).uv(0, v1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT)
             .normal(pose.normal(), face.getStepX(), face.getStepY(), face.getStepZ()).endVertex();
+    }
+
+    protected RenderType getRenderType(boolean colored) {
+        ResourceLocation location = colored ? LASER_TEXTURE_GREYSCALE : LASER_TEXTURE;
+        return ShaderHelper.isShaderPackInUse() ? RenderType.entityTranslucentEmissive(location) : RenderType.beaconBeam(location, true);
     }
 }

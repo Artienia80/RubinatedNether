@@ -64,21 +64,11 @@ public class RubyLaserBlock extends DirectionalBlock implements EntityBlock {
         BlockEntity be = level.getBlockEntity(pos);
         if(!(be instanceof RubyLaserBlockEntity laser)) return;
         level.setBlockAndUpdate(pos, state.setValue(POWER, laser.getPowerLevel()));
-    }
 
-    @Override
-    @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if(!(level.getBlockEntity(pos) instanceof RubyLaserBlockEntity blockEntity)) return InteractionResult.PASS;
-        ItemStack stack = player.getItemInHand(hand);
-        if(stack.is(Blocks.GLASS.asItem())) {
-            blockEntity.setVisible(true);
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        } else if(stack.is(ModBlocks.RUBY_GLASS_PANE.get().asItem())) {
-            blockEntity.setVisible(false);
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        return InteractionResult.PASS;
+        Direction direction = state.getValue(FACING);
+        BlockPos blockPos = pos.relative(direction.getOpposite());
+        level.neighborChanged(blockPos, this, pos);
+        level.updateNeighborsAtExceptFromFacing(blockPos, this, direction);
     }
 
     @Override
