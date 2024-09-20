@@ -19,7 +19,10 @@
       "net.artienia.rubinated_nether.fabric.client.RubinatedNetherFabricClient"
     ],
     "jei_mod_plugin": [
-      "net.artienia.rubinated_nether.jei.JEIModPlugin"
+      "net.artienia.rubinated_nether.integrations.jei.JEIModPlugin"
+    ],
+    "emi": [
+      "net.artienia.rubinated_nether.integrations.emi.EMIModPlugin"
     ]
   },
   "mixins": [

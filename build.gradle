@@ -52,6 +52,14 @@ subprojects {
             name = "TerraformersMC"
             url = "https://maven.terraformersmc.com/"
         }
+        maven {
+            name = "Theillusivevec4"
+            url = "https://maven.theillusivec4.top/"
+        }
+        maven {
+            name = "Ladysnake"
+            url = "https://maven.ladysnake.org/releases"
+        }
     }
 
     loom {

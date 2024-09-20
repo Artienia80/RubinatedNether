@@ -1,4 +1,4 @@
-package net.artienia.rubinated_nether.jei;
+package net.artienia.rubinated_nether.integrations.jei;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -14,6 +14,7 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.ModBlocks;
+import net.artienia.rubinated_nether.integrations.viewers.FuelRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -23,18 +24,18 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.Comparator;
 import java.util.List;
 
-public class ModFuelCategory implements IRecipeCategory<FuelRecipe> {
+public class FreezerFuelCategory implements IRecipeCategory<FuelRecipe> {
     public static final ResourceLocation TEXTURE = new ResourceLocation(RubinatedNether.MOD_ID, "textures/gui/freezer_gui.png");
     public static final RecipeType<FuelRecipe> RECIPE_TYPE = RecipeType.create(RubinatedNether.MOD_ID, "fuel", FuelRecipe.class);
     private final IDrawable background;
     private final IDrawable icon;
     private final LoadingCache<Integer, IDrawableAnimated> cachedFuelIndicator;
 
-    public ModFuelCategory(IGuiHelper helper) {
+    public FreezerFuelCategory(IGuiHelper helper) {
         this(helper, List.of(ModBlocks.FREEZER.get().getName().getString()));
     }
 
-    public ModFuelCategory(IGuiHelper helper, List<String> craftingStations) {
+    public FreezerFuelCategory(IGuiHelper helper, List<String> craftingStations) {
         String longestString = craftingStations.stream().max(Comparator.comparingInt(String::length)).get();
         Component longestStationName = Component.literal(longestString);
 
@@ -51,7 +52,7 @@ public class ModFuelCategory implements IRecipeCategory<FuelRecipe> {
                 .build(new CacheLoader<>() {
                     @Override
                     public IDrawableAnimated load(Integer burnTime) {
-                        return helper.drawableBuilder(ModFuelCategory.this.getTexture(), 176, 0, 14, 13).buildAnimated(burnTime, IDrawableAnimated.StartDirection.TOP, true);
+                        return helper.drawableBuilder(FreezerFuelCategory.this.getTexture(), 176, 0, 14, 13).buildAnimated(burnTime, IDrawableAnimated.StartDirection.TOP, true);
                     }
                 });
     }

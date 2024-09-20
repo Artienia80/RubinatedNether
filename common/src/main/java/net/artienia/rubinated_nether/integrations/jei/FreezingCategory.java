@@ -1,4 +1,4 @@
-package net.artienia.rubinated_nether.jei;
+package net.artienia.rubinated_nether.integrations.jei;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;

@@ -70,6 +70,9 @@ dependencies {
     compileOnly annotationProcessor("io.github.llamalad7:mixinextras-common:${rootProject.mixin_extras_version}")
     implementation include("io.github.llamalad7:mixinextras-forge:${rootProject.mixin_extras_version}")
 
+    // Curios
+    modImplementation("top.theillusivec4.curios:curios-forge:${rootProject.curios_version}+${rootProject.minecraft_version}")
+
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionForge')
 }

@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class FreezerScreen extends AbstractRecipeBookScreen<FreezerMenu, FreezerRecipeBookComponent> {
-    private static final ResourceLocation FREEZER_GUI_TEXTURES = new ResourceLocation(RubinatedNether.MOD_ID, "textures/gui/freezer_gui.png");
+    public static final ResourceLocation FREEZER_GUI_TEXTURES = new ResourceLocation(RubinatedNether.MOD_ID, "textures/gui/freezer_gui.png");
 
     public FreezerScreen(FreezerMenu menu, Inventory inventory, Component title) {
         super(menu, new FreezerRecipeBookComponent(), inventory, title);
