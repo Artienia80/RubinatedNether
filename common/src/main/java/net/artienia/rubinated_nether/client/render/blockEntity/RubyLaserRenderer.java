@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -61,7 +62,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
             int i = blockEntity.getBlockRange() + 2;
 
             // Use fallback render type if shaders in use because beacon beam broken
-            RenderType renderType = ShaderHelper.isShaderPackInUse() ? RenderType.entityTranslucentCull(LASER_TEXTURE) : RenderType.beaconBeam(LASER_TEXTURE, true);
+            RenderType renderType = ShaderHelper.isShaderPackInUse() ? RenderType.entityTranslucentEmissive(LASER_TEXTURE) : RenderType.beaconBeam(LASER_TEXTURE, true);
             VertexConsumer consumer = buffer.getBuffer(renderType);
 
             renderFace(poseStack, consumer, .4f, 1, .6f, .6f, i, .6f, 1f, 1f, 1f, lerpedTime, Direction.NORTH);
@@ -81,13 +82,13 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
         float v0 = 1 - (ticks % 150f) / 150;
         float v1 = v0 + (maxV * 0.4f);
 
-        buffer.vertex(pose.pose(), minX, minY, minZ).color(r, g, b, 1f).uv(0, v0).uv2(LightTexture.FULL_BRIGHT)
+        buffer.vertex(pose.pose(), minX, minY, minZ).color(r, g, b, 1f).uv(0, v0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT)
             .normal(pose.normal(), face.getStepX(), face.getStepY(), face.getStepZ()).endVertex();
-        buffer.vertex(pose.pose(), maxX, minY, maxZ).color(r, g, b, 1f).uv(1, v0).uv2(LightTexture.FULL_BRIGHT)
+        buffer.vertex(pose.pose(), maxX, minY, maxZ).color(r, g, b, 1f).uv(1, v0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT)
             .normal(pose.normal(), face.getStepX(), face.getStepY(), face.getStepZ()).endVertex();
-        buffer.vertex(pose.pose(), maxX, maxY, maxZ).color(r, g, b, endAlpha).uv(1, v1).uv2(LightTexture.FULL_BRIGHT)
+        buffer.vertex(pose.pose(), maxX, maxY, maxZ).color(r, g, b, endAlpha).uv(1, v1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT)
             .normal(pose.normal(), face.getStepX(), face.getStepY(), face.getStepZ()).endVertex();
-        buffer.vertex(pose.pose(), minX, maxY, minZ).color(r, g, b, endAlpha).uv(0, v1).uv2(LightTexture.FULL_BRIGHT)
+        buffer.vertex(pose.pose(), minX, maxY, minZ).color(r, g, b, endAlpha).uv(0, v1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT)
             .normal(pose.normal(), face.getStepX(), face.getStepY(), face.getStepZ()).endVertex();
     }
 }
