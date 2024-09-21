@@ -1,13 +1,13 @@
 package net.artienia.rubinated_nether.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.LivingEntity;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public abstract class RubyLensRenderer {
 
-    private final Map<HeadedModel, RubyLensModel<?>> models = new HashMap<>();
+    private final Map<HeadedModel, RubyLensModel<?>> models = new Reference2ReferenceOpenHashMap<>();
 
     protected void renderInternal(EntityModel<? extends LivingEntity> entityModel, PoseStack poseStack, MultiBufferSource multiBufferSource, int light) {
         if(entityModel instanceof HeadedModel headed) {
