@@ -6,6 +6,7 @@ import net.artienia.rubinated_nether.block.RubyLaserBlock;
 import net.artienia.rubinated_nether.platform.PlatformUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
@@ -73,8 +74,9 @@ public class RubyLaserBlockEntity extends BlockEntity {
         // Further processing only needs to be done server-side
         if(level.isClientSide) return;
 
+        Vec3i rangeVec = facing.getNormal().multiply(blockRange);
         AABB range = new AABB(0, 0, 0, 1, 1, 1)
-            .expandTowards(Vec3.atLowerCornerOf(facing.getNormal().multiply(blockRange)))
+            .expandTowards(rangeVec.getX(), rangeVec.getY(), rangeVec.getZ())
             .move(worldPosition.relative(facing));
 
         MutableDouble lastDistance = new MutableDouble(blockRange + 1);
