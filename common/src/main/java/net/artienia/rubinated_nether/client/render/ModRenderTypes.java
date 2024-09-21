@@ -24,7 +24,7 @@ public final class ModRenderTypes extends RenderType {
             .setCullState(RenderStateShard.CULL)
             .setLightmapState(RenderStateShard.NO_LIGHTMAP)
             .setOverlayState(RenderStateShard.NO_OVERLAY)
-            .setOutputState(RenderStateShard.TRANSLUCENT_TARGET)
+            .setOutputState(RenderStateShard.ITEM_ENTITY_TARGET)
             .createCompositeState(false)
     );
 
@@ -43,7 +43,7 @@ public final class ModRenderTypes extends RenderType {
             .setCullState(RenderStateShard.CULL)
             .setLightmapState(RenderStateShard.NO_LIGHTMAP)
             .setOverlayState(RenderStateShard.NO_OVERLAY)
-            .setOutputState(RenderStateShard.TRANSLUCENT_TARGET)
+            .setOutputState(RenderStateShard.ITEM_ENTITY_TARGET)
             .createCompositeState(false)
     );
 
