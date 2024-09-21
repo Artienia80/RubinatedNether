@@ -1,6 +1,7 @@
 package net.artienia.rubinated_nether.client.render.blockEntity;
 
 import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Axis;
 import dev.architectury.platform.Mod;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.RubyLaserBlock;
@@ -54,7 +55,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
             // rotating animation
             float lerpedTime = Mth.lerp(partialTick, level.getGameTime(), level.getGameTime() + 1);
             float angle = (lerpedTime * 3) % 360f;
-            poseStack.mulPose(new Quaternionf().rotationY(angle * Mth.DEG_TO_RAD));
+            poseStack.mulPose(Axis.YP.rotationDegrees(angle));
 
             poseStack.translate(-0.5f, -0.5f, -0.5f);
 
