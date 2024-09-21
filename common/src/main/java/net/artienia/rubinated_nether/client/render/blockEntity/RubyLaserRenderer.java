@@ -46,13 +46,10 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 
             // laser facing
             Direction facing = blockEntity.getBlockState().getValue(RubyLaserBlock.FACING);
-            Vector3f rot = new Vector3f(
-                facing == Direction.UP ? 0 : (Direction.Plane.VERTICAL.test(facing) ? 180f : 90f),
-                0,
-                (Math.max(facing.get2DDataValue(), 0) & 3) * 90f
-            );
-            rot.mul(Mth.DEG_TO_RAD);
-            poseStack.mulPose(new Quaternionf().rotationXYZ(rot.x, rot.y, rot.z));
+            float xRot = (facing == Direction.UP) ? 0 : (Direction.Plane.VERTICAL.test(facing) ? 180f : 90f);
+            float zRot = (Math.max(facing.get2DDataValue(), 0) & 3) * 90f;
+
+            poseStack.mulPose(new Quaternionf().rotationXYZ(xRot * Mth.DEG_TO_RAD, 0, zRot * Mth.DEG_TO_RAD));
 
             // rotating animation
             float lerpedTime = Mth.lerp(partialTick, level.getGameTime(), level.getGameTime() + 1);
