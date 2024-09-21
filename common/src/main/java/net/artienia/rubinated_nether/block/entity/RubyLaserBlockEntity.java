@@ -74,6 +74,14 @@ public class RubyLaserBlockEntity extends BlockEntity {
         // Further processing only needs to be done server-side
         if(level.isClientSide) return;
 
+        if(getBlockState().getValue(RubyLaserBlock.TINTED)) {
+            powerLevel = 15 - blockRange;
+            if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
+                level.scheduleTick(getBlockPos(), ModBlocks.RUBY_LASER.get(), 2);
+            }
+            return;
+        }
+
         Vec3i rangeVec = facing.getNormal().multiply(blockRange);
         AABB range = new AABB(0, 0, 0, 1, 1, 1)
             .expandTowards(rangeVec.getX(), rangeVec.getY(), rangeVec.getZ())
@@ -87,7 +95,7 @@ public class RubyLaserBlockEntity extends BlockEntity {
 
         int blockDistance = Mth.clamp(Mth.floor(lastDistance.getValue()), 0, 15);
         powerLevel = 15 - blockDistance;
-        if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER) && (!level.isClientSide)) {
+        if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
             level.scheduleTick(getBlockPos(), ModBlocks.RUBY_LASER.get(), 2);
         }
     }

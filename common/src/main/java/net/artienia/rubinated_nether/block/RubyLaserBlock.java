@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -39,13 +40,21 @@ public class RubyLaserBlock extends DirectionalBlock implements EntityBlock {
     ));
 
     public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
+    public static final BooleanProperty TINTED = BooleanProperty.create("tinted");
 
     public RubyLaserBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState()
             .setValue(FACING, Direction.NORTH)
             .setValue(POWER, 0)
+            .setValue(TINTED, false)
         );
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        level.setBlockAndUpdate(pos, state.cycle(TINTED));
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
@@ -73,7 +82,7 @@ public class RubyLaserBlock extends DirectionalBlock implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, POWER);
+        builder.add(FACING, POWER, TINTED);
     }
 
     // Redstone output stuff
