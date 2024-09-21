@@ -16,6 +16,6 @@ public class PiglinAiMixin {
         at = @At("RETURN")
     )
     private static boolean barterRubies(boolean original, @Local(argsOnly = true) ItemStack stack) {
-        return original || stack.is(ModItems.RUBY.get());
+        return original || stack.is(ModItems.RUBY_SHARD.get());
     }
 }
