@@ -1,9 +1,11 @@
 package net.artienia.rubinated_nether.client.render.blockEntity;
 
 import com.mojang.blaze3d.vertex.*;
+import dev.architectury.platform.Mod;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.RubyLaserBlock;
 import net.artienia.rubinated_nether.block.entity.RubyLaserBlockEntity;
+import net.artienia.rubinated_nether.client.render.ModRenderTypes;
 import net.artienia.rubinated_nether.client.render.ShaderHelper;
 import net.artienia.rubinated_nether.platform.PlatformUtils;
 import net.minecraft.client.Minecraft;
@@ -24,9 +26,9 @@ import org.joml.Vector3f;
 
 public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEntity> {
 
+    public static final ResourceLocation LASER_TEXTURE = RubinatedNether.id("textures/misc/ruby_laser_beam.png");
+    public static final ResourceLocation LASER_TEXTURE_GREYSCALE = RubinatedNether.id("textures/misc/ruby_laser_beam_greyscale.png");
 
-    private static final ResourceLocation LASER_TEXTURE = RubinatedNether.id("textures/misc/ruby_laser_beam.png");
-    private static final ResourceLocation LASER_TEXTURE_GREYSCALE = RubinatedNether.id("textures/misc/ruby_laser_beam_greyscale.png");
     private static final float[] NO_COLOR = new float[]{1f, 1f, 1f};
 
     public RubyLaserRenderer(BlockEntityRendererProvider.Context context) {}
@@ -103,7 +105,10 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
     }
 
     protected RenderType getRenderType(boolean colored) {
-        ResourceLocation location = colored ? LASER_TEXTURE_GREYSCALE : LASER_TEXTURE;
-        return ShaderHelper.isShaderPackInUse() ? RenderType.entityTranslucentEmissive(location) : RenderType.beaconBeam(location, true);
+        if(ShaderHelper.isShaderPackInUse()) {
+            return RenderType.entityTranslucentEmissive(colored ? LASER_TEXTURE_GREYSCALE : LASER_TEXTURE);
+        } else {
+            return colored ? ModRenderTypes.LASER_BEAM_GREYSCALE : ModRenderTypes.LASER_BEAM;
+        }
     }
 }
