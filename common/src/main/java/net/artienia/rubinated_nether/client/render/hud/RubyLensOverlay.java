@@ -16,7 +16,7 @@ public class RubyLensOverlay {
     public static void renderHud(Gui gui, GuiGraphics graphics) {
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
-        if(player != null && PlatformUtils.rubyLensEquipped(player)) {
+        if(player != null && minecraft.options.getCameraType().isFirstPerson() && PlatformUtils.rubyLensEquipped(player)) {
             gui.renderTextureOverlay(graphics, Minecraft.useFancyGraphics() ? RUBY_OVERLAY : RUBY_OVERLAY_FAST, 1.0f);
         }
     }
