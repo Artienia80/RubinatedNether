@@ -1,9 +1,11 @@
 package net.artienia.rubinated_nether.client.render.blockEntity;
 
 import com.mojang.blaze3d.vertex.*;
+import dev.architectury.platform.Mod;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.RubyLaserBlock;
 import net.artienia.rubinated_nether.block.entity.RubyLaserBlockEntity;
+import net.artienia.rubinated_nether.client.render.ModRenderTypes;
 import net.artienia.rubinated_nether.client.render.ShaderHelper;
 import net.artienia.rubinated_nether.platform.PlatformUtils;
 import net.minecraft.client.Minecraft;
@@ -17,15 +19,16 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEntity> {
 
+    public static final ResourceLocation LASER_TEXTURE = RubinatedNether.id("textures/misc/ruby_laser_beam.png");
+    public static final ResourceLocation LASER_TEXTURE_GREYSCALE = RubinatedNether.id("textures/misc/ruby_laser_beam_greyscale.png");
 
-    private static final ResourceLocation LASER_TEXTURE = RubinatedNether.id("textures/misc/ruby_laser_beam.png");
-    private static final ResourceLocation LASER_TEXTURE_GREYSCALE = RubinatedNether.id("textures/misc/ruby_laser_beam_greyscale.png");
     private static final float[] NO_COLOR = new float[]{1f, 1f, 1f};
 
     public RubyLaserRenderer(BlockEntityRendererProvider.Context context) {}
@@ -59,8 +62,16 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
             poseStack.translate(-0.5f, -0.5f, -0.5f);
 
             int i = blockEntity.getBlockRange() + 2;
-            boolean colored = blockEntity.isColored();
-            float[] color = colored ? blockEntity.getColor() : NO_COLOR;
+            boolean colored = blockEntity.isColored() || blockEntity.isSilly();
+            float[] color;
+
+            if(blockEntity.isColored()) {
+                color = blockEntity.getColor();
+            } else if(blockEntity.isSilly()) {
+                float hue = lerpedTime % 50f / 50f;
+                int col = Mth.hsvToRgb(hue, .8f, 1f);
+                color = new float[]{FastColor.ARGB32.red(col), FastColor.ARGB32.green(col) , FastColor.ARGB32.blue(col)};
+            } else color = NO_COLOR;
 
             // Use fallback render type if shaders in use because beacon beam broken
             VertexConsumer consumer = buffer.getBuffer(getRenderType(colored));
@@ -94,7 +105,10 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
     }
 
     protected RenderType getRenderType(boolean colored) {
-        ResourceLocation location = colored ? LASER_TEXTURE_GREYSCALE : LASER_TEXTURE;
-        return ShaderHelper.isShaderPackInUse() ? RenderType.entityTranslucentEmissive(location) : RenderType.beaconBeam(location, true);
+        if(ShaderHelper.isShaderPackInUse()) {
+            return RenderType.entityTranslucentEmissive(colored ? LASER_TEXTURE_GREYSCALE : LASER_TEXTURE);
+        } else {
+            return colored ? ModRenderTypes.LASER_BEAM_GREYSCALE : ModRenderTypes.LASER_BEAM;
+        }
     }
 }
