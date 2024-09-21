@@ -4,7 +4,7 @@
 	"render_type": "minecraft:cutout",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "rubinated_nether:block/ruby_laser_lens_on",
+		"0": "rubinated_nether:block/ruby_laser_lens_tinted_on",
 		"1": "rubinated_nether:block/chandelier/blank",
 		"2": "rubinated_nether:block/ruby_laser_front_on",
 		"3": "rubinated_nether:block/ruby_laser_side",
