@@ -21,7 +21,7 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final RegistrySupplier<Item> RUBY_SHARD = ITEMS.register("ruby_shard",
-            () -> new Item(new Item.Properties()));
+            () -> new RubyCurrency(new Item.Properties()));
 
     public static final RegistrySupplier<Item> FROSTED_ICE = ITEMS.register("frosted_ice",
             () -> new BlockItem(Blocks.FROSTED_ICE, new Item.Properties()));
