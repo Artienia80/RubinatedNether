@@ -51,7 +51,7 @@ public class FreezerFuelEMIRecipe implements EmiRecipe {
 
     @Override
     public List<EmiIngredient> getInputs() {
-        return List.of();
+        return List.of(stack);
     }
 
     @Override
