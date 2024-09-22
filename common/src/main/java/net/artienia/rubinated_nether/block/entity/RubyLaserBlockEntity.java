@@ -1,6 +1,5 @@
 package net.artienia.rubinated_nether.block.entity;
 
-import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import net.artienia.rubinated_nether.ModTags;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.ModBlocks;
@@ -9,7 +8,6 @@ import net.artienia.rubinated_nether.platform.PlatformUtils;
 import net.artienia.rubinated_nether.utils.BlockUpdateListener;
 import net.artienia.rubinated_nether.utils.ShapeUtils;
 import net.artienia.rubinated_nether.utils.UpdateListenerHolder;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -25,9 +23,6 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.apache.commons.lang3.mutable.MutableDouble;
-
-import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -37,14 +32,6 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
     private static final Map<Direction, VoxelShape> BEAM_SEGMENT_SHAPES = ShapeUtils.allDirections(
             Shapes.box(.4, 0, .4, .6, 1, .6)
     );
-
-    private static final Map<Direction, AABB> DIRECTION_BOUNDS = Util.make(new EnumMap<>(Direction.class), map -> {
-        AABB base = new AABB(0, 0, 0, 1, 1, 1);
-        for(Direction dir : Direction.values()) {
-            Vec3i end = dir.getNormal().multiply(15);
-            map.put(dir, base.expandTowards(end.getX(), end.getY(), end.getZ()));
-        }
-    });
 
     private static final String VISIBLE_KEY = "alwaysVisible";
 
