@@ -58,7 +58,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 
             poseStack.translate(-0.5f, -0.5f, -0.5f);
 
-            int i = blockEntity.getBlockRange() + 1;
+            float i = (float) (blockEntity.getRenderRange() + 1f);
             float[] color;
 
             if(blockEntity.isColored()) {

@@ -86,4 +86,8 @@ public class ShapeUtils {
             return new Vec3(x * cos - y * sin, y * cos + x * sin, z);
         return vec;
     }
+
+    public static double length(VoxelShape shape, Direction.Axis axis) {
+        return shape.isEmpty() ? 0 : shape.max(axis) - shape.min(axis);
+    }
 }

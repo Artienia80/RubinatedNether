@@ -32,6 +32,7 @@ public class RubyLaserBlockEntity extends BlockEntity {
 
     private int powerLevel;
     private int blockRange = -1;
+    private double rangeRemnant;
     private boolean visible = false;
     private float[] color;
     private boolean colored = false;
@@ -62,7 +63,17 @@ public class RubyLaserBlockEntity extends BlockEntity {
                 if (state.is(ModTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
 
                 VoxelShape shape = state.getCollisionShape(level, mutableBlockPos);
-                if(Shapes.joinIsNotEmpty(shape, BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND)) break;
+                VoxelShape beam = BEAM_SEGMENT_SHAPES.get(facing);
+                if(Shapes.joinIsNotEmpty(shape, beam, BooleanOp.AND)) {
+                    if(level.isClientSide) {
+                        Direction.Axis axis = facing.getAxis();
+                        rangeRemnant = Math.min(
+                            ShapeUtils.length(beam, axis) - ShapeUtils.length(shape, axis),
+                            facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.min(axis)
+                        );
+                    }
+                    break;
+                }
             }
 
             // Ignore what IDEA says its stupid
@@ -119,6 +130,10 @@ public class RubyLaserBlockEntity extends BlockEntity {
 
     public int getBlockRange() {
         return (blockRange == -1) ? 15 : Mth.clamp(blockRange, 0, 15);
+    }
+
+    public double getRenderRange() {
+        return getBlockRange() + rangeRemnant;
     }
 
     public boolean alwaysVisible() {
