@@ -1,0 +1,60 @@
+{
+  "item.rubinated_nether.ruby": "Рубин",
+  "item.rubinated_nether.molten_ruby": "Расплавленный рубин",
+  "item.rubinated_nether.ruby_shard": "Осколок рубина",
+  "item.rubinated_nether.ruby_lens": "Рубиновая линза",
+
+
+
+  "block.rubinated_nether.ruby_block": "Блок рубина",
+  "block.rubinated_nether.molten_ruby_block": "Блок расплавленного рубина",
+  "block.rubinated_nether.molten_ruby_ore": "Расплавленная рубиновая руда",
+  "block.rubinated_nether.nether_ruby_ore": "Незер-рубиновая руда",
+  "block.rubinated_nether.rubinated_blackstone": "Рубиноносный чернит",
+  "block.rubinated_nether.bleeding_obsidian": "Кровоточащий обсидиан",
+  "block.rubinated_nether.ruby_glass": "Рубиновое стекло",
+  "block.rubinated_nether.ruby_glass_pane": "Рубиновая стеклянная панель",
+  "block.rubinated_nether.molten_ruby_glass": "Расплавленное рубиновое стекло",
+  "block.rubinated_nether.molten_ruby_glass_pane": "Расплавленная рубиновая стеклянная панель",
+  "block.rubinated_nether.ruby_chandelier": "Рубиновая люстра",
+  "block.rubinated_nether.ruby_laser": "Рубиновый лазер",
+  "block.rubinated_nether.ruby_lantern": "Рубиновая лампа",
+  "block.rubinated_nether.ruby_lava_lamp": "Рубиновая лавовая лампа",
+
+  "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Кровь для Бога крови!",
+  "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Получите кровоточащий обсидиан",
+  "advancements.rubinated_nether.ruby_barter.title": "...более чем альтернатива",
+  "advancements.rubinated_nether.ruby_barter.description": "Поторгуйте с Пиглином осколком рубина",
+  "advancements.rubinated_nether.obtain_freezer.title": "Холодно! Холодно! Холодно!",
+  "advancements.rubinated_nether.obtain_freezer.description": "Создайте блок морозилки",
+  "advancements.rubinated_nether.obtain_molten_ruby.title": "Горячо! Горячо! Горячо!",
+  "advancements.rubinated_nether.obtain_molten_ruby.description": "Получите расплавленный рубин из магмовой жили или расплавив рубин",
+  "advancements.rubinated_nether.obtain_ruby.title": "С возвращением, старый друг",
+  "advancements.rubinated_nether.obtain_ruby.description": "Получите рубин с незер-рубиновой руды или заморозив расплавленный рубин",
+  "advancements.rubinated_nether.obtain_ruby_lights.title": "Просветлей!",
+  "advancements.rubinated_nether.obtain_ruby_lights.description": "Имейте в инвентаре рубиновую люстру и рубиновую лавовую лампу",
+  "advancements.rubinated_nether.obtain_rubinated_blackstone.title": "Законное спасение",
+  "advancements.rubinated_nether.obtain_rubinated_blackstone.description": "Добудьте рубиноносный чернит из руин бастиона",
+  "advancements.rubinated_nether.obtain_ruby_glass.title": "Сверх 9000!",
+  "advancements.rubinated_nether.obtain_ruby_glass.description": "Создайте взрывоустойчивое рубиновое стекло",
+  "advancements.rubinated_nether.obtain_frosted_ice.title": "Повторно доступный",
+  "advancements.rubinated_nether.obtain_frosted_ice.description": "Заморозьте блок снега, превратив его в лёд",
+  "advancements.rubinated_nether.wear_lens.title": "Розовые очки",
+  "advancements.rubinated_nether.wear_lens.description": "Наденьте пару рубиновых линз, чтобы видеть лазерные лучи.",
+  "advancements.rubinated_nether.obtain_ruby_laser.title": "Указываю, это ты!",
+  "advancements.rubinated_nether.obtain_ruby_laser.description": "Создайте рубиновый лазер",
+
+  "death.attack.fallingBlock": "%1$s был объят упавшей люстрой",
+  "death.attack.fallingBlock.player": "%1$s был объят упавшей люстрой во время боя с %2$s",
+
+  "block.rubinated_nether.freezer": "Морозильник",
+  "menu.rubinated_nether.freezer": "Морозильник",
+  "gui.rubinated_nether.recipebook.toggleRecipes.freezable": "Показать замораживаемое",
+
+  "gui.rubinated_nether.jei.freezer": "Заморозка",
+  "gui.rubinated_nether.jei.fuel": "Топливо",
+
+  "gui.rubinated_nether.emi.freezes": "Замораживает %s предмет(ов)",
+  "emi.category.rubinated_nether.freezing": "Заморозка",
+  "emi.category.rubinated_nether.freezer_fuel": "Морозное топливо"
+}
