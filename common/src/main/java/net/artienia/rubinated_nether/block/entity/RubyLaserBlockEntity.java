@@ -42,6 +42,10 @@ public class RubyLaserBlockEntity extends BlockEntity {
         super(ModBlockEntityTypes.RUBY_LASER.get(), pos, blockState);
     }
 
+    public void handleBlockUpdate(BlockPos pos) {
+        // TODO
+    }
+
     public void tick() {
         if(level == null) return;
 
@@ -51,10 +55,10 @@ public class RubyLaserBlockEntity extends BlockEntity {
         if(blockRange == -1 || level.getGameTime() % 8 == 0) {
             BlockPos.MutableBlockPos mutableBlockPos = worldPosition.mutable();
             blockRange = 0;
-            for (int i = 0; i < 15; i++) {
+            for (int i = 0; i <= 15; i++) {
                 mutableBlockPos.move(facing);
-                if (level.getBlockState(mutableBlockPos).canOcclude()) break;
                 blockRange = i;
+                if (level.getBlockState(mutableBlockPos).canOcclude()) break;
             }
 
             // Ignore what IDEA says its stupid
@@ -75,7 +79,7 @@ public class RubyLaserBlockEntity extends BlockEntity {
         if(level.isClientSide) return;
 
         if(getBlockState().getValue(RubyLaserBlock.TINTED)) {
-            powerLevel = 15 - blockRange;
+            powerLevel = Mth.clamp(15 - (blockRange), 0, 15);
             if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
                 level.scheduleTick(getBlockPos(), ModBlocks.RUBY_LASER.get(), 2);
             }
@@ -87,7 +91,7 @@ public class RubyLaserBlockEntity extends BlockEntity {
             .expandTowards(rangeVec.getX(), rangeVec.getY(), rangeVec.getZ())
             .move(worldPosition.relative(facing));
 
-        MutableDouble lastDistance = new MutableDouble(blockRange + 1);
+        MutableDouble lastDistance = new MutableDouble(blockRange);
         level.getEntities().get(range, entity -> {
             double distance = Math.sqrt(entity.distanceToSqr(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ())) - 1;
             if(distance < lastDistance.getValue()) lastDistance.setValue(distance);

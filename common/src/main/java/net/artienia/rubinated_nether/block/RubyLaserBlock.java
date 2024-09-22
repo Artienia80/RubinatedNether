@@ -6,6 +6,8 @@ import net.artienia.rubinated_nether.utils.ShapeUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -54,6 +56,7 @@ public class RubyLaserBlock extends DirectionalBlock implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         level.setBlockAndUpdate(pos, state.cycle(TINTED));
+        level.playLocalSound(pos, SoundEvents.IRON_TRAPDOOR_OPEN, SoundSource.BLOCKS, 0.5f, 0.7f, true);
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
