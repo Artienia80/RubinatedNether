@@ -80,7 +80,6 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
     @Override
     public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
-        RubinatedNether.LOGGER.info("WAAWW");
         Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
         BlockPos.MutableBlockPos mutableBlockPos = worldPosition.mutable();
         blockRange = 0;
