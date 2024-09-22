@@ -17,6 +17,8 @@ public class ModTags {
         public static final TagKey<Block> RUBY_GLASS = TagKey.create(Registries.BLOCK, id("ruby_glass"));
 
         public static final TagKey<Block> RUBY_GLASS_PANES = TagKey.create(Registries.BLOCK, id("ruby_glass_panes"));
+
+        public static final TagKey<Block> RUBY_LASER_TRANSPARENT = TagKey.create(Registries.BLOCK, id("ruby_laser_transparent"));
     }
 
     public static class Items {

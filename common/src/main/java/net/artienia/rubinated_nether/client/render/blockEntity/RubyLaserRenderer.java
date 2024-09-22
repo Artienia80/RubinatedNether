@@ -2,7 +2,6 @@ package net.artienia.rubinated_nether.client.render.blockEntity;
 
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
-import dev.architectury.platform.Mod;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.RubyLaserBlock;
 import net.artienia.rubinated_nether.block.entity.RubyLaserBlockEntity;
@@ -23,15 +22,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import org.joml.Quaternionf;
-import org.joml.Vector3f;
 
 public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEntity> {
 
     public static final ResourceLocation LASER_TEXTURE = RubinatedNether.id("textures/misc/ruby_laser_beam.png");
     public static final ResourceLocation LASER_TEXTURE_GREYSCALE = RubinatedNether.id("textures/misc/ruby_laser_beam_greyscale.png");
 
-    private static final float[] NO_COLOR = new float[]{1f, 1f, 1f};
-    private static final float[] NO_COLOR_TINTED = new float[]{1f, 0, .5f};
+    private static final float[] BASE_COLOR = new float[]{1f, 1f, 1f};
+    private static final float[] TINTED_COLOR = new float[]{1f, 0, .5f};
 
     public RubyLaserRenderer(BlockEntityRendererProvider.Context context) {}
 
@@ -61,7 +59,6 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
             poseStack.translate(-0.5f, -0.5f, -0.5f);
 
             int i = blockEntity.getBlockRange() + 1;
-            boolean colored = blockEntity.isColored() || blockEntity.isSilly();
             float[] color;
 
             if(blockEntity.isColored()) {
@@ -71,11 +68,11 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
                 int col = Mth.hsvToRgb(hue, .8f, 1f);
                 color = new float[]{FastColor.ARGB32.red(col), FastColor.ARGB32.green(col) , FastColor.ARGB32.blue(col)};
             } else {
-                color = blockEntity.getBlockState().getValue(RubyLaserBlock.TINTED) ? NO_COLOR_TINTED : NO_COLOR;
+                color = blockEntity.getBlockState().getValue(RubyLaserBlock.TINTED) ? TINTED_COLOR : BASE_COLOR;
             }
 
             // Use fallback render type if shaders in use because beacon beam broken
-            VertexConsumer consumer = buffer.getBuffer(getRenderType(colored));
+            VertexConsumer consumer = buffer.getBuffer(getRenderType(blockEntity.isColored() || blockEntity.isSilly()));
 
             renderFace(poseStack, consumer, .4f, 1, .6f, .6f, i, .6f, color, lerpedTime, Direction.NORTH);
             renderFace(poseStack, consumer, .6f, 1, .4f, .4f, i, .4f, color, lerpedTime, Direction.SOUTH);
@@ -88,7 +85,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 
     private void renderFace(PoseStack matrices, VertexConsumer buffer, float minX, float minY, float minZ, float maxX, float maxY, float maxZ, float[] color, float ticks, Direction face) {
         PoseStack.Pose pose = matrices.last();
-        float maxV = maxY / 15f;
+        float maxV = (maxY - 1f) / 15f;
         float endAlpha = Mth.clamp(1f - maxV, 0, 1);
 
         float v0 = 1 - (ticks % 150f) / 150;

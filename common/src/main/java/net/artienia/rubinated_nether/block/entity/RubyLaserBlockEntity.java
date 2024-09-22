@@ -4,6 +4,7 @@ import net.artienia.rubinated_nether.ModTags;
 import net.artienia.rubinated_nether.block.ModBlocks;
 import net.artienia.rubinated_nether.block.RubyLaserBlock;
 import net.artienia.rubinated_nether.platform.PlatformUtils;
+import net.artienia.rubinated_nether.utils.ShapeUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -14,14 +15,19 @@ import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.apache.commons.lang3.mutable.MutableDouble;
-import java.util.EnumMap;
+
 import java.util.Map;
 
 public class RubyLaserBlockEntity extends BlockEntity {
 
-    private static final Map<Direction, AABB> FACE_RANGES = new EnumMap<>(Direction.class);
+    // Shapes representing a 1 block long beam segment
+    private static final Map<Direction, VoxelShape> BEAM_SEGMENT_SHAPES = ShapeUtils.allDirections(
+            Shapes.box(.4, 0, .4, .6, 1, .6)
+    );
     private static final String VISIBLE_KEY = "alwaysVisible";
 
     private int powerLevel;
@@ -30,13 +36,6 @@ public class RubyLaserBlockEntity extends BlockEntity {
     private float[] color;
     private boolean colored = false;
     private boolean silly = false;
-
-    static {
-        for(Direction direction : Direction.values()) {
-            FACE_RANGES.put(direction, new AABB(0, 0, 0, 1, 1, 1)
-                .expandTowards(Vec3.atLowerCornerOf(direction.getNormal().multiply(15))));
-        }
-    }
 
     public RubyLaserBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntityTypes.RUBY_LASER.get(), pos, blockState);
@@ -58,7 +57,12 @@ public class RubyLaserBlockEntity extends BlockEntity {
             for (int i = 0; i <= 15; i++) {
                 mutableBlockPos.move(facing);
                 blockRange = i;
-                if (level.getBlockState(mutableBlockPos).canOcclude()) break;
+
+                BlockState state = level.getBlockState(mutableBlockPos);
+                if (state.is(ModTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
+
+                VoxelShape shape = state.getCollisionShape(level, mutableBlockPos);
+                if(Shapes.joinIsNotEmpty(shape, BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND)) break;
             }
 
             // Ignore what IDEA says its stupid
@@ -106,7 +110,7 @@ public class RubyLaserBlockEntity extends BlockEntity {
 
     // This overrides a forge thing
     public AABB getRenderBoundingBox() {
-        return FACE_RANGES.get(getBlockState().getValue(RubyLaserBlock.FACING)).move(worldPosition);
+        return BEAM_SEGMENT_SHAPES.get(getBlockState().getValue(RubyLaserBlock.FACING)).bounds().move(worldPosition);
     }
 
     public int getPowerLevel() {
