@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
+import net.minecraft.network.protocol.game.ClientboundSectionBlocksUpdatePacket;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,10 +22,18 @@ public class ClientboundNetworkHandlerMixin {
 
     @Inject(
         method = "handleBlockUpdate",
-        at = @At("HEAD")
+        at = @At("TAIL")
     )
     public void handleBlockUpdate(ClientboundBlockUpdatePacket packet, CallbackInfo ci) {
-        minecraft.execute(() -> ((UpdateListenerHolder) this.level).rn$handleBlockUpdate(packet.getPos()));
+        ((UpdateListenerHolder) this.level).rn$handleBlockUpdate(packet.getPos());
+    }
+
+    @Inject(
+        method = "handleChunkBlocksUpdate",
+        at = @At("TAIL")
+    )
+    public void handleBlockUpdates(ClientboundSectionBlocksUpdatePacket packet, CallbackInfo ci) {
+        packet.runUpdates((pos, state) -> ((UpdateListenerHolder) this.level).rn$handleBlockUpdate(pos));
     }
 
 }

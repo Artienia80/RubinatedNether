@@ -100,7 +100,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
             if(Shapes.joinIsNotEmpty(shape, beam, BooleanOp.AND)) {
                 if(level.isClientSide) {
                     Direction.Axis axis = facing.getAxis();
-                    rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.min(axis);
+                    rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.max(axis);
                 }
                 break;
             }
