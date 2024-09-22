@@ -67,10 +67,7 @@ public class RubyLaserBlockEntity extends BlockEntity {
                 if(Shapes.joinIsNotEmpty(shape, beam, BooleanOp.AND)) {
                     if(level.isClientSide) {
                         Direction.Axis axis = facing.getAxis();
-                        rangeRemnant = Math.min(
-                            ShapeUtils.length(beam, axis) - ShapeUtils.length(shape, axis),
-                            facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.min(axis)
-                        );
+                        rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.min(axis);
                     }
                     break;
                 }

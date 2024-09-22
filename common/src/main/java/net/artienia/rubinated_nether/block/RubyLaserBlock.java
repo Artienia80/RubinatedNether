@@ -56,7 +56,8 @@ public class RubyLaserBlock extends DirectionalBlock implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         level.setBlockAndUpdate(pos, state.cycle(TINTED));
-        level.playLocalSound(pos, SoundEvents.IRON_TRAPDOOR_OPEN, SoundSource.BLOCKS, 0.5f, 0.7f, true);
+        boolean bl = state.getValue(TINTED);
+        level.playLocalSound(pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.5f, bl ? 0.5f : 0.55f, true);
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
