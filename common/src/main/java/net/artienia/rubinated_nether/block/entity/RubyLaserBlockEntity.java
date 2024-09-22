@@ -1,28 +1,37 @@
 package net.artienia.rubinated_nether.block.entity;
 
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import net.artienia.rubinated_nether.ModTags;
+import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.ModBlocks;
 import net.artienia.rubinated_nether.block.RubyLaserBlock;
 import net.artienia.rubinated_nether.platform.PlatformUtils;
+import net.artienia.rubinated_nether.utils.BlockUpdateListener;
 import net.artienia.rubinated_nether.utils.ShapeUtils;
+import net.artienia.rubinated_nether.utils.UpdateListenerHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.apache.commons.lang3.mutable.MutableDouble;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
-public class RubyLaserBlockEntity extends BlockEntity {
+public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateListener {
 
     // Shapes representing a 1 block long beam segment
     private static final Map<Direction, VoxelShape> BEAM_SEGMENT_SHAPES = ShapeUtils.allDirections(
@@ -42,61 +51,18 @@ public class RubyLaserBlockEntity extends BlockEntity {
         super(ModBlockEntityTypes.RUBY_LASER.get(), pos, blockState);
     }
 
-    public void handleBlockUpdate(BlockPos pos) {
-        // TODO
+    @Override
+    public void setLevel(Level level) {
+        if(!hasLevel()) UpdateListenerHolder.addUpdateListener(level, this);
+        super.setLevel(level);
     }
 
     public void tick() {
         if(level == null) return;
+        if(blockRange == -1) handleBlockUpdate(level, worldPosition, getBlockState());
+        if(level.isClientSide || getBlockState().getValue(RubyLaserBlock.TINTED)) return;
 
         Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
-
-        // Only re check blocks ever 8th game tick
-        if(blockRange == -1 || level.getGameTime() % 8 == 0) {
-            BlockPos.MutableBlockPos mutableBlockPos = worldPosition.mutable();
-            blockRange = 0;
-            for (int i = 0; i <= 15; i++) {
-                mutableBlockPos.move(facing);
-                blockRange = i;
-
-                BlockState state = level.getBlockState(mutableBlockPos);
-                if (state.is(ModTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
-
-                VoxelShape shape = state.getCollisionShape(level, mutableBlockPos);
-                VoxelShape beam = BEAM_SEGMENT_SHAPES.get(facing);
-                if(Shapes.joinIsNotEmpty(shape, beam, BooleanOp.AND)) {
-                    if(level.isClientSide) {
-                        Direction.Axis axis = facing.getAxis();
-                        rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.min(axis);
-                    }
-                    break;
-                }
-            }
-
-            // Ignore what IDEA says its stupid
-            BlockState state = level.getBlockState(worldPosition.relative(facing));
-            silly = state.is(ModTags.Blocks.RUBY_GLASS);
-            visible = silly || state.is(PlatformUtils.getGlassTag());
-
-            if(visible && !silly && state.getBlock() instanceof BeaconBeamBlock) {
-                DyeColor dye = ((BeaconBeamBlock) state.getBlock()).getColor();
-                color = dye.getTextureDiffuseColors();
-                colored = true;
-            } else {
-                colored = false;
-            }
-        }
-
-        // Further processing only needs to be done server-side
-        if(level.isClientSide) return;
-
-        if(getBlockState().getValue(RubyLaserBlock.TINTED)) {
-            powerLevel = Mth.clamp(15 - (blockRange), 0, 15);
-            if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
-                level.scheduleTick(getBlockPos(), ModBlocks.RUBY_LASER.get(), 2);
-            }
-            return;
-        }
 
         Vec3i rangeVec = facing.getNormal().multiply(blockRange);
         AABB range = new AABB(0, 0, 0, 1, 1, 1)
@@ -113,6 +79,51 @@ public class RubyLaserBlockEntity extends BlockEntity {
         powerLevel = 15 - blockDistance;
         if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
             level.scheduleTick(getBlockPos(), ModBlocks.RUBY_LASER.get(), 2);
+        }
+    }
+
+    @Override
+    public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
+        RubinatedNether.LOGGER.info("WAAWW");
+        Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
+        BlockPos.MutableBlockPos mutableBlockPos = worldPosition.mutable();
+        blockRange = 0;
+        for (int i = 0; i <= 15; i++) {
+            mutableBlockPos.move(facing);
+            blockRange = i;
+
+            BlockState state = level.getBlockState(mutableBlockPos);
+            if (state.is(ModTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
+
+            VoxelShape shape = state.getCollisionShape(level, mutableBlockPos);
+            VoxelShape beam = BEAM_SEGMENT_SHAPES.get(facing);
+            if(Shapes.joinIsNotEmpty(shape, beam, BooleanOp.AND)) {
+                if(level.isClientSide) {
+                    Direction.Axis axis = facing.getAxis();
+                    rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.min(axis);
+                }
+                break;
+            }
+        }
+
+        // Ignore what IDEA says its stupid
+        BlockState state = level.getBlockState(worldPosition.relative(facing));
+        silly = state.is(ModTags.Blocks.RUBY_GLASS);
+        visible = silly || state.is(PlatformUtils.getGlassTag());
+
+        if(visible && !silly && state.getBlock() instanceof BeaconBeamBlock) {
+            DyeColor dye = ((BeaconBeamBlock) state.getBlock()).getColor();
+            color = dye.getTextureDiffuseColors();
+            colored = true;
+        } else {
+            colored = false;
+        }
+
+        if(getBlockState().getValue(RubyLaserBlock.TINTED)) {
+            powerLevel = Mth.clamp(15 - (blockRange), 0, 15);
+            if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
+                level.scheduleTick(getBlockPos(), ModBlocks.RUBY_LASER.get(), 2);
+            }
         }
     }
 
@@ -157,5 +168,16 @@ public class RubyLaserBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag tag) {
         visible = tag.getBoolean(VISIBLE_KEY);
+    }
+
+    @Override
+    public boolean shouldRemove() {
+        return this.isRemoved();
+    }
+
+    @Override
+    public Stream<BlockPos> getListenedPositions() {
+        Vec3i offset = getBlockState().getValue(RubyLaserBlock.FACING).getNormal().multiply(15);
+        return BlockPos.betweenClosedStream(worldPosition, worldPosition.offset(offset));
     }
 }

@@ -3,6 +3,7 @@ package net.artienia.rubinated_nether.block;
 import net.artienia.rubinated_nether.block.entity.RubyLaserBlockEntity;
 import net.artienia.rubinated_nether.item.ModItems;
 import net.artienia.rubinated_nether.utils.ShapeUtils;
+import net.artienia.rubinated_nether.utils.UpdateListenerHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -55,9 +56,9 @@ public class RubyLaserBlock extends DirectionalBlock implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        level.setBlockAndUpdate(pos, state.cycle(TINTED));
         boolean bl = state.getValue(TINTED);
         level.playLocalSound(pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.5f, bl ? 0.5f : 0.55f, true);
+        level.setBlockAndUpdate(pos, state.cycle(TINTED));
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
@@ -116,7 +117,10 @@ public class RubyLaserBlock extends DirectionalBlock implements EntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         return (level1, blockPos, blockState, blockEntity) -> {
-            if(!blockEntity.hasLevel()) blockEntity.setLevel(level1);
+            if(!blockEntity.hasLevel()) {
+                blockEntity.setLevel(level1);
+                UpdateListenerHolder.addUpdateListener(level, (RubyLaserBlockEntity) blockEntity);
+            }
             ((RubyLaserBlockEntity) blockEntity).tick();
         };
     }

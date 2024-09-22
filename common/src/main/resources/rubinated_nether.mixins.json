@@ -4,12 +4,15 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "mixins": [
-    "AbstractFurnaceBlockEntityAccessor"
+    "AbstractFurnaceBlockEntityAccessor",
+    "ChunkHolderMixin",
+    "LevelMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
+    "client.ClientboundNetworkHandlerMixin",
     "client.CustomHeadLayerMixin"
   ]
 }
