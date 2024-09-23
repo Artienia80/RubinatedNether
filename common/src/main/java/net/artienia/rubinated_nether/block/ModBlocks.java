@@ -146,7 +146,7 @@ public class ModBlocks {
         .copyProperties(() -> Blocks.COPPER_BLOCK)
         .properties(BlockBehaviour.Properties::noOcclusion)
         .item(BlockItem::new)
-        .creativeTab(CreativeModeTabs.REDSTONE_BLOCKS, TabPlacement.END)
+        .creativeTab(CreativeModeTabs.REDSTONE_BLOCKS, TabPlacement.after(Blocks.OBSERVER))
         .build()
         .renderType(() -> RenderType::cutout)
         .register();
