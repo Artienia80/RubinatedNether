@@ -18,8 +18,8 @@ import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = RubinatedNether.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModBookCategories {
-    public static final Supplier<RecipeBookCategories> FREEZABLE_SEARCH = Suppliers.memoize(() -> RecipeBookCategories.create("FREEZABLE_SEARCH", new ItemStack(Items.COMPASS)));
-    public static final Supplier<RecipeBookCategories> FREEZABLE_MISC = Suppliers.memoize(() -> RecipeBookCategories.create("FREEZABLE_MISC", new ItemStack(ModItems.RUBY.get())));
+    //public static final Supplier<RecipeBookCategories> FREEZABLE_SEARCH = Suppliers.memoize(() -> RecipeBookCategories.create("FREEZABLE_SEARCH", new ItemStack(Items.COMPASS)));
+    //public static final Supplier<RecipeBookCategories> FREEZABLE_MISC = Suppliers.memoize(() -> RecipeBookCategories.create("FREEZABLE_MISC", new ItemStack(ModItems.RUBY.get())));
 
 
     /**
@@ -29,8 +29,8 @@ public class ModBookCategories {
      */
     @SubscribeEvent
     public static void registerRecipeCategories(RegisterRecipeBookCategoriesEvent event) {
-        event.registerBookCategories(ModRecipeBookTypes.getFreezer(), ImmutableList.of(FREEZABLE_SEARCH.get(), FREEZABLE_MISC.get()));
-        event.registerAggregateCategory(FREEZABLE_SEARCH.get(), ImmutableList.of(FREEZABLE_MISC.get()));
-        event.registerRecipeCategoryFinder(ModRecipeTypes.FREEZING.get(), recipe -> FREEZABLE_MISC.get());
+       // event.registerBookCategories(ModRecipeBookTypes.getFreezer(), ImmutableList.of(FREEZABLE_SEARCH.get(), FREEZABLE_MISC.get()));
+      //  event.registerAggregateCategory(FREEZABLE_SEARCH.get(), ImmutableList.of(FREEZABLE_MISC.get()));
+       // event.registerRecipeCategoryFinder(ModRecipeTypes.FREEZING.get(), recipe -> FREEZABLE_MISC.get());
     }
 }
