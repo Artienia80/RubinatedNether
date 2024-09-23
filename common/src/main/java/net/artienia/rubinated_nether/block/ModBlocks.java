@@ -1,133 +1,170 @@
 package net.artienia.rubinated_nether.block;
 
-import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.RegistrySupplier;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.custom.FreezerBlock;
-import net.artienia.rubinated_nether.item.ModItems;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import java.util.function.Supplier;
+import uwu.serenity.critter.creative.TabPlacement;
+import uwu.serenity.critter.stdlib.blocks.BlockBuilder;
+import uwu.serenity.critter.stdlib.blocks.BlockEntry;
+import uwu.serenity.critter.stdlib.blocks.BlockRegistrar;
+import uwu.serenity.critter.utils.StatePredicates;
+
+import java.util.function.UnaryOperator;
 
 public class ModBlocks {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(RubinatedNether.MOD_ID, Registries.BLOCK);
 
-    public static final RegistrySupplier<Block> RUBY_BLOCK = registerBlock("ruby_block", () -> new Block(BlockBehaviour
-    .Properties.copy(Blocks.NETHERITE_BLOCK)
-    .mapColor(MapColor.FIRE)
-    ));
-    public static final RegistrySupplier<Block> MOLTEN_RUBY_BLOCK = registerBlock("molten_ruby_block", () -> new RotatedPillarBlock(BlockBehaviour
-    .Properties.copy(Blocks.ANCIENT_DEBRIS)
-    .mapColor(MapColor.FIRE)
-    .lightLevel((p_220871_) -> {return 15;})
-    ));
+    public static final BlockRegistrar BLOCKS = BlockRegistrar.create(RubinatedNether.REGISTRIES);
 
-    public static final RegistrySupplier<Block> BLEEDING_OBSIDIAN = registerBlock("bleeding_obsidian", () -> new Block(BlockBehaviour
-    .Properties.copy(Blocks.CRYING_OBSIDIAN)
-    .mapColor(MapColor.FIRE)
-    .pushReaction(PushReaction.BLOCK)
-    ));
+    public static final BlockEntry<Block> RUBY_BLOCK = BLOCKS.entry("ruby_block", Block::new)
+        .copyProperties(() -> Blocks.NETHERITE_BLOCK)
+        .properties(p -> p.mapColor(MapColor.FIRE))
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.BUILDING_BLOCKS, TabPlacement.after(Blocks.DIAMOND_BLOCK))
+        .build()
+        .register();
 
-    public static final RegistrySupplier<StainedGlassBlock> RUBY_GLASS = registerBlock("ruby_glass", () -> new StainedGlassBlock(DyeColor.RED, BlockBehaviour
-    .Properties.copy(Blocks.GLASS)
-    .mapColor(MapColor.FIRE)
-    .explosionResistance(100F)
-    .noOcclusion()
-    .isRedstoneConductor(ModBlocks::never)
-    ));
-    public static final RegistrySupplier<StainedGlassPaneBlock> RUBY_GLASS_PANE = registerBlock("ruby_glass_pane", () -> new StainedGlassPaneBlock(DyeColor.RED, Block
-    .Properties.copy(Blocks.GLASS)
-    .mapColor(MapColor.FIRE)
-    .explosionResistance(100F)
-    .noOcclusion()
-    .isRedstoneConductor(ModBlocks::never)
-    .isViewBlocking(ModBlocks::never)
-    ));
+    public static final BlockEntry<Block> BLEEDING_OBSIDIAN = BLOCKS.entry("bleeding_obsidian", Block::new)
+        .copyProperties(() -> Blocks.CRYING_OBSIDIAN)
+        .properties(p -> p.mapColor(MapColor.FIRE)
+            .pushReaction(PushReaction.BLOCK))
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(Blocks.CRYING_OBSIDIAN))
+        .build()
+        .register();
 
-    public static final RegistrySupplier<StainedGlassBlock> MOLTEN_RUBY_GLASS = registerBlock("molten_ruby_glass", () -> new StainedGlassBlock(DyeColor.ORANGE, BlockBehaviour
-            .Properties.copy(Blocks.GLASS)
-            .mapColor(MapColor.FIRE)
-            .explosionResistance(100F)
+    public static final BlockEntry<StainedGlassBlock> RUBY_GLASS = BLOCKS.entry("ruby_glass", p -> new StainedGlassBlock(DyeColor.RED, p))
+        .transform(rubyGlassBlock(false))
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.COLORED_BLOCKS, TabPlacement.after(Blocks.GLASS))
+        .build()
+        .register();
+
+    public static final BlockEntry<StainedGlassPaneBlock> RUBY_GLASS_PANE = BLOCKS.entry("ruby_glass_pane", p -> new StainedGlassPaneBlock(DyeColor.RED, p))
+        .transform(rubyGlassBlock(true))
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.COLORED_BLOCKS, TabPlacement.after(Blocks.GLASS_PANE))
+        .build()
+        .register();
+
+    public static final BlockEntry<StainedGlassBlock> MOLTEN_RUBY_GLASS = BLOCKS.entry("molten_ruby_glass", p -> new StainedGlassBlock(DyeColor.ORANGE, p))
+        .transform(rubyGlassBlock(false))
+        .properties(p -> p.lightLevel($ -> 15))
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.COLORED_BLOCKS, TabPlacement.after(RUBY_GLASS))
+        .build()
+        .register();
+
+    public static final BlockEntry<StainedGlassPaneBlock> MOLTEN_RUBY_GLASS_PANE = BLOCKS.entry("molten_ruby_glass_pane", p -> new StainedGlassPaneBlock(DyeColor.ORANGE, p))
+        .transform(rubyGlassBlock(true))
+        .properties(p -> p.lightLevel($ -> 15))
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.COLORED_BLOCKS, TabPlacement.after(RUBY_GLASS_PANE))
+        .build()
+        .register();
+
+    public static final BlockEntry<LanternBlock> RUBY_LANTERN = BLOCKS.entry("ruby_lantern", LanternBlock::new)
+        .copyProperties(() -> Blocks.LANTERN)
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(Blocks.SOUL_LANTERN))
+        .build()
+        .register();
+
+    public static final BlockEntry<Chandelier> RUBY_CHANDELIER = BLOCKS.entry("ruby_chandelier", Chandelier::new)
+        .copyProperties(() -> Blocks.COPPER_BLOCK)
+        .properties(p -> p.mapColor(MapColor.FIRE)
             .noOcclusion()
-            .isRedstoneConductor(ModBlocks::never)
-            .lightLevel((p_220871_) -> {return 10;})
-    ));
-    public static final RegistrySupplier<StainedGlassPaneBlock> MOLTEN_RUBY_GLASS_PANE = registerBlock("molten_ruby_glass_pane", () -> new StainedGlassPaneBlock(DyeColor.ORANGE, Block
-            .Properties.copy(Blocks.GLASS)
-            .mapColor(MapColor.FIRE)
-            .explosionResistance(100F)
+            .isViewBlocking(StatePredicates::never)
+            .lightLevel($ -> 15))
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(RUBY_LANTERN))
+        .build()
+        .renderType(() -> RenderType::cutout)
+        .register();
+
+    public static final BlockEntry<LavaLamp> RUBY_LAVA_LAMP = BLOCKS.entry("ruby_lava_lamp", LavaLamp::new)
+        .copyProperties(() -> Blocks.COPPER_BLOCK)
+        .properties(p -> p.mapColor(MapColor.FIRE)
             .noOcclusion()
-            .isRedstoneConductor(ModBlocks::never)
-            .isViewBlocking(ModBlocks::never)
-            .lightLevel((p_220871_) -> {return 10;})
-    ));
+            .lightLevel($ -> 15))
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(Blocks.SOUL_CAMPFIRE))
+        .build()
+        .renderType(() -> RenderType::cutout)
+        .register();
 
+    public static final BlockEntry<DropExperienceBlock> NETHER_RUBY_ORE = BLOCKS.entry("nether_ruby_ore", p -> new DropExperienceBlock(p, UniformInt.of(3, 6)))
+        .copyProperties(() -> Blocks.NETHERRACK)
+        .properties(p -> p.strength(2f)
+            .requiresCorrectToolForDrops())
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.NATURAL_BLOCKS, TabPlacement.after(Blocks.NETHER_QUARTZ_ORE))
+        .build()
+        .register();
 
-    public static final RegistrySupplier<Block> RUBY_CHANDELIER = registerBlock("ruby_chandelier", () -> new Chandelier(BlockBehaviour
-    .Properties.copy(Blocks.COPPER_BLOCK)
-    .mapColor(MapColor.FIRE)
-    .noOcclusion()
-    .isViewBlocking(ModBlocks::never)
-    .lightLevel((p_220871_) -> {return 15;})
-    ));
-    public static final RegistrySupplier<Block> RUBY_LAVA_LAMP = registerBlock("ruby_lava_lamp", () -> new LavaLamp(BlockBehaviour
-    .Properties.copy(Blocks.COPPER_BLOCK)
-    .mapColor(MapColor.FIRE)
-    .noOcclusion()
-    .lightLevel((p_220871_) -> {return 15;})
-    ));
+    public static final BlockEntry<MagmaXP> MOLTEN_RUBY_ORE = BLOCKS.entry("molten_ruby_ore", p -> new MagmaXP(p, UniformInt.of(4, 8)))
+        .copyProperties(() -> Blocks.MAGMA_BLOCK)
+        .properties(p -> p.strength(2f)
+            .requiresCorrectToolForDrops())
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.NATURAL_BLOCKS, TabPlacement.after(NETHER_RUBY_ORE))
+        .build()
+        .register();
 
-    public static final RegistrySupplier<Block> MOLTEN_RUBY_ORE = registerBlock("molten_ruby_ore", () -> new MagmaXP(BlockBehaviour
-    .Properties.copy(Blocks.MAGMA_BLOCK)
-    .strength(2f)
-    .requiresCorrectToolForDrops(), UniformInt.of(4, 8)
-    ));
-    public static final RegistrySupplier<Block> NETHER_RUBY_ORE = registerBlock("nether_ruby_ore", () -> new DropExperienceBlock(BlockBehaviour
-    .Properties.copy(Blocks.NETHERRACK)
-    .strength(2f).requiresCorrectToolForDrops(), UniformInt.of(3, 6)
-    ));
-    public static final RegistrySupplier<Block> RUBINATED_BLACKSTONE = registerBlock("rubinated_blackstone", () -> new DropExperienceBlock(BlockBehaviour
-    .Properties.copy(Blocks.GILDED_BLACKSTONE)
-    .strength(2f)
-    .requiresCorrectToolForDrops()
-    ));
+    public static final BlockEntry<RotatedPillarBlock> MOLTEN_RUBY_BLOCK = BLOCKS.entry("molten_ruby_block", RotatedPillarBlock::new)
+        .copyProperties(() -> Blocks.ANCIENT_DEBRIS)
+        .properties(p -> p.mapColor(MapColor.FIRE)
+            .lightLevel($ -> 15))
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.NATURAL_BLOCKS, TabPlacement.after(MOLTEN_RUBY_ORE))
+        .build()
+        .register();
 
-    public static final RegistrySupplier<Block> FREEZER = registerBlock("freezer", () -> new FreezerBlock(BlockBehaviour
-    .Properties.copy(Blocks.COPPER_BLOCK)
-    .noOcclusion()
-    ));
-    public static final RegistrySupplier<Block> RUBY_LASER = registerBlock("ruby_laser", () -> new RubyLaserBlock(BlockBehaviour
-    .Properties.copy(Blocks.COPPER_BLOCK)
-    .noOcclusion()
-    ));
-    public static final RegistrySupplier<LanternBlock> RUBY_LANTERN = registerBlock("ruby_lantern", () -> new LanternBlock(BlockBehaviour.Properties.copy(Blocks.LANTERN)));
+    public static final BlockEntry<DropExperienceBlock> RUBINATED_BLACKSTONE = BLOCKS.entry("rubinated_blackstone", DropExperienceBlock::new)
+        .copyProperties(() -> Blocks.GILDED_BLACKSTONE)
+        .properties(p -> p.strength(2f)
+            .requiresCorrectToolForDrops())
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.BUILDING_BLOCKS, TabPlacement.after(Blocks.GILDED_BLACKSTONE))
+        .build()
+        .register();
 
+    public static final BlockEntry<FreezerBlock> FREEZER = BLOCKS.entry("freezer", FreezerBlock::new)
+        .copyProperties(() -> Blocks.COPPER_BLOCK)
+        .properties(BlockBehaviour.Properties::noOcclusion)
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(Blocks.BLAST_FURNACE))
+        .build()
+        .register();
 
-    private static <T extends Block> RegistrySupplier<T> registerBlock(String name, Supplier<T> block) {
-        RegistrySupplier<T> toReturn = BLOCKS.register(name, block);
-        registerBlockItem(name, toReturn);
-        return toReturn;
-    }
+    public static final BlockEntry<RubyLaserBlock> RUBY_LASER = BLOCKS.entry("ruby_laser", RubyLaserBlock::new)
+        .copyProperties(() -> Blocks.COPPER_BLOCK)
+        .properties(BlockBehaviour.Properties::noOcclusion)
+        .item(BlockItem::new)
+        .creativeTab(CreativeModeTabs.REDSTONE_BLOCKS, TabPlacement.END)
+        .build()
+        .renderType(() -> RenderType::cutout)
+        .register();
 
-    private static <T extends Block> RegistrySupplier<Item> registerBlockItem(String name, RegistrySupplier<T> block) {
-        return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+    private static <T extends Block, P> UnaryOperator<BlockBuilder<T, P>> rubyGlassBlock(boolean pane) {
+        return b -> b.copyProperties(() -> pane ? Blocks.GLASS_PANE : Blocks.GLASS)
+            .properties(p -> {
+                p.mapColor(MapColor.FIRE)
+                    .explosionResistance(100F)
+                    .noOcclusion()
+                    .isRedstoneConductor(StatePredicates::never);
+                if(pane) p.isViewBlocking(StatePredicates::never);
+            })
+            .renderType(() -> RenderType::translucent);
     }
 
     public static void register() {
         BLOCKS.register();
     }
 
-    public static boolean never(BlockState state, BlockGetter getter, BlockPos pos){
-        return false;
-    }
 }

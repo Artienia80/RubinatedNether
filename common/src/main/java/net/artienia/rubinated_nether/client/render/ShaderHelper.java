@@ -1,9 +1,9 @@
 package net.artienia.rubinated_nether.client.render;
 
-import dev.architectury.platform.Platform;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.irisshaders.iris.api.v0.IrisApi;
+import uwu.serenity.critter.platform.PlatformUtils;
 
 import java.lang.reflect.Field;
 import java.util.function.BooleanSupplier;
@@ -14,7 +14,7 @@ public class ShaderHelper {
     private static final BooleanSupplier shaderPackInUse;
 
     static {
-        if (Platform.isModLoaded("iris") || Platform.isModLoaded("oculus")) {
+        if (PlatformUtils.modLoaded("iris") || PlatformUtils.modLoaded("oculus")) {
             shaderPackInUse = () -> IrisApi.getInstance().isShaderPackInUse();
         } else if (Package.getPackage("net.optifine") != null) {
             shaderPackInUse = optifineShadersInUse();

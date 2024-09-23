@@ -14,6 +14,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.stream.Stream;
@@ -23,8 +24,8 @@ public class FreezerBlockEntity extends AbstractFreezerBlockEntity implements Me
     private static final Object2IntMap<Item> freezingMap = new Object2IntLinkedOpenHashMap<>();
     private static final Object2IntMap<TagKey<Item>> tagFreezingMap = new Object2IntLinkedOpenHashMap<>();
 
-    public FreezerBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntityTypes.FREEZER.get(), pos, state, ModRecipeTypes.FREEZING.get());
+    public FreezerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state, ModRecipeTypes.FREEZING.get());
     }
 
     @Override

@@ -17,16 +17,19 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.apache.commons.lang3.mutable.MutableDouble;
+import uwu.serenity.critter.utils.TickableBlockEntity;
+
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateListener {
+public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateListener, TickableBlockEntity {
 
     // Shapes representing a 1 block long beam segment
     private static final Map<Direction, VoxelShape> BEAM_SEGMENT_SHAPES = ShapeUtils.allDirections(
@@ -43,8 +46,8 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
     private boolean colored = false;
     private boolean silly = false;
 
-    public RubyLaserBlockEntity(BlockPos pos, BlockState blockState) {
-        super(ModBlockEntityTypes.RUBY_LASER.get(), pos, blockState);
+    public RubyLaserBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
+        super(type, pos, blockState);
     }
 
     @Override
@@ -53,10 +56,16 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
         super.setLevel(level);
     }
 
-    public void tick() {
-        if(level == null) return;
+    @Override
+    public void clientTick() {
         if(blockRange == -1) handleBlockUpdate(level, worldPosition, getBlockState());
-        if(level.isClientSide || getBlockState().getValue(RubyLaserBlock.TINTED)) return;
+    }
+
+    @Override
+    public void tick() {
+        if(blockRange == -1) handleBlockUpdate(level, worldPosition, getBlockState());
+
+        if(getBlockState().getValue(RubyLaserBlock.TINTED)) return;
 
         Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
 

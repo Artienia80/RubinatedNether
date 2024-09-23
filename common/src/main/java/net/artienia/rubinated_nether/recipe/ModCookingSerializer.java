@@ -50,7 +50,6 @@ public class ModCookingSerializer<T extends FreezingRecipe> implements RecipeSer
         return this.factory.create(id, group, modBookCategory, ingredient, result, experience, cookingTime);
     }
 
-    @Nullable
     @Override
     public T fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
         String group = buffer.readUtf();

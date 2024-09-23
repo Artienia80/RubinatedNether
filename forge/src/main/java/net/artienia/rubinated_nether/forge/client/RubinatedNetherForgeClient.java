@@ -1,6 +1,5 @@
 package net.artienia.rubinated_nether.forge.client;
 
-import dev.architectury.platform.Platform;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.client.RubinatedNetherClient;
 import net.artienia.rubinated_nether.client.render.hud.RubyLensOverlay;
@@ -10,6 +9,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -19,7 +19,7 @@ public class RubinatedNetherForgeClient {
     @SubscribeEvent
     public static void onInitializeClient(FMLClientSetupEvent event) {
         event.enqueueWork(RubinatedNetherClient::clientSetup);
-        if(Platform.isModLoaded("curios")) CuriosRenderers.register();
+        if(ModList.get().isLoaded("curios")) CuriosRenderers.register();
     }
 
     @SubscribeEvent

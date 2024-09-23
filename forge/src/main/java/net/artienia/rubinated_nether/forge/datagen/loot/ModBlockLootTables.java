@@ -1,9 +1,7 @@
 package net.artienia.rubinated_nether.forge.datagen.loot;
 
-import dev.architectury.registry.registries.RegistrySupplier;
 import net.artienia.rubinated_nether.block.ModBlocks;
 import net.artienia.rubinated_nether.item.ModItems;
-import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
@@ -14,10 +12,9 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
-import java.util.stream.StreamSupport;
 
 public class ModBlockLootTables extends BlockLootSubProvider {
     public ModBlockLootTables() {
@@ -65,7 +62,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     }
 
     @Override
-    protected Iterable<Block> getKnownBlocks() {
-        return StreamSupport.stream(ModBlocks.BLOCKS.spliterator(), false).map(RegistrySupplier::get)::iterator;
+    protected @NotNull Iterable<Block> getKnownBlocks() {
+        return ModBlocks.BLOCKS.stream().map(entry -> (Block) entry.get())::iterator;
     }
 }

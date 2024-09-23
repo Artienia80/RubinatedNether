@@ -1,6 +1,5 @@
 package net.artienia.rubinated_nether;
 
-import dev.architectury.platform.Platform;
 import net.artienia.rubinated_nether.block.ModBlocks;
 import net.artienia.rubinated_nether.block.entity.FreezerBlockEntity;
 import net.artienia.rubinated_nether.block.entity.ModBlockEntityTypes;
@@ -16,20 +15,23 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uwu.serenity.critter.RegistryManager;
+import uwu.serenity.critter.platform.PlatformUtils;
 
 public final class RubinatedNether {
 
     public static final String MOD_ID = "rubinated_nether";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final RegistryManager REGISTRIES = RegistryManager.create(MOD_ID);
 
     public static void init() {
         LOGGER.info("Rubinating your nether");
 
         ModBlocks.register();
         ModItems.register();
+        ModBlockEntityTypes.register();
         ModTabs.init();
         ModMenuTypes.register();
-        ModBlockEntityTypes.register();
         ModRecipeTypes.register();
         ModRecipeSerializers.register();
         // Write common init code here.
@@ -43,7 +45,7 @@ public final class RubinatedNether {
         FreezerBlockEntity.addItemFreezingTime(Blocks.BLUE_ICE, 1600);
         FreezerBlockEntity.addItemFreezingTime(Blocks.PACKED_ICE, 3200);
 
-        if(Platform.isModLoaded("aether")){
+        if(PlatformUtils.modLoaded("aether")){
             // Scuffing this a little to avoid loading more dependencies
             Block icestone = BuiltInRegistries.BLOCK.get(new ResourceLocation("aether", "icestone"));
             FreezerBlockEntity.addItemFreezingTime(icestone, 600);

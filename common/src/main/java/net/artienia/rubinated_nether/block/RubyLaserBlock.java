@@ -1,5 +1,6 @@
 package net.artienia.rubinated_nether.block;
 
+import net.artienia.rubinated_nether.block.entity.ModBlockEntityTypes;
 import net.artienia.rubinated_nether.block.entity.RubyLaserBlockEntity;
 import net.artienia.rubinated_nether.item.ModItems;
 import net.artienia.rubinated_nether.utils.ShapeUtils;
@@ -30,12 +31,13 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+import uwu.serenity.critter.utils.BEBlock;
 
 import java.util.Map;
 import java.util.stream.Stream;
 
 @SuppressWarnings("deprecation")
-public class RubyLaserBlock extends DirectionalBlock implements EntityBlock {
+public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLaserBlockEntity> {
 
     public static final Map<Direction, VoxelShape> SHAPES = ShapeUtils.allDirections(Shapes.or(
         box(0, 0, 0, 16, 6, 16),
@@ -47,7 +49,7 @@ public class RubyLaserBlock extends DirectionalBlock implements EntityBlock {
 
     public RubyLaserBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState()
+        this.registerDefaultState(this.defaultBlockState()
             .setValue(FACING, Direction.NORTH)
             .setValue(POWER, 0)
             .setValue(TINTED, false)
@@ -106,22 +108,13 @@ public class RubyLaserBlock extends DirectionalBlock implements EntityBlock {
         return true;
     }
 
-    // Block entity stuff
-    @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new RubyLaserBlockEntity(pos, state);
+    public BlockEntityType<? extends RubyLaserBlockEntity> getBlockEntityType() {
+        return ModBlockEntityTypes.RUBY_LASER.get();
     }
 
-    @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return (level1, blockPos, blockState, blockEntity) -> {
-            if(!blockEntity.hasLevel()) {
-                blockEntity.setLevel(level1);
-                UpdateListenerHolder.addUpdateListener(level, (RubyLaserBlockEntity) blockEntity);
-            }
-            ((RubyLaserBlockEntity) blockEntity).tick();
-        };
+    public Class<? extends RubyLaserBlockEntity> getBlockEntityClass() {
+        return RubyLaserBlockEntity.class;
     }
 }

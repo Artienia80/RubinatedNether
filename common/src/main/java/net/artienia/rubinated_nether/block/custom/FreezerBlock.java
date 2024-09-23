@@ -30,7 +30,7 @@ public class FreezerBlock extends AbstractFurnaceBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new FreezerBlockEntity(pos, state);
+        return ModBlockEntityTypes.FREEZER.create(pos, state);
     }
 
     @Override

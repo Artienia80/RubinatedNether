@@ -1,6 +1,5 @@
 package net.artienia.rubinated_nether.platform.forge;
 
-import dev.architectury.platform.Platform;
 import net.artienia.rubinated_nether.item.ModItems;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -9,6 +8,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.fml.ModList;
 import top.theillusivec4.curios.api.CuriosApi;
 
 public class PlatformUtilsImpl {
@@ -21,7 +21,7 @@ public class PlatformUtilsImpl {
     }
 
     public static boolean rubyLensEquipped(Player player) {
-        return Platform.isModLoaded("curios") ? rubyLensEquippedCurios(player) : player.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.RUBY_LENS.get());
+        return ModList.get().isLoaded("curios") ? rubyLensEquippedCurios(player) : player.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.RUBY_LENS.get());
     }
 
     private static boolean rubyLensEquippedCurios(Player player) {

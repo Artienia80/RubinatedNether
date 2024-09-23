@@ -1,20 +1,23 @@
 package net.artienia.rubinated_nether.block.entity;
 
-import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.RegistrySupplier;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.ModBlocks;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.artienia.rubinated_nether.client.render.blockEntity.RubyLaserRenderer;
+import uwu.serenity.critter.stdlib.blockEntities.BlockEntityEntry;
+import uwu.serenity.critter.stdlib.blockEntities.BlockEntityRegistrar;
 
 public class ModBlockEntityTypes {
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(RubinatedNether.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
 
-    public static final RegistrySupplier<BlockEntityType<FreezerBlockEntity>> FREEZER = BLOCK_ENTITY_TYPES.register("freezer", () ->
-        BlockEntityType.Builder.of(FreezerBlockEntity::new, ModBlocks.FREEZER.get()).build(null));
+    public static final BlockEntityRegistrar BLOCK_ENTITY_TYPES = BlockEntityRegistrar.create(RubinatedNether.REGISTRIES);
 
-    public static final RegistrySupplier<BlockEntityType<RubyLaserBlockEntity>> RUBY_LASER = BLOCK_ENTITY_TYPES.register("ruby_laser", () ->
-        BlockEntityType.Builder.of(RubyLaserBlockEntity::new, ModBlocks.RUBY_LASER.get()).build(null));
+    public static final BlockEntityEntry<FreezerBlockEntity> FREEZER = BLOCK_ENTITY_TYPES.entry("freezer", FreezerBlockEntity::new)
+        .validBlock(ModBlocks.FREEZER)
+        .register();
+
+    public static final BlockEntityEntry<RubyLaserBlockEntity> RUBY_LASER = BLOCK_ENTITY_TYPES.entry("ruby_laser", RubyLaserBlockEntity::new)
+        .validBlock(ModBlocks.RUBY_LASER)
+        .renderer(() -> RubyLaserRenderer::new)
+        .register();
 
     public static void register() {
         BLOCK_ENTITY_TYPES.register();
