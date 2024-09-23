@@ -54,7 +54,7 @@ public class ModBlocks {
 
     public static final BlockEntry<StainedGlassBlock> MOLTEN_RUBY_GLASS = BLOCKS.entry("molten_ruby_glass", p -> new StainedGlassBlock(DyeColor.ORANGE, p))
         .transform(rubyGlassBlock(false))
-        .properties(p -> p.lightLevel($ -> 15))
+        .properties(p -> p.lightLevel($ -> 10))
         .item(BlockItem::new)
         .creativeTab(CreativeModeTabs.COLORED_BLOCKS, TabPlacement.after(RUBY_GLASS))
         .build()
@@ -62,7 +62,7 @@ public class ModBlocks {
 
     public static final BlockEntry<StainedGlassPaneBlock> MOLTEN_RUBY_GLASS_PANE = BLOCKS.entry("molten_ruby_glass_pane", p -> new StainedGlassPaneBlock(DyeColor.ORANGE, p))
         .transform(rubyGlassBlock(true))
-        .properties(p -> p.lightLevel($ -> 15))
+        .properties(p -> p.lightLevel($ -> 10))
         .item(BlockItem::new)
         .creativeTab(CreativeModeTabs.COLORED_BLOCKS, TabPlacement.after(RUBY_GLASS_PANE))
         .build()
@@ -119,7 +119,7 @@ public class ModBlocks {
     public static final BlockEntry<RotatedPillarBlock> MOLTEN_RUBY_BLOCK = BLOCKS.entry("molten_ruby_block", RotatedPillarBlock::new)
         .copyProperties(() -> Blocks.ANCIENT_DEBRIS)
         .properties(p -> p.mapColor(MapColor.FIRE)
-            .lightLevel($ -> 15))
+            .lightLevel($ -> 10))
         .item(BlockItem::new)
         .creativeTab(CreativeModeTabs.NATURAL_BLOCKS, TabPlacement.after(MOLTEN_RUBY_ORE))
         .build()
