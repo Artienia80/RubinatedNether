@@ -2,6 +2,8 @@ package net.artienia.rubinated_nether.mixin;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.longs.Long2ReferenceMap;
+import it.unimi.dsi.fastutil.longs.Long2ReferenceOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import net.artienia.rubinated_nether.utils.BlockUpdateListener;
 import net.artienia.rubinated_nether.utils.UpdateListenerHolder;
@@ -23,7 +25,7 @@ public abstract class LevelMixin implements LevelAccessor, UpdateListenerHolder 
     @Shadow public abstract BlockState getBlockState(BlockPos pos);
 
     @Unique
-    private final Long2ObjectMap<Set<BlockUpdateListener>> uwu$updateListeners = new Long2ObjectOpenHashMap<>();
+    private final Long2ReferenceMap<Set<BlockUpdateListener>> uwu$updateListeners = new Long2ReferenceOpenHashMap<>();
 
     @Override
     public void rn$addUpdateListener(BlockUpdateListener listener) {
