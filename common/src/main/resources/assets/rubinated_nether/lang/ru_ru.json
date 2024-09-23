@@ -4,7 +4,7 @@
   "item.rubinated_nether.ruby_shard": "Осколок рубина",
   "item.rubinated_nether.ruby_lens": "Рубиновая линза",
 
-
+  "itemGroup.rubinated_nether.main": "Рубинный Незер",
 
   "block.rubinated_nether.ruby_block": "Блок рубина",
   "block.rubinated_nether.molten_ruby_block": "Блок расплавленного рубина",
@@ -56,5 +56,5 @@
 
   "gui.rubinated_nether.emi.freezes": "Замораживает %s предмет(ов)",
   "emi.category.rubinated_nether.freezing": "Заморозка",
-  "emi.category.rubinated_nether.freezer_fuel": "Морозное топливо"
+  "emi.category.rubinated_nether.freezer_fuel": "Морозное топливо",
 }
