@@ -6,7 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
-public class PlatformUtils {
+public class Platform {
 
     // Forge and fabric do this differently so we need to make a platform class
     @ExpectPlatform

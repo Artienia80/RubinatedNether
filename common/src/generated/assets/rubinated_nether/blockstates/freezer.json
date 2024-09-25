@@ -9,10 +9,12 @@
       "y": 90
     },
     "facing=north,lit=false": {
-      "model": "rubinated_nether:block/freezer"
+      "model": "rubinated_nether:block/freezer",
+      "y": 0
     },
     "facing=north,lit=true": {
-      "model": "rubinated_nether:block/freezer_on"
+      "model": "rubinated_nether:block/freezer_on",
+      "y": 0
     },
     "facing=south,lit=false": {
       "model": "rubinated_nether:block/freezer",

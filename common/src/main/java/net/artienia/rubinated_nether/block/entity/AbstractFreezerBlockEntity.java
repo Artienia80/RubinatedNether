@@ -1,7 +1,7 @@
 package net.artienia.rubinated_nether.block.entity;
 
 import net.artienia.rubinated_nether.mixin.AbstractFurnaceBlockEntityAccessor;
-import net.artienia.rubinated_nether.platform.PlatformUtils;
+import net.artienia.rubinated_nether.platform.Platform;
 import net.artienia.rubinated_nether.recipe.FreezingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -61,13 +61,13 @@ public abstract class AbstractFreezerBlockEntity extends AbstractFurnaceBlockEnt
                 abstractFurnaceBlockEntityAccessor.rubinatedNether$setLitDuration(abstractFurnaceBlockEntityAccessor.rubinatedNether$getLitTime());
                 if (abstractFurnaceBlockEntityAccessor.callIsLit()) {
                     flag1 = true;
-                    if (PlatformUtils.hasCraftingRemainder(itemstack))
-                        abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems().set(1, PlatformUtils.getCraftingRemainder(itemstack));
+                    if (Platform.hasCraftingRemainder(itemstack))
+                        abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems().set(1, Platform.getCraftingRemainder(itemstack));
                     else
                     if (flag3) {
                         itemstack.shrink(1);
                         if (itemstack.isEmpty()) {
-                            abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems().set(1, PlatformUtils.getCraftingRemainder(itemstack));
+                            abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems().set(1, Platform.getCraftingRemainder(itemstack));
                         }
                     }
                 }
@@ -138,8 +138,8 @@ public abstract class AbstractFreezerBlockEntity extends AbstractFurnaceBlockEnt
                 resultSlotStack.grow(resultStack.getCount());
             }
 
-            if (PlatformUtils.hasCraftingRemainder(inputSlotStack) && !PlatformUtils.getCraftingRemainder(inputSlotStack).is(PlatformUtils.getCraftingRemainder(resultStack).getItem())) {
-                stacks.set(0, PlatformUtils.getCraftingRemainder(inputSlotStack));
+            if (Platform.hasCraftingRemainder(inputSlotStack) && !Platform.getCraftingRemainder(inputSlotStack).is(Platform.getCraftingRemainder(resultStack).getItem())) {
+                stacks.set(0, Platform.getCraftingRemainder(inputSlotStack));
             } else {
                 inputSlotStack.shrink(1);
             }
@@ -181,7 +181,7 @@ public abstract class AbstractFreezerBlockEntity extends AbstractFurnaceBlockEnt
         AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) this;
         Optional<NonNullList<Ingredient>> ingredient = abstractFurnaceBlockEntityAccessor.rubinatedNether$getQuickCheck().getRecipeFor(this, this.level).map(AbstractCookingRecipe::getIngredients);
         if (this.remainderItem.isEmpty()) {
-            ingredient.ifPresent(ing -> this.remainderItem = PlatformUtils.getCraftingRemainder(stack)); // Stores the correlating crafting remainder item.
+            ingredient.ifPresent(ing -> this.remainderItem = Platform.getCraftingRemainder(stack)); // Stores the correlating crafting remainder item.
         }
         if (direction == Direction.DOWN && index == 0) {
             if (!this.remainderItem.isEmpty()) {

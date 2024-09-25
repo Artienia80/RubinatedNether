@@ -7,12 +7,17 @@ architectury {
     fabric()
 }
 
-loom {
-    Project common = project(":common")
-    accessWidenerPath = common.file("src/main/resources/rubinatednether.accesswidener")
+fabricApi {
+    configureDataGeneration {
+        createRunConfiguration = false
+    }
 }
 
 sourceSets {
+    create("datagen") {
+        runtimeClasspath += sourceSets["main"].runtimeClasspath
+        compileClasspath += sourceSets["main"].compileClasspath
+    }
     main {
         // Platform specific generated files
         resources {
@@ -23,6 +28,28 @@ sourceSets {
             exclude "**/.fabric"
             exclude "**/.forge"
 
+        }
+    }
+}
+
+loom {
+    Project common = project(":common")
+    Project forge = project(":forge")
+    accessWidenerPath = common.file("src/main/resources/rubinatednether.accesswidener")
+
+    runs {
+        datagen {
+            client()
+            name "Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${common.file("src/generated")}"
+            vmArg "-Drubinated_nether.datagen.fabric-output-dir=${file("src/generated")}"
+            vmArg "-Drubinated_nether.datagen.forge-output-dir=${forge.file("src/generated")}"
+            vmArg "-Dfabric-api.datagen.modid=rubinated_nether"
+
+            runDir "build/datagen"
+
+            source(sourceSets.getByName("datagen"))
         }
     }
 }

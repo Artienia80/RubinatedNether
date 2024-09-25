@@ -2,7 +2,6 @@ package net.artienia.rubinated_nether.platform.fabric;
 
 import dev.emi.trinkets.api.TrinketsApi;
 import net.artienia.rubinated_nether.item.ModItems;
-import net.artienia.rubinated_nether.item.RubyLens;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.tags.TagKey;
@@ -11,9 +10,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import uwu.serenity.critter.platform.PlatformUtils;
 
-public class PlatformUtilsImpl {
+public class PlatformImpl {
     public static boolean hasCraftingRemainder(ItemStack stack) {
         return stack.getItem().hasCraftingRemainingItem();
     }

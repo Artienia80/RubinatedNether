@@ -11,7 +11,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.ModList;
 import top.theillusivec4.curios.api.CuriosApi;
 
-public class PlatformUtilsImpl {
+public class PlatformImpl {
     public static boolean hasCraftingRemainder(ItemStack stack) {
         return stack.hasCraftingRemainingItem();
     }

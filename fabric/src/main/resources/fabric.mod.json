@@ -23,6 +23,9 @@
     ],
     "emi": [
       "net.artienia.rubinated_nether.integrations.emi.EMIModPlugin"
+    ],
+    "fabric-datagen": [
+      "net.artienia.rubinated_nether.datagen.DataGenerators"
     ]
   },
   "mixins": [

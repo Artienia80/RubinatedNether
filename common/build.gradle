@@ -6,6 +6,8 @@ loom {
     accessWidenerPath = file("src/main/resources/rubinatednether.accesswidener")
 }
 
+processResources.duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
 sourceSets {
     main {
         // Platform specific generated files

@@ -1,9 +1,9 @@
-package net.artienia.rubinated_nether.forge.datagen.loot;
+package net.artienia.rubinated_nether.datagen.loot;
 
 import net.artienia.rubinated_nether.block.ModBlocks;
 import net.artienia.rubinated_nether.item.ModItems;
-import net.minecraft.data.loot.BlockLootSubProvider;
-import net.minecraft.world.flag.FeatureFlags;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
@@ -12,17 +12,14 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.Set;
+public class ModBlockLootTables extends FabricBlockLootTableProvider {
 
-public class ModBlockLootTables extends BlockLootSubProvider {
-    public ModBlockLootTables() {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+    public ModBlockLootTables(FabricDataOutput dataOutput) {
+        super(dataOutput);
     }
 
-    @Override
-    protected void generate() {
+    public void generate() {
         this.dropSelf(ModBlocks.RUBY_BLOCK.get());
         this.dropSelf(ModBlocks.MOLTEN_RUBY_BLOCK.get());
         this.dropSelf(ModBlocks.BLEEDING_OBSIDIAN.get());
@@ -35,34 +32,31 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
 
         this.add(ModBlocks.NETHER_RUBY_ORE.get(),
-                block -> createEmeraldLikeOreDrops(ModBlocks.NETHER_RUBY_ORE.get(), ModItems.RUBY.get()));
+            block -> createEmeraldLikeOreDrops(ModBlocks.NETHER_RUBY_ORE.get(), ModItems.RUBY.get()));
         this.add(ModBlocks.MOLTEN_RUBY_ORE.get(),
-                block -> createCopperLikeOreDrops(ModBlocks.MOLTEN_RUBY_ORE.get(), ModItems.MOLTEN_RUBY.get()));
+            block -> createCopperLikeOreDrops(ModBlocks.MOLTEN_RUBY_ORE.get(), ModItems.MOLTEN_RUBY.get()));
         this.add(ModBlocks.RUBINATED_BLACKSTONE.get(),
-                block -> createCopperLikeOreDrops(ModBlocks.RUBINATED_BLACKSTONE.get(), ModItems.RUBY_SHARD.get()));
+            block -> createCopperLikeOreDrops(ModBlocks.RUBINATED_BLACKSTONE.get(), ModItems.RUBY_SHARD.get()));
 
         this.dropSelf(ModBlocks.FREEZER.get());
-
+        this.dropSelf(ModBlocks.RUBY_LASER.get());
     }
 
     protected LootTable.Builder createCopperLikeOreDrops(Block pBlock, Item item) {
         return createSilkTouchDispatchTable(pBlock,
-                this.applyExplosionDecay(pBlock,
-                        LootItem.lootTableItem(item)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
-                                .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+            this.applyExplosionDecay(pBlock,
+                LootItem.lootTableItem(item)
+                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                    .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
     }
 
     protected LootTable.Builder createEmeraldLikeOreDrops(Block pBlock, Item item) {
         return createSilkTouchDispatchTable(pBlock,
-                this.applyExplosionDecay(pBlock,
-                        LootItem.lootTableItem(item)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
-                                .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+            this.applyExplosionDecay(pBlock,
+                LootItem.lootTableItem(item)
+                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
+                    .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
     }
 
-    @Override
-    protected @NotNull Iterable<Block> getKnownBlocks() {
-        return ModBlocks.BLOCKS.stream().map(entry -> (Block) entry.get())::iterator;
-    }
+
 }

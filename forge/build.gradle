@@ -12,15 +12,6 @@ loom {
         mixinConfig "rubinated_nether.mixins.json"
     }
 
-    runs {
-        data {
-            data()
-            programArgs "--all", "--mod", "rubinated_nether"
-            programArgs "--existing", common.file("src/main/resources").getAbsolutePath()
-            programArgs "--output", common.file("src/generated").getAbsolutePath()
-        }
-    }
-
 }
 
 sourceSets {

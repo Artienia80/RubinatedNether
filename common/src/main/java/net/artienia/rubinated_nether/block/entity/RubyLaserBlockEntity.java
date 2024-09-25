@@ -1,10 +1,9 @@
 package net.artienia.rubinated_nether.block.entity;
 
 import net.artienia.rubinated_nether.ModTags;
-import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.ModBlocks;
 import net.artienia.rubinated_nether.block.RubyLaserBlock;
-import net.artienia.rubinated_nether.platform.PlatformUtils;
+import net.artienia.rubinated_nether.platform.Platform;
 import net.artienia.rubinated_nether.utils.BlockUpdateListener;
 import net.artienia.rubinated_nether.utils.ShapeUtils;
 import net.artienia.rubinated_nether.utils.UpdateListenerHolder;
@@ -113,7 +112,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
         // Ignore what IDEA says its stupid
         BlockState state = level.getBlockState(worldPosition.relative(facing));
         silly = state.is(ModTags.Blocks.RUBY_GLASS);
-        visible = silly || state.is(PlatformUtils.getGlassTag());
+        visible = silly || state.is(Platform.getGlassTag());
 
         if(visible && !silly && state.getBlock() instanceof BeaconBeamBlock) {
             DyeColor dye = ((BeaconBeamBlock) state.getBlock()).getColor();

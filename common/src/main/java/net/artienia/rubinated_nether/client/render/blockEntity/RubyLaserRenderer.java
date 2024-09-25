@@ -7,7 +7,7 @@ import net.artienia.rubinated_nether.block.RubyLaserBlock;
 import net.artienia.rubinated_nether.block.entity.RubyLaserBlockEntity;
 import net.artienia.rubinated_nether.client.render.ModRenderTypes;
 import net.artienia.rubinated_nether.client.render.ShaderHelper;
-import net.artienia.rubinated_nether.platform.PlatformUtils;
+import net.artienia.rubinated_nether.platform.Platform;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -39,7 +39,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
         ClientLevel level = Minecraft.getInstance().level;
         if(player == null || level == null) return;
 
-        if(blockEntity.alwaysVisible() || PlatformUtils.rubyLensEquipped(player)) {
+        if(blockEntity.alwaysVisible() || Platform.rubyLensEquipped(player)) {
 
             poseStack.pushPose();
             poseStack.translate(0.5f, 0.5f, 0.5f);
