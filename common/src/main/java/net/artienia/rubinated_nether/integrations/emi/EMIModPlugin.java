@@ -27,8 +27,11 @@ public class EMIModPlugin implements EmiPlugin {
     public void register(EmiRegistry registry) {
         registry.addCategory(FREEZING);
         registry.addCategory(FREEZER_FUEL);
+        registry.addWorkstation(FREEZING, EmiStack.of(ModBlocks.FREEZER.get()));
+        registry.addWorkstation(FREEZER_FUEL, EmiStack.of(ModBlocks.FREEZER.get()));
 
         addAll(registry, ModRecipeTypes.FREEZING.get(), FreezingEMIRecipe::new);
+
         for(FuelRecipe recipe : FreezerFuelRecipeMaker.getFuelRecipes()) {
             registry.addRecipe(new FreezerFuelEMIRecipe(recipe));
         }
