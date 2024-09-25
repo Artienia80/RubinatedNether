@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
@@ -24,7 +25,7 @@ public final class RubinatedNetherFabric implements ModInitializer {
         RubinatedNether.setup();
 
         ModContainer mod = FabricLoader.getInstance().getModContainer(RubinatedNether.MOD_ID).orElseThrow();
-        ResourceManagerHelper.registerBuiltinResourcePack(RubinatedNether.id("better_netherite_template"), mod, ResourcePackActivationType.DEFAULT_ENABLED);
+        ResourceManagerHelper.registerBuiltinResourcePack(RubinatedNether.id("better_netherite_template"), mod, Component.literal("Rubinated Netherite Template"), ResourcePackActivationType.DEFAULT_ENABLED);
 
         registerBiomeModifications();
     }
