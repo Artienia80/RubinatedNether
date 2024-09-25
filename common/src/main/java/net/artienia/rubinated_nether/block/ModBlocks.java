@@ -22,8 +22,10 @@ public class ModBlocks {
     public static final BlockRegistrar BLOCKS = BlockRegistrar.create(RubinatedNether.REGISTRIES);
 
     public static final BlockEntry<Block> RUBY_BLOCK = BLOCKS.entry("ruby_block", Block::new)
-        .copyProperties(() -> Blocks.NETHERITE_BLOCK)
-        .properties(p -> p.mapColor(MapColor.FIRE))
+        .properties(p -> p.mapColor(MapColor.FIRE)
+            .sound(SoundType.METAL)
+            .strength(5.0f, 1200.0f)
+            .requiresCorrectToolForDrops())
         .item(BlockItem::new)
         .creativeTab(CreativeModeTabs.BUILDING_BLOCKS, TabPlacement.after(Blocks.DIAMOND_BLOCK))
         .build()
@@ -117,8 +119,10 @@ public class ModBlocks {
         .register();
 
     public static final BlockEntry<RotatedPillarBlock> MOLTEN_RUBY_BLOCK = BLOCKS.entry("molten_ruby_block", RotatedPillarBlock::new)
-        .copyProperties(() -> Blocks.ANCIENT_DEBRIS)
         .properties(p -> p.mapColor(MapColor.FIRE)
+            .sound(SoundType.ANCIENT_DEBRIS)
+            .strength(5.0f, 1200.0f)
+            .requiresCorrectToolForDrops()
             .lightLevel($ -> 10))
         .item(BlockItem::new)
         .creativeTab(CreativeModeTabs.NATURAL_BLOCKS, TabPlacement.after(MOLTEN_RUBY_ORE))
