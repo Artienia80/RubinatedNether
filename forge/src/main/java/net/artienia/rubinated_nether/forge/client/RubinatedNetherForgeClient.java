@@ -4,14 +4,23 @@ import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.client.RubinatedNetherClient;
 import net.artienia.rubinated_nether.client.render.hud.RubyLensOverlay;
 import net.artienia.rubinated_nether.forge.client.curios.CuriosRenderers;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.PathPackResources;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+
+import java.nio.file.Path;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = RubinatedNether.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RubinatedNetherForgeClient {
@@ -31,6 +40,21 @@ public class RubinatedNetherForgeClient {
     @SubscribeEvent
     public static void registerEntityLayes(EntityRenderersEvent.AddLayers event) {
         RubinatedNetherClient.registerEntityLayers(event.getContext().getEntityRenderDispatcher(), event.getEntityModels(), event::getSkin);
+    }
+
+    @SubscribeEvent
+    public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        RubinatedNetherClient.registeModelLayes(event::registerLayerDefinition);
+    }
+
+    @SubscribeEvent
+    public static void addResourcePack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            Path resourcePath = ModList.get().getModFileById(RubinatedNether.MOD_ID).getFile().findResource("resourcepacks/better_netherite_template");
+            Pack pack = Pack.readMetaAndCreate("rubinated_nether/better_netherite_template", Component.literal("Better Netherite Template"), false,
+                path -> new PathPackResources(path, resourcePath, false), PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, PackSource.BUILT_IN);
+            event.addRepositorySource(packConsumer -> packConsumer.accept(pack));
+        }
     }
 
 }

@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 import uwu.serenity.critter.RegistryManager;
 import uwu.serenity.critter.platform.PlatformUtils;
 
+import java.util.List;
+
 public final class RubinatedNether {
 
     public static final String MOD_ID = "rubinated_nether";
