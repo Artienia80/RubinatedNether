@@ -16,13 +16,19 @@ import java.util.Map;
  */
 public class ShapeUtils {
 
+    public static Map<Direction.Axis, VoxelShape> allAxis(VoxelShape facingY) {
+        Map<Direction.Axis, VoxelShape> map = new EnumMap<>(Direction.Axis.class);
+        for(Direction.Axis axis : Direction.Axis.values()) {
+            Vec3 dir = getDirectionRotationVec(Direction.fromAxisAndDirection(axis, Direction.AxisDirection.POSITIVE));
+            map.put(axis, rotatedCopy(facingY, dir));
+        }
+        return map;
+    }
+
     public static Map<Direction, VoxelShape> allDirections(VoxelShape facingUp) {
         Map<Direction, VoxelShape> map = new EnumMap<>(Direction.class);
         for(Direction direction : Direction.values()) {
-            Vec3 dir = new Vec3(
-                direction == Direction.UP ? 0 : (Direction.Plane.VERTICAL.test(direction) ? 180 : 90),
-                -((Math.max(direction.get2DDataValue(), 0) & 3) * 90f), 0
-            );
+            Vec3 dir = getDirectionRotationVec(direction);
             map.put(direction, rotatedCopy(facingUp, dir));
         }
         return map;
@@ -89,5 +95,12 @@ public class ShapeUtils {
 
     public static double length(VoxelShape shape, Direction.Axis axis) {
         return shape.isEmpty() ? 0 : shape.max(axis) - shape.min(axis);
+    }
+
+    private static Vec3 getDirectionRotationVec(Direction direction) {
+        return new Vec3(
+            direction == Direction.UP ? 0 : (Direction.Plane.VERTICAL.test(direction) ? 180 : 90),
+            -((Math.max(direction.get2DDataValue(), 0) & 3) * 90f), 0
+        );
     }
 }
