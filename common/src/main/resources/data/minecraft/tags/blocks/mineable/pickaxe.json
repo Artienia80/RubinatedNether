@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "rubinated_nether:ruby_block",
     "rubinated_nether:molten_ruby_block",
@@ -13,6 +14,7 @@
     "rubinated_nether:ruby_lantern",
     "rubinated_nether:ruby_chandelier",
     "rubinated_nether:ruby_laser",
+    "rubinated_nether:ruby_lava_lamp",
     "rubinated_nether:freezer"
   ]
 }
