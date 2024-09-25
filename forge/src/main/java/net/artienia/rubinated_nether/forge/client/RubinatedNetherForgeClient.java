@@ -52,7 +52,7 @@ public class RubinatedNetherForgeClient {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(RubinatedNether.MOD_ID).getFile().findResource("resourcepacks/better_netherite_template");
             Pack pack = Pack.readMetaAndCreate("rubinated_nether/better_netherite_template", Component.literal("Better Netherite Template"), false,
-                path -> new PathPackResources(path, resourcePath, false), PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, PackSource.BUILT_IN);
+                path -> new PathPackResources(path, resourcePath, true), PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, PackSource.BUILT_IN);
             event.addRepositorySource(packConsumer -> packConsumer.accept(pack));
         }
     }

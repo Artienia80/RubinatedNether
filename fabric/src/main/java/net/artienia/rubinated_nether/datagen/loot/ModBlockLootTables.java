@@ -29,7 +29,7 @@ public class ModBlockLootTables extends FabricBlockLootTableProvider {
         this.dropSelf(ModBlocks.MOLTEN_RUBY_GLASS_PANE.get());
         this.dropSelf(ModBlocks.RUBY_CHANDELIER.get());
         this.dropSelf(ModBlocks.RUBY_LANTERN.get());
-
+        this.dropSelf(ModBlocks.RUBY_LAVA_LAMP.get());
 
         this.add(ModBlocks.NETHER_RUBY_ORE.get(),
             block -> createEmeraldLikeOreDrops(ModBlocks.NETHER_RUBY_ORE.get(), ModItems.RUBY.get()));
