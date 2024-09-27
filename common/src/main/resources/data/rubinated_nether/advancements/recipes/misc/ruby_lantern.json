@@ -41,7 +41,8 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:ruby_lantern"
+      "rubinated_nether:ruby_lantern",
+      "rubinated_nether:ruby_lantern_from_nuggets"
     ]
   }
 }

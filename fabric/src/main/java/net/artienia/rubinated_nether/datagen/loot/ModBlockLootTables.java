@@ -46,7 +46,7 @@ public class ModBlockLootTables extends FabricBlockLootTableProvider {
         return createSilkTouchDispatchTable(pBlock,
             this.applyExplosionDecay(pBlock,
                 LootItem.lootTableItem(item)
-                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 6.0F)))
+                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 7.0F)))
                     .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
     }
 

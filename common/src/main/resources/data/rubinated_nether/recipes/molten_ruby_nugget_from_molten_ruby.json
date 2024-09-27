@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
+  "group": "molten_ruby",
   "ingredients": [
     {
       "item": "rubinated_nether:molten_ruby"

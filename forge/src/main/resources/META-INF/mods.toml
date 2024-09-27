@@ -25,5 +25,5 @@ side = "BOTH"
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20.1,)"
-ordering = "NONE"
+ordering = "BEFORE"
 side = "BOTH"
