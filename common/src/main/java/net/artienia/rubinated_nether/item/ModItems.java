@@ -25,6 +25,10 @@ public class ModItems {
         .creativeTab(CreativeModeTabs.INGREDIENTS, TabPlacement.after(Items.AMETHYST_SHARD))
         .register();
 
+    public static final ItemEntry<Item> MOLTEN_RUBY_NUGGET = ITEMS.entry("molten_ruby_nugget", Item::new)
+            .creativeTab(CreativeModeTabs.INGREDIENTS, TabPlacement.after(RUBY_SHARD))
+            .register();
+
     public static final ItemEntry<BlockItem> FROSTED_ICE = ITEMS.entry("frosted_ice", p -> new BlockItem(Blocks.FROSTED_ICE, p))
         .creativeTab(CreativeModeTabs.NATURAL_BLOCKS, TabPlacement.before(Blocks.ICE))
         .register();

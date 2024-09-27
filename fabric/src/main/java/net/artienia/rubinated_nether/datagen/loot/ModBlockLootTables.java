@@ -34,7 +34,7 @@ public class ModBlockLootTables extends FabricBlockLootTableProvider {
         this.add(ModBlocks.NETHER_RUBY_ORE.get(),
             block -> createEmeraldLikeOreDrops(ModBlocks.NETHER_RUBY_ORE.get(), ModItems.RUBY.get()));
         this.add(ModBlocks.MOLTEN_RUBY_ORE.get(),
-            block -> createCopperLikeOreDrops(ModBlocks.MOLTEN_RUBY_ORE.get(), ModItems.MOLTEN_RUBY.get()));
+            block -> createCopperLikeOreDrops(ModBlocks.MOLTEN_RUBY_ORE.get(), ModItems.MOLTEN_RUBY_NUGGET.get()));
         this.add(ModBlocks.RUBINATED_BLACKSTONE.get(),
             block -> createCopperLikeOreDrops(ModBlocks.RUBINATED_BLACKSTONE.get(), ModItems.RUBY_SHARD.get()));
 
@@ -46,7 +46,7 @@ public class ModBlockLootTables extends FabricBlockLootTableProvider {
         return createSilkTouchDispatchTable(pBlock,
             this.applyExplosionDecay(pBlock,
                 LootItem.lootTableItem(item)
-                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 6.0F)))
                     .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
     }
 

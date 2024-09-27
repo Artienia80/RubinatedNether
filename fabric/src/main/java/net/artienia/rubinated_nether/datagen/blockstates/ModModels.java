@@ -85,6 +85,7 @@ public class ModModels extends FabricModelProvider {
         generators.generateFlatItem(ModItems.RUBY.get(), ModelTemplates.FLAT_ITEM);
         generators.generateFlatItem(ModItems.MOLTEN_RUBY.get(), ModelTemplates.FLAT_ITEM);
         generators.generateFlatItem(ModItems.RUBY_SHARD.get(), ModelTemplates.FLAT_ITEM);
+        generators.generateFlatItem(ModItems.MOLTEN_RUBY_NUGGET.get(), ModelTemplates.FLAT_ITEM);
         generators.generateFlatItem(ModItems.RUBY_LENS.get(), ModelTemplates.FLAT_ITEM);
         generators.generateFlatItem(ModBlocks.RUBY_CHANDELIER.asItem(), ModelTemplates.FLAT_ITEM);
     }

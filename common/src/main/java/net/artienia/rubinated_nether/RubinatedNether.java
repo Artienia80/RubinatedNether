@@ -41,16 +41,16 @@ public final class RubinatedNether {
 
     public static void setup() {
         FreezerBlockEntity.addItemFreezingTime(Items.SNOWBALL, 50);
-        FreezerBlockEntity.addItemFreezingTime(Blocks.SNOW_BLOCK, 200);
-        FreezerBlockEntity.addItemFreezingTime(Blocks.FROSTED_ICE, 400);
-        FreezerBlockEntity.addItemFreezingTime(Blocks.ICE, 800);
-        FreezerBlockEntity.addItemFreezingTime(Blocks.BLUE_ICE, 1600);
-        FreezerBlockEntity.addItemFreezingTime(Blocks.PACKED_ICE, 3200);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.SNOW_BLOCK, 400);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.FROSTED_ICE, 800);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.ICE, 1600);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.BLUE_ICE, 3200);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.PACKED_ICE, 6400);
 
         if(PlatformUtils.modLoaded("aether")){
             // Scuffing this a little to avoid loading more dependencies
             Block icestone = BuiltInRegistries.BLOCK.get(new ResourceLocation("aether", "icestone"));
-            FreezerBlockEntity.addItemFreezingTime(icestone, 600);
+            FreezerBlockEntity.addItemFreezingTime(icestone, 1200);
         }
     }
 
