@@ -27,32 +27,51 @@
               "name": "rubinated_nether:rubinated_blackstone"
             },
             {
-              "type": "minecraft:item",
-              "functions": [
+              "type": "minecraft:alternatives",
+              "children": [
                 {
-                  "add": false,
-                  "count": {
-                    "type": "minecraft:uniform",
-                    "max": 7.0,
-                    "min": 2.0
-                  },
-                  "function": "minecraft:set_count"
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "chances": [
+                        0.1,
+                        0.14285715,
+                        0.25,
+                        1.0
+                      ],
+                      "condition": "minecraft:table_bonus",
+                      "enchantment": "minecraft:fortune"
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": {
+                        "type": "minecraft:uniform",
+                        "max": 5.0,
+                        "min": 2.0
+                      },
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "rubinated_nether:ruby_shard"
                 },
                 {
-                  "enchantment": "minecraft:fortune",
-                  "formula": "minecraft:ore_drops",
-                  "function": "minecraft:apply_bonus"
-                },
-                {
-                  "function": "minecraft:explosion_decay"
+                  "type": "minecraft:item",
+                  "name": "rubinated_nether:rubinated_blackstone"
                 }
               ],
-              "name": "rubinated_nether:ruby_shard"
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                }
+              ]
             }
           ]
         }
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "rubinated_nether:blocks/rubinated_blackstone"
 }
