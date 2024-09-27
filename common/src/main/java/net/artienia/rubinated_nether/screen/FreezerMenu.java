@@ -23,11 +23,11 @@ public class FreezerMenu extends RecipeBookMenu<Container> {
     private final RecipeBookType recipeBookType;
 
     public FreezerMenu(int containerId, Inventory playerInventory) {
-        this(ModMenuTypes.FREEZER_MENU.get(), ModRecipeTypes.FREEZING.get(), ModRecipeBookTypes.getFreezer(), containerId, playerInventory, new SimpleContainer(3), new SimpleContainerData(4));
+        this(ModMenuTypes.FREEZER_MENU.get(), ModRecipeTypes.FREEZING.get(), RecipeBookType.FURNACE, containerId, playerInventory, new SimpleContainer(3), new SimpleContainerData(4));
     }
 
     public FreezerMenu(int containerId, Inventory playerInventory, Container freezerContainer, ContainerData data) {
-        this(ModMenuTypes.FREEZER_MENU.get(), ModRecipeTypes.FREEZING.get(), ModRecipeBookTypes.getFreezer(), containerId, playerInventory, freezerContainer, data);
+        this(ModMenuTypes.FREEZER_MENU.get(), ModRecipeTypes.FREEZING.get(), RecipeBookType.FURNACE, containerId, playerInventory, freezerContainer, data);
     }
 
     public FreezerMenu(MenuType<?> menuType, RecipeType<? extends FreezingRecipe> recipeType, RecipeBookType recipeBookType, int containerId, Inventory playerInventory, Container container, ContainerData data) {
@@ -166,7 +166,7 @@ public class FreezerMenu extends RecipeBookMenu<Container> {
 
     @Override
     public RecipeBookType getRecipeBookType() {
-        return this.recipeBookType;
+        return RecipeBookType.FURNACE;
     }
 
     @Override
