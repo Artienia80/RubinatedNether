@@ -19,6 +19,7 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 import java.nio.file.Path;
 
@@ -45,17 +46,6 @@ public class RubinatedNetherForgeClient {
     @SubscribeEvent
     public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         RubinatedNetherClient.registeModelLayes(event::registerLayerDefinition);
-    }
-
-    @SubscribeEvent
-    public static void addResourcePack(AddPackFindersEvent event) {
-        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-            Path resourcePath = ModList.get().getModFileById(RubinatedNether.MOD_ID).getFile().findResource("resourcepacks/better_netherite_template");
-            Pack pack = Pack.readMetaAndCreate("rubinated_nether/better_netherite_template", Component.literal("Rubinated Netherite Template"), false,
-                path -> new PathPackResources(path, resourcePath, true), PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, PackSource.BUILT_IN);
-            if(pack == null) return;
-            event.addRepositorySource(packConsumer -> packConsumer.accept(pack));
-        }
     }
 
 }
