@@ -13,12 +13,12 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_ruby": {
+    "has_ruby_shard": {
       "conditions": {
         "items": [
           {
             "items": [
-              "rubinated_nether:ruby"
+              "rubinated_nether:ruby_shard"
             ]
           }
         ]
@@ -36,7 +36,7 @@
     [
       "has_the_recipe",
       "has_glass",
-      "has_ruby"
+      "has_ruby_shard"
     ]
   ],
   "rewards": {

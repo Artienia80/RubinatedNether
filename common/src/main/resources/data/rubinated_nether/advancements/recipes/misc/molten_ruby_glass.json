@@ -13,12 +13,12 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_molten_ruby": {
+    "has_molten_ruby_nugget": {
       "conditions": {
         "items": [
           {
             "items": [
-              "rubinated_nether:molten_ruby"
+              "rubinated_nether:molten_ruby_nugget"
             ]
           }
         ]
@@ -36,7 +36,7 @@
     [
       "has_the_recipe",
       "has_glass",
-      "has_molten_ruby"
+      "has_molten_ruby_nugget"
     ]
   ],
   "rewards": {
