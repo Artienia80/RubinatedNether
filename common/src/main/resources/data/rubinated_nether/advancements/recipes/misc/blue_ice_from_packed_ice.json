@@ -28,7 +28,8 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:blue_ice_from_packed_ice"
+      "rubinated_nether:blue_ice_from_packed_ice",
+      "aether:blue_ice_from_packed_ice"
     ]
   }
 }

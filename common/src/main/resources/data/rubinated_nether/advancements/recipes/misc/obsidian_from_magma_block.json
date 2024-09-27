@@ -28,7 +28,9 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:obsidian_from_magma_block"
+      "rubinated_nether:obsidian_from_magma_block",
+      "aether:obsidian_from_magma_block"
+
     ]
   }
 }

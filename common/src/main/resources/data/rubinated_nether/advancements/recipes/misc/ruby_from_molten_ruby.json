@@ -28,7 +28,9 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:ruby_from_molten_ruby"
+      "rubinated_nether:ruby_from_molten_ruby",
+      "aether:ruby_from_molten_ruby"
+
     ]
   }
 }

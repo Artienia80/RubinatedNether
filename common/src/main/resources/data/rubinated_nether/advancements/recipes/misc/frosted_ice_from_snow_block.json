@@ -28,7 +28,8 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:frosted_ice_from_snow_block"
+      "rubinated_nether:frosted_ice_from_snow_block",
+      "aether:frosted_ice_from_snow_block"
     ]
   }
 }

@@ -28,7 +28,9 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:slime_balls_from_magma_cream"
+      "rubinated_nether:slime_balls_from_magma_cream",
+      "aether:slime_balls_from_magma_cream"
+
     ]
   }
 }

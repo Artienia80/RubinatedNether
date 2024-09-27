@@ -28,7 +28,8 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:ice_from_frosted_ice"
+      "rubinated_nether:ice_from_frosted_ice",
+      "aether:ice_from_frosted_ice"
     ]
   }
 }
