@@ -38,19 +38,19 @@ public final class RubinatedNetherForge {
 
 
     public void addResourcePack(AddPackFindersEvent event) {
+        if(!FMLEnvironment.production) return;
+
+        Path resourcePath = ModList.get().getModFileById(RubinatedNether.MOD_ID).getFile().findResource("resourcepacks/better_netherite_template");
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-            Path resourcePath = ModList.get().getModFileById(RubinatedNether.MOD_ID).getFile().findResource("resourcepacks/better_netherite_template");
+            Pack pack = Pack.readMetaAndCreate("rubinated_nether/better_netherite_template_assets", Component.literal("Rubinated Netherite Template"), false,
+                path -> new PathPackResources(path, resourcePath, true), PackType.CLIENT_RESOURCES, Pack.Position.TOP, PackSource.BUILT_IN);
 
-            Pack pack = Pack.readMetaAndCreate("rubinated_nether/better_netherite_template", Component.literal("Rubinated Netherite Template"), false,
-                path -> new PathPackResources(path, resourcePath, true), PackType.CLIENT_RESOURCES, Pack.Position.TOP, PackSource.DEFAULT);
-            Pack pack2 = Pack.readMetaAndCreate("rubinated_nether/better_netherite_template", Component.literal("Rubinated Netherite Template"), false,
-                path -> new PathPackResources(path, resourcePath, true), PackType.SERVER_DATA, Pack.Position.TOP, PackSource.DEFAULT);
+            event.addRepositorySource(packConsumer -> packConsumer.accept(pack));
+        } else if(event.getPackType() == PackType.SERVER_DATA) {
+            Pack pack2 = Pack.readMetaAndCreate("rubinated_nether/better_netherite_template_data", Component.literal("Rubinated Netherite Template"), false,
+                path -> new PathPackResources(path, resourcePath, true), PackType.SERVER_DATA, Pack.Position.TOP, PackSource.BUILT_IN);
 
-            if(!FMLEnvironment.production) return;
-            event.addRepositorySource(packConsumer -> {
-                packConsumer.accept(pack);
-                packConsumer.accept(pack2);
-            });
+            event.addRepositorySource(consumer -> consumer.accept(pack2));
         }
     }
 }
