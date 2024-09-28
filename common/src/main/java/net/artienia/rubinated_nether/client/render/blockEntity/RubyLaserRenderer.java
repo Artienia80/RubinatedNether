@@ -1,7 +1,6 @@
 package net.artienia.rubinated_nether.client.render.blockEntity;
 
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Axis;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.block.RubyLaserBlock;
 import net.artienia.rubinated_nether.block.entity.RubyLaserBlockEntity;
@@ -60,7 +59,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
             poseStack.mulPose(quat);
             poseStack.translate(-0.5f, -0.5f, -0.5f);
 
-            float i = (float) (blockEntity.getRenderRange() + 1f);
+            float maxY = (float) (blockEntity.getRenderRange() + 1f);
             float[] color;
 
             if(blockEntity.isColored()) {
@@ -76,10 +75,10 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
             // Use fallback render type if shaders in use because beacon beam broken
             VertexConsumer consumer = buffer.getBuffer(getRenderType(blockEntity.isColored() || blockEntity.isSilly()));
 
-            renderFace(poseStack, consumer, .4f, 1, .6f, .6f, i, .6f, color, lerpedTime, Direction.NORTH);
-            renderFace(poseStack, consumer, .6f, 1, .4f, .4f, i, .4f, color, lerpedTime, Direction.SOUTH);
-            renderFace(poseStack, consumer, .4f, 1, .4f, .4f, i, .6f, color, lerpedTime, Direction.EAST);
-            renderFace(poseStack, consumer, .6f, 1, .6f, .6f, i, .4f, color, lerpedTime, Direction.WEST);
+            renderFace(poseStack, consumer, .4f, 1, .6f, .6f, maxY, .6f, color, lerpedTime, Direction.NORTH);
+            renderFace(poseStack, consumer, .6f, 1, .4f, .4f, maxY, .4f, color, lerpedTime, Direction.SOUTH);
+            renderFace(poseStack, consumer, .4f, 1, .4f, .4f, maxY, .6f, color, lerpedTime, Direction.EAST);
+            renderFace(poseStack, consumer, .6f, 1, .6f, .6f, maxY, .4f, color, lerpedTime, Direction.WEST);
             poseStack.popPose();
         }
 

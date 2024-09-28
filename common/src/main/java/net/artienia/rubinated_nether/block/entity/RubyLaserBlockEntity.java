@@ -86,6 +86,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
         }
     }
 
+    @SuppressWarnings({"ConstantValue", "DataFlowIssue"})
     @Override
     public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
         Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
@@ -99,8 +100,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
             if (state.is(ModTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
 
             VoxelShape shape = state.getCollisionShape(level, mutableBlockPos);
-            VoxelShape beam = BEAM_SEGMENT_SHAPES.get(facing);
-            if(Shapes.joinIsNotEmpty(shape, beam, BooleanOp.AND)) {
+            if(Shapes.joinIsNotEmpty(shape, BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND)) {
                 if(level.isClientSide) {
                     Direction.Axis axis = facing.getAxis();
                     rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.max(axis);
@@ -110,6 +110,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
         }
 
         // Ignore what IDEA says its stupid
+        //
         BlockState state = level.getBlockState(worldPosition.relative(facing));
         silly = state.is(ModTags.Blocks.RUBY_GLASS);
         visible = silly || state.is(Platform.getGlassTag());
