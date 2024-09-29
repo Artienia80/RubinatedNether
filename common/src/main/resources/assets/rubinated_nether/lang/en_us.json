@@ -51,11 +51,11 @@
   "block.rubinated_nether.freezer": "Freezer",
   "menu.rubinated_nether.freezer": "Freezer",
   "gui.rubinated_nether.recipebook.toggleRecipes.freezable": "Showing Freezable",
-
   "gui.rubinated_nether.jei.freezer": "Freezing",
   "gui.rubinated_nether.jei.fuel": "Fuels",
-
   "gui.rubinated_nether.emi.freezes": "Freezes %s item(s)",
   "emi.category.rubinated_nether.freezing": "Freezing",
-  "emi.category.rubinated_nether.freezer_fuel": "Freezer Fuel"
+  "emi.category.rubinated_nether.freezer_fuel": "Freezer Fuel",
+
+  "trim_material.rubinated_nether.ruby": "Ruby Material"
 }

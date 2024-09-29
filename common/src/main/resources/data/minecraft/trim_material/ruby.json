@@ -1,0 +1,9 @@
+{
+  "asset_name": "ruby",
+  "description": {
+    "color": "#961B24",
+    "translate": "trim_material.rubinated_nether.ruby"
+  },
+  "ingredient": "rubinated_nether:ruby",
+  "item_model_index": 0.4
+}

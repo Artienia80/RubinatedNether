@@ -57,5 +57,7 @@
 
   "gui.rubinated_nether.emi.freezes": "Замораживает %s предмет(ов)",
   "emi.category.rubinated_nether.freezing": "Заморозка",
-  "emi.category.rubinated_nether.freezer_fuel": "Морозное топливо"
+  "emi.category.rubinated_nether.freezer_fuel": "Морозное топливо",
+
+  "trim_material.rubinated_nether.ruby": "Ruby Material IN RUSSIAN"
 }
