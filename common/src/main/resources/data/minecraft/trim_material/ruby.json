@@ -1,7 +1,7 @@
 {
   "asset_name": "ruby",
   "description": {
-    "color": "#961B24",
+    "color": "#A50621",
     "translate": "trim_material.rubinated_nether.ruby"
   },
   "ingredient": "rubinated_nether:ruby",
