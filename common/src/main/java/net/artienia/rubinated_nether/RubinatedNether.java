@@ -3,6 +3,7 @@ package net.artienia.rubinated_nether;
 import net.artienia.rubinated_nether.block.ModBlocks;
 import net.artienia.rubinated_nether.block.entity.FreezerBlockEntity;
 import net.artienia.rubinated_nether.block.entity.ModBlockEntityTypes;
+import net.artienia.rubinated_nether.init.ModSounds;
 import net.artienia.rubinated_nether.item.ModItems;
 import net.artienia.rubinated_nether.item.ModTabs;
 import net.artienia.rubinated_nether.recipe.ModRecipeSerializers;
@@ -33,6 +34,7 @@ public final class RubinatedNether {
         ModItems.register();
         ModBlockEntityTypes.register();
         ModTabs.init();
+
         ModMenuTypes.register();
         ModRecipeTypes.register();
         ModRecipeSerializers.register();

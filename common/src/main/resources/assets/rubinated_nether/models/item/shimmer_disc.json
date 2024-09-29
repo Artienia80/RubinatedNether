@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/template_music_disc",
+  "textures": {
+    "layer0": "rubinated_nether:item/shimmer_disc"
+  }
+}

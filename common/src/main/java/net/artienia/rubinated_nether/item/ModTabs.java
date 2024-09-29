@@ -17,6 +17,8 @@ public class ModTabs {
             output.accept(ModItems.RUBY_SHARD.get());
             output.accept(ModItems.MOLTEN_RUBY_NUGGET.get());
 
+            output.accept(ModItems.SHIMMER_DISC.get());
+
             output.accept(ModBlocks.NETHER_RUBY_ORE.get());
             output.accept(ModBlocks.MOLTEN_RUBY_ORE.get());
             output.accept(ModBlocks.RUBINATED_BLACKSTONE.get());
