@@ -1,11 +1,12 @@
 package net.artienia.rubinated_nether.content;
 
 import net.artienia.rubinated_nether.RubinatedNether;
+import net.artienia.rubinated_nether.config.RNConfig;
 import net.minecraft.world.item.CreativeModeTab;
 import uwu.serenity.critter.api.entry.RegistryEntry;
 import uwu.serenity.critter.stdlib.creativeTabs.CreativeTabRegistrar;
 
-public class RNTabs {
+public final class RNTabs {
     public static final CreativeTabRegistrar TABS = CreativeTabRegistrar.create(RubinatedNether.REGISTRIES);
     
     public static final RegistryEntry<CreativeModeTab> MAIN = TABS.entry("main")
@@ -46,6 +47,6 @@ public class RNTabs {
         .register();
 
     public static void init() {
-        TABS.register();
+        if(RNConfig.enableCreativeTab) TABS.register();
     }
 }

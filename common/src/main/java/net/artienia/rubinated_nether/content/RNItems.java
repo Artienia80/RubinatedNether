@@ -10,7 +10,7 @@ import uwu.serenity.critter.stdlib.items.ItemEntry;
 import uwu.serenity.critter.stdlib.items.ItemRegistrar;
 
 
-public class RNItems {
+public final class RNItems {
 
     public static final ItemRegistrar ITEMS = ItemRegistrar.create(RubinatedNether.REGISTRIES);
 

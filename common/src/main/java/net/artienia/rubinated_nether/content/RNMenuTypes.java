@@ -9,7 +9,7 @@ import net.minecraft.world.inventory.MenuType;
 import uwu.serenity.critter.api.entry.RegistryEntry;
 import uwu.serenity.critter.api.generic.Registrar;
 
-public class RNMenuTypes {
+public final class RNMenuTypes {
     public static final Registrar<MenuType<?>> MENUS =
             RubinatedNether.REGISTRIES.getRegistrar(Registries.MENU);
 

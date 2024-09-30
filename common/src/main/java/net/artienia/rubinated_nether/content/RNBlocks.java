@@ -21,7 +21,7 @@ import uwu.serenity.critter.utils.StatePredicates;
 
 import java.util.function.UnaryOperator;
 
-public class RNBlocks {
+public final class RNBlocks {
 
     public static final BlockRegistrar BLOCKS = BlockRegistrar.create(RubinatedNether.REGISTRIES);
 

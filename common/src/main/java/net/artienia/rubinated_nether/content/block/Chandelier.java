@@ -1,5 +1,6 @@
 package net.artienia.rubinated_nether.content.block;
 
+import net.artienia.rubinated_nether.config.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -55,8 +56,8 @@ public class Chandelier extends Block {
         BlockState blockstate = pLevel.getBlockState(blockpos$mutableblockpos);
         FallingBlockEntity fallingblockentity = FallingBlockEntity.fall(pLevel, blockpos$mutableblockpos, blockstate);
         int i = Math.max(1 + pPos.getY() - blockpos$mutableblockpos.getY(), 6);
-        float f = 0.22F * (float)i;
-        fallingblockentity.setHurtsEntities(f, 500);
+        float f = RNConfig.chandelierMultiplier * (float)i;
+        fallingblockentity.setHurtsEntities(f, RNConfig.chandelierMaxDamage);
     }
 }
 

@@ -57,5 +57,15 @@
   "emi.category.rubinated_nether.freezing": "Freezing",
   "emi.category.rubinated_nether.freezer_fuel": "Freezer Fuel",
 
-  "trim_material.rubinated_nether.ruby": "Ruby Material"
+  "trim_material.rubinated_nether.ruby": "Ruby Material",
+
+  "config.rubinated_nether.chandelier": "Chandelier",
+  "config.rubinated_nether.chandelier_damage_multiplier": "Damage Multiplier",
+  "config.rubinated_nether.chandelier_max_damage": "Max Damage",
+
+  "config.rubinated_nether.client": "Client Config",
+
+  "config.rubinated_nether.worldgen": "Worldgen Config",
+  "config.rubinated_nether.worldgen.enabled": "Enable Worldgen",
+  "config.rubinated_nether.worldgen.features": "Features"
 }

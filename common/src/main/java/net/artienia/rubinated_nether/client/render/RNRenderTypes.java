@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 
-public final class ModRenderTypes extends RenderType {
+public final class RNRenderTypes extends RenderType {
 
     public static final RenderType LASER_BEAM = RenderType.create(
         "rubinated_nether:laser_beam",
@@ -47,7 +47,7 @@ public final class ModRenderTypes extends RenderType {
             .createCompositeState(false)
     );
 
-    private ModRenderTypes(String name, VertexFormat format, VertexFormat.Mode mode, int bufferSize, boolean affectsCrumbling, boolean sortOnUpload, Runnable setupState, Runnable clearState) {
+    private RNRenderTypes(String name, VertexFormat format, VertexFormat.Mode mode, int bufferSize, boolean affectsCrumbling, boolean sortOnUpload, Runnable setupState, Runnable clearState) {
         super(name, format, mode, bufferSize, affectsCrumbling, sortOnUpload, setupState, clearState);
     }
 }

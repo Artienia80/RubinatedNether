@@ -7,12 +7,50 @@ import net.artienia.rubinated_nether.RubinatedNether;
 @Config(RubinatedNether.MOD_ID)
 public final class RNConfig {
 
+    @ConfigEntry(
+        id = "enable_creative_tab",
+        type = EntryType.BOOLEAN,
+        translation = "config.rubinated_nether.creative_tab"
+    )
+    @Comment("""
+    Enable the mod's creative tab. The items can always be found in vanilla tabs
+    §eRequires Game Restart
+    """)
+    public static boolean enableCreativeTab = true;
+
+    @ConfigSeparator(translation = "config.rubinated_nether.chandelier")
+    @ConfigEntry(
+        id = "chandelier_multiplier",
+        type = EntryType.FLOAT,
+        translation = "config.rubinated_nether.chandelier_damage_multiplier"
+    )
+    @Comment("Chandelier damage multiplier")
+    public static float chandelierMultiplier = 0.22f;
+
+    @ConfigEntry(
+        id = "chandelier_damage_multiplier",
+        type = EntryType.INTEGER,
+        translation = "config.rubinated_nether.chandelier_max_damage"
+    )
+    @Comment("Chandelier max damage")
+    public static int chandelierMaxDamage = 500;
+
     @Category(
         id = "client",
         translation = "config.rubinated_nether.client"
     )
     public static final class Client {
 
+        @ConfigEntry(
+            id = "ruby_lens_opacity",
+            type = EntryType.FLOAT,
+            translation = "config.rubinated_nether.client.ruby_lens_opacity"
+        )
+        @FloatRange(min = 0f, max = 1f)
+        @Comment("""
+            Set the ruby lens opacity. 1 is full and default.
+            """)
+        public static float rubyLensOpacity = 1f;
     }
 
     @Category(
@@ -35,21 +73,21 @@ public final class RNConfig {
         @ConfigEntry(
             id = "nether_ruby_ore",
             type = EntryType.BOOLEAN,
-            translation = "config.rubinated_nether.worldgen.nether_ores"
+            translation = "block.rubinated_nether.nether_ruby_ore"
         )
         public static boolean netherRubyOre = true;
 
         @ConfigEntry(
             id = "molten_ruby_ore",
             type = EntryType.BOOLEAN,
-            translation = "config.rubinated_nether.worldgen.molten_ruby_ore"
+            translation = "block.rubinated_nether.molten_ruby_ore"
         )
         public static boolean moltenRubyOre = true;
 
         @ConfigEntry(
             id = "rubinated_blackstone",
             type = EntryType.BOOLEAN,
-            translation = "config.rubinated_nether.worldgen.rubinated_blackstone"
+            translation = "block.rubinated_nether.rubinated_blackstone"
         )
         public static boolean rubinatedBlackstone = true;
 

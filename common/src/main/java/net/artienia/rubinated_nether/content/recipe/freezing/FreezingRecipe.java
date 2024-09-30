@@ -1,6 +1,5 @@
 package net.artienia.rubinated_nether.content.recipe.freezing;
 
-import net.artienia.rubinated_nether.content.RNRecipeSerializers;
 import net.artienia.rubinated_nether.content.RNRecipes;
 import net.artienia.rubinated_nether.content.recipe.ModBookCategory;
 import net.artienia.rubinated_nether.content.recipe.ModCookingSerializer;
@@ -35,7 +34,7 @@ public class FreezingRecipe extends AbstractCookingRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return RNRecipeSerializers.FREEZING.get();
+        return RNRecipes.FREEZING_SERIALIZER.get();
     }
 
     public static class Serializer extends ModCookingSerializer<FreezingRecipe> {

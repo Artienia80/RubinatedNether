@@ -7,7 +7,7 @@ import net.artienia.rubinated_nether.content.block.ruby_laser.RubyLaserBlockEnti
 import uwu.serenity.critter.stdlib.blockEntities.BlockEntityEntry;
 import uwu.serenity.critter.stdlib.blockEntities.BlockEntityRegistrar;
 
-public class RNBlockEntities {
+public final class RNBlockEntities {
 
     public static final BlockEntityRegistrar BLOCK_ENTITY_TYPES = BlockEntityRegistrar.create(RubinatedNether.REGISTRIES);
 

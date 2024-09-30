@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.*;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.content.block.ruby_laser.RubyLaserBlock;
 import net.artienia.rubinated_nether.content.block.ruby_laser.RubyLaserBlockEntity;
-import net.artienia.rubinated_nether.client.render.ModRenderTypes;
+import net.artienia.rubinated_nether.client.render.RNRenderTypes;
 import net.artienia.rubinated_nether.client.render.ShaderHelper;
 import net.artienia.rubinated_nether.platform.Platform;
 import net.minecraft.client.Minecraft;
@@ -107,7 +107,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
         if(ShaderHelper.isShaderPackInUse()) {
             return RenderType.entityTranslucentEmissive(colored ? LASER_TEXTURE_GREYSCALE : LASER_TEXTURE);
         } else {
-            return colored ? ModRenderTypes.LASER_BEAM_GREYSCALE : ModRenderTypes.LASER_BEAM;
+            return colored ? RNRenderTypes.LASER_BEAM_GREYSCALE : RNRenderTypes.LASER_BEAM;
         }
     }
 }

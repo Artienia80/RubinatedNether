@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import uwu.serenity.critter.api.entry.RegistryEntry;
 import uwu.serenity.critter.api.generic.Registrar;
 
-public class RNRecipes {
+public final class RNRecipes {
     public static final Registrar<RecipeType<?>> RECIPE_TYPES = RubinatedNether.REGISTRIES.getRegistrar(Registries.RECIPE_TYPE);
     public static final Registrar<RecipeSerializer<?>> RECIPE_SERIALIZERS = RubinatedNether.REGISTRIES.getRegistrar(Registries.RECIPE_SERIALIZER);
 
