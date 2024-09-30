@@ -89,6 +89,7 @@ public final class RNBlocks {
             .lightLevel($ -> 15))
         .item(BlockItem::new)
         .creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(RUBY_LANTERN))
+        .flags(RNItems.GENERATE_FLAT_MODEL)
         .build()
         .renderType(() -> RenderType::cutout)
         .register();

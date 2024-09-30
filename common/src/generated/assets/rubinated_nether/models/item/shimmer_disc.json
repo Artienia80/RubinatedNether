@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:item/template_music_disc",
+  "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "rubinated_nether:item/shimmer_disc"
   }

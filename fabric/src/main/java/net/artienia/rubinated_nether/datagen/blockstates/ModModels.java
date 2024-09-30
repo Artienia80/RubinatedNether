@@ -8,6 +8,7 @@ import net.artienia.rubinated_nether.content.RNItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.models.BlockModelGenerators;
 import net.minecraft.data.models.ItemModelGenerators;
 import net.minecraft.data.models.blockstates.*;
@@ -81,12 +82,9 @@ public class ModModels extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerators generators) {
-        generators.generateFlatItem(RNItems.RUBY.get(), ModelTemplates.FLAT_ITEM);
-        generators.generateFlatItem(RNItems.MOLTEN_RUBY.get(), ModelTemplates.FLAT_ITEM);
-        generators.generateFlatItem(RNItems.RUBY_SHARD.get(), ModelTemplates.FLAT_ITEM);
-        generators.generateFlatItem(RNItems.MOLTEN_RUBY_NUGGET.get(), ModelTemplates.FLAT_ITEM);
-        generators.generateFlatItem(RNItems.RUBY_LENS.get(), ModelTemplates.FLAT_ITEM);
-        generators.generateFlatItem(RNBlocks.RUBY_CHANDELIER.asItem(), ModelTemplates.FLAT_ITEM);
+        RubinatedNether.REGISTRIES.getAllEntries(Registries.ITEM).stream()
+            .filter(entry -> entry.hasFlag(RNItems.GENERATE_FLAT_MODEL))
+            .forEach(entry -> generators.generateFlatItem(entry.get(), ModelTemplates.FLAT_ITEM));
     }
 
     private static VariantProperties.Rotation xRotFromDirection(Direction facing) {
