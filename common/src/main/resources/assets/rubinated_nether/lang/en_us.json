@@ -59,11 +59,13 @@
 
   "trim_material.rubinated_nether.ruby": "Ruby Material",
 
+  "config.rubinated_nether.creative_tab": "Enable Creative Tab",
   "config.rubinated_nether.chandelier": "Chandelier",
   "config.rubinated_nether.chandelier_damage_multiplier": "Damage Multiplier",
   "config.rubinated_nether.chandelier_max_damage": "Max Damage",
 
   "config.rubinated_nether.client": "Client Config",
+  "config.rubinated_nether.client.ruby_lens_opacity": "Ruby Lens Overlay Opacity",
 
   "config.rubinated_nether.worldgen": "Worldgen Config",
   "config.rubinated_nether.worldgen.enabled": "Enable Worldgen",

@@ -14,8 +14,8 @@ public final class RNConfig {
     )
     @Comment("""
     Enable the mod's creative tab. The items can always be found in vanilla tabs
-    §eRequires Game Restart
-    """)
+    
+    §eRequires game restart""")
     public static boolean enableCreativeTab = true;
 
     @ConfigSeparator(translation = "config.rubinated_nether.chandelier")
@@ -47,9 +47,7 @@ public final class RNConfig {
             translation = "config.rubinated_nether.client.ruby_lens_opacity"
         )
         @FloatRange(min = 0f, max = 1f)
-        @Comment("""
-            Set the ruby lens opacity. 1 is full and default.
-            """)
+        @Comment("Set the ruby lens opacity. 1 is maximum and default.")
         public static float rubyLensOpacity = 1f;
     }
 
