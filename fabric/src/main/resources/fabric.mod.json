@@ -26,6 +26,9 @@
     ],
     "fabric-datagen": [
       "net.artienia.rubinated_nether.datagen.DataGenerators"
+    ],
+    "modmenu": [
+      "net.artienia.rubinated_nether.fabric.integrations.RNModMenu"
     ]
   },
   "mixins": [

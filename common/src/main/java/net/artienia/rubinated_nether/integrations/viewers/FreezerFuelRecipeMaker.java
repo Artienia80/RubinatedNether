@@ -1,7 +1,7 @@
 package net.artienia.rubinated_nether.integrations.viewers;
 
-import net.artienia.rubinated_nether.block.ModBlocks;
-import net.artienia.rubinated_nether.block.entity.FreezerBlockEntity;
+import net.artienia.rubinated_nether.content.RNBlocks;
+import net.artienia.rubinated_nether.content.block.freezer.FreezerBlockEntity;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public final class FreezerFuelRecipeMaker {
 
     public static List<FuelRecipe> getFuelRecipes() {
         List<FuelRecipe> fuelRecipes = new ArrayList<>();
-        FreezerBlockEntity.getFreezingMap().forEach((item, burnTime) -> fuelRecipes.add(new FuelRecipe(List.of(new ItemStack(item)), burnTime, ModBlocks.FREEZER.get())));
+        FreezerBlockEntity.getFreezingMap().forEach((item, burnTime) -> fuelRecipes.add(new FuelRecipe(List.of(new ItemStack(item)), burnTime, RNBlocks.FREEZER.get())));
         return fuelRecipes;
     }
 }

@@ -1,7 +1,7 @@
 package net.artienia.rubinated_nether.integrations.emi;
 
 import dev.emi.emi.api.render.EmiTexture;
-import net.artienia.rubinated_nether.screen.FreezerScreen;
+import net.artienia.rubinated_nether.content.screen.FreezerScreen;
 
 import java.text.DecimalFormat;
 

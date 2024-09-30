@@ -11,8 +11,8 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.artienia.rubinated_nether.RubinatedNether;
-import net.artienia.rubinated_nether.block.ModBlocks;
-import net.artienia.rubinated_nether.recipe.FreezingRecipe;
+import net.artienia.rubinated_nether.content.RNBlocks;
+import net.artienia.rubinated_nether.content.recipe.freezing.FreezingRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -33,7 +33,7 @@ public class FreezingCategory implements IRecipeCategory<FreezingRecipe> {
 
     public FreezingCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(TEXTURE, 55, 16, 82, 54);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.FREEZER.get().asItem()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RNBlocks.FREEZER.get().asItem()));
         this.fuelIndicator = helper.createDrawable(TEXTURE, 176, 0, 14, 13);
         this.animatedProgressArrow = helper.createAnimatedDrawable(helper.createDrawable(TEXTURE, 176, 14, 23, 16), 100, IDrawableAnimated.StartDirection.LEFT, false);
     }

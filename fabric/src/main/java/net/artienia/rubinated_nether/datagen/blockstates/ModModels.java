@@ -1,14 +1,13 @@
 package net.artienia.rubinated_nether.datagen.blockstates;
 
 import net.artienia.rubinated_nether.RubinatedNether;
-import net.artienia.rubinated_nether.block.ModBlocks;
-import net.artienia.rubinated_nether.block.RubyLaserBlock;
-import net.artienia.rubinated_nether.block.custom.FreezerBlock;
-import net.artienia.rubinated_nether.item.ModItems;
+import net.artienia.rubinated_nether.content.RNBlocks;
+import net.artienia.rubinated_nether.content.block.ruby_laser.RubyLaserBlock;
+import net.artienia.rubinated_nether.content.block.freezer.FreezerBlock;
+import net.artienia.rubinated_nether.content.RNItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.models.BlockModelGenerators;
 import net.minecraft.data.models.ItemModelGenerators;
 import net.minecraft.data.models.blockstates.*;
@@ -43,23 +42,23 @@ public class ModModels extends FabricModelProvider {
         this.generateBlockStates(generators.blockStateOutput);
 
         // Glass Blocks
-        generators.createGlassBlocks(ModBlocks.RUBY_GLASS.get(), ModBlocks.RUBY_GLASS_PANE.get());
-        generators.createGlassBlocks(ModBlocks.MOLTEN_RUBY_GLASS.get(), ModBlocks.MOLTEN_RUBY_GLASS_PANE.get());
+        generators.createGlassBlocks(RNBlocks.RUBY_GLASS.get(), RNBlocks.RUBY_GLASS_PANE.get());
+        generators.createGlassBlocks(RNBlocks.MOLTEN_RUBY_GLASS.get(), RNBlocks.MOLTEN_RUBY_GLASS_PANE.get());
 
         // Regular Blocks
-        generators.createTrivialCube(ModBlocks.RUBY_BLOCK.get());
-        generators.createTrivialCube(ModBlocks.NETHER_RUBY_ORE.get());
-        generators.createTrivialCube(ModBlocks.MOLTEN_RUBY_ORE.get());
-        generators.createTrivialCube(ModBlocks.RUBINATED_BLACKSTONE.get());
-        generators.createTrivialCube(ModBlocks.BLEEDING_OBSIDIAN.get());
-        generators.createLantern(ModBlocks.RUBY_LANTERN.get());
-        generators.createRotatedPillarWithHorizontalVariant(ModBlocks.MOLTEN_RUBY_BLOCK.get(), TexturedModel.COLUMN,  TexturedModel.COLUMN_HORIZONTAL);
+        generators.createTrivialCube(RNBlocks.RUBY_BLOCK.get());
+        generators.createTrivialCube(RNBlocks.NETHER_RUBY_ORE.get());
+        generators.createTrivialCube(RNBlocks.MOLTEN_RUBY_ORE.get());
+        generators.createTrivialCube(RNBlocks.RUBINATED_BLACKSTONE.get());
+        generators.createTrivialCube(RNBlocks.BLEEDING_OBSIDIAN.get());
+        generators.createLantern(RNBlocks.RUBY_LANTERN.get());
+        generators.createRotatedPillarWithHorizontalVariant(RNBlocks.MOLTEN_RUBY_BLOCK.get(), TexturedModel.COLUMN,  TexturedModel.COLUMN_HORIZONTAL);
 
     }
 
     private void generateBlockStates(Consumer<BlockStateGenerator> output) {
         // Ruby Laser
-        output.accept(MultiVariantGenerator.multiVariant(ModBlocks.RUBY_LASER.get())
+        output.accept(MultiVariantGenerator.multiVariant(RNBlocks.RUBY_LASER.get())
             .with(PropertyDispatch.properties(RubyLaserBlock.FACING, RubyLaserBlock.POWER, RubyLaserBlock.TINTED)
                 .generate((facing, power, tinted) -> Variant.variant()
                     .with(VariantProperties.X_ROT, xRotFromDirection(facing))
@@ -69,25 +68,25 @@ public class ModModels extends FabricModelProvider {
             ));
 
         // Freezer
-        output.accept(MultiVariantGenerator.multiVariant(ModBlocks.FREEZER.get())
+        output.accept(MultiVariantGenerator.multiVariant(RNBlocks.FREEZER.get())
             .with(PropertyDispatch.properties(FreezerBlock.FACING, FreezerBlock.LIT)
                 .generate((facing, lit) -> Variant.variant()
                     .with(VariantProperties.Y_ROT, yRotFromDirection(facing))
                     .with(VariantProperties.MODEL, lit ? FREEZER_ON : FREEZER))
             ));
 
-        output.accept(BlockModelGenerators.createSimpleBlock(ModBlocks.RUBY_CHANDELIER.get(), RUBY_CHANDELIER));
-        output.accept(BlockModelGenerators.createAxisAlignedPillarBlock(ModBlocks.RUBY_LAVA_LAMP.get(), RUBY_LAVA_LAMP));
+        output.accept(BlockModelGenerators.createSimpleBlock(RNBlocks.RUBY_CHANDELIER.get(), RUBY_CHANDELIER));
+        output.accept(BlockModelGenerators.createAxisAlignedPillarBlock(RNBlocks.RUBY_LAVA_LAMP.get(), RUBY_LAVA_LAMP));
     }
 
     @Override
     public void generateItemModels(ItemModelGenerators generators) {
-        generators.generateFlatItem(ModItems.RUBY.get(), ModelTemplates.FLAT_ITEM);
-        generators.generateFlatItem(ModItems.MOLTEN_RUBY.get(), ModelTemplates.FLAT_ITEM);
-        generators.generateFlatItem(ModItems.RUBY_SHARD.get(), ModelTemplates.FLAT_ITEM);
-        generators.generateFlatItem(ModItems.MOLTEN_RUBY_NUGGET.get(), ModelTemplates.FLAT_ITEM);
-        generators.generateFlatItem(ModItems.RUBY_LENS.get(), ModelTemplates.FLAT_ITEM);
-        generators.generateFlatItem(ModBlocks.RUBY_CHANDELIER.asItem(), ModelTemplates.FLAT_ITEM);
+        generators.generateFlatItem(RNItems.RUBY.get(), ModelTemplates.FLAT_ITEM);
+        generators.generateFlatItem(RNItems.MOLTEN_RUBY.get(), ModelTemplates.FLAT_ITEM);
+        generators.generateFlatItem(RNItems.RUBY_SHARD.get(), ModelTemplates.FLAT_ITEM);
+        generators.generateFlatItem(RNItems.MOLTEN_RUBY_NUGGET.get(), ModelTemplates.FLAT_ITEM);
+        generators.generateFlatItem(RNItems.RUBY_LENS.get(), ModelTemplates.FLAT_ITEM);
+        generators.generateFlatItem(RNBlocks.RUBY_CHANDELIER.asItem(), ModelTemplates.FLAT_ITEM);
     }
 
     private static VariantProperties.Rotation xRotFromDirection(Direction facing) {

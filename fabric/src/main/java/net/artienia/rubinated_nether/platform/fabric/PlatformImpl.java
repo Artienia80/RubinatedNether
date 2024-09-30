@@ -1,7 +1,7 @@
 package net.artienia.rubinated_nether.platform.fabric;
 
 import dev.emi.trinkets.api.TrinketsApi;
-import net.artienia.rubinated_nether.item.ModItems;
+import net.artienia.rubinated_nether.content.RNItems;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.tags.TagKey;
@@ -21,15 +21,15 @@ public class PlatformImpl {
     }
 
     public static boolean rubyLensEquipped(Player player) {
-        return FabricLoader.getInstance().isModLoaded("trinkets") ? rubyLensEquippedTrinkets(player) : player.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.RUBY_LENS.get());
+        return FabricLoader.getInstance().isModLoaded("trinkets") ? rubyLensEquippedTrinkets(player) : player.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get());
     }
 
     private static boolean rubyLensEquippedTrinkets(Player player) {
-        Item rubyLens = ModItems.RUBY_LENS.get();
+        Item rubyLens = RNItems.RUBY_LENS.get();
         return TrinketsApi.getTrinketComponent(player)
             .map(component -> component.isEquipped(rubyLens))
             .orElse(false)
-            || player.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.RUBY_LENS.get());
+            || player.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get());
     }
 
     public static TagKey<Block> getGlassTag() {

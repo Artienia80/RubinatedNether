@@ -1,7 +1,7 @@
 package net.artienia.rubinated_nether.datagen.loot;
 
-import net.artienia.rubinated_nether.block.ModBlocks;
-import net.artienia.rubinated_nether.item.ModItems;
+import net.artienia.rubinated_nether.content.RNBlocks;
+import net.artienia.rubinated_nether.content.RNItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.world.item.Item;
@@ -20,26 +20,26 @@ public class ModBlockLootTables extends FabricBlockLootTableProvider {
     }
 
     public void generate() {
-        this.dropSelf(ModBlocks.RUBY_BLOCK.get());
-        this.dropSelf(ModBlocks.MOLTEN_RUBY_BLOCK.get());
-        this.dropSelf(ModBlocks.BLEEDING_OBSIDIAN.get());
-        this.dropSelf(ModBlocks.RUBY_GLASS.get());
-        this.dropSelf(ModBlocks.MOLTEN_RUBY_GLASS.get());
-        this.dropSelf(ModBlocks.RUBY_GLASS_PANE.get());
-        this.dropSelf(ModBlocks.MOLTEN_RUBY_GLASS_PANE.get());
-        this.dropSelf(ModBlocks.RUBY_CHANDELIER.get());
-        this.dropSelf(ModBlocks.RUBY_LANTERN.get());
-        this.dropSelf(ModBlocks.RUBY_LAVA_LAMP.get());
+        this.dropSelf(RNBlocks.RUBY_BLOCK.get());
+        this.dropSelf(RNBlocks.MOLTEN_RUBY_BLOCK.get());
+        this.dropSelf(RNBlocks.BLEEDING_OBSIDIAN.get());
+        this.dropSelf(RNBlocks.RUBY_GLASS.get());
+        this.dropSelf(RNBlocks.MOLTEN_RUBY_GLASS.get());
+        this.dropSelf(RNBlocks.RUBY_GLASS_PANE.get());
+        this.dropSelf(RNBlocks.MOLTEN_RUBY_GLASS_PANE.get());
+        this.dropSelf(RNBlocks.RUBY_CHANDELIER.get());
+        this.dropSelf(RNBlocks.RUBY_LANTERN.get());
+        this.dropSelf(RNBlocks.RUBY_LAVA_LAMP.get());
 
-        this.add(ModBlocks.NETHER_RUBY_ORE.get(),
-            block -> createEmeraldLikeOreDrops(ModBlocks.NETHER_RUBY_ORE.get(), ModItems.RUBY.get()));
-        this.add(ModBlocks.MOLTEN_RUBY_ORE.get(),
-            block -> createCopperLikeOreDrops(ModBlocks.MOLTEN_RUBY_ORE.get(), ModItems.MOLTEN_RUBY_NUGGET.get()));
-        this.add(ModBlocks.RUBINATED_BLACKSTONE.get(),
-            block -> createCopperLikeOreDrops(ModBlocks.RUBINATED_BLACKSTONE.get(), ModItems.RUBY_SHARD.get()));
+        this.add(RNBlocks.NETHER_RUBY_ORE.get(),
+            block -> createEmeraldLikeOreDrops(RNBlocks.NETHER_RUBY_ORE.get(), RNItems.RUBY.get()));
+        this.add(RNBlocks.MOLTEN_RUBY_ORE.get(),
+            block -> createCopperLikeOreDrops(RNBlocks.MOLTEN_RUBY_ORE.get(), RNItems.MOLTEN_RUBY_NUGGET.get()));
+        this.add(RNBlocks.RUBINATED_BLACKSTONE.get(),
+            block -> createCopperLikeOreDrops(RNBlocks.RUBINATED_BLACKSTONE.get(), RNItems.RUBY_SHARD.get()));
 
-        this.dropSelf(ModBlocks.FREEZER.get());
-        this.dropSelf(ModBlocks.RUBY_LASER.get());
+        this.dropSelf(RNBlocks.FREEZER.get());
+        this.dropSelf(RNBlocks.RUBY_LASER.get());
     }
 
     protected LootTable.Builder createCopperLikeOreDrops(Block pBlock, Item item) {

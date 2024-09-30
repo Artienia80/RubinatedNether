@@ -1,12 +1,17 @@
 package net.artienia.rubinated_nether.client;
 
+import com.teamresourceful.resourcefulconfig.client.ConfigScreen;
+import com.teamresourceful.resourcefulconfig.common.config.ResourcefulConfig;
+import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.client.render.entity.RubyLensModel;
 import net.artienia.rubinated_nether.client.render.entity.RubyLensRenderLayer;
-import net.artienia.rubinated_nether.screen.FreezerScreen;
-import net.artienia.rubinated_nether.screen.ModMenuTypes;
+import net.artienia.rubinated_nether.config.RNConfig;
+import net.artienia.rubinated_nether.content.screen.FreezerScreen;
+import net.artienia.rubinated_nether.content.RNMenuTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -22,7 +27,13 @@ import java.util.function.Supplier;
 public class RubinatedNetherClient {
     public static void clientSetup() {
         // Register screen provider
-        MenuScreens.register(ModMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
+        MenuScreens.register(RNMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
+    }
+
+    public static Screen getConfigScreen(Screen parent) {
+        ResourcefulConfig config = RubinatedNether.CONFIGURATOR.getConfig(RNConfig.class);
+        if(config == null) return null;
+        return new ConfigScreen(parent, null, config);
     }
 
     public static void registeModelLayes(BiConsumer<ModelLayerLocation, Supplier<LayerDefinition>> layers) {

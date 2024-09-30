@@ -1,20 +1,10 @@
 package net.artienia.rubinated_nether.forge.screen;
 
-import com.google.common.base.Suppliers;
-import com.google.common.collect.ImmutableList;
 import net.artienia.rubinated_nether.RubinatedNether;
-import net.artienia.rubinated_nether.item.ModItems;
-import net.artienia.rubinated_nether.recipe.ModRecipeTypes;
-import net.artienia.rubinated_nether.platform.ModRecipeBookTypes;
-import net.minecraft.client.RecipeBookCategories;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterRecipeBookCategoriesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = RubinatedNether.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModBookCategories {

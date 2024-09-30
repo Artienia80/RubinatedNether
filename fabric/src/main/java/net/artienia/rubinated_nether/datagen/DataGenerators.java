@@ -3,8 +3,8 @@ package net.artienia.rubinated_nether.datagen;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.datagen.blockstates.ModModels;
 import net.artienia.rubinated_nether.datagen.loot.ModBlockLootTables;
-import net.artienia.rubinated_nether.worldgen.ModConfiguredFeatures;
-import net.artienia.rubinated_nether.worldgen.ModPlacedFeatures;
+import net.artienia.rubinated_nether.worldgen.RNConfiguredFeatures;
+import net.artienia.rubinated_nether.worldgen.RNPlacedFeatures;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -26,8 +26,8 @@ public class DataGenerators implements DataGeneratorEntrypoint {
 
     @Override
     public void buildRegistry(RegistrySetBuilder registryBuilder) {
-        registryBuilder.add(Registries.CONFIGURED_FEATURE, ModConfiguredFeatures::bootstrap)
-            .add(Registries.PLACED_FEATURE, ModPlacedFeatures::bootstrap);
+        registryBuilder.add(Registries.CONFIGURED_FEATURE, RNConfiguredFeatures::bootstrap)
+            .add(Registries.PLACED_FEATURE, RNPlacedFeatures::bootstrap);
     }
 
     private static class ModRegistries extends FabricDynamicRegistryProvider {

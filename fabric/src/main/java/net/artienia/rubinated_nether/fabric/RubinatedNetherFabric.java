@@ -1,7 +1,7 @@
 package net.artienia.rubinated_nether.fabric;
 
 import net.artienia.rubinated_nether.RubinatedNether;
-import net.artienia.rubinated_nether.worldgen.ModPlacedFeatures;
+import net.artienia.rubinated_nether.worldgen.RNPlacedFeatures;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -34,9 +34,9 @@ public final class RubinatedNetherFabric implements ModInitializer {
         BiomeModifications.create(RubinatedNether.id("rubies"))
             .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(BiomeTags.IS_NETHER), (selection, context) -> {
                 BiomeModificationContext.GenerationSettingsContext generation = context.getGenerationSettings();
-                generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.NETHER_RUBY_ORE_PLACED_KEY);
-                generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.MOLTEN_RUBY_ORE_PLACED_KEY);
-                generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.RUBINATED_BLACKSTONE_PLACED_KEY);
+                generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, RNPlacedFeatures.NETHER_RUBY_ORE_PLACED_KEY);
+                generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, RNPlacedFeatures.MOLTEN_RUBY_ORE_PLACED_KEY);
+                generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, RNPlacedFeatures.RUBINATED_BLACKSTONE_PLACED_KEY);
             });
     }
 }

@@ -1,14 +1,10 @@
 package net.artienia.rubinated_nether;
 
-import net.artienia.rubinated_nether.block.ModBlocks;
-import net.artienia.rubinated_nether.block.entity.FreezerBlockEntity;
-import net.artienia.rubinated_nether.block.entity.ModBlockEntityTypes;
-import net.artienia.rubinated_nether.init.ModSounds;
-import net.artienia.rubinated_nether.item.ModItems;
-import net.artienia.rubinated_nether.item.ModTabs;
-import net.artienia.rubinated_nether.recipe.ModRecipeSerializers;
-import net.artienia.rubinated_nether.recipe.ModRecipeTypes;
-import net.artienia.rubinated_nether.screen.ModMenuTypes;
+import com.teamresourceful.resourcefulconfig.common.config.Configurator;
+import net.artienia.rubinated_nether.config.RNConfig;
+import net.artienia.rubinated_nether.content.*;
+import net.artienia.rubinated_nether.content.block.freezer.FreezerBlockEntity;
+import net.artienia.rubinated_nether.worldgen.RNPlacementFilters;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
@@ -19,26 +15,28 @@ import org.slf4j.LoggerFactory;
 import uwu.serenity.critter.RegistryManager;
 import uwu.serenity.critter.platform.PlatformUtils;
 
-import java.util.List;
-
 public final class RubinatedNether {
 
     public static final String MOD_ID = "rubinated_nether";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final RegistryManager REGISTRIES = RegistryManager.create(MOD_ID);
+    public static final Configurator CONFIGURATOR = new Configurator();
 
     public static void init() {
         LOGGER.info("Rubinating your nether");
 
-        ModBlocks.register();
-        ModItems.register();
-        ModBlockEntityTypes.register();
-        ModTabs.init();
+        // Register the config to the configurator
+        CONFIGURATOR.registerConfig(RNConfig.class);
 
-        ModMenuTypes.register();
-        ModRecipeTypes.register();
-        ModRecipeSerializers.register();
-        // Write common init code here.
+        // Intialize the registries
+        RNSounds.register();
+        RNBlocks.register();
+        RNItems.register();
+        RNBlockEntities.register();
+        RNTabs.init();
+        RNMenuTypes.register();
+        RNRecipes.register();
+        RNPlacementFilters.register();
     }
 
     public static void setup() {

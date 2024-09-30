@@ -1,14 +1,21 @@
 package net.artienia.rubinated_nether.forge;
 
 
+import com.teamresourceful.resourcefulconfig.client.ConfigScreen;
+import com.teamresourceful.resourcefulconfig.common.config.ResourcefulConfig;
+import com.teamresourceful.resourcefulconfig.common.config.impl.ResourcefulConfigImpl;
+import com.teamresourceful.resourcefulconfig.forge.ResourcefulconfigForge;
+import net.artienia.rubinated_nether.client.RubinatedNetherClient;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -29,6 +36,10 @@ public final class RubinatedNetherForge {
 
         // Run our common setup.
         RubinatedNether.init();
+
+        // Config screen
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+            () -> new ConfigScreenHandler.ConfigScreenFactory(RubinatedNetherClient::getConfigScreen));
     }
 
     public void onSetup(FMLCommonSetupEvent event) {

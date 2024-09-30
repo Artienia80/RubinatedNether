@@ -13,7 +13,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.artienia.rubinated_nether.RubinatedNether;
-import net.artienia.rubinated_nether.block.ModBlocks;
+import net.artienia.rubinated_nether.content.RNBlocks;
 import net.artienia.rubinated_nether.integrations.viewers.FuelRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -32,7 +32,7 @@ public class FreezerFuelCategory implements IRecipeCategory<FuelRecipe> {
     private final LoadingCache<Integer, IDrawableAnimated> cachedFuelIndicator;
 
     public FreezerFuelCategory(IGuiHelper helper) {
-        this(helper, List.of(ModBlocks.FREEZER.get().getName().getString()));
+        this(helper, List.of(RNBlocks.FREEZER.get().getName().getString()));
     }
 
     public FreezerFuelCategory(IGuiHelper helper, List<String> craftingStations) {

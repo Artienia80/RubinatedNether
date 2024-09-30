@@ -2,7 +2,7 @@ package net.artienia.rubinated_nether.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.artienia.rubinated_nether.RubinatedNether;
-import net.artienia.rubinated_nether.item.ModItems;
+import net.artienia.rubinated_nether.content.RNItems;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -29,7 +29,7 @@ public class RubyLensRenderLayer<T extends LivingEntity, M extends EntityModel<T
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
-        if(livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.RUBY_LENS.get())) {
+        if(livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get())) {
             lensModel.copyHeadData(baseModel.getHead());
             lensModel.renderToBuffer(poseStack, buffer.getBuffer(lensModel.renderType(RUBY_LENS_TEXTURE)), packedLight, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
         }

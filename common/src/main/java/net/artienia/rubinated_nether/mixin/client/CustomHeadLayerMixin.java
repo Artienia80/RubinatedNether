@@ -1,7 +1,7 @@
 package net.artienia.rubinated_nether.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.artienia.rubinated_nether.item.ModItems;
+import net.artienia.rubinated_nether.content.RNItems;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -23,7 +23,7 @@ public class CustomHeadLayerMixin {
         cancellable = true
     )
     public void cancelIfRubyLens(PoseStack poseStack, MultiBufferSource buffer, int packedLight, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
-        if(livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.RUBY_LENS.get())) {
+        if(livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get())) {
             poseStack.popPose();
             ci.cancel();
         }

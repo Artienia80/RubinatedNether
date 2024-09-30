@@ -2,8 +2,8 @@ package net.artienia.rubinated_nether.client.render.blockEntity;
 
 import com.mojang.blaze3d.vertex.*;
 import net.artienia.rubinated_nether.RubinatedNether;
-import net.artienia.rubinated_nether.block.RubyLaserBlock;
-import net.artienia.rubinated_nether.block.entity.RubyLaserBlockEntity;
+import net.artienia.rubinated_nether.content.block.ruby_laser.RubyLaserBlock;
+import net.artienia.rubinated_nether.content.block.ruby_laser.RubyLaserBlockEntity;
 import net.artienia.rubinated_nether.client.render.ModRenderTypes;
 import net.artienia.rubinated_nether.client.render.ShaderHelper;
 import net.artienia.rubinated_nether.platform.Platform;

@@ -7,9 +7,9 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.integrations.viewers.FreezerFuelRecipeMaker;
-import net.artienia.rubinated_nether.recipe.FreezingRecipe;
-import net.artienia.rubinated_nether.recipe.ModRecipeTypes;
-import net.artienia.rubinated_nether.screen.FreezerScreen;
+import net.artienia.rubinated_nether.content.recipe.freezing.FreezingRecipe;
+import net.artienia.rubinated_nether.content.RNRecipes;
+import net.artienia.rubinated_nether.content.screen.FreezerScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -35,7 +35,7 @@ public class JEIModPlugin implements IModPlugin {
 
         registration.addRecipes(FreezerFuelCategory.RECIPE_TYPE, FreezerFuelRecipeMaker.getFuelRecipes());
 
-        List<FreezingRecipe> freezingRecipes = recipeManager.getAllRecipesFor(ModRecipeTypes.FREEZING.get());
+        List<FreezingRecipe> freezingRecipes = recipeManager.getAllRecipesFor(RNRecipes.FREEZING.get());
         registration.addRecipes(FreezingCategory.FREEZING_RECIPE_TYPE, freezingRecipes);
     }
 
