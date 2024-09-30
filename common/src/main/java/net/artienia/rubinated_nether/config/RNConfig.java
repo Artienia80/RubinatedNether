@@ -99,11 +99,14 @@ public final class RNConfig {
                     try {
                         return entry.field().getBoolean(null);
                     } catch (Exception e) {
-                        RubinatedNether.LOGGER.warn("No config field with name: {}", fieldName);
+                        RubinatedNether.LOGGER.warn("Config field is not boolean: {}", fieldName);
                         return true;
                     }
                 })
-                .orElse(true);
+                .orElseGet(() -> {
+                    RubinatedNether.LOGGER.warn("No Config field with name: {}", fieldName);
+                    return true;
+                });
         }
     }
 }
