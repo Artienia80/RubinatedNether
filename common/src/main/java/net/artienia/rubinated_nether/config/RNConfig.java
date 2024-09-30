@@ -20,7 +20,7 @@ public final class RNConfig {
 
     @ConfigSeparator(translation = "config.rubinated_nether.chandelier")
     @ConfigEntry(
-        id = "chandelier_multiplier",
+        id = "chandelier_damage_multiplier",
         type = EntryType.FLOAT,
         translation = "config.rubinated_nether.chandelier_damage_multiplier"
     )
@@ -28,7 +28,7 @@ public final class RNConfig {
     public static float chandelierMultiplier = 0.22f;
 
     @ConfigEntry(
-        id = "chandelier_damage_multiplier",
+        id = "chandelier_max_damage",
         type = EntryType.INTEGER,
         translation = "config.rubinated_nether.chandelier_max_damage"
     )
