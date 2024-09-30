@@ -1,8 +1,7 @@
 package net.artienia.rubinated_nether.item;
 
 import net.artienia.rubinated_nether.RubinatedNether;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.sounds.SoundEvent;
+import net.artienia.rubinated_nether.init.ModSounds;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Blocks;
 import uwu.serenity.critter.creative.TabPlacement;
@@ -38,10 +37,11 @@ public class ModItems {
         .creativeTab(CreativeModeTabs.TOOLS_AND_UTILITIES, TabPlacement.after(Items.SPYGLASS))
         .register();
 
-    public static final ItemEntry<Item> SHIMMER_DISC = ITEMS.entry("shimmer_disc", Item::new)
-            .creativeTab(CreativeModeTabs.INGREDIENTS, TabPlacement.after(MOLTEN_RUBY_NUGGET))
-            .register();
-    public static final SoundEvent SHIMMER_DISC = register("music_disc.shimmer");
+    public static final ItemEntry<RecordItem> SHIMMER_DISC = ITEMS.entry("shimmer_disc", p -> new RecordItem(15, ModSounds.SHIMMER.get(), p, 226))
+        .properties(p -> p.stacksTo(1)
+            .rarity(Rarity.UNCOMMON))
+        .creativeTab(CreativeModeTabs.TOOLS_AND_UTILITIES, TabPlacement.END)
+        .register();
 
     public static void register() {
         ITEMS.register();

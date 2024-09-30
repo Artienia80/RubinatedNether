@@ -5,24 +5,20 @@
 
 package net.artienia.rubinated_nether.init;
 
-import net.minecraft.resources.ResourceLocation;
+import net.artienia.rubinated_nether.RubinatedNether;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import uwu.serenity.critter.api.entry.RegistryEntry;
+import uwu.serenity.critter.api.generic.Registrar;
 
-public class ModSounds {
-    public static final DeferredRegister<SoundEvent> REGISTRY;
-    public static final RegistryObject<SoundEvent> SHIMMER_DISC;
+public final class ModSounds {
 
-    public ModSounds() {
+    public static final Registrar<SoundEvent> SOUNDS = RubinatedNether.REGISTRIES.getRegistrar(Registries.SOUND_EVENT);
+
+    public static final RegistryEntry<SoundEvent> SHIMMER = SOUNDS.entry("shimmer", () -> SoundEvent.createVariableRangeEvent(RubinatedNether.id("shimmer_disc"))).register();
+
+    public static void register() {
+        SOUNDS.register();
     }
 
-    static {
-        REGISTRY = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, "rubinated_nether");
-
-        SHIMMER_DISC = REGISTRY.register("shimmer_disc", () -> {
-            return SoundEvent.createVariableRangeEvent(new ResourceLocation("rubinated_nether", "shimmer_disc"));
-        });
-    }
 }
