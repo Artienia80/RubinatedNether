@@ -49,7 +49,7 @@ public final class RNItems {
     public static final ItemEntry<RecordItem> SHIMMER_DISC = ITEMS.entry("shimmer_disc", p -> new RecordItem(15, RNSounds.SHIMMER.get(), p, 226))
         .properties(p -> p.stacksTo(1)
             .rarity(Rarity.RARE))
-        .creativeTab(CreativeModeTabs.TOOLS_AND_UTILITIES, TabPlacement.END)
+        .creativeTab(CreativeModeTabs.TOOLS_AND_UTILITIES, TabPlacement.after(Items.MUSIC_DISC_PIGSTEP))
         .flags(GENERATE_FLAT_MODEL)
         .register();
 
