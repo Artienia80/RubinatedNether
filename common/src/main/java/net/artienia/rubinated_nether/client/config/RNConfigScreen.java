@@ -23,10 +23,5 @@ public class RNConfigScreen extends ConfigScreen {
         return new RNConfigScreen(parent, null, config);
     }
 
-    @Override
-    public void renderDirtBackground(GuiGraphics guiGraphics) {
-        guiGraphics.setColor(0.25F, 0.25F, 0.25F, 1.0F);
-        guiGraphics.blit(BACKROUND, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-    }
+    // TODO: Ruby bg somehow
 }
