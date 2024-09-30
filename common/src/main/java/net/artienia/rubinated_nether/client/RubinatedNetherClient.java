@@ -27,8 +27,7 @@ import java.util.function.Supplier;
 @Environment(EnvType.CLIENT)
 public class RubinatedNetherClient {
     public static void clientSetup() {
-        // Register screen provider
-        MenuScreens.register(RNMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
+        // Currently does nothing but i'll leave it bc its probably useful in the future
     }
 
     public static void registeModelLayes(BiConsumer<ModelLayerLocation, Supplier<LayerDefinition>> layers) {

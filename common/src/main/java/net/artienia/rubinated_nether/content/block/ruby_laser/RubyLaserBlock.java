@@ -79,7 +79,7 @@ public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLase
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         boolean bl = state.getValue(TINTED);
-        level.playLocalSound(pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.5f, bl ? 0.5f : 0.55f, true);
+        level.playLocalSound(pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.5f, bl ? 0.55f : 0.5f, true);
         level.setBlockAndUpdate(pos, state.cycle(TINTED));
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
