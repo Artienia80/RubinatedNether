@@ -11,10 +11,19 @@
   },
   "pattern": [
     "nnn",
-    "ntn",
+    "nrn",
     "nnn"
   ],
   "result": {
     "item": "rubinated_nether:ruby_lantern"
-  }
+  },
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "forge:nuggets/copper"
+      }
+    }
+  ]
 }
