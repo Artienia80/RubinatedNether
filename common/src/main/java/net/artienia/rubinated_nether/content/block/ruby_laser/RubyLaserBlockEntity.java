@@ -1,6 +1,6 @@
 package net.artienia.rubinated_nether.content.block.ruby_laser;
 
-import net.artienia.rubinated_nether.ModTags;
+import net.artienia.rubinated_nether.content.RNTags;
 import net.artienia.rubinated_nether.content.RNBlocks;
 import net.artienia.rubinated_nether.platform.Platform;
 import net.artienia.rubinated_nether.utils.BlockUpdateListener;
@@ -92,7 +92,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
             blockRange = i;
 
             BlockState state = level.getBlockState(mutableBlockPos);
-            if (state.is(ModTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
+            if (state.is(RNTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
 
             VoxelShape shape = state.getCollisionShape(level, mutableBlockPos);
             if(Shapes.joinIsNotEmpty(shape, BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND)) {
@@ -107,7 +107,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
         // Ignore what IDEA says its stupid
         //
         BlockState state = level.getBlockState(worldPosition.relative(facing));
-        silly = state.is(ModTags.Blocks.RUBY_GLASS);
+        silly = state.is(RNTags.Blocks.RUBY_GLASS);
         visible = silly || state.is(Platform.getGlassTag());
 
         if(visible && !silly && state.getBlock() instanceof BeaconBeamBlock) {
