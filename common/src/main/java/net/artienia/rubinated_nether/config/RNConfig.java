@@ -90,7 +90,6 @@ public final class RNConfig {
         public static boolean rubinatedBlackstone = true;
 
         public static boolean shouldPlaceFeature(String fieldName) {
-            // TODO: A better way of doing this
             return enabled && RubinatedNether.CONFIGURATOR.getConfig(RNConfig.class)
                 .getSubConfig("worldgen")
                 .flatMap(worldgen -> worldgen.getEntry(fieldName))
