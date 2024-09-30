@@ -98,7 +98,7 @@ public final class RNConfig {
                     try {
                         return entry.field().getBoolean(null);
                     } catch (Exception e) {
-                        RubinatedNether.LOGGER.warn("Config field is not boolean: {}", fieldName);
+                        RubinatedNether.LOGGER.error("Failed to read config field: {}", fieldName);
                         return true;
                     }
                 })
