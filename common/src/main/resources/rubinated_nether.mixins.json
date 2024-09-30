@@ -12,7 +12,7 @@
     "defaultRequire": 1
   },
   "client": [
-    "client.ClientboundNetworkHandlerMixin",
+    "client.ClientPacketListenerMixin",
     "client.CustomHeadLayerMixin"
   ]
 }

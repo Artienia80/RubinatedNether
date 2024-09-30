@@ -22,6 +22,10 @@
     },
     {
       "type": "minecraft:biome"
+    },
+    {
+      "type": "rubinated_nether:config_filter",
+      "value": "nether_ruby_ore"
     }
   ]
 }
