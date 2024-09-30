@@ -3,6 +3,7 @@ package net.artienia.rubinated_nether.client;
 import com.teamresourceful.resourcefulconfig.client.ConfigScreen;
 import com.teamresourceful.resourcefulconfig.common.config.ResourcefulConfig;
 import net.artienia.rubinated_nether.RubinatedNether;
+import net.artienia.rubinated_nether.client.config.RNConfigScreen;
 import net.artienia.rubinated_nether.client.render.entity.RubyLensModel;
 import net.artienia.rubinated_nether.client.render.entity.RubyLensRenderLayer;
 import net.artienia.rubinated_nether.config.RNConfig;
@@ -28,12 +29,6 @@ public class RubinatedNetherClient {
     public static void clientSetup() {
         // Register screen provider
         MenuScreens.register(RNMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
-    }
-
-    public static Screen getConfigScreen(Screen parent) {
-        ResourcefulConfig config = RubinatedNether.CONFIGURATOR.getConfig(RNConfig.class);
-        if(config == null) return null;
-        return new ConfigScreen(parent, null, config);
     }
 
     public static void registeModelLayes(BiConsumer<ModelLayerLocation, Supplier<LayerDefinition>> layers) {
