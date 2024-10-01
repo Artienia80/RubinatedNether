@@ -57,6 +57,9 @@
   "emi.category.rubinated_nether.freezing": "Freezing",
   "emi.category.rubinated_nether.freezer_fuel": "Freezer Fuel",
 
+  "item.rubinated_nether.shimmer_disc": "Rubinated Music Disc",
+  "item.rubinated_nether.shimmer_disc.desc": "Quizzly - Shimmer",
+
   "trim_material.rubinated_nether.ruby": "Ruby Material",
 
   "config.rubinated_nether.creative_tab": "Enable Creative Tab",
