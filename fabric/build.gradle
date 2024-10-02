@@ -14,10 +14,6 @@ fabricApi {
 }
 
 sourceSets {
-    create("datagen") {
-        runtimeClasspath += sourceSets["main"].runtimeClasspath
-        compileClasspath += sourceSets["main"].compileClasspath
-    }
     main {
         // Platform specific generated files
         resources {
@@ -48,8 +44,6 @@ loom {
             vmArg "-Dfabric-api.datagen.modid=rubinated_nether"
 
             runDir "build/datagen"
-
-            source(sourceSets.getByName("datagen"))
         }
     }
 }

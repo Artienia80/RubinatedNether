@@ -25,7 +25,7 @@
       "net.artienia.rubinated_nether.integrations.emi.EMIModPlugin"
     ],
     "fabric-datagen": [
-      "net.artienia.rubinated_nether.datagen.DataGenerators"
+      "net.artienia.rubinated_nether.datagen.RNDataGenerators"
     ],
     "modmenu": [
       "net.artienia.rubinated_nether.fabric.integrations.RNModMenu"

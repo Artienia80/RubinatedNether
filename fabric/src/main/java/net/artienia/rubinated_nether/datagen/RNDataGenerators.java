@@ -1,8 +1,8 @@
 package net.artienia.rubinated_nether.datagen;
 
 import net.artienia.rubinated_nether.RubinatedNether;
-import net.artienia.rubinated_nether.datagen.blockstates.ModModels;
-import net.artienia.rubinated_nether.datagen.loot.ModBlockLootTables;
+import net.artienia.rubinated_nether.datagen.models.RNModels;
+import net.artienia.rubinated_nether.datagen.loot.RNBlockLootTables;
 import net.artienia.rubinated_nether.worldgen.RNConfiguredFeatures;
 import net.artienia.rubinated_nether.worldgen.RNPlacedFeatures;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -15,12 +15,12 @@ import net.minecraft.core.registries.Registries;
 
 import java.util.concurrent.CompletableFuture;
 
-public class DataGenerators implements DataGeneratorEntrypoint {
+public class RNDataGenerators implements DataGeneratorEntrypoint {
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator generator) {
         FabricDataGenerator.Pack pack = generator.createPack();
-        pack.addProvider(ModModels::new);
-        pack.addProvider(ModBlockLootTables::new);
+        pack.addProvider(RNModels::new);
+        pack.addProvider(RNBlockLootTables::new);
         pack.addProvider(ModRegistries::new);
     }
 

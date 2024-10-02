@@ -1,4 +1,4 @@
-package net.artienia.rubinated_nether.datagen.blockstates;
+package net.artienia.rubinated_nether.datagen.models;
 
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.content.RNBlocks;
@@ -18,7 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Consumer;
 
-public class ModModels extends FabricModelProvider {
+public class RNModels extends FabricModelProvider {
 
     private static final ResourceLocation RUBY_LASER = RubinatedNether.id("block/ruby_laser");
     private static final ResourceLocation RUBY_LASER_ON = RubinatedNether.id("block/ruby_laser_on");
@@ -32,7 +32,7 @@ public class ModModels extends FabricModelProvider {
 
     private static final ResourceLocation RUBY_LAVA_LAMP = RubinatedNether.id("block/ruby_lava_lamp");
 
-    public ModModels(FabricDataOutput output) {
+    public RNModels(FabricDataOutput output) {
         super(output);
     }
 
