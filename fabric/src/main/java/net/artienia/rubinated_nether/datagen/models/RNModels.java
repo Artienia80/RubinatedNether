@@ -82,8 +82,7 @@ public class RNModels extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerators generators) {
-        RubinatedNether.REGISTRIES.getAllEntries(Registries.ITEM).stream()
-            .filter(entry -> entry.hasFlag(RNItems.GENERATE_FLAT_MODEL))
+        RubinatedNether.REGISTRIES.getAllEntries(Registries.ITEM, RNItems.GENERATE_FLAT_MODEL)
             .forEach(entry -> generators.generateFlatItem(entry.get(), ModelTemplates.FLAT_ITEM));
     }
 
