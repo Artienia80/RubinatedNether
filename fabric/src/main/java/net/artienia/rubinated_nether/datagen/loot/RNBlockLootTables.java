@@ -13,9 +13,9 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
-public class ModBlockLootTables extends FabricBlockLootTableProvider {
+public class RNBlockLootTables extends FabricBlockLootTableProvider {
 
-    public ModBlockLootTables(FabricDataOutput dataOutput) {
+    public RNBlockLootTables(FabricDataOutput dataOutput) {
         super(dataOutput);
     }
 
@@ -40,6 +40,7 @@ public class ModBlockLootTables extends FabricBlockLootTableProvider {
 
         this.dropSelf(RNBlocks.FREEZER.get());
         this.dropSelf(RNBlocks.RUBY_LASER.get());
+
     }
 
     protected LootTable.Builder createCopperLikeOreDrops(Block pBlock, Item item) {

@@ -12,37 +12,37 @@ public final class RNTabs {
     public static final RegistryEntry<CreativeModeTab> MAIN = TABS.entry("main")
         .icon(RNItems.RUBY::asStack)
         .displayItems((itemDisplayParameters, output) -> {
-            output.accept(RNItems.RUBY.get());
-            output.accept(RNItems.MOLTEN_RUBY.get());
-            output.accept(RNItems.RUBY_SHARD.get());
-            output.accept(RNItems.MOLTEN_RUBY_NUGGET.get());
+            output.accept(RNItems.RUBY);
+            output.accept(RNItems.MOLTEN_RUBY);
+            output.accept(RNItems.RUBY_SHARD);
+            output.accept(RNItems.MOLTEN_RUBY_NUGGET);
 
-            output.accept(RNItems.SHIMMER_DISC.get());
+            output.accept(RNItems.SHIMMER_DISC);
 
-            output.accept(RNBlocks.NETHER_RUBY_ORE.get());
-            output.accept(RNBlocks.MOLTEN_RUBY_ORE.get());
-            output.accept(RNBlocks.RUBINATED_BLACKSTONE.get());
+            output.accept(RNBlocks.NETHER_RUBY_ORE);
+            output.accept(RNBlocks.MOLTEN_RUBY_ORE);
+            output.accept(RNBlocks.RUBINATED_BLACKSTONE);
 
-            output.accept(RNBlocks.RUBY_BLOCK.get());
-            output.accept(RNBlocks.MOLTEN_RUBY_BLOCK.get());
+            output.accept(RNBlocks.RUBY_BLOCK);
+            output.accept(RNBlocks.MOLTEN_RUBY_BLOCK);
 
-            output.accept(RNBlocks.BLEEDING_OBSIDIAN.get());
+            output.accept(RNBlocks.BLEEDING_OBSIDIAN);
 
-            output.accept(RNBlocks.RUBY_GLASS.get());
-            output.accept(RNBlocks.RUBY_GLASS_PANE.get());
-            output.accept(RNBlocks.MOLTEN_RUBY_GLASS.get());
-            output.accept(RNBlocks.MOLTEN_RUBY_GLASS_PANE.get());
+            output.accept(RNBlocks.RUBY_GLASS);
+            output.accept(RNBlocks.RUBY_GLASS_PANE);
+            output.accept(RNBlocks.MOLTEN_RUBY_GLASS);
+            output.accept(RNBlocks.MOLTEN_RUBY_GLASS_PANE);
 
 
-            output.accept(RNBlocks.RUBY_LANTERN.get());
-            output.accept(RNBlocks.RUBY_CHANDELIER.get());
-            output.accept(RNBlocks.RUBY_LAVA_LAMP.get());
+            output.accept(RNBlocks.RUBY_LANTERN);
+            output.accept(RNBlocks.RUBY_CHANDELIER);
+            output.accept(RNBlocks.RUBY_LAVA_LAMP);
 
-            output.accept(RNBlocks.FREEZER.get());
-            output.accept(RNItems.FROSTED_ICE.get());
+            output.accept(RNBlocks.FREEZER);
+            output.accept(RNItems.FROSTED_ICE);
 
-            output.accept(RNItems.RUBY_LENS.get());
-            output.accept(RNBlocks.RUBY_LASER.get());
+            output.accept(RNItems.RUBY_LENS);
+            output.accept(RNBlocks.RUBY_LASER);
         })
         .register();
 
