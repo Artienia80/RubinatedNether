@@ -51,28 +51,26 @@
   "block.rubinated_nether.freezer": "Zamrażarka",
   "menu.rubinated_nether.freezer": "Zamrażarka",
   "gui.rubinated_nether.recipebook.toggleRecipes.freezable": "Pokazuj przedmioty do zamrożenia",
-
   "gui.rubinated_nether.jei.freezer": "Mrożenie",
   "gui.rubinated_nether.jei.fuel": "Paliwa",
-
   "gui.rubinated_nether.emi.freezes": "Zamraża %s przedmioty",
   "emi.category.rubinated_nether.freezing": "Zamrażanie",
   "emi.category.rubinated_nether.freezer_fuel": "Paliwo Zamrażarki",
 
-  "item.rubinated_nether.shimmer_disc": "Rubinated Music Disc",
+  "item.rubinated_nether.shimmer_disc": "Rubinowy Dysk Muzyczny",
   "item.rubinated_nether.shimmer_disc.desc": "Quizzly - Shimmer",
 
-  "trim_material.rubinated_nether.ruby": "Ruby Material",
+  "trim_material.rubinated_nether.ruby": "Materiał Rubin",
 
-  "config.rubinated_nether.creative_tab": "Enable Creative Tab",
-  "config.rubinated_nether.chandelier": "Chandelier",
-  "config.rubinated_nether.chandelier_damage_multiplier": "Damage Multiplier",
-  "config.rubinated_nether.chandelier_max_damage": "Max Damage",
+  "config.rubinated_nether.creative_tab": "Aktywuj zakładke w ekwipunku kreatywnym",
+  "config.rubinated_nether.chandelier": "Żyrandol",
+  "config.rubinated_nether.chandelier_damage_multiplier": "Mnożnik obrażeń",
+  "config.rubinated_nether.chandelier_max_damage": "Maksymalne obrażenia",
 
-  "config.rubinated_nether.client": "Client Config",
-  "config.rubinated_nether.client.ruby_lens_opacity": "Ruby Lens Overlay Opacity",
+  "config.rubinated_nether.client": "Ustawienia Clienta",
+  "config.rubinated_nether.client.ruby_lens_opacity": "Przeźroczystość Overlay'u Rubinowej Soczewki",
 
-  "config.rubinated_nether.worldgen": "Worldgen Config",
-  "config.rubinated_nether.worldgen.enabled": "Enable Worldgen",
+  "config.rubinated_nether.worldgen": "Ustawienia generacji świata",
+  "config.rubinated_nether.worldgen.enabled": "Aktywuj generacje świata",
   "config.rubinated_nether.worldgen.features": "Features"
 }
