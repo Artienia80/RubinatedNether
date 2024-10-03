@@ -3,8 +3,13 @@ package net.artienia.rubinated_nether.content;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.config.RNConfig;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import uwu.serenity.critter.api.entry.RegistryEntry;
+import uwu.serenity.critter.creative.TabPlacement;
 import uwu.serenity.critter.stdlib.creativeTabs.CreativeTabRegistrar;
+import uwu.serenity.critter.stdlib.items.ItemBuilder;
+
+import java.util.function.UnaryOperator;
 
 public final class RNTabs {
     public static final CreativeTabRegistrar TABS = CreativeTabRegistrar.create(RubinatedNether.REGISTRIES);
@@ -46,7 +51,14 @@ public final class RNTabs {
         })
         .register();
 
-    public static void init() {
+    public static void register() {
         if(RNConfig.enableCreativeTab) TABS.register();
+    }
+
+    public static <I extends Item, P> UnaryOperator<ItemBuilder<I, P>> modTabIfEnabled(TabPlacement placement) {
+        if(RNConfig.enableCreativeTab) {
+            return b -> b.creativeTab(MAIN, placement);
+        }
+        return UnaryOperator.identity();
     }
 }

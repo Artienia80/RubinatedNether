@@ -9,6 +9,7 @@ import net.artienia.rubinated_nether.client.render.entity.RubyLensRenderLayer;
 import net.artienia.rubinated_nether.config.RNConfig;
 import net.artienia.rubinated_nether.content.screen.FreezerScreen;
 import net.artienia.rubinated_nether.content.RNMenuTypes;
+import net.artienia.rubinated_nether.integrations.RNModCompat;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -27,7 +28,7 @@ import java.util.function.Supplier;
 @Environment(EnvType.CLIENT)
 public class RubinatedNetherClient {
     public static void clientSetup() {
-        // Currently does nothing but i'll leave it bc its probably useful in the future
+        RNModCompat.clientSetup();
     }
 
     public static void registeModelLayes(BiConsumer<ModelLayerLocation, Supplier<LayerDefinition>> layers) {

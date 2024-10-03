@@ -69,7 +69,6 @@ subprojects {
             url = "https://maven.is-immensely.gay/nightly"
         }
         maven {
-            // Location of the maven that hosts Team Resourceful's jars.
             name = "Resourceful Bees Maven"
             url = "https://nexus.resourcefulbees.com/repository/maven-public/"
         }

@@ -61,6 +61,9 @@ dependencies {
     // Curios
     modImplementation("top.theillusivec4.curios:curios-forge:${rootProject.curios_version}+${rootProject.minecraft_version}")
 
+    // Spelunkery
+    modCompileOnly("maven.modrinth:spelunkery:1.20.1-0.3.13-forge")
+
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionForge')
 }

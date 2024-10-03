@@ -40,4 +40,7 @@ dependencies {
 
     // Iris Shaders (only needed for shader test, api is identical to oculus)
     modCompileOnly("maven.modrinth:iris:1.7.2+1.20.1")
+
+    // Spelunkery
+    modCompileOnly("maven.modrinth:spelunkery:1.20.1-0.3.13-fabric")
 }
