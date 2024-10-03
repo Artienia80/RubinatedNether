@@ -15,15 +15,15 @@ import java.util.function.Supplier;
 public class RNModCompat {
 
     // Put all the compat handlers for compatible mods in here
-    public static final Map<String, Supplier<CompatHandler>> COMPAT = ImmutableMap.<String, Supplier<CompatHandler>>builder()
-        .put("spelunkery", SpelunkeryCompat::new)
-        .put("aether", AetherCompat::new)
+    public static final Map<String, Supplier<Supplier<CompatHandler>>> COMPAT = ImmutableMap.<String, Supplier<Supplier<CompatHandler>>>builder()
+        .put("spelunkery", () -> SpelunkeryCompat::new)
+        .put("aether", () -> AetherCompat::new)
         .build();
 
     private static final Supplier<List<CompatHandler>> ACTIVE_HANDLERS = Suppliers.memoize(() -> COMPAT.entrySet()
         .stream()
         .filter(entry -> PlatformUtils.modLoaded(entry.getKey()))
-        .map(entry -> entry.getValue().get())
+        .map(entry -> entry.getValue().get().get())
         .toList()
     );
 
