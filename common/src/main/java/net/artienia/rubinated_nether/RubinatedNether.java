@@ -9,6 +9,7 @@ import net.artienia.rubinated_nether.worldgen.RNPlacementFilters;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uwu.serenity.critter.RegistryManager;
@@ -53,6 +54,7 @@ public final class RubinatedNether {
         // Mod compat setup
         RNModCompat.setup();
     }
+
 
     public static ResourceLocation id(String id) {
         return new ResourceLocation(MOD_ID, id);

@@ -1,9 +1,7 @@
 package net.artienia.rubinated_nether.content;
 
 import net.artienia.rubinated_nether.RubinatedNether;
-import net.artienia.rubinated_nether.content.block.Chandelier;
-import net.artienia.rubinated_nether.content.block.LavaLamp;
-import net.artienia.rubinated_nether.content.block.MagmaXP;
+import net.artienia.rubinated_nether.content.block.*;
 import net.artienia.rubinated_nether.content.block.ruby_laser.RubyLaserBlock;
 import net.artienia.rubinated_nether.content.block.freezer.FreezerBlock;
 import net.minecraft.client.renderer.RenderType;
@@ -44,7 +42,7 @@ public final class RNBlocks {
         .build()
         .register();
 
-    public static final BlockEntry<Block> POROUS_ROCK = BLOCKS.entry("porous_rock", Block::new)
+    public static final BlockEntry<LavaSpongeBlock> SPONGERACK = BLOCKS.entry("spongerack", LavaSpongeBlock::new)
             .properties(p -> p.mapColor(MapColor.COLOR_BROWN)
                     .sound(SoundType.STONE))
             .item(BlockItem::new)
@@ -112,6 +110,17 @@ public final class RNBlocks {
         .build()
         .renderType(() -> RenderType::cutout)
         .register();
+
+    public static final BlockEntry<Brazier> RUBY_BRAZIER = BLOCKS.entry("ruby_brazier", Brazier::new)
+            .copyProperties(() -> Blocks.COPPER_BLOCK)
+            .properties(p -> p.mapColor(MapColor.FIRE)
+                    .noOcclusion()
+                    .lightLevel($ -> 15))
+            .item(BlockItem::new)
+            .creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(RNBlocks.RUBY_LAVA_LAMP))
+            .build()
+            .renderType(() -> RenderType::cutout)
+            .register();
 
     public static final BlockEntry<DropExperienceBlock> NETHER_RUBY_ORE = BLOCKS.entry("nether_ruby_ore", p -> new DropExperienceBlock(p, UniformInt.of(3, 6)))
         .copyProperties(() -> Blocks.NETHERRACK)
