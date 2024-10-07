@@ -43,10 +43,11 @@ public final class RNBlocks {
         .register();
 
     public static final BlockEntry<LavaSpongeBlock> SPONGERACK = BLOCKS.entry("spongerack", LavaSpongeBlock::new)
+            .copyProperties(() -> Blocks.NETHERRACK)
             .properties(p -> p.mapColor(MapColor.COLOR_BROWN)
                     .sound(SoundType.STONE))
             .item(BlockItem::new)
-            .creativeTab(CreativeModeTabs.BUILDING_BLOCKS, TabPlacement.after(RNBlocks.BLEEDING_OBSIDIAN))
+            .creativeTab(CreativeModeTabs.NATURAL_BLOCKS, TabPlacement.after(Blocks.WET_SPONGE))
             .build()
             .register();
 
