@@ -32,6 +32,8 @@ public final class RNTabs {
             output.accept(RNBlocks.MOLTEN_RUBY_BLOCK);
 
             output.accept(RNBlocks.BLEEDING_OBSIDIAN);
+            output.accept(RNBlocks.POROUS_ROCK);
+
 
             output.accept(RNBlocks.RUBY_GLASS);
             output.accept(RNBlocks.RUBY_GLASS_PANE);

@@ -22,7 +22,7 @@ public final class RubinatedNether {
 
     public static void init() {
         // *Rubinates your nether*
-        LOGGER.info("Rubinating your nether");
+        LOGGER.info("Rubinating all over your nether");
 
         // Register the config to the configurator
         CONFIGURATOR.registerConfig(RNConfig.class);

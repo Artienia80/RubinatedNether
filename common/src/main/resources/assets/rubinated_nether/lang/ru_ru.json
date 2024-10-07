@@ -74,5 +74,6 @@
 
   "config.rubinated_nether.worldgen": "Worldgen Config",
   "config.rubinated_nether.worldgen.enabled": "Enable Worldgen",
-  "config.rubinated_nether.worldgen.features": "Features"
+  "config.rubinated_nether.worldgen.features": "Features",
+  "block.rubinated_nether.porous_rock": "Porous Rock"
 }

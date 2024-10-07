@@ -72,5 +72,6 @@
 
   "config.rubinated_nether.worldgen": "Világgenerálás konfigurálása",
   "config.rubinated_nether.worldgen.enabled": "Világgenerálás engedélyezése",
-  "config.rubinated_nether.worldgen.features": "Adottságok"
+  "config.rubinated_nether.worldgen.features": "Adottságok",
+  "block.rubinated_nether.porous_rock": "Porous Rock"
 }

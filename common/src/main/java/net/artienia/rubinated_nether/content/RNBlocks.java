@@ -44,6 +44,14 @@ public final class RNBlocks {
         .build()
         .register();
 
+    public static final BlockEntry<Block> POROUS_ROCK = BLOCKS.entry("porous_rock", Block::new)
+            .properties(p -> p.mapColor(MapColor.COLOR_BROWN)
+                    .sound(SoundType.STONE))
+            .item(BlockItem::new)
+            .creativeTab(CreativeModeTabs.BUILDING_BLOCKS, TabPlacement.after(RNBlocks.BLEEDING_OBSIDIAN))
+            .build()
+            .register();
+
     public static final BlockEntry<StainedGlassBlock> RUBY_GLASS = BLOCKS.entry("ruby_glass", p -> new StainedGlassBlock(DyeColor.RED, p))
         .transform(rubyGlassBlock(false))
         .item(BlockItem::new)
@@ -159,6 +167,7 @@ public final class RNBlocks {
         .build()
         .renderType(() -> RenderType::cutout)
         .register();
+
 
     private static <T extends Block, P> UnaryOperator<BlockBuilder<T, P>> rubyGlassBlock(boolean pane) {
         return b -> b.copyProperties(() -> pane ? Blocks.GLASS_PANE : Blocks.GLASS)
