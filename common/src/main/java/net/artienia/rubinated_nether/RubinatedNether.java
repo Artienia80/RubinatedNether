@@ -37,6 +37,8 @@ public final class RubinatedNether {
         RNMenuTypes.register();
         RNRecipes.register();
         RNPlacementFilters.register();
+        RNLootNumberProviders.register();
+        RNLootConditions.register();
 
         // Initialize mod compat
         RNModCompat.init();

@@ -36,10 +36,9 @@ public class RNBlockLootTables extends FabricBlockLootTableProvider {
 
     public void generate() {
 
+        // Self-dropping blocks (automated)
         RubinatedNether.REGISTRIES.getAllEntries(Registries.BLOCK, RNBlocks.DROP_SELF)
-            .stream()
-            .map(RegistryEntry::get)
-            .forEach(this::dropSelf);
+            .forEach(entry -> dropSelf(entry.get()));
 
         this.add(RNBlocks.NETHER_RUBY_ORE.get(), block -> createToolDependantDrops(block, RNItems.RUBY_SHARD, RNItems.RUBY));
 

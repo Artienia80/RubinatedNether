@@ -27,27 +27,55 @@
               "name": "rubinated_nether:nether_ruby_ore"
             },
             {
-              "type": "minecraft:item",
-              "functions": [
+              "type": "minecraft:alternatives",
+              "children": [
                 {
-                  "add": false,
-                  "count": {
-                    "type": "minecraft:uniform",
-                    "max": 1.0,
-                    "min": 1.0
-                  },
-                  "function": "minecraft:set_count"
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "rubinated_nether:item_tier",
+                      "max_level": 2147483647,
+                      "min_level": 3
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 1.0,
+                      "function": "minecraft:set_count"
+                    },
+                    {
+                      "function": "minecraft:explosion_decay"
+                    }
+                  ],
+                  "name": "rubinated_nether:ruby"
                 },
                 {
-                  "enchantment": "minecraft:fortune",
-                  "formula": "minecraft:ore_drops",
-                  "function": "minecraft:apply_bonus"
-                },
-                {
-                  "function": "minecraft:explosion_decay"
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "rubinated_nether:item_tier",
+                      "max_level": 2,
+                      "min_level": 2
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": {
+                        "type": "rubinated_nether:config_uniform",
+                        "max_field": "ruby_ore_max_shards",
+                        "min_field": "ruby_ore_min_shards"
+                      },
+                      "function": "minecraft:set_count"
+                    },
+                    {
+                      "function": "minecraft:explosion_decay"
+                    }
+                  ],
+                  "name": "rubinated_nether:ruby_shard"
                 }
-              ],
-              "name": "rubinated_nether:ruby"
+              ]
             }
           ]
         }

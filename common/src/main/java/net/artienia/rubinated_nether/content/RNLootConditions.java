@@ -13,4 +13,7 @@ public final class RNLootConditions {
 
     public static final RegistryEntry<LootItemConditionType> ITEM_TIER = CONDITIONS.entry("item_tier", ItemTierLootCondition::createType).register();
 
+    public static void register() {
+        CONDITIONS.register();
+    }
 }
