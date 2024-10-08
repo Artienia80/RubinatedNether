@@ -13,6 +13,7 @@
   "block.rubinated_nether.nether_ruby_ore": "Nether Ruby Ore",
   "block.rubinated_nether.rubinated_blackstone": "Rubinated Blackstone",
   "block.rubinated_nether.bleeding_obsidian": "Bleeding Obsidian",
+  "block.rubinated_nether.spongerack": "Spongerack",
   "block.rubinated_nether.ruby_glass": "Ruby Glass",
   "block.rubinated_nether.ruby_glass_pane": "Ruby Glass Pane",
   "block.rubinated_nether.molten_ruby_glass": "Molten Ruby Glass",
@@ -21,6 +22,7 @@
   "block.rubinated_nether.ruby_laser": "Ruby Laser",
   "block.rubinated_nether.ruby_lantern": "Ruby Lantern",
   "block.rubinated_nether.ruby_lava_lamp": "Ruby Lava Lamp",
+  "block.rubinated_nether.ruby_brazier": "Ruby Brazier",
 
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Blood For The Blood God!",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Obtain Bleeding Obsidian",

@@ -72,5 +72,7 @@
 
   "config.rubinated_nether.worldgen": "Ustawienia generacji świata",
   "config.rubinated_nether.worldgen.enabled": "Aktywuj generacje świata",
-  "config.rubinated_nether.worldgen.features": "Features"
+  "config.rubinated_nether.worldgen.features": "Features",
+  "block.rubinated_nether.spongerack": "Spongerack",
+  "block.rubinated_nether.ruby_brazier": "Ruby Brazier"
 }
