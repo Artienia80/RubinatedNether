@@ -25,8 +25,6 @@ public class RNConfiguredFeatures {
         RuleTest magmaReplacables = new BlockMatchTest(Blocks.MAGMA_BLOCK);
         RuleTest gildedReplacables = new BlockMatchTest(Blocks.GILDED_BLACKSTONE);
 
-
-
         register(context, NETHER_RUBY_ORE_KEY, Feature.ORE, new OreConfiguration(netherrackReplacables,
                 RNBlocks.NETHER_RUBY_ORE.get().defaultBlockState(), 3));
         register(context, MOLTEN_RUBY_ORE_KEY, Feature.ORE, new OreConfiguration(magmaReplacables,

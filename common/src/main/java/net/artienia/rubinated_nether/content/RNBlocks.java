@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import uwu.serenity.critter.api.entry.flags.EntryFlag;
 import uwu.serenity.critter.creative.TabPlacement;
 import uwu.serenity.critter.stdlib.blocks.BlockBuilder;
 import uwu.serenity.critter.stdlib.blocks.BlockEntry;
@@ -25,6 +26,8 @@ public final class RNBlocks {
 
     public static final BlockRegistrar BLOCKS = BlockRegistrar.create(RubinatedNether.REGISTRIES);
 
+    public static final EntryFlag DROP_SELF = EntryFlag.of(RubinatedNether.id("drop_self"));
+
     public static final BlockEntry<Block> RUBY_BLOCK = BLOCKS.entry("ruby_block", Block::new)
         .properties(p -> p.mapColor(MapColor.FIRE)
             .sound(SoundType.METAL)
@@ -33,6 +36,7 @@ public final class RNBlocks {
         .item(BlockItem::new)
         .creativeTab(CreativeModeTabs.BUILDING_BLOCKS, TabPlacement.after(Blocks.DIAMOND_BLOCK))
         .build()
+        .flags(DROP_SELF)
         .register();
 
     public static final BlockEntry<Block> BLEEDING_OBSIDIAN = BLOCKS.entry("bleeding_obsidian", Block::new)
@@ -42,6 +46,7 @@ public final class RNBlocks {
         .item(BlockItem::new)
         .creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(Blocks.CRYING_OBSIDIAN))
         .build()
+        .flags(DROP_SELF)
         .register();
 
     public static final BlockEntry<StainedGlassBlock> RUBY_GLASS = BLOCKS.entry("ruby_glass", p -> new StainedGlassBlock(DyeColor.RED, p))

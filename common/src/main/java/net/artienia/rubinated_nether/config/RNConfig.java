@@ -18,6 +18,14 @@ public final class RNConfig {
     §eRequires game restart""")
     public static boolean enableCreativeTab = true;
 
+    @ConfigEntry(
+        id = "netherite_template_recipe",
+        type = EntryType.BOOLEAN,
+        translation = "config.rubinated_nether.custom_smithing_recipe"
+    )
+    @Comment("Enable custom netherite smithing template recipe")
+    public static boolean customSmithingRecipe = true;
+
     @ConfigSeparator(translation = "config.rubinated_nether.chandelier")
     @ConfigEntry(
         id = "chandelier_damage_multiplier",
@@ -34,6 +42,23 @@ public final class RNConfig {
     )
     @Comment("Chandelier max damage")
     public static int chandelierMaxDamage = 500;
+
+    @ConfigSeparator(translation = "block.rubinated_nether.nether_ruby_ore")
+    @ConfigEntry(
+        id = "ruby_ore_min_shards",
+        type = EntryType.INTEGER,
+        translation = "config.rubinated_nether.nether_ruby_ore.min_shards"
+    )
+    @SuppressWarnings("unused")
+    public static int minRubyOreShards = 2;
+
+    @ConfigEntry(
+        id = "ruby_ore_max_shards",
+        type = EntryType.INTEGER,
+        translation = "config.rubinated_nether.nether_ruby_ore.max_shards"
+    )
+    @SuppressWarnings("unused")
+    public static int maxRubyOreShards = 5;
 
     @Category(
         id = "client",
@@ -88,24 +113,5 @@ public final class RNConfig {
             translation = "block.rubinated_nether.rubinated_blackstone"
         )
         public static boolean rubinatedBlackstone = true;
-
-        public static boolean shouldPlaceFeature(String fieldName) {
-            return enabled && RubinatedNether.CONFIGURATOR.getConfig(RNConfig.class)
-                .getSubConfig("worldgen")
-                .flatMap(worldgen -> worldgen.getEntry(fieldName))
-                .filter(entry -> entry.type() == EntryType.BOOLEAN)
-                .map(entry -> {
-                    try {
-                        return entry.field().getBoolean(null);
-                    } catch (Exception e) {
-                        RubinatedNether.LOGGER.error("Failed to read config field: {}", fieldName);
-                        return true;
-                    }
-                })
-                .orElseGet(() -> {
-                    RubinatedNether.LOGGER.warn("No Config field with name: {}", fieldName);
-                    return true;
-                });
-        }
     }
 }
