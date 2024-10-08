@@ -5,6 +5,8 @@
     "rubinated_nether:ruby_lantern",
     "rubinated_nether:ruby_chandelier",
     "rubinated_nether:ruby_brazier",
-    "rubinated_nether:ruby_laser"
+    "rubinated_nether:ruby_laser",
+    "rubinated_nether:molten_ruby_ore",
+    "rubinated_nether:nether_ruby_ore"
   ]
 }
