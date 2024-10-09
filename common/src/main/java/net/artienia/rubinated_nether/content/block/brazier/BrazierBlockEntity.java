@@ -35,14 +35,14 @@ public class BrazierBlockEntity extends BlockEntity implements TickableBlockEnti
         Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierRange)
             .and(EntitySelector.NO_SPECTATORS);
 
-        level.getEntitiesOfClass(ServerPlayer.class, area, selector).forEach(entity -> {
-            if(entity.tickCount % 100 == 0) {
+        if(level.getGameTime() % 40 == 0) {
+            level.getEntitiesOfClass(ServerPlayer.class, area, selector).forEach(entity ->
                 entity.addEffect(new MobEffectInstance(
                     MobEffects.FIRE_RESISTANCE,
                     Mth.floor(20 * RNConfig.brazierDuration),
                     0, true, RNConfig.brazierEffectParticles, true
-                ));
-            }
-        });
+                ))
+            );
+        }
     }
 }

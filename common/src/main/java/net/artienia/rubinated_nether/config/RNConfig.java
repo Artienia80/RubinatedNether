@@ -49,7 +49,7 @@ public final class RNConfig {
         type = EntryType.INTEGER,
         translation = "config.rubinated_nether.brazier_effect_range"
     )
-    @Comment("Brazier effect range")
+    @Comment("Brazier effect range in blocks")
     @IntRange(min = 0, max = 32)
     public static int brazierRange = 5;
 
@@ -66,7 +66,9 @@ public final class RNConfig {
         type = EntryType.BOOLEAN,
         translation = "config.rubinated_nether.brazier_effect_particles"
     )
-    @Comment("Enable beacon effect particles for brazier")
+    @Comment("""
+    Enable beacon effect particles for brazier.
+    You may need to wait for the effect to ware off for this to apply""")
     public static boolean brazierEffectParticles = false;
 
     @ConfigSeparator(translation = "block.rubinated_nether.nether_ruby_ore")
