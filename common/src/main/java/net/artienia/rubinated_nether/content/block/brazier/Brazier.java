@@ -1,21 +1,17 @@
-package net.artienia.rubinated_nether.content.block;
+package net.artienia.rubinated_nether.content.block.brazier;
 
-import net.artienia.rubinated_nether.config.RNConfig;
+import net.artienia.rubinated_nether.content.RNBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import uwu.serenity.critter.utils.BEBlock;
 
-public class Brazier extends Block {
+public class Brazier extends Block implements BEBlock<BrazierBlockEntity> {
+
     protected static final VoxelShape SHAPE = Block.box(0., 0., 0., 16.0, 16.0, 16.0);
 
     public Brazier(Properties properties) {
@@ -27,5 +23,14 @@ public class Brazier extends Block {
         return SHAPE;
     }
 
+    @Override
+    public BlockEntityType<? extends BrazierBlockEntity> getBlockEntityType() {
+        return RNBlockEntities.BRAZIER.get();
+    }
+
+    @Override
+    public Class<? extends BrazierBlockEntity> getBlockEntityClass() {
+        return BrazierBlockEntity.class;
+    }
 }
 

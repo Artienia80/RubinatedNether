@@ -43,6 +43,24 @@ public final class RNConfig {
     @Comment("Chandelier max damage")
     public static int chandelierMaxDamage = 500;
 
+    @ConfigSeparator(translation = "block.rubinated_nether.ruby_brazier")
+    @ConfigEntry(
+        id = "brazier_effect_range",
+        type = EntryType.INTEGER,
+        translation = "config.rubinated_nether.brazier_effect_range"
+    )
+    @Comment("Brazier effect range")
+    @IntRange(min = 0, max = 32)
+    public static int brazierRange = 5;
+
+    @ConfigEntry(
+        id = "brazier_effect_duration",
+        type = EntryType.FLOAT,
+        translation = "config.rubinated_nether.brazier_effect_duration"
+    )
+    @Comment("Brazier effect duration in seconds, maximum 1 minute")
+    public static float brazierDuration = 15.0f;
+
     @ConfigSeparator(translation = "block.rubinated_nether.nether_ruby_ore")
     @ConfigEntry(
         id = "ruby_ore_min_shards",
