@@ -12,10 +12,10 @@ public final class RNConfig {
         type = EntryType.BOOLEAN,
         translation = "config.rubinated_nether.creative_tab"
     )
-    @Comment("""
-    Enable the mod's creative tab. The items can always be found in vanilla tabs
-    
-    §eRequires game restart""")
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.creative_tab.desc"
+    )
     public static boolean enableCreativeTab = true;
 
     @ConfigEntry(
@@ -23,16 +23,22 @@ public final class RNConfig {
         type = EntryType.BOOLEAN,
         translation = "config.rubinated_nether.custom_smithing_recipe"
     )
-    @Comment("Enable custom netherite smithing template recipe")
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.custom_smithing_recipe.desc"
+    )
     public static boolean customSmithingRecipe = true;
 
-    @ConfigSeparator(translation = "config.rubinated_nether.chandelier")
+    @ConfigSeparator(translation = "block.rubinated_nether.ruby_chandelier")
     @ConfigEntry(
         id = "chandelier_damage_multiplier",
         type = EntryType.FLOAT,
         translation = "config.rubinated_nether.chandelier_damage_multiplier"
     )
-    @Comment("Chandelier damage multiplier")
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.chandelier_damage_multiplier.desc"
+    )
     public static float chandelierMultiplier = 0.22f;
 
     @ConfigEntry(
@@ -40,7 +46,10 @@ public final class RNConfig {
         type = EntryType.INTEGER,
         translation = "config.rubinated_nether.chandelier_max_damage"
     )
-    @Comment("Chandelier max damage")
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.chandelier_max_damage.desc"
+    )
     public static int chandelierMaxDamage = 500;
 
     @ConfigSeparator(translation = "block.rubinated_nether.ruby_brazier")
@@ -49,16 +58,22 @@ public final class RNConfig {
         type = EntryType.INTEGER,
         translation = "config.rubinated_nether.brazier_effect_range"
     )
-    @Comment("Brazier effect range in blocks")
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.brazier_effect_range.desc"
+    )
     @IntRange(min = 0, max = 32)
-    public static int brazierRange = 5;
+    public static int brazierRange = 16;
 
     @ConfigEntry(
         id = "brazier_effect_duration",
         type = EntryType.FLOAT,
         translation = "config.rubinated_nether.brazier_effect_duration"
     )
-    @Comment("Brazier effect duration in seconds")
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.brazier_effect_duration.desc"
+    )
     public static float brazierDuration = 15.0f;
 
     @ConfigEntry(
@@ -66,9 +81,10 @@ public final class RNConfig {
         type = EntryType.BOOLEAN,
         translation = "config.rubinated_nether.brazier_effect_particles"
     )
-    @Comment("""
-    Enable beacon effect particles for brazier.
-    You may need to wait for the effect to ware off for this to apply""")
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.brazier_effect_particles.desc"
+    )
     public static boolean brazierEffectParticles = false;
 
     @ConfigSeparator(translation = "block.rubinated_nether.nether_ruby_ore")
@@ -77,6 +93,10 @@ public final class RNConfig {
         type = EntryType.INTEGER,
         translation = "config.rubinated_nether.nether_ruby_ore.min_shards"
     )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.nether_ruby_ore.min_shards.desc"
+    )
     @SuppressWarnings("unused")
     public static int minRubyOreShards = 2;
 
@@ -84,6 +104,10 @@ public final class RNConfig {
         id = "ruby_ore_max_shards",
         type = EntryType.INTEGER,
         translation = "config.rubinated_nether.nether_ruby_ore.max_shards"
+    )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.nether_ruby_ore.max_shards.desc"
     )
     @SuppressWarnings("unused")
     public static int maxRubyOreShards = 7;
@@ -94,6 +118,10 @@ public final class RNConfig {
             type = EntryType.INTEGER,
             translation = "config.rubinated_nether.molten_ruby_ore.min_molten"
     )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.molten_ruby_ore.min_molten.desc"
+    )
     @SuppressWarnings("unused")
     public static int minRubyOreMolten = 1;
 
@@ -102,12 +130,21 @@ public final class RNConfig {
             type = EntryType.INTEGER,
             translation = "config.rubinated_nether.molten_ruby_ore.max_molten"
     )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.molten_ruby_ore.max_molten.desc"
+    )
     @SuppressWarnings("unused")
     public static int maxRubyOreMolten = 2;
+
     @ConfigEntry(
             id = "ruby_ore_min_nuggets",
             type = EntryType.INTEGER,
             translation = "config.rubinated_nether.molten_ruby_ore.min_nuggets"
+    )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.molten_ruby_ore.min_nuggets.desc"
     )
     @SuppressWarnings("unused")
     public static int minRubyOreNuggets = 2;
@@ -116,6 +153,10 @@ public final class RNConfig {
             id = "ruby_ore_max_nuggets",
             type = EntryType.INTEGER,
             translation = "config.rubinated_nether.molten_ruby_ore.max_nuggets"
+    )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.molten_ruby_ore.max_nuggets.desc"
     )
     @SuppressWarnings("unused")
     public static int maxRubyOreNuggets = 4;
@@ -132,7 +173,10 @@ public final class RNConfig {
             translation = "config.rubinated_nether.client.ruby_lens_opacity"
         )
         @FloatRange(min = 0f, max = 1f)
-        @Comment("Set the ruby lens opacity. 1 is maximum and default.")
+        @Comment(
+                value = "",
+                translation = "config.rubinated_nether.client.ruby_lens_opacity.desc"
+                )
         public static float rubyLensOpacity = 1f;
     }
 
@@ -148,7 +192,10 @@ public final class RNConfig {
             type = EntryType.BOOLEAN,
             translation = "config.rubinated_nether.worldgen.enabled"
         )
-        @Comment("Enable the mod's worldgen")
+        @Comment(
+                value = "",
+                translation = "config.rubinated_nether.worldgen.enabled.desc"
+        )
         public static boolean enabled = true;
 
         @ConfigSeparator(translation = "config.rubinated_nether.worldgen.features")
@@ -158,6 +205,10 @@ public final class RNConfig {
             type = EntryType.BOOLEAN,
             translation = "block.rubinated_nether.nether_ruby_ore"
         )
+        @Comment(
+                value = "",
+                translation = "config.rubinated_nether.spawn_nether_ruby_ore.desc"
+        )
         public static boolean netherRubyOre = true;
 
         @ConfigEntry(
@@ -165,12 +216,20 @@ public final class RNConfig {
             type = EntryType.BOOLEAN,
             translation = "block.rubinated_nether.molten_ruby_ore"
         )
+        @Comment(
+                value = "",
+                translation =  "config.rubinated_nether.spawn_molten_ruby_ore.desc"
+        )
         public static boolean moltenRubyOre = true;
 
         @ConfigEntry(
             id = "rubinated_blackstone",
             type = EntryType.BOOLEAN,
             translation = "block.rubinated_nether.rubinated_blackstone"
+        )
+        @Comment(
+                value = "",
+                translation =  "config.rubinated_nether.spawn_rubinated_blackstone.desc"
         )
         public static boolean rubinatedBlackstone = true;
     }
