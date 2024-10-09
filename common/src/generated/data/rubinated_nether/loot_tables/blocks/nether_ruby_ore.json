@@ -35,7 +35,7 @@
                     {
                       "condition": "rubinated_nether:item_tier",
                       "max_level": 2147483647,
-                      "min_level": 3
+                      "min_level": 4
                     }
                   ],
                   "functions": [
@@ -46,6 +46,27 @@
                         "max": 2.0,
                         "min": 1.0
                       },
+                      "function": "minecraft:set_count"
+                    },
+                    {
+                      "function": "minecraft:explosion_decay"
+                    }
+                  ],
+                  "name": "rubinated_nether:ruby"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "condition": "rubinated_nether:item_tier",
+                      "max_level": 3,
+                      "min_level": 3
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 1.0,
                       "function": "minecraft:set_count"
                     },
                     {
