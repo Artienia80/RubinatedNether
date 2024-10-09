@@ -58,7 +58,7 @@ public final class RNConfig {
         type = EntryType.FLOAT,
         translation = "config.rubinated_nether.brazier_effect_duration"
     )
-    @Comment("Brazier effect duration in seconds, maximum 1 minute")
+    @Comment("Brazier effect duration in seconds")
     public static float brazierDuration = 15.0f;
 
     @ConfigEntry(
