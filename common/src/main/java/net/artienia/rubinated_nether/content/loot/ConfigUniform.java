@@ -26,7 +26,7 @@ public record ConfigUniform(NamedIntSupplier min, NamedIntSupplier max) implemen
 
     @Override
     public float getFloat(LootContext lootContext) {
-        return lootContext.getRandom().nextInt(min.getAsInt(), max.getAsInt());
+        return lootContext.getRandom().nextIntBetweenInclusive(min.getAsInt(), max.getAsInt());
     }
 
     @Override
