@@ -40,7 +40,7 @@ public class BrazierBlockEntity extends BlockEntity implements TickableBlockEnti
                 entity.addEffect(new MobEffectInstance(
                     MobEffects.FIRE_RESISTANCE,
                     Mth.floor(20 * RNConfig.brazierDuration),
-                    0, true, false, true
+                    0, true, RNConfig.brazierEffectParticles, true
                 ));
             }
         });

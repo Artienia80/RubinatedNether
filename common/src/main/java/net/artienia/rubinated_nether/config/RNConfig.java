@@ -61,6 +61,14 @@ public final class RNConfig {
     @Comment("Brazier effect duration in seconds, maximum 1 minute")
     public static float brazierDuration = 15.0f;
 
+    @ConfigEntry(
+        id = "brazier_effect_particles",
+        type = EntryType.BOOLEAN,
+        translation = "config.rubinated_nether.brazier_effect_particles"
+    )
+    @Comment("Enable beacon effect particles for brazier")
+    public static boolean brazierEffectParticles = false;
+
     @ConfigSeparator(translation = "block.rubinated_nether.nether_ruby_ore")
     @ConfigEntry(
         id = "ruby_ore_min_shards",
