@@ -41,9 +41,7 @@ public class RNBlockLootTables extends FabricBlockLootTableProvider {
             .forEach(entry -> dropSelf(entry.get()));
 
         this.add(RNBlocks.NETHER_RUBY_ORE.get(), block -> createToolDependantDrops(block, RNItems.RUBY_SHARD, RNItems.RUBY));
-
-        this.add(RNBlocks.MOLTEN_RUBY_ORE.get(),
-            block -> createCopperLikeOreDrops(RNBlocks.MOLTEN_RUBY_ORE.get(), RNItems.MOLTEN_RUBY_NUGGET.get()));
+        this.add(RNBlocks.MOLTEN_RUBY_ORE.get(), block -> createToolDependantMoltenDrops(block, RNItems.MOLTEN_RUBY_NUGGET, RNItems.MOLTEN_RUBY));
         this.add(RNBlocks.RUBINATED_BLACKSTONE.get(),
             block -> createCopperLikeOreDrops(RNBlocks.RUBINATED_BLACKSTONE.get(), RNItems.RUBY_SHARD.get()));
 
@@ -62,6 +60,22 @@ public class RNBlockLootTables extends FabricBlockLootTableProvider {
                     .maxTier(Tiers.IRON))
                 .apply(SetItemCountFunction.setCount(ConfigUniform.of("ruby_ore_min_shards", "ruby_ore_max_shards")))
             )
+        ));
+    }
+
+    protected LootTable.Builder createToolDependantMoltenDrops(Block block, ItemLike lowTier, ItemLike netheriteTier) {
+        return createSilkTouchDispatchTable(block, AlternativesEntry.alternatives(
+                applyExplosionDecay(block, LootItem.lootTableItem(netheriteTier)
+                        .when(ItemTierLootCondition.builder()
+                                .minTier(Tiers.NETHERITE))
+                        .apply(SetItemCountFunction.setCount(ConfigUniform.of("ruby_ore_min_molten", "ruby_ore_max_molten")))
+                ),
+                applyExplosionDecay(block, LootItem.lootTableItem(lowTier)
+                        .when(ItemTierLootCondition.builder()
+                                .minTier(Tiers.IRON)
+                                .maxTier(Tiers.DIAMOND))
+                        .apply(SetItemCountFunction.setCount(ConfigUniform.of("ruby_ore_min_nuggets", "ruby_ore_max_nuggets")))
+                )
         ));
     }
 

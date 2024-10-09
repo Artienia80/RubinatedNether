@@ -58,7 +58,39 @@ public final class RNConfig {
         translation = "config.rubinated_nether.nether_ruby_ore.max_shards"
     )
     @SuppressWarnings("unused")
-    public static int maxRubyOreShards = 5;
+    public static int maxRubyOreShards = 7;
+
+    @ConfigSeparator(translation = "block.rubinated_nether.molten_ruby_ore")
+    @ConfigEntry(
+            id = "ruby_ore_min_molten",
+            type = EntryType.INTEGER,
+            translation = "config.rubinated_nether.molten_ruby_ore.min_molten"
+    )
+    @SuppressWarnings("unused")
+    public static int minRubyOreMolten = 1;
+
+    @ConfigEntry(
+            id = "ruby_ore_max_molten",
+            type = EntryType.INTEGER,
+            translation = "config.rubinated_nether.molten_ruby_ore.max_molten"
+    )
+    @SuppressWarnings("unused")
+    public static int maxRubyOreMolten = 2;
+    @ConfigEntry(
+            id = "ruby_ore_min_nuggets",
+            type = EntryType.INTEGER,
+            translation = "config.rubinated_nether.molten_ruby_ore.min_nuggets"
+    )
+    @SuppressWarnings("unused")
+    public static int minRubyOreNuggets = 2;
+
+    @ConfigEntry(
+            id = "ruby_ore_max_nuggets",
+            type = EntryType.INTEGER,
+            translation = "config.rubinated_nether.molten_ruby_ore.max_nuggets"
+    )
+    @SuppressWarnings("unused")
+    public static int maxRubyOreNuggets = 4;
 
     @Category(
         id = "client",
