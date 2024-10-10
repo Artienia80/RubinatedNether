@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -28,14 +28,13 @@ import net.minecraftforge.registries.RegisterEvent;
 import java.nio.file.Path;
 
 @Mod(RubinatedNether.MOD_ID)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class RubinatedNetherForge {
     public RubinatedNetherForge() {
-        // Event bus stuff
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modBus.register(RubinatedNether.REGISTRIES);
-        modBus.addListener(this::onSetup);
-        modBus.addListener(this::onRegister);
-        modBus.addListener(this::addResourcePack);
+        // Register the registry manager
+        FMLJavaModLoadingContext.get()
+            .getModEventBus()
+            .register(RubinatedNether.REGISTRIES);
 
         // Run our common setup.
         RubinatedNether.init();
@@ -47,16 +46,20 @@ public final class RubinatedNetherForge {
         }
     }
 
-    public void onSetup(FMLCommonSetupEvent event) {
+    @SubscribeEvent
+    public static void onSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(RubinatedNether::setup);
     }
 
-    public void onRegister(RegisterEvent event) {
-        event.register(ForgeRegistries.Keys.RECIPE_SERIALIZERS, $ -> CraftingHelper.register(ConfigCondition.SERIALIZER));
+    @SubscribeEvent
+    public static void onRegister(RegisterEvent event) {
+        event.register(ForgeRegistries.Keys.RECIPE_SERIALIZERS,
+            $ -> CraftingHelper.register(ConfigCondition.SERIALIZER));
     }
 
-
-    public void addResourcePack(AddPackFindersEvent event) {
+    @SubscribeEvent
+    public static void addResourcePack(AddPackFindersEvent event) {
+        // Broke in dev
         if(!FMLEnvironment.production) return;
 
         Path resourcePath = ModList.get()

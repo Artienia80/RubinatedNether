@@ -45,4 +45,9 @@ public class BrazierBlockEntity extends BlockEntity implements TickableBlockEnti
             );
         }
     }
+
+    @Override
+    public void clientTick() {
+
+    }
 }

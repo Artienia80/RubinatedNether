@@ -6,6 +6,9 @@ import net.artienia.rubinated_nether.client.render.blockEntity.RubyLaserRenderer
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
+
+import java.util.function.Function;
 
 public final class RNRenderTypes extends RenderType {
 

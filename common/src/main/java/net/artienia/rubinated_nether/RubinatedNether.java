@@ -30,6 +30,7 @@ public final class RubinatedNether {
 
         // Intialize the registries
         RNSounds.register();
+        RNParticleTypes.register();
         RNBlocks.register();
         RNItems.register();
         RNBlockEntities.register();
