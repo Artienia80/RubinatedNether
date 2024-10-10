@@ -2,8 +2,8 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "rubinated_nether:rough_ruby_block",
-      "rubinated_nether:rough_ruby_shard"
+      "rubinated_nether:spelunkery/rough_ruby_block",
+      "rubinated_nether:spelunkery/rough_ruby_shard"
     ]
   },
   "criteria": {
