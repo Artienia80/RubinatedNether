@@ -30,8 +30,8 @@ public class SpelunkeryCompat implements CompatHandler {
             .strength(5.0f, 6.0f)
             .sound(SoundType.CALCITE))
         .item(BlockItem::new)
-        .creativeTab(CreativeModeTabs.NATURAL_BLOCKS, TabPlacement.after(() -> ModBlocks.ROUGH_DIAMOND_BLOCK.get().asItem()))
-        .transform(RNTabs.modTabIfEnabled(TabPlacement.after(RNBlocks.NETHER_RUBY_ORE)))
+        .creativeTab(CreativeModeTabs.NATURAL_BLOCKS, TabPlacement.after(() -> ModBlocks.ROUGH_EMERALD_BLOCK.get().asItem()))
+        .transform(RNTabs.modTabIfEnabled(TabPlacement.after(RNBlocks.MOLTEN_RUBY_BLOCK)))
         .build()
         .register();
 
@@ -42,7 +42,7 @@ public class SpelunkeryCompat implements CompatHandler {
 
     public static final ItemEntry<Item> ROUGH_RUBY_SHARD = SPELUNKERY_ITEMS.entry("rough_ruby_shard", Item::new)
             .creativeTab(CreativeModeTabs.INGREDIENTS, TabPlacement.after(ModItems.ROUGH_EMERALD_SHARD::get))
-            .transform(RNTabs.modTabIfEnabled(TabPlacement.after(SpelunkeryCompat.ROUGH_RUBY)))
+            .transform(RNTabs.modTabIfEnabled(TabPlacement.after(RNItems.MOLTEN_RUBY_NUGGET)))
             .register();
 
 

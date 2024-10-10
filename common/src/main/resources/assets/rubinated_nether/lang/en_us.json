@@ -24,6 +24,10 @@
   "block.rubinated_nether.ruby_lava_lamp": "Ruby Lava Lamp",
   "block.rubinated_nether.ruby_brazier": "Ruby Brazier",
 
+  "item.rubinated_nether.rough_ruby": "Rough Ruby",
+  "item.rubinated_nether.rough_ruby_shard": "Rough Ruby Shard",
+  "block.rubinated_nether.rough_ruby_block": "Block of Rough Ruby",
+
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Blood For The Blood God!",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Obtain Bleeding Obsidian",
   "advancements.rubinated_nether.ruby_barter.title": "...better than the alternative",
