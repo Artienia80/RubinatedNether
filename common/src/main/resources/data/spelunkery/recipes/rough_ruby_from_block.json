@@ -1,5 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "rough_ruby",
   "ingredients": [
     {
       "item": "rubinated_nether:rough_ruby_block"

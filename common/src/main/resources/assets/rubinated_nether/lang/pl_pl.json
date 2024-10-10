@@ -24,6 +24,10 @@
   "block.rubinated_nether.ruby_lava_lamp": "Rubinowa Lampa Lawowa",
   "block.rubinated_nether.ruby_brazier": "Ruby Brazier",
 
+  "item.rubinated_nether.rough_ruby": "Rough Ruby",
+  "item.rubinated_nether.rough_ruby_shard": "Rough Ruby Shard",
+  "block.rubinated_nether.rough_ruby_block": "Block of Rough Ruby",
+
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Krew dla boga krwi!",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Zdobądź Krwiawiący Obsydian",
   "advancements.rubinated_nether.ruby_barter.title": "...Lepsze niż alternatywa",

@@ -24,6 +24,10 @@
   "block.rubinated_nether.ruby_lava_lamp": "Rubin lávalámpa",
   "block.rubinated_nether.ruby_brazier": "Rubin parázstartó",
 
+  "item.rubinated_nether.rough_ruby": "Rough Ruby",
+  "item.rubinated_nether.rough_ruby_shard": "Rough Ruby Shard",
+  "block.rubinated_nether.rough_ruby_block": "Block of Rough Ruby",
+
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Vért a véristennek!",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Szerezz vérző obszidiánt",
   "advancements.rubinated_nether.ruby_barter.title": "...jobb mint a semmi",
@@ -102,5 +106,5 @@
   "config.rubinated_nether.worldgen.enabled.desc": "Enable this mod's Worldgen",
   "config.rubinated_nether.spawn_nether_ruby_ore.desc": "Enable Nether Ruby Ore spawning near the Nether roof",
   "config.rubinated_nether.spawn_molten_ruby_ore.desc": "Enable Molten Ruby Ore spawning inside Magma veins",
-  "config.rubinated_nether.spawn_rubinated_blackstone.desc": "Enable Rubinated Blackstone spawning inside Bastion Remnants"
+  "config.rubinated_nether.spawn_rubinated_blackstone.desc": "Enable Rubinated Blackstone spawning inside Bastion Remnants",
 }

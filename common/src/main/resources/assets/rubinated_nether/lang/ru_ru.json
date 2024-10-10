@@ -24,6 +24,10 @@
   "block.rubinated_nether.ruby_lava_lamp": "Рубиновая лавовая лампа",
   "block.rubinated_nether.ruby_brazier": "Ruby Brazier",
 
+  "item.rubinated_nether.rough_ruby": "Rough Ruby",
+  "item.rubinated_nether.rough_ruby_shard": "Rough Ruby Shard",
+  "block.rubinated_nether.rough_ruby_block": "Block of Rough Ruby",
+
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Кровь для Бога крови!",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Получите кровоточащий обсидиан",
   "advancements.rubinated_nether.ruby_barter.title": "...более чем альтернатива",
