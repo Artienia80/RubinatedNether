@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "rubinated_nether:rough_ruby_shard"
+    }
+  },
+  "result": {
+    "item": "rubinated_nether:rough_ruby"
+  }
+}

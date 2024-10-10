@@ -19,6 +19,10 @@
     "rubinated_nether:ruby_glass_pane",
     "rubinated_nether:molten_ruby_glass_pane",
     "rubinated_nether:ruby_lava_lamp",
-    "rubinated_nether:ruby_lens"
+    "rubinated_nether:ruby_lens",
+
+    "rubinated_nether:rough_ruby",
+    "rubinated_nether:rough_ruby_shard",
+    "rubinated_nether:rough_ruby_block"
   ]
 }
