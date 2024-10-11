@@ -94,7 +94,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
         // Iterating the range of the Laser to check each position
         blockRange = 0;
-        for (int i = 0; i <= currentLaserRange; i++) {
+        for (int i = 0; i <= 15; i++) {
             mutableBlockPos.move(facing);
             blockRange = i;
 
@@ -131,7 +131,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
         }
 
         if(getBlockState().getValue(RubyLaserBlock.TINTED)) {
-            powerLevel = Mth.clamp(currentLaserRange - (blockRange), 0, currentLaserRange);
+            powerLevel = Mth.clamp(15 - (blockRange), 0, 15);
             if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
                 level.scheduleTick(getBlockPos(), RNBlocks.RUBY_LASER.get(), 2);
             }
