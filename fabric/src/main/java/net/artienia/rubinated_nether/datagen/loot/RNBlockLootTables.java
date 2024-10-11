@@ -51,13 +51,8 @@ public class RNBlockLootTables extends FabricBlockLootTableProvider {
         return createSilkTouchDispatchTable(block, AlternativesEntry.alternatives(
             applyExplosionDecay(block, LootItem.lootTableItem(diamondTier)
                 .when(ItemTierLootCondition.builder()
-                    .minTier(Tiers.NETHERITE))
-                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)))
-            ),
-            applyExplosionDecay(block, LootItem.lootTableItem(diamondTier)
-                .when(ItemTierLootCondition.builder()
                     .minTier(Tiers.DIAMOND)
-                    .maxTier(Tiers.DIAMOND))
+                    .maxTier(Tiers.NETHERITE))
                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
             ),
             applyExplosionDecay(block, LootItem.lootTableItem(ironTier)

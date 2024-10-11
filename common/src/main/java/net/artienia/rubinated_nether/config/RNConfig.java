@@ -98,6 +98,7 @@ public final class RNConfig {
             translation = "config.rubinated_nether.nether_ruby_ore.min_shards.desc"
     )
     @SuppressWarnings("unused")
+    @IntRange(min = 0, max = 9)
     public static int minRubyOreShards = 2;
 
     @ConfigEntry(
@@ -110,6 +111,7 @@ public final class RNConfig {
             translation = "config.rubinated_nether.nether_ruby_ore.max_shards.desc"
     )
     @SuppressWarnings("unused")
+    @IntRange(min = 0, max = 9)
     public static int maxRubyOreShards = 7;
 
     @ConfigSeparator(translation = "block.rubinated_nether.molten_ruby_ore")
@@ -123,6 +125,7 @@ public final class RNConfig {
             translation = "config.rubinated_nether.molten_ruby_ore.min_molten.desc"
     )
     @SuppressWarnings("unused")
+    @IntRange(min = 1, max = 3)
     public static int minRubyOreMolten = 1;
 
     @ConfigEntry(
@@ -135,6 +138,7 @@ public final class RNConfig {
             translation = "config.rubinated_nether.molten_ruby_ore.max_molten.desc"
     )
     @SuppressWarnings("unused")
+    @IntRange(min = 1, max = 3)
     public static int maxRubyOreMolten = 2;
 
     @ConfigEntry(
@@ -147,6 +151,7 @@ public final class RNConfig {
             translation = "config.rubinated_nether.molten_ruby_ore.min_nuggets.desc"
     )
     @SuppressWarnings("unused")
+    @IntRange(min = 0, max = 9)
     public static int minRubyOreNuggets = 2;
 
     @ConfigEntry(
@@ -159,6 +164,7 @@ public final class RNConfig {
             translation = "config.rubinated_nether.molten_ruby_ore.max_nuggets.desc"
     )
     @SuppressWarnings("unused")
+    @IntRange(min = 0, max = 9)
     public static int maxRubyOreNuggets = 4;
 
     @Category(
