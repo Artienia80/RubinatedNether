@@ -12,19 +12,33 @@ public final class RNConfig {
         type = EntryType.BOOLEAN,
         translation = "config.rubinated_nether.creative_tab"
     )
-    @Comment("""
-    Enable the mod's creative tab. The items can always be found in vanilla tabs
-    
-    §eRequires game restart""")
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.creative_tab.desc"
+    )
     public static boolean enableCreativeTab = true;
 
-    @ConfigSeparator(translation = "config.rubinated_nether.chandelier")
+    @ConfigEntry(
+        id = "netherite_template_recipe",
+        type = EntryType.BOOLEAN,
+        translation = "config.rubinated_nether.custom_smithing_recipe"
+    )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.custom_smithing_recipe.desc"
+    )
+    public static boolean customSmithingRecipe = true;
+
+    @ConfigSeparator(translation = "block.rubinated_nether.ruby_chandelier")
     @ConfigEntry(
         id = "chandelier_damage_multiplier",
         type = EntryType.FLOAT,
         translation = "config.rubinated_nether.chandelier_damage_multiplier"
     )
-    @Comment("Chandelier damage multiplier")
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.chandelier_damage_multiplier.desc"
+    )
     public static float chandelierMultiplier = 0.22f;
 
     @ConfigEntry(
@@ -32,8 +46,120 @@ public final class RNConfig {
         type = EntryType.INTEGER,
         translation = "config.rubinated_nether.chandelier_max_damage"
     )
-    @Comment("Chandelier max damage")
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.chandelier_max_damage.desc"
+    )
     public static int chandelierMaxDamage = 500;
+
+    @ConfigSeparator(translation = "block.rubinated_nether.ruby_brazier")
+    @ConfigEntry(
+        id = "brazier_effect_range",
+        type = EntryType.INTEGER,
+        translation = "config.rubinated_nether.brazier_effect_range"
+    )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.brazier_effect_range.desc"
+    )
+    @IntRange(min = 0, max = 32)
+    public static int brazierRange = 16;
+
+    @ConfigEntry(
+        id = "brazier_effect_duration",
+        type = EntryType.FLOAT,
+        translation = "config.rubinated_nether.brazier_effect_duration"
+    )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.brazier_effect_duration.desc"
+    )
+    public static float brazierDuration = 15.0f;
+
+    @ConfigEntry(
+        id = "brazier_effect_particles",
+        type = EntryType.BOOLEAN,
+        translation = "config.rubinated_nether.brazier_effect_particles"
+    )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.brazier_effect_particles.desc"
+    )
+    public static boolean brazierEffectParticles = false;
+
+    @ConfigSeparator(translation = "block.rubinated_nether.nether_ruby_ore")
+    @ConfigEntry(
+        id = "ruby_ore_min_shards",
+        type = EntryType.INTEGER,
+        translation = "config.rubinated_nether.nether_ruby_ore.min_shards"
+    )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.nether_ruby_ore.min_shards.desc"
+    )
+    @SuppressWarnings("unused")
+    public static int minRubyOreShards = 2;
+
+    @ConfigEntry(
+        id = "ruby_ore_max_shards",
+        type = EntryType.INTEGER,
+        translation = "config.rubinated_nether.nether_ruby_ore.max_shards"
+    )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.nether_ruby_ore.max_shards.desc"
+    )
+    @SuppressWarnings("unused")
+    public static int maxRubyOreShards = 7;
+
+    @ConfigSeparator(translation = "block.rubinated_nether.molten_ruby_ore")
+    @ConfigEntry(
+            id = "ruby_ore_min_molten",
+            type = EntryType.INTEGER,
+            translation = "config.rubinated_nether.molten_ruby_ore.min_molten"
+    )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.molten_ruby_ore.min_molten.desc"
+    )
+    @SuppressWarnings("unused")
+    public static int minRubyOreMolten = 1;
+
+    @ConfigEntry(
+            id = "ruby_ore_max_molten",
+            type = EntryType.INTEGER,
+            translation = "config.rubinated_nether.molten_ruby_ore.max_molten"
+    )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.molten_ruby_ore.max_molten.desc"
+    )
+    @SuppressWarnings("unused")
+    public static int maxRubyOreMolten = 2;
+
+    @ConfigEntry(
+            id = "ruby_ore_min_nuggets",
+            type = EntryType.INTEGER,
+            translation = "config.rubinated_nether.molten_ruby_ore.min_nuggets"
+    )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.molten_ruby_ore.min_nuggets.desc"
+    )
+    @SuppressWarnings("unused")
+    public static int minRubyOreNuggets = 2;
+
+    @ConfigEntry(
+            id = "ruby_ore_max_nuggets",
+            type = EntryType.INTEGER,
+            translation = "config.rubinated_nether.molten_ruby_ore.max_nuggets"
+    )
+    @Comment(
+            value = "",
+            translation = "config.rubinated_nether.molten_ruby_ore.max_nuggets.desc"
+    )
+    @SuppressWarnings("unused")
+    public static int maxRubyOreNuggets = 4;
 
     @Category(
         id = "client",
@@ -47,7 +173,10 @@ public final class RNConfig {
             translation = "config.rubinated_nether.client.ruby_lens_opacity"
         )
         @FloatRange(min = 0f, max = 1f)
-        @Comment("Set the ruby lens opacity. 1 is maximum and default.")
+        @Comment(
+                value = "",
+                translation = "config.rubinated_nether.client.ruby_lens_opacity.desc"
+                )
         public static float rubyLensOpacity = 1f;
     }
 
@@ -63,7 +192,10 @@ public final class RNConfig {
             type = EntryType.BOOLEAN,
             translation = "config.rubinated_nether.worldgen.enabled"
         )
-        @Comment("Enable the mod's worldgen")
+        @Comment(
+                value = "",
+                translation = "config.rubinated_nether.worldgen.enabled.desc"
+        )
         public static boolean enabled = true;
 
         @ConfigSeparator(translation = "config.rubinated_nether.worldgen.features")
@@ -73,12 +205,20 @@ public final class RNConfig {
             type = EntryType.BOOLEAN,
             translation = "block.rubinated_nether.nether_ruby_ore"
         )
+        @Comment(
+                value = "",
+                translation = "config.rubinated_nether.spawn_nether_ruby_ore.desc"
+        )
         public static boolean netherRubyOre = true;
 
         @ConfigEntry(
             id = "molten_ruby_ore",
             type = EntryType.BOOLEAN,
             translation = "block.rubinated_nether.molten_ruby_ore"
+        )
+        @Comment(
+                value = "",
+                translation =  "config.rubinated_nether.spawn_molten_ruby_ore.desc"
         )
         public static boolean moltenRubyOre = true;
 
@@ -87,25 +227,10 @@ public final class RNConfig {
             type = EntryType.BOOLEAN,
             translation = "block.rubinated_nether.rubinated_blackstone"
         )
+        @Comment(
+                value = "",
+                translation =  "config.rubinated_nether.spawn_rubinated_blackstone.desc"
+        )
         public static boolean rubinatedBlackstone = true;
-
-        public static boolean shouldPlaceFeature(String fieldName) {
-            return enabled && RubinatedNether.CONFIGURATOR.getConfig(RNConfig.class)
-                .getSubConfig("worldgen")
-                .flatMap(worldgen -> worldgen.getEntry(fieldName))
-                .filter(entry -> entry.type() == EntryType.BOOLEAN)
-                .map(entry -> {
-                    try {
-                        return entry.field().getBoolean(null);
-                    } catch (Exception e) {
-                        RubinatedNether.LOGGER.error("Failed to read config field: {}", fieldName);
-                        return true;
-                    }
-                })
-                .orElseGet(() -> {
-                    RubinatedNether.LOGGER.warn("No Config field with name: {}", fieldName);
-                    return true;
-                });
-        }
     }
 }

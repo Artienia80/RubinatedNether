@@ -1,6 +1,7 @@
 package net.artienia.rubinated_nether.fabric;
 
 import net.artienia.rubinated_nether.RubinatedNether;
+import net.artienia.rubinated_nether.config.RNConfig;
 import net.artienia.rubinated_nether.worldgen.RNPlacedFeatures;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
@@ -9,6 +10,7 @@ import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.network.chat.Component;
@@ -24,9 +26,21 @@ public final class RubinatedNetherFabric implements ModInitializer {
         RubinatedNether.init();
         RubinatedNether.setup();
 
-        ModContainer mod = FabricLoader.getInstance().getModContainer(RubinatedNether.MOD_ID).orElseThrow();
-        ResourceManagerHelper.registerBuiltinResourcePack(RubinatedNether.id("better_netherite_template"), mod, Component.literal("Rubinated Netherite Template"), ResourcePackActivationType.DEFAULT_ENABLED);
+        // Register ruby template RP
+        ResourceManagerHelper.registerBuiltinResourcePack(
+            RubinatedNether.id("better_netherite_template"),
+            FabricLoader.getInstance().getModContainer(RubinatedNether.MOD_ID).orElseThrow(),
+            Component.literal("Rubinated Netherite Template"),
+            ResourcePackActivationType.DEFAULT_ENABLED
+        );
 
+        // register custom resource condition
+        ResourceConditions.register(
+            RubinatedNether.id("netherite_smithing_template_recipe"),
+            $ -> RNConfig.customSmithingRecipe
+        );
+
+        // Register biome modifications
         registerBiomeModifications();
     }
 

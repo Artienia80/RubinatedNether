@@ -4,6 +4,11 @@ import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.client.RubinatedNetherClient;
 import net.artienia.rubinated_nether.client.render.hud.RubyLensOverlay;
 import net.artienia.rubinated_nether.forge.client.curios.CuriosRenderers;
+import net.artienia.rubinated_nether.utils.ParticleFactoryConsumer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
@@ -12,6 +17,7 @@ import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -46,6 +52,21 @@ public class RubinatedNetherForgeClient {
     @SubscribeEvent
     public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         RubinatedNetherClient.registeModelLayes(event::registerLayerDefinition);
+    }
+
+    @SubscribeEvent
+    public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
+        RubinatedNetherClient.registerParticleFactories(new ParticleFactoryConsumer() {
+            @Override
+            public <T extends ParticleOptions> void register(ParticleType<T> type, PendingProvider<T> factoryProvider) {
+                event.registerSpriteSet(type, factoryProvider::create);
+            }
+
+            @Override
+            public <T extends ParticleOptions> void register(ParticleType<T> type, ParticleProvider<T> provider) {
+                event.registerSpecial(type, provider);
+            }
+        });
     }
 
 }

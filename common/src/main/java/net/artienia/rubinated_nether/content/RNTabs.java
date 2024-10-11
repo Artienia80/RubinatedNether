@@ -32,6 +32,8 @@ public final class RNTabs {
             output.accept(RNBlocks.MOLTEN_RUBY_BLOCK);
 
             output.accept(RNBlocks.BLEEDING_OBSIDIAN);
+            output.accept(RNBlocks.SPONGERACK);
+
 
             output.accept(RNBlocks.RUBY_GLASS);
             output.accept(RNBlocks.RUBY_GLASS_PANE);
@@ -42,6 +44,7 @@ public final class RNTabs {
             output.accept(RNBlocks.RUBY_LANTERN);
             output.accept(RNBlocks.RUBY_CHANDELIER);
             output.accept(RNBlocks.RUBY_LAVA_LAMP);
+            output.accept(RNBlocks.RUBY_BRAZIER);
 
             output.accept(RNBlocks.FREEZER);
             output.accept(RNItems.FROSTED_ICE);

@@ -18,6 +18,8 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Consumer;
 
+import static net.artienia.rubinated_nether.RubinatedNether.REGISTRIES;
+
 public class RNModels extends FabricModelProvider {
 
     private static final ResourceLocation RUBY_LASER = RubinatedNether.id("block/ruby_laser");
@@ -46,15 +48,12 @@ public class RNModels extends FabricModelProvider {
         generators.createGlassBlocks(RNBlocks.RUBY_GLASS.get(), RNBlocks.RUBY_GLASS_PANE.get());
         generators.createGlassBlocks(RNBlocks.MOLTEN_RUBY_GLASS.get(), RNBlocks.MOLTEN_RUBY_GLASS_PANE.get());
 
-        // Regular Blocks
-        generators.createTrivialCube(RNBlocks.RUBY_BLOCK.get());
-        generators.createTrivialCube(RNBlocks.NETHER_RUBY_ORE.get());
-        generators.createTrivialCube(RNBlocks.MOLTEN_RUBY_ORE.get());
-        generators.createTrivialCube(RNBlocks.RUBINATED_BLACKSTONE.get());
-        generators.createTrivialCube(RNBlocks.BLEEDING_OBSIDIAN.get());
         generators.createLantern(RNBlocks.RUBY_LANTERN.get());
         generators.createRotatedPillarWithHorizontalVariant(RNBlocks.MOLTEN_RUBY_BLOCK.get(), TexturedModel.COLUMN,  TexturedModel.COLUMN_HORIZONTAL);
 
+        // Regular Blocks (Automated)
+        REGISTRIES.getAllEntries(Registries.BLOCK, RNBlocks.CUBE)
+            .forEach(entry -> generators.createTrivialCube(entry.get()));
     }
 
     private void generateBlockStates(Consumer<BlockStateGenerator> output) {
@@ -76,13 +75,19 @@ public class RNModels extends FabricModelProvider {
                     .with(VariantProperties.MODEL, lit ? FREEZER_ON : FREEZER))
             ));
 
-        output.accept(BlockModelGenerators.createSimpleBlock(RNBlocks.RUBY_CHANDELIER.get(), RUBY_CHANDELIER));
         output.accept(BlockModelGenerators.createAxisAlignedPillarBlock(RNBlocks.RUBY_LAVA_LAMP.get(), RUBY_LAVA_LAMP));
+
+        // Basic blockstates (automated)
+        REGISTRIES.getAllEntries(Registries.BLOCK, RNBlocks.SINGLE_BLOCKSTATE)
+            .forEach(entry -> output.accept(BlockModelGenerators.createSimpleBlock(
+                entry.get(),
+                new ResourceLocation(entry.getId().getNamespace(), "block/" + entry.getId().getPath())
+            )));
     }
 
     @Override
     public void generateItemModels(ItemModelGenerators generators) {
-        RubinatedNether.REGISTRIES.getAllEntries(Registries.ITEM, RNItems.GENERATE_FLAT_MODEL)
+        REGISTRIES.getAllEntries(Registries.ITEM, RNItems.GENERATE_FLAT_MODEL)
             .forEach(entry -> generators.generateFlatItem(entry.get(), ModelTemplates.FLAT_ITEM));
     }
 
