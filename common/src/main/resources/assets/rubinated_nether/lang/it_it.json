@@ -72,5 +72,51 @@
 
   "config.rubinated_nether.worldgen": "Configurazione del Mondo",
   "config.rubinated_nether.worldgen.enabled": "Abilita generazione",
-  "config.rubinated_nether.worldgen.features": "Feature"
+  "config.rubinated_nether.worldgen.features": "Feature",
+
+  "block.rubinated_nether.spongerack": "Spongerack",
+  "block.rubinated_nether.ruby_brazier": "Braciere di Rubino",
+
+  "item.rubinated_nether.rough_ruby": "Rubino Rozzo",
+  "item.rubinated_nether.rough_ruby_shard": "Scheggia di Rubino Rozzo",
+  "block.rubinated_nether.rough_ruby_block": "Blocco di Rubino Rozzo",
+
+  "config.rubinated_nether.creative_tab.desc": "Abilita la tab in Creativa della mod. Gli oggetti potranno comunque essere trovati nelle tab vanilla\n§eRichiede un riavvio",
+
+  "config.rubinated_nether.custom_smithing_recipe": "Schema di Forgiatura di Netherite Rubinato",
+  "config.rubinated_nether.custom_smithing_recipe.desc": "Abilita la ricetta dello schema di forgiatura custom per la Netherite",
+
+  "config.rubinated_nether.chandelier_damage_multiplier.desc": "Specifica quanto rapidamente incrementa il danno del Candelabro",
+  "config.rubinated_nether.chandelier_max_damage.desc": "Specifica il danno massimo del Candelabro",
+
+  "config.rubinated_nether.brazier_effect_range": "Range d'Effetto",
+  "config.rubinated_nether.brazier_effect_range.desc": "Specifica la distanza d'effetto del Braciere in blocchi",
+  "config.rubinated_nether.brazier_effect_duration": "Durata dell'Effetto",
+  "config.rubinated_nether.brazier_effect_duration.desc": "Specifica la durata dell'effetto del Braciere in secondi",
+  "config.rubinated_nether.brazier_effect_particles": "Particelle dell'Effetto",
+  "config.rubinated_nether.brazier_effect_particles.desc": "Abilita le particelle del faro per il braciere.\nPotresti dover aspettare la fine dell'effetto per farlo funzionare",
+
+  "config.rubinated_nether.nether_ruby_ore.min_shards": "Minimo numero di Scheggie",
+  "config.rubinated_nether.nether_ruby_ore.min_shards.desc": "Specifica il numero minimo di Scheggie ricavate per minerale",
+  "config.rubinated_nether.nether_ruby_ore.max_shards": "Massimo numero di Scheggie",
+  "config.rubinated_nether.nether_ruby_ore.max_shards.desc": "Specifica il numero massimo di Scheggie ricavate per minerale",
+
+  "config.rubinated_nether.molten_ruby_ore.min_molten": "Minimo numero di Gemme",
+  "config.rubinated_nether.molten_ruby_ore.min_molten.desc": "Specifica il numero minimo di Rubini Fusi ricavati per minerale",
+  "config.rubinated_nether.molten_ruby_ore.max_molten": "Massimo numero di Gemme",
+  "config.rubinated_nether.molten_ruby_ore.max_molten.desc": "Specifica il numero massimo di Rubini Fusi ricavati per minerale",
+
+  "config.rubinated_nether.molten_ruby_ore.min_nuggets": "Minimo numero di Pepite",
+  "config.rubinated_nether.molten_ruby_ore.min_nuggets.desc": "Specifica il numero minimo di Pepite di Rubino Fuso ricavate per minerale",
+  "config.rubinated_nether.molten_ruby_ore.max_nuggets": "Massimo numero di Pepite",
+  "config.rubinated_nether.molten_ruby_ore.max_nuggets.desc": "Specifica il numero massimo di Pepite di Rubino Fuso ricavate per minerale",
+
+  "config.rubinated_nether.client.ruby_lens_opacity.desc": "Imposta l'opacità delle Lenti di Rubino. 1 è il massimo e il valore di default.",
+
+  "config.rubinated_nether.worldgen.enabled.desc": "Abilita la generazione del mondo della mod",
+
+  "config.rubinated_nether.spawn_nether_ruby_ore.desc": "Permetti al Rubino Grezzo del Nether di generare vicino al tetto del Nether",
+  "config.rubinated_nether.spawn_molten_ruby_ore.desc": "Permetti al Rubino Fuso Grezzo di generare dentro le vene di Magma",
+  "config.rubinated_nether.spawn_rubinated_blackstone.desc": "Permetti alla Pietranera Rubinata di generare dentro ai Bastioni"
+
 }
