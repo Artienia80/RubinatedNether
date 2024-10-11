@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "spelunkery:rough_ruby_shard"
+    {
+      "id": "rubinated_nether:rough_ruby_shard",
+      "required": false
+    }
   ]
 }

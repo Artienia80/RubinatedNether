@@ -3,7 +3,6 @@ package net.artienia.rubinated_nether.forge;
 
 import net.artienia.rubinated_nether.client.config.RNConfigScreen;
 import net.artienia.rubinated_nether.forge.conditions.ConfigCondition;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;

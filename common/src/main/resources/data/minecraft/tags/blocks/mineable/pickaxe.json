@@ -3,7 +3,6 @@
   "values": [
     "rubinated_nether:ruby_block",
     "rubinated_nether:molten_ruby_block",
-    "rubinated_nether:rough_ruby_block",
     "rubinated_nether:molten_ruby_ore",
     "rubinated_nether:nether_ruby_ore",
     "rubinated_nether:rubinated_blackstone",
@@ -18,6 +17,10 @@
     "rubinated_nether:ruby_laser",
     "rubinated_nether:ruby_lava_lamp",
     "rubinated_nether:ruby_brazier",
-    "rubinated_nether:freezer"
+    "rubinated_nether:freezer",
+    {
+      "id": "rubinated_nether:rough_ruby_block",
+      "required": false
+    }
   ]
 }
