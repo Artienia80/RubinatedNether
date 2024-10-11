@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "block/block",
 	"textures": {
 		"0": "rubinated_nether:block/brazier/bars",
 		"1": "rubinated_nether:block/molten_ruby_block_top",
