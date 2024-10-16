@@ -2,9 +2,7 @@ package net.artienia.rubinated_nether.content.block.brazier;
 
 import net.artienia.rubinated_nether.config.RNConfig;
 import net.artienia.rubinated_nether.content.RNParticleTypes;
-import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -17,8 +15,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import uwu.serenity.critter.utils.TickableBlockEntity;
-
-import java.util.Random;
 import java.util.function.Predicate;
 
 public class BrazierBlockEntity extends BlockEntity implements TickableBlockEntity {
