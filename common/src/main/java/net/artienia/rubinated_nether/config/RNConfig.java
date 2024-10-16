@@ -13,7 +13,7 @@ public final class RNConfig {
         translation = "config.rubinated_nether.creative_tab"
     )
     @Comment(
-            value = "",
+            value = "Enable the mod's creative tab. The items can always be found in vanilla tabs\n§eRequires game restart",
             translation = "config.rubinated_nether.creative_tab.desc"
     )
     public static boolean enableCreativeTab = true;
@@ -24,7 +24,7 @@ public final class RNConfig {
         translation = "config.rubinated_nether.custom_smithing_recipe"
     )
     @Comment(
-            value = "",
+            value = "Enable custom netherite smithing template recipe",
             translation = "config.rubinated_nether.custom_smithing_recipe.desc"
     )
     public static boolean customSmithingRecipe = true;
@@ -36,7 +36,7 @@ public final class RNConfig {
         translation = "config.rubinated_nether.chandelier_damage_multiplier"
     )
     @Comment(
-            value = "",
+            value = "Specify how rapidly the Chandelier's damage increases",
             translation = "config.rubinated_nether.chandelier_damage_multiplier.desc"
     )
     public static float chandelierMultiplier = 0.22f;
@@ -47,7 +47,7 @@ public final class RNConfig {
         translation = "config.rubinated_nether.chandelier_max_damage"
     )
     @Comment(
-            value = "",
+            value = "Specify the Chandelier's maximum damage limit",
             translation = "config.rubinated_nether.chandelier_max_damage.desc"
     )
     public static int chandelierMaxDamage = 500;
@@ -59,7 +59,7 @@ public final class RNConfig {
         translation = "config.rubinated_nether.brazier_effect_range"
     )
     @Comment(
-            value = "",
+            value = "Specify the Brazier's effect range in blocks",
             translation = "config.rubinated_nether.brazier_effect_range.desc"
     )
     @IntRange(min = 0, max = 32)
@@ -71,7 +71,7 @@ public final class RNConfig {
         translation = "config.rubinated_nether.brazier_effect_duration"
     )
     @Comment(
-            value = "",
+            value = "Specify the Brazier's effect duration in seconds",
             translation = "config.rubinated_nether.brazier_effect_duration.desc"
     )
     public static float brazierDuration = 15.0f;
@@ -82,7 +82,7 @@ public final class RNConfig {
         translation = "config.rubinated_nether.brazier_effect_particles"
     )
     @Comment(
-            value = "",
+            value = "Enable beacon effect particles for brazier.\nYou may need to wait for the effect to ware off for this to apply",
             translation = "config.rubinated_nether.brazier_effect_particles.desc"
     )
     public static boolean brazierEffectParticles = false;
@@ -94,7 +94,7 @@ public final class RNConfig {
         translation = "config.rubinated_nether.nether_ruby_ore.min_shards"
     )
     @Comment(
-            value = "",
+            value = "Specify the minimum amount of Ruby Shards dropped per ore",
             translation = "config.rubinated_nether.nether_ruby_ore.min_shards.desc"
     )
     @SuppressWarnings("unused")
@@ -107,7 +107,7 @@ public final class RNConfig {
         translation = "config.rubinated_nether.nether_ruby_ore.max_shards"
     )
     @Comment(
-            value = "",
+            value = "Specify the maximum amount of Ruby Shards dropped per ore",
             translation = "config.rubinated_nether.nether_ruby_ore.max_shards.desc"
     )
     @SuppressWarnings("unused")
@@ -121,7 +121,7 @@ public final class RNConfig {
             translation = "config.rubinated_nether.molten_ruby_ore.min_molten"
     )
     @Comment(
-            value = "",
+            value = "Specify the minimum amount of Molten Ruby dropped per ore",
             translation = "config.rubinated_nether.molten_ruby_ore.min_molten.desc"
     )
     @SuppressWarnings("unused")
@@ -134,7 +134,7 @@ public final class RNConfig {
             translation = "config.rubinated_nether.molten_ruby_ore.max_molten"
     )
     @Comment(
-            value = "",
+            value = "Specify the maximum amount of Molten Ruby dropped per ore",
             translation = "config.rubinated_nether.molten_ruby_ore.max_molten.desc"
     )
     @SuppressWarnings("unused")
@@ -147,7 +147,7 @@ public final class RNConfig {
             translation = "config.rubinated_nether.molten_ruby_ore.min_nuggets"
     )
     @Comment(
-            value = "",
+            value = "Specify the minimum amount of Molten Ruby Nuggets dropped per ore",
             translation = "config.rubinated_nether.molten_ruby_ore.min_nuggets.desc"
     )
     @SuppressWarnings("unused")
@@ -160,7 +160,7 @@ public final class RNConfig {
             translation = "config.rubinated_nether.molten_ruby_ore.max_nuggets"
     )
     @Comment(
-            value = "",
+            value = "Specify the maximum amount of Molten Ruby Nuggets dropped per ore",
             translation = "config.rubinated_nether.molten_ruby_ore.max_nuggets.desc"
     )
     @SuppressWarnings("unused")
@@ -180,7 +180,7 @@ public final class RNConfig {
         )
         @FloatRange(min = 0f, max = 1f)
         @Comment(
-                value = "",
+                value = "Set the Ruby Lens opacity. 1 is maximum and default.",
                 translation = "config.rubinated_nether.client.ruby_lens_opacity.desc"
                 )
         public static float rubyLensOpacity = 1f;
@@ -207,7 +207,7 @@ public final class RNConfig {
             translation = "config.rubinated_nether.worldgen.enabled"
         )
         @Comment(
-                value = "",
+                value = "Enable this mod's Worldgen",
                 translation = "config.rubinated_nether.worldgen.enabled.desc"
         )
         public static boolean enabled = true;
@@ -220,7 +220,7 @@ public final class RNConfig {
             translation = "block.rubinated_nether.nether_ruby_ore"
         )
         @Comment(
-                value = "",
+                value = "Enable Nether Ruby Ore spawning near the Nether roof",
                 translation = "config.rubinated_nether.spawn_nether_ruby_ore.desc"
         )
         public static boolean netherRubyOre = true;
@@ -231,7 +231,7 @@ public final class RNConfig {
             translation = "block.rubinated_nether.molten_ruby_ore"
         )
         @Comment(
-                value = "",
+                value = "Enable Molten Ruby Ore spawning inside Magma veins",
                 translation =  "config.rubinated_nether.spawn_molten_ruby_ore.desc"
         )
         public static boolean moltenRubyOre = true;
@@ -242,7 +242,7 @@ public final class RNConfig {
             translation = "block.rubinated_nether.rubinated_blackstone"
         )
         @Comment(
-                value = "",
+                value = "Enable Rubinated Blackstone spawning inside Bastion Remnants",
                 translation =  "config.rubinated_nether.spawn_rubinated_blackstone.desc"
         )
         public static boolean rubinatedBlackstone = true;
