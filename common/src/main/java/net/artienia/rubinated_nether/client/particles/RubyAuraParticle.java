@@ -9,11 +9,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class RubyAuraParticle extends RisingParticle {
 
-    private final double glowStrength;
-
     protected RubyAuraParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-        super(level, x, y, z, 0, ySpeed, 0);
-        this.glowStrength = zSpeed;
+        super(level, x, y, z, xSpeed, ySpeed, zSpeed);
     }
 
     @Override
