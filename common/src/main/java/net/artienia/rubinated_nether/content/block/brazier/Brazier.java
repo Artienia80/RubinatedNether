@@ -24,7 +24,7 @@ public class Brazier extends Block implements BEBlock<BrazierBlockEntity> {
     ).reduce(Shapes::or).get();
 
     protected static final VoxelShape COLLISION_SHAPE =
-        Shapes.join(SHAPE, box(2, 6, 2, 14, 16, 14), BooleanOp.NOT_SAME);
+        Shapes.join(SHAPE, box(1.5, 6, 1.5, 14.5, 16, 14.5), BooleanOp.NOT_SAME);
 
     public Brazier(Properties properties) {
         super(properties);

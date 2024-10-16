@@ -7,7 +7,7 @@ import net.minecraft.core.particles.SimpleParticleType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class RubyAuraParticle extends TextureSheetParticle {
+public class RubyAuraParticle extends RisingParticle {
 
     private final double glowStrength;
 

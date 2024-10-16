@@ -21,6 +21,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.forgespi.locating.IModFile;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 
@@ -61,29 +62,27 @@ public final class RubinatedNetherForge {
         // Broke in dev
         if(!FMLEnvironment.production) return;
 
-        Path resourcePath = ModList.get()
+        IModFile modFile = ModList.get()
             .getModFileById(RubinatedNether.MOD_ID)
-            .getFile()
-            .findResource("resourcepacks/better_netherite_template");
+            .getFile();
 
-        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-            Pack pack = Pack.readMetaAndCreate(
-                "rubinated_nether/better_netherite_template_assets",
-                Component.literal("Rubinated Netherite Template"), false,
-                path -> new PathPackResources(path, resourcePath, true),
-                PackType.CLIENT_RESOURCES, Pack.Position.TOP, PackSource.BUILT_IN
-            );
+        createPack(event, modFile, "better_netherite_template", "Better Netherite Template", false);
 
-            event.addRepositorySource(consumer -> consumer.accept(pack));
-        } else if(event.getPackType() == PackType.SERVER_DATA) {
-            Pack pack2 = Pack.readMetaAndCreate(
-                "rubinated_nether/better_netherite_template_data",
-                Component.literal("Rubinated Netherite Template"), true,
-                path -> new PathPackResources(path, resourcePath, true),
-                PackType.SERVER_DATA, Pack.Position.TOP, PackSource.BUILT_IN
-            );
-
-            event.addRepositorySource(consumer -> consumer.accept(pack2));
+        if(event.getPackType() == PackType.SERVER_DATA) {
+            createPack(event, modFile, "compat", "Rubinated Nether Mod Compat", true);
         }
+    }
+
+    private static void createPack(AddPackFindersEvent event, IModFile modFile, String id, String name, boolean required) {
+        Path resourcePath = modFile.findResource("resourcepacks/" + id);
+
+        Pack pack = Pack.readMetaAndCreate(
+            RubinatedNether.MOD_ID + "/" + id,
+            Component.literal(name), required,
+            path -> new PathPackResources(path, resourcePath, true),
+            event.getPackType(), Pack.Position.TOP, PackSource.BUILT_IN
+        );
+
+        event.addRepositorySource(consumer -> consumer.accept(pack));
     }
 }

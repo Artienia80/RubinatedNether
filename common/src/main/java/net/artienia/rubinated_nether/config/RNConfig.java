@@ -184,6 +184,14 @@ public final class RNConfig {
                 translation = "config.rubinated_nether.client.ruby_lens_opacity.desc"
                 )
         public static float rubyLensOpacity = 1f;
+
+        @ConfigEntry(
+            id = "brazier_particles",
+            type = EntryType.INTEGER,
+            translation = "config.rubinated_nether.client.brazier_particles"
+        )
+        @IntRange(min = 0, max = 10)
+        public static int brazierParticleCount = 6;
     }
 
     @Category(

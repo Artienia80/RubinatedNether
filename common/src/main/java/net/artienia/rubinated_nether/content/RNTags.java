@@ -30,6 +30,8 @@ public final class RNTags {
         public static final TagKey<Item> RUBY_GLASS_PANES = TagKey.create(Registries.ITEM, id("ruby_glass_pane_tag"));
 
         public static final TagKey<Item> RUBY_SHARDS = TagKey.create(Registries.ITEM, id("ruby_shard_tag"));
+
+        public static final TagKey<Item> OBSIDIAN_CONVERTERS = TagKey.create(Registries.ITEM, id("bleeding_obsidian_converter"));
     }
 
 }

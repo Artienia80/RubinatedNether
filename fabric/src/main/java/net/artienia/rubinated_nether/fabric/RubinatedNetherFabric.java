@@ -1,5 +1,6 @@
 package net.artienia.rubinated_nether.fabric;
 
+import net.artienia.rubinated_nether.RNEvents;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.config.RNConfig;
 import net.artienia.rubinated_nether.worldgen.RNPlacedFeatures;
@@ -8,6 +9,7 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
@@ -26,12 +28,22 @@ public final class RubinatedNetherFabric implements ModInitializer {
         RubinatedNether.init();
         RubinatedNether.setup();
 
+        ModContainer mod = FabricLoader.getInstance()
+            .getModContainer(RubinatedNether.MOD_ID)
+            .orElseThrow();
+
         // Register ruby template RP
         ResourceManagerHelper.registerBuiltinResourcePack(
-            RubinatedNether.id("better_netherite_template"),
-            FabricLoader.getInstance().getModContainer(RubinatedNether.MOD_ID).orElseThrow(),
+            RubinatedNether.id("better_netherite_template"), mod,
             Component.literal("Rubinated Netherite Template"),
             ResourcePackActivationType.DEFAULT_ENABLED
+        );
+
+        // Additional data (Compat and config recipe)
+        ResourceManagerHelper.registerBuiltinResourcePack(
+            RubinatedNether.id("compat"), mod,
+            Component.literal("Rubinated Nether Mod Compat"),
+            ResourcePackActivationType.ALWAYS_ENABLED
         );
 
         // register custom resource condition
@@ -40,11 +52,11 @@ public final class RubinatedNetherFabric implements ModInitializer {
             $ -> RNConfig.customSmithingRecipe
         );
 
-        // Register biome modifications
         registerBiomeModifications();
+        registerEvents();
     }
 
-    public static void registerBiomeModifications() {
+    private void registerBiomeModifications() {
         BiomeModifications.create(RubinatedNether.id("rubies"))
             .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(BiomeTags.IS_NETHER), (selection, context) -> {
                 BiomeModificationContext.GenerationSettingsContext generation = context.getGenerationSettings();
@@ -52,5 +64,9 @@ public final class RubinatedNetherFabric implements ModInitializer {
                 generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, RNPlacedFeatures.MOLTEN_RUBY_ORE_PLACED_KEY);
                 generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, RNPlacedFeatures.RUBINATED_BLACKSTONE_PLACED_KEY);
             });
+    }
+
+    private void registerEvents() {
+        UseBlockCallback.EVENT.register(RNEvents::interactBlock);
     }
 }

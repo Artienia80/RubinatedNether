@@ -27,9 +27,8 @@ public class ShapeUtils {
 
     public static Map<Direction, VoxelShape> allDirections(VoxelShape facingUp) {
         Map<Direction, VoxelShape> map = new EnumMap<>(Direction.class);
-        for(Direction direction : Direction.values()) {
-            Vec3 dir = getDirectionRotationVec(direction);
-            map.put(direction, rotatedCopy(facingUp, dir));
+        for(Direction dir : Direction.values()) {
+            map.put(dir, rotatedCopy(facingUp, getDirectionRotationVec(dir)));
         }
         return map;
     }
@@ -98,9 +97,10 @@ public class ShapeUtils {
     }
 
     private static Vec3 getDirectionRotationVec(Direction direction) {
-        return new Vec3(
-            direction == Direction.UP ? 0 : (Direction.Plane.VERTICAL.test(direction) ? 180 : 90),
-            -((Math.max(direction.get2DDataValue(), 0) & 3) * 90f), 0
+        return direction == Direction.UP ? Vec3.ZERO : new Vec3(
+            Direction.Plane.VERTICAL.test(direction) ? 180 : 90,
+            -((Math.max(direction.get2DDataValue(), 0) & 3) * 90f),
+            0
         );
     }
 }

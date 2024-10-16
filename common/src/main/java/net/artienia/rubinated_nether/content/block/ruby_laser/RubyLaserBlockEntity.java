@@ -145,7 +145,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
     @Override
     public Stream<BlockPos> getListenedPositions() {
-        Vec3i offset = getBlockState().getValue(RubyLaserBlock.FACING).getNormal().multiply(currentLaserRange);
+        Vec3i offset = getBlockState().getValue(RubyLaserBlock.FACING).getNormal().multiply(15);
         return BlockPos.betweenClosedStream(worldPosition, worldPosition.offset(offset));
     }
 

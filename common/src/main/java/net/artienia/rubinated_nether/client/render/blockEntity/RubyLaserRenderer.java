@@ -20,6 +20,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionf;
 
 public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEntity> {
@@ -29,6 +30,8 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 
     private static final float[] BASE_COLOR = new float[]{1f, 1f, 1f};
     private static final float[] TINTED_COLOR = new float[]{1f, 0, .5f};
+
+    private final Quaternionf tempQuat = new Quaternionf();
 
     public RubyLaserRenderer(BlockEntityRendererProvider.Context context) {}
 
@@ -42,21 +45,20 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 
             poseStack.pushPose();
             poseStack.translate(0.5f, 0.5f, 0.5f);
-            Quaternionf quat = new Quaternionf();
 
             // laser facing
             Direction facing = blockEntity.getBlockState().getValue(RubyLaserBlock.FACING);
             float xRot = (facing == Direction.UP) ? 0 : (Direction.Plane.VERTICAL.test(facing) ? 180f : 90f);
             float zRot = (Math.max(facing.get2DDataValue(), 0) & 3) * 90f;
 
-            quat.rotationXYZ(xRot * Mth.DEG_TO_RAD, 0, zRot * Mth.DEG_TO_RAD);
+            tempQuat.rotationXYZ(xRot * Mth.DEG_TO_RAD, 0, zRot * Mth.DEG_TO_RAD);
 
             // rotating animation
             float lerpedTime = Mth.lerp(partialTick, level.getGameTime(), level.getGameTime() + 1);
             float angle = (lerpedTime * 3) % 360f;
-            quat.rotateY(angle * Mth.DEG_TO_RAD);
+            tempQuat.rotateY(angle * Mth.DEG_TO_RAD);
 
-            poseStack.mulPose(quat);
+            poseStack.mulPose(tempQuat);
             poseStack.translate(-0.5f, -0.5f, -0.5f);
 
             float maxY = (float) (blockEntity.getRenderRange() + 1f);
@@ -71,6 +73,8 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
             } else {
                 color = blockEntity.getBlockState().getValue(RubyLaserBlock.TINTED) ? TINTED_COLOR : BASE_COLOR;
             }
+
+            Vec3 vec = new Vec3(0, 1, 1);
 
             // Use fallback render type if shaders in use because beacon beam broken
             VertexConsumer consumer = buffer.getBuffer(getRenderType(blockEntity.isColored() || blockEntity.isSilly()));

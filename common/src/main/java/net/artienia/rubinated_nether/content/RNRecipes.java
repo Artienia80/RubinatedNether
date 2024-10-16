@@ -12,7 +12,7 @@ public final class RNRecipes {
     public static final Registrar<RecipeType<?>> RECIPE_TYPES = RubinatedNether.REGISTRIES.getRegistrar(Registries.RECIPE_TYPE);
     public static final Registrar<RecipeSerializer<?>> RECIPE_SERIALIZERS = RubinatedNether.REGISTRIES.getRegistrar(Registries.RECIPE_SERIALIZER);
 
-    public static final RegistryEntry<? extends RecipeType<FreezingRecipe>> FREEZING = RECIPE_TYPES.entry("freezing", () -> new RecipeType<FreezingRecipe>() {
+    public static final RegistryEntry<RecipeType<FreezingRecipe>> FREEZING = RECIPE_TYPES.<RecipeType<FreezingRecipe>>entry("freezing", () -> new RecipeType<>() {
         @Override
         public String toString() {
             return "rubinated_nether:freezing";

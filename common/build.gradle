@@ -1,3 +1,6 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
 architectury {
     common rootProject.enabled_platforms.split(',')
 }
@@ -43,4 +46,11 @@ dependencies {
 
     // Spelunkery
     modCompileOnly("maven.modrinth:spelunkery:1.20.1-0.3.13-fabric")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+repositories {
+    mavenCentral()
+}
+kotlin {
+    jvmToolchain(17)
 }
