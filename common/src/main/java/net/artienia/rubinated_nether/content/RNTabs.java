@@ -1,5 +1,6 @@
 package net.artienia.rubinated_nether.content;
 
+import com.google.common.eventbus.Subscribe;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.config.RNConfig;
 import net.minecraft.world.item.CreativeModeTab;
@@ -9,6 +10,9 @@ import uwu.serenity.critter.creative.TabPlacement;
 import uwu.serenity.critter.stdlib.creativeTabs.CreativeTabRegistrar;
 import uwu.serenity.critter.stdlib.items.ItemBuilder;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.function.BiConsumer;
 import java.util.function.UnaryOperator;
 
 public final class RNTabs {

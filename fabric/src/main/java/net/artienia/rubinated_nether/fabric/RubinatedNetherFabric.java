@@ -39,18 +39,14 @@ public final class RubinatedNetherFabric implements ModInitializer {
             ResourcePackActivationType.DEFAULT_ENABLED
         );
 
-        // Additional data (Compat and config recipe)
-        ResourceManagerHelper.registerBuiltinResourcePack(
-            RubinatedNether.id("compat"), mod,
-            Component.literal("Rubinated Nether Mod Compat"),
-            ResourcePackActivationType.ALWAYS_ENABLED
-        );
-
-        // register custom resource condition
-        ResourceConditions.register(
-            RubinatedNether.id("netherite_smithing_template_recipe"),
-            $ -> RNConfig.customSmithingRecipe
-        );
+        // Spelunkery Compat
+        if(FabricLoader.getInstance().isModLoaded("spelunkery")) {
+            ResourceManagerHelper.registerBuiltinResourcePack(
+                RubinatedNether.id("compat"), mod,
+                Component.literal("Rubinated Nether Mod Compat"),
+                ResourcePackActivationType.ALWAYS_ENABLED
+            );
+        }
 
         registerBiomeModifications();
         registerEvents();

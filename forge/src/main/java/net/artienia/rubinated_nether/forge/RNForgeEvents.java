@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = RubinatedNether.MOD_ID)
-public class RNForgeEvents {
+public final class RNForgeEvents {
 
     @SubscribeEvent
     public static void interactBlock(PlayerInteractEvent.RightClickBlock event) {
