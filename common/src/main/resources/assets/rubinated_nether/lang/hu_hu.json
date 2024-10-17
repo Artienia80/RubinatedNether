@@ -24,9 +24,9 @@
   "block.rubinated_nether.ruby_lava_lamp": "Rubin lávalámpa",
   "block.rubinated_nether.ruby_brazier": "Rubin parázstartó",
 
-  "item.rubinated_nether.rough_ruby": "Rough Ruby",
-  "item.rubinated_nether.rough_ruby_shard": "Rough Ruby Shard",
-  "block.rubinated_nether.rough_ruby_block": "Block of Rough Ruby",
+  "item.rubinated_nether.rough_ruby": "Csiszolatlan rubin",
+  "item.rubinated_nether.rough_ruby_shard": "Csiszolatlan rubinszilánk",
+  "block.rubinated_nether.rough_ruby_block": "Csiszolatlan rubinblokk",
 
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Vért a véristennek!",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Szerezz vérző obszidiánt",
@@ -80,7 +80,7 @@
   "config.rubinated_nether.worldgen.enabled": "Világgenerálás engedélyezése",
   "config.rubinated_nether.worldgen.features": "Adottságok",
   "config.rubinated_nether.creative_tab.desc": "Enable the mod's creative tab. The items can always be found in vanilla tabs\n§eRequires game restart",
-  "config.rubinated_nether.custom_smithing_recipe": "Rubinate Netherite Template",
+  "config.rubinated_nether.custom_smithing_recipe": "Rubinozott netherit fejlesztés",
   "config.rubinated_nether.custom_smithing_recipe.desc": "Enable custom netherite smithing template recipe",
   "config.rubinated_nether.chandelier_damage_multiplier.desc": "Specify how rapidly the Chandelier's damage increases",
   "config.rubinated_nether.chandelier_max_damage.desc": "Specify the Chandelier's maximum damage limit",
@@ -106,5 +106,5 @@
   "config.rubinated_nether.worldgen.enabled.desc": "Enable this mod's Worldgen",
   "config.rubinated_nether.spawn_nether_ruby_ore.desc": "Enable Nether Ruby Ore spawning near the Nether roof",
   "config.rubinated_nether.spawn_molten_ruby_ore.desc": "Enable Molten Ruby Ore spawning inside Magma veins",
-  "config.rubinated_nether.spawn_rubinated_blackstone.desc": "Enable Rubinated Blackstone spawning inside Bastion Remnants",
+  "config.rubinated_nether.spawn_rubinated_blackstone.desc": "Enable Rubinated Blackstone spawning inside Bastion Remnants"
 }
