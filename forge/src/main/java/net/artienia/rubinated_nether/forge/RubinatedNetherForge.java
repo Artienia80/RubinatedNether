@@ -67,10 +67,10 @@ public final class RubinatedNetherForge {
         Path resourcePath = modFile.findResource("resourcepacks/" + id);
 
         Pack pack = Pack.readMetaAndCreate(
-            RubinatedNether.MOD_ID + "/" + id,
-            Component.literal(name), required,
-            path -> new PathPackResources(path, resourcePath, true),
-            event.getPackType(), Pack.Position.TOP, PackSource.BUILT_IN
+                "builtin/" + id,
+                Component.literal(name), required,
+                path -> new PathPackResources(path, resourcePath, true),
+                event.getPackType(), Pack.Position.TOP, PackSource.BUILT_IN
         );
 
         event.addRepositorySource(consumer -> consumer.accept(pack));
