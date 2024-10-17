@@ -59,7 +59,7 @@ public final class RubinatedNetherForge {
         createPack(event, modFile, "better_netherite_template", "Better Netherite Template", false);
 
         if(event.getPackType() == PackType.SERVER_DATA) {
-            createPack(event, modFile, "compat_spelunkeery", "Rubinated Nether Spelunkery Compat", true);
+            createPack(event, modFile, "compat_spelunkery", "Rubinated Nether Spelunkery Compat", true);
         }
     }
 

@@ -74,8 +74,6 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
                 color = blockEntity.getBlockState().getValue(RubyLaserBlock.TINTED) ? TINTED_COLOR : BASE_COLOR;
             }
 
-            Vec3 vec = new Vec3(0, 1, 1);
-
             // Use fallback render type if shaders in use because beacon beam broken
             VertexConsumer consumer = buffer.getBuffer(getRenderType(blockEntity.isColored() || blockEntity.isSilly()));
 
@@ -93,7 +91,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
         float maxV = (maxY - 1f) / 15f;
         float endAlpha = Mth.clamp(1f - maxV, 0, 1);
 
-        float v0 = 1 - (ticks % 150f) / 150;
+        float v0 = 1 - (ticks % 150f) / 150f;
         float v1 = v0 + (maxV * 0.4f);
         float r = color[0], g = color[1], b = color[2];
 
