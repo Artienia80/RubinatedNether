@@ -1,0 +1,7 @@
+{
+  "key": {
+    "#reactor_topsoil" : "minecraft:basalt",
+    "#reactor_subsoil" : "minecraft:blackstone",
+    "#reactor_stone" : "minecraft:netherrack"
+  }
+}

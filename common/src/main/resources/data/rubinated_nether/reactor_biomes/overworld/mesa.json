@@ -1,0 +1,17 @@
+{
+  "key": {
+    "#reactor_topsoil" : "minecraft:grass_block",
+    "#reactor_subsoil" : "minecraft:terracotta",
+    "#reactor_stone" : "minecraft:terracotta",
+
+    "#reactor_plants" : "minecraft:grass",
+
+    "#reactor_logs": "minecraft:cactus",
+    "#reactor_wood": "minecraft:cactus",
+    "#reactor_stripped_logs": "minecraft:cactus",
+    "#reactor_stripped_wood": "minecraft:cactus",
+    "#reactor_leaves" : "minecraft:air",
+
+    "#reactor_planks": "minecraft:oak_planks"
+  }
+}

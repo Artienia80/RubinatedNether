@@ -1,0 +1,17 @@
+{
+  "key": {
+    "#reactor_topsoil" : "minecraft:mud",
+    "#reactor_subsoil" : "minecraft:mud",
+    "#reactor_stone" : "minecraft:stone",
+
+    "#reactor_plants" : "minecraft:grass",
+
+    "#reactor_logs": "minecraft:mangrove_log",
+    "#reactor_wood": "minecraft:mangrove_wood",
+    "#reactor_stripped_logs": "minecraft:stripped_mangrove_log",
+    "#reactor_stripped_wood": "minecraft:stripped_mangrove_wood",
+    "#reactor_leaves" : "minecraft:mangrove_leaves",
+
+    "#reactor_planks": "minecraft:mangrove_planks"
+  }
+}

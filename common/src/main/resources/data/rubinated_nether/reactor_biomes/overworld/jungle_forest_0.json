@@ -1,0 +1,18 @@
+{
+  "weight": 60,
+  "key": {
+    "#reactor_topsoil" : "minecraft:grass_block",
+    "#reactor_subsoil" : "minecraft:dirt",
+    "#reactor_stone" : "minecraft:stone",
+
+    "#reactor_plants" : "minecraft:fern",
+
+    "#reactor_logs": "minecraft:jungle_log",
+    "#reactor_wood": "minecraft:jungle_wood",
+    "#reactor_stripped_logs": "minecraft:stripped_jungle_log",
+    "#reactor_stripped_wood": "minecraft:stripped_jungle_wood",
+    "#reactor_leaves" : "minecraft:jungle_leaves",
+
+    "#reactor_planks": "minecraft:jungle_planks"
+  }
+}
