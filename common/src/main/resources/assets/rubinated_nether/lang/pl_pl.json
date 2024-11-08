@@ -80,8 +80,8 @@
   "config.rubinated_nether.worldgen.enabled": "Aktywuj generacje świata",
   "config.rubinated_nether.worldgen.features": "Features",
   "config.rubinated_nether.creative_tab.desc": "Aktywuj zakładke w ekwipunku kreatywnym. Przedmioty zawsze znajdują sie w standardowych zakładkach\n§eWymaga restartu gry",
-  "config.rubinated_nether.netherite_smithing_recipe": "Rubinowy szablon kowalski",
-  "config.rubinated_nether.netherite_smithing_recipe.desc": "Aktywuj niestandardową recepture netherytowego szablonu kowalskiego",
+  "config.rubinated_nether.netherite_smithing_template_recipe": "Rubinowy szablon kowalski",
+  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Aktywuj niestandardową recepture netherytowego szablonu kowalskiego",
   "config.rubinated_nether.chandelier_damage_multiplier.desc": "Ustaw jak szybko zwiększają się obrażenia żyrandolu",
   "config.rubinated_nether.chandelier_max_damage.desc": "Ustaw limit maksymalnych obrażeń żyrandolu",
   "config.rubinated_nether.brazier_effect_range": "obszar efektu",
@@ -107,6 +107,6 @@
   "config.rubinated_nether.spawn_nether_ruby_ore.desc": "Aktywuj generacje złóż blisko sufitu netheru",
   "config.rubinated_nether.spawn_molten_ruby_ore.desc": "Aktywuj generacje złóż w żyłach bloku magmy",
   "config.rubinated_nether.spawn_rubinated_blackstone.desc": "Aktywuj generacje rubinowego czernitu w ruinach bastionu",
-  "config.rubinated_nether.client.brazier_particles": "Set the amount of particles produced by the Ruby Brazier"
+  "config.rubinated_nether.client.brazier_particles": "Ruby Brazier Particle Count"
 
 }
