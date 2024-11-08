@@ -3,6 +3,7 @@ package net.artienia.rubinated_nether.fabric;
 import net.artienia.rubinated_nether.RNEvents;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.config.RNConfig;
+import net.artienia.rubinated_nether.fabric.conditions.RNResourceConditionTypes;
 import net.artienia.rubinated_nether.worldgen.RNPlacedFeatures;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
@@ -27,6 +28,7 @@ public final class RubinatedNetherFabric implements ModInitializer {
         // Run our common setup.
         RubinatedNether.init();
         RubinatedNether.setup();
+        RNResourceConditionTypes.init();
 
         ModContainer mod = FabricLoader.getInstance()
             .getModContainer(RubinatedNether.MOD_ID)

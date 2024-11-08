@@ -86,6 +86,7 @@ subprojects {
         }
 
         modCompileOnly("mezz.jei:jei-${rootProject.minecraft_version}-common-api:${rootProject.jei_version}")
+
         modApi include("uwu.serenity.critter:critter-${project.name}:${rootProject.critter_version}")
         modApi include("com.teamresourceful.resourcefulconfig:resourcefulconfig-${project.name}-$minecraft_version:$config_version")
 
