@@ -23,6 +23,10 @@ public class RNResourceConditionTypes {
         };
     }
 
+    public static void init() {
+        // init static
+    }
+
     static {
         ResourceConditions.register(RECIPE_CONFIG, object -> RNConfig.netherite_smithing_template_recipe);
     }
