@@ -71,8 +71,8 @@
   "config.rubinated_nether.creative_tab": "Enable Creative Tab",
   "config.rubinated_nether.creative_tab.desc": "Enable the mod's creative tab. The items can always be found in vanilla tabs\n§eRequires game restart",
 
-  "config.rubinated_nether.custom_smithing_recipe": "Rubinate Netherite Template",
-  "config.rubinated_nether.custom_smithing_recipe.desc": "Enable custom netherite smithing template recipe",
+  "config.rubinated_nether.netherite_smithing_recipe": "Rubinate Netherite Template",
+  "config.rubinated_nether.netherite_smithing_recipe.desc": "Enable custom netherite smithing template recipe",
 
   "config.rubinated_nether.chandelier": "Chandelier",
   "config.rubinated_nether.chandelier_damage_multiplier": "Damage Multiplier",
@@ -105,6 +105,7 @@
   "config.rubinated_nether.client": "Client Config",
   "config.rubinated_nether.client.ruby_lens_opacity": "Ruby Lens Overlay Opacity",
   "config.rubinated_nether.client.ruby_lens_opacity.desc": "Set the Ruby Lens opacity. 1 is maximum and default.",
+  "config.rubinated_nether.client.brazier_particles": "Set the amount of particles produced by the Ruby Brazier",
 
   "config.rubinated_nether.worldgen": "Worldgen Config",
   "config.rubinated_nether.worldgen.enabled": "Enable Worldgen",
