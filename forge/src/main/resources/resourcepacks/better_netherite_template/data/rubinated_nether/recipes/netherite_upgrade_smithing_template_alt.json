@@ -1,11 +1,12 @@
 {
   "type": "forge:conditional",
-
   "recipes": [
     {
-      "conditions": [{
-        "type": "rubinated_nether:netherite_smithing_template_recipe"
-      }],
+      "conditions": [
+        {
+          "type": "rubinated_nether:netherite_smithing_template_recipe"
+        }
+      ],
       "recipe": {
         "type": "minecraft:crafting_shaped",
         "category": "misc",
