@@ -2,6 +2,7 @@ package net.artienia.rubinated_nether.forge;
 
 
 import net.artienia.rubinated_nether.client.config.RNConfigScreen;
+import net.artienia.rubinated_nether.forge.conditions.RecipeConfigCondition;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
@@ -9,6 +10,7 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -20,6 +22,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.forgespi.locating.IModFile;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 
 import java.nio.file.Path;
 
@@ -44,14 +48,14 @@ public final class RubinatedNetherForge {
 
     @SubscribeEvent
     public static void onSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(RubinatedNether::setup);
+        event.enqueueWork(() -> {
+            RubinatedNether.setup();
+            CraftingHelper.register(RecipeConfigCondition.Serializer.INSTANCE);
+        });
     }
 
     @SubscribeEvent
     public static void addResourcePack(AddPackFindersEvent event) {
-        // Broke in dev
-        if(!FMLEnvironment.production) return;
-
         IModFile modFile = ModList.get()
             .getModFileById(RubinatedNether.MOD_ID)
             .getFile();
@@ -73,6 +77,6 @@ public final class RubinatedNetherForge {
                 event.getPackType(), Pack.Position.TOP, PackSource.BUILT_IN
         );
 
-        event.addRepositorySource(consumer -> consumer.accept(pack));
+        if(pack != null) event.addRepositorySource(consumer -> consumer.accept(pack));
     }
 }
