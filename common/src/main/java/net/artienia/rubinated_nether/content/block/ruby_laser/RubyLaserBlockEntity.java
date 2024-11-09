@@ -13,7 +13,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -94,27 +93,24 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
         // Iterating the range of the Laser to check each position
         blockRange = 0;
-        boolean isTintedGlass = false;
         for (int i = 0; i <= 15; i++) {
             mutableBlockPos.move(facing);
             blockRange = i;
 
             BlockState state = level.getBlockState(mutableBlockPos);
 
-            // In case of Tinted Glass the laser range is shortened
-            if (state.is(Blocks.TINTED_GLASS)){
-                this.currentLaserRange = blockRange;
-                isTintedGlass = true;
-                break;
-            }
-            if (state.is(RNTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
+            boolean blocks = state.is(RNTags.Blocks.RUBY_LASER_NO_SIGNAL);
+            if (!blocks && state.is(RNTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
 
-            VoxelShape shape = state.getCollisionShape(level, mutableBlockPos);
-            if(Shapes.joinIsNotEmpty(shape, BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND)) {
+            VoxelShape shape = Shapes.join(state.getCollisionShape(level, mutableBlockPos), BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND);
+
+            if(!shape.isEmpty()) {
                 if(level.isClientSide) {
                     Direction.Axis axis = facing.getAxis();
                     rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.max(axis);
                 }
+                // In case of Tinted Glass the laser range is shortened
+                if(blocks) this.currentLaserRange = blockRange;
                 break;
             }
         }
@@ -132,9 +128,9 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
             color = null;
         }
 
-        if(getBlockState().getValue(RubyLaserBlock.TINTED) && !isTintedGlass) {
-            powerLevel = Mth.clamp(15 - (blockRange), 0, 15);
-            if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
+        if(getBlockState().getValue(RubyLaserBlock.TINTED)) {
+            powerLevel = Mth.clamp(currentLaserRange - blockRange, 0, 15);
+            if (powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
                 level.scheduleTick(getBlockPos(), RNBlocks.RUBY_LASER.get(), 2);
             }
         }
