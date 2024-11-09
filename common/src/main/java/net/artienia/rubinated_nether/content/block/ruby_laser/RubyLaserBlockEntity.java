@@ -94,6 +94,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
         // Iterating the range of the Laser to check each position
         blockRange = 0;
+        boolean isTintedGlass = false;
         for (int i = 0; i <= 15; i++) {
             mutableBlockPos.move(facing);
             blockRange = i;
@@ -103,6 +104,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
             // In case of Tinted Glass the laser range is shortened
             if (state.is(Blocks.TINTED_GLASS)){
                 this.currentLaserRange = blockRange;
+                isTintedGlass = true;
                 break;
             }
             if (state.is(RNTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
@@ -130,12 +132,11 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
             color = null;
         }
 
-        if(getBlockState().getValue(RubyLaserBlock.TINTED)) {
+        if(getBlockState().getValue(RubyLaserBlock.TINTED) && !isTintedGlass) {
             powerLevel = Mth.clamp(15 - (blockRange), 0, 15);
             if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
                 level.scheduleTick(getBlockPos(), RNBlocks.RUBY_LASER.get(), 2);
             }
-
         }
     }
 
