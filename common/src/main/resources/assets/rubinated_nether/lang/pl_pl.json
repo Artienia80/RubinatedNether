@@ -107,6 +107,6 @@
   "config.rubinated_nether.spawn_nether_ruby_ore.desc": "Aktywuj generacje złóż blisko sufitu netheru",
   "config.rubinated_nether.spawn_molten_ruby_ore.desc": "Aktywuj generacje złóż w żyłach bloku magmy",
   "config.rubinated_nether.spawn_rubinated_blackstone.desc": "Aktywuj generacje rubinowego czernitu w ruinach bastionu",
-  "config.rubinated_nether.client.brazier_particles": "Ruby Brazier Particle Count"
+  "config.rubinated_nether.client.brazier_particles": "Ilość cząsteczek Rubinowego Paleniska"
 
 }
