@@ -23,6 +23,7 @@
                     ]
                   }
                 }
+
               ],
               "name": "rubinated_nether:nether_ruby_ore"
             },
@@ -81,14 +82,6 @@
         }
       ],
       "rolls": 1.0
-    }
-  ],
-  "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "spelunkery"
-      ]
     }
   ]
 }

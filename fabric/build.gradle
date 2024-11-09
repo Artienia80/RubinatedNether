@@ -82,7 +82,14 @@ dependencies {
     modLocalRuntime("dev.emi:emi-fabric:${rootProject.emi_version}+${rootProject.minecraft_version}")
 
     // Spelunkery
+    modImplementation ("maven.modrinth:moonlight:fabric_1.20-2.12.21")
+    modCompileOnly ("maven.modrinth:moonlight:fabric_1.20-2.12.21")
+    modLocalRuntime ("maven.modrinth:moonlight:fabric_1.20-2.12.21")
+    modApi("maven.modrinth:moonlight:fabric_1.20-2.12.21")
+    modRuntimeOnly("maven.modrinth:moonlight:fabric_1.20-2.12.21")
+
     modCompileOnly "maven.modrinth:spelunkery:1.20.1-0.3.13-fabric"
+    //modLocalRuntime("maven.modrinth:spelunkery:1.20.1-0.3.13-fabric")
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')

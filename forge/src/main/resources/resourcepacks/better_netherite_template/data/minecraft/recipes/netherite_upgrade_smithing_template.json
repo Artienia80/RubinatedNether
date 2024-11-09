@@ -4,7 +4,10 @@
     {
       "conditions": [
         {
-          "type": "rubinated_nether:netherite_smithing_template_recipe"
+          "type": "forge:not",
+          "value": {
+            "type": "rubinated_nether:netherite_smithing_template_recipe"
+          }
         }
       ],
       "recipe": {

@@ -44,9 +44,9 @@ public final class RubinatedNetherFabric implements ModInitializer {
         // Spelunkery Compat
         if(FabricLoader.getInstance().isModLoaded("spelunkery")) {
             ResourceManagerHelper.registerBuiltinResourcePack(
-                RubinatedNether.id("compat"), mod,
+                RubinatedNether.id("compat_spelunkery"), mod,
                 Component.literal("Rubinated Nether Mod Compat"),
-                ResourcePackActivationType.ALWAYS_ENABLED
+                ResourcePackActivationType.DEFAULT_ENABLED
             );
         }
 

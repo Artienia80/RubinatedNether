@@ -3,7 +3,10 @@ package net.artienia.rubinated_nether.forge;
 
 import net.artienia.rubinated_nether.client.config.RNConfigScreen;
 import net.artienia.rubinated_nether.forge.conditions.RecipeConfigCondition;
+import net.artienia.rubinated_nether.forge.conditions.ModLoadedLootTable;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
@@ -22,7 +25,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.forgespi.locating.IModFile;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 
 import java.nio.file.Path;
@@ -42,7 +44,7 @@ public final class RubinatedNetherForge {
         // Config screen
         if(FMLEnvironment.dist == Dist.CLIENT) {
             ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
-                () -> new ConfigScreenHandler.ConfigScreenFactory(RNConfigScreen::create));
+                () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> RNConfigScreen.create(screen)));
         }
     }
 
@@ -55,6 +57,15 @@ public final class RubinatedNetherForge {
     }
 
     @SubscribeEvent
+    public void registerLootData(RegisterEvent event)
+    {
+        if (!event.getRegistryKey().equals(Registries.LOOT_CONDITION_TYPE))
+            return;
+
+        event.register(Registries.LOOT_CONDITION_TYPE, new ResourceLocation(RubinatedNether.MOD_ID, "is_mod_loaded"), () -> ModLoadedLootTable.TYPE);
+    }
+
+    @SubscribeEvent
     public static void addResourcePack(AddPackFindersEvent event) {
         IModFile modFile = ModList.get()
             .getModFileById(RubinatedNether.MOD_ID)
@@ -63,7 +74,8 @@ public final class RubinatedNetherForge {
         createPack(event, modFile, "better_netherite_template", "Better Netherite Template", false);
 
         if(event.getPackType() == PackType.SERVER_DATA) {
-            createPack(event, modFile, "compat_spelunkery", "Rubinated Nether Spelunkery Compat", true);
+            if(ModList.get().isLoaded("spelunkery"))
+                createPack(event, modFile, "compat_spelunkery", "Rubinated Nether Spelunkery Compat", true);
         }
     }
 

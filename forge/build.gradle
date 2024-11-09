@@ -80,7 +80,14 @@ dependencies {
     modImplementation("top.theillusivec4.curios:curios-forge:${rootProject.curios_version}+${rootProject.minecraft_version}")
 
     // Spelunkery
+    modImplementation ("maven.modrinth:moonlight:forge_1.20-2.13.22")
+    modCompileOnly ("maven.modrinth:moonlight:forge_1.20-2.13.22")
+    modLocalRuntime ("maven.modrinth:moonlight:forge_1.20-2.13.22")
+    modApi("maven.modrinth:moonlight:forge_1.20-2.13.22")
+    modRuntimeOnly("maven.modrinth:moonlight:forge_1.20-2.13.22")
+
     modCompileOnly("maven.modrinth:spelunkery:1.20.1-0.3.13-forge")
+    modRuntimeOnly("maven.modrinth:spelunkery:1.20.1-0.3.13-forge")
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
