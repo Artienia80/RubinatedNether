@@ -83,8 +83,8 @@
 
   "config.rubinated_nether.creative_tab.desc": "Abilita la tab in Creativa della mod. Gli oggetti potranno comunque essere trovati nelle tab vanilla\n§eRichiede un riavvio",
 
-  "config.rubinated_nether.custom_smithing_recipe": "Schema di Forgiatura di Netherite Rubinato",
-  "config.rubinated_nether.custom_smithing_recipe.desc": "Abilita la ricetta dello schema di forgiatura custom per la Netherite",
+  "config.rubinated_nether.netherite_smithing_template_recipe": "Schema di Forgiatura di Netherite Rubinato",
+  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Abilita la ricetta dello schema di forgiatura custom per la Netherite",
 
   "config.rubinated_nether.chandelier_damage_multiplier.desc": "Specifica quanto rapidamente incrementa il danno del Candelabro",
   "config.rubinated_nether.chandelier_max_damage.desc": "Specifica il danno massimo del Candelabro",
@@ -117,6 +117,8 @@
 
   "config.rubinated_nether.spawn_nether_ruby_ore.desc": "Permetti al Rubino Grezzo del Nether di generare vicino al tetto del Nether",
   "config.rubinated_nether.spawn_molten_ruby_ore.desc": "Permetti al Rubino Fuso Grezzo di generare dentro le vene di Magma",
-  "config.rubinated_nether.spawn_rubinated_blackstone.desc": "Permetti alla Pietranera Rubinata di generare dentro ai Bastioni"
+  "config.rubinated_nether.spawn_rubinated_blackstone.desc": "Permetti alla Pietranera Rubinata di generare dentro ai Bastioni",
+
+  "config.rubinated_nether.client.brazier_particles": "Ruby Brazier Particle Count"
 
 }

@@ -77,8 +77,8 @@
   "config.rubinated_nether.chandelier_max_damage": "Макс. урон",
   "config.rubinated_nether.chandelier_max_damage.desc": "Укажите максимальный предел урона люстры",
 
-  "config.rubinated_nether.custom_smithing_recipe": "Шаблон рубинированного незерита",
-  "config.rubinated_nether.custom_smithing_recipe.desc": "Включить пользовательский рецепт незеритового кузнечного шаблона",
+  "config.rubinated_nether.netherite_smithing_template_recipe": "Шаблон рубинированного незерита",
+  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Включить пользовательский рецепт незеритового кузнечного шаблона",
 
   "config.rubinated_nether.brazier_effect_range": "Диапазон эффекта",
   "config.rubinated_nether.brazier_effect_range.desc": "Укажите диапазон действия жаровни в блоках",
@@ -113,5 +113,7 @@
   "config.rubinated_nether.worldgen.features": "Функции",
   "config.rubinated_nether.spawn_nether_ruby_ore.desc": "Включить появление незер-рубиновой руды возле потолка Нижнего мира",
   "config.rubinated_nether.spawn_molten_ruby_ore.desc": "Включить появление расплавленной рубиновой руды внутри магматических жил",
-  "config.rubinated_nether.spawn_rubinated_blackstone.desc": "Включить появление рубиноносного чернита внутри руин бастиона"
+  "config.rubinated_nether.spawn_rubinated_blackstone.desc": "Включить появление рубиноносного чернита внутри руин бастиона",
+
+  "config.rubinated_nether.client.brazier_particles": "Ruby Brazier Particle Count"
 }

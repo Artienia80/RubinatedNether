@@ -190,8 +190,8 @@ public final class RNConfig {
             type = EntryType.INTEGER,
             translation = "config.rubinated_nether.client.brazier_particles"
         )
-        @IntRange(min = 0, max = 10)
-        public static int brazierParticleCount = 6;
+        @IntRange(min = 0, max = 6)
+        public static int brazierParticleCount = 2;
     }
 
     @Category(
