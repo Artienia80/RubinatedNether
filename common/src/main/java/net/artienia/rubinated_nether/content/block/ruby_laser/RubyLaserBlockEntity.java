@@ -135,6 +135,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
             if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
                 level.scheduleTick(getBlockPos(), RNBlocks.RUBY_LASER.get(), 2);
             }
+
         }
     }
 

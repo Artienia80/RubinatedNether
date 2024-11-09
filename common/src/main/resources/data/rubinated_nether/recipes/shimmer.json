@@ -7,16 +7,16 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:glass"
+    "D": {
+      "item": "minecraft:music_disc_pigstep"
     },
-    "R": {
+    "#": {
       "item": "rubinated_nether:ruby_shard"
     }
   },
 
   "result": {
-    "item": "rubinated_nether:ruby_glass",
-    "count": 1
+    "item": "rubinated_nether:shimmer_disc",
+    "count": 8
   }
 }
