@@ -3,7 +3,7 @@
   "category": "building",
   "pattern": [
     "###",
-    "#R#",
+    "#D#",
     "###"
   ],
   "key": {
@@ -17,6 +17,6 @@
 
   "result": {
     "item": "rubinated_nether:shimmer_disc",
-    "count": 8
+    "count": 1
   }
 }
