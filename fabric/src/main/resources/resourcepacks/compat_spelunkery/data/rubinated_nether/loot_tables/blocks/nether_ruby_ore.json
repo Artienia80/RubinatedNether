@@ -90,11 +90,5 @@
         "spelunkery"
       ]
     }
-  ],
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "spelunkery"
-    }
   ]
 }
