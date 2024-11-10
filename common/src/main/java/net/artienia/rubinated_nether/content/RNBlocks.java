@@ -50,7 +50,7 @@ public final class RNBlocks {
         .flags(DROP_SELF, CUBE)
         .register();
 
-    public static final BlockEntry<LavaSpongeBlock> SPONGERACK = BLOCKS.entry("spongerack", LavaSpongeBlock::new)
+    public static final BlockEntry<LavaSpongeBlock> SOAKSTONE = BLOCKS.entry("soakstone", LavaSpongeBlock::new)
             .copyProperties(() -> Blocks.NETHERRACK)
             .properties(p -> p.mapColor(MapColor.COLOR_BROWN)
                     .sound(SoundType.STONE))

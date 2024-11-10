@@ -74,7 +74,7 @@
   "config.rubinated_nether.worldgen.enabled": "Abilita generazione",
   "config.rubinated_nether.worldgen.features": "Feature",
 
-  "block.rubinated_nether.spongerack": "Spongerack",
+  "block.rubinated_nether.soakstone": "Soakstone",
   "block.rubinated_nether.ruby_brazier": "Braciere di Rubino",
 
   "item.rubinated_nether.rough_ruby": "Rubino Rozzo",
