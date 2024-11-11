@@ -81,7 +81,7 @@
   "config.rubinated_nether.worldgen.features": "Adottságok",
   "config.rubinated_nether.creative_tab.desc": "Engedélyezi a mod kreatív fülét. A tárgyak mindig is megtalálhatóak a vanilla fülekbe\n§eA Játék újrainditása szükséges",
   "config.rubinated_nether.netherite_smithing_template_recipe": "Rubinozott netherit fejlesztés",
-  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Engedélyezi az egyéni netherit fejlesztési barkácsolás-receptet",
+  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Engedélyezi az egyéni netherit fejlesztési barkácsolás-receptet\n§eA Játék újrainditása szükséges",
   "config.rubinated_nether.chandelier_damage_multiplier.desc": "Adja meg milyen gyorsan növekszik a Rubincsillár sebzése",
   "config.rubinated_nether.chandelier_max_damage.desc": "Adja meg a Rubincsillár maximális sebzési határát",
   "config.rubinated_nether.brazier_effect_range": "Effektus tartomány",

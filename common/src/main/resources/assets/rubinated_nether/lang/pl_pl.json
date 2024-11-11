@@ -81,7 +81,7 @@
   "config.rubinated_nether.worldgen.features": "Features",
   "config.rubinated_nether.creative_tab.desc": "Aktywuj zakładke w ekwipunku kreatywnym. Przedmioty zawsze znajdują sie w standardowych zakładkach\n§eWymaga restartu gry",
   "config.rubinated_nether.netherite_smithing_template_recipe": "Rubinowy szablon kowalski",
-  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Aktywuj niestandardową recepture netherytowego szablonu kowalskiego",
+  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Aktywuj niestandardową recepture netherytowego szablonu kowalskiego\n§eWymaga restartu gry",
   "config.rubinated_nether.chandelier_damage_multiplier.desc": "Ustaw jak szybko zwiększają się obrażenia żyrandolu",
   "config.rubinated_nether.chandelier_max_damage.desc": "Ustaw limit maksymalnych obrażeń żyrandolu",
   "config.rubinated_nether.brazier_effect_range": "obszar efektu",

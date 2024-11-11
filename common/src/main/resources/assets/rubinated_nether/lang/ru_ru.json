@@ -73,7 +73,7 @@
 
   "config.rubinated_nether.chandelier": "Люстра",
   "config.rubinated_nether.chandelier_damage_multiplier": "Множитель урона",
-  "config.rubinated_nether.chandelier_damage_multiplier.desc": "Укажите, как быстро увеличивается урон от люстры",
+  "config.rubinated_nether.chandelier_damage_multiplier.desc": "Укажите, как быстро увеличивается урон от люстры\n§eТребуется перезапуск игры",
   "config.rubinated_nether.chandelier_max_damage": "Макс. урон",
   "config.rubinated_nether.chandelier_max_damage.desc": "Укажите максимальный предел урона люстры",
 

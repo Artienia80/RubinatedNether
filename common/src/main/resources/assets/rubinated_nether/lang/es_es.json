@@ -72,7 +72,7 @@
   "config.rubinated_nether.creative_tab.desc": "Activar la pestaña del mod en creativo. Los items siempre se pueden encontrar en las pestañas vanilla del modo creativo\n§eRequiere reiniciar el juego",
 
   "config.rubinated_nether.netherite_smithing_template_recipe": "Mejora de netherita rubinada",
-  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Activar receta de plantilla de herrería especial de netherita",
+  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Activar receta de plantilla de herrería especial de netherita\n§eRequiere reiniciar el juego",
 
   "config.rubinated_nether.chandelier": "Candelabro",
   "config.rubinated_nether.chandelier_damage_multiplier": "Multiplicador de Daño",

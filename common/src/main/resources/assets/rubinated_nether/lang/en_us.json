@@ -72,7 +72,7 @@
   "config.rubinated_nether.creative_tab.desc": "Enable the mod's creative tab. The items can always be found in vanilla tabs\n§eRequires game restart",
 
   "config.rubinated_nether.netherite_smithing_template_recipe": "Rubinate Netherite Template",
-  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Enable custom netherite smithing template recipe",
+  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Enable custom netherite smithing template recipe\n§eRequires game restart",
 
   "config.rubinated_nether.chandelier": "Chandelier",
   "config.rubinated_nether.chandelier_damage_multiplier": "Damage Multiplier",
