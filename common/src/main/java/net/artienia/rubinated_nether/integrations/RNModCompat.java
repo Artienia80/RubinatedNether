@@ -3,6 +3,7 @@ package net.artienia.rubinated_nether.integrations;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableMap;
 import net.artienia.rubinated_nether.integrations.aether.AetherCompat;
+import net.artienia.rubinated_nether.integrations.netherexp.JNECompat;
 import net.artienia.rubinated_nether.integrations.spelunkery.SpelunkeryCompat;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -18,6 +19,7 @@ public class RNModCompat {
     public static final Map<String, Supplier<Supplier<CompatHandler>>> COMPAT = ImmutableMap.<String, Supplier<Supplier<CompatHandler>>>builder()
         .put("spelunkery", () -> SpelunkeryCompat::new)
         .put("aether", () -> AetherCompat::new)
+        .put("netherexp", () -> JNECompat::new)
         .build();
 
     private static final Supplier<List<CompatHandler>> ACTIVE_HANDLERS = Suppliers.memoize(() -> COMPAT.entrySet()

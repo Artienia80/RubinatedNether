@@ -51,8 +51,8 @@ public final class RubinatedNether {
         FreezerBlockEntity.addItemFreezingTime(Blocks.SNOW_BLOCK, 400);
         FreezerBlockEntity.addItemFreezingTime(Blocks.FROSTED_ICE, 800);
         FreezerBlockEntity.addItemFreezingTime(Blocks.ICE, 1600);
-        FreezerBlockEntity.addItemFreezingTime(Blocks.BLUE_ICE, 3200);
-        FreezerBlockEntity.addItemFreezingTime(Blocks.PACKED_ICE, 6400);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.PACKED_ICE, 3200);
+        FreezerBlockEntity.addItemFreezingTime(Blocks.BLUE_ICE, 6400);
 
         // Mod compat setup
         RNModCompat.setup();
