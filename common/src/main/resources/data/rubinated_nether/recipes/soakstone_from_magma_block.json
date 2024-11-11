@@ -6,5 +6,5 @@
   "ingredient": {
     "item": "minecraft:magma_block"
   },
-  "result": "minecraft:obsidian"
+  "result": "rubinated_nether:soakstone"
 }
