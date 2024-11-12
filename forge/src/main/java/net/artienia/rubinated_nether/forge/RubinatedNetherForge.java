@@ -1,8 +1,7 @@
 package net.artienia.rubinated_nether.forge;
 
 
-import net.artienia.rubinated_nether.client.config.RNConfigScreen;
-import net.artienia.rubinated_nether.forge.conditions.RecipeConfigCondition;
+import net.artienia.rubinated_nether.config.RNConfig;
 import net.artienia.rubinated_nether.forge.conditions.ModLoadedLootTable;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -11,19 +10,14 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import net.artienia.rubinated_nether.RubinatedNether;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.forgespi.locating.IModFile;
 import net.minecraftforge.registries.RegisterEvent;
 
@@ -40,20 +34,11 @@ public final class RubinatedNetherForge {
 
         // Run our common setup.
         RubinatedNether.init();
-
-        // Config screen
-        if(FMLEnvironment.dist == Dist.CLIENT) {
-            ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
-                () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> RNConfigScreen.create(screen)));
-        }
     }
 
     @SubscribeEvent
     public static void onSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            RubinatedNether.setup();
-            CraftingHelper.register(RecipeConfigCondition.Serializer.INSTANCE);
-        });
+        event.enqueueWork(RubinatedNether::setup);
     }
 
     @SubscribeEvent
@@ -71,7 +56,9 @@ public final class RubinatedNetherForge {
             .getModFileById(RubinatedNether.MOD_ID)
             .getFile();
 
-        createPack(event, modFile, "better_netherite_template", "Better Netherite Template", false);
+        if(event.getPackType() == PackType.CLIENT_RESOURCES || RNConfig.netherite_smithing_template_recipe) {
+            createPack(event, modFile, "better_netherite_template", "Better Netherite Template", false);
+        }
 
         if(event.getPackType() == PackType.SERVER_DATA) {
             if(ModList.get().isLoaded("spelunkery"))

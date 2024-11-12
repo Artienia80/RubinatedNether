@@ -2,6 +2,7 @@ package net.artienia.rubinated_nether.forge.client;
 
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.client.RubinatedNetherClient;
+import net.artienia.rubinated_nether.client.config.RNConfigScreen;
 import net.artienia.rubinated_nether.client.render.hud.RubyLensOverlay;
 import net.artienia.rubinated_nether.forge.client.curios.CuriosRenderers;
 import net.artienia.rubinated_nether.utils.ParticleFactoryConsumer;
@@ -15,6 +16,7 @@ import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
@@ -35,6 +37,10 @@ public class RubinatedNetherForgeClient {
     @SubscribeEvent
     public static void onInitializeClient(FMLClientSetupEvent event) {
         event.enqueueWork(RubinatedNetherClient::clientSetup);
+
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+            () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> RNConfigScreen.create(screen)));
+
         if(ModList.get().isLoaded("curios")) CuriosRenderers.register();
     }
 
