@@ -13,7 +13,7 @@
   "block.rubinated_nether.nether_ruby_ore": "Nether Ruby Ore",
   "block.rubinated_nether.rubinated_blackstone": "Rubinated Blackstone",
   "block.rubinated_nether.bleeding_obsidian": "Bleeding Obsidian",
-  "block.rubinated_nether.spongerack": "Spongerack",
+  "block.rubinated_nether.soakstone": "Soakstone",
   "block.rubinated_nether.ruby_glass": "Ruby Glass",
   "block.rubinated_nether.ruby_glass_pane": "Ruby Glass Pane",
   "block.rubinated_nether.molten_ruby_glass": "Molten Ruby Glass",
@@ -72,7 +72,7 @@
   "config.rubinated_nether.creative_tab.desc": "Enable the mod's creative tab. The items can always be found in vanilla tabs\n§eRequires game restart",
 
   "config.rubinated_nether.netherite_smithing_template_recipe": "Rubinate Netherite Template",
-  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Enable custom netherite smithing template recipe",
+  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Enable custom netherite smithing template recipe\n§eRequires game restart",
 
   "config.rubinated_nether.chandelier": "Chandelier",
   "config.rubinated_nether.chandelier_damage_multiplier": "Damage Multiplier",

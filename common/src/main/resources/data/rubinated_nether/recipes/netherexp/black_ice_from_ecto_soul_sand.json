@@ -1,0 +1,24 @@
+{
+  "type": "rubinated_nether:freezing",
+  "category": "freezable_misc",
+  "cookingtime": 400,
+  "experience": 1.0,
+  "ingredient": {
+    "item": "netherexp:ecto_soul_sand"
+  },
+  "result": "netherexp:black_ice",
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "netherexp"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "netherexp"
+    }
+  ]
+}

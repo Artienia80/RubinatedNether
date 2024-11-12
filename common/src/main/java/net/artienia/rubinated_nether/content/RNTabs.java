@@ -36,7 +36,7 @@ public final class RNTabs {
             output.accept(RNBlocks.MOLTEN_RUBY_BLOCK);
 
             output.accept(RNBlocks.BLEEDING_OBSIDIAN);
-            output.accept(RNBlocks.SPONGERACK);
+            output.accept(RNBlocks.SOAKSTONE);
 
 
             output.accept(RNBlocks.RUBY_GLASS);

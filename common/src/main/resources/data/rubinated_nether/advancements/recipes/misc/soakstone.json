@@ -27,7 +27,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:spongerack"
+        "recipe": "rubinated_nether:soakstone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -41,7 +41,7 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:spongerack"
+      "rubinated_nether:soakstone"
     ]
   }
 }

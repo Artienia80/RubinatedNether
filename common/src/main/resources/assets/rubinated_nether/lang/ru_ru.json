@@ -13,7 +13,7 @@
   "block.rubinated_nether.nether_ruby_ore": "Незер-рубиновая руда",
   "block.rubinated_nether.rubinated_blackstone": "Рубиноносный чернит",
   "block.rubinated_nether.bleeding_obsidian": "Кровоточащий обсидиан",
-  "block.rubinated_nether.spongerack": "Губкорак",
+  "block.rubinated_nether.soakstone": "Губкорак",
   "block.rubinated_nether.ruby_glass": "Рубиновое стекло",
   "block.rubinated_nether.ruby_glass_pane": "Рубиновая стеклянная панель",
   "block.rubinated_nether.molten_ruby_glass": "Расплавленное рубиновое стекло",
@@ -73,7 +73,7 @@
 
   "config.rubinated_nether.chandelier": "Люстра",
   "config.rubinated_nether.chandelier_damage_multiplier": "Множитель урона",
-  "config.rubinated_nether.chandelier_damage_multiplier.desc": "Укажите, как быстро увеличивается урон от люстры",
+  "config.rubinated_nether.chandelier_damage_multiplier.desc": "Укажите, как быстро увеличивается урон от люстры\n§eТребуется перезапуск игры",
   "config.rubinated_nether.chandelier_max_damage": "Макс. урон",
   "config.rubinated_nether.chandelier_max_damage.desc": "Укажите максимальный предел урона люстры",
 

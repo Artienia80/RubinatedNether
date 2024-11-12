@@ -1,0 +1,120 @@
+{
+  "item.rubinated_nether.ruby": "Rubí",
+  "item.rubinated_nether.molten_ruby": "Rubí Derretido",
+  "item.rubinated_nether.ruby_shard": "Fragmento de Rubí",
+  "item.rubinated_nether.molten_ruby_nugget": "Esquirla de Rubí Derretido",
+  "item.rubinated_nether.ruby_lens": "Lentes de Rubí",
+
+  "itemGroup.rubinated_nether.main": "Nether Rubinado",
+
+  "block.rubinated_nether.ruby_block": "Bloque de Rubí",
+  "block.rubinated_nether.molten_ruby_block": "Bloque de Rubí Derretido",
+  "block.rubinated_nether.molten_ruby_ore": "Mineral de Rubí Derretido",
+  "block.rubinated_nether.nether_ruby_ore": "Mineral de Rubí del Nether",
+  "block.rubinated_nether.rubinated_blackstone": "Piedra negra Rubinada",
+  "block.rubinated_nether.bleeding_obsidian": "Obsidiana",
+  "block.rubinated_nether.soakstone": "Absorbita",
+  "block.rubinated_nether.ruby_glass": "Cristal de Rubí",
+  "block.rubinated_nether.ruby_glass_pane": "Panel de cristal de Rubí",
+  "block.rubinated_nether.molten_ruby_glass": "Cristal de Rubí Derretido",
+  "block.rubinated_nether.molten_ruby_glass_pane": "Panel de cristal Rubí Derretido",
+  "block.rubinated_nether.ruby_chandelier": "Candelabro de Rubí",
+  "block.rubinated_nether.ruby_laser": "Láser Rubí",
+  "block.rubinated_nether.ruby_lantern": "Farol de Rubí",
+  "block.rubinated_nether.ruby_lava_lamp": "Lámpara de Lava de Rubí",
+  "block.rubinated_nether.ruby_brazier": "Bracero de Rubí",
+
+  "item.rubinated_nether.rough_ruby": "Rubí en bruto",
+  "item.rubinated_nether.rough_ruby_shard": "Fragmento de Rubí en bruto",
+  "block.rubinated_nether.rough_ruby_block": "Bloque de Rubí en bruto",
+
+  "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "¡Sangre para el dios de la sangre!",
+  "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Consigue Obsidiana Sangrante",
+  "advancements.rubinated_nether.ruby_barter.title": "...mejor que la alternativa",
+  "advancements.rubinated_nether.ruby_barter.description": "Haz un trueque con un Piglin usando un Fragmento de Rubí",
+  "advancements.rubinated_nether.obtain_freezer.title": "¡Hela! ¡Hela! ¡Hela!",
+  "advancements.rubinated_nether.obtain_freezer.description": "Fabricaca un Congelador bloque",
+  "advancements.rubinated_nether.obtain_molten_ruby.title": "¡Quema! ¡Quema! ¡Quema!",
+  "advancements.rubinated_nether.obtain_molten_ruby.description": "Acquire un Rubí Derretido from Magma Veins or smelting",
+  "advancements.rubinated_nether.obtain_ruby.title": "bienvenido de devuelta, Viejo Amigo",
+  "advancements.rubinated_nether.obtain_ruby.description": "Obtén un Rubí de Menas de Rubí en el Nether o por congelamiento",
+  "advancements.rubinated_nether.obtain_ruby_lights.title": "¡Hora de Brillar!",
+  "advancements.rubinated_nether.obtain_ruby_lights.description": "Ten un Candelabro de Rubí y una Lámpa de Lava de Rubí en tu inventario",
+  "advancements.rubinated_nether.obtain_rubinated_blackstone.title": "Legitimate Salvage",
+  "advancements.rubinated_nether.obtain_rubinated_blackstone.description": "Mina Piedra negra Rubinada de un Bastión en ruinas",
+  "advancements.rubinated_nether.obtain_ruby_glass.title": "¡Es más de 9000!",
+  "advancements.rubinated_nether.obtain_ruby_glass.description": "Fabrica el Cristal de Rubí resistente-a-explosiones",
+  "advancements.rubinated_nether.obtain_frosted_ice.title": "Re-Obtenible",
+  "advancements.rubinated_nether.obtain_frosted_ice.description": "Congela un Bloque de Nieve en Hielo Escarchado",
+  "advancements.rubinated_nether.wear_lens.title": "Lentes color rosa",
+  "advancements.rubinated_nether.wear_lens.description": "Ponte un par de Lentes de Rubí para ver Rayos Láser.",
+  "advancements.rubinated_nether.obtain_ruby_laser.title": "...y me disparó con su rayo láser!",
+  "advancements.rubinated_nether.obtain_ruby_laser.description": "Fabrica el Láser Ruby",
+
+  "death.attack.fallingBlock": "%1$s recibió el abrazo de un Candelabro cayendo",
+  "death.attack.fallingBlock.player": "%1$s recibió el abrazo de un Candelabro cayendo mientras luchaba contra %2$s",
+
+  "block.rubinated_nether.freezer": "Congelador",
+  "menu.rubinated_nether.freezer": "Congelador",
+  "gui.rubinated_nether.recipebook.toggleRecipes.freezable": "Mostrando Congelables",
+  "gui.rubinated_nether.jei.freezer": "Congelación",
+  "gui.rubinated_nether.jei.fuel": "Activadores",
+  "gui.rubinated_nether.emi.freezes": "Congela %s item(s)",
+  "emi.category.rubinated_nether.freezing": "Congelación",
+  "emi.category.rubinated_nether.freezer_fuel": "Activador de Congelador",
+
+  "item.rubinated_nether.shimmer_disc": "Disco de Música Rubinado",
+  "item.rubinated_nether.shimmer_disc.desc": "Quizzly - Shimmer",
+
+  "trim_material.rubinated_nether.ruby": "Material de Rubí",
+
+  "config.rubinated_nether.creative_tab": "Activar Pestaña del Creativo",
+  "config.rubinated_nether.creative_tab.desc": "Activar la pestaña del mod en creativo. Los items siempre se pueden encontrar en las pestañas vanilla del modo creativo\n§eRequiere reiniciar el juego",
+
+  "config.rubinated_nether.netherite_smithing_template_recipe": "Mejora de netherita rubinada",
+  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Activar receta de plantilla de herrería especial de netherita\n§eRequiere reiniciar el juego",
+
+  "config.rubinated_nether.chandelier": "Candelabro",
+  "config.rubinated_nether.chandelier_damage_multiplier": "Multiplicador de Daño",
+  "config.rubinated_nether.chandelier_damage_multiplier.desc": "Específica que tan rápido aumenta el daño del Candelabro",
+  "config.rubinated_nether.chandelier_max_damage": "Daño Máximo",
+  "config.rubinated_nether.chandelier_max_damage.desc": "Específica límite máximo de daño del Candelabro",
+
+  "config.rubinated_nether.brazier_effect_range": "Rango el Efecto",
+  "config.rubinated_nether.brazier_effect_range.desc": "Específica el rango de los efectos de un Bracero en bloques",
+  "config.rubinated_nether.brazier_effect_duration": "Duration del Efecto",
+  "config.rubinated_nether.brazier_effect_duration.desc": "Específica la duración de los efectos de un Bracero en segundos",
+  "config.rubinated_nether.brazier_effect_particles": "Partículas del Efecto",
+  "config.rubinated_nether.brazier_effect_particles.desc": "Activar partículas de efecto de beacon para el bracero.\nPuede que necesites esperar a que el efecto se disipe para que esto se aplique.",
+
+  "config.rubinated_nether.nether_ruby_ore.min_shards": "Mínimo de fragmentos soltados",
+  "config.rubinated_nether.nether_ruby_ore.min_shards.desc": "Específica la cantidad mínima de Fragmentos de Rubí soltado por mena",
+  "config.rubinated_nether.nether_ruby_ore.max_shards": "Máximo de fragmentos soltados",
+  "config.rubinated_nether.nether_ruby_ore.max_shards.desc": "Específica la cantidad máxima de Fragmentos de Rubí soltado por mena",
+
+  "config.rubinated_nether.molten_ruby_ore.min_molten": "Mínimo gemas soltadas",
+  "config.rubinated_nether.molten_ruby_ore.min_molten.desc": "Específica la cantidad mínima de Rubí Derretido soltado por mena",
+  "config.rubinated_nether.molten_ruby_ore.max_molten": "Máximo de gemas soltadas",
+  "config.rubinated_nether.molten_ruby_ore.max_molten.desc": "Específica la cantidad máxima de Rubí Derretido soltado por mena",
+
+  "config.rubinated_nether.molten_ruby_ore.min_nuggets": "Mínimo esquirla soltadas",
+  "config.rubinated_nether.molten_ruby_ore.min_nuggets.desc": "Específica la cantidad mínima de esquirlas de Rubí Derretido soltado por mena",
+  "config.rubinated_nether.molten_ruby_ore.max_nuggets": "Máximo de esquirla soltadas",
+  "config.rubinated_nether.molten_ruby_ore.max_nuggets.desc": "Específica la cantidad máxima de Rubí Derretido Nuggets soltado por mena",
+
+  "config.rubinated_nether.client": "Configuración del Cliente",
+  "config.rubinated_nether.client.ruby_lens_opacity": "Opacidad del filtro de los Lentes de Rubí",
+  "config.rubinated_nether.client.ruby_lens_opacity.desc": "Establece la opacidad de los Lentes de Rubí. 1 es el Máximo y el valor por defecto.",
+
+  "config.rubinated_nether.worldgen": "Configuración de la Generación-de-terreno",
+  "config.rubinated_nether.worldgen.enabled": "Activar Generación-de-terreno",
+  "config.rubinated_nether.worldgen.enabled.desc": "Activar la Generación de terreno de este mod",
+
+  "config.rubinated_nether.worldgen.features": "Características",
+  "config.rubinated_nether.spawn_nether_ruby_ore.desc": "Activar la aparición de Menas de Rubí del Nether cerca del techo del Nether",
+  "config.rubinated_nether.spawn_molten_ruby_ore.desc": "Activar la aparición de Menas de Rubí Derretido dentro de vetas de Magma",
+  "config.rubinated_nether.spawn_rubinated_blackstone.desc": "Activar la aparición de Piedra negra Rubinada dentro de los Bastiones en ruinas",
+
+  "config.rubinated_nether.client.brazier_particles": "Cantidad de Partículas del Bracero de Rubí"
+
+}

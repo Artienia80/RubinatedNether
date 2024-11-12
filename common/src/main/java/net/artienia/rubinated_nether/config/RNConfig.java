@@ -24,7 +24,7 @@ public final class RNConfig {
             translation = "config.rubinated_nether.netherite_smithing_template_recipe"
     )
     @Comment(
-            value = "Enable a new Netherite Smithing Template Recipe",
+            value = "Enable a new Netherite Smithing Template Recipe\n§eRequires game restart",
             translation = "config.rubinated_nether.netherite_smithing_template_recipe.desc"
     )
     public static boolean netherite_smithing_template_recipe = true;

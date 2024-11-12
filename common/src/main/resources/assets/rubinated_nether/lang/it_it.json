@@ -74,7 +74,7 @@
   "config.rubinated_nether.worldgen.enabled": "Abilita generazione",
   "config.rubinated_nether.worldgen.features": "Feature",
 
-  "block.rubinated_nether.spongerack": "Spongerack",
+  "block.rubinated_nether.soakstone": "Soakstone",
   "block.rubinated_nether.ruby_brazier": "Braciere di Rubino",
 
   "item.rubinated_nether.rough_ruby": "Rubino Rozzo",
@@ -84,7 +84,7 @@
   "config.rubinated_nether.creative_tab.desc": "Abilita la tab in Creativa della mod. Gli oggetti potranno comunque essere trovati nelle tab vanilla\n§eRichiede un riavvio",
 
   "config.rubinated_nether.netherite_smithing_template_recipe": "Schema di Forgiatura di Netherite Rubinato",
-  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Abilita la ricetta dello schema di forgiatura custom per la Netherite",
+  "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Abilita la ricetta dello schema di forgiatura custom per la Netherite\n§eRichiede un riavvio",
 
   "config.rubinated_nether.chandelier_damage_multiplier.desc": "Specifica quanto rapidamente incrementa il danno del Candelabro",
   "config.rubinated_nether.chandelier_max_damage.desc": "Specifica il danno massimo del Candelabro",
