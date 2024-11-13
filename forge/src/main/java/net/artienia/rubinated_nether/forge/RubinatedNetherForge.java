@@ -56,21 +56,20 @@ public final class RubinatedNetherForge {
             .getModFileById(RubinatedNether.MOD_ID)
             .getFile();
 
-        if(event.getPackType() == PackType.CLIENT_RESOURCES || RNConfig.netherite_smithing_template_recipe) {
-            createPack(event, modFile, "better_netherite_template", "Better Netherite Template", false);
-        }
+        createPack(event, modFile, "better_netherite_template", "Better Netherite Template", false);
 
-        if(event.getPackType() == PackType.SERVER_DATA) {
-            if(ModList.get().isLoaded("spelunkery"))
-                createPack(event, modFile, "compat_spelunkery", "Rubinated Nether Spelunkery Compat", true);
-        }
+
+
+        if(ModList.get().isLoaded("spelunkery"))
+            createPack(event, modFile, "compat_spelunkery", "Rubinated Nether Spelunkery Compat", true);
+
     }
 
     private static void createPack(AddPackFindersEvent event, IModFile modFile, String id, String name, boolean required) {
         Path resourcePath = modFile.findResource("resourcepacks/" + id);
 
         Pack pack = Pack.readMetaAndCreate(
-                "builtin/" + id,
+                "rubinated_nether/" + id,
                 Component.literal(name), required,
                 path -> new PathPackResources(path, resourcePath, true),
                 event.getPackType(), Pack.Position.TOP, PackSource.BUILT_IN

@@ -22,9 +22,6 @@
     "item": "minecraft:netherite_upgrade_smithing_template"
   },
   "show_notification": true,
-  "conditions": {
-    "type": "rubinated_nether:netherite_smithing_template_recipe"
-  },
   "fabric:load_conditions": {
     "condition": "rubinated_nether:netherite_smithing_template_recipe"
   }

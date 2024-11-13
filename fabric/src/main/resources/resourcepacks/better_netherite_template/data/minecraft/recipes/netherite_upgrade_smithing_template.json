@@ -2,20 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:diamond"
+    "O": {
+      "item": "minecraft:obsidian"
     },
     "C": {
-      "item": "minecraft:netherrack"
+      "item": "rubinated_nether:ruby"
     },
     "S": {
       "item": "minecraft:netherite_upgrade_smithing_template"
     }
   },
   "pattern": [
-    "#S#",
-    "#C#",
-    "###"
+    "CSC",
+    "COC",
+    "CCC"
   ],
   "result": {
     "count": 2,
@@ -24,10 +24,7 @@
   "show_notification": true,
   "fabric:load_conditions": [
     {
-      "condition": "fabric:not",
-      "value": {
-        "condition": "rubinated_nether:netherite_smithing_template_recipe"
-      }
+    "condition": "rubinated_nether:netherite_smithing_template_recipe"
     }
   ]
 }

@@ -18,15 +18,15 @@ public final class RNConfig {
     )
     public static boolean enableCreativeTab = true;
 
-    @ConfigEntry(
-            id = "netherite_smithing_template_recipe",
-            type = EntryType.BOOLEAN,
-            translation = "config.rubinated_nether.netherite_smithing_template_recipe"
-    )
-    @Comment(
-            value = "Enable a new Netherite Smithing Template Recipe\n§eRequires game restart",
-            translation = "config.rubinated_nether.netherite_smithing_template_recipe.desc"
-    )
+//    @ConfigEntry(
+//            id = "netherite_smithing_template_recipe",
+//            type = EntryType.BOOLEAN,
+//            translation = "config.rubinated_nether.netherite_smithing_template_recipe"
+//    )
+//    @Comment(
+//            value = "Enable a new Netherite Smithing Template Recipe\n§eRequires game restart",
+//            translation = "config.rubinated_nether.netherite_smithing_template_recipe.desc"
+//    )
     public static boolean netherite_smithing_template_recipe = true;
 
     @ConfigSeparator(translation = "block.rubinated_nether.ruby_chandelier")
