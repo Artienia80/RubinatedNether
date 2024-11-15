@@ -29,9 +29,9 @@ public class FreezingEMIRecipe implements EmiRecipe {
 
     @Override
     public void addWidgets(WidgetHolder widgets) {
-        int seconds = recipe.getCookingTime() / 50;
-        widgets.addFillingArrow(24, 5, seconds)
-            .tooltip(List.of(ClientTooltipComponent.create(Component.translatable("emi.cooking.time", seconds).getVisualOrderText())));
+        int ticks = recipe.getCookingTime();
+        widgets.addFillingArrow(24, 5, ticks * 50)
+            .tooltip(List.of(ClientTooltipComponent.create(Component.translatable("emi.cooking.time", ticks / 20).getVisualOrderText())));
 
         widgets.addTexture(EMIStuff.FULL_FREEZE, 1, 24);
 
