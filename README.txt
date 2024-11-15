@@ -8,7 +8,7 @@ Freeze Rubies!
 Using the Freezer, you can freeze Molten Rubies into Rubies, Ice into it's colder variants, Magma Cream into Slimeballs and Magma Blocks into Obsidian. Freezing Snow yields the (un)obtainable Frosted Ice.
 
 Barter with Piglins!
-Break Rubies into Ruby Shards for a more economical and efficenct way to Barter with Piglins.
+Break Rubies into Ruby Shards for a more economical and efficient way to Barter with Piglins.
 
 Secure your Base!
 Craft Ruby Glass for a blast-proof window, or Bleeding Obsidian to invite nightmares.
