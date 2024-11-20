@@ -211,6 +211,18 @@ public final class RNBlocks {
             .renderType(() -> RenderType::translucent);
     }
 
+    public static final BlockEntry<Block> BLACK_ICE = BLOCKS.entry("black_ice", Block::new)
+            .copyProperties(() -> Blocks.BLUE_CANDLE)
+            .properties(p -> p.mapColor(MapColor.COLOR_BLACK)
+                    .sound(SoundType.GLASS)
+                    .requiresCorrectToolForDrops()
+                    .friction(0.998f))
+            .item(BlockItem::new)
+            .creativeTab(CreativeModeTabs.NATURAL_BLOCKS, TabPlacement.after(Blocks.BLUE_ICE))
+            .build()
+            .flags(DROP_SELF, CUBE)
+            .register();
+
     public static void register() {
         BLOCKS.register();
     }
