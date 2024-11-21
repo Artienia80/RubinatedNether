@@ -51,7 +51,7 @@ public final class RNTabs {
 
             output.accept(RNBlocks.FREEZER);
             output.accept(RNItems.FROSTED_ICE);
-            output.accept(RNBlocks.BLACK_ICE);
+            output.accept(RNBlocks.BLACK_ICE_SHEET);
 
             output.accept(RNItems.RUBY_LENS);
             output.accept(RNBlocks.RUBY_LASER);
