@@ -22,6 +22,8 @@ public final class RNTags {
 
         public static final TagKey<Block> RUBY_LASER_NO_SIGNAL = TagKey.create(Registries.BLOCK, id("ruby_laser_no_signal"));
 
+        public static final TagKey<Block> COLDEST_ICE = TagKey.create(Registries.BLOCK, id("coldest_ice"));
+
     }
 
     public static final class Items {
