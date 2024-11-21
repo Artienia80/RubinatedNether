@@ -50,7 +50,7 @@ public final class RNBlocks {
             .flags(DROP_SELF, CUBE)
             .register();
 
-    public static final BlockEntry<Block> BLACK_ICE = BLOCKS.entry("black_ice", Block::new)
+    public static final BlockEntry<SnowLayerBlock> BLACK_ICE = BLOCKS.entry("black_ice", SnowLayerBlock::new)
             .copyProperties(() -> Blocks.BLUE_ICE)
             .properties(p -> p.mapColor(MapColor.COLOR_BLACK)
                     .sound(SoundType.GLASS)
@@ -59,9 +59,8 @@ public final class RNBlocks {
             .item(BlockItem::new)
             .creativeTab(CreativeModeTabs.NATURAL_BLOCKS, TabPlacement.after(Blocks.BLUE_ICE))
             .build()
-            .flags(DROP_SELF, CUBE)
+            .flags(DROP_SELF)
             .register();
-
 
     public static final BlockEntry<LavaSpongeBlock> SOAKSTONE = BLOCKS.entry("soakstone", LavaSpongeBlock::new)
             .copyProperties(() -> Blocks.NETHERRACK)
