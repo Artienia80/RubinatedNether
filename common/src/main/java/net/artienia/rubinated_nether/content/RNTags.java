@@ -21,6 +21,7 @@ public final class RNTags {
         public static final TagKey<Block> RUBY_LASER_TRANSPARENT = TagKey.create(Registries.BLOCK, id("ruby_laser_transparent"));
 
         public static final TagKey<Block> RUBY_LASER_NO_SIGNAL = TagKey.create(Registries.BLOCK, id("ruby_laser_no_signal"));
+
     }
 
     public static final class Items {
