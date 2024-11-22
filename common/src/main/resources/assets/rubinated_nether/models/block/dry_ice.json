@@ -1,7 +1,8 @@
 {
   "parent": "minecraft:block/thin_block",
   "textures": {
-    "all": "rubinated_nether:block/dry_ice"
+    "all": "rubinated_nether:block/dry_ice",
+    "particle": "rubinated_nether:block/dry_ice"
   },
   "elements": [
     {   "from": [ 0, 0, 0 ],

@@ -55,7 +55,7 @@ public final class RNBlocks {
             .properties(p -> p.mapColor(MapColor.COLOR_BLACK)
                     .sound(SoundType.GLASS)
                     .requiresCorrectToolForDrops()
-                    .friction(0.998f))
+                    .friction(0.995f))
             .item(BlockItem::new)
             .creativeTab(CreativeModeTabs.NATURAL_BLOCKS, TabPlacement.after(Blocks.BLUE_ICE))
             .build()

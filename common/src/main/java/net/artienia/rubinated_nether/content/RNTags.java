@@ -4,6 +4,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.dimension.DimensionType;
+
+import java.awt.*;
 
 import static net.artienia.rubinated_nether.RubinatedNether.id;
 
@@ -37,6 +40,10 @@ public final class RNTags {
         public static final TagKey<Item> RUBY_SHARDS = TagKey.create(Registries.ITEM, id("ruby_shard_tag"));
 
         public static final TagKey<Item> OBSIDIAN_CONVERTERS = TagKey.create(Registries.ITEM, id("bleeding_obsidian_converter"));
+    }
+
+    public static final class Dimensions {
+        public static final TagKey<DimensionType> COLD_DIMENSION = TagKey.create(Registries.DIMENSION_TYPE, id("cold_dimension"));
     }
 
 }
