@@ -50,7 +50,7 @@ public final class RNBlocks {
             .flags(DROP_SELF, CUBE)
             .register();
 
-    public static final BlockEntry<BlackIceBlock> BLACK_ICE_SHEET = BLOCKS.entry("black_ice_sheet", BlackIceBlock::new)
+    public static final BlockEntry<DryIce> DRY_ICE = BLOCKS.entry("dry_ice", DryIce::new)
             .copyProperties(() -> Blocks.BLUE_ICE)
             .properties(p -> p.mapColor(MapColor.COLOR_BLACK)
                     .sound(SoundType.GLASS)

@@ -11,11 +11,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class BlackIceBlock extends Block {
+public class DryIce extends Block {
 
     protected static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 1.0, 16.0);
 
-    public BlackIceBlock(Properties properties) {
+    public DryIce(Properties properties) {
         super(properties);
     }
 
