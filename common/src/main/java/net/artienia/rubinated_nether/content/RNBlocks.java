@@ -40,8 +40,16 @@ public final class RNBlocks {
             .flags(DROP_SELF, CUBE)
             .register();
 
+    public static final BlockEntry<RubyRailBlock> RUBY_RAIL = BLOCKS.entry("ruby_rail", RubyRailBlock::new)
+            .copyProperties(() -> Blocks.POWERED_RAIL)
+            .item(BlockItem::new)
+            .creativeTab(CreativeModeTabs.REDSTONE_BLOCKS, TabPlacement.after(Blocks.POWERED_RAIL))
+            .build()
+            .flags(DROP_SELF)
+            .register();
+
     public static final BlockEntry<Block> BLEEDING_OBSIDIAN = BLOCKS.entry("bleeding_obsidian", Block::new)
-            .copyProperties(() -> Blocks.CRYING_OBSIDIAN)
+            .copyProperties(() -> Blocks.CRYING_OBSIDIAN).copyProperties(() -> Blocks.CRYING_OBSIDIAN)
             .properties(p -> p.mapColor(MapColor.FIRE)
                     .pushReaction(PushReaction.BLOCK))
             .item(BlockItem::new)
