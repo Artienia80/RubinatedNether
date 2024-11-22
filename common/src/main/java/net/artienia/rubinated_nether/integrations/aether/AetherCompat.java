@@ -13,6 +13,6 @@ public class AetherCompat implements CompatHandler {
     @Override
     public void setup() {
         Block icestone = BuiltInRegistries.BLOCK.get(new ResourceLocation("aether", "icestone"));
-        FreezerBlockEntity.addItemFreezingTime(icestone, 1200);
+        FreezerBlockEntity.addItemFreezingTime(icestone, 600);
     }
 }

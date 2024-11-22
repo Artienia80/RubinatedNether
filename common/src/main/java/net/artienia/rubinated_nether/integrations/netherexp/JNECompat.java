@@ -14,9 +14,9 @@ public class JNECompat implements CompatHandler {
     @Override
     public void setup() {
         Block black_ice = BuiltInRegistries.BLOCK.get(new ResourceLocation("netherexp", "black_ice"));
-        FreezerBlockEntity.addItemFreezingTime(black_ice, 3200);
+        FreezerBlockEntity.addItemFreezingTime(black_ice, 1200);
 
         Item ectoplasm_bucket = BuiltInRegistries.ITEM.get(new ResourceLocation("netherexp", "ectoplasm_bucket"));
-        FreezerBlockEntity.addItemFreezingTime(ectoplasm_bucket, 20000);
+        FreezerBlockEntity.addItemFreezingTime(ectoplasm_bucket, 19200);
     }
 }

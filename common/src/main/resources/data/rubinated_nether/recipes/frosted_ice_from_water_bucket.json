@@ -1,10 +1,10 @@
 {
   "type": "rubinated_nether:freezing",
   "category": "freezable_misc",
-  "cookingtime": 800,
+  "cookingtime": 4800,
   "experience": 1.0,
   "ingredient": {
     "item": "minecraft:water_bucket"
   },
-  "result": "minecraft:ice"
+  "result": "rubinated_nether:frosted_ice"
 }

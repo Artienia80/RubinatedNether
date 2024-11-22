@@ -1,7 +1,7 @@
 {
   "type": "rubinated_nether:freezing",
   "category": "freezable_misc",
-  "cookingtime": 3200,
+  "cookingtime": 9600,
   "experience": 1.0,
   "ingredient": {
     "item": "minecraft:packed_ice"
