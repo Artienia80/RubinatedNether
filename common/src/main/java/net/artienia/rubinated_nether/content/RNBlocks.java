@@ -89,7 +89,7 @@ public final class RNBlocks {
 			.flags(DROP_SELF, CUBE)
 			.register();
 
-	public static final BlockEntry<Block> ALTAR_STONE_PILLAR = BLOCKS.entry("altar_stone_pillar", Block::new)
+	public static final BlockEntry<RotatedPillarBlock> ALTAR_STONE_PILLAR = BLOCKS.entry("altar_stone_pillar", RotatedPillarBlock::new)
 			.copyProperties(() -> RNBlocks.ALTAR_STONE.get())
 			.item(BlockItem::new)
 			.creativeTab(CreativeModeTabs.BUILDING_BLOCKS)
