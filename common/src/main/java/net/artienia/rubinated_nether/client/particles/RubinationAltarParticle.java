@@ -79,20 +79,6 @@ public class RubinationAltarParticle extends TextureSheetParticle {
         }
     }
 
-    @Environment(EnvType.CLIENT)
-    public static class NautilusProvider implements ParticleProvider<SimpleParticleType> {
-        private final SpriteSet sprite;
-
-        public NautilusProvider(SpriteSet sprites) {
-            this.sprite = sprites;
-        }
-
-        public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            RubinationAltarParticle rubinationAltarParticle = new RubinationAltarParticle(level, x, y, z, xSpeed, ySpeed, zSpeed);
-            rubinationAltarParticle.pickSprite(this.sprite);
-            return rubinationAltarParticle;
-        }
-    }
 
 
     @Environment(EnvType.CLIENT)

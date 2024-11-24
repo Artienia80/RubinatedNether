@@ -2,6 +2,8 @@ package net.artienia.rubinated_nether.content;
 
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.client.render.blockEntity.RubyLaserRenderer;
+import net.artienia.rubinated_nether.content.block.RubinationAltarBlock;
+import net.artienia.rubinated_nether.content.block.RubinationAltarBlockEntity;
 import net.artienia.rubinated_nether.content.block.brazier.BrazierBlockEntity;
 import net.artienia.rubinated_nether.content.block.freezer.FreezerBlockEntity;
 import net.artienia.rubinated_nether.content.block.ruby_laser.RubyLaserBlockEntity;
@@ -24,6 +26,10 @@ public final class RNBlockEntities {
     public static final BlockEntityEntry<BrazierBlockEntity> BRAZIER = BLOCK_ENTITY_TYPES.entry("brazier", BrazierBlockEntity::new)
         .validBlock(RNBlocks.RUBY_BRAZIER)
         .register();
+
+    public static final BlockEntityEntry<RubinationAltarBlockEntity> RUBINATION_ALTAR = BLOCK_ENTITY_TYPES.entry("rubination_altar", RubinationAltarBlockEntity::new)
+            .validBlock(RNBlocks.RUBINATION_ATLAR)
+            .register();
 
     public static void register() {
         BLOCK_ENTITY_TYPES.register();
