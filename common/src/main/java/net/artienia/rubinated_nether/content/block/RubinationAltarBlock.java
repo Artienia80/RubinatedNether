@@ -7,7 +7,10 @@ package net.artienia.rubinated_nether.content.block;
 
 import java.util.Iterator;
 import java.util.List;
+
+import net.artienia.rubinated_nether.content.RNParticleTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
@@ -104,25 +107,26 @@ public class RubinationAltarBlock extends BaseEntityBlock {
     @Nullable
     public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof EnchantmentTableBlockEntity) {
+        if (1==1) {
             Component component = ((Nameable)blockEntity).getDisplayName();
             return new SimpleMenuProvider((i, inventory, player) -> {
                 return new EnchantmentMenu(i, inventory, ContainerLevelAccess.create(level, pos));
-            }, component);
+            },
+                    component);
         } else {
             return null;
         }
     }
 
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        if (stack.hasCustomHoverName()) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof EnchantmentTableBlockEntity) {
-                ((EnchantmentTableBlockEntity)blockEntity).setCustomName(stack.getHoverName());
-            }
-        }
-
-    }
+//    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+//        if (stack.hasCustomHoverName()) {
+//            BlockEntity blockEntity = level.getBlockEntity(pos);
+//            if (blockEntity instanceof EnchantmentTableBlockEntity) {
+//                ((EnchantmentTableBlockEntity)blockEntity).setCustomName(stack.getHoverName());
+//            }
+//        }
+//
+//    }
 
     public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
         return false;
