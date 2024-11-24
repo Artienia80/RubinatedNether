@@ -47,6 +47,16 @@ public final class RNBlocks {
             .flags(DROP_SELF)
             .register();
 
+	
+	public static final BlockEntry<Block> RUNESTONE = BLOCKS.entry("runestone", Block::new)
+			.copyProperties(() -> Blocks.BASALT)
+			.properties(p -> p.noOcclusion())
+			.item(BlockItem::new)
+			.creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(Blocks.ENCHANTING_TABLE))
+			.build()
+			.flags(DROP_SELF)
+			.register();
+
 //    public static final BlockEntry<RubyRailBlock> RUBY_RAIL = BLOCKS.entry("ruby_rail", RubyRailBlock::new)
 //            .copyProperties(() -> Blocks.POWERED_RAIL)
 //            .item(BlockItem::new)

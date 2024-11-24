@@ -62,6 +62,7 @@ public final class RNTabs {
             output.accept(RNBlocks.RUBY_LASER);
 
             output.accept(RNBlocks.RUBINATION_ATLAR);
+			output.accept(RNBlocks.RUNESTONE);
 
             //output.accept(RNBlocks.RUBY_RAIL);
         })
