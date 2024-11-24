@@ -57,6 +57,8 @@ public final class RNTabs {
             output.accept(RNItems.RUBY_LENS);
             output.accept(RNBlocks.RUBY_LASER);
 
+            output.accept(RNBlocks.RUBINATION_ATLAR);
+
             //output.accept(RNBlocks.RUBY_RAIL);
         })
         .register();
