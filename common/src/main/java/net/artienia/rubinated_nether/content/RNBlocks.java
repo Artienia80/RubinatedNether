@@ -66,13 +66,45 @@ public final class RNBlocks {
             .register();
 
 	public static final BlockEntry<Block> ALTAR_STONE = BLOCKS.entry("altar_stone", Block::new)
-			.copyProperties(() -> Blocks.BLACKSTONE)
+			.copyProperties(() -> Blocks.BASALT)
 			.item(BlockItem::new)
 			.creativeTab(CreativeModeTabs.BUILDING_BLOCKS)
 			.build()
 			.flags(DROP_SELF, CUBE)
 			.register();
 
+	public static final BlockEntry<Block> ALTAR_STONE_BRICKS = BLOCKS.entry("altar_stone_bricks", Block::new)
+			.copyProperties(() -> RNBlocks.ALTAR_STONE.get())
+			.item(BlockItem::new)
+			.creativeTab(CreativeModeTabs.BUILDING_BLOCKS)
+			.build()
+			.flags(DROP_SELF, CUBE)
+			.register();
+	
+	public static final BlockEntry<Block> ALTAR_STONE_TILES = BLOCKS.entry("altar_stone_tiles", Block::new)
+			.copyProperties(() -> RNBlocks.ALTAR_STONE.get())
+			.item(BlockItem::new)
+			.creativeTab(CreativeModeTabs.BUILDING_BLOCKS)
+			.build()
+			.flags(DROP_SELF, CUBE)
+			.register();
+
+	public static final BlockEntry<Block> ALTAR_STONE_PILLAR = BLOCKS.entry("altar_stone_pillar", Block::new)
+			.copyProperties(() -> RNBlocks.ALTAR_STONE.get())
+			.item(BlockItem::new)
+			.creativeTab(CreativeModeTabs.BUILDING_BLOCKS)
+			.build()
+			.flags(DROP_SELF, CUBE)
+			.register();
+
+	public static final BlockEntry<Block> CHISELED_ALTAR_STONE_BRICKS = BLOCKS.entry("chiseled_altar_stone_bricks", Block::new)
+			.copyProperties(() -> RNBlocks.ALTAR_STONE.get())
+			.item(BlockItem::new)
+			.creativeTab(CreativeModeTabs.BUILDING_BLOCKS)
+			.build()
+			.flags(DROP_SELF, CUBE)
+			.register();
+	
     public static final BlockEntry<DryIce> DRY_ICE = BLOCKS.entry("dry_ice", DryIce::new)
             .copyProperties(() -> Blocks.BLUE_ICE)
             .properties(p -> p.mapColor(MapColor.COLOR_BLACK)

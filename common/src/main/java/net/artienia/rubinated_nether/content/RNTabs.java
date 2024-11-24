@@ -37,6 +37,10 @@ public final class RNTabs {
 
             output.accept(RNBlocks.BLEEDING_OBSIDIAN);
 			output.accept(RNBlocks.ALTAR_STONE);
+			output.accept(RNBlocks.ALTAR_STONE_BRICKS);
+			output.accept(RNBlocks.ALTAR_STONE_TILES);
+			output.accept(RNBlocks.ALTAR_STONE_PILLAR);
+			output.accept(RNBlocks.CHISELED_ALTAR_STONE_BRICKS);
             output.accept(RNBlocks.SOAKSTONE);
 
             output.accept(RNBlocks.RUBY_GLASS);
