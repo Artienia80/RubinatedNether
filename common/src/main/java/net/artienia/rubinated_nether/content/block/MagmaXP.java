@@ -17,7 +17,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BubbleColumnBlock;
@@ -26,7 +25,6 @@ import net.minecraft.world.level.block.state.BlockState;
 public class MagmaXP extends Block {
 
     private final IntProvider xpRange;
-    private static final int BUBBLE_COLUMN_CHECK_DELAY = 20;
 
     public MagmaXP(Properties pProperties) {
         this(pProperties, ConstantInt.of(0));

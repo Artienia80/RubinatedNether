@@ -1,9 +1,7 @@
 package net.artienia.rubinated_nether.content;
 
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import uwu.serenity.critter.api.entry.RegistryEntry;
 import uwu.serenity.critter.api.generic.Registrar;

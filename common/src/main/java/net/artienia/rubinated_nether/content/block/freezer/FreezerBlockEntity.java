@@ -8,7 +8,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
@@ -20,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.stream.Stream;
 
 
-public class FreezerBlockEntity extends AbstractFreezerBlockEntity implements MenuProvider {
+public class FreezerBlockEntity extends AbstractFreezerBlockEntity {
     private static final Object2IntMap<Item> freezingMap = new Object2IntLinkedOpenHashMap<>();
     private static final Object2IntMap<TagKey<Item>> tagFreezingMap = new Object2IntLinkedOpenHashMap<>();
 

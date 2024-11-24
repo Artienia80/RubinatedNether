@@ -10,10 +10,7 @@ import java.util.List;
 
 import net.artienia.rubinated_nether.content.RNBlockEntities;
 import net.artienia.rubinated_nether.content.RNParticleTypes;
-import net.artienia.rubinated_nether.content.block.brazier.BrazierBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -22,16 +19,13 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.EnchantmentMenu;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -75,7 +69,7 @@ public class RubinationAltarBlock extends BaseEntityBlock implements BEBlock<Rub
 
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         super.animateTick(state, level, pos, random);
-        Iterator var5 = BOOKSHELF_OFFSETS.iterator();
+        Iterator<BlockPos> var5 = BOOKSHELF_OFFSETS.iterator();
 
         while(var5.hasNext()) {
             BlockPos blockPos = (BlockPos)var5.next();
@@ -111,15 +105,12 @@ public class RubinationAltarBlock extends BaseEntityBlock implements BEBlock<Rub
     @Nullable
     public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (1==1) {
-            Component component = ((Nameable)blockEntity).getDisplayName();
-            return new SimpleMenuProvider((i, inventory, player) -> {
-                return new EnchantmentMenu(i, inventory, ContainerLevelAccess.create(level, pos));
-            },
-                    component);
-        } else {
-            return null;
-        }
+
+		Component component = ((Nameable)blockEntity).getDisplayName();
+		return new SimpleMenuProvider((i, inventory, player) -> {
+			return new EnchantmentMenu(i, inventory, ContainerLevelAccess.create(level, pos));
+		},
+				component);
     }
 
     public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {

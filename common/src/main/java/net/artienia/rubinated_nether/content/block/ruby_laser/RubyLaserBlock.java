@@ -30,7 +30,6 @@ import uwu.serenity.critter.utils.BEBlock;
 
 import java.util.Map;
 
-@SuppressWarnings("deprecation")
 public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLaserBlockEntity> {
 
     public static final Map<Direction, VoxelShape> SHAPES = ShapeUtils.allDirections(Shapes.or(

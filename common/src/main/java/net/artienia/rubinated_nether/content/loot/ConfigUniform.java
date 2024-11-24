@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.config.RNConfig;
-import net.artienia.rubinated_nether.content.RNLootConditions;
 import net.artienia.rubinated_nether.content.RNLootNumberProviders;
 import net.artienia.rubinated_nether.utils.NamedIntSupplier;
 import net.minecraft.world.level.storage.loot.LootContext;

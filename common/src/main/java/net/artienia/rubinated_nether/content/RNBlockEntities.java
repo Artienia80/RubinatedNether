@@ -2,7 +2,6 @@ package net.artienia.rubinated_nether.content;
 
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.client.render.blockEntity.RubyLaserRenderer;
-import net.artienia.rubinated_nether.content.block.RubinationAltarBlock;
 import net.artienia.rubinated_nether.content.block.RubinationAltarBlockEntity;
 import net.artienia.rubinated_nether.content.block.brazier.BrazierBlockEntity;
 import net.artienia.rubinated_nether.content.block.freezer.FreezerBlockEntity;

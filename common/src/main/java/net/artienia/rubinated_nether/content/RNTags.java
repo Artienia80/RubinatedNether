@@ -6,8 +6,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.dimension.DimensionType;
 
-import java.awt.*;
-
 import static net.artienia.rubinated_nether.RubinatedNether.id;
 
 /**
