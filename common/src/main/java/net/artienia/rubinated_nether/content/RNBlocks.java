@@ -58,6 +58,14 @@ public final class RNBlocks {
             .flags(DROP_SELF, CUBE)
             .register();
 
+	public static final BlockEntry<Block> ALTAR_STONE = BLOCKS.entry("altar_stone", Block::new)
+			.copyProperties(() -> Blocks.BLACKSTONE)
+			.item(BlockItem::new)
+			.creativeTab(CreativeModeTabs.BUILDING_BLOCKS)
+			.build()
+			.flags(DROP_SELF, CUBE)
+			.register();
+
     public static final BlockEntry<DryIce> DRY_ICE = BLOCKS.entry("dry_ice", DryIce::new)
             .copyProperties(() -> Blocks.BLUE_ICE)
             .properties(p -> p.mapColor(MapColor.COLOR_BLACK)
