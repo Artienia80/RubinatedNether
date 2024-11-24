@@ -36,11 +36,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class RubinationAltarBlock extends BaseEntityBlock {
-    protected static final VoxelShape SHAPE = Block.box(0.0, 4.0, 0.0, 16.0, 14.0, 16.0);
+
+    protected static final VoxelShape SHAPE_BOTTOM = Block.box(2.0, 0.0, 2.0, 14.0, 4.0, 14.0);
+    protected static final VoxelShape SHAPE_TOP = Block.box(0.0, 4.0, 0.0, 16.0, 14.0, 16.0);
+    protected static final VoxelShape SHAPE = Shapes.or(SHAPE_BOTTOM, SHAPE_TOP);
+
     public static final List<BlockPos> BOOKSHELF_OFFSETS = BlockPos.betweenClosedStream(-2, 0, -2, 2, 1, 2).filter((blockPos) -> {
         return Math.abs(blockPos.getX()) == 2 || Math.abs(blockPos.getZ()) == 2;
     }).map(BlockPos::immutable).toList();
