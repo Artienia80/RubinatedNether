@@ -79,8 +79,8 @@ public class RubinationAltarBlock extends BaseEntityBlock implements BEBlock<Rub
 
         while(var5.hasNext()) {
             BlockPos blockPos = (BlockPos)var5.next();
-            if (random.nextInt(16) == 0 && isValidBookShelf(level, pos, blockPos)) {
-                level.addParticle(RNParticleTypes.RUBINATE.get(), (double)pos.getX() + 0.5, (double)pos.getY() + 2.0, (double)pos.getZ() + 0.5, (double)((float)blockPos.getX() + random.nextFloat()) - 0.5, (double)((float)blockPos.getY() - random.nextFloat() - 1.0F), (double)((float)blockPos.getZ() + random.nextFloat()) - 0.5);
+            if (random.nextInt(8) == 0 && isValidBookShelf(level, pos, blockPos)) {
+                level.addParticle(RNParticleTypes.RUBINATE.get(), (double)pos.getX() + 0.5, (double)pos.getY() + 2, (double)pos.getZ() + 0.5, (double)((float)blockPos.getX() + random.nextFloat()) - 0.5, (double)((float)blockPos.getY() - random.nextFloat() - 0.5F), (double)((float)blockPos.getZ() + random.nextFloat()) - 0.5);
             }
         }
 

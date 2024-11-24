@@ -30,11 +30,11 @@ public class RubinationAltarParticle extends TextureSheetParticle {
         this.z = this.zo;
         this.quadSize = 0.1F * (this.random.nextFloat() * 0.5F + 0.2F);
         float f = this.random.nextFloat() * 0.6F + 0.4F;
-        this.rCol = 0.9F * f;
-        this.gCol = 0.9F * f;
-        this.bCol = f;
+        this.rCol = f;
+        this.gCol = 0.3F * f;
+        this.bCol = 0.3F * f;
         this.hasPhysics = false;
-        this.lifetime = (int)(Math.random() * 10.0) + 30;
+        this.lifetime = (int)(Math.random() * 10.0) + 75;
     }
 
     public ParticleRenderType getRenderType() {
