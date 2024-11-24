@@ -40,7 +40,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class RubinationAltarBlock extends BaseEntityBlock {
-    protected static final VoxelShape SHAPE = Block.box(4.0, 0.0, 4.0, 16.0, 12.0, 16.0);
+    protected static final VoxelShape SHAPE = Block.box(0.0, 4.0, 0.0, 16.0, 14.0, 16.0);
     public static final List<BlockPos> BOOKSHELF_OFFSETS = BlockPos.betweenClosedStream(-2, 0, -2, 2, 1, 2).filter((blockPos) -> {
         return Math.abs(blockPos.getX()) == 2 || Math.abs(blockPos.getZ()) == 2;
     }).map(BlockPos::immutable).toList();
