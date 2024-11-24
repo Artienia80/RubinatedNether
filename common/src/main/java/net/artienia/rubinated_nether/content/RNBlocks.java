@@ -40,8 +40,7 @@ public final class RNBlocks {
             .flags(DROP_SELF, CUBE)
             .register();
 
-    public static final BlockEntry<EnchantmentTableBlock> RUBINATION_ATLAR = BLOCKS.entry("rubination_altar", EnchantmentTableBlock::new)
-            .copyProperties(() -> Blocks.ENCHANTING_TABLE)
+    public static final BlockEntry<RubinationAltarBlock> RUBINATION_ATLAR = BLOCKS.entry("rubination_altar", RubinationAltarBlock::new)
             .item(BlockItem::new)
             .creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(Blocks.ENCHANTING_TABLE))
             .build()
