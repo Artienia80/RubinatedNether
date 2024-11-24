@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.artienia.rubinated_nether.content.RNBlockEntities;
+import net.artienia.rubinated_nether.content.RNBlocks;
 import net.artienia.rubinated_nether.content.RNParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -47,16 +48,17 @@ public class RubinationAltarBlock extends BaseEntityBlock implements BEBlock<Rub
     protected static final VoxelShape SHAPE_TOP = Block.box(0.0, 4.0, 0.0, 16.0, 14.0, 16.0);
     protected static final VoxelShape SHAPE = Shapes.or(SHAPE_BOTTOM, SHAPE_TOP);
 
-    public static final List<BlockPos> BOOKSHELF_OFFSETS = BlockPos.betweenClosedStream(-2, 0, -2, 2, 1, 2).filter((blockPos) -> {
-        return Math.abs(blockPos.getX()) == 2 || Math.abs(blockPos.getZ()) == 2;
+    public static final List<BlockPos> RUNESTONE_OFFSETS = BlockPos.betweenClosedStream(-3, 0, -3, 3, 1, 3).filter((blockPos) -> {
+        return Math.abs(blockPos.getX()) > 1 || Math.abs(blockPos.getZ()) > 1;
     }).map(BlockPos::immutable).toList();
+
 
     public RubinationAltarBlock(BlockBehaviour.Properties properties) {
         super(properties);
     }
 
     public static boolean isValidBookShelf(Level level, BlockPos tablePos, BlockPos offsetPos) {
-        return level.getBlockState(tablePos.offset(offsetPos)).is(BlockTags.ENCHANTMENT_POWER_PROVIDER) && level.getBlockState(tablePos.offset(offsetPos.getX() / 2, offsetPos.getY(), offsetPos.getZ() / 2)).is(BlockTags.ENCHANTMENT_POWER_TRANSMITTER);
+        return level.getBlockState(tablePos.offset(offsetPos)).is(RNBlocks.RUNESTONE.get()) && level.getBlockState(tablePos.offset(offsetPos.getX() / 2, offsetPos.getY(), offsetPos.getZ() / 2)).is(BlockTags.ENCHANTMENT_POWER_TRANSMITTER);
     }
 
     public boolean useShapeForLightOcclusion(BlockState state) {
@@ -69,11 +71,11 @@ public class RubinationAltarBlock extends BaseEntityBlock implements BEBlock<Rub
 
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         super.animateTick(state, level, pos, random);
-        Iterator<BlockPos> var5 = BOOKSHELF_OFFSETS.iterator();
+        Iterator<BlockPos> var5 = RUNESTONE_OFFSETS.iterator();
 
         while(var5.hasNext()) {
             BlockPos blockPos = (BlockPos)var5.next();
-            if (random.nextInt(4) == 0 && isValidBookShelf(level, pos, blockPos)) {
+            if (random.nextInt(2) == 0 && isValidBookShelf(level, pos, blockPos)) {
                 level.addParticle(RNParticleTypes.RUBINATE.get(), (double)pos.getX() + 0.5, (double)pos.getY() + 1.5, (double)pos.getZ() + 0.5, (double)((float)blockPos.getX() + random.nextFloat()) - 0.5, (double)((float)blockPos.getY() - random.nextFloat() - 0.5F), (double)((float)blockPos.getZ() + random.nextFloat()) - 0.5);
             }
         }

@@ -68,29 +68,17 @@ public class RubinationAltarParticle extends TextureSheetParticle {
         this.xo = this.x;
         this.yo = this.y;
         this.zo = this.z;
-
         if (this.age++ >= this.lifetime) {
             this.remove();
         } else {
-            float progress = (float) this.age / (float) this.lifetime; // Progress through lifetime (0 to 1)
-            float radius = (1.0F - progress) * 1.5F; // Decreasing radius
             float f = (float)this.age / (float)this.lifetime;
             f = 1.0F - f;
-
-            // Gradually adjust angle for smooth rotation
-            double targetAngle = this.angleOffset + Math.PI * 2 * progress * 2; // Desired angle
-            this.currentAngle = this.currentAngle + (targetAngle - this.currentAngle) * 0.05F; // Interpolate smoothly
-
-            double spiralX = Math.cos(this.currentAngle) * radius;
-            double spiralZ = Math.sin(this.currentAngle) * radius;
-
-            // Adjusted height to start low and end at y=0
-            float heightChange = (float) Math.sin(Math.PI * progress) * 0.15F; // Reduced height scaling
-            this.y = this.yStart + heightChange + 0.1F - progress; // Gradually decreases to y=0
-
-            // Update x and z for unique spiraling inward
-            this.x = this.xStart + (spiralX*progress) * (double)f;
-            this.z = this.zStart + (spiralX*progress) * (double)f;
+            float g = 1.0F - f;
+            g *= g;
+            g *= g;
+            this.x = this.xStart + this.xd * (double)f;
+            this.y = this.yStart + this.yd * (double)f - (double)(g * 0.5F);
+            this.z = this.zStart + this.zd * (double)f;
         }
     }
 
