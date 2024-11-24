@@ -8,7 +8,9 @@ package net.artienia.rubinated_nether.content.block;
 import java.util.Iterator;
 import java.util.List;
 
+import net.artienia.rubinated_nether.content.RNBlockEntities;
 import net.artienia.rubinated_nether.content.RNParticleTypes;
+import net.artienia.rubinated_nether.content.block.brazier.BrazierBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -29,6 +31,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -42,8 +45,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+import uwu.serenity.critter.utils.BEBlock;
 
-public class RubinationAltarBlock extends BaseEntityBlock {
+public class RubinationAltarBlock extends BaseEntityBlock implements BEBlock<RubinationAltarBlockEntity> {
 
     protected static final VoxelShape SHAPE_BOTTOM = Block.box(2.0, 0.0, 2.0, 14.0, 4.0, 14.0);
     protected static final VoxelShape SHAPE_TOP = Block.box(0.0, 4.0, 0.0, 16.0, 14.0, 16.0);
@@ -76,7 +80,7 @@ public class RubinationAltarBlock extends BaseEntityBlock {
         while(var5.hasNext()) {
             BlockPos blockPos = (BlockPos)var5.next();
             if (random.nextInt(16) == 0 && isValidBookShelf(level, pos, blockPos)) {
-                level.addParticle(ParticleTypes.ENCHANT, (double)pos.getX() + 0.5, (double)pos.getY() + 2.0, (double)pos.getZ() + 0.5, (double)((float)blockPos.getX() + random.nextFloat()) - 0.5, (double)((float)blockPos.getY() - random.nextFloat() - 1.0F), (double)((float)blockPos.getZ() + random.nextFloat()) - 0.5);
+                level.addParticle(RNParticleTypes.RUBINATE.get(), (double)pos.getX() + 0.5, (double)pos.getY() + 2.0, (double)pos.getZ() + 0.5, (double)((float)blockPos.getX() + random.nextFloat()) - 0.5, (double)((float)blockPos.getY() - random.nextFloat() - 1.0F), (double)((float)blockPos.getZ() + random.nextFloat()) - 0.5);
             }
         }
 
@@ -118,17 +122,17 @@ public class RubinationAltarBlock extends BaseEntityBlock {
         }
     }
 
-//    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-//        if (stack.hasCustomHoverName()) {
-//            BlockEntity blockEntity = level.getBlockEntity(pos);
-//            if (blockEntity instanceof EnchantmentTableBlockEntity) {
-//                ((EnchantmentTableBlockEntity)blockEntity).setCustomName(stack.getHoverName());
-//            }
-//        }
-//
-//    }
-
     public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
         return false;
+    }
+
+    @Override
+    public BlockEntityType<? extends RubinationAltarBlockEntity> getBlockEntityType() {
+        return RNBlockEntities.RUBINATION_ALTAR.get();
+    }
+
+    @Override
+    public Class<? extends RubinationAltarBlockEntity> getBlockEntityClass() {
+        return RubinationAltarBlockEntity.class;
     }
 }
