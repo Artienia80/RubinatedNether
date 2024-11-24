@@ -4,6 +4,7 @@ import com.teamresourceful.resourcefulconfig.client.ConfigScreen;
 import com.teamresourceful.resourcefulconfig.common.config.ResourcefulConfig;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.client.config.RNConfigScreen;
+import net.artienia.rubinated_nether.client.particles.RubinationAltarParticle;
 import net.artienia.rubinated_nether.client.particles.RubyAuraParticle;
 import net.artienia.rubinated_nether.client.render.entity.RubyLensModel;
 import net.artienia.rubinated_nether.client.render.entity.RubyLensRenderLayer;
@@ -57,5 +58,6 @@ public class RubinatedNetherClient {
 
     public static void registerParticleFactories(ParticleFactoryConsumer registrar) {
         registrar.register(RNParticleTypes.RUBY_AURA.get(), RubyAuraParticle.Provider::new);
+        registrar.register(RNParticleTypes.RUBINATE.get(), RubinationAltarParticle.Provider::new);
     }
 }
