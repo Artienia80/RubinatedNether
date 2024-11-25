@@ -77,7 +77,7 @@ public class RubinationAltarParticle extends TextureSheetParticle {
             g *= g;
             g *= g;
             this.x = this.xStart + this.xd * (double)f;
-            this.y = this.yStart + this.yd * (double)f - (double)(g * 0.5F);
+            this.y = this.yStart + this.yd * (double)f - (double)(g * 1.5F);
             this.z = this.zStart + this.zd * (double)f;
         }
     }
