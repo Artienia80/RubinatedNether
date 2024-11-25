@@ -11,8 +11,6 @@ public class RubinationAltarParticle extends TextureSheetParticle {
     private final double xStart;
     private final double yStart;
     private final double zStart;
-    private final double angleOffset;
-    private double currentAngle; // Current angle for smooth interpolation
 
 
     RubinationAltarParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
@@ -26,7 +24,6 @@ public class RubinationAltarParticle extends TextureSheetParticle {
         this.xo = x + xSpeed;
         this.yo = y + ySpeed;
         this.zo = z + zSpeed;
-        this.angleOffset = this.random.nextDouble() * Math.PI * 2; // Random initial angle
         this.x = this.xo;
         this.y = this.yo;
         this.z = this.zo;
@@ -37,6 +34,24 @@ public class RubinationAltarParticle extends TextureSheetParticle {
         this.bCol = 0.3F * f;
         this.hasPhysics = false;
         this.lifetime = (int)(Math.random() * 10.0) + 75;
+    }
+
+    public void tick() {
+        this.xo = this.x;
+        this.yo = this.y;
+        this.zo = this.z;
+        if (this.age++ >= this.lifetime) {
+            this.remove();
+        } else {
+            float f = (float)this.age / (float)this.lifetime;
+            f = 1.0F - f;
+            float g = 1.0F - f;
+            g *= g;
+            g *= g;
+            this.x = this.xStart + this.xd * (double)f;
+            this.y = this.yStart + this.yd * (double)f - (double)(g * 1.5F);
+            this.z = this.zStart + this.zd * (double)f;
+        }
     }
 
     public ParticleRenderType getRenderType() {
@@ -62,28 +77,6 @@ public class RubinationAltarParticle extends TextureSheetParticle {
 
         return j | k << 16;
     }
-
-
-    public void tick() {
-        this.xo = this.x;
-        this.yo = this.y;
-        this.zo = this.z;
-        if (this.age++ >= this.lifetime) {
-            this.remove();
-        } else {
-            float f = (float)this.age / (float)this.lifetime;
-            f = 1.0F - f;
-            float g = 1.0F - f;
-            g *= g;
-            g *= g;
-            this.x = this.xStart + this.xd * (double)f;
-            this.y = this.yStart + this.yd * (double)f - (double)(g * 1.5F);
-            this.z = this.zStart + this.zd * (double)f;
-        }
-    }
-
-
-
 
     @Environment(EnvType.CLIENT)
     public static class Provider implements ParticleProvider<SimpleParticleType> {
