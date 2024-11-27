@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "AAA",
+    "BCB",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "rubinated_nether:altar_stone_bricks"
+    },
+    "B": {
+      "item": "rubinated_nether:altar_stone_pillar"
+    },
+    "C": {
+      "item": "minecraft:lodestone"
+    }
+  },
+
+  "result": {
+    "item": "rubinated_nether:runestone"
+  }
+}

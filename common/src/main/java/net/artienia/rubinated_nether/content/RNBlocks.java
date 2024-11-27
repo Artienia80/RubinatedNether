@@ -48,11 +48,12 @@ public final class RNBlocks {
             .register();
 
 	
-	public static final BlockEntry<Block> RUNESTONE = BLOCKS.entry("runestone", Block::new)
+	public static final BlockEntry<RunestoneBlock> RUNESTONE = BLOCKS.entry("runestone", RunestoneBlock::new)
 			.copyProperties(() -> Blocks.BASALT)
-			.properties(p -> p.noOcclusion())
+			.properties(p -> p.noOcclusion()
+					.lightLevel($->2))
 			.item(BlockItem::new)
-			.creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(Blocks.ENCHANTING_TABLE))
+			.creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(RNBlocks.RUBINATION_ATLAR))
 			.build()
 			.flags(DROP_SELF)
 			.register();

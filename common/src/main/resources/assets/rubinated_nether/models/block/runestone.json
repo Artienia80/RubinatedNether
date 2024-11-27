@@ -8,7 +8,8 @@
 		"3": "rubinated_nether:block/altar/null",
 		"5": "rubinated_nether:block/runestone/top_side",
 		"6": "rubinated_nether:block/runestone/pillar_side",
-		"7": "rubinated_nether:block/runestone/feet"
+		"7": "rubinated_nether:block/runestone/feet",
+		"particle": "rubinated_nether:block/altar_stone"
 	},
 	"elements": [
 		{
