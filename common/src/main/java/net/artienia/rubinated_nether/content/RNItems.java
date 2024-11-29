@@ -46,6 +46,10 @@ public final class RNItems {
         .flags(GENERATE_FLAT_MODEL)
         .register();
 
+    public static final ItemEntry<Item> RUBY_ICON = ITEMS.entry("ruby_icon", Item::new)
+            .flags(GENERATE_FLAT_MODEL)
+            .register();
+
     public static final ItemEntry<RecordItem> SHIMMER_DISC = ITEMS.entry("shimmer_disc", p -> new RecordItem(15, RNSounds.SHIMMER.get(), p, 226))
         .properties(p -> p.stacksTo(1)
             .rarity(Rarity.RARE))

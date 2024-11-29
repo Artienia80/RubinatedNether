@@ -1,7 +1,13 @@
 package net.artienia.rubinated_nether.content;
 
+import com.ordana.spelunkery.reg.ModItems;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.config.RNConfig;
+import net.artienia.rubinated_nether.integrations.CompatHandler;
+import net.artienia.rubinated_nether.integrations.RNModCompat;
+import net.artienia.rubinated_nether.integrations.netherexp.JNECompat;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import uwu.serenity.critter.api.entry.RegistryEntry;
@@ -21,8 +27,6 @@ public final class RNTabs {
             output.accept(RNItems.MOLTEN_RUBY);
             output.accept(RNItems.RUBY_SHARD);
             output.accept(RNItems.MOLTEN_RUBY_NUGGET);
-
-            output.accept(RNItems.SHIMMER_DISC);
 
             output.accept(RNBlocks.NETHER_RUBY_ORE);
             output.accept(RNBlocks.MOLTEN_RUBY_ORE);
@@ -60,12 +64,32 @@ public final class RNTabs {
             output.accept(RNBlocks.RUBINATION_ATLAR);
 			output.accept(RNBlocks.RUNESTONE);
 
+            output.accept(RNItems.SHIMMER_DISC);
+
+
             //output.accept(RNBlocks.RUBY_RAIL);
         })
         .register();
 
+    public static final RegistryEntry<CreativeModeTab> COMPAT = TABS.entry("compat_tab")
+            .icon(RNItems.RUBY_ICON::asStack)
+            .displayItems((itemDisplayParameters, output) -> {
+                output.accept(BuiltInRegistries.BLOCK.get(new ResourceLocation("netherexp", "soul_ruby_ore")));
+                    })
+            .register();
+
     public static void register() {
         if(RNConfig.enableCreativeTab) TABS.register();
+        if(RNConfig.enableCompatTab) TABS.register();
+
+    }
+
+
+    public static <I extends Item, P> UnaryOperator<ItemBuilder<I, P>> compatTabIfEnabled(TabPlacement placement) {
+        if(RNConfig.enableCompatTab) {
+            return b -> b.creativeTab(COMPAT, placement);
+        }
+        return UnaryOperator.identity();
     }
 
     public static <I extends Item, P> UnaryOperator<ItemBuilder<I, P>> modTabIfEnabled(TabPlacement placement) {

@@ -22,6 +22,7 @@ public class RNModCompat {
         .put("netherexp", () -> JNECompat::new)
         .build();
 
+
     private static final Supplier<List<CompatHandler>> ACTIVE_HANDLERS = Suppliers.memoize(() -> COMPAT.entrySet()
         .stream()
         .filter(entry -> PlatformUtils.modLoaded(entry.getKey()))

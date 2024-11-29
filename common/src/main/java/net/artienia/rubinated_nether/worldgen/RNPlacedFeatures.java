@@ -12,6 +12,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import uwu.serenity.critter.platform.PlatformUtils;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class RNPlacedFeatures {
 
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
+
 
         register(context, NETHER_RUBY_ORE_PLACED_KEY, configuredFeatures.getOrThrow(RNConfiguredFeatures.NETHER_RUBY_ORE_KEY),
             RNOrePlacement.commonOrePlacement("nether_ruby_ore", 1,
