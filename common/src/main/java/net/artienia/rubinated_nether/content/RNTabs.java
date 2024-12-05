@@ -48,6 +48,10 @@ public final class RNTabs {
             output.accept(RNBlocks.RUBY_GLASS_PANE);
             output.accept(RNBlocks.MOLTEN_RUBY_GLASS);
             output.accept(RNBlocks.MOLTEN_RUBY_GLASS_PANE);
+            output.accept(RNBlocks.ORNATE_RUBY_GLASS);
+            output.accept(RNBlocks.ORNATE_RUBY_GLASS_PANE);
+
+
 
 
             output.accept(RNBlocks.RUBY_LANTERN);

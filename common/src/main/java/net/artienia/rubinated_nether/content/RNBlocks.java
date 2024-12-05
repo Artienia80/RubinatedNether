@@ -168,6 +168,21 @@ public final class RNBlocks {
             .build()
             .register();
 
+	public static final BlockEntry<StainedGlassBlock> ORNATE_RUBY_GLASS = BLOCKS.entry("ornate_ruby_glass", p -> new StainedGlassBlock(DyeColor.RED, p))
+			.transform(rubyGlassBlock(false))
+			.item(BlockItem::new)
+			.creativeTab(CreativeModeTabs.COLORED_BLOCKS, TabPlacement.after(MOLTEN_RUBY_GLASS))
+			.build()
+			.register();
+
+	public static final BlockEntry<StainedGlassPaneBlock> ORNATE_RUBY_GLASS_PANE = BLOCKS.entry("ornate_ruby_glass_pane", p -> new StainedGlassPaneBlock(DyeColor.ORANGE, p))
+			.transform(rubyGlassBlock(true))
+			.properties(p -> p.lightLevel($ -> 10))
+			.item(BlockItem::new)
+			.creativeTab(CreativeModeTabs.COLORED_BLOCKS, TabPlacement.after(MOLTEN_RUBY_GLASS_PANE))
+			.build()
+			.register();
+
     public static final BlockEntry<LanternBlock> RUBY_LANTERN = BLOCKS.entry("ruby_lantern", LanternBlock::new)
             .copyProperties(() -> Blocks.LANTERN)
             .item(BlockItem::new)

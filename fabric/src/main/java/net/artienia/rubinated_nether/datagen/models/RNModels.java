@@ -47,6 +47,7 @@ public class RNModels extends FabricModelProvider {
         // Glass Blocks
         generators.createGlassBlocks(RNBlocks.RUBY_GLASS.get(), RNBlocks.RUBY_GLASS_PANE.get());
         generators.createGlassBlocks(RNBlocks.MOLTEN_RUBY_GLASS.get(), RNBlocks.MOLTEN_RUBY_GLASS_PANE.get());
+        generators.createGlassBlocks(RNBlocks.ORNATE_RUBY_GLASS.get(), RNBlocks.ORNATE_RUBY_GLASS_PANE.get());
 
         generators.createLantern(RNBlocks.RUBY_LANTERN.get());
         generators.createRotatedPillarWithHorizontalVariant(RNBlocks.MOLTEN_RUBY_BLOCK.get(), TexturedModel.COLUMN,  TexturedModel.COLUMN_HORIZONTAL);
