@@ -12,6 +12,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import uwu.serenity.critter.api.entry.RegistryEntry;
 import uwu.serenity.critter.creative.TabPlacement;
+import uwu.serenity.critter.platform.PlatformUtils;
 import uwu.serenity.critter.stdlib.creativeTabs.CreativeTabRegistrar;
 import uwu.serenity.critter.stdlib.items.ItemBuilder;
 
@@ -74,7 +75,9 @@ public final class RNTabs {
     public static final RegistryEntry<CreativeModeTab> COMPAT = TABS.entry("compat_tab")
             .icon(RNItems.RUBY_ICON::asStack)
             .displayItems((itemDisplayParameters, output) -> {
-                output.accept(BuiltInRegistries.BLOCK.get(new ResourceLocation("netherexp", "soul_ruby_ore")));
+                if(PlatformUtils.modLoaded("netherexp")){
+                     output.accept(BuiltInRegistries.BLOCK.get(new ResourceLocation("netherexp", "soul_ruby_ore")));
+                }
                     })
             .register();
 
