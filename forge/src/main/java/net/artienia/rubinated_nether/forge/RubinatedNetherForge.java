@@ -1,12 +1,10 @@
 package net.artienia.rubinated_nether.forge;
 
 
-import net.artienia.rubinated_nether.config.RNConfig;
 import net.artienia.rubinated_nether.forge.conditions.ModLoadedLootTable;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;

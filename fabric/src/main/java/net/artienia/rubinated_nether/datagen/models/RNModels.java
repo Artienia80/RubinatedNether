@@ -30,8 +30,6 @@ public class RNModels extends FabricModelProvider {
     private static final ResourceLocation FREEZER = RubinatedNether.id("block/freezer");
     private static final ResourceLocation FREEZER_ON = RubinatedNether.id("block/freezer_on");
 
-    private static final ResourceLocation RUBY_CHANDELIER = RubinatedNether.id("block/ruby_chandelier");
-
     private static final ResourceLocation RUBY_LAVA_LAMP = RubinatedNether.id("block/ruby_lava_lamp");
 
     public RNModels(FabricDataOutput output) {

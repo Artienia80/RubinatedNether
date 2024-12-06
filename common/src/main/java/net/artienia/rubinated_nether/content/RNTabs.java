@@ -1,11 +1,7 @@
 package net.artienia.rubinated_nether.content;
 
-import com.ordana.spelunkery.reg.ModItems;
 import net.artienia.rubinated_nether.RubinatedNether;
 import net.artienia.rubinated_nether.config.RNConfig;
-import net.artienia.rubinated_nether.integrations.CompatHandler;
-import net.artienia.rubinated_nether.integrations.RNModCompat;
-import net.artienia.rubinated_nether.integrations.netherexp.JNECompat;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;

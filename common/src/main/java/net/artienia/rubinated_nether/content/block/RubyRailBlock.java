@@ -96,6 +96,8 @@ public class RubyRailBlock extends BaseRailBlock {
                     }
 
                     railShape = RailShape.NORTH_SOUTH;
+				default:
+					break;
             }
 
             if (this.isSameRailWithPower(level, new BlockPos(i, j, k), searchForward, recursionCount, railShape)) {
@@ -287,6 +289,8 @@ public class RubyRailBlock extends BaseRailBlock {
                     case NORTH_EAST:
                         return (BlockState)state.setValue(SHAPE, RailShape.NORTH_WEST);
                 }
+			default:
+				break;
         }
 
         return super.mirror(state, mirror);

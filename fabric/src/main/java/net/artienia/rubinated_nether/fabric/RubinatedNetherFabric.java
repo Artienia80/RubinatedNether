@@ -2,7 +2,6 @@ package net.artienia.rubinated_nether.fabric;
 
 import net.artienia.rubinated_nether.RNEvents;
 import net.artienia.rubinated_nether.RubinatedNether;
-import net.artienia.rubinated_nether.config.RNConfig;
 import net.artienia.rubinated_nether.fabric.conditions.RNResourceConditionTypes;
 import net.artienia.rubinated_nether.worldgen.RNPlacedFeatures;
 import net.fabricmc.api.ModInitializer;
@@ -13,7 +12,6 @@ import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.network.chat.Component;
