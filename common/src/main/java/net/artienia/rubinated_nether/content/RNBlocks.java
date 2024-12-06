@@ -55,7 +55,7 @@ public final class RNBlocks {
 			.item(BlockItem::new)
 			.creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(RNBlocks.RUBINATION_ATLAR))
 			.build()
-			.flags(DROP_SELF)
+			.flags(DROP_SELF, RNItems.GENERATE_FLAT_MODEL)
 			.register();
 
 //    public static final BlockEntry<RubyRailBlock> RUBY_RAIL = BLOCKS.entry("ruby_rail", RubyRailBlock::new)
