@@ -7,6 +7,10 @@
 
 # IntelliJ
 out/
+
+# Eclipse
+.eclipse/
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
@@ -112,16 +116,12 @@ gradle-app.setting
 **/build/
 
 # Common working directory
-run/
+runs/
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
 /common/src/generated/.cache/
-/src/
 /descriptions/
 
 # Bin folders
-/forge/bin
-/common/bin
-/fabric/bin
-/run-data/
+/bin/
