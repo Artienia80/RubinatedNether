@@ -1,7 +1,11 @@
-package ruby.rubinated_nether;
+package corundum.rubinated_nether;
 
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
+
+import corundum.rubinated_nether.content.RubinatedNetherBlocks;
+import corundum.rubinated_nether.content.RubinatedNetherItems;
+import corundum.rubinated_nether.content.RubinatedNetherTabs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
@@ -15,9 +19,6 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import ruby.rubinated_nether.content.RubinatedNetherBlocks;
-import ruby.rubinated_nether.content.RubinatedNetherItems;
-import ruby.rubinated_nether.content.RubinatedNetherTabs;
 
 @Mod(RubinatedNether.MODID)
 public class RubinatedNether {

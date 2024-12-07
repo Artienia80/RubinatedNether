@@ -1,12 +1,12 @@
-package ruby.rubinated_nether.content;
+package corundum.rubinated_nether.content;
 
+import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import ruby.rubinated_nether.RubinatedNether;
 
 public class RubinatedNetherTabs {
 	// Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "examplemod" namespace

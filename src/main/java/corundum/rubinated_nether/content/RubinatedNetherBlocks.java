@@ -1,5 +1,6 @@
-package ruby.rubinated_nether.content;
+package corundum.rubinated_nether.content;
 
+import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -7,7 +8,6 @@ import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import ruby.rubinated_nether.RubinatedNether;
 
 public class RubinatedNetherBlocks {
 	// Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
