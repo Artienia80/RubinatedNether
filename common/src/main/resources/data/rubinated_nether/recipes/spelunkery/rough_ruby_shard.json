@@ -2,26 +2,26 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "rubinated_nether:rough_ruby"
-    }
+	{
+	  "item": "rubinated_nether:rough_ruby"
+	}
   ],
   "result": {
-    "item": "rubinated_nether:rough_ruby_shard",
-    "count": 9
+	"item": "rubinated_nether:rough_ruby_shard",
+	"count": 9
   },
   "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "spelunkery"
-      ]
-    }
+	{
+	  "condition": "fabric:all_mods_loaded",
+	  "values": [
+		"spelunkery"
+	  ]
+	}
   ],
   "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "spelunkery"
-    }
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "spelunkery"
+	}
   ]
 }

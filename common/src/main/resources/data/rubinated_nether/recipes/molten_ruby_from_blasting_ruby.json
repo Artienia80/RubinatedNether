@@ -5,7 +5,7 @@
   "experience": 0.7,
   "group": "ruby",
   "ingredient": {
-    "item": "rubinated_nether:ruby"
+	"item": "rubinated_nether:ruby"
   },
   "result": "rubinated_nether:molten_ruby"
 }

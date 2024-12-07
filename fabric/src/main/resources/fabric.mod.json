@@ -5,43 +5,43 @@
   "name": "${name}",
   "description": "${description}",
   "authors": [
-    "Artienia", "Juniper", "Darksonic300" , "Serine"
+	"Artienia", "Juniper", "Darksonic300" , "Serine"
   ],
   "contact": {},
   "license": "${license}",
   "icon": "assets/rubinated_nether/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "net.artienia.rubinated_nether.fabric.RubinatedNetherFabric"
-    ],
-    "client": [
-      "net.artienia.rubinated_nether.fabric.client.RubinatedNetherFabricClient"
-    ],
-    "jei_mod_plugin": [
-      "net.artienia.rubinated_nether.integrations.jei.JEIModPlugin"
-    ],
-    "emi": [
-      "net.artienia.rubinated_nether.integrations.emi.EMIModPlugin"
-    ],
-    "fabric-datagen": [
-      "net.artienia.rubinated_nether.datagen.RNDataGenerators"
-    ],
-    "modmenu": [
-      "net.artienia.rubinated_nether.fabric.integrations.RNModMenu"
-    ]
+	"main": [
+	  "net.artienia.rubinated_nether.fabric.RubinatedNetherFabric"
+	],
+	"client": [
+	  "net.artienia.rubinated_nether.fabric.client.RubinatedNetherFabricClient"
+	],
+	"jei_mod_plugin": [
+	  "net.artienia.rubinated_nether.integrations.jei.JEIModPlugin"
+	],
+	"emi": [
+	  "net.artienia.rubinated_nether.integrations.emi.EMIModPlugin"
+	],
+	"fabric-datagen": [
+	  "net.artienia.rubinated_nether.datagen.RNDataGenerators"
+	],
+	"modmenu": [
+	  "net.artienia.rubinated_nether.fabric.integrations.RNModMenu"
+	]
   },
   "mixins": [
-    "rubinated_nether.mixins.json",
-    "rubinated_nether.fabric.mixins.json"
+	"rubinated_nether.mixins.json",
+	"rubinated_nether.fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.0",
-    "minecraft": "~1.20.1",
-    "java": ">=17",
-    "fabric-api": ">=0.92.2"
+	"fabricloader": ">=0.16.0",
+	"minecraft": "~1.20.1",
+	"java": ">=17",
+	"fabric-api": ">=0.92.2"
   },
   "suggests": {
-    "another-mod": "*"
+	"another-mod": "*"
   }
 }

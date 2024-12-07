@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/template_lantern",
   "textures": {
-    "lantern": "rubinated_nether:block/ruby_lantern"
+	"lantern": "rubinated_nether:block/ruby_lantern"
   }
 }

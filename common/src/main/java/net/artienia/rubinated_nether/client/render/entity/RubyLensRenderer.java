@@ -15,13 +15,13 @@ import java.util.Map;
  */
 public abstract class RubyLensRenderer {
 
-    private final Map<HeadedModel, RubyLensModel<?>> models = new Reference2ReferenceOpenHashMap<>();
+	private final Map<HeadedModel, RubyLensModel<?>> models = new Reference2ReferenceOpenHashMap<>();
 
-    protected void renderInternal(EntityModel<? extends LivingEntity> entityModel, PoseStack poseStack, MultiBufferSource multiBufferSource, int light) {
-        if(entityModel instanceof HeadedModel headed) {
-            RubyLensModel<?> model = models.computeIfAbsent(headed, $ -> new RubyLensModel<>(RubyLensModel.createBodyLayer().bakeRoot()));
-            model.copyHeadData(headed.getHead());
-            model.renderToBuffer(poseStack, multiBufferSource.getBuffer(model.renderType(RubyLensRenderLayer.RUBY_LENS_TEXTURE)), light, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
-        }
-    }
+	protected void renderInternal(EntityModel<? extends LivingEntity> entityModel, PoseStack poseStack, MultiBufferSource multiBufferSource, int light) {
+		if(entityModel instanceof HeadedModel headed) {
+			RubyLensModel<?> model = models.computeIfAbsent(headed, $ -> new RubyLensModel<>(RubyLensModel.createBodyLayer().bakeRoot()));
+			model.copyHeadData(headed.getHead());
+			model.renderToBuffer(poseStack, multiBufferSource.getBuffer(model.renderType(RubyLensRenderLayer.RUBY_LENS_TEXTURE)), light, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
 }

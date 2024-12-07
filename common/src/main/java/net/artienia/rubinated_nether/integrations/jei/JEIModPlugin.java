@@ -18,30 +18,30 @@ import java.util.List;
 
 @JeiPlugin
 public class JEIModPlugin implements IModPlugin {
-    @Override
-    public ResourceLocation getPluginUid() {
-        return new ResourceLocation(RubinatedNether.MOD_ID, "jei");
-    }
+	@Override
+	public ResourceLocation getPluginUid() {
+		return new ResourceLocation(RubinatedNether.MOD_ID, "jei");
+	}
 
-    @Override
-    public void registerCategories(IRecipeCategoryRegistration registration) {
-        registration.addRecipeCategories(new FreezingCategory(registration.getJeiHelpers().getGuiHelper()));
-        registration.addRecipeCategories(new FreezerFuelCategory(registration.getJeiHelpers().getGuiHelper()));
-    }
+	@Override
+	public void registerCategories(IRecipeCategoryRegistration registration) {
+		registration.addRecipeCategories(new FreezingCategory(registration.getJeiHelpers().getGuiHelper()));
+		registration.addRecipeCategories(new FreezerFuelCategory(registration.getJeiHelpers().getGuiHelper()));
+	}
 
-    @Override
-    public void registerRecipes(IRecipeRegistration registration) {
-        RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
+	@Override
+	public void registerRecipes(IRecipeRegistration registration) {
+		RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
 
-        registration.addRecipes(FreezerFuelCategory.RECIPE_TYPE, FreezerFuelRecipeMaker.getFuelRecipes());
+		registration.addRecipes(FreezerFuelCategory.RECIPE_TYPE, FreezerFuelRecipeMaker.getFuelRecipes());
 
-        List<FreezingRecipe> freezingRecipes = recipeManager.getAllRecipesFor(RNRecipes.FREEZING.get());
-        registration.addRecipes(FreezingCategory.FREEZING_RECIPE_TYPE, freezingRecipes);
-    }
+		List<FreezingRecipe> freezingRecipes = recipeManager.getAllRecipesFor(RNRecipes.FREEZING.get());
+		registration.addRecipes(FreezingCategory.FREEZING_RECIPE_TYPE, freezingRecipes);
+	}
 
-    @Override
-    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-        registration.addRecipeClickArea(FreezerScreen.class, 60, 30, 20, 30,
-                FreezingCategory.FREEZING_RECIPE_TYPE);
-    }
+	@Override
+	public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+		registration.addRecipeClickArea(FreezerScreen.class, 60, 30, 20, 30,
+				FreezingCategory.FREEZING_RECIPE_TYPE);
+	}
 }

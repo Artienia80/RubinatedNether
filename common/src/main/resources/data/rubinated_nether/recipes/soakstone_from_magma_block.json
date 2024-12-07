@@ -4,7 +4,7 @@
   "cookingtime": 400,
   "experience": 1.0,
   "ingredient": {
-    "item": "minecraft:magma_block"
+	"item": "minecraft:magma_block"
   },
   "result": "rubinated_nether:soakstone"
 }

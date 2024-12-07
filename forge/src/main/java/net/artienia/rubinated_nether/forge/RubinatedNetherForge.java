@@ -24,55 +24,55 @@ import java.nio.file.Path;
 @Mod(RubinatedNether.MOD_ID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class RubinatedNetherForge {
-    public RubinatedNetherForge() {
-        // Register the registry manager
-        FMLJavaModLoadingContext.get()
-            .getModEventBus()
-            .register(RubinatedNether.REGISTRIES);
+	public RubinatedNetherForge() {
+		// Register the registry manager
+		FMLJavaModLoadingContext.get()
+			.getModEventBus()
+			.register(RubinatedNether.REGISTRIES);
 
-        // Run our common setup.
-        RubinatedNether.init();
-    }
+		// Run our common setup.
+		RubinatedNether.init();
+	}
 
-    @SubscribeEvent
-    public static void onSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(RubinatedNether::setup);
-    }
+	@SubscribeEvent
+	public static void onSetup(FMLCommonSetupEvent event) {
+		event.enqueueWork(RubinatedNether::setup);
+	}
 
-    @SubscribeEvent
-    public void registerLootData(RegisterEvent event)
-    {
-        if (!event.getRegistryKey().equals(Registries.LOOT_CONDITION_TYPE))
-            return;
+	@SubscribeEvent
+	public void registerLootData(RegisterEvent event)
+	{
+		if (!event.getRegistryKey().equals(Registries.LOOT_CONDITION_TYPE))
+			return;
 
-        event.register(Registries.LOOT_CONDITION_TYPE, new ResourceLocation(RubinatedNether.MOD_ID, "is_mod_loaded"), () -> ModLoadedLootTable.TYPE);
-    }
+		event.register(Registries.LOOT_CONDITION_TYPE, new ResourceLocation(RubinatedNether.MOD_ID, "is_mod_loaded"), () -> ModLoadedLootTable.TYPE);
+	}
 
-    @SubscribeEvent
-    public static void addResourcePack(AddPackFindersEvent event) {
-        IModFile modFile = ModList.get()
-            .getModFileById(RubinatedNether.MOD_ID)
-            .getFile();
+	@SubscribeEvent
+	public static void addResourcePack(AddPackFindersEvent event) {
+		IModFile modFile = ModList.get()
+			.getModFileById(RubinatedNether.MOD_ID)
+			.getFile();
 
-        createPack(event, modFile, "better_netherite_template", "Better Netherite Template", false);
+		createPack(event, modFile, "better_netherite_template", "Better Netherite Template", false);
 
 
 
-        if(ModList.get().isLoaded("spelunkery"))
-            createPack(event, modFile, "compat_spelunkery", "Rubinated Nether Spelunkery Compat", true);
+		if(ModList.get().isLoaded("spelunkery"))
+			createPack(event, modFile, "compat_spelunkery", "Rubinated Nether Spelunkery Compat", true);
 
-    }
+	}
 
-    private static void createPack(AddPackFindersEvent event, IModFile modFile, String id, String name, boolean required) {
-        Path resourcePath = modFile.findResource("resourcepacks/" + id);
+	private static void createPack(AddPackFindersEvent event, IModFile modFile, String id, String name, boolean required) {
+		Path resourcePath = modFile.findResource("resourcepacks/" + id);
 
-        Pack pack = Pack.readMetaAndCreate(
-                "rubinated_nether/" + id,
-                Component.literal(name), required,
-                path -> new PathPackResources(path, resourcePath, true),
-                event.getPackType(), Pack.Position.TOP, PackSource.BUILT_IN
-        );
+		Pack pack = Pack.readMetaAndCreate(
+				"rubinated_nether/" + id,
+				Component.literal(name), required,
+				path -> new PathPackResources(path, resourcePath, true),
+				event.getPackType(), Pack.Position.TOP, PackSource.BUILT_IN
+		);
 
-        if(pack != null) event.addRepositorySource(consumer -> consumer.accept(pack));
-    }
+		if(pack != null) event.addRepositorySource(consumer -> consumer.accept(pack));
+	}
 }

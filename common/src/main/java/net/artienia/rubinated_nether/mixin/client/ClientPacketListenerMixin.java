@@ -16,24 +16,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientPacketListener.class)
 public class ClientPacketListenerMixin {
 
-    @Shadow private ClientLevel level;
+	@Shadow private ClientLevel level;
 
-    @Shadow @Final private Minecraft minecraft;
+	@Shadow @Final private Minecraft minecraft;
 
-    @Inject(
-        method = "handleBlockUpdate",
-        at = @At("TAIL")
-    )
-    public void handleBlockUpdate(ClientboundBlockUpdatePacket packet, CallbackInfo ci) {
-        ((UpdateListenerHolder) this.level).rn$handleBlockUpdate(packet.getPos());
-    }
+	@Inject(
+		method = "handleBlockUpdate",
+		at = @At("TAIL")
+	)
+	public void handleBlockUpdate(ClientboundBlockUpdatePacket packet, CallbackInfo ci) {
+		((UpdateListenerHolder) this.level).rn$handleBlockUpdate(packet.getPos());
+	}
 
-    @Inject(
-        method = "handleChunkBlocksUpdate",
-        at = @At("TAIL")
-    )
-    public void handleBlockUpdates(ClientboundSectionBlocksUpdatePacket packet, CallbackInfo ci) {
-        packet.runUpdates((pos, state) -> ((UpdateListenerHolder) this.level).rn$handleBlockUpdate(pos));
-    }
+	@Inject(
+		method = "handleChunkBlocksUpdate",
+		at = @At("TAIL")
+	)
+	public void handleBlockUpdates(ClientboundSectionBlocksUpdatePacket packet, CallbackInfo ci) {
+		packet.runUpdates((pos, state) -> ((UpdateListenerHolder) this.level).rn$handleBlockUpdate(pos));
+	}
 
 }

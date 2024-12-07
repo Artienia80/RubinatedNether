@@ -1,17 +1,17 @@
 {
   "key": {
-    "#reactor_topsoil" : "minecraft:grass_block",
-    "#reactor_subsoil" : "minecraft:dirt",
-    "#reactor_stone" : "minecraft:stone",
+	"#reactor_topsoil" : "minecraft:grass_block",
+	"#reactor_subsoil" : "minecraft:dirt",
+	"#reactor_stone" : "minecraft:stone",
 
-    "#reactor_plants" : "minecraft:grass",
+	"#reactor_plants" : "minecraft:grass",
 
-    "#reactor_logs": "minecraft:dark_oak_log",
-    "#reactor_wood": "minecraft:dark_oak_wood",
-    "#reactor_stripped_logs": "minecraft:stripped_dark_oak_log",
-    "#reactor_stripped_wood": "minecraft:stripped_dark_oak_wood",
-    "#reactor_leaves" : "minecraft:dark_oak_leaves",
+	"#reactor_logs": "minecraft:dark_oak_log",
+	"#reactor_wood": "minecraft:dark_oak_wood",
+	"#reactor_stripped_logs": "minecraft:stripped_dark_oak_log",
+	"#reactor_stripped_wood": "minecraft:stripped_dark_oak_wood",
+	"#reactor_leaves" : "minecraft:dark_oak_leaves",
 
-    "#reactor_planks": "minecraft:dark_oak_planks"
+	"#reactor_planks": "minecraft:dark_oak_planks"
   }
 }

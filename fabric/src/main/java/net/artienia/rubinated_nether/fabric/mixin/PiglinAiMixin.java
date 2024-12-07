@@ -11,11 +11,11 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(PiglinAi.class)
 public class PiglinAiMixin {
 
-    @ModifyReturnValue(
-        method = "isBarterCurrency",
-        at = @At("RETURN")
-    )
-    private static boolean barterRubies(boolean original, @Local(argsOnly = true) ItemStack stack) {
-        return original || (stack.getItem() instanceof PiglinCurrency currency && currency.isPiglinCurrency(stack));
-    }
+	@ModifyReturnValue(
+		method = "isBarterCurrency",
+		at = @At("RETURN")
+	)
+	private static boolean barterRubies(boolean original, @Local(argsOnly = true) ItemStack stack) {
+		return original || (stack.getItem() instanceof PiglinCurrency currency && currency.isPiglinCurrency(stack));
+	}
 }

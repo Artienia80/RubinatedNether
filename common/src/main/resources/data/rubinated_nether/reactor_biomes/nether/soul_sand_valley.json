@@ -1,14 +1,14 @@
 {
   "key": {
-    "#reactor_topsoil" : "minecraft:soul_sand",
-    "#reactor_subsoil" : "minecraft:soul_soil",
-    "#reactor_stone" : "minecraft:soul_soil",
+	"#reactor_topsoil" : "minecraft:soul_sand",
+	"#reactor_subsoil" : "minecraft:soul_soil",
+	"#reactor_stone" : "minecraft:soul_soil",
 
-    "#reactor_plants" : "minecraft:soul_fire",
+	"#reactor_plants" : "minecraft:soul_fire",
 
-    "#reactor_logs": "minecraft:bone_block",
-    "#reactor_wood": "minecraft:bone_block",
-    "#reactor_stripped_logs": "minecraft:bone_block",
-    "#reactor_stripped_wood": "minecraft:bone_block"
+	"#reactor_logs": "minecraft:bone_block",
+	"#reactor_wood": "minecraft:bone_block",
+	"#reactor_stripped_logs": "minecraft:bone_block",
+	"#reactor_stripped_wood": "minecraft:bone_block"
   }
 }

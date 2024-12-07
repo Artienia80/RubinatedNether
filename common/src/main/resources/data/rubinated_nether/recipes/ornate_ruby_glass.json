@@ -2,17 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "pattern": [
-    "A",
-    "A"
+	"A",
+	"A"
   ],
   "key": {
-    "A": {
-      "item": "rubinated_nether:ruby_glass"
-    }
+	"A": {
+	  "item": "rubinated_nether:ruby_glass"
+	}
   },
 
   "result": {
-    "item": "rubinated_nether:ornate_ruby_glass",
-    "count": 2
+	"item": "rubinated_nether:ornate_ruby_glass",
+	"count": 2
   }
 }

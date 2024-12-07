@@ -1,9 +1,9 @@
 {
   "values": [
-    "minecraft:grass_block",
-    "minecraft:podzol",
-    "minecraft:mycelium",
-    "minecraft:crimson_nylium",
-    "minecraft:warped_nylium"
+	"minecraft:grass_block",
+	"minecraft:podzol",
+	"minecraft:mycelium",
+	"minecraft:crimson_nylium",
+	"minecraft:warped_nylium"
   ]
 }

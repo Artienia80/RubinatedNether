@@ -17,23 +17,23 @@ import java.util.List;
 @Mixin(ChunkHolder.class)
 public class ChunkHolderMixin {
 
-    @Inject(
-        method = "method_30312",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/server/level/ChunkHolder;broadcastBlockEntityIfNeeded(Ljava/util/List;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V")
-    )
-    public void handleUpdate(List list, Level level, BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
-        if(!level.isClientSide) ((UpdateListenerHolder) level).rn$handleBlockUpdate(blockPos);
-    }
+	@Inject(
+		method = "method_30312",
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/server/level/ChunkHolder;broadcastBlockEntityIfNeeded(Ljava/util/List;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V")
+	)
+	public void handleUpdate(List list, Level level, BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
+		if(!level.isClientSide) ((UpdateListenerHolder) level).rn$handleBlockUpdate(blockPos);
+	}
 
-    @Inject(
-        method = "broadcastChanges",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/server/level/ChunkHolder;broadcastBlockEntityIfNeeded(Ljava/util/List;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V")
-    )
-    public void handleSingleUpdate(LevelChunk chunk, CallbackInfo ci, @Local Level level, @Local BlockPos pos) {
-        if(!level.isClientSide) ((UpdateListenerHolder) level).rn$handleBlockUpdate(pos);
-    }
+	@Inject(
+		method = "broadcastChanges",
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/server/level/ChunkHolder;broadcastBlockEntityIfNeeded(Ljava/util/List;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V")
+	)
+	public void handleSingleUpdate(LevelChunk chunk, CallbackInfo ci, @Local Level level, @Local BlockPos pos) {
+		if(!level.isClientSide) ((UpdateListenerHolder) level).rn$handleBlockUpdate(pos);
+	}
 }

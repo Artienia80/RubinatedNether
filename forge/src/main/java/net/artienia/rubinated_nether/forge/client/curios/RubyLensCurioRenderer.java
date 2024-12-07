@@ -12,8 +12,8 @@ import top.theillusivec4.curios.api.client.ICurioRenderer;
 
 public class RubyLensCurioRenderer extends RubyLensRenderer implements ICurioRenderer {
 
-    @Override
-    public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack matrixStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.renderInternal(renderLayerParent.getModel(), matrixStack, renderTypeBuffer, light);
-    }
+	@Override
+	public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack matrixStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.renderInternal(renderLayerParent.getModel(), matrixStack, renderTypeBuffer, light);
+	}
 }

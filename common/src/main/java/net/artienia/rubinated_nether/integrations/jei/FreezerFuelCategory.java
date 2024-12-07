@@ -25,80 +25,80 @@ import java.util.Comparator;
 import java.util.List;
 
 public class FreezerFuelCategory implements IRecipeCategory<FuelRecipe> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(RubinatedNether.MOD_ID, "textures/gui/freezer_gui.png");
-    public static final RecipeType<FuelRecipe> RECIPE_TYPE = RecipeType.create(RubinatedNether.MOD_ID, "fuel", FuelRecipe.class);
-    private final IDrawable background;
-    private final IDrawable icon;
-    private final LoadingCache<Integer, IDrawableAnimated> cachedFuelIndicator;
+	public static final ResourceLocation TEXTURE = new ResourceLocation(RubinatedNether.MOD_ID, "textures/gui/freezer_gui.png");
+	public static final RecipeType<FuelRecipe> RECIPE_TYPE = RecipeType.create(RubinatedNether.MOD_ID, "fuel", FuelRecipe.class);
+	private final IDrawable background;
+	private final IDrawable icon;
+	private final LoadingCache<Integer, IDrawableAnimated> cachedFuelIndicator;
 
-    public FreezerFuelCategory(IGuiHelper helper) {
-        this(helper, List.of(RNBlocks.FREEZER.get().getName().getString()));
-    }
+	public FreezerFuelCategory(IGuiHelper helper) {
+		this(helper, List.of(RNBlocks.FREEZER.get().getName().getString()));
+	}
 
-    public FreezerFuelCategory(IGuiHelper helper, List<String> craftingStations) {
-        String longestString = craftingStations.stream().max(Comparator.comparingInt(String::length)).get();
-        Component longestStationName = Component.literal(longestString);
+	public FreezerFuelCategory(IGuiHelper helper, List<String> craftingStations) {
+		String longestString = craftingStations.stream().max(Comparator.comparingInt(String::length)).get();
+		Component longestStationName = Component.literal(longestString);
 
-        Font fontRenderer = Minecraft.getInstance().font;
-        Component maxBurnTimeText = createBurnTimeText(10000, longestStationName);
-        int maxStringWidth = fontRenderer.width(maxBurnTimeText.getString());
-        int backgroundHeight = 34;
-        int textPadding = 20;
+		Font fontRenderer = Minecraft.getInstance().font;
+		Component maxBurnTimeText = createBurnTimeText(10000, longestStationName);
+		int maxStringWidth = fontRenderer.width(maxBurnTimeText.getString());
+		int backgroundHeight = 34;
+		int textPadding = 20;
 
-        this.background = helper.drawableBuilder(this.getTexture(), 55, 36, 18, backgroundHeight).addPadding(0, 0, 0, textPadding + maxStringWidth).build();
-        this.icon = helper.createDrawable(this.getTexture(), 176, 0, 14, 13);
+		this.background = helper.drawableBuilder(this.getTexture(), 55, 36, 18, backgroundHeight).addPadding(0, 0, 0, textPadding + maxStringWidth).build();
+		this.icon = helper.createDrawable(this.getTexture(), 176, 0, 14, 13);
 
-        this.cachedFuelIndicator = CacheBuilder.newBuilder().maximumSize(25)
-                .build(new CacheLoader<>() {
-                    @Override
-                    public IDrawableAnimated load(Integer burnTime) {
-                        return helper.drawableBuilder(FreezerFuelCategory.this.getTexture(), 176, 0, 14, 13).buildAnimated(burnTime, IDrawableAnimated.StartDirection.TOP, true);
-                    }
-                });
-    }
+		this.cachedFuelIndicator = CacheBuilder.newBuilder().maximumSize(25)
+				.build(new CacheLoader<>() {
+					@Override
+					public IDrawableAnimated load(Integer burnTime) {
+						return helper.drawableBuilder(FreezerFuelCategory.this.getTexture(), 176, 0, 14, 13).buildAnimated(burnTime, IDrawableAnimated.StartDirection.TOP, true);
+					}
+				});
+	}
 
-    @Override
-    public IDrawable getBackground() {
-        return this.background;
-    }
+	@Override
+	public IDrawable getBackground() {
+		return this.background;
+	}
 
-    @Override
-    public IDrawable getIcon() {
-        return this.icon;
-    }
+	@Override
+	public IDrawable getIcon() {
+		return this.icon;
+	}
 
-    @Override
-    public Component getTitle() {
-        return Component.translatable("gui." + RubinatedNether.MOD_ID + ".jei.fuel");
-    }
+	@Override
+	public Component getTitle() {
+		return Component.translatable("gui." + RubinatedNether.MOD_ID + ".jei.fuel");
+	}
 
-    @Override
-    public RecipeType<FuelRecipe> getRecipeType() {
-        return RECIPE_TYPE;
-    }
+	@Override
+	public RecipeType<FuelRecipe> getRecipeType() {
+		return RECIPE_TYPE;
+	}
 
-    public ResourceLocation getTexture() {
-        return TEXTURE;
-    }
+	public ResourceLocation getTexture() {
+		return TEXTURE;
+	}
 
-    @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, FuelRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 17).addItemStacks(recipe.getInput());
-    }
+	@Override
+	public void setRecipe(IRecipeLayoutBuilder builder, FuelRecipe recipe, IFocusGroup focuses) {
+		builder.addSlot(RecipeIngredientRole.INPUT, 1, 17).addItemStacks(recipe.getInput());
+	}
 
-    @Override
-    public void draw(FuelRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        int burnTime = recipe.getBurnTime();
-        IDrawableAnimated fuelIndicator = this.cachedFuelIndicator.getUnchecked(burnTime);
-        fuelIndicator.draw(guiGraphics, 1, 0);
+	@Override
+	public void draw(FuelRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+		int burnTime = recipe.getBurnTime();
+		IDrawableAnimated fuelIndicator = this.cachedFuelIndicator.getUnchecked(burnTime);
+		fuelIndicator.draw(guiGraphics, 1, 0);
 
-        Font font = Minecraft.getInstance().font;
-        Component burnTimeText = createBurnTimeText(recipe.getBurnTime(), recipe.getUsage().getName());
-        int stringWidth = font.width(burnTimeText);
-        guiGraphics.drawString(font, burnTimeText, this.background.getWidth() - stringWidth, 14, 0xFF808080, false);
-    }
+		Font font = Minecraft.getInstance().font;
+		Component burnTimeText = createBurnTimeText(recipe.getBurnTime(), recipe.getUsage().getName());
+		int stringWidth = font.width(burnTimeText);
+		guiGraphics.drawString(font, burnTimeText, this.background.getWidth() - stringWidth, 14, 0xFF808080, false);
+	}
 
-    private static Component createBurnTimeText(int burnTime, Component usage) {
-        return Component.translatable("gui.jei.category.smelting.time.seconds", burnTime / 20).append(" (").append(usage).append(")");
-    }
+	private static Component createBurnTimeText(int burnTime, Component usage) {
+		return Component.translatable("gui.jei.category.smelting.time.seconds", burnTime / 20).append(" (").append(usage).append(")");
+	}
 }

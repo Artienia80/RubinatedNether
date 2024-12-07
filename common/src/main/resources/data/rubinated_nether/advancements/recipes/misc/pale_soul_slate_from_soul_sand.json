@@ -1,47 +1,47 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_soul_sand": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "minecraft:soul_sand"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_pss": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "netherexp:pale_soul_slate"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "netherexp:pale_soul_slate_from_soul_sand"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    }
+	"has_soul_sand": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": [
+			  "minecraft:soul_sand"
+			]
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	},
+	"has_pss": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": [
+			  "netherexp:pale_soul_slate"
+			]
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	},
+	"has_the_recipe": {
+	  "conditions": {
+		"recipe": "netherexp:pale_soul_slate_from_soul_sand"
+	  },
+	  "trigger": "minecraft:recipe_unlocked"
+	}
   },
   "requirements": [
-    [
-      "has_the_recipe",
-      "has_pss",
-      "has_soul_sand"
-    ]
+	[
+	  "has_the_recipe",
+	  "has_pss",
+	  "has_soul_sand"
+	]
   ],
   "rewards": {
-    "recipes": [
-      "netherexp:pale_soul_slate_from_soul_sand"
-    ]
+	"recipes": [
+	  "netherexp:pale_soul_slate_from_soul_sand"
+	]
   }
 }

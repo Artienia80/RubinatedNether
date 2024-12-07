@@ -13,23 +13,23 @@ import uwu.serenity.critter.platform.PlatformUtils;
 
 public final class RubinatedNetherFabricClient implements ClientModInitializer {
 
-    @Override
-    public void onInitializeClient() {
-        // This entrypoint is suitable for setting up client-specific logic, such as rendering.
-        RubinatedNetherClient.clientSetup();
-        RubinatedNetherClient.registeModelLayes((location, definition) -> EntityModelLayerRegistry.registerModelLayer(location, definition::get));
-        RubinatedNetherClient.registerParticleFactories(new ParticleFactoryConsumer() {
-            @Override
-            public <T extends ParticleOptions> void register(ParticleType<T> type, PendingProvider<T> factoryProvider) {
-                ParticleFactoryRegistry.getInstance().register(type, factoryProvider::create);
-            }
+	@Override
+	public void onInitializeClient() {
+		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
+		RubinatedNetherClient.clientSetup();
+		RubinatedNetherClient.registeModelLayes((location, definition) -> EntityModelLayerRegistry.registerModelLayer(location, definition::get));
+		RubinatedNetherClient.registerParticleFactories(new ParticleFactoryConsumer() {
+			@Override
+			public <T extends ParticleOptions> void register(ParticleType<T> type, PendingProvider<T> factoryProvider) {
+				ParticleFactoryRegistry.getInstance().register(type, factoryProvider::create);
+			}
 
-            @Override
-            public <T extends ParticleOptions> void register(ParticleType<T> type, ParticleProvider<T> provider) {
-                ParticleFactoryRegistry.getInstance().register(type, provider);
-            }
-        });
+			@Override
+			public <T extends ParticleOptions> void register(ParticleType<T> type, ParticleProvider<T> provider) {
+				ParticleFactoryRegistry.getInstance().register(type, provider);
+			}
+		});
 
-        if(PlatformUtils.modLoaded("trinkets")) TrinketsRenderers.register();
-    }
+		if(PlatformUtils.modLoaded("trinkets")) TrinketsRenderers.register();
+	}
 }

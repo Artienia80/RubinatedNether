@@ -8,33 +8,33 @@ import org.jetbrains.annotations.NotNull;
 
 public class RubyAuraParticle extends RisingParticle {
 
-    protected RubyAuraParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-        super(level, x, y, z, xSpeed, ySpeed, zSpeed);
-    }
+	protected RubyAuraParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+		super(level, x, y, z, xSpeed, ySpeed, zSpeed);
+	}
 
-    @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
-    }
+	@Override
+	public ParticleRenderType getRenderType() {
+		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+	}
 
-    @Override
-    protected int getLightColor(float partialTick) {
-        return LightTexture.FULL_BRIGHT;
-    }
+	@Override
+	protected int getLightColor(float partialTick) {
+		return LightTexture.FULL_BRIGHT;
+	}
 
-    public static final class Provider implements ParticleProvider<SimpleParticleType> {
+	public static final class Provider implements ParticleProvider<SimpleParticleType> {
 
-        private final SpriteSet sprites;
+		private final SpriteSet sprites;
 
-        public Provider(SpriteSet sprites) {
-            this.sprites = sprites;
-        }
+		public Provider(SpriteSet sprites) {
+			this.sprites = sprites;
+		}
 
-        @Override
-        public @NotNull Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            RubyAuraParticle particle = new RubyAuraParticle(level, x, y, z, xSpeed, ySpeed, zSpeed);
-            particle.pickSprite(sprites);
-            return particle;
-        }
-    }
+		@Override
+		public @NotNull Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+			RubyAuraParticle particle = new RubyAuraParticle(level, x, y, z, xSpeed, ySpeed, zSpeed);
+			particle.pickSprite(sprites);
+			return particle;
+		}
+	}
 }

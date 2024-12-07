@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "item": "rubinated_nether:altar_stone"
+	"item": "rubinated_nether:altar_stone"
   },
   "result": "rubinated_nether:altar_stone_bricks"
 }

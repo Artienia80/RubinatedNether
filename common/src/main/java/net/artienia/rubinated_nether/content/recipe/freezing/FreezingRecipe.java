@@ -12,34 +12,34 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
 public class FreezingRecipe extends AbstractCookingRecipe {
-    private final ModBookCategory category;
+	private final ModBookCategory category;
 
-    public FreezingRecipe(ResourceLocation id, String group, ModBookCategory category, Ingredient ingredient, ItemStack result, float experience, int freezingTime) {
-        super(RNRecipes.FREEZING.get(), id, group, CookingBookCategory.MISC, ingredient, result, experience, freezingTime);
-        this.category = category;
-    }
+	public FreezingRecipe(ResourceLocation id, String group, ModBookCategory category, Ingredient ingredient, ItemStack result, float experience, int freezingTime) {
+		super(RNRecipes.FREEZING.get(), id, group, CookingBookCategory.MISC, ingredient, result, experience, freezingTime);
+		this.category = category;
+	}
 
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return super.getIngredients();
-    }
+	@Override
+	public NonNullList<Ingredient> getIngredients() {
+		return super.getIngredients();
+	}
 
-    public ItemStack getResult() {
-        return this.result;
-    }
+	public ItemStack getResult() {
+		return this.result;
+	}
 
-    public ModBookCategory modCategory() {
-        return this.category;
-    }
+	public ModBookCategory modCategory() {
+		return this.category;
+	}
 
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return RNRecipes.FREEZING_SERIALIZER.get();
-    }
+	@Override
+	public RecipeSerializer<?> getSerializer() {
+		return RNRecipes.FREEZING_SERIALIZER.get();
+	}
 
-    public static class Serializer extends ModCookingSerializer<FreezingRecipe> {
-        public Serializer() {
-            super(FreezingRecipe::new, 800);
-        }
-    }
+	public static class Serializer extends ModCookingSerializer<FreezingRecipe> {
+		public Serializer() {
+			super(FreezingRecipe::new, 800);
+		}
+	}
 }

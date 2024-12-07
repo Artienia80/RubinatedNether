@@ -15,58 +15,58 @@ import java.util.List;
 
 public class FreezingEMIRecipe implements EmiRecipe {
 
-    private final ResourceLocation id;
-    private final EmiIngredient input;
-    private final EmiStack output;
-    private final FreezingRecipe recipe;
+	private final ResourceLocation id;
+	private final EmiIngredient input;
+	private final EmiStack output;
+	private final FreezingRecipe recipe;
 
-    public FreezingEMIRecipe(FreezingRecipe recipe) {
-        this.recipe = recipe;
-        this.id = recipe.getId();
-        this.input = EmiIngredient.of(recipe.getIngredients().get(0));
-        this.output = EmiStack.of(recipe.getResult());
-    }
+	public FreezingEMIRecipe(FreezingRecipe recipe) {
+		this.recipe = recipe;
+		this.id = recipe.getId();
+		this.input = EmiIngredient.of(recipe.getIngredients().get(0));
+		this.output = EmiStack.of(recipe.getResult());
+	}
 
-    @Override
-    public void addWidgets(WidgetHolder widgets) {
-        int ticks = recipe.getCookingTime();
-        widgets.addFillingArrow(24, 5, ticks * 50)
-            .tooltip(List.of(ClientTooltipComponent.create(Component.translatable("emi.cooking.time", ticks / 20).getVisualOrderText())));
+	@Override
+	public void addWidgets(WidgetHolder widgets) {
+		int ticks = recipe.getCookingTime();
+		widgets.addFillingArrow(24, 5, ticks * 50)
+			.tooltip(List.of(ClientTooltipComponent.create(Component.translatable("emi.cooking.time", ticks / 20).getVisualOrderText())));
 
-        widgets.addTexture(EMIStuff.FULL_FREEZE, 1, 24);
+		widgets.addTexture(EMIStuff.FULL_FREEZE, 1, 24);
 
-        widgets.addText(Component.translatable("emi.cooking.experience", recipe.getExperience()), 26, 28, -1, true);
-        widgets.addSlot(input, 0, 4);
-        widgets.addSlot(output, 56, 0).large(true).recipeContext(this);
-    }
+		widgets.addText(Component.translatable("emi.cooking.experience", recipe.getExperience()), 26, 28, -1, true);
+		widgets.addSlot(input, 0, 4);
+		widgets.addSlot(output, 56, 0).large(true).recipeContext(this);
+	}
 
-    @Override
-    public EmiRecipeCategory getCategory() {
-        return EMIModPlugin.FREEZING;
-    }
+	@Override
+	public EmiRecipeCategory getCategory() {
+		return EMIModPlugin.FREEZING;
+	}
 
-    @Override
-    public @Nullable ResourceLocation getId() {
-        return id;
-    }
+	@Override
+	public @Nullable ResourceLocation getId() {
+		return id;
+	}
 
-    @Override
-    public List<EmiIngredient> getInputs() {
-        return List.of(input);
-    }
+	@Override
+	public List<EmiIngredient> getInputs() {
+		return List.of(input);
+	}
 
-    @Override
-    public List<EmiStack> getOutputs() {
-        return List.of(output);
-    }
+	@Override
+	public List<EmiStack> getOutputs() {
+		return List.of(output);
+	}
 
-    @Override
-    public int getDisplayWidth() {
-        return 82;
-    }
+	@Override
+	public int getDisplayWidth() {
+		return 82;
+	}
 
-    @Override
-    public int getDisplayHeight() {
-        return 38;
-    }
+	@Override
+	public int getDisplayHeight() {
+		return 38;
+	}
 }

@@ -24,46 +24,46 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class MagmaXP extends Block {
 
-    private final IntProvider xpRange;
+	private final IntProvider xpRange;
 
-    public MagmaXP(Properties pProperties) {
-        this(pProperties, ConstantInt.of(0));
-    }
+	public MagmaXP(Properties pProperties) {
+		this(pProperties, ConstantInt.of(0));
+	}
 
-    public MagmaXP(Properties pProperties, IntProvider pXpRange) {
-        super(pProperties);
-        this.xpRange = pXpRange;
-    }
+	public MagmaXP(Properties pProperties, IntProvider pXpRange) {
+		super(pProperties);
+		this.xpRange = pXpRange;
+	}
 
-    public void spawnAfterBreak(BlockState pState, ServerLevel pLevel, BlockPos pPos, ItemStack pStack, boolean pDropExperience) {
-        super.spawnAfterBreak(pState, pLevel, pPos, pStack, pDropExperience);
-        if(!EnchantmentHelper.hasSilkTouch(pStack)) {
-            tryDropExperience(pLevel, pPos, pStack, xpRange);
-        }
-    }
+	public void spawnAfterBreak(BlockState pState, ServerLevel pLevel, BlockPos pPos, ItemStack pStack, boolean pDropExperience) {
+		super.spawnAfterBreak(pState, pLevel, pPos, pStack, pDropExperience);
+		if(!EnchantmentHelper.hasSilkTouch(pStack)) {
+			tryDropExperience(pLevel, pPos, pStack, xpRange);
+		}
+	}
 
-    public void stepOn(Level pLevel, BlockPos pPos, BlockState pState, Entity pEntity) {
-        if (!pEntity.isSteppingCarefully() && pEntity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity)pEntity)) {
-            pEntity.hurt(pLevel.damageSources().hotFloor(), 1.0F);
-        }
+	public void stepOn(Level pLevel, BlockPos pPos, BlockState pState, Entity pEntity) {
+		if (!pEntity.isSteppingCarefully() && pEntity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity)pEntity)) {
+			pEntity.hurt(pLevel.damageSources().hotFloor(), 1.0F);
+		}
 
-        super.stepOn(pLevel, pPos, pState, pEntity);
-    }
+		super.stepOn(pLevel, pPos, pState, pEntity);
+	}
 
-    public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-        BubbleColumnBlock.updateColumn(pLevel, pPos.above(), pState);
-    }
+	public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+		BubbleColumnBlock.updateColumn(pLevel, pPos.above(), pState);
+	}
 
-    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
-        if (pFacing == Direction.UP && pFacingState.is(Blocks.WATER)) {
-            pLevel.scheduleTick(pCurrentPos, this, 20);
-        }
+	public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
+		if (pFacing == Direction.UP && pFacingState.is(Blocks.WATER)) {
+			pLevel.scheduleTick(pCurrentPos, this, 20);
+		}
 
-        return super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
-    }
+		return super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
+	}
 
-    public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving) {
-        pLevel.scheduleTick(pPos, this, 20);
-    }
+	public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving) {
+		pLevel.scheduleTick(pPos, this, 20);
+	}
 }
 

@@ -1,14 +1,14 @@
 {
   "values": [
-    "#minecraft:small_flowers",
-    "minecraft:grass",
-    "minecraft:fern",
-    "minecraft:dead_bush",
-    "minecraft:crimson_roots",
-    "minecraft:warped_roots",
-    "minecraft:brown_mushroom",
-    "minecraft:red_mushroom",
-    "minecraft:bamboo_sapling"
+	"#minecraft:small_flowers",
+	"minecraft:grass",
+	"minecraft:fern",
+	"minecraft:dead_bush",
+	"minecraft:crimson_roots",
+	"minecraft:warped_roots",
+	"minecraft:brown_mushroom",
+	"minecraft:red_mushroom",
+	"minecraft:bamboo_sapling"
 
   ]
 }

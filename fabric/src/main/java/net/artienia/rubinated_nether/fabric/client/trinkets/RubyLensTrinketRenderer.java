@@ -11,8 +11,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class RubyLensTrinketRenderer extends RubyLensRenderer implements TrinketRenderer {
 
-    @Override
-    public void render(ItemStack itemStack, SlotReference slotReference, EntityModel<? extends LivingEntity> entityModel, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, LivingEntity livingEntity, float v, float v1, float v2, float v3, float v4, float v5) {
-        this.renderInternal(entityModel, poseStack, multiBufferSource, i);
-    }
+	@Override
+	public void render(ItemStack itemStack, SlotReference slotReference, EntityModel<? extends LivingEntity> entityModel, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, LivingEntity livingEntity, float v, float v1, float v2, float v3, float v4, float v5) {
+		this.renderInternal(entityModel, poseStack, multiBufferSource, i);
+	}
 }

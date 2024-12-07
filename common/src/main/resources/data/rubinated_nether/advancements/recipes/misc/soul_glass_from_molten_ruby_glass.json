@@ -1,47 +1,47 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_soul_glass": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "netherexp:soul_glass"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_mrg": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "rubinated_nether:molten_ruby_glass"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "netherexp:soul_glass_from_molten_ruby_glass"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    }
+	"has_soul_glass": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": [
+			  "netherexp:soul_glass"
+			]
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	},
+	"has_mrg": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": [
+			  "rubinated_nether:molten_ruby_glass"
+			]
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	},
+	"has_the_recipe": {
+	  "conditions": {
+		"recipe": "netherexp:soul_glass_from_molten_ruby_glass"
+	  },
+	  "trigger": "minecraft:recipe_unlocked"
+	}
   },
   "requirements": [
-    [
-      "has_soul_glass",
-      "has_mrg",
-      "has_the_recipe"
-    ]
+	[
+	  "has_soul_glass",
+	  "has_mrg",
+	  "has_the_recipe"
+	]
   ],
   "rewards": {
-    "recipes": [
-      "netherexp:soul_glass_from_molten_ruby_glass"
-    ]
+	"recipes": [
+	  "netherexp:soul_glass_from_molten_ruby_glass"
+	]
   }
 }

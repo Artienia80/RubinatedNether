@@ -4,21 +4,21 @@
   "cookingtime": 20,
   "experience": 0,
   "ingredient": {
-    "item": "netherexp:music_disc_buckshot_wonderland"
+	"item": "netherexp:music_disc_buckshot_wonderland"
   },
   "result": "rubinated_nether:shimmer_disc",
   "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "netherexp"
-      ]
-    }
+	{
+	  "condition": "fabric:all_mods_loaded",
+	  "values": [
+		"netherexp"
+	  ]
+	}
   ],
   "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "netherexp"
-    }
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "netherexp"
+	}
   ]
 }

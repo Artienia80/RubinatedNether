@@ -2,17 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "S": {
-      "item": "rubinated_nether:altar_stone_bricks"
-    }
+	"S": {
+	  "item": "rubinated_nether:altar_stone_bricks"
+	}
   },
   "pattern": [
-    "SS",
-    "SS"
+	"SS",
+	"SS"
   ],
   "result": {
-    "count": 4,
-    "item": "rubinated_nether:altar_stone_tiles"
+	"count": 4,
+	"item": "rubinated_nether:altar_stone_tiles"
   },
   "show_notification": true
 }

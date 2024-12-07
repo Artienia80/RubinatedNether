@@ -18,30 +18,30 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class RunestoneBlock extends Block {
 
-    protected static final VoxelShape SHAPE_BOTTOM = Block.box(0.0, 0.0, 0.0, 16.0, 10.0, 16.0);
-    protected static final VoxelShape SHAPE_MIDDLE = Block.box(1.0, 10.0, 1.0, 15.0, 24.0, 15.0);
-    protected static final VoxelShape SHAPE_TOP = Block.box(0.0, 24.0, 0.0, 16.0, 32.0, 16.0);
+	protected static final VoxelShape SHAPE_BOTTOM = Block.box(0.0, 0.0, 0.0, 16.0, 10.0, 16.0);
+	protected static final VoxelShape SHAPE_MIDDLE = Block.box(1.0, 10.0, 1.0, 15.0, 24.0, 15.0);
+	protected static final VoxelShape SHAPE_TOP = Block.box(0.0, 24.0, 0.0, 16.0, 32.0, 16.0);
 
-    protected static final VoxelShape SHAPE_HALF = Shapes.or(SHAPE_BOTTOM, SHAPE_MIDDLE);
-    protected static final VoxelShape SHAPE = Shapes.or(SHAPE_HALF, SHAPE_TOP);
+	protected static final VoxelShape SHAPE_HALF = Shapes.or(SHAPE_BOTTOM, SHAPE_MIDDLE);
+	protected static final VoxelShape SHAPE = Shapes.or(SHAPE_HALF, SHAPE_TOP);
 
 
-    public RunestoneBlock(BlockBehaviour.Properties properties) {
-        super(properties);
-    }
+	public RunestoneBlock(BlockBehaviour.Properties properties) {
+		super(properties);
+	}
 
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		return SHAPE;
+	}
 
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
-        } else {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-                player.openMenu((BarrelBlockEntity)blockEntity);
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (level.isClientSide) {
+			return InteractionResult.SUCCESS;
+		} else {
+			BlockEntity blockEntity = level.getBlockEntity(pos);
+				player.openMenu((BarrelBlockEntity)blockEntity);
 
-            return InteractionResult.CONSUME;
-        }
-    }
+			return InteractionResult.CONSUME;
+		}
+	}
 }

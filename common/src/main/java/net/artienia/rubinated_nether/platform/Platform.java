@@ -8,25 +8,25 @@ import net.minecraft.world.level.block.Block;
 
 public class Platform {
 
-    // Forge and fabric do this differently so we need to make a platform class
-    @ExpectPlatform
-    public static boolean hasCraftingRemainder(ItemStack stack) {
-        throw new AssertionError();
-    }
+	// Forge and fabric do this differently so we need to make a platform class
+	@ExpectPlatform
+	public static boolean hasCraftingRemainder(ItemStack stack) {
+		throw new AssertionError();
+	}
 
-    @ExpectPlatform
-    public static ItemStack getCraftingRemainder(ItemStack stack) {
-        throw new AssertionError();
-    }
+	@ExpectPlatform
+	public static ItemStack getCraftingRemainder(ItemStack stack) {
+		throw new AssertionError();
+	}
 
-    @ExpectPlatform
-    public static boolean rubyLensEquipped(Player player) {
-        return false;
-    }
+	@ExpectPlatform
+	public static boolean rubyLensEquipped(Player player) {
+		return false;
+	}
 
-    @ExpectPlatform
-    public static TagKey<Block> getGlassTag() {
-        throw new AssertionError();
-    }
+	@ExpectPlatform
+	public static TagKey<Block> getGlassTag() {
+		throw new AssertionError();
+	}
 
 }

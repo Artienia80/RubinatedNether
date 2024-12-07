@@ -11,15 +11,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Gui.class)
 public abstract class GuiMixin {
 
-    @Inject(
-        method = "render",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/CameraType;isFirstPerson()Z",
-            shift = At.Shift.AFTER
-        )
-    )
-    public void renderRubyLens(GuiGraphics guiGraphics, float partialTick, CallbackInfo ci) {
-        RubyLensOverlay.renderHud((Gui) (Object) this, guiGraphics);
-    }
+	@Inject(
+		method = "render",
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/client/CameraType;isFirstPerson()Z",
+			shift = At.Shift.AFTER
+		)
+	)
+	public void renderRubyLens(GuiGraphics guiGraphics, float partialTick, CallbackInfo ci) {
+		RubyLensOverlay.renderHud((Gui) (Object) this, guiGraphics);
+	}
 }

@@ -1,17 +1,17 @@
 {
   "key": {
-    "#reactor_topsoil" : "minecraft:air",
-    "#reactor_subsoil" : "minecraft:air",
-    "#reactor_stone" : "minecraft:air",
+	"#reactor_topsoil" : "minecraft:air",
+	"#reactor_subsoil" : "minecraft:air",
+	"#reactor_stone" : "minecraft:air",
 
-    "#reactor_plants" : "minecraft:air",
+	"#reactor_plants" : "minecraft:air",
 
-    "#reactor_logs": "minecraft:air",
-    "#reactor_wood": "minecraft:air",
-    "#reactor_stripped_logs": "minecraft:air",
-    "#reactor_stripped_wood": "minecraft:air",
-    "#reactor_leaves" : "minecraft:air",
+	"#reactor_logs": "minecraft:air",
+	"#reactor_wood": "minecraft:air",
+	"#reactor_stripped_logs": "minecraft:air",
+	"#reactor_stripped_wood": "minecraft:air",
+	"#reactor_leaves" : "minecraft:air",
 
-    "#reactor_planks": "minecraft:air"
+	"#reactor_planks": "minecraft:air"
   }
 }

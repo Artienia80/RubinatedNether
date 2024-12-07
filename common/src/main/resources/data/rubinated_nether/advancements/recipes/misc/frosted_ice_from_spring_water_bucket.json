@@ -1,27 +1,27 @@
 {
   "parent": "minecraft:recipes/root",
   "rewards": {
-    "recipes": [
-      "rubinated_nether:spelunkery/frosted_ice_from_spring_water_bucket"
-    ]
+	"recipes": [
+	  "rubinated_nether:spelunkery/frosted_ice_from_spring_water_bucket"
+	]
   },
   "criteria": {
-    "has_item": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "spelunkery:spring_water_bucket"
-            ]
-          }
-        ]
-      }
-    }
+	"has_item": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"items": [
+			  "spelunkery:spring_water_bucket"
+			]
+		  }
+		]
+	  }
+	}
   },
   "requirements": [
-    [
-      "has_item"
-    ]
+	[
+	  "has_item"
+	]
   ]
 }

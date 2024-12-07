@@ -4,7 +4,7 @@
   "cookingtime": 400,
   "experience": 1.0,
   "ingredient": {
-    "item": "minecraft:magma_cream"
+	"item": "minecraft:magma_cream"
   },
   "result": "minecraft:slime_ball"
 }

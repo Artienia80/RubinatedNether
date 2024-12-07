@@ -2,12 +2,12 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "rubinated_nether:ruby"
-    }
+	{
+	  "item": "rubinated_nether:ruby"
+	}
   ],
   "result": {
-    "item": "rubinated_nether:ruby_shard",
-    "count": 9
+	"item": "rubinated_nether:ruby_shard",
+	"count": 9
   }
 }

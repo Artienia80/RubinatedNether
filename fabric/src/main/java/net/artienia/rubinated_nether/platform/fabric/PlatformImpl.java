@@ -12,27 +12,27 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
 public class PlatformImpl {
-    public static boolean hasCraftingRemainder(ItemStack stack) {
-        return stack.getItem().hasCraftingRemainingItem();
-    }
+	public static boolean hasCraftingRemainder(ItemStack stack) {
+		return stack.getItem().hasCraftingRemainingItem();
+	}
 
-    public static ItemStack getCraftingRemainder(ItemStack stack) {
-        return stack.getItem().getRecipeRemainder(stack);
-    }
+	public static ItemStack getCraftingRemainder(ItemStack stack) {
+		return stack.getItem().getRecipeRemainder(stack);
+	}
 
-    public static boolean rubyLensEquipped(Player player) {
-        return FabricLoader.getInstance().isModLoaded("trinkets") ? rubyLensEquippedTrinkets(player) : player.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get());
-    }
+	public static boolean rubyLensEquipped(Player player) {
+		return FabricLoader.getInstance().isModLoaded("trinkets") ? rubyLensEquippedTrinkets(player) : player.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get());
+	}
 
-    private static boolean rubyLensEquippedTrinkets(Player player) {
-        Item rubyLens = RNItems.RUBY_LENS.get();
-        return TrinketsApi.getTrinketComponent(player)
-            .map(component -> component.isEquipped(rubyLens))
-            .orElse(false)
-            || player.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get());
-    }
+	private static boolean rubyLensEquippedTrinkets(Player player) {
+		Item rubyLens = RNItems.RUBY_LENS.get();
+		return TrinketsApi.getTrinketComponent(player)
+			.map(component -> component.isEquipped(rubyLens))
+			.orElse(false)
+			|| player.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get());
+	}
 
-    public static TagKey<Block> getGlassTag() {
-        return ConventionalBlockTags.GLASS_BLOCKS;
-    }
+	public static TagKey<Block> getGlassTag() {
+		return ConventionalBlockTags.GLASS_BLOCKS;
+	}
 }

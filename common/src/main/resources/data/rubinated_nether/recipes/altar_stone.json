@@ -2,21 +2,21 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "pattern": [
-    "###",
-    "#A#",
-    "###"
+	"###",
+	"#A#",
+	"###"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:smooth_basalt"
-    },
-    "A": {
-      "item": "rubinated_nether:bleeding_obsidian"
-    }
+	"#": {
+	  "item": "minecraft:smooth_basalt"
+	},
+	"A": {
+	  "item": "rubinated_nether:bleeding_obsidian"
+	}
   },
 
   "result": {
-    "item": "rubinated_nether:altar_stone",
-    "count": 8
+	"item": "rubinated_nether:altar_stone",
+	"count": 8
   }
 }

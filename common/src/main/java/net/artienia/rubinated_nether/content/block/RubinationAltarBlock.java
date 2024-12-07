@@ -44,88 +44,88 @@ import uwu.serenity.critter.utils.BEBlock;
 
 public class RubinationAltarBlock extends BaseEntityBlock implements BEBlock<RubinationAltarBlockEntity> {
 
-    protected static final VoxelShape SHAPE_BOTTOM = Block.box(2.0, 0.0, 2.0, 14.0, 4.0, 14.0);
-    protected static final VoxelShape SHAPE_TOP = Block.box(0.0, 4.0, 0.0, 16.0, 14.0, 16.0);
-    protected static final VoxelShape SHAPE = Shapes.or(SHAPE_BOTTOM, SHAPE_TOP);
+	protected static final VoxelShape SHAPE_BOTTOM = Block.box(2.0, 0.0, 2.0, 14.0, 4.0, 14.0);
+	protected static final VoxelShape SHAPE_TOP = Block.box(0.0, 4.0, 0.0, 16.0, 14.0, 16.0);
+	protected static final VoxelShape SHAPE = Shapes.or(SHAPE_BOTTOM, SHAPE_TOP);
 
-    public static final List<BlockPos> RUNESTONE_OFFSETS = BlockPos.betweenClosedStream(-3, 0, -3, 3, 1, 3).filter((blockPos) -> {
-        return Math.abs(blockPos.getX()) > 1 || Math.abs(blockPos.getZ()) > 1;
-    }).map(BlockPos::immutable).toList();
+	public static final List<BlockPos> RUNESTONE_OFFSETS = BlockPos.betweenClosedStream(-3, 0, -3, 3, 1, 3).filter((blockPos) -> {
+		return Math.abs(blockPos.getX()) > 1 || Math.abs(blockPos.getZ()) > 1;
+	}).map(BlockPos::immutable).toList();
 
 
-    public RubinationAltarBlock(BlockBehaviour.Properties properties) {
-        super(properties);
-    }
+	public RubinationAltarBlock(BlockBehaviour.Properties properties) {
+		super(properties);
+	}
 
-    public static boolean isValidBookShelf(Level level, BlockPos tablePos, BlockPos offsetPos) {
-        return level.getBlockState(tablePos.offset(offsetPos)).is(RNBlocks.RUNESTONE.get()) && level.getBlockState(tablePos.offset(offsetPos.getX() / 2, offsetPos.getY(), offsetPos.getZ() / 2)).is(BlockTags.ENCHANTMENT_POWER_TRANSMITTER);
-    }
+	public static boolean isValidBookShelf(Level level, BlockPos tablePos, BlockPos offsetPos) {
+		return level.getBlockState(tablePos.offset(offsetPos)).is(RNBlocks.RUNESTONE.get()) && level.getBlockState(tablePos.offset(offsetPos.getX() / 2, offsetPos.getY(), offsetPos.getZ() / 2)).is(BlockTags.ENCHANTMENT_POWER_TRANSMITTER);
+	}
 
-    public boolean useShapeForLightOcclusion(BlockState state) {
-        return false;
-    }
+	public boolean useShapeForLightOcclusion(BlockState state) {
+		return false;
+	}
 
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		return SHAPE;
+	}
 
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        super.animateTick(state, level, pos, random);
-        Iterator<BlockPos> var5 = RUNESTONE_OFFSETS.iterator();
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+		super.animateTick(state, level, pos, random);
+		Iterator<BlockPos> var5 = RUNESTONE_OFFSETS.iterator();
 
-        while(var5.hasNext()) {
-            BlockPos blockPos = (BlockPos)var5.next();
-            if (random.nextInt(1) == 0 && isValidBookShelf(level, pos, blockPos)) {
-                level.addParticle(RNParticleTypes.RUBINATE.get(), (double)pos.getX() + 0.5, (double)pos.getY() + 2.0, (double)pos.getZ() + 0.5, (double)((float)blockPos.getX() + random.nextFloat()) - 0.5, (double)((float)blockPos.getY() - random.nextFloat() - 0.5F), (double)((float)blockPos.getZ() + random.nextFloat()) - 0.5);
-            }
-        }
+		while(var5.hasNext()) {
+			BlockPos blockPos = (BlockPos)var5.next();
+			if (random.nextInt(1) == 0 && isValidBookShelf(level, pos, blockPos)) {
+				level.addParticle(RNParticleTypes.RUBINATE.get(), (double)pos.getX() + 0.5, (double)pos.getY() + 2.0, (double)pos.getZ() + 0.5, (double)((float)blockPos.getX() + random.nextFloat()) - 0.5, (double)((float)blockPos.getY() - random.nextFloat() - 0.5F), (double)((float)blockPos.getZ() + random.nextFloat()) - 0.5);
+			}
+		}
 
-    }
+	}
 
-    public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
-    }
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.MODEL;
+	}
 
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new EnchantmentTableBlockEntity(pos, state);
-    }
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new EnchantmentTableBlockEntity(pos, state);
+	}
 
-    @Nullable
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return level.isClientSide ? createTickerHelper(blockEntityType, BlockEntityType.ENCHANTING_TABLE, EnchantmentTableBlockEntity::bookAnimationTick) : null;
-    }
+	@Nullable
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+		return level.isClientSide ? createTickerHelper(blockEntityType, BlockEntityType.ENCHANTING_TABLE, EnchantmentTableBlockEntity::bookAnimationTick) : null;
+	}
 
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
-        } else {
-            player.openMenu(state.getMenuProvider(level, pos));
-            return InteractionResult.CONSUME;
-        }
-    }
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (level.isClientSide) {
+			return InteractionResult.SUCCESS;
+		} else {
+			player.openMenu(state.getMenuProvider(level, pos));
+			return InteractionResult.CONSUME;
+		}
+	}
 
-    @Nullable
-    public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
+	@Nullable
+	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+		BlockEntity blockEntity = level.getBlockEntity(pos);
 
 		Component component = ((Nameable)blockEntity).getDisplayName();
 		return new SimpleMenuProvider((i, inventory, player) -> {
 			return new EnchantmentMenu(i, inventory, ContainerLevelAccess.create(level, pos));
 		},
 				component);
-    }
+	}
 
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
-        return false;
-    }
+	public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+		return false;
+	}
 
-    @Override
-    public BlockEntityType<? extends RubinationAltarBlockEntity> getBlockEntityType() {
-        return RNBlockEntities.RUBINATION_ALTAR.get();
-    }
+	@Override
+	public BlockEntityType<? extends RubinationAltarBlockEntity> getBlockEntityType() {
+		return RNBlockEntities.RUBINATION_ALTAR.get();
+	}
 
-    @Override
-    public Class<? extends RubinationAltarBlockEntity> getBlockEntityClass() {
-        return RubinationAltarBlockEntity.class;
-    }
+	@Override
+	public Class<? extends RubinationAltarBlockEntity> getBlockEntityClass() {
+		return RubinationAltarBlockEntity.class;
+	}
 }

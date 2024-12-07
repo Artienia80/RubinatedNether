@@ -17,33 +17,33 @@ import java.util.Set;
 @Mixin(Level.class)
 public abstract class LevelMixin implements UpdateListenerHolder {
 
-    @Shadow public abstract BlockState getBlockState(BlockPos pos);
+	@Shadow public abstract BlockState getBlockState(BlockPos pos);
 
-    @Unique
-    private final Long2ReferenceMap<Set<BlockUpdateListener>> uwu$updateListeners = new Long2ReferenceOpenHashMap<>();
+	@Unique
+	private final Long2ReferenceMap<Set<BlockUpdateListener>> uwu$updateListeners = new Long2ReferenceOpenHashMap<>();
 
-    @Override
-    public void rn$addUpdateListener(BlockUpdateListener listener) {
-        listener.getListenedPositions()
-            .mapToLong(BlockPos::asLong)
-            .forEach(l -> uwu$updateListeners.computeIfAbsent(l, $ -> new ObjectArraySet<>()).add(listener));
-    }
+	@Override
+	public void rn$addUpdateListener(BlockUpdateListener listener) {
+		listener.getListenedPositions()
+			.mapToLong(BlockPos::asLong)
+			.forEach(l -> uwu$updateListeners.computeIfAbsent(l, $ -> new ObjectArraySet<>()).add(listener));
+	}
 
-    @Override
-    public void rn$handleBlockUpdate(BlockPos pos) {
-        long longPos = pos.asLong();
-        Set<BlockUpdateListener> listeners = uwu$updateListeners.get(longPos);
-        if(listeners != null) {
-            Iterator<BlockUpdateListener> iterator = listeners.iterator();
-            while (iterator.hasNext()) {
-                BlockUpdateListener listener = iterator.next();
-                if(listener.shouldRemove()) {
-                    iterator.remove();
-                } else {
-                    listener.handleBlockUpdate((Level) (Object) this, pos, getBlockState(pos));
-                }
-            }
-            if(listeners.isEmpty()) uwu$updateListeners.remove(longPos);
-        }
-    }
+	@Override
+	public void rn$handleBlockUpdate(BlockPos pos) {
+		long longPos = pos.asLong();
+		Set<BlockUpdateListener> listeners = uwu$updateListeners.get(longPos);
+		if(listeners != null) {
+			Iterator<BlockUpdateListener> iterator = listeners.iterator();
+			while (iterator.hasNext()) {
+				BlockUpdateListener listener = iterator.next();
+				if(listener.shouldRemove()) {
+					iterator.remove();
+				} else {
+					listener.handleBlockUpdate((Level) (Object) this, pos, getBlockState(pos));
+				}
+			}
+			if(listeners.isEmpty()) uwu$updateListeners.remove(longPos);
+		}
+	}
 }

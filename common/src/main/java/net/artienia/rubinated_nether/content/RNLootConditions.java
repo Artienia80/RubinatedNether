@@ -9,11 +9,11 @@ import uwu.serenity.critter.api.generic.Registrar;
 
 public final class RNLootConditions {
 
-    public static final Registrar<LootItemConditionType> CONDITIONS = RubinatedNether.REGISTRIES.getRegistrar(Registries.LOOT_CONDITION_TYPE);
+	public static final Registrar<LootItemConditionType> CONDITIONS = RubinatedNether.REGISTRIES.getRegistrar(Registries.LOOT_CONDITION_TYPE);
 
-    public static final RegistryEntry<LootItemConditionType> ITEM_TIER = CONDITIONS.entry("item_tier", ItemTierLootCondition::createType).register();
+	public static final RegistryEntry<LootItemConditionType> ITEM_TIER = CONDITIONS.entry("item_tier", ItemTierLootCondition::createType).register();
 
-    public static void register() {
-        CONDITIONS.register();
-    }
+	public static void register() {
+		CONDITIONS.register();
+	}
 }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "rubinated_nether:block/altar_stone_tiles"
+	"all": "rubinated_nether:block/altar_stone_tiles"
   }
 }

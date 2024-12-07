@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "rubinated_nether:block/chiseled_altar_stone_bricks"
-    }
+	"": {
+	  "model": "rubinated_nether:block/chiseled_altar_stone_bricks"
+	}
   }
 }

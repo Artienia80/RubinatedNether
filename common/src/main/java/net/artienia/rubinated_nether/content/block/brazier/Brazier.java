@@ -16,38 +16,38 @@ import java.util.stream.Stream;
 
 public class Brazier extends Block implements BEBlock<BrazierBlockEntity> {
 
-    protected static final VoxelShape SHAPE = Stream.of(
-        box(0, 0, 0, 16, 2, 16),
-        box(2, 2, 2, 14, 5, 14),
-        box(1, 5, 1, 15, 8, 15),
-        box(1, 6, 1, 15, 16,15)
-    ).reduce(Shapes::or).get();
+	protected static final VoxelShape SHAPE = Stream.of(
+		box(0, 0, 0, 16, 2, 16),
+		box(2, 2, 2, 14, 5, 14),
+		box(1, 5, 1, 15, 8, 15),
+		box(1, 6, 1, 15, 16,15)
+	).reduce(Shapes::or).get();
 
-    protected static final VoxelShape COLLISION_SHAPE =
-        Shapes.join(SHAPE, box(1.5, 6, 1.5, 14.5, 16, 14.5), BooleanOp.NOT_SAME);
+	protected static final VoxelShape COLLISION_SHAPE =
+		Shapes.join(SHAPE, box(1.5, 6, 1.5, 14.5, 16, 14.5), BooleanOp.NOT_SAME);
 
-    public Brazier(Properties properties) {
-        super(properties);
-    }
+	public Brazier(Properties properties) {
+		super(properties);
+	}
 
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		return SHAPE;
+	}
 
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return COLLISION_SHAPE;
-    }
+	@Override
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		return COLLISION_SHAPE;
+	}
 
-    @Override
-    public BlockEntityType<? extends BrazierBlockEntity> getBlockEntityType() {
-        return RNBlockEntities.BRAZIER.get();
-    }
+	@Override
+	public BlockEntityType<? extends BrazierBlockEntity> getBlockEntityType() {
+		return RNBlockEntities.BRAZIER.get();
+	}
 
-    @Override
-    public Class<? extends BrazierBlockEntity> getBlockEntityClass() {
-        return BrazierBlockEntity.class;
-    }
+	@Override
+	public Class<? extends BrazierBlockEntity> getBlockEntityClass() {
+		return BrazierBlockEntity.class;
+	}
 }
 

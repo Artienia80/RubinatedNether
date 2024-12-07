@@ -16,44 +16,44 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(AbstractFurnaceBlockEntity.class)
 public interface AbstractFurnaceBlockEntityAccessor {
-    @Accessor("quickCheck")
-    RecipeManager.CachedCheck<Container, ? extends AbstractCookingRecipe> rubinatedNether$getQuickCheck();
+	@Accessor("quickCheck")
+	RecipeManager.CachedCheck<Container, ? extends AbstractCookingRecipe> rubinatedNether$getQuickCheck();
 
-    @Invoker
-    boolean callCanBurn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, NonNullList<ItemStack> stacks, int stackSize);
+	@Invoker
+	boolean callCanBurn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, NonNullList<ItemStack> stacks, int stackSize);
 
-    @Accessor("litTime")
-    int rubinatedNether$getLitTime();
+	@Accessor("litTime")
+	int rubinatedNether$getLitTime();
 
-    @Accessor("litTime")
-    void rubinatedNether$setLitTime(int litTime);
+	@Accessor("litTime")
+	void rubinatedNether$setLitTime(int litTime);
 
-    @Accessor("litDuration")
-    void rubinatedNether$setLitDuration(int litDuration);
+	@Accessor("litDuration")
+	void rubinatedNether$setLitDuration(int litDuration);
 
-    @Accessor("cookingProgress")
-    int rubinatedNether$getCookingProgress();
+	@Accessor("cookingProgress")
+	int rubinatedNether$getCookingProgress();
 
-    @Accessor("cookingProgress")
-    void rubinatedNether$setCookingProgress(int cookingProgress);
+	@Accessor("cookingProgress")
+	void rubinatedNether$setCookingProgress(int cookingProgress);
 
-    @Accessor("cookingTotalTime")
-    int rubinatedNether$getCookingTotalTime();
+	@Accessor("cookingTotalTime")
+	int rubinatedNether$getCookingTotalTime();
 
-    @Accessor("cookingTotalTime")
-    void rubinatedNether$setCookingTotalTime(int cookingTotalTime);
+	@Accessor("cookingTotalTime")
+	void rubinatedNether$setCookingTotalTime(int cookingTotalTime);
 
-    @Invoker
-    boolean callIsLit();
+	@Invoker
+	boolean callIsLit();
 
-    @Invoker
-    static int callGetTotalCookTime(Level level, AbstractFurnaceBlockEntity blockEntity) {
-        throw new AssertionError();
-    }
+	@Invoker
+	static int callGetTotalCookTime(Level level, AbstractFurnaceBlockEntity blockEntity) {
+		throw new AssertionError();
+	}
 
-    @Accessor("items")
-    NonNullList<ItemStack> rubinatedNether$getItems();
+	@Accessor("items")
+	NonNullList<ItemStack> rubinatedNether$getItems();
 
-    @Invoker
-    int callGetBurnDuration(ItemStack pFuel);
+	@Invoker
+	int callGetBurnDuration(ItemStack pFuel);
 }

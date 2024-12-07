@@ -2,21 +2,21 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "pattern": [
-    "###",
-    "#R#",
-    "###"
+	"###",
+	"#R#",
+	"###"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:crying_obsidian"
-    },
-    "R": {
-      "item": "rubinated_nether:ruby"
-    }
+	"#": {
+	  "item": "minecraft:crying_obsidian"
+	},
+	"R": {
+	  "item": "rubinated_nether:ruby"
+	}
   },
 
   "result": {
-    "item": "rubinated_nether:bleeding_obsidian",
-    "count": 8
+	"item": "rubinated_nether:bleeding_obsidian",
+	"count": 8
   }
 }

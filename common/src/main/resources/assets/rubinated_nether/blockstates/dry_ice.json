@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "rubinated_nether:block/dry_ice"
-    }
+	"": {
+	  "model": "rubinated_nether:block/dry_ice"
+	}
   }
 }

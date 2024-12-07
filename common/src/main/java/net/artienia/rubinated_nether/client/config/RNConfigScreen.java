@@ -10,17 +10,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class RNConfigScreen extends ConfigScreen {
 
-    private static final ResourceLocation BACKROUND = RubinatedNether.id("textures/block/ruby_block.png");
+	private static final ResourceLocation BACKROUND = RubinatedNether.id("textures/block/ruby_block.png");
 
-    public RNConfigScreen(@Nullable Screen lastScreen, @Nullable ConfigScreen screen, ResourcefulConfig config) {
-        super(lastScreen, screen, config);
-    }
+	public RNConfigScreen(@Nullable Screen lastScreen, @Nullable ConfigScreen screen, ResourcefulConfig config) {
+		super(lastScreen, screen, config);
+	}
 
-    public static RNConfigScreen create(@Nullable Screen parent) {
-        ResourcefulConfig config = RubinatedNether.CONFIGURATOR.getConfig(RNConfig.class);
-        if(config == null) return null;
-        return new RNConfigScreen(parent, null, config);
-    }
+	public static RNConfigScreen create(@Nullable Screen parent) {
+		ResourcefulConfig config = RubinatedNether.CONFIGURATOR.getConfig(RNConfig.class);
+		if(config == null) return null;
+		return new RNConfigScreen(parent, null, config);
+	}
 
-    // TODO: Ruby bg somehow
+	// TODO: Ruby bg somehow
 }

@@ -4,13 +4,13 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
-    "client.EntityRenderDispatcherMixin",
-    "client.GuiMixin"
+	"client.EntityRenderDispatcherMixin",
+	"client.GuiMixin"
   ],
   "injectors": {
-    "defaultRequire": 1
+	"defaultRequire": 1
   },
   "mixins": [
-    "PiglinAiMixin"
+	"PiglinAiMixin"
   ]
 }

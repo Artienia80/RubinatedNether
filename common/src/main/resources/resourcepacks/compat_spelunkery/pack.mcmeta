@@ -1,6 +1,6 @@
 {
   "pack": {
-    "description": "Change smithing template texture to fit with the mod's custom recipe",
-    "pack_format": 15
+	"description": "Change smithing template texture to fit with the mod's custom recipe",
+	"pack_format": 15
   }
 }

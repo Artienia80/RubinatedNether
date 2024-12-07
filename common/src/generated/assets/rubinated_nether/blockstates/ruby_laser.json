@@ -1,964 +1,964 @@
 {
   "variants": {
-    "facing=down,power=0,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=0,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=1,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=1,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=10,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=10,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=11,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=11,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=12,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=12,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=13,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=13,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=14,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=14,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=15,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=15,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=2,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=2,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=3,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=3,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=4,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=4,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=5,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=5,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=6,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=6,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=7,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=7,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=8,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=8,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=9,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=down,power=9,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 180,
-      "y": 0
-    },
-    "facing=east,power=0,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=0,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=1,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=1,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=10,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=10,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=11,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=11,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=12,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=12,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=13,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=13,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=14,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=14,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=15,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=15,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=2,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=2,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=3,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=3,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=4,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=4,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=5,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=5,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=6,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=6,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=7,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=7,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=8,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=8,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=9,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,power=9,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 90
-    },
-    "facing=north,power=0,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=0,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=1,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=1,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=10,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=10,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=11,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=11,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=12,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=12,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=13,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=13,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=14,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=14,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=15,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=15,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=2,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=2,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=3,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=3,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=4,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=4,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=5,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=5,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=6,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=6,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=7,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=7,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=8,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=8,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=9,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=north,power=9,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 0
-    },
-    "facing=south,power=0,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=0,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=1,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=1,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=10,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=10,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=11,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=11,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=12,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=12,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=13,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=13,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=14,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=14,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=15,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=15,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=2,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=2,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=3,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=3,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=4,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=4,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=5,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=5,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=6,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=6,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=7,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=7,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=8,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=8,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=9,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,power=9,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 180
-    },
-    "facing=up,power=0,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=0,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=1,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=1,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=10,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=10,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=11,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=11,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=12,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=12,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=13,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=13,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=14,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=14,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=15,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=15,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=2,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=2,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=3,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=3,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=4,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=4,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=5,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=5,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=6,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=6,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=7,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=7,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=8,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=8,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=9,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=up,power=9,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 0,
-      "y": 0
-    },
-    "facing=west,power=0,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=0,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=1,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=1,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=10,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=10,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=11,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=11,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=12,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=12,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=13,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=13,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=14,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=14,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=15,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=15,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=2,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=2,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=3,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=3,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=4,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=4,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=5,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=5,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=6,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=6,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=7,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=7,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=8,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=8,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=9,tinted=false": {
-      "model": "rubinated_nether:block/ruby_laser_on",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,power=9,tinted=true": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
-      "x": 90,
-      "y": 270
-    }
+	"facing=down,power=0,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=0,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=1,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=1,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=10,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=10,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=11,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=11,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=12,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=12,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=13,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=13,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=14,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=14,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=15,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=15,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=2,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=2,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=3,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=3,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=4,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=4,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=5,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=5,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=6,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=6,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=7,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=7,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=8,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=8,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=9,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=down,power=9,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 180,
+	  "y": 0
+	},
+	"facing=east,power=0,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=0,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=1,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=1,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=10,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=10,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=11,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=11,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=12,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=12,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=13,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=13,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=14,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=14,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=15,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=15,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=2,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=2,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=3,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=3,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=4,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=4,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=5,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=5,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=6,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=6,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=7,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=7,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=8,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=8,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=9,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=east,power=9,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 90
+	},
+	"facing=north,power=0,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=0,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=1,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=1,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=10,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=10,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=11,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=11,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=12,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=12,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=13,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=13,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=14,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=14,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=15,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=15,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=2,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=2,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=3,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=3,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=4,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=4,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=5,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=5,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=6,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=6,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=7,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=7,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=8,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=8,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=9,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=north,power=9,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 0
+	},
+	"facing=south,power=0,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=0,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=1,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=1,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=10,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=10,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=11,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=11,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=12,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=12,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=13,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=13,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=14,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=14,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=15,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=15,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=2,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=2,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=3,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=3,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=4,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=4,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=5,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=5,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=6,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=6,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=7,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=7,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=8,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=8,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=9,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=south,power=9,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 180
+	},
+	"facing=up,power=0,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=0,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=1,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=1,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=10,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=10,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=11,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=11,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=12,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=12,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=13,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=13,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=14,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=14,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=15,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=15,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=2,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=2,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=3,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=3,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=4,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=4,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=5,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=5,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=6,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=6,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=7,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=7,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=8,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=8,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=9,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=up,power=9,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 0,
+	  "y": 0
+	},
+	"facing=west,power=0,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=0,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=1,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=1,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=10,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=10,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=11,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=11,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=12,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=12,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=13,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=13,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=14,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=14,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=15,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=15,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=2,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=2,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=3,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=3,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=4,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=4,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=5,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=5,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=6,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=6,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=7,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=7,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=8,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=8,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=9,tinted=false": {
+	  "model": "rubinated_nether:block/ruby_laser_on",
+	  "x": 90,
+	  "y": 270
+	},
+	"facing=west,power=9,tinted=true": {
+	  "model": "rubinated_nether:block/ruby_laser_tinted_on",
+	  "x": 90,
+	  "y": 270
+	}
   }
 }

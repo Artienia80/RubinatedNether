@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "rubinated_nether:item/runestone"
+	"layer0": "rubinated_nether:item/runestone"
   }
 }

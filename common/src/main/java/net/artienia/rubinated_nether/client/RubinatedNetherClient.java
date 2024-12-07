@@ -24,30 +24,30 @@ import java.util.function.Supplier;
 
 @Environment(EnvType.CLIENT)
 public class RubinatedNetherClient {
-    public static void clientSetup() {
-        RNModCompat.clientSetup();
-    }
+	public static void clientSetup() {
+		RNModCompat.clientSetup();
+	}
 
-    public static void registeModelLayes(BiConsumer<ModelLayerLocation, Supplier<LayerDefinition>> layers) {
-        layers.accept(RubyLensModel.LAYER_LOCATION, RubyLensModel::createBodyLayer);
-    }
+	public static void registeModelLayes(BiConsumer<ModelLayerLocation, Supplier<LayerDefinition>> layers) {
+		layers.accept(RubyLensModel.LAYER_LOCATION, RubyLensModel::createBodyLayer);
+	}
 
-    @SuppressWarnings("unchecked")
-    public static void registerEntityLayers(EntityRenderDispatcher dispatcher, EntityModelSet models, Function<String, PlayerRenderer> skinGetter) {
-        dispatcher.renderers.forEach((type, renderer) -> {
-            if(renderer instanceof LivingEntityRenderer<?,?> livingRenderer && livingRenderer.getModel() instanceof HeadedModel) {
-                livingRenderer.addLayer(new RubyLensRenderLayer(livingRenderer, models, livingRenderer.getModel()));
-            }
-        });
+	@SuppressWarnings("unchecked")
+	public static void registerEntityLayers(EntityRenderDispatcher dispatcher, EntityModelSet models, Function<String, PlayerRenderer> skinGetter) {
+		dispatcher.renderers.forEach((type, renderer) -> {
+			if(renderer instanceof LivingEntityRenderer<?,?> livingRenderer && livingRenderer.getModel() instanceof HeadedModel) {
+				livingRenderer.addLayer(new RubyLensRenderLayer(livingRenderer, models, livingRenderer.getModel()));
+			}
+		});
 
-        PlayerRenderer defaultSkin = skinGetter.apply("default");
-        PlayerRenderer slimSkin = skinGetter.apply("slim");
-        defaultSkin.addLayer(new RubyLensRenderLayer<>(defaultSkin, models, defaultSkin.getModel()));
-        slimSkin.addLayer(new RubyLensRenderLayer<>(slimSkin, models, slimSkin.getModel()));
-    }
+		PlayerRenderer defaultSkin = skinGetter.apply("default");
+		PlayerRenderer slimSkin = skinGetter.apply("slim");
+		defaultSkin.addLayer(new RubyLensRenderLayer<>(defaultSkin, models, defaultSkin.getModel()));
+		slimSkin.addLayer(new RubyLensRenderLayer<>(slimSkin, models, slimSkin.getModel()));
+	}
 
-    public static void registerParticleFactories(ParticleFactoryConsumer registrar) {
-        registrar.register(RNParticleTypes.RUBY_AURA.get(), RubyAuraParticle.Provider::new);
-        registrar.register(RNParticleTypes.RUBINATE.get(), RubinationAltarParticle.Provider::new);
-    }
+	public static void registerParticleFactories(ParticleFactoryConsumer registrar) {
+		registrar.register(RNParticleTypes.RUBY_AURA.get(), RubyAuraParticle.Provider::new);
+		registrar.register(RNParticleTypes.RUBINATE.get(), RubinationAltarParticle.Provider::new);
+	}
 }

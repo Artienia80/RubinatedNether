@@ -17,44 +17,44 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class FreezerBlock extends AbstractFurnaceBlock {
 
-    public FreezerBlock(Properties pProperties) {
-        super(pProperties);
-    }
+	public FreezerBlock(Properties pProperties) {
+		super(pProperties);
+	}
 
-    @Override
-    public RenderShape getRenderShape(BlockState pState) {
-        return RenderShape.MODEL;
-    }
+	@Override
+	public RenderShape getRenderShape(BlockState pState) {
+		return RenderShape.MODEL;
+	}
 
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return RNBlockEntities.FREEZER.create(pos, state);
-    }
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return RNBlockEntities.FREEZER.create(pos, state);
+	}
 
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return level.isClientSide() ? null : createTickerHelper(blockEntityType, RNBlockEntities.FREEZER.get(), AbstractFreezerBlockEntity::serverTick);
-    }
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+		return level.isClientSide() ? null : createTickerHelper(blockEntityType, RNBlockEntities.FREEZER.get(), AbstractFreezerBlockEntity::serverTick);
+	}
 
-    @Override
-    protected void openContainer(Level level, BlockPos pos, Player player) {
-        if (!level.isClientSide()) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof FreezerBlockEntity freezerBlockEntity) {
-                player.openMenu(freezerBlockEntity);
-            }
-        }
-    }
+	@Override
+	protected void openContainer(Level level, BlockPos pos, Player player) {
+		if (!level.isClientSide()) {
+			BlockEntity blockEntity = level.getBlockEntity(pos);
+			if (blockEntity instanceof FreezerBlockEntity freezerBlockEntity) {
+				player.openMenu(freezerBlockEntity);
+			}
+		}
+	}
 
-    @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        if (state.getValue(LIT)) {
-            double x = pos.getX() + 0.5;
-            double y = pos.getY() + 1.0 + (random.nextFloat() * 6.0) / 16.0;
-            double z = pos.getZ() + 0.5;
-            level.addParticle(ParticleTypes.SNOWFLAKE, x, y, z, 0.0, 0.0, 0.0);
-        }
-    }
+	@Override
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+		if (state.getValue(LIT)) {
+			double x = pos.getX() + 0.5;
+			double y = pos.getY() + 1.0 + (random.nextFloat() * 6.0) / 16.0;
+			double z = pos.getZ() + 0.5;
+			level.addParticle(ParticleTypes.SNOWFLAKE, x, y, z, 0.0, 0.0, 0.0);
+		}
+	}
 }
 
 

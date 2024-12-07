@@ -1,27 +1,27 @@
 {
   "parent": "minecraft:recipes/root",
   "rewards": {
-    "recipes": [
-      "rubinated_nether:spelunkery/rough_ruby_from_block"
-    ]
+	"recipes": [
+	  "rubinated_nether:spelunkery/rough_ruby_from_block"
+	]
   },
   "criteria": {
-    "has_item": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "rubinated_nether:rough_ruby_block"
-            ]
-          }
-        ]
-      }
-    }
+	"has_item": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"items": [
+			  "rubinated_nether:rough_ruby_block"
+			]
+		  }
+		]
+	  }
+	}
   },
   "requirements": [
-    [
-      "has_item"
-    ]
+	[
+	  "has_item"
+	]
   ]
 }

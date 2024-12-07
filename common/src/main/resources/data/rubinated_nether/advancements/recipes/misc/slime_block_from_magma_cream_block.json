@@ -1,34 +1,34 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_magma_cream": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "netherexp:magma_cream_block"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "netherexp:slime_block_from_magma_cream_block"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    }
+	"has_magma_cream": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": [
+			  "netherexp:magma_cream_block"
+			]
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	},
+	"has_the_recipe": {
+	  "conditions": {
+		"recipe": "netherexp:slime_block_from_magma_cream_block"
+	  },
+	  "trigger": "minecraft:recipe_unlocked"
+	}
   },
   "requirements": [
-    [
-      "has_the_recipe",
-      "has_magma_cream"
-    ]
+	[
+	  "has_the_recipe",
+	  "has_magma_cream"
+	]
   ],
   "rewards": {
-    "recipes": [
-      "netherexp:slime_block_from_magma_cream_block"
-    ]
+	"recipes": [
+	  "netherexp:slime_block_from_magma_cream_block"
+	]
   }
 }

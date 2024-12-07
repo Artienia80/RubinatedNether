@@ -7,12 +7,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
 public class AetherCompat implements CompatHandler {
-    @Override
-    public void init() {}
+	@Override
+	public void init() {}
 
-    @Override
-    public void setup() {
-        Block icestone = BuiltInRegistries.BLOCK.get(new ResourceLocation("aether", "icestone"));
-        FreezerBlockEntity.addItemFreezingTime(icestone, 600);
-    }
+	@Override
+	public void setup() {
+		Block icestone = BuiltInRegistries.BLOCK.get(new ResourceLocation("aether", "icestone"));
+		FreezerBlockEntity.addItemFreezingTime(icestone, 600);
+	}
 }

@@ -4,21 +4,21 @@
   "cookingtime": 400,
   "experience": 1.0,
   "ingredient": {
-    "item": "minecraft:stone_slab"
+	"item": "minecraft:stone_slab"
   },
   "result": "immersive_weathering:snowy_stone_slab",
   "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "immersive_weathering"
-      ]
-    }
+	{
+	  "condition": "fabric:all_mods_loaded",
+	  "values": [
+		"immersive_weathering"
+	  ]
+	}
   ],
   "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "immersive_weathering"
-    }
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "immersive_weathering"
+	}
   ]
 }

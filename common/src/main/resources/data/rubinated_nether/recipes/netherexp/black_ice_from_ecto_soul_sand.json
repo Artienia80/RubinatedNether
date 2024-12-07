@@ -4,21 +4,21 @@
   "cookingtime": 1200,
   "experience": 1.0,
   "ingredient": {
-    "item": "netherexp:ecto_soul_sand"
+	"item": "netherexp:ecto_soul_sand"
   },
   "result": "netherexp:black_ice",
   "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "netherexp"
-      ]
-    }
+	{
+	  "condition": "fabric:all_mods_loaded",
+	  "values": [
+		"netherexp"
+	  ]
+	}
   ],
   "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "netherexp"
-    }
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "netherexp"
+	}
   ]
 }

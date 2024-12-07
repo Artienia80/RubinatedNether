@@ -16,22 +16,22 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class RubyLensRenderLayer<T extends LivingEntity, M extends EntityModel<T> & HeadedModel> extends RenderLayer<T, M> {
 
-    public static final ResourceLocation RUBY_LENS_TEXTURE = RubinatedNether.id("textures/models/wearable/ruby_lens.png");
+	public static final ResourceLocation RUBY_LENS_TEXTURE = RubinatedNether.id("textures/models/wearable/ruby_lens.png");
 
-    private final M baseModel;
-    private final RubyLensModel<T> lensModel;
+	private final M baseModel;
+	private final RubyLensModel<T> lensModel;
 
-    public RubyLensRenderLayer(RenderLayerParent<T, M> renderer, EntityModelSet models, M baseModel) {
-        super(renderer);
-        this.baseModel = baseModel;
-        lensModel = new RubyLensModel<>(models.bakeLayer(RubyLensModel.LAYER_LOCATION));
-    }
+	public RubyLensRenderLayer(RenderLayerParent<T, M> renderer, EntityModelSet models, M baseModel) {
+		super(renderer);
+		this.baseModel = baseModel;
+		lensModel = new RubyLensModel<>(models.bakeLayer(RubyLensModel.LAYER_LOCATION));
+	}
 
-    @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
-        if(livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get())) {
-            lensModel.copyHeadData(baseModel.getHead());
-            lensModel.renderToBuffer(poseStack, buffer.getBuffer(lensModel.renderType(RUBY_LENS_TEXTURE)), packedLight, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
-        }
-    }
+	@Override
+	public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
+		if(livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get())) {
+			lensModel.copyHeadData(baseModel.getHead());
+			lensModel.renderToBuffer(poseStack, buffer.getBuffer(lensModel.renderType(RUBY_LENS_TEXTURE)), packedLight, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
 }

@@ -8,9 +8,9 @@ import java.util.stream.Stream;
 
 public interface BlockUpdateListener {
 
-    void handleBlockUpdate(Level view, BlockPos pos, BlockState state);
+	void handleBlockUpdate(Level view, BlockPos pos, BlockState state);
 
-    boolean shouldRemove();
+	boolean shouldRemove();
 
-    Stream<BlockPos> getListenedPositions();
+	Stream<BlockPos> getListenedPositions();
 }

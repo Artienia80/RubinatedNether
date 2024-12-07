@@ -20,27 +20,27 @@ import java.util.function.Function;
 @EmiEntrypoint
 public class EMIModPlugin implements EmiPlugin {
 
-    public static final EmiRecipeCategory FREEZING = new EmiRecipeCategory(RubinatedNether.id("freezing"), EmiStack.of(RNBlocks.FREEZER.get()));
-    public static final EmiRecipeCategory FREEZER_FUEL = new EmiRecipeCategory(RubinatedNether.id("freezer_fuel"), EMIStuff.FREEZE_ICON);
+	public static final EmiRecipeCategory FREEZING = new EmiRecipeCategory(RubinatedNether.id("freezing"), EmiStack.of(RNBlocks.FREEZER.get()));
+	public static final EmiRecipeCategory FREEZER_FUEL = new EmiRecipeCategory(RubinatedNether.id("freezer_fuel"), EMIStuff.FREEZE_ICON);
 
-    @Override
-    public void register(EmiRegistry registry) {
-        registry.addCategory(FREEZING);
-        registry.addCategory(FREEZER_FUEL);
-        registry.addWorkstation(FREEZING, EmiStack.of(RNBlocks.FREEZER.get()));
-        registry.addWorkstation(FREEZER_FUEL, EmiStack.of(RNBlocks.FREEZER.get()));
+	@Override
+	public void register(EmiRegistry registry) {
+		registry.addCategory(FREEZING);
+		registry.addCategory(FREEZER_FUEL);
+		registry.addWorkstation(FREEZING, EmiStack.of(RNBlocks.FREEZER.get()));
+		registry.addWorkstation(FREEZER_FUEL, EmiStack.of(RNBlocks.FREEZER.get()));
 
-        addAll(registry, RNRecipes.FREEZING.get(), FreezingEMIRecipe::new);
+		addAll(registry, RNRecipes.FREEZING.get(), FreezingEMIRecipe::new);
 
-        for(FuelRecipe recipe : FreezerFuelRecipeMaker.getFuelRecipes()) {
-            registry.addRecipe(new FreezerFuelEMIRecipe(recipe));
-        }
-    }
+		for(FuelRecipe recipe : FreezerFuelRecipeMaker.getFuelRecipes()) {
+			registry.addRecipe(new FreezerFuelEMIRecipe(recipe));
+		}
+	}
 
-    private <C extends Container, T extends Recipe<C>> void addAll(EmiRegistry registry, RecipeType<T> type, Function<T, EmiRecipe> constructor) {
-        for (T recipe : registry.getRecipeManager().getAllRecipesFor(type)) {
-            registry.addRecipe(constructor.apply(recipe));
-        }
-    }
+	private <C extends Container, T extends Recipe<C>> void addAll(EmiRegistry registry, RecipeType<T> type, Function<T, EmiRecipe> constructor) {
+		for (T recipe : registry.getRecipeManager().getAllRecipesFor(type)) {
+			registry.addRecipe(constructor.apply(recipe));
+		}
+	}
 
 }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "rubinated_nether:item/rough_ruby"
+	"layer0": "rubinated_nether:item/rough_ruby"
   }
 }

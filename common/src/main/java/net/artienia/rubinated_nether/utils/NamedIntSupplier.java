@@ -4,8 +4,8 @@ import java.util.function.IntSupplier;
 
 public record NamedIntSupplier(String name, IntSupplier provider) implements IntSupplier {
 
-    @Override
-    public int getAsInt() {
-        return provider.getAsInt();
-    }
+	@Override
+	public int getAsInt() {
+		return provider.getAsInt();
+	}
 }

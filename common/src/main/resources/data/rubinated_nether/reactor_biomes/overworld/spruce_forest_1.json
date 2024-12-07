@@ -1,18 +1,18 @@
 {
   "weight": 95,
   "key": {
-    "#reactor_topsoil" : "minecraft:grass_block",
-    "#reactor_subsoil" : "minecraft:dirt",
-    "#reactor_stone" : "minecraft:stone",
+	"#reactor_topsoil" : "minecraft:grass_block",
+	"#reactor_subsoil" : "minecraft:dirt",
+	"#reactor_stone" : "minecraft:stone",
 
-    "#reactor_plants" : "minecraft:fern",
+	"#reactor_plants" : "minecraft:fern",
 
-    "#reactor_logs": "minecraft:spruce_log",
-    "#reactor_wood": "minecraft:spruce_wood",
-    "#reactor_stripped_logs": "minecraft:stripped_spruce_log",
-    "#reactor_stripped_wood": "minecraft:stripped_spruce_wood",
-    "#reactor_leaves" : "minecraft:spruce_leaves",
+	"#reactor_logs": "minecraft:spruce_log",
+	"#reactor_wood": "minecraft:spruce_wood",
+	"#reactor_stripped_logs": "minecraft:stripped_spruce_log",
+	"#reactor_stripped_wood": "minecraft:stripped_spruce_wood",
+	"#reactor_leaves" : "minecraft:spruce_leaves",
 
-    "#reactor_planks": "minecraft:spruce_planks"
+	"#reactor_planks": "minecraft:spruce_planks"
   }
 }

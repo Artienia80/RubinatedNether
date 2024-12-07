@@ -1,10 +1,10 @@
 {
   "values": [
-    "#minecraft:base_stone_overworld",
-    "#minecraft:base_stone_nether",
-    "minecraft:soul_soil",
-    "minecraft:end_stone",
-    "minecraft:sandstone",
-    "minecraft:red_sandstone"
+	"#minecraft:base_stone_overworld",
+	"#minecraft:base_stone_nether",
+	"minecraft:soul_soil",
+	"minecraft:end_stone",
+	"minecraft:sandstone",
+	"minecraft:red_sandstone"
   ]
 }

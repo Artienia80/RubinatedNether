@@ -2,29 +2,29 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "ABA",
-    "ACA",
-    "DED"
+	"ABA",
+	"ACA",
+	"DED"
   ],
   "key": {
-    "A": {
-      "item": "rubinated_nether:altar_stone"
-    },
-    "B": {
-      "item": "rubinated_nether:ruby"
-    },
-    "C": {
-      "item": "rubinated_nether:bleeding_obsidian"
-    },
-    "D": {
-      "item": "minecraft:gold_ingot"
-    },
-    "E": {
-      "item": "minecraft:obsidian"
-    }
+	"A": {
+	  "item": "rubinated_nether:altar_stone"
+	},
+	"B": {
+	  "item": "rubinated_nether:ruby"
+	},
+	"C": {
+	  "item": "rubinated_nether:bleeding_obsidian"
+	},
+	"D": {
+	  "item": "minecraft:gold_ingot"
+	},
+	"E": {
+	  "item": "minecraft:obsidian"
+	}
   },
 
   "result": {
-    "item": "rubinated_nether:rubination_altar"
+	"item": "rubinated_nether:rubination_altar"
   }
 }

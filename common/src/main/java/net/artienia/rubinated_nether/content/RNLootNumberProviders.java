@@ -9,12 +9,12 @@ import uwu.serenity.critter.api.generic.Registrar;
 
 public final class RNLootNumberProviders {
 
-    public static final Registrar<LootNumberProviderType> NUMBER_PROVIDERS = RubinatedNether.REGISTRIES.getRegistrar(Registries.LOOT_NUMBER_PROVIDER_TYPE);
+	public static final Registrar<LootNumberProviderType> NUMBER_PROVIDERS = RubinatedNether.REGISTRIES.getRegistrar(Registries.LOOT_NUMBER_PROVIDER_TYPE);
 
-    public static final RegistryEntry<LootNumberProviderType> CONFIG_UNIFORM = NUMBER_PROVIDERS.entry("config_uniform", () -> new LootNumberProviderType(ConfigUniform.SERIALIZER))
-        .register();
+	public static final RegistryEntry<LootNumberProviderType> CONFIG_UNIFORM = NUMBER_PROVIDERS.entry("config_uniform", () -> new LootNumberProviderType(ConfigUniform.SERIALIZER))
+		.register();
 
-    public static void register() {
-        NUMBER_PROVIDERS.register();
-    }
+	public static void register() {
+		NUMBER_PROVIDERS.register();
+	}
 }

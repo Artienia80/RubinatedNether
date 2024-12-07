@@ -5,12 +5,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class RubyCurrency extends Item implements PiglinCurrency {
-    public RubyCurrency(Properties properties) {
-        super(properties);
-    }
+	public RubyCurrency(Properties properties) {
+		super(properties);
+	}
 
-    @Override
-    public boolean isPiglinCurrency(ItemStack stack) {
-        return true;
-    }
+	@Override
+	public boolean isPiglinCurrency(ItemStack stack) {
+		return true;
+	}
 }

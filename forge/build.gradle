@@ -1,105 +1,105 @@
 plugins {
-    id 'com.github.johnrengelman.shadow'
+	id 'com.github.johnrengelman.shadow'
 }
 
 loom {
-    Project common = project(":common")
-    accessWidenerPath = common.file("src/main/resources/rubinatednether.accesswidener")
+	Project common = project(":common")
+	accessWidenerPath = common.file("src/main/resources/rubinatednether.accesswidener")
 
-    forge {
-        convertAccessWideners = true
-        extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
-        mixinConfig "rubinated_nether.mixins.json"
-    }
+	forge {
+		convertAccessWideners = true
+		extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
+		mixinConfig "rubinated_nether.mixins.json"
+	}
 
 }
 
 sourceSets {
-    main {
-        // Platform specific generated files
-        resources {
-            srcDirs += [
-                    'src/main/generated'
-            ]
-            exclude ".cache/**"
-            exclude "**/.fabric"
-            exclude "**/.forge"
+	main {
+		// Platform specific generated files
+		resources {
+			srcDirs += [
+					'src/main/generated'
+			]
+			exclude ".cache/**"
+			exclude "**/.fabric"
+			exclude "**/.forge"
 
-        }
-    }
+		}
+	}
 }
 
 architectury {
-    platformSetupLoomIde()
-    forge()
+	platformSetupLoomIde()
+	forge()
 }
 
 configurations {
-    common {
-        canBeResolved = true
-        canBeConsumed = false
-    }
-    compileClasspath.extendsFrom common
-    runtimeClasspath.extendsFrom common
-    developmentForge.extendsFrom common
+	common {
+		canBeResolved = true
+		canBeConsumed = false
+	}
+	compileClasspath.extendsFrom common
+	runtimeClasspath.extendsFrom common
+	developmentForge.extendsFrom common
 
-    // Files in this configuration will be bundled into your mod using the Shadow plugin.
-    // Don't use the `shadow` configuration from the plugin itself as it's meant for excluding files.
-    shadowBundle {
-        canBeResolved = true
-        canBeConsumed = false
-    }
+	// Files in this configuration will be bundled into your mod using the Shadow plugin.
+	// Don't use the `shadow` configuration from the plugin itself as it's meant for excluding files.
+	shadowBundle {
+		canBeResolved = true
+		canBeConsumed = false
+	}
 }
 
 repositories {
-    maven {
-        // location of the maven that hosts JEI files before January 2023
-        name = "Progwml6's maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        // location of the maven that hosts JEI files since January 2023
-        name = "Jared's maven"
-        url = "https://maven.blamejared.com/"
-    }
-    maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.dev"
-    }
+	maven {
+		// location of the maven that hosts JEI files before January 2023
+		name = "Progwml6's maven"
+		url = "https://dvs1.progwml6.com/files/maven/"
+	}
+	maven {
+		// location of the maven that hosts JEI files since January 2023
+		name = "Jared's maven"
+		url = "https://maven.blamejared.com/"
+	}
+	maven {
+		// location of a maven mirror for JEI files, as a fallback
+		name = "ModMaven"
+		url = "https://modmaven.dev"
+	}
 }
 
 dependencies {
-    forge "net.minecraftforge:forge:$rootProject.forge_version"
+	forge "net.minecraftforge:forge:$rootProject.forge_version"
 
-    // MixinExtras only has to be included on forge, fabric has it bundled
-    compileOnly annotationProcessor("io.github.llamalad7:mixinextras-common:${rootProject.mixin_extras_version}")
-    implementation include("io.github.llamalad7:mixinextras-forge:${rootProject.mixin_extras_version}")
+	// MixinExtras only has to be included on forge, fabric has it bundled
+	compileOnly annotationProcessor("io.github.llamalad7:mixinextras-common:${rootProject.mixin_extras_version}")
+	implementation include("io.github.llamalad7:mixinextras-forge:${rootProject.mixin_extras_version}")
 
-    // Curios
-    modImplementation("top.theillusivec4.curios:curios-forge:${rootProject.curios_version}+${rootProject.minecraft_version}")
+	// Curios
+	modImplementation("top.theillusivec4.curios:curios-forge:${rootProject.curios_version}+${rootProject.minecraft_version}")
 
-    // Spelunkery
-    modImplementation ("maven.modrinth:moonlight:forge_1.20-2.13.22")
-    modCompileOnly ("maven.modrinth:moonlight:forge_1.20-2.13.22")
-    modLocalRuntime ("maven.modrinth:moonlight:forge_1.20-2.13.22")
-    modApi("maven.modrinth:moonlight:forge_1.20-2.13.22")
-    modRuntimeOnly("maven.modrinth:moonlight:forge_1.20-2.13.22")
+	// Spelunkery
+	modImplementation ("maven.modrinth:moonlight:forge_1.20-2.13.22")
+	modCompileOnly ("maven.modrinth:moonlight:forge_1.20-2.13.22")
+	modLocalRuntime ("maven.modrinth:moonlight:forge_1.20-2.13.22")
+	modApi("maven.modrinth:moonlight:forge_1.20-2.13.22")
+	modRuntimeOnly("maven.modrinth:moonlight:forge_1.20-2.13.22")
 
-    modCompileOnly("maven.modrinth:spelunkery:1.20.1-0.3.13-forge")
-    modRuntimeOnly("maven.modrinth:spelunkery:1.20.1-0.3.13-forge")
-    modRuntimeOnly("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+	modCompileOnly("maven.modrinth:spelunkery:1.20.1-0.3.13-forge")
+	modRuntimeOnly("maven.modrinth:spelunkery:1.20.1-0.3.13-forge")
+	modRuntimeOnly("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
-    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
-    shadowBundle project(path: ':common', configuration: 'transformProductionForge')
+	common(project(path: ':common', configuration: 'namedElements')) { transitive false }
+	shadowBundle project(path: ':common', configuration: 'transformProductionForge')
 }
 
 shadowJar {
-    configurations = [project.configurations.shadowBundle]
-    archiveClassifier = 'dev-shadow'
+	configurations = [project.configurations.shadowBundle]
+	archiveClassifier = 'dev-shadow'
 }
 
 remapJar {
-    inputFile.set shadowJar.archiveFile
-    dependsOn shadowJar
+	inputFile.set shadowJar.archiveFile
+	dependsOn shadowJar
 }

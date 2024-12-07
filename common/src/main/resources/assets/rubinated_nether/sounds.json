@@ -1,10 +1,10 @@
 {
   "shimmer_disc": {
-    "sounds": [
-      {
-        "name": "rubinated_nether:shimmer_disc",
-        "stream": true
-      }
-    ]
+	"sounds": [
+	  {
+		"name": "rubinated_nether:shimmer_disc",
+		"stream": true
+	  }
+	]
   }
 }

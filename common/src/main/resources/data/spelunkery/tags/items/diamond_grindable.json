@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    {
-      "id": "rubinated_nether:rough_ruby",
-      "required": false
-    }
+	{
+	  "id": "rubinated_nether:rough_ruby",
+	  "required": false
+	}
   ]
 }

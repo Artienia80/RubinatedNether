@@ -11,15 +11,15 @@ import net.minecraft.resources.ResourceLocation;
 
 public class RubyLensOverlay {
 
-    private static final ResourceLocation RUBY_OVERLAY = RubinatedNether.id("textures/misc/ruby_overlay.png");
-    private static final ResourceLocation RUBY_OVERLAY_FAST = RubinatedNether.id("textures/misc/ruby_overlay_fast.png");
+	private static final ResourceLocation RUBY_OVERLAY = RubinatedNether.id("textures/misc/ruby_overlay.png");
+	private static final ResourceLocation RUBY_OVERLAY_FAST = RubinatedNether.id("textures/misc/ruby_overlay_fast.png");
 
-    public static void renderHud(Gui gui, GuiGraphics graphics) {
-        if(RNConfig.Client.rubyLensOpacity == 0) return;
-        Minecraft minecraft = Minecraft.getInstance();
-        LocalPlayer player = minecraft.player;
-        if(player != null && minecraft.options.getCameraType().isFirstPerson() && Platform.rubyLensEquipped(player)) {
-            gui.renderTextureOverlay(graphics, Minecraft.useFancyGraphics() ? RUBY_OVERLAY : RUBY_OVERLAY_FAST, RNConfig.Client.rubyLensOpacity);
-        }
-    }
+	public static void renderHud(Gui gui, GuiGraphics graphics) {
+		if(RNConfig.Client.rubyLensOpacity == 0) return;
+		Minecraft minecraft = Minecraft.getInstance();
+		LocalPlayer player = minecraft.player;
+		if(player != null && minecraft.options.getCameraType().isFirstPerson() && Platform.rubyLensEquipped(player)) {
+			gui.renderTextureOverlay(graphics, Minecraft.useFancyGraphics() ? RUBY_OVERLAY : RUBY_OVERLAY_FAST, RNConfig.Client.rubyLensOpacity);
+		}
+	}
 }

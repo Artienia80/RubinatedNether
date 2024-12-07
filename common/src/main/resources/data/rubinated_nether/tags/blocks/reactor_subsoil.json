@@ -1,14 +1,14 @@
 {
   "values": [
-    "minecraft:dirt",
-    "minecraft:coarse_dirt",
-    "minecraft:rooted_dirt",
-    "minecraft:mud",
-    "minecraft:sand",
-    "minecraft:red_sand",
-    "#minecraft:terracotta",
-    "minecraft:gravel",
-    "minecraft:clay",
-    "minecraft:soul_sand"
+	"minecraft:dirt",
+	"minecraft:coarse_dirt",
+	"minecraft:rooted_dirt",
+	"minecraft:mud",
+	"minecraft:sand",
+	"minecraft:red_sand",
+	"#minecraft:terracotta",
+	"minecraft:gravel",
+	"minecraft:clay",
+	"minecraft:soul_sand"
   ]
 }

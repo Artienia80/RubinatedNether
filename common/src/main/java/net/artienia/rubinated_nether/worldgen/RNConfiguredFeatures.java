@@ -15,32 +15,32 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTes
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 
 public class RNConfiguredFeatures {
-    public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_RUBY_ORE_KEY = registerKey("nether_ruby_ore");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> MOLTEN_RUBY_ORE_KEY = registerKey("molten_ruby_ore");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> RUBINATED_BLACKSTONE_KEY = registerKey("rubinated_blackstone");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_RUBY_ORE_KEY = registerKey("nether_ruby_ore");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> MOLTEN_RUBY_ORE_KEY = registerKey("molten_ruby_ore");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> RUBINATED_BLACKSTONE_KEY = registerKey("rubinated_blackstone");
 
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
-        RuleTest netherrackReplacables = new BlockMatchTest(Blocks.NETHERRACK);
-        RuleTest magmaReplacables = new BlockMatchTest(Blocks.MAGMA_BLOCK);
-        RuleTest gildedReplacables = new BlockMatchTest(Blocks.GILDED_BLACKSTONE);
+	public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+		RuleTest netherrackReplacables = new BlockMatchTest(Blocks.NETHERRACK);
+		RuleTest magmaReplacables = new BlockMatchTest(Blocks.MAGMA_BLOCK);
+		RuleTest gildedReplacables = new BlockMatchTest(Blocks.GILDED_BLACKSTONE);
 
-        register(context, NETHER_RUBY_ORE_KEY, Feature.ORE, new OreConfiguration(netherrackReplacables,
-                RNBlocks.NETHER_RUBY_ORE.get().defaultBlockState(), 3));
-        register(context, MOLTEN_RUBY_ORE_KEY, Feature.ORE, new OreConfiguration(magmaReplacables,
-                RNBlocks.MOLTEN_RUBY_ORE.get().defaultBlockState(), 5));
-        register(context, RUBINATED_BLACKSTONE_KEY, Feature.ORE, new OreConfiguration(gildedReplacables,
-                RNBlocks.RUBINATED_BLACKSTONE.get().defaultBlockState(), 25));
+		register(context, NETHER_RUBY_ORE_KEY, Feature.ORE, new OreConfiguration(netherrackReplacables,
+				RNBlocks.NETHER_RUBY_ORE.get().defaultBlockState(), 3));
+		register(context, MOLTEN_RUBY_ORE_KEY, Feature.ORE, new OreConfiguration(magmaReplacables,
+				RNBlocks.MOLTEN_RUBY_ORE.get().defaultBlockState(), 5));
+		register(context, RUBINATED_BLACKSTONE_KEY, Feature.ORE, new OreConfiguration(gildedReplacables,
+				RNBlocks.RUBINATED_BLACKSTONE.get().defaultBlockState(), 25));
 
-    }
+	}
 
 
-    public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(RubinatedNether.MOD_ID, name));
-    }
+	public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
+		return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(RubinatedNether.MOD_ID, name));
+	}
 
-    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context,
-                                                                                          ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
-        context.register(key, new ConfiguredFeature<>(feature, configuration));
-    }
+	private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context,
+																						  ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
+		context.register(key, new ConfiguredFeature<>(feature, configuration));
+	}
 }

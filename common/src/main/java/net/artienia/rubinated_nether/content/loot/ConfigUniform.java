@@ -15,56 +15,56 @@ import java.util.function.IntSupplier;
 
 public record ConfigUniform(NamedIntSupplier min, NamedIntSupplier max) implements NumberProvider {
 
-    public static final net.minecraft.world.level.storage.loot.Serializer<ConfigUniform> SERIALIZER = new Serializer();
+	public static final net.minecraft.world.level.storage.loot.Serializer<ConfigUniform> SERIALIZER = new Serializer();
 
-    public static ConfigUniform of(String minField, String maxField) {
-        return new ConfigUniform(
-            new NamedIntSupplier(minField, ofConfigField(minField)),
-            new NamedIntSupplier(maxField, ofConfigField(maxField))
-        );
-    }
+	public static ConfigUniform of(String minField, String maxField) {
+		return new ConfigUniform(
+			new NamedIntSupplier(minField, ofConfigField(minField)),
+			new NamedIntSupplier(maxField, ofConfigField(maxField))
+		);
+	}
 
-    @Override
-    public float getFloat(LootContext lootContext) {
-        return lootContext.getRandom().nextIntBetweenInclusive(min.getAsInt(), max.getAsInt());
-    }
+	@Override
+	public float getFloat(LootContext lootContext) {
+		return lootContext.getRandom().nextIntBetweenInclusive(min.getAsInt(), max.getAsInt());
+	}
 
-    @Override
-    public LootNumberProviderType getType() {
-        return RNLootNumberProviders.CONFIG_UNIFORM.get();
-    }
+	@Override
+	public LootNumberProviderType getType() {
+		return RNLootNumberProviders.CONFIG_UNIFORM.get();
+	}
 
-    private static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<ConfigUniform> {
+	private static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<ConfigUniform> {
 
-        @Override
-        public void serialize(JsonObject json, ConfigUniform value, JsonSerializationContext serializationContext) {
-            json.addProperty("min_field", value.min.name());
-            json.addProperty("max_field", value.max.name());
-        }
+		@Override
+		public void serialize(JsonObject json, ConfigUniform value, JsonSerializationContext serializationContext) {
+			json.addProperty("min_field", value.min.name());
+			json.addProperty("max_field", value.max.name());
+		}
 
-        @Override
-        public ConfigUniform deserialize(JsonObject json, JsonDeserializationContext serializationContext) {
-            String minField = json.get("min_field").getAsString();
-            String maxField = json.get("max_field").getAsString();
+		@Override
+		public ConfigUniform deserialize(JsonObject json, JsonDeserializationContext serializationContext) {
+			String minField = json.get("min_field").getAsString();
+			String maxField = json.get("max_field").getAsString();
 
-            return new ConfigUniform(
-                new NamedIntSupplier(minField, ofConfigField(minField)),
-                new NamedIntSupplier(maxField, ofConfigField(maxField))
-            );
-        }
-    }
+			return new ConfigUniform(
+				new NamedIntSupplier(minField, ofConfigField(minField)),
+				new NamedIntSupplier(maxField, ofConfigField(maxField))
+			);
+		}
+	}
 
-    private static IntSupplier ofConfigField(String fieldName) {
-        return RubinatedNether.CONFIGURATOR.getConfig(RNConfig.class)
-            .getEntry(fieldName)
-            .<IntSupplier>map(entry -> () -> {
-                try {
-                    return entry.field().getInt(null);
-                } catch (IllegalAccessException e) {
-                    RubinatedNether.LOGGER.error("Error reading config field {}", fieldName, e);
-                    return 0;
-                }
-            }).orElse(() -> 0);
-    }
+	private static IntSupplier ofConfigField(String fieldName) {
+		return RubinatedNether.CONFIGURATOR.getConfig(RNConfig.class)
+			.getEntry(fieldName)
+			.<IntSupplier>map(entry -> () -> {
+				try {
+					return entry.field().getInt(null);
+				} catch (IllegalAccessException e) {
+					RubinatedNether.LOGGER.error("Error reading config field {}", fieldName, e);
+					return 0;
+				}
+			}).orElse(() -> 0);
+	}
 
 }

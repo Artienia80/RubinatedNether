@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/rail_flat",
   "textures": {
-    "rail": "rubinated_nether:block/ruby_rail"
+	"rail": "rubinated_nether:block/ruby_rail"
   }
 }

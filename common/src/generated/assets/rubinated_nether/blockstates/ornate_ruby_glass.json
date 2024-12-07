@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "rubinated_nether:block/ornate_ruby_glass"
-    }
+	"": {
+	  "model": "rubinated_nether:block/ornate_ruby_glass"
+	}
   }
 }

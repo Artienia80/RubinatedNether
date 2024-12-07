@@ -15,12 +15,12 @@ import static uwu.serenity.critter.stdlib.extras.ExtraBuilders.sound;
 
 public final class RNSounds {
 
-    public static final Registrar<SoundEvent> SOUNDS = RubinatedNether.REGISTRIES.getRegistrar(Registries.SOUND_EVENT);
+	public static final Registrar<SoundEvent> SOUNDS = RubinatedNether.REGISTRIES.getRegistrar(Registries.SOUND_EVENT);
 
-    public static final RegistryEntry<SoundEvent> SHIMMER = sound(SOUNDS, "shimmer_disc").register();
+	public static final RegistryEntry<SoundEvent> SHIMMER = sound(SOUNDS, "shimmer_disc").register();
 
-    public static void register() {
-        SOUNDS.register();
-    }
+	public static void register() {
+		SOUNDS.register();
+	}
 
 }

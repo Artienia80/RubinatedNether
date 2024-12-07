@@ -23,71 +23,71 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 public class RNBlockLootTables extends FabricBlockLootTableProvider {
 
-    public RNBlockLootTables(FabricDataOutput dataOutput) {
-        super(dataOutput);
-    }
+	public RNBlockLootTables(FabricDataOutput dataOutput) {
+		super(dataOutput);
+	}
 
-    public void generate() {
+	public void generate() {
 
-        // Self-dropping blocks (automated)
-        RubinatedNether.REGISTRIES.getAllEntries(Registries.BLOCK, RNBlocks.DROP_SELF)
-            .forEach(entry -> dropSelf(entry.get()));
+		// Self-dropping blocks (automated)
+		RubinatedNether.REGISTRIES.getAllEntries(Registries.BLOCK, RNBlocks.DROP_SELF)
+			.forEach(entry -> dropSelf(entry.get()));
 
-        this.add(RNBlocks.NETHER_RUBY_ORE.get(), block -> createToolDependantDrops(block, RNItems.RUBY_SHARD, RNItems.RUBY));
-        this.add(RNBlocks.MOLTEN_RUBY_ORE.get(), block -> createToolDependantMoltenDrops(block, RNItems.MOLTEN_RUBY_NUGGET, RNItems.MOLTEN_RUBY));
-        this.add(RNBlocks.RUBINATED_BLACKSTONE.get(),
-            block -> createCopperLikeOreDrops(RNBlocks.RUBINATED_BLACKSTONE.get(), RNItems.RUBY_SHARD.get()));
+		this.add(RNBlocks.NETHER_RUBY_ORE.get(), block -> createToolDependantDrops(block, RNItems.RUBY_SHARD, RNItems.RUBY));
+		this.add(RNBlocks.MOLTEN_RUBY_ORE.get(), block -> createToolDependantMoltenDrops(block, RNItems.MOLTEN_RUBY_NUGGET, RNItems.MOLTEN_RUBY));
+		this.add(RNBlocks.RUBINATED_BLACKSTONE.get(),
+			block -> createCopperLikeOreDrops(RNBlocks.RUBINATED_BLACKSTONE.get(), RNItems.RUBY_SHARD.get()));
 
-    }
+	}
 
-    protected LootTable.Builder createToolDependantDrops(Block block, ItemLike ironTier, ItemLike diamondTier) {
-        return createSilkTouchDispatchTable(block, AlternativesEntry.alternatives(
-            applyExplosionDecay(block, LootItem.lootTableItem(diamondTier)
-                .when(ItemTierLootCondition.builder()
-                    .minTier(Tiers.DIAMOND)
-                    .maxTier(Tiers.NETHERITE))
-                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-            ),
-            applyExplosionDecay(block, LootItem.lootTableItem(ironTier)
-                .when(ItemTierLootCondition.builder()
-                    .minTier(Tiers.IRON)
-                    .maxTier(Tiers.IRON))
-                .apply(SetItemCountFunction.setCount(ConfigUniform.of("ruby_ore_min_shards", "ruby_ore_max_shards")))
-            )
-        ));
-    }
+	protected LootTable.Builder createToolDependantDrops(Block block, ItemLike ironTier, ItemLike diamondTier) {
+		return createSilkTouchDispatchTable(block, AlternativesEntry.alternatives(
+			applyExplosionDecay(block, LootItem.lootTableItem(diamondTier)
+				.when(ItemTierLootCondition.builder()
+					.minTier(Tiers.DIAMOND)
+					.maxTier(Tiers.NETHERITE))
+				.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+			),
+			applyExplosionDecay(block, LootItem.lootTableItem(ironTier)
+				.when(ItemTierLootCondition.builder()
+					.minTier(Tiers.IRON)
+					.maxTier(Tiers.IRON))
+				.apply(SetItemCountFunction.setCount(ConfigUniform.of("ruby_ore_min_shards", "ruby_ore_max_shards")))
+			)
+		));
+	}
 
-    protected LootTable.Builder createToolDependantMoltenDrops(Block block, ItemLike lowTier, ItemLike netheriteTier) {
-        return createSilkTouchDispatchTable(block, AlternativesEntry.alternatives(
-                applyExplosionDecay(block, LootItem.lootTableItem(netheriteTier)
-                        .when(ItemTierLootCondition.builder()
-                                .minTier(Tiers.NETHERITE))
-                        .apply(SetItemCountFunction.setCount(ConfigUniform.of("ruby_ore_min_molten", "ruby_ore_max_molten")))
-                ),
-                applyExplosionDecay(block, LootItem.lootTableItem(lowTier)
-                        .when(ItemTierLootCondition.builder()
-                                .minTier(Tiers.IRON)
-                                .maxTier(Tiers.DIAMOND))
-                        .apply(SetItemCountFunction.setCount(ConfigUniform.of("ruby_ore_min_nuggets", "ruby_ore_max_nuggets")))
-                )
-        ));
-    }
+	protected LootTable.Builder createToolDependantMoltenDrops(Block block, ItemLike lowTier, ItemLike netheriteTier) {
+		return createSilkTouchDispatchTable(block, AlternativesEntry.alternatives(
+				applyExplosionDecay(block, LootItem.lootTableItem(netheriteTier)
+						.when(ItemTierLootCondition.builder()
+								.minTier(Tiers.NETHERITE))
+						.apply(SetItemCountFunction.setCount(ConfigUniform.of("ruby_ore_min_molten", "ruby_ore_max_molten")))
+				),
+				applyExplosionDecay(block, LootItem.lootTableItem(lowTier)
+						.when(ItemTierLootCondition.builder()
+								.minTier(Tiers.IRON)
+								.maxTier(Tiers.DIAMOND))
+						.apply(SetItemCountFunction.setCount(ConfigUniform.of("ruby_ore_min_nuggets", "ruby_ore_max_nuggets")))
+				)
+		));
+	}
 
-    protected LootTable.Builder createCopperLikeOreDrops(Block pBlock, Item item) {
-        return createSilkTouchDispatchTable(pBlock,
-            this.applyExplosionDecay(pBlock,
-                LootItem.lootTableItem(item)
-                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 7.0F)))
-                    .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
-    }
+	protected LootTable.Builder createCopperLikeOreDrops(Block pBlock, Item item) {
+		return createSilkTouchDispatchTable(pBlock,
+			this.applyExplosionDecay(pBlock,
+				LootItem.lootTableItem(item)
+					.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 7.0F)))
+					.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+	}
 
-    protected LootTable.Builder createEmeraldLikeOreDrops(Block pBlock, Item item) {
-        return createSilkTouchDispatchTable(pBlock,
-            this.applyExplosionDecay(pBlock,
-                LootItem.lootTableItem(item)
-                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
-                    .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
-    }
+	protected LootTable.Builder createEmeraldLikeOreDrops(Block pBlock, Item item) {
+		return createSilkTouchDispatchTable(pBlock,
+			this.applyExplosionDecay(pBlock,
+				LootItem.lootTableItem(item)
+					.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
+					.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+	}
 
 
 }

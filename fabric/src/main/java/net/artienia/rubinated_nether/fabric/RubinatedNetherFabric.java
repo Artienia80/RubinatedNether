@@ -20,49 +20,49 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 
 public final class RubinatedNetherFabric implements ModInitializer {
 
-    @Override
-    public void onInitialize() {
+	@Override
+	public void onInitialize() {
 
-        // Run our common setup.
-        RubinatedNether.init();
-        RubinatedNether.setup();
-        RNResourceConditionTypes.init();
+		// Run our common setup.
+		RubinatedNether.init();
+		RubinatedNether.setup();
+		RNResourceConditionTypes.init();
 
-        ModContainer mod = FabricLoader.getInstance()
-            .getModContainer(RubinatedNether.MOD_ID)
-            .orElseThrow();
+		ModContainer mod = FabricLoader.getInstance()
+			.getModContainer(RubinatedNether.MOD_ID)
+			.orElseThrow();
 
-        // Register ruby template RP
-        ResourceManagerHelper.registerBuiltinResourcePack(
-            RubinatedNether.id("better_netherite_template"), mod,
-            Component.literal("Rubinated Netherite Template"),
-            ResourcePackActivationType.DEFAULT_ENABLED
-        );
+		// Register ruby template RP
+		ResourceManagerHelper.registerBuiltinResourcePack(
+			RubinatedNether.id("better_netherite_template"), mod,
+			Component.literal("Rubinated Netherite Template"),
+			ResourcePackActivationType.DEFAULT_ENABLED
+		);
 
-        // Spelunkery Compat
-        if(FabricLoader.getInstance().isModLoaded("spelunkery")) {
-            ResourceManagerHelper.registerBuiltinResourcePack(
-                RubinatedNether.id("compat_spelunkery"), mod,
-                Component.literal("Rubinated Nether Mod Compat"),
-                ResourcePackActivationType.DEFAULT_ENABLED
-            );
-        }
+		// Spelunkery Compat
+		if(FabricLoader.getInstance().isModLoaded("spelunkery")) {
+			ResourceManagerHelper.registerBuiltinResourcePack(
+				RubinatedNether.id("compat_spelunkery"), mod,
+				Component.literal("Rubinated Nether Mod Compat"),
+				ResourcePackActivationType.DEFAULT_ENABLED
+			);
+		}
 
-        registerBiomeModifications();
-        registerEvents();
-    }
+		registerBiomeModifications();
+		registerEvents();
+	}
 
-    private void registerBiomeModifications() {
-        BiomeModifications.create(RubinatedNether.id("rubies"))
-            .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(BiomeTags.IS_NETHER), (selection, context) -> {
-                BiomeModificationContext.GenerationSettingsContext generation = context.getGenerationSettings();
-                generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, RNPlacedFeatures.NETHER_RUBY_ORE_PLACED_KEY);
-                generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, RNPlacedFeatures.MOLTEN_RUBY_ORE_PLACED_KEY);
-                generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, RNPlacedFeatures.RUBINATED_BLACKSTONE_PLACED_KEY);
-            });
-    }
+	private void registerBiomeModifications() {
+		BiomeModifications.create(RubinatedNether.id("rubies"))
+			.add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(BiomeTags.IS_NETHER), (selection, context) -> {
+				BiomeModificationContext.GenerationSettingsContext generation = context.getGenerationSettings();
+				generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, RNPlacedFeatures.NETHER_RUBY_ORE_PLACED_KEY);
+				generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, RNPlacedFeatures.MOLTEN_RUBY_ORE_PLACED_KEY);
+				generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, RNPlacedFeatures.RUBINATED_BLACKSTONE_PLACED_KEY);
+			});
+	}
 
-    private void registerEvents() {
-        UseBlockCallback.EVENT.register(RNEvents::interactBlock);
-    }
+	private void registerEvents() {
+		UseBlockCallback.EVENT.register(RNEvents::interactBlock);
+	}
 }

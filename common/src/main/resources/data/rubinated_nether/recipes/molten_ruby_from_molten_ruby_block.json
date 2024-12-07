@@ -2,12 +2,12 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "rubinated_nether:molten_ruby_block"
-    }
+	{
+	  "item": "rubinated_nether:molten_ruby_block"
+	}
   ],
   "result": {
-    "item": "rubinated_nether:molten_ruby",
-    "count": 9
+	"item": "rubinated_nether:molten_ruby",
+	"count": 9
   }
 }

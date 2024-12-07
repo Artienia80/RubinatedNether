@@ -2,29 +2,29 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "pattern": [
-    "BEB",
-    "CDC",
-    "AAA"
+	"BEB",
+	"CDC",
+	"AAA"
   ],
   "key": {
-    "A": {
-      "item": "minecraft:obsidian"
-    },
-    "B": {
-      "item": "minecraft:copper_ingot"
-    },
-    "C": {
-      "item": "minecraft:nether_brick"
-    },
-    "D": {
-      "item": "minecraft:netherrack"
-    },
-    "E": {
-      "item": "rubinated_nether:molten_ruby"
-    }
+	"A": {
+	  "item": "minecraft:obsidian"
+	},
+	"B": {
+	  "item": "minecraft:copper_ingot"
+	},
+	"C": {
+	  "item": "minecraft:nether_brick"
+	},
+	"D": {
+	  "item": "minecraft:netherrack"
+	},
+	"E": {
+	  "item": "rubinated_nether:molten_ruby"
+	}
   },
 
   "result": {
-    "item": "rubinated_nether:ruby_brazier"
+	"item": "rubinated_nether:ruby_brazier"
   }
 }

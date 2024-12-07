@@ -10,17 +10,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 
 public class FreezerRecipeBookComponent extends AbstractFurnaceRecipeBookComponent {
-    private static final Component FILTER_NAME = Component.translatable("gui." + RubinatedNether.MOD_ID + ".recipebook.toggleRecipes.freezable");
+	private static final Component FILTER_NAME = Component.translatable("gui." + RubinatedNether.MOD_ID + ".recipebook.toggleRecipes.freezable");
 
-    @Override
-    @NotNull
-    protected Component getRecipeFilterName() {
-        return FILTER_NAME;
-    }
+	@Override
+	@NotNull
+	protected Component getRecipeFilterName() {
+		return FILTER_NAME;
+	}
 
-    @Override
-    @NotNull
-    protected Set<Item> getFuelItems() {
-        return FreezerBlockEntity.getFreezingMap().keySet();
-    }
+	@Override
+	@NotNull
+	protected Set<Item> getFuelItems() {
+		return FreezerBlockEntity.getFreezingMap().keySet();
+	}
 }

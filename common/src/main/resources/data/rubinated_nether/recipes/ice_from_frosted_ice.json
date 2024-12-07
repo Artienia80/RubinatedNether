@@ -4,7 +4,7 @@
   "cookingtime": 2400,
   "experience": 1.0,
   "ingredient": {
-    "item": "rubinated_nether:frosted_ice"
+	"item": "rubinated_nether:frosted_ice"
   },
   "result": "minecraft:ice"
 }

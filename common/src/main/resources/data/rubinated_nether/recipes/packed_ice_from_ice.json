@@ -4,7 +4,7 @@
   "cookingtime": 4800,
   "experience": 1.0,
   "ingredient": {
-    "item": "minecraft:ice"
+	"item": "minecraft:ice"
   },
   "result": "minecraft:packed_ice"
 }

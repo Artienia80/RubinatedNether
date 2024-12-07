@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/template_glass_pane_post",
   "textures": {
-    "edge": "rubinated_nether:block/molten_ruby_glass_pane_top",
-    "pane": "rubinated_nether:block/molten_ruby_glass"
+	"edge": "rubinated_nether:block/molten_ruby_glass_pane_top",
+	"pane": "rubinated_nether:block/molten_ruby_glass"
   }
 }

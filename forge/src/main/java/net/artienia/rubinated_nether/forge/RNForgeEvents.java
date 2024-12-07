@@ -10,12 +10,12 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = RubinatedNether.MOD_ID)
 public final class RNForgeEvents {
 
-    @SubscribeEvent
-    public static void interactBlock(PlayerInteractEvent.RightClickBlock event) {
-        InteractionResult result = RNEvents.interactBlock(event.getEntity(), event.getLevel(), event.getHand(), event.getHitVec());
-        if(result.consumesAction()) {
-            event.setCanceled(true);
-            event.setCancellationResult(result);
-        }
-    }
+	@SubscribeEvent
+	public static void interactBlock(PlayerInteractEvent.RightClickBlock event) {
+		InteractionResult result = RNEvents.interactBlock(event.getEntity(), event.getLevel(), event.getHand(), event.getHitVec());
+		if(result.consumesAction()) {
+			event.setCanceled(true);
+			event.setCancellationResult(result);
+		}
+	}
 }

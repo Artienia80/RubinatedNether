@@ -1,35 +1,35 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_packed_ice": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "minecraft:packed_ice"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "rubinated_nether:blue_ice_from_packed_ice"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    }
+	"has_packed_ice": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": [
+			  "minecraft:packed_ice"
+			]
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	},
+	"has_the_recipe": {
+	  "conditions": {
+		"recipe": "rubinated_nether:blue_ice_from_packed_ice"
+	  },
+	  "trigger": "minecraft:recipe_unlocked"
+	}
   },
   "requirements": [
-    [
-      "has_the_recipe",
-      "has_packed_ice"
-    ]
+	[
+	  "has_the_recipe",
+	  "has_packed_ice"
+	]
   ],
   "rewards": {
-    "recipes": [
-      "rubinated_nether:blue_ice_from_packed_ice",
-      "aether:blue_ice_from_packed_ice"
-    ]
+	"recipes": [
+	  "rubinated_nether:blue_ice_from_packed_ice",
+	  "aether:blue_ice_from_packed_ice"
+	]
   }
 }

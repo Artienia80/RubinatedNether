@@ -1,94 +1,94 @@
 {
   "type": "minecraft:block",
   "pools": [
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:alternatives",
-          "children": [
-            {
-              "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "enchantments": [
-                      {
-                        "enchantment": "minecraft:silk_touch",
-                        "levels": {
-                          "min": 1
-                        }
-                      }
-                    ]
-                  }
-                }
-              ],
-              "name": "rubinated_nether:nether_ruby_ore"
-            },
-            {
-              "type": "minecraft:alternatives",
-              "children": [
-                {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "rubinated_nether:item_tier",
-                      "max_level": 4,
-                      "min_level": 3
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "add": false,
-                      "count": 1.0,
-                      "function": "minecraft:set_count"
-                    },
-                    {
-                      "function": "minecraft:explosion_decay"
-                    }
-                  ],
-                  "name": "rubinated_nether:rough_ruby"
-                },
-                {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "rubinated_nether:item_tier",
-                      "max_level": 2,
-                      "min_level": 2
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "add": false,
-                      "count": {
-                        "type": "rubinated_nether:config_uniform",
-                        "max_field": "ruby_ore_max_shards",
-                        "min_field": "ruby_ore_min_shards"
-                      },
-                      "function": "minecraft:set_count"
-                    },
-                    {
-                      "function": "minecraft:explosion_decay"
-                    }
-                  ],
-                  "name": "rubinated_nether:rough_ruby_shard"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "rolls": 1.0
-    }
+	{
+	  "bonus_rolls": 0.0,
+	  "entries": [
+		{
+		  "type": "minecraft:alternatives",
+		  "children": [
+			{
+			  "type": "minecraft:item",
+			  "conditions": [
+				{
+				  "condition": "minecraft:match_tool",
+				  "predicate": {
+					"enchantments": [
+					  {
+						"enchantment": "minecraft:silk_touch",
+						"levels": {
+						  "min": 1
+						}
+					  }
+					]
+				  }
+				}
+			  ],
+			  "name": "rubinated_nether:nether_ruby_ore"
+			},
+			{
+			  "type": "minecraft:alternatives",
+			  "children": [
+				{
+				  "type": "minecraft:item",
+				  "conditions": [
+					{
+					  "condition": "rubinated_nether:item_tier",
+					  "max_level": 4,
+					  "min_level": 3
+					}
+				  ],
+				  "functions": [
+					{
+					  "add": false,
+					  "count": 1.0,
+					  "function": "minecraft:set_count"
+					},
+					{
+					  "function": "minecraft:explosion_decay"
+					}
+				  ],
+				  "name": "rubinated_nether:rough_ruby"
+				},
+				{
+				  "type": "minecraft:item",
+				  "conditions": [
+					{
+					  "condition": "rubinated_nether:item_tier",
+					  "max_level": 2,
+					  "min_level": 2
+					}
+				  ],
+				  "functions": [
+					{
+					  "add": false,
+					  "count": {
+						"type": "rubinated_nether:config_uniform",
+						"max_field": "ruby_ore_max_shards",
+						"min_field": "ruby_ore_min_shards"
+					  },
+					  "function": "minecraft:set_count"
+					},
+					{
+					  "function": "minecraft:explosion_decay"
+					}
+				  ],
+				  "name": "rubinated_nether:rough_ruby_shard"
+				}
+			  ]
+			}
+		  ]
+		}
+	  ],
+	  "rolls": 1.0
+	}
   ],
   "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "spelunkery"
-      ]
-    }
+	{
+	  "condition": "fabric:all_mods_loaded",
+	  "values": [
+		"spelunkery"
+	  ]
+	}
   ]
 }

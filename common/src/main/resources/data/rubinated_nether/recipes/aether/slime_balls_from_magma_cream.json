@@ -4,21 +4,21 @@
   "cookingtime": 500,
   "experience": 0.1,
   "ingredient": {
-    "item": "minecraft:magma_cream"
+	"item": "minecraft:magma_cream"
   },
   "result": "minecraft:slime_ball",
   "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "aether"
-      ]
-    }
+	{
+	  "condition": "fabric:all_mods_loaded",
+	  "values": [
+		"aether"
+	  ]
+	}
   ],
   "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "aether"
-    }
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "aether"
+	}
   ]
 }

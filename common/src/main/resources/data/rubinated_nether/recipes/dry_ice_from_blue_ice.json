@@ -4,7 +4,7 @@
   "cookingtime": 19200,
   "experience": 1.0,
   "ingredient": {
-    "item": "minecraft:blue_ice"
+	"item": "minecraft:blue_ice"
   },
   "result": "rubinated_nether:dry_ice"
 }

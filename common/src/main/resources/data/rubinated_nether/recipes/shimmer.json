@@ -2,21 +2,21 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "pattern": [
-    "###",
-    "#D#",
-    "###"
+	"###",
+	"#D#",
+	"###"
   ],
   "key": {
-    "D": {
-      "item": "minecraft:music_disc_pigstep"
-    },
-    "#": {
-      "item": "rubinated_nether:ruby_shard"
-    }
+	"D": {
+	  "item": "minecraft:music_disc_pigstep"
+	},
+	"#": {
+	  "item": "rubinated_nether:ruby_shard"
+	}
   },
 
   "result": {
-    "item": "rubinated_nether:shimmer_disc",
-    "count": 1
+	"item": "rubinated_nether:shimmer_disc",
+	"count": 1
   }
 }

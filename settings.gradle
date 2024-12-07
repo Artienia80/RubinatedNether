@@ -1,14 +1,14 @@
 pluginManagement {
-    repositories {
-        maven { url "https://maven.fabricmc.net/" }
-        maven { url "https://maven.architectury.dev/" }
-        maven { url "https://files.minecraftforge.net/maven/" }
-        maven { url "https://maven.parchmentmc.org" }
-        gradlePluginPortal()
-    }
+	repositories {
+		maven { url "https://maven.fabricmc.net/" }
+		maven { url "https://maven.architectury.dev/" }
+		maven { url "https://files.minecraftforge.net/maven/" }
+		maven { url "https://maven.parchmentmc.org" }
+		gradlePluginPortal()
+	}
 }
 plugins {
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+	id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
 }
 
 rootProject.name = 'rubinated_nether'

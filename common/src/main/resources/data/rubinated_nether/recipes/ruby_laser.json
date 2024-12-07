@@ -2,29 +2,29 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "pattern": [
-    " E ",
-    "BDB",
-    "ACA"
+	" E ",
+	"BDB",
+	"ACA"
   ],
   "key": {
-    "A": {
-      "item": "minecraft:copper_block"
-    },
-    "B": {
-      "item": "minecraft:copper_ingot"
-    },
-    "C": {
-      "item": "minecraft:redstone"
-    },
-    "D": {
-      "item": "minecraft:glowstone_dust"
-    },
-    "E": {
-      "item": "rubinated_nether:ruby"
-    }
+	"A": {
+	  "item": "minecraft:copper_block"
+	},
+	"B": {
+	  "item": "minecraft:copper_ingot"
+	},
+	"C": {
+	  "item": "minecraft:redstone"
+	},
+	"D": {
+	  "item": "minecraft:glowstone_dust"
+	},
+	"E": {
+	  "item": "rubinated_nether:ruby"
+	}
   },
 
   "result": {
-    "item": "rubinated_nether:ruby_laser"
+	"item": "rubinated_nether:ruby_laser"
   }
 }

@@ -21,13 +21,13 @@ Searge, Bspks, Fesh0r, ProfMobious, and all the rest over on the MCP team {of wh
 I am a part}. For creating some of the core tools needed to make Minecraft modding 
 both possible, and as stable as can be.
   On that note, here is some specific information of the MCP data we use:
-    * Minecraft Coder Pack (MCP) *
-      Forge Mod Loader and Minecraft Forge have permission to distribute and automatically 
-      download components of MCP and distribute MCP data files. This permission is not 
-      transitive and others wishing to redistribute the Minecraft Forge source independently
-      should seek permission of MCP or remove the MCP data files and request their users 
-      to download MCP separately.
-      
+	* Minecraft Coder Pack (MCP) *
+	  Forge Mod Loader and Minecraft Forge have permission to distribute and automatically 
+	  download components of MCP and distribute MCP data files. This permission is not 
+	  transitive and others wishing to redistribute the Minecraft Forge source independently
+	  should seek permission of MCP or remove the MCP data files and request their users 
+	  to download MCP separately.
+	  
 And lastly, the countless community members who have spent time submitting bug reports, 
 pull requests, and just helping out the community in general. Thank you.
 

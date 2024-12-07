@@ -2,28 +2,28 @@
   "type": "minecraft:crafting_shaped",
   "group": "building",
   "key": {
-    "n": {
-      "tag": "forge:nuggets/copper"
-    },
-    "r": {
-      "item": "rubinated_nether:molten_ruby_nugget"
-    }
+	"n": {
+	  "tag": "forge:nuggets/copper"
+	},
+	"r": {
+	  "item": "rubinated_nether:molten_ruby_nugget"
+	}
   },
   "pattern": [
-    "nnn",
-    "nrn",
-    "nnn"
+	"nnn",
+	"nrn",
+	"nnn"
   ],
   "result": {
-    "item": "rubinated_nether:ruby_lantern"
+	"item": "rubinated_nether:ruby_lantern"
   },
   "conditions": [
-    {
-      "type": "forge:not",
-      "value": {
-        "type": "forge:tag_empty",
-        "tag": "forge:nuggets/copper"
-      }
-    }
+	{
+	  "type": "forge:not",
+	  "value": {
+		"type": "forge:tag_empty",
+		"tag": "forge:nuggets/copper"
+	  }
+	}
   ]
 }

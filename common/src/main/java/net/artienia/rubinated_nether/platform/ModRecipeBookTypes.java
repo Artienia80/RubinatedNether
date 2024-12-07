@@ -5,8 +5,8 @@ import net.minecraft.world.inventory.RecipeBookType;
 
 public class ModRecipeBookTypes {
 
-    @ExpectPlatform
-    public static RecipeBookType getFreezer() {
-        throw new AssertionError();
-    }
+	@ExpectPlatform
+	public static RecipeBookType getFreezer() {
+		throw new AssertionError();
+	}
 }

@@ -5,7 +5,7 @@ import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 public class CuriosRenderers {
 
-    public static void register() {
-        CuriosRendererRegistry.register(RNItems.RUBY_LENS.get(), RubyLensCurioRenderer::new);
-    }
+	public static void register() {
+		CuriosRendererRegistry.register(RNItems.RUBY_LENS.get(), RubyLensCurioRenderer::new);
+	}
 }

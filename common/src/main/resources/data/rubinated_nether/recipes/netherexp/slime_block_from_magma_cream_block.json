@@ -4,21 +4,21 @@
   "cookingtime": 400,
   "experience": 1.0,
   "ingredient": {
-    "item": "netherexp:magma_cream_block"
+	"item": "netherexp:magma_cream_block"
   },
   "result": "minecraft:slime_block",
   "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "netherexp"
-      ]
-    }
+	{
+	  "condition": "fabric:all_mods_loaded",
+	  "values": [
+		"netherexp"
+	  ]
+	}
   ],
   "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "netherexp"
-    }
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "netherexp"
+	}
   ]
 }

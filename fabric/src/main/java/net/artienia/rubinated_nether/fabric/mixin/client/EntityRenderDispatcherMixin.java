@@ -19,15 +19,15 @@ import java.util.Map;
 @Mixin(EntityRenderDispatcher.class)
 public class EntityRenderDispatcherMixin {
 
-    @Shadow @Final private EntityModelSet entityModels;
+	@Shadow @Final private EntityModelSet entityModels;
 
-    @Shadow private Map<String, EntityRenderer<? extends Player>> playerRenderers;
+	@Shadow private Map<String, EntityRenderer<? extends Player>> playerRenderers;
 
-    @Inject(
-        method = "onResourceManagerReload",
-        at = @At("TAIL")
-    )
-    public void onLoadEntityLayers(ResourceManager resourceManager, CallbackInfo ci) {
-        RubinatedNetherClient.registerEntityLayers((EntityRenderDispatcher) (Object) this, this.entityModels, skin -> (PlayerRenderer) playerRenderers.get(skin));
-    }
+	@Inject(
+		method = "onResourceManagerReload",
+		at = @At("TAIL")
+	)
+	public void onLoadEntityLayers(ResourceManager resourceManager, CallbackInfo ci) {
+		RubinatedNetherClient.registerEntityLayers((EntityRenderDispatcher) (Object) this, this.entityModels, skin -> (PlayerRenderer) playerRenderers.get(skin));
+	}
 }

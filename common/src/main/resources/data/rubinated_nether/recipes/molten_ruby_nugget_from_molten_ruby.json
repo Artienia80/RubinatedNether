@@ -3,12 +3,12 @@
   "category": "misc",
   "group": "molten_ruby",
   "ingredients": [
-    {
-      "item": "rubinated_nether:molten_ruby"
-    }
+	{
+	  "item": "rubinated_nether:molten_ruby"
+	}
   ],
   "result": {
-    "item": "rubinated_nether:molten_ruby_nugget",
-    "count": 9
+	"item": "rubinated_nether:molten_ruby_nugget",
+	"count": 9
   }
 }

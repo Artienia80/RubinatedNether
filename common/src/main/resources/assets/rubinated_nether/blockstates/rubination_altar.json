@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "rubinated_nether:block/rubination_altar"
-    }
+	"": {
+	  "model": "rubinated_nether:block/rubination_altar"
+	}
   }
 }

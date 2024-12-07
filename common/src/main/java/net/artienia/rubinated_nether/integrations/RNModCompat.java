@@ -15,32 +15,32 @@ import java.util.function.Supplier;
 
 public class RNModCompat {
 
-    // Put all the compat handlers for compatible mods in here
-    public static final Map<String, Supplier<Supplier<CompatHandler>>> COMPAT = ImmutableMap.<String, Supplier<Supplier<CompatHandler>>>builder()
-        .put("spelunkery", () -> SpelunkeryCompat::new)
-        .put("aether", () -> AetherCompat::new)
-        .put("netherexp", () -> JNECompat::new)
-        .build();
+	// Put all the compat handlers for compatible mods in here
+	public static final Map<String, Supplier<Supplier<CompatHandler>>> COMPAT = ImmutableMap.<String, Supplier<Supplier<CompatHandler>>>builder()
+		.put("spelunkery", () -> SpelunkeryCompat::new)
+		.put("aether", () -> AetherCompat::new)
+		.put("netherexp", () -> JNECompat::new)
+		.build();
 
 
-    private static final Supplier<List<CompatHandler>> ACTIVE_HANDLERS = Suppliers.memoize(() -> COMPAT.entrySet()
-        .stream()
-        .filter(entry -> PlatformUtils.modLoaded(entry.getKey()))
-        .map(entry -> entry.getValue().get().get())
-        .toList()
-    );
+	private static final Supplier<List<CompatHandler>> ACTIVE_HANDLERS = Suppliers.memoize(() -> COMPAT.entrySet()
+		.stream()
+		.filter(entry -> PlatformUtils.modLoaded(entry.getKey()))
+		.map(entry -> entry.getValue().get().get())
+		.toList()
+	);
 
-    public static void init() {
-        ACTIVE_HANDLERS.get().forEach(CompatHandler::init);
-    }
+	public static void init() {
+		ACTIVE_HANDLERS.get().forEach(CompatHandler::init);
+	}
 
-    public static void setup() {
-        ACTIVE_HANDLERS.get().forEach(CompatHandler::setup);
-    }
+	public static void setup() {
+		ACTIVE_HANDLERS.get().forEach(CompatHandler::setup);
+	}
 
-    @Environment(EnvType.CLIENT)
-    public static void clientSetup() {
-        ACTIVE_HANDLERS.get().forEach(CompatHandler::clientSetup);
-    }
+	@Environment(EnvType.CLIENT)
+	public static void clientSetup() {
+		ACTIVE_HANDLERS.get().forEach(CompatHandler::clientSetup);
+	}
 
 }

@@ -2,21 +2,21 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "pattern": [
-    "###",
-    "#R#",
-    "###"
+	"###",
+	"#R#",
+	"###"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:glass"
-    },
-    "R": {
-      "item": "rubinated_nether:ruby_shard"
-    }
+	"#": {
+	  "item": "minecraft:glass"
+	},
+	"R": {
+	  "item": "rubinated_nether:ruby_shard"
+	}
   },
 
   "result": {
-    "item": "rubinated_nether:ruby_glass",
-    "count": 8
+	"item": "rubinated_nether:ruby_glass",
+	"count": 8
   }
 }

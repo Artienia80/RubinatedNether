@@ -8,13 +8,13 @@ import uwu.serenity.critter.api.generic.Registrar;
 
 public class RNPlacementFilters {
 
-    public static final Registrar<PlacementModifierType<?>> MODIFIERS = RubinatedNether.REGISTRIES.getRegistrar(Registries.PLACEMENT_MODIFIER_TYPE);
+	public static final Registrar<PlacementModifierType<?>> MODIFIERS = RubinatedNether.REGISTRIES.getRegistrar(Registries.PLACEMENT_MODIFIER_TYPE);
 
-    public static final RegistryEntry<PlacementModifierType<ConfigPlacementFilter>> CONFIG_FILTER =
-        MODIFIERS.<PlacementModifierType<ConfigPlacementFilter>>entry("config_filter", () -> () -> ConfigPlacementFilter.CODEC).register();
+	public static final RegistryEntry<PlacementModifierType<ConfigPlacementFilter>> CONFIG_FILTER =
+		MODIFIERS.<PlacementModifierType<ConfigPlacementFilter>>entry("config_filter", () -> () -> ConfigPlacementFilter.CODEC).register();
 
 
-    public static void register() {
-        MODIFIERS.register();
-    }
+	public static void register() {
+		MODIFIERS.register();
+	}
 }

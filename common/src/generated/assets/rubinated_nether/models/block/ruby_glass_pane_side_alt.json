@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/template_glass_pane_side_alt",
   "textures": {
-    "edge": "rubinated_nether:block/ruby_glass_pane_top",
-    "pane": "rubinated_nether:block/ruby_glass"
+	"edge": "rubinated_nether:block/ruby_glass_pane_top",
+	"pane": "rubinated_nether:block/ruby_glass"
   }
 }

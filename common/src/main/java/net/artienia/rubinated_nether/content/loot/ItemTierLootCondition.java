@@ -13,74 +13,74 @@ import org.jetbrains.annotations.NotNull;
 
 public record ItemTierLootCondition(int minLevel, int maxLevel) implements LootItemCondition {
 
-    public static LootItemConditionType createType() {
-        return new LootItemConditionType(new Serializer());
-    }
+	public static LootItemConditionType createType() {
+		return new LootItemConditionType(new Serializer());
+	}
 
-    public static Builder builder() {
-        return new Builder();
-    }
+	public static Builder builder() {
+		return new Builder();
+	}
 
-    @Override
-    public LootItemConditionType getType() {
-        return RNLootConditions.ITEM_TIER.get();
-    }
+	@Override
+	public LootItemConditionType getType() {
+		return RNLootConditions.ITEM_TIER.get();
+	}
 
-    @Override
-    public boolean test(LootContext lootContext) {
-        ItemStack stack = lootContext.getParam(LootContextParams.TOOL);
-        int level;
-        return stack.getItem() instanceof TieredItem tiered
-            && (level = tiered.getTier().getLevel()) <= maxLevel
-            && level >= minLevel;
-    }
+	@Override
+	public boolean test(LootContext lootContext) {
+		ItemStack stack = lootContext.getParam(LootContextParams.TOOL);
+		int level;
+		return stack.getItem() instanceof TieredItem tiered
+			&& (level = tiered.getTier().getLevel()) <= maxLevel
+			&& level >= minLevel;
+	}
 
-    private static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<ItemTierLootCondition> {
+	private static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<ItemTierLootCondition> {
 
-        @Override
-        public void serialize(JsonObject json, ItemTierLootCondition value, JsonSerializationContext serializationContext) {
-            json.add("min_level", new JsonPrimitive(value.minLevel));
-            json.add("max_level", new JsonPrimitive(value.maxLevel));
-        }
+		@Override
+		public void serialize(JsonObject json, ItemTierLootCondition value, JsonSerializationContext serializationContext) {
+			json.add("min_level", new JsonPrimitive(value.minLevel));
+			json.add("max_level", new JsonPrimitive(value.maxLevel));
+		}
 
-        @Override
-        public ItemTierLootCondition deserialize(JsonObject json, JsonDeserializationContext serializationContext) {
-            return new ItemTierLootCondition(
-                json.get("min_level").getAsInt(),
-                json.get("max_level").getAsInt()
-            );
-        }
-    }
+		@Override
+		public ItemTierLootCondition deserialize(JsonObject json, JsonDeserializationContext serializationContext) {
+			return new ItemTierLootCondition(
+				json.get("min_level").getAsInt(),
+				json.get("max_level").getAsInt()
+			);
+		}
+	}
 
-    public static class Builder implements LootItemCondition.Builder {
+	public static class Builder implements LootItemCondition.Builder {
 
-        private int minLevel;
-        private int maxLevel = Integer.MAX_VALUE;
+		private int minLevel;
+		private int maxLevel = Integer.MAX_VALUE;
 
-        private Builder() {}
+		private Builder() {}
 
-        public Builder minTier(int tierLevel) {
-            this.minLevel = tierLevel;
-            return this;
-        }
+		public Builder minTier(int tierLevel) {
+			this.minLevel = tierLevel;
+			return this;
+		}
 
-        public Builder minTier(Tier tier) {
-            return minTier(tier.getLevel());
-        }
+		public Builder minTier(Tier tier) {
+			return minTier(tier.getLevel());
+		}
 
-        public Builder maxTier(int tierLevel) {
-            this.maxLevel = tierLevel;
-            return this;
-        }
+		public Builder maxTier(int tierLevel) {
+			this.maxLevel = tierLevel;
+			return this;
+		}
 
-        public Builder maxTier(Tier tier) {
-            return maxTier(tier.getLevel());
-        }
+		public Builder maxTier(Tier tier) {
+			return maxTier(tier.getLevel());
+		}
 
-        @Override
-        public @NotNull ItemTierLootCondition build() {
-            return new ItemTierLootCondition(minLevel, maxLevel);
-        }
-    }
+		@Override
+		public @NotNull ItemTierLootCondition build() {
+			return new ItemTierLootCondition(minLevel, maxLevel);
+		}
+	}
 
 }

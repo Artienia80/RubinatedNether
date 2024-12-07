@@ -4,21 +4,21 @@
   "cookingtime": 400,
   "experience": 1.0,
   "ingredient": {
-    "item": "spelunkery:spring_water_bucket"
+	"item": "spelunkery:spring_water_bucket"
   },
   "result": "rubinated_nether:frosted_ice",
   "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "spelunkery"
-      ]
-    }
+	{
+	  "condition": "fabric:all_mods_loaded",
+	  "values": [
+		"spelunkery"
+	  ]
+	}
   ],
   "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "spelunkery"
-    }
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "spelunkery"
+	}
   ]
 }

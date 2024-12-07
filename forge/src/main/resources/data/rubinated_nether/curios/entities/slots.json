@@ -1,8 +1,8 @@
 {
   "entities": [
-    "player"
+	"player"
   ],
   "slots": [
-    "head"
+	"head"
   ]
 }

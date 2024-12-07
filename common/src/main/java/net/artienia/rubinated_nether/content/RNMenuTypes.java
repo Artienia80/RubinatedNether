@@ -10,16 +10,16 @@ import uwu.serenity.critter.stdlib.extras.ExtraBuilders;
 import uwu.serenity.critter.stdlib.extras.menu.MenuEntry;
 
 public final class RNMenuTypes {
-    public static final Registrar<MenuType<?>> MENUS =
-            RubinatedNether.REGISTRIES.getRegistrar(Registries.MENU);
+	public static final Registrar<MenuType<?>> MENUS =
+			RubinatedNether.REGISTRIES.getRegistrar(Registries.MENU);
 
-    public static final MenuEntry<FreezerMenu> FREEZER_MENU =
-        ExtraBuilders.menu(MENUS, "freezer_menu", FreezerMenu::new)
-            .screen(() -> FreezerScreen::new)
-            .register();
+	public static final MenuEntry<FreezerMenu> FREEZER_MENU =
+		ExtraBuilders.menu(MENUS, "freezer_menu", FreezerMenu::new)
+			.screen(() -> FreezerScreen::new)
+			.register();
 
 
-    public static void register() {
-        MENUS.register();
-    }
+	public static void register() {
+		MENUS.register();
+	}
 }

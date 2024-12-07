@@ -12,27 +12,27 @@ import net.minecraftforge.fml.ModList;
 import top.theillusivec4.curios.api.CuriosApi;
 
 public class PlatformImpl {
-    public static boolean hasCraftingRemainder(ItemStack stack) {
-        return stack.hasCraftingRemainingItem();
-    }
+	public static boolean hasCraftingRemainder(ItemStack stack) {
+		return stack.hasCraftingRemainingItem();
+	}
 
-    public static ItemStack getCraftingRemainder(ItemStack stack) {
-        return stack.getCraftingRemainingItem();
-    }
+	public static ItemStack getCraftingRemainder(ItemStack stack) {
+		return stack.getCraftingRemainingItem();
+	}
 
-    public static boolean rubyLensEquipped(Player player) {
-        return ModList.get().isLoaded("curios") ? rubyLensEquippedCurios(player) : player.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get());
-    }
+	public static boolean rubyLensEquipped(Player player) {
+		return ModList.get().isLoaded("curios") ? rubyLensEquippedCurios(player) : player.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get());
+	}
 
-    private static boolean rubyLensEquippedCurios(Player player) {
-        Item rubyLens = RNItems.RUBY_LENS.get();
-        return CuriosApi.getCuriosInventory(player)
-            .map(inventory -> inventory.findFirstCurio(rubyLens).isPresent())
-            .orElse(false)
-        || player.getItemBySlot(EquipmentSlot.HEAD).is(rubyLens);
-    }
+	private static boolean rubyLensEquippedCurios(Player player) {
+		Item rubyLens = RNItems.RUBY_LENS.get();
+		return CuriosApi.getCuriosInventory(player)
+			.map(inventory -> inventory.findFirstCurio(rubyLens).isPresent())
+			.orElse(false)
+		|| player.getItemBySlot(EquipmentSlot.HEAD).is(rubyLens);
+	}
 
-    public static TagKey<Block> getGlassTag() {
-        return Tags.Blocks.GLASS;
-    }
+	public static TagKey<Block> getGlassTag() {
+		return Tags.Blocks.GLASS;
+	}
 }

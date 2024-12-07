@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "minecraft:blue_ice",
-    {
-      "id": "netherexp:black_ice",
-      "required": false
-    }  ]
+	"minecraft:blue_ice",
+	{
+	  "id": "netherexp:black_ice",
+	  "required": false
+	}  ]
 }

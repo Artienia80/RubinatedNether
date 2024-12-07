@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/template_glass_pane_noside_alt",
   "textures": {
-    "pane": "rubinated_nether:block/ornate_ruby_glass"
+	"pane": "rubinated_nether:block/ornate_ruby_glass"
   }
 }

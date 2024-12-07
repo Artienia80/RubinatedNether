@@ -1,35 +1,35 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_frosted_ice": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "rubinated_nether:frosted_ice"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "rubinated_nether:ice_from_frosted_ice"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    }
+	"has_frosted_ice": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": [
+			  "rubinated_nether:frosted_ice"
+			]
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	},
+	"has_the_recipe": {
+	  "conditions": {
+		"recipe": "rubinated_nether:ice_from_frosted_ice"
+	  },
+	  "trigger": "minecraft:recipe_unlocked"
+	}
   },
   "requirements": [
-    [
-      "has_the_recipe",
-      "has_frosted_ice"
-    ]
+	[
+	  "has_the_recipe",
+	  "has_frosted_ice"
+	]
   ],
   "rewards": {
-    "recipes": [
-      "rubinated_nether:ice_from_frosted_ice",
-      "aether:ice_from_frosted_ice"
-    ]
+	"recipes": [
+	  "rubinated_nether:ice_from_frosted_ice",
+	  "aether:ice_from_frosted_ice"
+	]
   }
 }

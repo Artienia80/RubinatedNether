@@ -10,14 +10,14 @@ import static net.artienia.rubinated_nether.RubinatedNether.REGISTRIES;
 
 public final class RNParticleTypes {
 
-    public static final Registrar<ParticleType<?>> PARTICLES = REGISTRIES.getRegistrar(Registries.PARTICLE_TYPE);
+	public static final Registrar<ParticleType<?>> PARTICLES = REGISTRIES.getRegistrar(Registries.PARTICLE_TYPE);
 
-    public static final RegistryEntry<SimpleParticleType> RUBY_AURA = PARTICLES.entry("ruby_aura", () -> new SimpleParticleType(true)).register();
+	public static final RegistryEntry<SimpleParticleType> RUBY_AURA = PARTICLES.entry("ruby_aura", () -> new SimpleParticleType(true)).register();
 
-    public static final RegistryEntry<SimpleParticleType> RUBINATE = PARTICLES.entry("rubinate", () -> new SimpleParticleType(false)).register();
+	public static final RegistryEntry<SimpleParticleType> RUBINATE = PARTICLES.entry("rubinate", () -> new SimpleParticleType(false)).register();
 
 
-    public static void register() {
-        PARTICLES.register();
-    }
+	public static void register() {
+		PARTICLES.register();
+	}
 }
