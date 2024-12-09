@@ -2,8 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "pattern": [
-	"BEB",
-	"CDC",
+	"BCB",
+	"BDB",
 	"AAA"
   ],
   "key": {
@@ -14,13 +14,10 @@
 	  "item": "minecraft:copper_ingot"
 	},
 	"C": {
-	  "item": "minecraft:nether_brick"
+		"item": "rubinated_nether:molten_ruby"
 	},
 	"D": {
-	  "item": "minecraft:netherrack"
-	},
-	"E": {
-	  "item": "rubinated_nether:molten_ruby"
+	  "item": "minecraft:netherite_ingot"
 	}
   },
 
