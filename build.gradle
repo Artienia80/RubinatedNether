@@ -89,7 +89,6 @@ subprojects {
 
 		modApi include("uwu.serenity.critter:critter-${project.name}:${rootProject.critter_version}")
 		modApi include("com.teamresourceful.resourcefulconfig:resourcefulconfig-${project.name}-$minecraft_version:$config_version")
-
 	}
 
 	java {
