@@ -6,7 +6,6 @@
   "item.rubinated_nether.ruby_lens": "Ruby Lens",
 
   "itemGroup.rubinated_nether.main": "Rubinated Nether",
-  "itemGroup.rubinated_nether.compat_tab": "RN - Mod Compat",
 
   "block.rubinated_nether.ruby_block": "Block of Ruby",
   "block.rubinated_nether.molten_ruby_block": "Block of Molten Ruby",
@@ -82,9 +81,6 @@
 
   "config.rubinated_nether.creative_tab": "Enable Creative Tab",
   "config.rubinated_nether.creative_tab.desc": "Enable the mod's creative tab. Reccomended to only toggle alongside compatibility tab.\nThe items can always be found in vanilla tabs\n§eRequires game restart",
-
-  "config.rubinated_nether.compat_tab": "Enable Compatibility Tab",
-  "config.rubinated_nether.compat_tab.desc": "Enable the mod's compatibility tab. Only enable together with Creative tab and if you have any of the following mods: \nSpelunkers\nJaden's Nether Expansion\n§eRequires game restart",
 
   "config.rubinated_nether.netherite_smithing_template_recipe": "Rubinate Netherite Template",
   "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Enable custom netherite smithing template recipe\n§eRequires game restart",

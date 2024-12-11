@@ -41,6 +41,7 @@ public final class RNBlocks {
 			.register();
 
 	public static final BlockEntry<RubinationAltarBlock> RUBINATION_ATLAR = BLOCKS.entry("rubination_altar", RubinationAltarBlock::new)
+			.copyProperties(() -> Blocks.OBSIDIAN)
 			.item(BlockItem::new)
 			.creativeTab(CreativeModeTabs.FUNCTIONAL_BLOCKS, TabPlacement.after(Blocks.ENCHANTING_TABLE))
 			.build()

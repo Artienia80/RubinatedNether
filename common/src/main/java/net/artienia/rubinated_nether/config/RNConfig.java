@@ -18,17 +18,6 @@ public final class RNConfig {
 	)
 	public static boolean enableCreativeTab = true;
 
-	@ConfigEntry(
-			id = "enable_compat_tab",
-			type = EntryType.BOOLEAN,
-			translation = "config.rubinated_nether.compat_tab"
-	)
-	@Comment(
-			value = "Enable the mod's creative compatibility tab. The items may be found in other mod's tabs\n§eRequires game restart",
-			translation = "config.rubinated_nether.compat_tab.desc"
-	)
-	public static boolean enableCompatTab = true;
-
 //	@ConfigEntry(
 //			id = "netherite_smithing_template_recipe",
 //			type = EntryType.BOOLEAN,

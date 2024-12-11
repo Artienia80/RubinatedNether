@@ -47,9 +47,6 @@ public final class RNTabs {
 			output.accept(RNBlocks.ORNATE_RUBY_GLASS);
 			output.accept(RNBlocks.ORNATE_RUBY_GLASS_PANE);
 
-
-
-
 			output.accept(RNBlocks.RUBY_LANTERN);
 			output.accept(RNBlocks.RUBY_CHANDELIER);
 			output.accept(RNBlocks.RUBY_LAVA_LAMP);
@@ -72,27 +69,8 @@ public final class RNTabs {
 		})
 		.register();
 
-	public static final RegistryEntry<CreativeModeTab> COMPAT = TABS.entry("compat_tab")
-			.icon(RNItems.RUBY_ICON::asStack)
-			.displayItems((itemDisplayParameters, output) -> {
-				if(PlatformUtils.modLoaded("netherexp")){
-					 output.accept(BuiltInRegistries.BLOCK.get(new ResourceLocation("netherexp", "soul_ruby_ore")));
-				}
-					})
-			.register();
-
 	public static void register() {
 		if(RNConfig.enableCreativeTab) TABS.register();
-		if(RNConfig.enableCompatTab) TABS.register();
-
-	}
-
-
-	public static <I extends Item, P> UnaryOperator<ItemBuilder<I, P>> compatTabIfEnabled(TabPlacement placement) {
-		if(RNConfig.enableCompatTab) {
-			return b -> b.creativeTab(COMPAT, placement);
-		}
-		return UnaryOperator.identity();
 	}
 
 	public static <I extends Item, P> UnaryOperator<ItemBuilder<I, P>> modTabIfEnabled(TabPlacement placement) {
