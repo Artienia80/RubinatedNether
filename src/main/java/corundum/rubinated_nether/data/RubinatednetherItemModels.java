@@ -21,5 +21,6 @@ public class RubinatednetherItemModels extends ItemModelProvider {
 		);
 
 		this.basicItem(RubinatedNetherItems.RUBY_ITEM.get());
+		this.basicItem(RubinatedNetherItems.MOLTEN_RUBY_ITEM.get());
 	}
 }

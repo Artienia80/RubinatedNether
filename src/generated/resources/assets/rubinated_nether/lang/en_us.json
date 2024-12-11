@@ -1,3 +1,5 @@
 {
-  "block.rubinated_nether.molten_ruby_ore": "Molten Ruby Ore"
+  "block.rubinated_nether.molten_ruby_ore": "Molten Ruby Ore",
+  "item.rubinated_nether.molten_ruby": "Molten Ruby",
+  "item.rubinated_nether.ruby": "Ruby"
 }
