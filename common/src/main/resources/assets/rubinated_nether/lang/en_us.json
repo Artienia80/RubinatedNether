@@ -81,10 +81,10 @@
   "trim_material.rubinated_nether.ruby": "Ruby Material",
 
   "config.rubinated_nether.creative_tab": "Enable Creative Tab",
-  "config.rubinated_nether.creative_tab.desc": "Enable the mod's creative tab. The items can always be found in vanilla tabs\n§eRequires game restart",
+  "config.rubinated_nether.creative_tab.desc": "Enable the mod's creative tab. Reccomended to only toggle alongside compatibility tab.\nThe items can always be found in vanilla tabs\n§eRequires game restart",
 
   "config.rubinated_nether.compat_tab": "Enable Compatibility Tab",
-  "config.rubinated_nether.compat_tab.desc": "Enable the mod's compatibility tab. \n§eRequires game restart",
+  "config.rubinated_nether.compat_tab.desc": "Enable the mod's compatibility tab. Only enable together with Creative tab and if you have any of the following mods: \nSpelunkers\nJaden's Nether Expansion\n§eRequires game restart",
 
   "config.rubinated_nether.netherite_smithing_template_recipe": "Rubinate Netherite Template",
   "config.rubinated_nether.netherite_smithing_template_recipe.desc": "Enable custom netherite smithing template recipe\n§eRequires game restart",
