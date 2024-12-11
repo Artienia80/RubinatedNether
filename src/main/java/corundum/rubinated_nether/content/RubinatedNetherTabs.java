@@ -16,8 +16,8 @@ public class RubinatedNetherTabs {
 	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
 		.title(Component.translatable("itemGroup.examplemod")) //The language key for the title of your CreativeModeTab
 		.withTabsBefore(CreativeModeTabs.COMBAT)
-		.icon(() -> RubinatedNetherItems.EXAMPLE_ITEM.get().getDefaultInstance())
+		.icon(() -> RubinatedNetherItems.RUBY_ITEM.get().getDefaultInstance())
 		.displayItems((parameters, output) -> {
-			output.accept(RubinatedNetherItems.EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+			output.accept(RubinatedNetherItems.RUBY_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
 		}).build());
 }

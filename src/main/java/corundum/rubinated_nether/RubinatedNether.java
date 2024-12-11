@@ -6,7 +6,12 @@ import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.content.RubinatedNetherBlocks;
 import corundum.rubinated_nether.content.RubinatedNetherItems;
 import corundum.rubinated_nether.content.RubinatedNetherTabs;
+import corundum.rubinated_nether.data.RubinatedNetherBlockStates;
+import corundum.rubinated_nether.data.RubinatedNetherLanguage;
+import corundum.rubinated_nether.data.RubinatednetherItemModels;
 import net.minecraft.client.Minecraft;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -17,6 +22,8 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
@@ -34,6 +41,7 @@ public class RubinatedNether {
 
 		NeoForge.EVENT_BUS.register(this);
 
+		modEventBus.addListener(this::datagen);
 		modEventBus.addListener(this::addCreative);
 	}
 
@@ -44,7 +52,7 @@ public class RubinatedNether {
 	// Add the example block item to the building blocks tab
 	private void addCreative(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-			event.accept(RubinatedNetherBlocks.EXAMPLE_BLOCK_ITEM);
+			event.accept(RubinatedNetherBlocks.MOLTEN_RUBY_ORE_ITEM);
 	}
 
 	// You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -63,5 +71,15 @@ public class RubinatedNether {
 			LOGGER.info("HELLO FROM CLIENT SETUP");
 			LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
 		}
+	}
+
+	private void datagen(final GatherDataEvent event) {
+		DataGenerator datagen = event.getGenerator();
+		ExistingFileHelper fileHelper = event.getExistingFileHelper();
+		PackOutput output = datagen.getPackOutput();
+
+		datagen.addProvider(event.includeClient(), new RubinatedNetherBlockStates(output, fileHelper));
+		datagen.addProvider(event.includeClient(), new RubinatednetherItemModels(output, fileHelper));
+		datagen.addProvider(event.includeClient(), new RubinatedNetherLanguage(output));
 	}
 }

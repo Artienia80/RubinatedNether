@@ -126,3 +126,6 @@ runs/
 
 # Bin folders
 /bin/
+
+# Those datagen cache files that are super annoying in PRs
+.cache

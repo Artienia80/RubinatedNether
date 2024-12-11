@@ -26,5 +26,8 @@ public class RubinatedNetherBlocks {
 		)
 	);
 
-	public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = RubinatedNetherItems.ITEMS.registerSimpleBlockItem("molten_ruby_ore", MOLTEN_RUBY_ORE);
+	public static final DeferredItem<BlockItem> MOLTEN_RUBY_ORE_ITEM = RubinatedNetherItems.ITEMS.registerSimpleBlockItem(
+		"molten_ruby_ore", 
+		MOLTEN_RUBY_ORE
+	);
 }
