@@ -18,6 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 public final class RNEvents {
 
@@ -28,49 +29,37 @@ public final class RNEvents {
 		ItemStack stack = player.getItemInHand(hand);
 
 		if(stack.is(RNTags.Items.LOW_RUBY) && level.getBlockState(pos).is(Blocks.CRYING_OBSIDIAN)) {
-			// TODO: Figure out sound and particles
 			level.setBlockAndUpdate(pos, RNBlocks.BLEEDING_OBSIDIAN.getDefaultState());
-			level.playLocalSound(pos, SoundEvents.AMETHYST_CLUSTER_BREAK, SoundSource.BLOCKS, 1.0f, 0.4f, true);
-			if(!player.getAbilities().instabuild) stack.shrink(1);
+			return getInteractionResult(player, level, pos, stack);
+		}
 
-			if(level.isClientSide) {
-				for (Direction direction : Direction.values()) {
-					ParticleUtils.spawnParticlesOnBlockFace(level, pos,
+		if(stack.is(RNTags.Items.LOW_RUBY) && level.getBlockState(pos).is(Blocks.DEEPSLATE)) {
+			level.setBlockAndUpdate(pos, RNBlocks.ALTAR_STONE.getDefaultState());
+			return getInteractionResult(player, level, pos, stack);
+		}
+
+		return InteractionResult.PASS;
+	}
+
+	// TODO: Figure out sound and particles
+	@NotNull
+	private static InteractionResult getInteractionResult(Player player, Level level, BlockPos pos, ItemStack stack) {
+		level.playLocalSound(pos, SoundEvents.AMETHYST_CLUSTER_BREAK, SoundSource.BLOCKS, 1.0f, 0.4f, true);
+		if (!player.getAbilities().instabuild) stack.shrink(1);
+
+		if (level.isClientSide) {
+			for (Direction direction : Direction.values()) {
+				ParticleUtils.spawnParticlesOnBlockFace(level, pos,
 						RNParticleTypes.RUBY_AURA.get(),
 						UniformInt.of(4, 6),
 						direction,
 						() -> new Vec3(Mth.nextDouble(level.random, -0.1, 0.1),
-							Mth.nextDouble(level.random, -0.1, 0.1),
-							Mth.nextDouble(level.random, -0.1, 0.1)),
+								Mth.nextDouble(level.random, -0.1, 0.1),
+								Mth.nextDouble(level.random, -0.1, 0.1)),
 						0.15);
-				}
 			}
-
-			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
 
-		if(stack.is(RNTags.Items.LOW_RUBY) && level.getBlockState(pos).is(Blocks.DEEPSLATE)) {
-			// TODO: Figure out sound and particles
-			level.setBlockAndUpdate(pos, RNBlocks.ALTAR_STONE.getDefaultState());
-			level.playLocalSound(pos, SoundEvents.AMETHYST_CLUSTER_BREAK, SoundSource.BLOCKS, 1.0f, 0.4f, true);
-			if(!player.getAbilities().instabuild) stack.shrink(1);
-
-			if(level.isClientSide) {
-				for (Direction direction : Direction.values()) {
-					ParticleUtils.spawnParticlesOnBlockFace(level, pos,
-							RNParticleTypes.RUBY_AURA.get(),
-							UniformInt.of(4, 6),
-							direction,
-							() -> new Vec3(Mth.nextDouble(level.random, -0.1, 0.1),
-									Mth.nextDouble(level.random, -0.1, 0.1),
-									Mth.nextDouble(level.random, -0.1, 0.1)),
-							0.15);
-				}
-			}
-
-			return InteractionResult.sidedSuccess(level.isClientSide);
-		}
-
-		return InteractionResult.PASS;
+		return InteractionResult.sidedSuccess(level.isClientSide);
 	}
 }

@@ -1,0 +1,18 @@
+--launchTarget
+forgejunituserdev
+--version
+21.1.83
+--assetIndex
+asset-index
+--assetsDir
+C:\Users\Rossi's Family\.gradle\caches\minecraft\assets
+--gameDir
+.
+--fml.neoForgeVersion
+21.1.83
+--fml.fmlVersion
+4.0.34
+--fml.mcVersion
+1.21.1
+--fml.neoFormVersion
+20240808.144430

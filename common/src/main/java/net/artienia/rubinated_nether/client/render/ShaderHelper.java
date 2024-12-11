@@ -16,7 +16,7 @@ public class ShaderHelper {
 	static {
 		if (PlatformUtils.modLoaded("iris") || PlatformUtils.modLoaded("oculus")) {
 			shaderPackInUse = () -> IrisApi.getInstance().isShaderPackInUse();
-		} else if (Package.getPackage("net.optifine") != null) {
+		} else if (ClassLoader.getPlatformClassLoader().getDefinedPackage("net.optifine") != null) {
 			shaderPackInUse = optifineShadersInUse();
 		} else {
 			shaderPackInUse = () -> false;
