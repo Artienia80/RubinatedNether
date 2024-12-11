@@ -16,6 +16,7 @@
 	"rubinated_nether:soakstone",
 	"rubinated_nether:dry_ice",
 	"rubinated_nether:ruby_glass",
+	  "rubinated_nether:rubination_altar",
 	"rubinated_nether:molten_ruby_glass",
 	"rubinated_nether:ornate_ruby_glass",
 	"rubinated_nether:ruby_glass_pane",
@@ -27,6 +28,7 @@
 	"rubinated_nether:ruby_lava_lamp",
 	"rubinated_nether:ruby_brazier",
 	"rubinated_nether:freezer",
+
 	{
 	  "id": "rubinated_nether:rough_ruby_block",
 	  "required": false
