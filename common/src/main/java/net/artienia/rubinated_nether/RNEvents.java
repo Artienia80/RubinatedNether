@@ -33,7 +33,7 @@ public final class RNEvents {
 			return getInteractionResult(player, level, pos, stack);
 		}
 
-		if(stack.is(RNTags.Items.LOW_RUBY) && level.getBlockState(pos).is(Blocks.DEEPSLATE)) {
+		if(stack.is(RNTags.Items.LOW_RUBY) && level.getBlockState(pos).is(Blocks.BLACKSTONE)) {
 			level.setBlockAndUpdate(pos, RNBlocks.ALTAR_STONE.getDefaultState());
 			return getInteractionResult(player, level, pos, stack);
 		}

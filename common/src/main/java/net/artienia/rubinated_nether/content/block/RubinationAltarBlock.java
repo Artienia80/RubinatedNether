@@ -23,6 +23,8 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.EnchantmentMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -59,6 +61,11 @@ public class RubinationAltarBlock extends BaseEntityBlock implements BEBlock<Rub
 
 	public static boolean isValidBookShelf(Level level, BlockPos tablePos, BlockPos offsetPos) {
 		return level.getBlockState(tablePos.offset(offsetPos)).is(RNBlocks.RUNESTONE.get()) && level.getBlockState(tablePos.offset(offsetPos.getX() / 2, offsetPos.getY(), offsetPos.getZ() / 2)).is(BlockTags.ENCHANTMENT_POWER_TRANSMITTER);
+	}
+
+	public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+		tooltip.add(Component.translatable("tooltip.rubinated_nether.wip.tooltip"));
+		super.appendHoverText(stack, level, tooltip, flag);
 	}
 
 	public boolean useShapeForLightOcclusion(BlockState state) {
