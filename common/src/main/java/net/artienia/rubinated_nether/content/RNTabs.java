@@ -75,10 +75,11 @@ public final class RNTabs {
 	public static final RegistryEntry<CreativeModeTab> COMPAT = TABS.entry("compat_tab")
 			.icon(RNItems.RUBY_ICON::asStack)
 			.displayItems((itemDisplayParameters, output) -> {
+				output.accept(RNItems.RUBY);
 				if(PlatformUtils.modLoaded("netherexp")){
-					 output.accept(BuiltInRegistries.BLOCK.get(new ResourceLocation("netherexp", "soul_ruby_ore")));
+					output.accept(BuiltInRegistries.BLOCK.get(new ResourceLocation("netherexp", "soul_ruby_ore")));
 				}
-					})
+			})
 			.register();
 
 	public static void register() {
