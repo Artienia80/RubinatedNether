@@ -129,3 +129,8 @@ runs/
 
 # Those datagen cache files that are super annoying in PRs
 .cache
+
+# From when we were multiplatform
+/common
+/fabric
+/forge
