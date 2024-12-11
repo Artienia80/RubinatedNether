@@ -18,9 +18,9 @@ public class Brazier extends Block implements BEBlock<BrazierBlockEntity> {
 
 	protected static final VoxelShape SHAPE = Stream.of(
 		box(0, 0, 0, 16, 3, 16),
-		box(2, 6, 2, 14, 5, 14),
-		box(2, 6, 2, 14, 8, 14),
-		box(2, 6, 2, 14, 16,14)
+		box(2, 2, 2, 14, 5, 14),
+		box(2, 5, 1, 14, 8, 14),
+		box(2, 6, 1, 14, 16,14)
 	).reduce(Shapes::or).get();
 
 	protected static final VoxelShape COLLISION_SHAPE =
