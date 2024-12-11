@@ -177,7 +177,6 @@ public final class RNBlocks {
 
 	public static final BlockEntry<StainedGlassPaneBlock> ORNATE_RUBY_GLASS_PANE = BLOCKS.entry("ornate_ruby_glass_pane", p -> new StainedGlassPaneBlock(DyeColor.ORANGE, p))
 			.transform(rubyGlassBlock(true))
-			.properties(p -> p.lightLevel($ -> 10))
 			.item(BlockItem::new)
 			.creativeTab(CreativeModeTabs.COLORED_BLOCKS, TabPlacement.after(MOLTEN_RUBY_GLASS_PANE))
 			.build()
