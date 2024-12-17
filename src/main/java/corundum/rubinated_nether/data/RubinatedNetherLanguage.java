@@ -16,5 +16,7 @@ public class RubinatedNetherLanguage extends LanguageProvider {
 
 		this.addItem(RubinatedNetherItems.RUBY_ITEM, "Ruby");
 		this.addItem(RubinatedNetherItems.MOLTEN_RUBY_ITEM, "Molten Ruby");
+
+		this.add(RubinatedNetherTabs.EXAMPLE_TAB.get().getDisplayName().getString(), "Rubinated Nether");
 	}
 }

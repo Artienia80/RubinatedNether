@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -20,4 +21,10 @@ public class RubinatedNetherTabs {
 		.displayItems((parameters, output) -> {
 			output.accept(RubinatedNetherItems.RUBY_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
 		}).build());
+
+	// Add the example block item to the building blocks tab
+	public static void addCreative(final BuildCreativeModeTabContentsEvent event) {
+		if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
+			event.accept(RubinatedNetherBlocks.MOLTEN_RUBY_ORE_ITEM);
+	}
 }
