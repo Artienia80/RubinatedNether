@@ -13,6 +13,7 @@ public class RubinatedNetherLanguage extends LanguageProvider {
 	@Override
 	protected void addTranslations() {
 		this.addBlock(RubinatedNetherBlocks.MOLTEN_RUBY_ORE, "Molten Ruby Ore");
+		this.addBlock(RubinatedNetherBlocks.CHANDELIER, "Ruby Chandelier");
 
 		this.addItem(RubinatedNetherItems.RUBY_ITEM, "Ruby");
 		this.addItem(RubinatedNetherItems.MOLTEN_RUBY_ITEM, "Molten Ruby");

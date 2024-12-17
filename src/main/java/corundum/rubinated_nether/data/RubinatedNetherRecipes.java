@@ -20,6 +20,7 @@ public class RubinatedNetherRecipes extends RecipeProvider {
 
 	}
 
+	@SuppressWarnings("unused")
 	private void stairsAndSlab(RecipeOutput recipeOutput, ItemLike input, ItemLike stairs, ItemLike slab) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4)
 			.group("stairs")

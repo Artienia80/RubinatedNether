@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout",
 	"textures": {
 		"0": "rubinated_nether:block/chandelier/chandelier_light",
 		"1": "rubinated_nether:block/chandelier/chandelier_frame",

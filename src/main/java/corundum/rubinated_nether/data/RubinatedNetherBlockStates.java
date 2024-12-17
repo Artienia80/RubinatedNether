@@ -14,5 +14,11 @@ public class RubinatedNetherBlockStates extends BlockStateProvider {
 	@Override
 	protected void registerStatesAndModels() {
 		this.simpleBlock(RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get());
+
+		this.simpleBlock(
+			RubinatedNetherBlocks.CHANDELIER.get(),
+			this.models()
+				.withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
+		);
 	}
 }

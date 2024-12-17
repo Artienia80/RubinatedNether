@@ -25,7 +25,12 @@ public class RubinatedNetherBlockTags extends BlockTagsProvider {
 	protected void addTags(Provider provider) {
 		// Mining tags 
 		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
-			RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get()
+			RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get(),
+			RubinatedNetherBlocks.CHANDELIER.get()
+		);
+
+		this.tag(BlockTags.NEEDS_STONE_TOOL).add(
+			RubinatedNetherBlocks.CHANDELIER.get()
 		);
 	}
 }

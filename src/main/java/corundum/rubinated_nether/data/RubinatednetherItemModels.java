@@ -15,11 +15,11 @@ public class RubinatednetherItemModels extends ItemModelProvider {
 	@Override
 	protected void registerModels() {
 		// Block items
-		this.withExistingParent(
-			RubinatedNetherBlocks.MOLTEN_RUBY_ORE_ITEM.get().toString(), 
-			modLoc("block/molten_ruby_ore")
-		);
+		this.simpleBlockItem(RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get());
 
+		this.basicItem(RubinatedNetherBlocks.CHANDELIER.asItem());
+
+		// Non-block items
 		this.basicItem(RubinatedNetherItems.RUBY_ITEM.get());
 		this.basicItem(RubinatedNetherItems.MOLTEN_RUBY_ITEM.get());
 	}
