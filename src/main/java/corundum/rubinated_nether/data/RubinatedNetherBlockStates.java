@@ -26,5 +26,17 @@ public class RubinatedNetherBlockStates extends BlockStateProvider {
 			this.models()
 				.withExistingParent("dry_ice", this.modLoc("block/dry_ice_base"))
 		);
+
+		this.simpleBlock(RubinatedNetherBlocks.ALTAR_STONE.get());
+		this.simpleBlock(RubinatedNetherBlocks.ALTAR_STONE_BRICKS.get());
+		this.simpleBlock(RubinatedNetherBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
+		this.simpleBlock(RubinatedNetherBlocks.ALTAR_STONE_TILES.get());
+		this.axisBlock(RubinatedNetherBlocks.ALTAR_STONE_PILLAR.get());
+
+		this.simpleBlock(
+			RubinatedNetherBlocks.RUNESTONE.get(),
+			this.models()
+				.withExistingParent("runestone", this.modLoc("block/runestone_base"))
+		);
 	}
 }

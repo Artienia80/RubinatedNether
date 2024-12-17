@@ -20,6 +20,13 @@ public class RubinatednetherItemModels extends ItemModelProvider {
 
 		this.basicItem(RubinatedNetherBlocks.CHANDELIER.asItem());
 
+		this.simpleBlockItem(RubinatedNetherBlocks.ALTAR_STONE.get());
+		this.simpleBlockItem(RubinatedNetherBlocks.ALTAR_STONE_BRICKS.get());
+		this.simpleBlockItem(RubinatedNetherBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
+		this.simpleBlockItem(RubinatedNetherBlocks.ALTAR_STONE_TILES.get());
+		this.simpleBlockItem(RubinatedNetherBlocks.ALTAR_STONE_PILLAR.get());
+		this.basicItem(RubinatedNetherBlocks.RUNESTONE.asItem());
+
 		// Non-block items
 		this.basicItem(RubinatedNetherItems.RUBY_ITEM.get());
 		this.basicItem(RubinatedNetherItems.MOLTEN_RUBY_ITEM.get());

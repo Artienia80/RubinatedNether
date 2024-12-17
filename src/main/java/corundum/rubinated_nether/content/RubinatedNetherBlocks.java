@@ -8,6 +8,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -46,6 +47,38 @@ public class RubinatedNetherBlocks {
 		)
 	);
 
+	public static final DeferredBlock<RunestoneBlock> RUNESTONE = registerBlockAndItem(
+		"runestone",
+		() -> new RunestoneBlock(
+			Block.Properties
+				.ofFullCopy(Blocks.BASALT)
+				.lightLevel($ -> 2)
+				.noOcclusion()
+		)
+	);
+
+	public static final DeferredBlock<Block> ALTAR_STONE = registerBlockAndItem(
+		"altar_stone",
+		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
+	);
+	public static final DeferredBlock<Block> ALTAR_STONE_BRICKS = registerBlockAndItem(
+		"altar_stone_bricks",
+		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
+	);
+	public static final DeferredBlock<Block> CHISELED_ALTAR_STONE_BRICKS = registerBlockAndItem(
+		"chiseled_altar_stone_bricks",
+		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
+	);
+	public static final DeferredBlock<Block> ALTAR_STONE_TILES = registerBlockAndItem(
+		"altar_stone_tiles",
+		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
+	);
+	public static final DeferredBlock<RotatedPillarBlock> ALTAR_STONE_PILLAR = registerBlockAndItem(
+		"altar_stone_pillar",
+		() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(Blocks.BASALT))
+	);
+
+	/// Registers a block and an item 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);
 

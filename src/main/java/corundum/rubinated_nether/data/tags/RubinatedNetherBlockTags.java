@@ -28,11 +28,27 @@ public class RubinatedNetherBlockTags extends BlockTagsProvider {
 		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
 			RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get(),
 			RubinatedNetherBlocks.CHANDELIER.get(),
-			RubinatedNetherBlocks.DRY_ICE.get()
+			RubinatedNetherBlocks.DRY_ICE.get(),
+			
+			RubinatedNetherBlocks.ALTAR_STONE.get(),
+			RubinatedNetherBlocks.ALTAR_STONE_BRICKS.get(),
+			RubinatedNetherBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
+			RubinatedNetherBlocks.ALTAR_STONE_TILES.get(),
+			RubinatedNetherBlocks.ALTAR_STONE_PILLAR.get(),
+			RubinatedNetherBlocks.RUNESTONE.get()
 		);
 
 		this.tag(BlockTags.NEEDS_STONE_TOOL).add(
 			RubinatedNetherBlocks.CHANDELIER.get()
+		);
+
+		this.tag(BlockTags.NEEDS_DIAMOND_TOOL).add(
+			RubinatedNetherBlocks.ALTAR_STONE.get(),
+			RubinatedNetherBlocks.ALTAR_STONE_BRICKS.get(),
+			RubinatedNetherBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
+			RubinatedNetherBlocks.ALTAR_STONE_TILES.get(),
+			RubinatedNetherBlocks.ALTAR_STONE_PILLAR.get(),
+			RubinatedNetherBlocks.RUNESTONE.get()
 		);
 
 		this.tag(RubinatedNetherTags.Blocks.COLDEST_ICE).add(

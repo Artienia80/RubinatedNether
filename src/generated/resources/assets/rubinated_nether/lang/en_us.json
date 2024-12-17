@@ -1,7 +1,13 @@
 {
+  "block.rubinated_nether.altar_stone": "Altar Stone",
+  "block.rubinated_nether.altar_stone_bricks": "Altar Stone Bricks",
+  "block.rubinated_nether.altar_stone_pillar": "Altar Stone Pillar",
+  "block.rubinated_nether.altar_stone_tiles": "Altar Stone Tiles",
+  "block.rubinated_nether.chiseled_altar_stone_bricks": "Chiseled Altar Stone Bricks",
   "block.rubinated_nether.dry_ice": "Dry Ice",
   "block.rubinated_nether.molten_ruby_ore": "Molten Ruby Ore",
   "block.rubinated_nether.ruby_chandelier": "Ruby Chandelier",
+  "block.rubinated_nether.runestone": "Runestone",
   "item.rubinated_nether.molten_ruby": "Molten Ruby",
   "item.rubinated_nether.ruby": "Ruby",
   "itemGroup.examplemod": "Rubinated Nether"

@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"render_type": "minecraft:cutout",
+	"ambientocclusion": false,
 	"texture_size": [32, 32],
 	"textures": {
 		"2": "rubinated_nether:block/altar_stone",
