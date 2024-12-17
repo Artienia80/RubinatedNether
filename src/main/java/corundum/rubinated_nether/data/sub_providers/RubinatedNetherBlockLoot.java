@@ -25,6 +25,8 @@ public class RubinatedNetherBlockLoot extends BlockLootSubProvider {
 	@Override
 	protected void generate() {
 		this.dropSelf(RubinatedNetherBlocks.CHANDELIER.get());
+
+		this.dropWhenSilkTouch(RubinatedNetherBlocks.DRY_ICE.get());
 		
 		this.dropOther(
 			RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get(),

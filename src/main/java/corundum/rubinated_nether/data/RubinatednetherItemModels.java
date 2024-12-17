@@ -16,6 +16,7 @@ public class RubinatednetherItemModels extends ItemModelProvider {
 	protected void registerModels() {
 		// Block items
 		this.simpleBlockItem(RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get());
+		this.simpleBlockItem(RubinatedNetherBlocks.DRY_ICE.get());
 
 		this.basicItem(RubinatedNetherBlocks.CHANDELIER.asItem());
 

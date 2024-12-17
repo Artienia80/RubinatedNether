@@ -36,6 +36,16 @@ public class RubinatedNetherBlocks {
 		)
 	);
 
+	public static final DeferredBlock<DryIceBlock> DRY_ICE = registerBlockAndItem(
+		"dry_ice",
+		() -> new DryIceBlock(
+			Block.Properties
+				.ofFullCopy(Blocks.BLUE_ICE)
+				.requiresCorrectToolForDrops()
+				.friction(0.995f)
+		)
+	);
+
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);
 

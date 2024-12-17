@@ -14,10 +14,11 @@ public class RubinatedNetherLanguage extends LanguageProvider {
 	protected void addTranslations() {
 		this.addBlock(RubinatedNetherBlocks.MOLTEN_RUBY_ORE, "Molten Ruby Ore");
 		this.addBlock(RubinatedNetherBlocks.CHANDELIER, "Ruby Chandelier");
+		this.addBlock(RubinatedNetherBlocks.DRY_ICE, "Dry Ice");
 
 		this.addItem(RubinatedNetherItems.RUBY_ITEM, "Ruby");
 		this.addItem(RubinatedNetherItems.MOLTEN_RUBY_ITEM, "Molten Ruby");
 
-		this.add(RubinatedNetherTabs.EXAMPLE_TAB.get().getDisplayName().getString(), "Rubinated Nether");
+		this.add(RubinatedNetherCreativeTabs.EXAMPLE_TAB.get().getDisplayName().getString(), "Rubinated Nether");
 	}
 }

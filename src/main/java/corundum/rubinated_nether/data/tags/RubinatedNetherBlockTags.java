@@ -4,14 +4,15 @@ import java.util.concurrent.CompletableFuture;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RubinatedNetherBlocks;
+import corundum.rubinated_nether.content.RubinatedNetherTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-@SuppressWarnings("null")
 public class RubinatedNetherBlockTags extends BlockTagsProvider {
 	public RubinatedNetherBlockTags(
 		PackOutput output, 
@@ -26,11 +27,16 @@ public class RubinatedNetherBlockTags extends BlockTagsProvider {
 		// Mining tags 
 		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
 			RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get(),
-			RubinatedNetherBlocks.CHANDELIER.get()
+			RubinatedNetherBlocks.CHANDELIER.get(),
+			RubinatedNetherBlocks.DRY_ICE.get()
 		);
 
 		this.tag(BlockTags.NEEDS_STONE_TOOL).add(
 			RubinatedNetherBlocks.CHANDELIER.get()
+		);
+
+		this.tag(RubinatedNetherTags.Blocks.COLDEST_ICE).add(
+			Blocks.BLUE_ICE	
 		);
 	}
 }

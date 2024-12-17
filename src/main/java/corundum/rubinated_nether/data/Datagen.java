@@ -6,6 +6,7 @@ import java.util.concurrent.CompletableFuture;
 
 import corundum.rubinated_nether.data.sub_providers.RubinatedNetherBlockLoot;
 import corundum.rubinated_nether.data.tags.RubinatedNetherBlockTags;
+import corundum.rubinated_nether.data.tags.RubinatedNetherFluidTags;
 import corundum.rubinated_nether.data.tags.RubinatedNetherItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -43,6 +44,8 @@ public class Datagen {
 				fileHelper
 			)
 		);
+
+		datagen.addProvider(event.includeClient(), new RubinatedNetherFluidTags(output, lookupProvider, fileHelper));
 
 		// Loot
 		datagen.addProvider(
