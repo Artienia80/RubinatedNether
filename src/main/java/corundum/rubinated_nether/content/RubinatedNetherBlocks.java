@@ -36,6 +36,14 @@ public class RubinatedNetherBlocks {
 				.lightLevel($ -> 15)
 		)
 	);
+	public static final DeferredBlock<LavaLampBlock> LAVA_LAMP = registerBlockAndItem(
+		"lava_lamp",
+		() -> new LavaLampBlock(
+			Block.Properties
+				.ofFullCopy(Blocks.COPPER_BLOCK)
+				.lightLevel($ -> 15)
+		)
+	);
 
 	public static final DeferredBlock<DryIceBlock> DRY_ICE = registerBlockAndItem(
 		"dry_ice",

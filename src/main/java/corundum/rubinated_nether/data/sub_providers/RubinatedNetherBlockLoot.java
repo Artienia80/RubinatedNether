@@ -25,6 +25,7 @@ public class RubinatedNetherBlockLoot extends BlockLootSubProvider {
 	@Override
 	protected void generate() {
 		this.dropSelf(RubinatedNetherBlocks.CHANDELIER.get());
+		this.dropSelf(RubinatedNetherBlocks.LAVA_LAMP.get());
 
 		this.dropSelf(RubinatedNetherBlocks.ALTAR_STONE.get());
 		this.dropSelf(RubinatedNetherBlocks.ALTAR_STONE_TILES.get());

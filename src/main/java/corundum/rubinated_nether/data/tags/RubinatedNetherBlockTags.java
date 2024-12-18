@@ -28,6 +28,7 @@ public class RubinatedNetherBlockTags extends BlockTagsProvider {
 		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
 			RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get(),
 			RubinatedNetherBlocks.CHANDELIER.get(),
+			RubinatedNetherBlocks.LAVA_LAMP.get(),
 			RubinatedNetherBlocks.DRY_ICE.get(),
 			
 			RubinatedNetherBlocks.ALTAR_STONE.get(),

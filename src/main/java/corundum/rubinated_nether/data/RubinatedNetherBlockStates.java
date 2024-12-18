@@ -20,6 +20,13 @@ public class RubinatedNetherBlockStates extends BlockStateProvider {
 			this.models()
 				.withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
 		);
+		this.axisBlock(
+			RubinatedNetherBlocks.LAVA_LAMP.get(),
+			this.models()
+				.withExistingParent("lava_lamp", this.modLoc("block/lava_lamp_side_base")),
+			this.models()
+				.withExistingParent("lava_lamp", this.modLoc("block/lava_lamp_base"))
+		);
 
 		this.simpleBlock(
 			RubinatedNetherBlocks.DRY_ICE.get(),

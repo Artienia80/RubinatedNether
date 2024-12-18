@@ -1,0 +1,24 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"0": "rubinated_nether:block/ruby_lava_lamp",
+		"1": "rubinated_nether:block/ruby_lava_lamp_top",
+		"particle": "rubinated_nether:block/ruby_lava_lamp"
+	},
+	"elements": [
+		{
+			"from": [2, 2, 0],
+			"to": [14, 14, 16],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [2, 2, 14, 14], "rotation": 180, "texture": "#1"},
+				"east": {"uv": [2, 0, 14, 16], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [2, 2, 14, 14], "texture": "#1"},
+				"west": {"uv": [2, 0, 14, 16], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [2, 0, 14, 16], "texture": "#0"},
+				"down": {"uv": [2, 0, 14, 16], "rotation": 180, "texture": "#0"}
+			}
+		}
+	]
+}

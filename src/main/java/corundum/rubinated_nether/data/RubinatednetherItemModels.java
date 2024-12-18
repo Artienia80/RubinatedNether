@@ -19,6 +19,7 @@ public class RubinatednetherItemModels extends ItemModelProvider {
 		this.simpleBlockItem(RubinatedNetherBlocks.DRY_ICE.get());
 
 		this.basicItem(RubinatedNetherBlocks.CHANDELIER.asItem());
+		this.simpleBlockItem(RubinatedNetherBlocks.LAVA_LAMP.get());
 
 		this.simpleBlockItem(RubinatedNetherBlocks.ALTAR_STONE.get());
 		this.simpleBlockItem(RubinatedNetherBlocks.ALTAR_STONE_TILES.get());
