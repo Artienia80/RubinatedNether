@@ -61,6 +61,14 @@ public class RubinatedNetherBlocks {
 		"altar_stone",
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
 	);
+	public static final DeferredBlock<Block> ALTAR_STONE_TILES = registerBlockAndItem(
+		"altar_stone_tiles",
+		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
+	);
+	public static final DeferredBlock<RotatedPillarBlock> ALTAR_STONE_PILLAR = registerBlockAndItem(
+		"altar_stone_pillar",
+		() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(Blocks.BASALT))
+	);
 	public static final DeferredBlock<Block> ALTAR_STONE_BRICKS = registerBlockAndItem(
 		"altar_stone_bricks",
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
@@ -69,13 +77,12 @@ public class RubinatedNetherBlocks {
 		"chiseled_altar_stone_bricks",
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
 	);
-	public static final DeferredBlock<Block> ALTAR_STONE_TILES = registerBlockAndItem(
-		"altar_stone_tiles",
-		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
-	);
-	public static final DeferredBlock<RotatedPillarBlock> ALTAR_STONE_PILLAR = registerBlockAndItem(
-		"altar_stone_pillar",
-		() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(Blocks.BASALT))
+	public static final DeferredBlock<RotatedPillarBlock> BLEEDING_CHISELED_ALTAR_STONE_BRICKS = registerBlockAndItem(
+		"bleeding_chiseled_altar_stone_bricks",
+		() -> new RotatedPillarBlock(
+			Block.Properties.ofFullCopy(Blocks.BASALT)
+				.lightLevel($ -> 15)
+		)
 	);
 
 	/// Registers a block and an item 

@@ -31,10 +31,11 @@ public class RubinatedNetherBlockTags extends BlockTagsProvider {
 			RubinatedNetherBlocks.DRY_ICE.get(),
 			
 			RubinatedNetherBlocks.ALTAR_STONE.get(),
-			RubinatedNetherBlocks.ALTAR_STONE_BRICKS.get(),
-			RubinatedNetherBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
 			RubinatedNetherBlocks.ALTAR_STONE_TILES.get(),
 			RubinatedNetherBlocks.ALTAR_STONE_PILLAR.get(),
+			RubinatedNetherBlocks.ALTAR_STONE_BRICKS.get(),
+			RubinatedNetherBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
+			RubinatedNetherBlocks.BLEEDING_CHISELED_ALTAR_STONE_BRICKS.get(),
 			RubinatedNetherBlocks.RUNESTONE.get()
 		);
 
@@ -44,10 +45,11 @@ public class RubinatedNetherBlockTags extends BlockTagsProvider {
 
 		this.tag(BlockTags.NEEDS_DIAMOND_TOOL).add(
 			RubinatedNetherBlocks.ALTAR_STONE.get(),
-			RubinatedNetherBlocks.ALTAR_STONE_BRICKS.get(),
-			RubinatedNetherBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
 			RubinatedNetherBlocks.ALTAR_STONE_TILES.get(),
 			RubinatedNetherBlocks.ALTAR_STONE_PILLAR.get(),
+			RubinatedNetherBlocks.ALTAR_STONE_BRICKS.get(),
+			RubinatedNetherBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
+			RubinatedNetherBlocks.BLEEDING_CHISELED_ALTAR_STONE_BRICKS.get(),
 			RubinatedNetherBlocks.RUNESTONE.get()
 		);
 

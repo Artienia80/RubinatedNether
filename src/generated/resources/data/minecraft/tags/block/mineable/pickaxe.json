@@ -4,10 +4,11 @@
     "rubinated_nether:ruby_chandelier",
     "rubinated_nether:dry_ice",
     "rubinated_nether:altar_stone",
-    "rubinated_nether:altar_stone_bricks",
-    "rubinated_nether:chiseled_altar_stone_bricks",
     "rubinated_nether:altar_stone_tiles",
     "rubinated_nether:altar_stone_pillar",
+    "rubinated_nether:altar_stone_bricks",
+    "rubinated_nether:chiseled_altar_stone_bricks",
+    "rubinated_nether:bleeding_chiseled_altar_stone_bricks",
     "rubinated_nether:runestone"
   ]
 }

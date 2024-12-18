@@ -28,10 +28,11 @@ public class RubinatedNetherBlockStates extends BlockStateProvider {
 		);
 
 		this.simpleBlock(RubinatedNetherBlocks.ALTAR_STONE.get());
-		this.simpleBlock(RubinatedNetherBlocks.ALTAR_STONE_BRICKS.get());
-		this.simpleBlock(RubinatedNetherBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
 		this.simpleBlock(RubinatedNetherBlocks.ALTAR_STONE_TILES.get());
 		this.axisBlock(RubinatedNetherBlocks.ALTAR_STONE_PILLAR.get());
+		this.simpleBlock(RubinatedNetherBlocks.ALTAR_STONE_BRICKS.get());
+		this.simpleBlock(RubinatedNetherBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
+		this.axisBlock(RubinatedNetherBlocks.BLEEDING_CHISELED_ALTAR_STONE_BRICKS.get());
 
 		this.simpleBlock(
 			RubinatedNetherBlocks.RUNESTONE.get(),
