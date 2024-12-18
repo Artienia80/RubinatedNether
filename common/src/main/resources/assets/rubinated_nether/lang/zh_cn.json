@@ -44,12 +44,12 @@
   "advancements.rubinated_nether.ruby_barter.title":"比金好",
   "advancements.rubinated_nether.ruby_barter.description":"使用红宝石碎片与猪灵进行交易。",
   "advancements.rubinated_nether.obtain_freezer.title":"冷！冷！冷！",
-  "advancements.rubinated_nether.obtain_freezer.description":"制作冰柜方块。",
+  "advancements.rubinated_nether.obtain_freezer.description":"制作一台冷冻机。",
   "advancements.rubinated_nether.obtain_molten_ruby.title":"烫！烫！烫！",
   "advancements.rubinated_nether.obtain_molten_ruby.description": "从熔岩矿脉或冶炼中获得熔融红宝石。",
   "advancements.rubinated_nether.obtain_ruby.title": "好久不见",
   "advancements.rubinated_nether.obtain_ruby.description": "从下界矿石或冰冻中获得红宝石。",
-  "advancements.rubinated_nether.obtain_ruby_lights.title": "点亮吧！",
+  "advancements.rubinated_nether.obtain_ruby_lights.title": "红灯区",
   "advancements.rubinated_nether.obtain_ruby_lights.description": "制作一个红宝石吊灯和一个红宝石熔岩灯。",
   "advancements.rubinated_nether.obtain_rubinated_blackstone.title": "合法回收",
   "advancements.rubinated_nether.obtain_rubinated_blackstone.description": "从堡垒遗迹中开采嵌红黑石。",
@@ -123,6 +123,6 @@
   "config.rubinated_nether.spawn_nether_ruby_ore.desc": "允许在下界上层附近生成下界红宝石矿石",
   "config.rubinated_nether.spawn_molten_ruby_ore.desc": "允许在熔岩脉内生成熔融红宝石矿石",
   "config.rubinated_nether.spawn_rubinated_blackstone.desc": "允许在堡垒遗迹内生成嵌红黑石",
-  "tooltip.rubinated_nether.wip.tooltip":"未完成功能 - 这纯粹是装饰性的,并且包含错​一些 bug。"
+  "tooltip.rubinated_nether.wip.tooltip":"未完成功能 - 这纯粹是装饰性的,并且包含​一些 bug。"
 
 }
