@@ -24,6 +24,10 @@ public class RubinatedNetherBlockLoot extends BlockLootSubProvider {
 
 	@Override
 	protected void generate() {
+		this.dropSelf(RubinatedNetherBlocks.RUBY_BLOCK.get());
+		this.dropSelf(RubinatedNetherBlocks.BLEEDING_OBSIDIAN.get());
+
+		this.dropSelf(RubinatedNetherBlocks.RUBY_LANTERN.get());
 		this.dropSelf(RubinatedNetherBlocks.CHANDELIER.get());
 		this.dropSelf(RubinatedNetherBlocks.LAVA_LAMP.get());
 		this.dropSelf(RubinatedNetherBlocks.SOAKSTONE.get());
@@ -35,6 +39,13 @@ public class RubinatedNetherBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RubinatedNetherBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
 		this.dropSelf(RubinatedNetherBlocks.BLEEDING_CHISELED_ALTAR_STONE_BRICKS.get());
 		this.dropSelf(RubinatedNetherBlocks.RUNESTONE.get());
+
+		this.dropWhenSilkTouch(RubinatedNetherBlocks.RUBY_GLASS.get());
+		this.dropWhenSilkTouch(RubinatedNetherBlocks.RUBY_GLASS_PANE.get());
+		this.dropWhenSilkTouch(RubinatedNetherBlocks.ORNATE_RUBY_GLASS.get());
+		this.dropWhenSilkTouch(RubinatedNetherBlocks.ORNATE_RUBY_GLASS_PANE.get());
+		this.dropWhenSilkTouch(RubinatedNetherBlocks.MOLTEN_RUBY_GLASS.get());
+		this.dropWhenSilkTouch(RubinatedNetherBlocks.MOLTEN_RUBY_GLASS_PANE.get());
 
 		this.dropWhenSilkTouch(RubinatedNetherBlocks.DRY_ICE.get());
 		

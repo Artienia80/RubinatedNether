@@ -30,10 +30,21 @@ public class RubinatedNetherBlockTags extends BlockTagsProvider {
 			RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get(),
 			RubinatedNetherBlocks.RUBINATED_BLACKSTONE.get(),
 
+			RubinatedNetherBlocks.RUBY_BLOCK.get(),
+			RubinatedNetherBlocks.BLEEDING_OBSIDIAN.get(),
+
+			RubinatedNetherBlocks.RUBY_LANTERN.get(),
 			RubinatedNetherBlocks.CHANDELIER.get(),
 			RubinatedNetherBlocks.LAVA_LAMP.get(),
 			RubinatedNetherBlocks.DRY_ICE.get(),
 			RubinatedNetherBlocks.SOAKSTONE.get(),
+
+			RubinatedNetherBlocks.RUBY_GLASS.get(),
+			RubinatedNetherBlocks.RUBY_GLASS_PANE.get(),
+			RubinatedNetherBlocks.ORNATE_RUBY_GLASS.get(),
+			RubinatedNetherBlocks.ORNATE_RUBY_GLASS_PANE.get(),
+			RubinatedNetherBlocks.MOLTEN_RUBY_GLASS.get(),
+			RubinatedNetherBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
 			
 			RubinatedNetherBlocks.ALTAR_STONE.get(),
 			RubinatedNetherBlocks.ALTAR_STONE_TILES.get(),
@@ -45,10 +56,24 @@ public class RubinatedNetherBlockTags extends BlockTagsProvider {
 		);
 
 		this.tag(BlockTags.NEEDS_STONE_TOOL).add(
+			RubinatedNetherBlocks.RUBY_GLASS.get(),
+			RubinatedNetherBlocks.RUBY_GLASS_PANE.get(),
+			RubinatedNetherBlocks.ORNATE_RUBY_GLASS.get(),
+			RubinatedNetherBlocks.ORNATE_RUBY_GLASS_PANE.get(),
+			RubinatedNetherBlocks.MOLTEN_RUBY_GLASS.get(),
+			RubinatedNetherBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
+
 			RubinatedNetherBlocks.CHANDELIER.get()
 		);
 
 		this.tag(BlockTags.NEEDS_DIAMOND_TOOL).add(
+			RubinatedNetherBlocks.NETHER_RUBY_ORE.get(),
+			RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get(),
+			RubinatedNetherBlocks.RUBINATED_BLACKSTONE.get(),
+
+			RubinatedNetherBlocks.RUBY_BLOCK.get(),
+			RubinatedNetherBlocks.BLEEDING_OBSIDIAN.get(),
+
 			RubinatedNetherBlocks.ALTAR_STONE.get(),
 			RubinatedNetherBlocks.ALTAR_STONE_TILES.get(),
 			RubinatedNetherBlocks.ALTAR_STONE_PILLAR.get(),

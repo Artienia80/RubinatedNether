@@ -5,11 +5,18 @@ import corundum.rubinated_nether.content.blocks.*;
 import java.util.function.Supplier;
 
 import corundum.rubinated_nether.RubinatedNether;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DropExperienceBlock;
+import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.StainedGlassBlock;
+import net.minecraft.world.level.block.StainedGlassPaneBlock;
+import net.minecraft.world.level.block.state.BlockState;import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -44,6 +51,22 @@ public class RubinatedNetherBlocks {
 		)
 	);
 
+	public static final DeferredBlock<Block> RUBY_BLOCK = registerBlockAndItem(
+		"ruby_block", 
+		() -> new Block(
+			Block.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK)
+				.mapColor(MapColor.FIRE)
+		)
+	);
+	public static final DeferredBlock<Block> BLEEDING_OBSIDIAN = registerBlockAndItem(
+		"bleeding_obsidian", 
+		() -> new Block(Block.Properties.ofFullCopy(Blocks.CRYING_OBSIDIAN))
+	);
+
+	public static final DeferredBlock<LanternBlock> RUBY_LANTERN = registerBlockAndItem(
+		"ruby_lantern",
+		() -> new LanternBlock(Block.Properties.ofFullCopy(Blocks.LANTERN))
+	);
 	public static final DeferredBlock<ChandelierBlock> CHANDELIER = registerBlockAndItem(
 		"ruby_chandelier",
 		() -> new ChandelierBlock(
@@ -61,7 +84,6 @@ public class RubinatedNetherBlocks {
 				.lightLevel($ -> 15)
 		)
 	);
-
 	public static final DeferredBlock<DryIceBlock> DRY_ICE = registerBlockAndItem(
 		"dry_ice",
 		() -> new DryIceBlock(
@@ -76,6 +98,55 @@ public class RubinatedNetherBlocks {
 		() -> new LavaSpongeBlock(Block.Properties.ofFullCopy(Blocks.NETHERRACK))
 	);
 
+	public static final DeferredBlock<StainedGlassBlock> RUBY_GLASS = registerBlockAndItem(
+		"ruby_glass",
+		() -> new StainedGlassBlock(
+			DyeColor.RED,
+			Block.Properties
+				.ofFullCopy(Blocks.RED_STAINED_GLASS)
+				.explosionResistance(1000)
+				.strength(5.0F, 6.0F)
+				.isViewBlocking(RubinatedNetherBlocks::never)
+		)
+	);
+	public static final DeferredBlock<StainedGlassPaneBlock> RUBY_GLASS_PANE = registerBlockAndItem(
+		"ruby_glass_pane", 
+		() -> new StainedGlassPaneBlock(
+			DyeColor.RED, 
+			Block.Properties.ofFullCopy(RUBY_GLASS.get())
+		)
+	);
+	public static final DeferredBlock<StainedGlassBlock> ORNATE_RUBY_GLASS = registerBlockAndItem(
+		"ornate_ruby_glass",
+		() -> new StainedGlassBlock(
+			DyeColor.RED,
+			Block.Properties.ofFullCopy(RUBY_GLASS.get())
+		)
+	);
+	public static final DeferredBlock<StainedGlassPaneBlock> ORNATE_RUBY_GLASS_PANE = registerBlockAndItem(
+		"ornate_ruby_glass_pane", 
+		() -> new StainedGlassPaneBlock(
+			DyeColor.RED, 
+			Block.Properties.ofFullCopy(RUBY_GLASS.get())
+		)
+	);
+	public static final DeferredBlock<StainedGlassBlock> MOLTEN_RUBY_GLASS = registerBlockAndItem(
+		"molten_ruby_glass",
+		() -> new StainedGlassBlock(
+			DyeColor.RED,
+			Block.Properties
+				.ofFullCopy(RUBY_GLASS.get())
+				.lightLevel($ -> 10)
+		)
+	);
+	public static final DeferredBlock<StainedGlassPaneBlock> MOLTEN_RUBY_GLASS_PANE = registerBlockAndItem(
+		"molten_ruby_glass_pane", 
+		() -> new StainedGlassPaneBlock(
+			DyeColor.RED, 
+			Block.Properties.ofFullCopy(MOLTEN_RUBY_GLASS.get())
+		)
+	);
+
 	public static final DeferredBlock<RunestoneBlock> RUNESTONE = registerBlockAndItem(
 		"runestone",
 		() -> new RunestoneBlock(
@@ -85,7 +156,6 @@ public class RubinatedNetherBlocks {
 				.noOcclusion()
 		)
 	);
-
 	public static final DeferredBlock<Block> ALTAR_STONE = registerBlockAndItem(
 		"altar_stone",
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
@@ -124,5 +194,9 @@ public class RubinatedNetherBlocks {
 		);
 
 		return register;
+	}
+
+	private static boolean never(BlockState state, BlockGetter blockGetter, BlockPos pos) {
+		return false;
 	}
 }

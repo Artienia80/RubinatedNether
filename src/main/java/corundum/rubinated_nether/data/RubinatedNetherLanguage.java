@@ -16,10 +16,21 @@ public class RubinatedNetherLanguage extends LanguageProvider {
 		this.addBlock(RubinatedNetherBlocks.MOLTEN_RUBY_ORE, "Molten Ruby Ore");
 		this.addBlock(RubinatedNetherBlocks.RUBINATED_BLACKSTONE, "Rubinated Blackstone");
 
+		this.addBlock(RubinatedNetherBlocks.RUBY_BLOCK, "Block of Ruby");
+		this.addBlock(RubinatedNetherBlocks.BLEEDING_OBSIDIAN, "Bleeding Obsidian");
+
+		this.addBlock(RubinatedNetherBlocks.RUBY_LANTERN, "Ruby Lantern");
 		this.addBlock(RubinatedNetherBlocks.CHANDELIER, "Ruby Chandelier");
 		this.addBlock(RubinatedNetherBlocks.LAVA_LAMP, "Molten Ruby Lava Lamp");
 		this.addBlock(RubinatedNetherBlocks.DRY_ICE, "Dry Ice");
 		this.addBlock(RubinatedNetherBlocks.SOAKSTONE, "Soakstone");
+
+		this.addBlock(RubinatedNetherBlocks.RUBY_GLASS, "Ruby Glass");
+		this.addBlock(RubinatedNetherBlocks.RUBY_GLASS_PANE, "Ruby Glass Pane");
+		this.addBlock(RubinatedNetherBlocks.ORNATE_RUBY_GLASS, "Ornate Ruby Glass");
+		this.addBlock(RubinatedNetherBlocks.ORNATE_RUBY_GLASS_PANE, "Ornate Ruby Glass Pane");
+		this.addBlock(RubinatedNetherBlocks.MOLTEN_RUBY_GLASS, "Molten Ruby Glass");
+		this.addBlock(RubinatedNetherBlocks.MOLTEN_RUBY_GLASS_PANE, "Molten Ruby Glass Pane");
 
 		this.addBlock(RubinatedNetherBlocks.ALTAR_STONE, "Altar Stone");
 		this.addBlock(RubinatedNetherBlocks.ALTAR_STONE_TILES, "Altar Stone Tiles");

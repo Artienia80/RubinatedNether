@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "hanging=false,waterlogged=false": {
+      "model": "rubinated_nether:block/ruby_lantern"
+    },
+    "hanging=false,waterlogged=true": {
+      "model": "rubinated_nether:block/ruby_lantern"
+    },
+    "hanging=true,waterlogged=false": {
+      "model": "rubinated_nether:block/hanging_ruby_lantern"
+    },
+    "hanging=true,waterlogged=true": {
+      "model": "rubinated_nether:block/hanging_ruby_lantern"
+    }
+  }
+}
