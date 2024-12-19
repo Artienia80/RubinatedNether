@@ -54,6 +54,10 @@ public class RubinatedNetherBlocks {
 				.friction(0.995f)
 		)
 	);
+	public static final DeferredBlock<LavaSpongeBlock> SOAKSTONE = registerBlockAndItem(
+		"soakstone",
+		() -> new LavaSpongeBlock(Block.Properties.ofFullCopy(Blocks.NETHERRACK))
+	);
 
 	public static final DeferredBlock<RunestoneBlock> RUNESTONE = registerBlockAndItem(
 		"runestone",

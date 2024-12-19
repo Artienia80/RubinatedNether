@@ -16,6 +16,7 @@ public class RubinatedNetherLanguage extends LanguageProvider {
 		this.addBlock(RubinatedNetherBlocks.CHANDELIER, "Ruby Chandelier");
 		this.addBlock(RubinatedNetherBlocks.LAVA_LAMP, "Molten Ruby Lava Lamp");
 		this.addBlock(RubinatedNetherBlocks.DRY_ICE, "Dry Ice");
+		this.addBlock(RubinatedNetherBlocks.SOAKSTONE, "Soakstone");
 		this.addBlock(RubinatedNetherBlocks.ALTAR_STONE, "Altar Stone");
 		this.addBlock(RubinatedNetherBlocks.ALTAR_STONE_TILES, "Altar Stone Tiles");
 		this.addBlock(RubinatedNetherBlocks.ALTAR_STONE_PILLAR, "Altar Stone Pillar");

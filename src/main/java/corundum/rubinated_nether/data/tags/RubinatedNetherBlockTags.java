@@ -30,6 +30,7 @@ public class RubinatedNetherBlockTags extends BlockTagsProvider {
 			RubinatedNetherBlocks.CHANDELIER.get(),
 			RubinatedNetherBlocks.LAVA_LAMP.get(),
 			RubinatedNetherBlocks.DRY_ICE.get(),
+			RubinatedNetherBlocks.SOAKSTONE.get(),
 			
 			RubinatedNetherBlocks.ALTAR_STONE.get(),
 			RubinatedNetherBlocks.ALTAR_STONE_TILES.get(),

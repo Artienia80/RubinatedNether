@@ -33,6 +33,7 @@ public class RubinatedNetherBlockStates extends BlockStateProvider {
 			this.models()
 				.withExistingParent("dry_ice", this.modLoc("block/dry_ice_base"))
 		);
+		this.simpleBlock(RubinatedNetherBlocks.SOAKSTONE.get());
 
 		this.simpleBlock(RubinatedNetherBlocks.ALTAR_STONE.get());
 		this.simpleBlock(RubinatedNetherBlocks.ALTAR_STONE_TILES.get());
