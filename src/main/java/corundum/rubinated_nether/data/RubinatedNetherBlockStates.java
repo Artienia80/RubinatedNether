@@ -13,7 +13,9 @@ public class RubinatedNetherBlockStates extends BlockStateProvider {
 
 	@Override
 	protected void registerStatesAndModels() {
+		this.simpleBlock(RubinatedNetherBlocks.NETHER_RUBY_ORE.get());
 		this.simpleBlock(RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get());
+		this.simpleBlock(RubinatedNetherBlocks.RUBINATED_BLACKSTONE.get());
 
 		this.simpleBlock(
 			RubinatedNetherBlocks.CHANDELIER.get(),

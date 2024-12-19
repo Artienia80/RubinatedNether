@@ -42,5 +42,13 @@ public class RubinatedNetherBlockLoot extends BlockLootSubProvider {
 			RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get(),
 			RubinatedNetherItems.MOLTEN_RUBY_ITEM.get()
 		);
+		this.dropOther(
+			RubinatedNetherBlocks.NETHER_RUBY_ORE.get(),
+			RubinatedNetherItems.RUBY_ITEM.get()
+		);
+		this.dropOther(
+			RubinatedNetherBlocks.RUBINATED_BLACKSTONE.get(),
+			RubinatedNetherItems.RUBY_ITEM.get()
+		);
 	}
 }

@@ -15,11 +15,13 @@ public class RubinatednetherItemModels extends ItemModelProvider {
 	@Override
 	protected void registerModels() {
 		// Block items
+		this.simpleBlockItem(RubinatedNetherBlocks.NETHER_RUBY_ORE.get());
 		this.simpleBlockItem(RubinatedNetherBlocks.MOLTEN_RUBY_ORE.get());
-		this.simpleBlockItem(RubinatedNetherBlocks.DRY_ICE.get());
+		this.simpleBlockItem(RubinatedNetherBlocks.RUBINATED_BLACKSTONE.get());
 
 		this.basicItem(RubinatedNetherBlocks.CHANDELIER.asItem());
 		this.simpleBlockItem(RubinatedNetherBlocks.LAVA_LAMP.get());
+		this.simpleBlockItem(RubinatedNetherBlocks.DRY_ICE.get());
 		this.simpleBlockItem(RubinatedNetherBlocks.SOAKSTONE.get());
 
 		this.simpleBlockItem(RubinatedNetherBlocks.ALTAR_STONE.get());

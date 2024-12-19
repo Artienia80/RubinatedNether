@@ -8,6 +8,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -15,6 +16,22 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class RubinatedNetherBlocks {
 	public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(RubinatedNether.MODID);
 
+	public static final DeferredBlock<DropExperienceBlock> NETHER_RUBY_ORE = registerBlockAndItem(
+		"nether_ruby_ore", 
+		() -> new DropExperienceBlock(
+			UniformInt.of(3, 6),
+			Block.Properties.ofFullCopy(Blocks.NETHERRACK)
+				.strength(2.F)
+				.requiresCorrectToolForDrops()
+		)
+	);
+	public static final DeferredBlock<DropExperienceBlock> RUBINATED_BLACKSTONE = registerBlockAndItem(
+		"rubinated_blackstone", 
+		() -> new DropExperienceBlock(
+			UniformInt.of(0, 1), // TODO: Figure out actual values
+			Block.Properties.ofFullCopy(Blocks.GILDED_BLACKSTONE)
+		)
+	);
 	public static final DeferredBlock<MagmaExperienceBlock> MOLTEN_RUBY_ORE = registerBlockAndItem(
 		"molten_ruby_ore",
 		() -> new MagmaExperienceBlock(
