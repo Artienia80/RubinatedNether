@@ -13,6 +13,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
@@ -151,6 +152,62 @@ public class RNRecipeProvider extends RecipeProvider {
 				2
 		);
 
+		threeByThree(
+				recipeOutput,
+				RNItems.RUBY_SHARD_ITEM,
+				RNItems.RUBY_ITEM,
+				1
+		);
+
+		threeByThree(
+				recipeOutput,
+				RNItems.MOLTEN_RUBY_NUGGET_ITEM,
+				RNItems.MOLTEN_RUBY_ITEM,
+				1
+		);
+
+		threeByThree(
+				recipeOutput,
+				RNItems.MOLTEN_RUBY_ITEM,
+				RNBlocks.MOLTEN_RUBY_BLOCK,
+				1
+		);
+
+		threeByThree(
+				recipeOutput,
+				RNItems.RUBY_SHARD_ITEM,
+				RNBlocks.MOLTEN_RUBY_BLOCK,
+				1
+		);
+
+		one(
+				recipeOutput,
+				RNBlocks.RUBY_BLOCK,
+				RNItems.RUBY_ITEM,
+				9
+		);
+
+		one(
+				recipeOutput,
+				RNBlocks.MOLTEN_RUBY_BLOCK,
+				RNItems.MOLTEN_RUBY_ITEM,
+				9
+		);
+
+		one(
+				recipeOutput,
+				RNItems.RUBY_ITEM,
+				RNItems.RUBY_SHARD_ITEM,
+				9
+		);
+
+		one(
+				recipeOutput,
+				RNItems.MOLTEN_RUBY_ITEM,
+				RNItems.MOLTEN_RUBY_NUGGET_ITEM,
+				9
+		);
+
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS, 8)
 				.define('X', RNBlocks.CHISELED_ALTAR_STONE_BRICKS)
 				.define('O', RNItems.RUBY_ITEM)
@@ -168,6 +225,15 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern("XXX")
 				.unlockedBy(getHasName(Blocks.CRYING_OBSIDIAN), has(RNItems.RUBY_ITEM))
 				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.MUSIC_DISC_SHIMMER, 8)
+				.define('X', RNItems.RUBY_SHARD_ITEM)
+				.define('O', Items.MUSIC_DISC_PIGSTEP)
+				.pattern("XXX")
+				.pattern("XOX")
+				.pattern("XXX")
+				.unlockedBy(getHasName(RNItems.RUBY_SHARD_ITEM), has(Items.MUSIC_DISC_PIGSTEP))
+				.save(recipeOutput);
 	}
 
 	private void twoByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
@@ -183,6 +249,24 @@ public class RNRecipeProvider extends RecipeProvider {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
 				.define('I', input)
 				.pattern("I")
+				.pattern("I")
+				.unlockedBy(getHasName(input), has(input))
+				.save(recipeOutput);
+	}
+
+	private void threeByThree(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
+				.define('I', input)
+				.pattern("III")
+				.pattern("III")
+				.pattern("III")
+				.unlockedBy(getHasName(input), has(input))
+				.save(recipeOutput);
+	}
+
+	private void one(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
+				.define('I', input)
 				.pattern("I")
 				.unlockedBy(getHasName(input), has(input))
 				.save(recipeOutput);
