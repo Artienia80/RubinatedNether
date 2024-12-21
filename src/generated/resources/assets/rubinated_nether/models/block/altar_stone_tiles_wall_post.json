@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/wall_inventory",
+  "parent": "minecraft:block/template_wall_post",
   "textures": {
     "wall": "rubinated_nether:block/altar_stone_tiles"
   }
