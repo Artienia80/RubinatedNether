@@ -133,6 +133,20 @@ public class RNRecipeProvider extends RecipeProvider {
 				4
 		);
 
+		twoByTwo(
+				recipeOutput,
+				RNBlocks.ALTAR_STONE_BRICKS_SLAB,
+				RNBlocks.CHISELED_ALTAR_STONE_BRICKS,
+				1
+		);
+
+		twoByTwo(
+				recipeOutput,
+				RNBlocks.ALTAR_STONE,
+				RNBlocks.ALTAR_STONE_PILLAR,
+				2
+		);
+
 	}
 
 	@SuppressWarnings("unused")
@@ -141,6 +155,14 @@ public class RNRecipeProvider extends RecipeProvider {
 				.define('I', input)
 				.pattern("II")
 				.pattern("II")
+				.unlockedBy(getHasName(input), has(input))
+				.save(recipeOutput);
+	}
+	private void oneByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
+				.define('I', input)
+				.pattern("I")
+				.pattern("I")
 				.unlockedBy(getHasName(input), has(input))
 				.save(recipeOutput);
 	}
