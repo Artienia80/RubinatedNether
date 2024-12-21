@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "rough_ruby",
+  "ingredients": [
+	{
+	  "item": "rubinated_nether:rough_ruby_block"
+	}
+  ],
+  "result": {
+	"item": "rubinated_nether:rough_ruby",
+	"count": 9
+  },
+  "fabric:load_conditions": [
+	{
+	  "condition": "fabric:all_mods_loaded",
+	  "values": [
+		"spelunkery"
+	  ]
+	}
+  ],
+  "conditions": [
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "spelunkery"
+	}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+	"S": {
+	  "item": "rubinated_nether:altar_stone"
+	}
+  },
+  "pattern": [
+	"S",
+	"S"
+  ],
+  "result": {
+	"count": 2,
+	"item": "rubinated_nether:altar_stone_pillar"
+  },
+  "show_notification": true
+}

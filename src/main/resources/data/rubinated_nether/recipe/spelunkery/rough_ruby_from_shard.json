@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "rough_ruby",
+  "pattern": [
+	"###",
+	"###",
+	"###"
+  ],
+  "key": {
+	"#": {
+	  "item": "rubinated_nether:rough_ruby_shard"
+	}
+  },
+  "result": {
+	"item": "rubinated_nether:rough_ruby"
+  },
+  "fabric:load_conditions": [
+	{
+	  "condition": "fabric:all_mods_loaded",
+	  "values": [
+		"spelunkery"
+	  ]
+	}
+  ],
+  "conditions": [
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "spelunkery"
+	}
+  ]
+}

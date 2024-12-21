@@ -1,6 +1,6 @@
 package corundum.rubinated_nether.content.blocks;
 
-import corundum.rubinated_nether.content.RubinatedNetherTags;
+import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -54,8 +54,8 @@ public class DryIceBlock extends Block {
 				FluidState fluidState = level.getFluidState(pos.below().relative(direction));
 
 				// In Nether, block below must be Coldest Ice and Coldest Fluid must be nearby
-				if (fluidState.is(RubinatedNetherTags.Fluids.COLDEST_FLUID)) 
-					return blockState.is(RubinatedNetherTags.Blocks.COLDEST_ICE);
+				if (fluidState.is(RNTags.Fluids.COLDEST_FLUID))
+					return blockState.is(RNTags.Blocks.COLDEST_ICE);
 			}
 			// No ectoplasm found, return false
 			return false;
@@ -72,6 +72,6 @@ public class DryIceBlock extends Block {
 		}
 
 		// For other dimensions (including Overworld), block below must be Coldest Ice
-		return blockState.is(RubinatedNetherTags.Blocks.COLDEST_ICE);
+		return blockState.is(RNTags.Blocks.COLDEST_ICE);
 	}
 }

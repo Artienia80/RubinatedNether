@@ -1,0 +1,17 @@
+{
+  "key": {
+	"#reactor_topsoil" : "minecraft:crimson_nylium",
+	"#reactor_subsoil" : "minecraft:netherrack",
+	"#reactor_stone" : "minecraft:netherrack",
+
+	"#reactor_plants" : "minecraft:crimson_roots",
+
+	"#reactor_logs": "minecraft:crimson_stem",
+	"#reactor_wood": "minecraft:crimson_hyphae",
+	"#reactor_stripped_logs": "minecraft:stripped_crimson_stem",
+	"#reactor_stripped_wood": "minecraft:stripped_crimson_hyphae",
+	"#reactor_leaves" : "minecraft:nether_wart",
+
+	"#reactor_planks": "minecraft:crimson_planks"
+  }
+}

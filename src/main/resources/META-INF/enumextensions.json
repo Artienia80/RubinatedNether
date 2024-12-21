@@ -1,0 +1,28 @@
+{
+  "entries": [
+    {
+      "enum": "net/minecraft/world/inventory/RecipeBookType",
+      "name": "RUBINATED_NETHER_FREEZER",
+      "constructor": "()V",
+      "parameters": [ ]
+    },
+    {
+      "enum": "net/minecraft/client/RecipeBookCategories",
+      "name": "RUBINATED_NETHER_FREEZABLE_SEARCH",
+      "constructor": "(Ljava/util/function/Supplier;)V",
+      "parameters": {
+        "class": "corundum/rubinated_nether/content/RNEnumExtensions",
+        "method": "freezingSearchIcon"
+      }
+    },
+    {
+      "enum": "net/minecraft/client/RecipeBookCategories",
+      "name": "RUBINATED_NETHER_FREEZABLE_MISC",
+      "constructor": "(Ljava/util/function/Supplier;)V",
+      "parameters": {
+        "class": "corundum/rubinated_nether/content/RNEnumExtensions",
+        "method": "freezingMiscIcon"
+      }
+    }
+  ]
+}

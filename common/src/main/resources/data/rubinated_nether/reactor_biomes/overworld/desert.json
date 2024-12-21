@@ -1,0 +1,16 @@
+{
+  "key": {
+	"#reactor_topsoil" : "minecraft:sand",
+	"#reactor_subsoil" : "minecraft:sand",
+	"#reactor_stone" : "minecraft:sandstone",
+
+	"#reactor_plants" : "minecraft:dead_shrub",
+
+	"#reactor_logs": "minecraft:cactus",
+	"#reactor_wood": "minecraft:cactus",
+	"#reactor_stripped_logs": "minecraft:cactus",
+	"#reactor_stripped_wood": "minecraft:cactus",
+
+	"#reactor_leaves" : "minecraft:air"
+  }
+}

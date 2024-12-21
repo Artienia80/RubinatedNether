@@ -1,0 +1,36 @@
+{
+  "replace": false,
+  "values": [
+	"rubinated_nether:ruby",
+	"rubinated_nether:molten_ruby",
+	"rubinated_nether:ruby_shard",
+	"rubinated_nether:molten_ruby_nugget",
+	"rubinated_nether:ruby_block",
+	"rubinated_nether:molten_ruby_block",
+	"rubinated_nether:nether_ruby_ore",
+	"rubinated_nether:molten_ruby_ore",
+	"rubinated_nether:bleeding_obsidian",
+	"rubinated_nether:ruby_glass",
+	"rubinated_nether:molten_ruby_glass",
+	"rubinated_nether:rubinated_blackstone",
+	"rubinated_nether:ruby_lantern",
+	"rubinated_nether:ruby_chandelier",
+	"rubinated_nether:ruby_brazier",
+	"rubinated_nether:ruby_glass_pane",
+	"rubinated_nether:molten_ruby_glass_pane",
+	"rubinated_nether:ruby_lava_lamp",
+	"rubinated_nether:ruby_lens",
+	{
+	  "id": "rubinated_nether:rough_ruby",
+	  "required": false
+	},
+	{
+	  "id": "rubinated_nether:rough_ruby_shard",
+	  "required": false
+	},
+	{
+	  "id": "rubinated_nether:rough_ruby_block",
+	  "required": false
+	}
+  ]
+}

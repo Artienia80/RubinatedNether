@@ -6,13 +6,13 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.data.sub_providers.RubinatedNetherBlockLoot;
-import corundum.rubinated_nether.data.tags.RubinatedNetherBlockTags;
-import corundum.rubinated_nether.data.tags.RubinatedNetherFluidTags;
-import corundum.rubinated_nether.data.tags.RubinatedNetherItemTags;
-import corundum.rubinated_nether.data.worldgen.RubinatedNetherBiomeModifiers;
-import corundum.rubinated_nether.data.worldgen.RubinatedNetherConfiguredFeatures;
-import corundum.rubinated_nether.data.worldgen.RubinatedNetherPlacedFeatures;
+import corundum.rubinated_nether.data.sub_providers.RNBlockLoot;
+import corundum.rubinated_nether.data.tags.RNBlockTags;
+import corundum.rubinated_nether.data.tags.RNFluidTags;
+import corundum.rubinated_nether.data.tags.RNItemTags;
+import corundum.rubinated_nether.data.worldgen.RNBiomeModifiers;
+import corundum.rubinated_nether.data.worldgen.RNConfiguredFeatures;
+import corundum.rubinated_nether.data.worldgen.RNPlacedFeatures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -33,20 +33,20 @@ public class Datagen {
 		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 		PackOutput output = datagen.getPackOutput();
 
-		datagen.addProvider(event.includeClient(), new RubinatedNetherBlockStates(output, fileHelper));
-		datagen.addProvider(event.includeClient(), new RubinatednetherItemModels(output, fileHelper));
-		datagen.addProvider(event.includeClient(), new RubinatedNetherLanguage(output));
+		datagen.addProvider(event.includeClient(), new RNBlockStates(output, fileHelper));
+		datagen.addProvider(event.includeClient(), new RNItemModels(output, fileHelper));
+		datagen.addProvider(event.includeClient(), new RNLanguage(output));
 
-		datagen.addProvider(event.includeServer(), new RubinatedNetherRecipes(output, lookupProvider));
+		datagen.addProvider(event.includeServer(), new RNRecipeProvider(output, lookupProvider));
 
 		// Tags
-		var blockTags = new RubinatedNetherBlockTags(output, lookupProvider, fileHelper);
+		var blockTags = new RNBlockTags(output, lookupProvider, fileHelper);
 
 		datagen.addProvider(event.includeClient(), blockTags);
 		
 		datagen.addProvider(
 			event.includeClient(), 
-			new RubinatedNetherItemTags(
+			new RNItemTags(
 				output, 
 				lookupProvider, 
 				blockTags.contentsGetter(), 
@@ -54,7 +54,7 @@ public class Datagen {
 			)
 		);
 
-		datagen.addProvider(event.includeClient(), new RubinatedNetherFluidTags(output, lookupProvider, fileHelper));
+		datagen.addProvider(event.includeClient(), new RNFluidTags(output, lookupProvider, fileHelper));
 
 		// Worldgen
 		datagen.addProvider(
@@ -63,9 +63,9 @@ public class Datagen {
 				output, 
 				lookupProvider, 
 				new RegistrySetBuilder()
-					.add(Registries.CONFIGURED_FEATURE, RubinatedNetherConfiguredFeatures::bootstap)
-					.add(Registries.PLACED_FEATURE, RubinatedNetherPlacedFeatures::bootstap)
-					.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RubinatedNetherBiomeModifiers::bootstap),
+					.add(Registries.CONFIGURED_FEATURE, RNConfiguredFeatures::bootstap)
+					.add(Registries.PLACED_FEATURE, RNPlacedFeatures::bootstap)
+					.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RNBiomeModifiers::bootstap),
 				Collections.singleton(RubinatedNether.MODID)
 			)
 		);
@@ -78,7 +78,7 @@ public class Datagen {
 				Set.of(), 
 				List.of(
 					new SubProviderEntry(
-						RubinatedNetherBlockLoot::new,
+						RNBlockLoot::new,
 						LootContextParamSets.BLOCK
 					)
 				), 

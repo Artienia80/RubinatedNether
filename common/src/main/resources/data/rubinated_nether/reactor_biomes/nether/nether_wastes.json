@@ -1,0 +1,9 @@
+{
+  "key": {
+	"#reactor_topsoil" : "minecraft:netherrack",
+	"#reactor_subsoil" : "minecraft:netherrack",
+	"#reactor_stone" : "minecraft:netherrack",
+
+	"#reactor_plants" : "minecraft:fire"
+  }
+}

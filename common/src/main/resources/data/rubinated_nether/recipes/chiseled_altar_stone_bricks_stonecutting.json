@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+	"item": "rubinated_nether:altar_stone_bricks"
+  },
+  "result": "rubinated_nether:chiseled_altar_stone_bricks"
+}

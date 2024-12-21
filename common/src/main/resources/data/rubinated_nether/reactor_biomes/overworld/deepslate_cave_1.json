@@ -1,0 +1,19 @@
+{
+  "weight": 20,
+  "key": {
+	"#reactor_topsoil" : "minecraft:sculk_catalyst",
+	"#reactor_subsoil" : "minecraft:sculk",
+	"#reactor_stone" : "minecraft:sculk",
+
+	"#reactor_plants" : "minecraft:sculk_vein",
+
+	"#coal_ores": "minecraft:deepslate_coal_ore",
+	"#iron_ores": "minecraft:deepslate_iron_ore",
+	"#copper_ores": "minecraft:deepslate_copper_ore",
+	"#gold_ores": "minecraft:deepslate_gold_ore",
+	"#redstone_ores": "minecraft:deepslate_redstone_ore",
+	"#emerald_ores": "minecraft:deepslate_emerald_ore",
+	"#lapis_ores": "minecraft:deepslate_lapis_ore",
+	"#diamond_ores": "minecraft:deepslate_diamond_ore"
+  }
+}

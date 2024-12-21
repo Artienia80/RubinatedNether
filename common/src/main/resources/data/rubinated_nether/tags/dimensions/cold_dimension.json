@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+	"minecraft:end",
+	{
+	  "id": "aether:the_aether",
+	  "required": false
+	}
+  ]
+}

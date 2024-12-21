@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+	"BCB",
+	"BDB",
+	"AAA"
+  ],
+  "key": {
+	"A": {
+	  "item": "minecraft:obsidian"
+	},
+	"B": {
+	  "item": "minecraft:copper_ingot"
+	},
+	"C": {
+		"item": "rubinated_nether:molten_ruby"
+	},
+	"D": {
+	  "item": "minecraft:netherite_ingot"
+	}
+  },
+
+  "result": {
+	"item": "rubinated_nether:ruby_brazier"
+  }
+}

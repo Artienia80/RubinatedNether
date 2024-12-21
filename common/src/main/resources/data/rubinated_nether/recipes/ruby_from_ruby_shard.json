@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "ruby",
+  "pattern": [
+	"###",
+	"###",
+	"###"
+  ],
+  "key": {
+	"#": {
+	  "item": "rubinated_nether:ruby_shard"
+	}
+  },
+  "result": {
+	"item": "rubinated_nether:ruby"
+  }
+}
