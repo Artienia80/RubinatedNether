@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "rubinated_nether:block/polished_altar_stone_slab"
+    },
+    "type=double": {
+      "model": "rubinated_nether:block/polished_altar_stone"
+    },
+    "type=top": {
+      "model": "rubinated_nether:block/polished_altar_stone_slab_top"
+    }
+  }
+}

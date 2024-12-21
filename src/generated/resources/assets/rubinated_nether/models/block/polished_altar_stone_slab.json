@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "rubinated_nether:block/polished_altar_stone",
+    "side": "rubinated_nether:block/polished_altar_stone",
+    "top": "rubinated_nether:block/polished_altar_stone"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side",
+  "textures": {
+    "wall": "rubinated_nether:block/polished_altar_stone"
+  }
+}
