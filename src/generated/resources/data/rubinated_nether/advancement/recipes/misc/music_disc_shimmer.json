@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_molten_ruby_nugget": {
+    "has_ruby_shard": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:molten_ruby_nugget"
+            "items": "minecraft:music_disc_pigstep"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:molten_ruby"
+        "recipe": "rubinated_nether:music_disc_shimmer"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_molten_ruby_nugget"
+      "has_ruby_shard"
     ]
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:molten_ruby"
+      "rubinated_nether:music_disc_shimmer"
     ]
   }
 }

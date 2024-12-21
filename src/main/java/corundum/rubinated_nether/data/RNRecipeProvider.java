@@ -152,31 +152,31 @@ public class RNRecipeProvider extends RecipeProvider {
 				2
 		);
 
+//		threeByThree(
+//				recipeOutput,
+//				RNItems.RUBY_SHARD_ITEM,
+//				RNItems.RUBY_ITEM,
+//				1
+//		);
+//
+//		threeByThree(
+//				recipeOutput,
+//				RNItems.MOLTEN_RUBY_NUGGET_ITEM,
+//				RNItems.MOLTEN_RUBY_ITEM,
+//				1
+//		);
+//
+//		threeByThree(
+//				recipeOutput,
+//				RNItems.MOLTEN_RUBY_ITEM,
+//				RNBlocks.MOLTEN_RUBY_BLOCK,
+//				1
+//		);
+//
 		threeByThree(
 				recipeOutput,
-				RNItems.RUBY_SHARD_ITEM,
 				RNItems.RUBY_ITEM,
-				1
-		);
-
-		threeByThree(
-				recipeOutput,
-				RNItems.MOLTEN_RUBY_NUGGET_ITEM,
-				RNItems.MOLTEN_RUBY_ITEM,
-				1
-		);
-
-		threeByThree(
-				recipeOutput,
-				RNItems.MOLTEN_RUBY_ITEM,
-				RNBlocks.MOLTEN_RUBY_BLOCK,
-				1
-		);
-
-		threeByThree(
-				recipeOutput,
-				RNItems.RUBY_SHARD_ITEM,
-				RNBlocks.MOLTEN_RUBY_BLOCK,
+				RNBlocks.RUBY_BLOCK,
 				1
 		);
 
@@ -186,27 +186,27 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNItems.RUBY_ITEM,
 				9
 		);
-
-		one(
-				recipeOutput,
-				RNBlocks.MOLTEN_RUBY_BLOCK,
-				RNItems.MOLTEN_RUBY_ITEM,
-				9
-		);
-
+//
+//		one(
+//				recipeOutput,
+//				RNBlocks.MOLTEN_RUBY_BLOCK,
+//				RNItems.MOLTEN_RUBY_ITEM,
+//				9
+//		);
+//
 		one(
 				recipeOutput,
 				RNItems.RUBY_ITEM,
 				RNItems.RUBY_SHARD_ITEM,
 				9
 		);
-
-		one(
-				recipeOutput,
-				RNItems.MOLTEN_RUBY_ITEM,
-				RNItems.MOLTEN_RUBY_NUGGET_ITEM,
-				9
-		);
+//
+//		one(
+//				recipeOutput,
+//				RNItems.MOLTEN_RUBY_ITEM,
+//				RNItems.MOLTEN_RUBY_NUGGET_ITEM,
+//				9
+//		);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS, 8)
 				.define('X', RNBlocks.CHISELED_ALTAR_STONE_BRICKS)
@@ -226,7 +226,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(Blocks.CRYING_OBSIDIAN), has(RNItems.RUBY_ITEM))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.MUSIC_DISC_SHIMMER, 8)
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.MUSIC_DISC_SHIMMER, 1)
 				.define('X', RNItems.RUBY_SHARD_ITEM)
 				.define('O', Items.MUSIC_DISC_PIGSTEP)
 				.pattern("XXX")
@@ -261,7 +261,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern("III")
 				.pattern("III")
 				.unlockedBy(getHasName(input), has(input))
-				.save(recipeOutput);
+				.save(recipeOutput, output.asItem().toString() + "_from_" + input.asItem().toString());
 	}
 
 	private void one(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
@@ -313,4 +313,6 @@ public class RNRecipeProvider extends RecipeProvider {
 			);
 		}
 	}
+
+
 }
