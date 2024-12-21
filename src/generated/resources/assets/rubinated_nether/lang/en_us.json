@@ -9,6 +9,7 @@
   "block.rubinated_nether.dry_ice": "Dry Ice",
   "block.rubinated_nether.freezer": "Freezer",
   "block.rubinated_nether.lava_lamp": "Molten Ruby Lava Lamp",
+  "block.rubinated_nether.molten_ruby_block": "Block of Molten Ruby",
   "block.rubinated_nether.molten_ruby_glass": "Molten Ruby Glass",
   "block.rubinated_nether.molten_ruby_glass_pane": "Molten Ruby Glass Pane",
   "block.rubinated_nether.molten_ruby_ore": "Molten Ruby Ore",
@@ -25,9 +26,10 @@
   "block.rubinated_nether.soakstone": "Soakstone",
   "gui.rubinated_nether.recipebook.toggleRecipes.freezable": "Showing Freezable",
   "item.rubinated_nether.molten_ruby": "Molten Ruby",
+  "item.rubinated_nether.molten_ruby_nugget": "Molten Ruby Nugget",
+  "item.rubinated_nether.music_disc_shimmer": "Rubinated Music Disc",
   "item.rubinated_nether.ruby": "Ruby",
   "item.rubinated_nether.ruby_shard": "Ruby Shard",
-  "item.rubinated_nether.": "Ruby Shard",
   "itemGroup.examplemod": "Rubinated Nether",
   "menu.rubinated_nether.freezer": "Freezer"
 }
