@@ -190,8 +190,28 @@ public class RNBlocks {
 	);
 	public static final DeferredBlock<Block> ALTAR_STONE_BRICKS = registerBlockAndItem(
 		"altar_stone_bricks",
-		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
+		() -> new Block(Block.Properties.ofFullCopy(RNBlocks.ALTAR_STONE.get()))
 	);
+
+	public static final DeferredBlock<SlabBlock> ALTAR_STONE_BRICKS_SLAB = registerBlockAndItem(
+			"altar_stone_bricks_slab",
+			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.ALTAR_STONE_BRICKS.get())
+			)
+	);
+	public static final DeferredBlock<StairBlock> ALTAR_STONE_BRICKS_STAIRS = registerBlockAndItem(
+			"altar_stone_bricks_stairs",
+			() -> new StairBlock(
+					ALTAR_STONE_BRICKS.get().defaultBlockState(),
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.ALTAR_STONE_BRICKS.get())
+			)
+	);
+	public static final DeferredBlock<WallBlock> ALTAR_STONE_BRICKS_WALL = registerBlockAndItem(
+			"altar_stone_bricks_wall",
+			() -> new WallBlock(
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.ALTAR_STONE_BRICKS.get())
+			)
+	);
+
 	public static final DeferredBlock<Block> CHISELED_ALTAR_STONE_BRICKS = registerBlockAndItem(
 		"chiseled_altar_stone_bricks",
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))

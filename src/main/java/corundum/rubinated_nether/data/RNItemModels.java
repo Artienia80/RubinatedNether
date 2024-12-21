@@ -55,11 +55,15 @@ public class RNItemModels extends ItemModelProvider {
 				modLoc("block/altar_stone_tiles")
 		);
 
-
-
-
 		this.simpleBlockItem(RNBlocks.ALTAR_STONE_PILLAR.get());
+
 		this.simpleBlockItem(RNBlocks.ALTAR_STONE_BRICKS.get());
+		this.simpleBlockItem(RNBlocks.ALTAR_STONE_BRICKS_STAIRS.get());
+		this.simpleBlockItem(RNBlocks.ALTAR_STONE_BRICKS_SLAB.get());
+		wallInventory(
+				RNBlocks.ALTAR_STONE_BRICKS_WALL.getId().toString(),
+				modLoc("block/altar_stone_bricks")
+		);
 		this.simpleBlockItem(RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
 		this.simpleBlockItem(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get());
 		this.basicItem(RNBlocks.RUNESTONE.asItem());

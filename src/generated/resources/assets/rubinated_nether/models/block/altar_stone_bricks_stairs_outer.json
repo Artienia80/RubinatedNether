@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "rubinated_nether:block/altar_stone_bricks",
+    "side": "rubinated_nether:block/altar_stone_bricks",
+    "top": "rubinated_nether:block/altar_stone_bricks"
+  }
+}

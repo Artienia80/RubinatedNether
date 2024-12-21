@@ -5,11 +5,14 @@ import java.util.concurrent.CompletableFuture;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNTags;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -54,6 +57,9 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.ALTAR_STONE_TILES_WALL.get(),
 			RNBlocks.ALTAR_STONE_PILLAR.get(),
 			RNBlocks.ALTAR_STONE_BRICKS.get(),
+			RNBlocks.ALTAR_STONE_BRICKS_STAIRS.get(),
+			RNBlocks.ALTAR_STONE_BRICKS_WALL.get(),
+			RNBlocks.ALTAR_STONE_BRICKS_SLAB.get(),
 			RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
 			RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get(),
 			RNBlocks.RUNESTONE.get()
@@ -91,5 +97,6 @@ public class RNBlockTags extends BlockTagsProvider {
 		this.tag(RNTags.Blocks.COLDEST_ICE).add(
 			Blocks.BLUE_ICE	
 		);
+
 	}
 }

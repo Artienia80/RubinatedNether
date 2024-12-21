@@ -40,10 +40,13 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.ALTAR_STONE_TILES_STAIRS.get());
 		this.dropSelf(RNBlocks.ALTAR_STONE_TILES_WALL.get());
 
-
-
 		this.dropSelf(RNBlocks.ALTAR_STONE_PILLAR.get());
+
 		this.dropSelf(RNBlocks.ALTAR_STONE_BRICKS.get());
+		this.dropSelf(RNBlocks.ALTAR_STONE_BRICKS_SLAB.get());
+		this.dropSelf(RNBlocks.ALTAR_STONE_BRICKS_STAIRS.get());
+		this.dropSelf(RNBlocks.ALTAR_STONE_BRICKS_WALL.get());
+
 		this.dropSelf(RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
 		this.dropSelf(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get());
 		this.dropSelf(RNBlocks.RUNESTONE.get());

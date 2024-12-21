@@ -87,6 +87,20 @@ public class RNBlockStates extends BlockStateProvider {
 
 		this.axisBlock(RNBlocks.ALTAR_STONE_PILLAR.get());
 		this.simpleBlock(RNBlocks.ALTAR_STONE_BRICKS.get());
+		this.slabBlock(
+				RNBlocks.ALTAR_STONE_BRICKS_SLAB.get(),
+				modLoc("block/altar_stone_bricks"),
+				modLoc("block/altar_stone_bricks")
+		);
+		this.stairsBlock(
+				RNBlocks.ALTAR_STONE_BRICKS_STAIRS.get(),
+				modLoc("block/altar_stone_bricks")
+		);
+		this.wallBlock(
+				RNBlocks.ALTAR_STONE_BRICKS_WALL.get(),
+				modLoc("block/altar_stone_bricks")
+		);
+
 		this.simpleBlock(RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
 		this.axisBlock(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get());
 

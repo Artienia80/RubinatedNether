@@ -40,9 +40,14 @@ public class RNLanguage extends LanguageProvider {
 		this.addBlock(RNBlocks.ALTAR_STONE_TILES_WALL, "Altar Stone Tile Wall");
 
 		this.addBlock(RNBlocks.ALTAR_STONE_PILLAR, "Altar Stone Pillar");
+
 		this.addBlock(RNBlocks.ALTAR_STONE_BRICKS, "Altar Stone Bricks");
+		this.addBlock(RNBlocks.ALTAR_STONE_BRICKS_STAIRS, "Altar Stone Brick Stairs");
+		this.addBlock(RNBlocks.ALTAR_STONE_BRICKS_SLAB, "Altar Stone Brick Slab");
+		this.addBlock(RNBlocks.ALTAR_STONE_BRICKS_WALL, "Altar Stone Brick Wall");
+
 		this.addBlock(RNBlocks.CHISELED_ALTAR_STONE_BRICKS, "Chiseled Altar Stone Bricks");
-		this.addBlock(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS, "Bleeding Chiseled Altar Stone Bricks");
+		this.addBlock(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS, "Rubinated Chiseled Altar Stone Bricks");
 		this.addBlock(RNBlocks.RUNESTONE, "Runestone");
 		this.addBlock(RNBlocks.FREEZER, "Freezer");
 
