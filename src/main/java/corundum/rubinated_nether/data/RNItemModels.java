@@ -51,7 +51,7 @@ public class RNItemModels extends ItemModelProvider {
 		this.simpleBlockItem(RNBlocks.ALTAR_STONE_TILES_STAIRS.get());
 		this.simpleBlockItem(RNBlocks.ALTAR_STONE_TILES_SLAB.get());
 		wallInventory(
-				RNBlocks.ALTAR_STONE_TILES.getId().toString(),
+				RNBlocks.ALTAR_STONE_TILES_WALL.getId().toString(),
 				modLoc("block/altar_stone_tiles")
 		);
 
