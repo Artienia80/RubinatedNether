@@ -25,10 +25,23 @@ public class RNRecipeProvider extends RecipeProvider {
 				recipeOutput,
 				RNBlocks.ALTAR_STONE,
 				List.of(
-						RNBlocks.POLISHED_ALTAR_STONE,
-						RNBlocks.ALTAR_STONE_BRICKS,
-						RNBlocks.ALTAR_STONE_TILES,
 						RNBlocks.CHISELED_ALTAR_STONE_BRICKS,
+
+						RNBlocks.ALTAR_STONE_BRICKS_SLAB,
+						RNBlocks.ALTAR_STONE_BRICKS_STAIRS,
+						RNBlocks.ALTAR_STONE_BRICKS_WALL,
+						RNBlocks.ALTAR_STONE_BRICKS,
+
+						RNBlocks.ALTAR_STONE_TILES_SLAB,
+						RNBlocks.ALTAR_STONE_TILES_STAIRS,
+						RNBlocks.ALTAR_STONE_TILES_WALL,
+						RNBlocks.ALTAR_STONE_TILES,
+
+						RNBlocks.POLISHED_ALTAR_STONE_SLAB,
+						RNBlocks.POLISHED_ALTAR_STONE_STAIRS,
+						RNBlocks.POLISHED_ALTAR_STONE_WALL,
+						RNBlocks.POLISHED_ALTAR_STONE,
+
 						RNBlocks.ALTAR_STONE_PILLAR
 				)
 		);
@@ -37,8 +50,19 @@ public class RNRecipeProvider extends RecipeProvider {
 				recipeOutput,
 				RNBlocks.POLISHED_ALTAR_STONE,
 				List.of(
+						RNBlocks.ALTAR_STONE_BRICKS_SLAB,
+						RNBlocks.ALTAR_STONE_BRICKS_STAIRS,
+						RNBlocks.ALTAR_STONE_BRICKS_WALL,
 						RNBlocks.ALTAR_STONE_BRICKS,
-						RNBlocks.ALTAR_STONE_TILES
+
+						RNBlocks.ALTAR_STONE_TILES_SLAB,
+						RNBlocks.ALTAR_STONE_TILES_STAIRS,
+						RNBlocks.ALTAR_STONE_TILES_WALL,
+						RNBlocks.ALTAR_STONE_TILES,
+
+						RNBlocks.POLISHED_ALTAR_STONE_SLAB,
+						RNBlocks.POLISHED_ALTAR_STONE_STAIRS,
+						RNBlocks.POLISHED_ALTAR_STONE_WALL
 				)
 		);
 
@@ -46,7 +70,14 @@ public class RNRecipeProvider extends RecipeProvider {
 				recipeOutput,
 				RNBlocks.ALTAR_STONE_BRICKS,
 				List.of(
-						RNBlocks.ALTAR_STONE_TILES
+						RNBlocks.ALTAR_STONE_BRICKS_SLAB,
+						RNBlocks.ALTAR_STONE_BRICKS_STAIRS,
+						RNBlocks.ALTAR_STONE_BRICKS_WALL,
+						RNBlocks.ALTAR_STONE_BRICKS,
+
+						RNBlocks.ALTAR_STONE_TILES_SLAB,
+						RNBlocks.ALTAR_STONE_TILES_STAIRS,
+						RNBlocks.ALTAR_STONE_TILES_WALL
 				)
 		);
 
