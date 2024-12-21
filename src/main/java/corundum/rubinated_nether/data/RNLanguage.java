@@ -34,6 +34,8 @@ public class RNLanguage extends LanguageProvider {
 		this.addBlock(RNBlocks.MOLTEN_RUBY_GLASS_PANE, "Molten Ruby Glass Pane");
 
 		this.addBlock(RNBlocks.ALTAR_STONE, "Altar Stone");
+		this.addBlock(RNBlocks.POLISHED_ALTAR_STONE, "Polished Altar Stone");
+
 		this.addBlock(RNBlocks.ALTAR_STONE_TILES, "Altar Stone Tiles");
 		this.addBlock(RNBlocks.ALTAR_STONE_TILES_STAIRS, "Altar Stone Tile Stairs");
 		this.addBlock(RNBlocks.ALTAR_STONE_TILES_SLAB, "Altar Stone Tile Slab");

@@ -86,6 +86,7 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.BLEEDING_OBSIDIAN.get(),
 
 			RNBlocks.ALTAR_STONE.get(),
+			RNBlocks.POLISHED_ALTAR_STONE.get(),
 			RNBlocks.ALTAR_STONE_TILES.get(),
 			RNBlocks.ALTAR_STONE_PILLAR.get(),
 			RNBlocks.ALTAR_STONE_BRICKS.get(),

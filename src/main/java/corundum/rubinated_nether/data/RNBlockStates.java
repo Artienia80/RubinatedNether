@@ -69,6 +69,8 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 
 		this.simpleBlock(RNBlocks.ALTAR_STONE.get());
+		this.simpleBlock(RNBlocks.POLISHED_ALTAR_STONE.get());
+
 
 		this.simpleBlock(RNBlocks.ALTAR_STONE_TILES.get());
 		this.slabBlock(

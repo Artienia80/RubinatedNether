@@ -161,6 +161,11 @@ public class RNBlocks {
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
 	);
 
+	public static final DeferredBlock<Block> POLISHED_ALTAR_STONE = registerBlockAndItem(
+			"polished_altar_stone",
+			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.ALTAR_STONE.get()))
+	);
+
 	public static final DeferredBlock<Block> ALTAR_STONE_TILES = registerBlockAndItem(
 		"altar_stone_tiles",
 		() -> new Block(Block.Properties.ofFullCopy(RNBlocks.ALTAR_STONE.get()))
@@ -186,7 +191,7 @@ public class RNBlocks {
 
 	public static final DeferredBlock<RotatedPillarBlock> ALTAR_STONE_PILLAR = registerBlockAndItem(
 		"altar_stone_pillar",
-		() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(Blocks.BASALT))
+		() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(RNBlocks.ALTAR_STONE.get()))
 	);
 	public static final DeferredBlock<Block> ALTAR_STONE_BRICKS = registerBlockAndItem(
 		"altar_stone_bricks",
@@ -214,12 +219,13 @@ public class RNBlocks {
 
 	public static final DeferredBlock<Block> CHISELED_ALTAR_STONE_BRICKS = registerBlockAndItem(
 		"chiseled_altar_stone_bricks",
-		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
+		() -> new Block(Block.Properties.ofFullCopy(RNBlocks.ALTAR_STONE.get()))
 	);
+
 	public static final DeferredBlock<RotatedPillarBlock> RUBINATED_CHISELED_ALTAR_STONE_BRICKS = registerBlockAndItem(
 		"rubinated_chiseled_altar_stone_bricks",
 		() -> new RotatedPillarBlock(
-			Block.Properties.ofFullCopy(Blocks.BASALT)
+			Block.Properties.ofFullCopy(RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get())
 				.lightLevel($ -> 15)
 		)
 	);

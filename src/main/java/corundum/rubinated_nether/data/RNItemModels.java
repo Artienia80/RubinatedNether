@@ -47,6 +47,8 @@ public class RNItemModels extends ItemModelProvider {
 		);
 
 		this.simpleBlockItem(RNBlocks.ALTAR_STONE.get());
+		this.simpleBlockItem(RNBlocks.POLISHED_ALTAR_STONE.get());
+
 		this.simpleBlockItem(RNBlocks.ALTAR_STONE_TILES.get());
 		this.simpleBlockItem(RNBlocks.ALTAR_STONE_TILES_STAIRS.get());
 		this.simpleBlockItem(RNBlocks.ALTAR_STONE_TILES_SLAB.get());
