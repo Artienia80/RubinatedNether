@@ -17,7 +17,6 @@ public class RNRecipeProvider extends RecipeProvider {
 
 	@Override
 	protected void buildRecipes(RecipeOutput recipeOutput) {
-
 	}
 
 	@SuppressWarnings("unused")

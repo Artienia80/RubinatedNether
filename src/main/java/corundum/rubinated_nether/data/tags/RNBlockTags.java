@@ -49,6 +49,9 @@ public class RNBlockTags extends BlockTagsProvider {
 			
 			RNBlocks.ALTAR_STONE.get(),
 			RNBlocks.ALTAR_STONE_TILES.get(),
+			RNBlocks.ALTAR_STONE_TILES_SLAB.get(),
+			RNBlocks.ALTAR_STONE_TILES_STAIRS.get(),
+			RNBlocks.ALTAR_STONE_TILES_WALL.get(),
 			RNBlocks.ALTAR_STONE_PILLAR.get(),
 			RNBlocks.ALTAR_STONE_BRICKS.get(),
 			RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
