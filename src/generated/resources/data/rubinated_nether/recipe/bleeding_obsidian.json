@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "O": {
+      "item": "rubinated_nether:ruby"
+    },
+    "X": {
+      "item": "minecraft:crying_obsidian"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XOX",
+    "XXX"
+  ],
+  "result": {
+    "count": 8,
+    "id": "rubinated_nether:bleeding_obsidian"
+  }
+}
