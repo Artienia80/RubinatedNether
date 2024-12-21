@@ -138,7 +138,6 @@ public class RNRecipeProvider extends RecipeProvider {
 	@SuppressWarnings("unused")
 	private void twoByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
-				.group("idk")
 				.define('I', input)
 				.pattern("II")
 				.pattern("II")
@@ -147,7 +146,6 @@ public class RNRecipeProvider extends RecipeProvider {
 	}
 	private void stairsAndSlab(RecipeOutput recipeOutput, ItemLike input, ItemLike stairs, ItemLike slab) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4)
-				.group("stairs")
 				.define('S', input)
 				.pattern("  S")
 				.pattern(" SS")
@@ -155,7 +153,6 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(input), has(input))
 				.save(recipeOutput);
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, slab, 6)
-				.group("slabs")
 				.define('S', input)
 				.pattern("SSS")
 				.unlockedBy(getHasName(input), has(input))
@@ -163,7 +160,6 @@ public class RNRecipeProvider extends RecipeProvider {
 	}
 	private void wall(RecipeOutput recipeOutput, ItemLike input, ItemLike wall) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, wall, 6)
-				.group("doors")
 				.define('P', input)
 				.pattern("PPP")
 				.pattern("PPP")

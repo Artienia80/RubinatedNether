@@ -1,7 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
-  "group": "doors",
   "key": {
     "P": {
       "item": "rubinated_nether:altar_stone_bricks"

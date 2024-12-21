@@ -1,7 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
-  "group": "slabs",
   "key": {
     "S": {
       "item": "rubinated_nether:altar_stone_bricks"
