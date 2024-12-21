@@ -36,6 +36,9 @@ public class RNCreativeTabs {
 
 				output.accept(RNBlocks.ALTAR_STONE.get());
 				output.accept(RNBlocks.POLISHED_ALTAR_STONE.get());
+				output.accept(RNBlocks.POLISHED_ALTAR_STONE_STAIRS.get());
+				output.accept(RNBlocks.POLISHED_ALTAR_STONE_SLAB.get());
+				output.accept(RNBlocks.POLISHED_ALTAR_STONE_WALL.get());
 
 				output.accept(RNBlocks.ALTAR_STONE_BRICKS.get());
 				output.accept(RNBlocks.ALTAR_STONE_BRICKS_STAIRS.get());

@@ -166,6 +166,25 @@ public class RNBlocks {
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.ALTAR_STONE.get()))
 	);
 
+	public static final DeferredBlock<SlabBlock> POLISHED_ALTAR_STONE_SLAB = registerBlockAndItem(
+			"polished_altar_stone_slab",
+			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.POLISHED_ALTAR_STONE.get())
+			)
+	);
+	public static final DeferredBlock<StairBlock> POLISHED_ALTAR_STONE_STAIRS = registerBlockAndItem(
+			"polished_altar_stone_stairs",
+			() -> new StairBlock(
+					POLISHED_ALTAR_STONE.get().defaultBlockState(),
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.POLISHED_ALTAR_STONE.get())
+			)
+	);
+	public static final DeferredBlock<WallBlock> POLISHED_ALTAR_STONE_WALL = registerBlockAndItem(
+			"polished_altar_stone_wall",
+			() -> new WallBlock(
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.POLISHED_ALTAR_STONE.get())
+			)
+	);
+
 	public static final DeferredBlock<Block> ALTAR_STONE_TILES = registerBlockAndItem(
 		"altar_stone_tiles",
 		() -> new Block(Block.Properties.ofFullCopy(RNBlocks.ALTAR_STONE.get()))
