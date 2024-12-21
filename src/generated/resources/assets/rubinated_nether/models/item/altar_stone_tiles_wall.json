@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "rubinated_nether:block/altar_stone_tiles"
+  }
+}
