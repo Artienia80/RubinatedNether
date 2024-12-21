@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "doors",
+  "key": {
+    "P": {
+      "item": "rubinated_nether:altar_stone_bricks"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "PPP"
+  ],
+  "result": {
+    "count": 6,
+    "id": "rubinated_nether:altar_stone_bricks_wall"
+  }
+}

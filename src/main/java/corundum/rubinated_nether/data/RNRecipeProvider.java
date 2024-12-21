@@ -88,6 +88,12 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.POLISHED_ALTAR_STONE_SLAB
 		);
 
+		wall(
+				recipeOutput,
+				RNBlocks.POLISHED_ALTAR_STONE,
+				RNBlocks.POLISHED_ALTAR_STONE_WALL
+		);
+
 		stairsAndSlab(
 				recipeOutput,
 				RNBlocks.ALTAR_STONE_BRICKS,
@@ -95,11 +101,36 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.ALTAR_STONE_BRICKS_SLAB
 		);
 
+		wall(
+				recipeOutput,
+				RNBlocks.ALTAR_STONE_BRICKS,
+				RNBlocks.ALTAR_STONE_BRICKS_WALL
+		);
+
 		stairsAndSlab(
 				recipeOutput,
 				RNBlocks.ALTAR_STONE_TILES,
 				RNBlocks.ALTAR_STONE_TILES_STAIRS,
 				RNBlocks.ALTAR_STONE_TILES_SLAB
+		);
+
+		wall(
+				recipeOutput,
+				RNBlocks.ALTAR_STONE_TILES,
+				RNBlocks.ALTAR_STONE_TILES_WALL
+		);
+
+		twoByTwo(
+				recipeOutput,
+				RNBlocks.ALTAR_STONE,
+				RNBlocks.POLISHED_ALTAR_STONE,
+				4
+		);
+		twoByTwo(
+				recipeOutput,
+				RNBlocks.POLISHED_ALTAR_STONE,
+				RNBlocks.ALTAR_STONE_BRICKS,
+				4
 		);
 
 	}
