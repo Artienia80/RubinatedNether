@@ -98,5 +98,9 @@ public class RNBlockTags extends BlockTagsProvider {
 			Blocks.BLUE_ICE	
 		);
 
+		this.tag(BlockTags.WALLS).add(
+			RNBlocks.ALTAR_STONE_TILES_WALL.get(),
+			RNBlocks.ALTAR_STONE_BRICKS_WALL.get()
+		);
 	}
 }
