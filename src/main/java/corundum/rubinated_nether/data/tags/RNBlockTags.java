@@ -31,6 +31,7 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.RUBINATED_BLACKSTONE.get(),
 
 			RNBlocks.RUBY_BLOCK.get(),
+			RNBlocks.MOLTEN_RUBY_BLOCK.get(),
 			RNBlocks.BLEEDING_OBSIDIAN.get(),
 
 			RNBlocks.RUBY_LANTERN.get(),
@@ -72,6 +73,7 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.RUBINATED_BLACKSTONE.get(),
 
 			RNBlocks.RUBY_BLOCK.get(),
+			RNBlocks.MOLTEN_RUBY_BLOCK.get(),
 			RNBlocks.BLEEDING_OBSIDIAN.get(),
 
 			RNBlocks.ALTAR_STONE.get(),
