@@ -7,8 +7,8 @@
     }
   },
   "pattern": [
-    "II",
-    "II"
+    "I",
+    "I"
   ],
   "result": {
     "count": 2,
