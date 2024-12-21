@@ -35,6 +35,7 @@ public class RNCreativeTabs {
 				output.accept(RNBlocks.BLEEDING_OBSIDIAN.get());
 
 				output.accept(RNBlocks.ALTAR_STONE.get());
+				output.accept(RNBlocks.POLISHED_ALTAR_STONE.get());
 
 				output.accept(RNBlocks.ALTAR_STONE_BRICKS.get());
 				output.accept(RNBlocks.ALTAR_STONE_BRICKS_STAIRS.get());
