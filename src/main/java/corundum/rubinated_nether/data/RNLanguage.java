@@ -43,6 +43,8 @@ public class RNLanguage extends LanguageProvider {
 
 		this.addItem(RNItems.RUBY_ITEM, "Ruby");
 		this.addItem(RNItems.MOLTEN_RUBY_ITEM, "Molten Ruby");
+		this.addItem(RNItems.RUBY_SHARD_ITEM, "Ruby Shard");
+
 
 		this.add(RNCreativeTabs.RN_TAB.get().getDisplayName().getString(), "Rubinated Nether");
 

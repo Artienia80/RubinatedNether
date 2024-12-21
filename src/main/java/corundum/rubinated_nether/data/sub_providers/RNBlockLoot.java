@@ -61,7 +61,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		);
 		this.dropOther(
 			RNBlocks.RUBINATED_BLACKSTONE.get(),
-			RNItems.RUBY_ITEM.get()
+			RNItems.RUBY_SHARD_ITEM.get()
 		);
 	}
 }

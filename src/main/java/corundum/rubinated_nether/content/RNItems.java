@@ -11,4 +11,6 @@ public class RNItems {
 
 	public static final DeferredItem<Item> RUBY_ITEM = ITEMS.registerSimpleItem("ruby", new Item.Properties());
 	public static final DeferredItem<Item> MOLTEN_RUBY_ITEM = ITEMS.registerSimpleItem("molten_ruby", new Item.Properties());
+	public static final DeferredItem<Item> RUBY_SHARD_ITEM = ITEMS.registerSimpleItem("ruby_shard", new Item.Properties());
+
 }

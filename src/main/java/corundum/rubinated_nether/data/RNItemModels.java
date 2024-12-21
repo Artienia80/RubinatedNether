@@ -55,6 +55,8 @@ public class RNItemModels extends ItemModelProvider {
 		// Non-block items
 		this.basicItem(RNItems.RUBY_ITEM.get());
 		this.basicItem(RNItems.MOLTEN_RUBY_ITEM.get());
+		this.basicItem(RNItems.RUBY_SHARD_ITEM.get());
+
 	}
 
 	private void paneItem(String block, String texture) {

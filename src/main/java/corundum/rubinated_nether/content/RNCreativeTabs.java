@@ -21,6 +21,7 @@ public class RNCreativeTabs {
 			.displayItems((parameters, output) -> {
 				output.accept(RNItems.RUBY_ITEM.get());
 				output.accept(RNItems.MOLTEN_RUBY_ITEM.get());
+				output.accept(RNItems.RUBY_SHARD_ITEM.get());
 				output.accept(RNBlocks.CHANDELIER.get());
 			})
 			.build()
