@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "slabs",
+  "key": {
+    "S": {
+      "item": "rubinated_nether:polished_altar_stone"
+    }
+  },
+  "pattern": [
+    "SSS"
+  ],
+  "result": {
+    "count": 6,
+    "id": "rubinated_nether:polished_altar_stone_slab"
+  }
+}
