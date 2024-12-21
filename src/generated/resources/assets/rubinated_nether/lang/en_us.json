@@ -23,9 +23,10 @@
   "block.rubinated_nether.ruby_lantern": "Ruby Lantern",
   "block.rubinated_nether.runestone": "Runestone",
   "block.rubinated_nether.soakstone": "Soakstone",
-  "gui.rubinated_nether.recipeBook.toggleRecipes.freezable": "Showing Freezable",
+  "gui.rubinated_nether.recipebook.toggleRecipes.freezable": "Showing Freezable",
   "item.rubinated_nether.molten_ruby": "Molten Ruby",
   "item.rubinated_nether.ruby": "Ruby",
+  "item.rubinated_nether.ruby_shard": "Ruby Shard",
   "itemGroup.examplemod": "Rubinated Nether",
   "menu.rubinated_nether.freezer": "Freezer"
 }

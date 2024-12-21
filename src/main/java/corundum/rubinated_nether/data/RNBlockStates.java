@@ -79,8 +79,6 @@ public class RNBlockStates extends BlockStateProvider {
 			this.models()
 				.withExistingParent("runestone", this.modLoc("block/runestone_base"))
 		);
-
-		this.simpleBlock(RNBlocks.FREEZER.get());
 	}
 
 	private void glassWithPane(Block glass, IronBarsBlock pane, String name, ResourceLocation edge) {

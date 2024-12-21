@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:ruby_shard"
+          "name": "rubinated_nether:freezer"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "rubinated_nether:blocks/rubinated_blackstone"
+  "random_sequence": "rubinated_nether:blocks/freezer"
 }

@@ -11,6 +11,9 @@ out/
 # Eclipse
 .eclipse/
 
+# VSCode
+.vscode/
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 

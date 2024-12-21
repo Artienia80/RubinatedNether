@@ -185,7 +185,14 @@ public class RNBlocks {
 		)
 	);
 
-		public static final DeferredBlock<Block> FREEZER = registerBlockAndItem("freezer", () -> new FreezerBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK)));
+	public static final DeferredBlock<Block> FREEZER = registerBlockAndItem(
+		"freezer", 
+		() -> new FreezerBlock(
+			BlockBehaviour.Properties
+				.ofFullCopy(Blocks.COPPER_BLOCK)
+				.noOcclusion()
+		)
+	);
 
 	/// Registers a block and an item 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
