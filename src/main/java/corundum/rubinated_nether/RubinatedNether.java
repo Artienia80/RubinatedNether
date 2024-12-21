@@ -3,14 +3,11 @@ package corundum.rubinated_nether;
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
-import corundum.rubinated_nether.content.recipe.RNBookCategory;
-import corundum.rubinated_nether.content.recipe.RNRecipeBookTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
@@ -38,7 +35,6 @@ public class RubinatedNether {
 		RNMenuTypes.MENUS.register(modEventBus);
 
 		modEventBus.addListener(Datagen::datagen);
-		modEventBus.addListener(RNCreativeTabs::addCreative);
 		if (dist == Dist.CLIENT) {
 			modEventBus.addListener(RNRecipeCategories::registerRecipeCategories);
 		}

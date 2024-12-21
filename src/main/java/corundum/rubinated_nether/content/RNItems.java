@@ -2,7 +2,6 @@ package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.JukeboxSongs;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;

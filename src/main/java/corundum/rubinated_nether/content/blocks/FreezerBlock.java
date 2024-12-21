@@ -2,7 +2,6 @@ package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.content.RNBlockEntities;
-import corundum.rubinated_nether.content.blocks.entities.AbstractFreezerBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;

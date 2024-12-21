@@ -12,7 +12,6 @@ import net.minecraft.world.item.ItemStack;
 
 
 import net.minecraft.world.item.crafting.*;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;

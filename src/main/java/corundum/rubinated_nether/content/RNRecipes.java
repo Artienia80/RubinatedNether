@@ -9,8 +9,13 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class RNRecipes {
-    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, RubinatedNether.MODID);
+	public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(
+		BuiltInRegistries.RECIPE_TYPE, 
+		RubinatedNether.MODID
+	);
 
-    public static final DeferredHolder<RecipeType<?>, RecipeType<FreezingRecipe>> FREEZING = RECIPE_TYPES.register("freezing", () ->
-            RecipeType.simple(ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "freezing")));
+	public static final DeferredHolder<RecipeType<?>, RecipeType<FreezingRecipe>> FREEZING = RECIPE_TYPES.register(
+		"freezing", 
+		() -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "freezing"))
+		);
 }

@@ -8,9 +8,16 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class RNMenuTypes {
-    public static final DeferredRegister<MenuType<?>> MENUS =
-            DeferredRegister.create(BuiltInRegistries.MENU, RubinatedNether.MODID);
+	public static final DeferredRegister<MenuType<?>> MENUS =DeferredRegister.create(
+		BuiltInRegistries.MENU, 
+		RubinatedNether.MODID
+	);
 
-    public static final DeferredHolder<MenuType<?>, MenuType<FreezerMenu>> FREEZER_MENU = MENUS.register("freezer_menu", () ->
-            new MenuType<>(FreezerMenu::new, FeatureFlags.VANILLA_SET));
+	public static final DeferredHolder<MenuType<?>, MenuType<FreezerMenu>> FREEZER_MENU = MENUS.register(
+		"freezer_menu", 
+		() -> new MenuType<>(
+			FreezerMenu::new, 
+			FeatureFlags.VANILLA_SET
+		)
+	);
 }
