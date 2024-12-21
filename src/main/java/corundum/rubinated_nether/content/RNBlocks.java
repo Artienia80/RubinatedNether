@@ -158,7 +158,7 @@ public class RNBlocks {
 	);
 	public static final DeferredBlock<Block> ALTAR_STONE = registerBlockAndItem(
 		"altar_stone",
-		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
+		() -> new Block(Block.Properties.ofFullCopy(Blocks.DEEPSLATE))
 	);
 
 	public static final DeferredBlock<Block> POLISHED_ALTAR_STONE = registerBlockAndItem(
