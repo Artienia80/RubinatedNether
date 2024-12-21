@@ -45,7 +45,7 @@ public class RNCreativeTabs {
 
 				output.accept(RNBlocks.ALTAR_STONE_PILLAR.get());
 				output.accept(RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
-				output.accept(RNBlocks.BLEEDING_CHISELED_ALTAR_STONE_BRICKS.get());
+				output.accept(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get());
 
 				output.accept(RNBlocks.SOAKSTONE.get());
 

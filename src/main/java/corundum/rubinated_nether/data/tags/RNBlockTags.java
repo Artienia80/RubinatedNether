@@ -55,7 +55,7 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.ALTAR_STONE_PILLAR.get(),
 			RNBlocks.ALTAR_STONE_BRICKS.get(),
 			RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
-			RNBlocks.BLEEDING_CHISELED_ALTAR_STONE_BRICKS.get(),
+			RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get(),
 			RNBlocks.RUNESTONE.get()
 		);
 
@@ -84,7 +84,7 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.ALTAR_STONE_PILLAR.get(),
 			RNBlocks.ALTAR_STONE_BRICKS.get(),
 			RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
-			RNBlocks.BLEEDING_CHISELED_ALTAR_STONE_BRICKS.get(),
+			RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get(),
 			RNBlocks.RUNESTONE.get()
 		);
 

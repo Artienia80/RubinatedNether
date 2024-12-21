@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:bleeding_chiseled_altar_stone_bricks"
+          "name": "rubinated_nether:rubinated_chiseled_altar_stone_bricks"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "rubinated_nether:blocks/bleeding_chiseled_altar_stone_bricks"
+  "random_sequence": "rubinated_nether:blocks/rubinated_chiseled_altar_stone_bricks"
 }

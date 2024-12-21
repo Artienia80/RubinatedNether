@@ -61,7 +61,7 @@ public class RNItemModels extends ItemModelProvider {
 		this.simpleBlockItem(RNBlocks.ALTAR_STONE_PILLAR.get());
 		this.simpleBlockItem(RNBlocks.ALTAR_STONE_BRICKS.get());
 		this.simpleBlockItem(RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
-		this.simpleBlockItem(RNBlocks.BLEEDING_CHISELED_ALTAR_STONE_BRICKS.get());
+		this.simpleBlockItem(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get());
 		this.basicItem(RNBlocks.RUNESTONE.asItem());
 
 		// Non-block items

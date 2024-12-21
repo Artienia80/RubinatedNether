@@ -196,8 +196,8 @@ public class RNBlocks {
 		"chiseled_altar_stone_bricks",
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.BASALT))
 	);
-	public static final DeferredBlock<RotatedPillarBlock> BLEEDING_CHISELED_ALTAR_STONE_BRICKS = registerBlockAndItem(
-		"bleeding_chiseled_altar_stone_bricks",
+	public static final DeferredBlock<RotatedPillarBlock> RUBINATED_CHISELED_ALTAR_STONE_BRICKS = registerBlockAndItem(
+		"rubinated_chiseled_altar_stone_bricks",
 		() -> new RotatedPillarBlock(
 			Block.Properties.ofFullCopy(Blocks.BASALT)
 				.lightLevel($ -> 15)

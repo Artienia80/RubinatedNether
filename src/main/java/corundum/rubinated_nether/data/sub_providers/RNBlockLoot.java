@@ -45,7 +45,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.ALTAR_STONE_PILLAR.get());
 		this.dropSelf(RNBlocks.ALTAR_STONE_BRICKS.get());
 		this.dropSelf(RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
-		this.dropSelf(RNBlocks.BLEEDING_CHISELED_ALTAR_STONE_BRICKS.get());
+		this.dropSelf(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get());
 		this.dropSelf(RNBlocks.RUNESTONE.get());
 
 		this.dropWhenSilkTouch(RNBlocks.RUBY_GLASS.get());
