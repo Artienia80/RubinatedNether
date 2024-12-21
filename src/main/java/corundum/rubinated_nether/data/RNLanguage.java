@@ -17,6 +17,7 @@ public class RNLanguage extends LanguageProvider {
 		this.addBlock(RNBlocks.RUBINATED_BLACKSTONE, "Rubinated Blackstone");
 
 		this.addBlock(RNBlocks.RUBY_BLOCK, "Block of Ruby");
+		this.addBlock(RNBlocks.MOLTEN_RUBY_BLOCK, "Block of Molten Ruby");
 		this.addBlock(RNBlocks.BLEEDING_OBSIDIAN, "Bleeding Obsidian");
 
 		this.addBlock(RNBlocks.RUBY_LANTERN, "Ruby Lantern");
@@ -44,6 +45,11 @@ public class RNLanguage extends LanguageProvider {
 		this.addItem(RNItems.RUBY_ITEM, "Ruby");
 		this.addItem(RNItems.MOLTEN_RUBY_ITEM, "Molten Ruby");
 		this.addItem(RNItems.RUBY_SHARD_ITEM, "Ruby Shard");
+		this.addItem(RNItems.MOLTEN_RUBY_NUGGET_ITEM, "Molten Ruby Nugget");
+
+		this.addItem(RNItems.MUSIC_DISC_SHIMMER, "Rubinated Music Disc");
+
+
 
 
 		this.add(RNCreativeTabs.RN_TAB.get().getDisplayName().getString(), "Rubinated Nether");

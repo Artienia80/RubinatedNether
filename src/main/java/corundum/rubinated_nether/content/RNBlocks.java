@@ -59,6 +59,11 @@ public class RNBlocks {
 				.mapColor(MapColor.FIRE)
 		)
 	);
+
+	public static final DeferredBlock<RotatedPillarBlock> MOLTEN_RUBY_BLOCK = registerBlockAndItem(
+			"molten_ruby_block",
+			() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK))
+	);
 	public static final DeferredBlock<Block> BLEEDING_OBSIDIAN = registerBlockAndItem(
 		"bleeding_obsidian", 
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.CRYING_OBSIDIAN))

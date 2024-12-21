@@ -20,6 +20,8 @@ public class RNItemModels extends ItemModelProvider {
 		this.simpleBlockItem(RNBlocks.RUBINATED_BLACKSTONE.get());
 
 		this.simpleBlockItem(RNBlocks.RUBY_BLOCK.get());
+		this.simpleBlockItem(RNBlocks.MOLTEN_RUBY_BLOCK.get());
+
 		this.simpleBlockItem(RNBlocks.BLEEDING_OBSIDIAN.get());
 
 		this.basicItem(RNBlocks.RUBY_LANTERN.asItem());
@@ -56,6 +58,10 @@ public class RNItemModels extends ItemModelProvider {
 		this.basicItem(RNItems.RUBY_ITEM.get());
 		this.basicItem(RNItems.MOLTEN_RUBY_ITEM.get());
 		this.basicItem(RNItems.RUBY_SHARD_ITEM.get());
+		this.basicItem(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get());
+		this.basicItem(RNItems.MUSIC_DISC_SHIMMER.get());
+
+
 
 	}
 

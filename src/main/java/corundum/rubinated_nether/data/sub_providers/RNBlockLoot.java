@@ -25,6 +25,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 	@Override
 	protected void generate() {
 		this.dropSelf(RNBlocks.RUBY_BLOCK.get());
+		this.dropSelf(RNBlocks.MOLTEN_RUBY_BLOCK.get());
 		this.dropSelf(RNBlocks.BLEEDING_OBSIDIAN.get());
 
 		this.dropSelf(RNBlocks.RUBY_LANTERN.get());
