@@ -73,8 +73,11 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.DISCOLORED_BRONZE_BLOCK.get(),
 				RNBlocks.CORRODED_BRONZE_BLOCK.get(),
 				RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()
-				);
+				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
+
+				RNBlocks.FREEZER.get()
+
+		);
 
 		this.tag(BlockTags.NEEDS_STONE_TOOL).add(
 			RNBlocks.RUBY_GLASS.get(),
@@ -122,7 +125,9 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.DISCOLORED_BRONZE_BLOCK.get(),
 				RNBlocks.CORRODED_BRONZE_BLOCK.get(),
 				RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()
+				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
+
+				RNBlocks.FREEZER.get()
 		);
 
 		this.tag(RNTags.Blocks.COLDEST_ICE).add(

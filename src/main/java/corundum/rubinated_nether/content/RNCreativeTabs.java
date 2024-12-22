@@ -59,6 +59,7 @@ public class RNCreativeTabs {
 				output.accept(RNBlocks.RUBY_GLASS.get());
 				output.accept(RNBlocks.RUBY_GLASS_PANE.get());
 				output.accept(RNBlocks.MOLTEN_RUBY_GLASS.get());
+				output.accept(RNBlocks.MOLTEN_RUBY_GLASS_PANE.get());
 				output.accept(RNBlocks.ORNATE_RUBY_GLASS.get());
 				output.accept(RNBlocks.ORNATE_RUBY_GLASS_PANE.get());
 
