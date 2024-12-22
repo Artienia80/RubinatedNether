@@ -6,5 +6,7 @@
   "ingredient": {
     "item": "minecraft:magma_block"
   },
-  "result": "rubinated_nether:soakstone"
+  "result": {
+    "id": "rubinated_nether:soakstone"
+  }
 }

@@ -6,5 +6,7 @@
   "ingredient": {
 	"item": "minecraft:water_bucket"
   },
-  "result": "rubinated_nether:frosted_ice"
+  "result": {
+    "id": "rubinated_nether:frosted_ice"
+  }
 }

@@ -6,5 +6,7 @@
   "ingredient": {
     "item": "rubinated_nether:molten_ruby"
   },
-  "result": "rubinated_nether:ruby"
+  "result": {
+    "id": "rubinated_nether:ruby"
+  }
 }

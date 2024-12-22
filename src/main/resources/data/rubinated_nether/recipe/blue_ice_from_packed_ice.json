@@ -6,5 +6,7 @@
   "ingredient": {
     "item": "minecraft:packed_ice"
   },
-  "result": "minecraft:blue_ice"
+  "result": {
+    "id": "minecraft:blue_ice"
+  }
 }

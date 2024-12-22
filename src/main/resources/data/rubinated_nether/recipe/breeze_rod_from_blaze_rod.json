@@ -6,5 +6,7 @@
   "ingredient": {
     "item": "minecraft:blaze_rod"
   },
-  "result": "minecraft:breeze_rod"
+  "result": {
+    "id": "minecraft:blaze_rod"
+  }
 }

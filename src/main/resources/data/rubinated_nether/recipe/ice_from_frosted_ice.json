@@ -6,5 +6,7 @@
   "ingredient": {
     "item": "rubinated_nether:frosted_ice"
   },
-  "result": "minecraft:ice"
+  "result": {
+    "id": "minecraft:ice"
+  }
 }

@@ -6,5 +6,7 @@
   "ingredient": {
     "item": "minecraft:snow_block"
   },
-  "result": "rubinated_nether:frosted_ice"
+  "result": {
+    "id": "rubinated_nether:frosted_ice"
+  }
 }
