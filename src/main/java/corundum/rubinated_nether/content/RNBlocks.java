@@ -256,6 +256,66 @@ public class RNBlocks {
 		)
 	);
 
+	public static final DeferredBlock<TarnishingBronzeFullBlock> BRONZE_BLOCK = registerBlockAndItem(
+			"bronze_block",
+			() -> new TarnishingBronzeFullBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.requiresCorrectToolForDrops()
+							.strength(6.0F, 12.0F)
+							.sound(SoundType.COPPER)
+			)
+	);
+
+	public static final DeferredBlock<TarnishingBronzeFullBlock> DISCOLORED_BRONZE_BLOCK = registerBlockAndItem(
+			"discolored_bronze_block",
+			() -> new TarnishingBronzeFullBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.requiresCorrectToolForDrops()
+							.strength(6.0F, 12.0F)
+							.sound(SoundType.COPPER)
+			)
+	);
+
+	public static final DeferredBlock<TarnishingBronzeFullBlock> CORRODED_BRONZE_BLOCK = registerBlockAndItem(
+			"corroded_bronze_block",
+			() -> new TarnishingBronzeFullBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.requiresCorrectToolForDrops()
+							.strength(6.0F, 12.0F)
+							.sound(SoundType.COPPER)
+			)
+	);
+
+	public static final DeferredBlock<TarnishingBronzeFullBlock> TARNISHED_BRONZE_BLOCK = registerBlockAndItem(
+			"tarnished_bronze_block",
+			() -> new TarnishingBronzeFullBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.requiresCorrectToolForDrops()
+							.strength(6.0F, 12.0F)
+							.sound(SoundType.COPPER)
+			)
+	);
+
+	public static final DeferredBlock<TarnishingBronzeFullBlock> CRYSTALLIZED_BRONZE_BLOCK = registerBlockAndItem(
+			"crystallized_bronze_block",
+			() -> new TarnishingBronzeFullBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.requiresCorrectToolForDrops()
+							.strength(6.0F, 12.0F)
+							.sound(SoundType.COPPER)
+			)
+	);
+
 	/// Registers a block and an item 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);
