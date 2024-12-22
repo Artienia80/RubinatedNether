@@ -2,26 +2,27 @@ package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import corundum.rubinated_nether.content.RNBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ChangeOverTimeBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TarnishingBronzeFullBlock extends RNBlocks implements TarnishingBronze {
-    public static final MapCodec<TarnishingBronzeFullBlock> CODEC = RecordCodecBuilder.mapCodec(
-            p_308850_ -> p_308850_.group(TarnishingBronze.TarnishState.CODEC.fieldOf("tarnishing_state").forGetter(ChangeOverTimeBlock::getAge), propertiesCodec())
-                    .apply(p_308850_, TarnishingBronzeFullBlock::new)
+public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
+    public static final MapCodec<TarnishingBronzeBlock> CODEC = RecordCodecBuilder.mapCodec(
+            blockInstance -> blockInstance.group(TarnishingBronze.TarnishState.CODEC.fieldOf("tarnishing_state").forGetter(ChangeOverTimeBlock::getAge), propertiesCodec())
+                    .apply(blockInstance, TarnishingBronzeBlock::new)
     );
     private final TarnishingBronze.TarnishState tarnishState;
 
     @Override
-    public MapCodec<TarnishingBronzeFullBlock> codec() {
+    public MapCodec<TarnishingBronzeBlock> codec() {
         return CODEC;
     }
 
-    public TarnishingBronzeFullBlock(TarnishingBronze.TarnishState tarnishState, BlockBehaviour.Properties properties) {
+    public TarnishingBronzeBlock(TarnishingBronze.TarnishState tarnishState, BlockBehaviour.Properties properties) {
         super(properties);
         this.tarnishState = tarnishState;
     }

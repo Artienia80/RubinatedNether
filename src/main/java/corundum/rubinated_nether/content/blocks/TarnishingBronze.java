@@ -11,44 +11,42 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.content.RNBlocks;
-import net.minecraft.core.registries.BuiltInRegistries;
+import corundum.rubinated_nether.content.RNDataMaps;
+import corundum.rubinated_nether.content.datamaps.Tarnishable;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ChangeOverTimeBlock;
-import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 
 public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.TarnishState> {
 
-    Supplier<BiMap<RNBlocks, RNBlocks>> NEXT_BY_BLOCK = Suppliers.memoize(
-            () -> ImmutableBiMap.<DeferredBlock, RNBlocks>builder()
-                    .put(RNBlocks.BRONZE_BLOCK, RNBlocks.DISCOLORED_BRONZE_BLOCK)
-                    .put(RNBlocks.DISCOLORED_BRONZE_BLOCK, RNBlocks.CORRODED_BRONZE_BLOCK)
-                    .put(RNBlocks.CORRODED_BRONZE_BLOCK, RNBlocks.TARNISHED_BRONZE_BLOCK)
+    Supplier<BiMap<Block, Block>> NEXT_BY_BLOCK = Suppliers.memoize(
+            () -> ImmutableBiMap.<Block, Block>builder()
+                    .put(RNBlocks.BRONZE_BLOCK.get(), RNBlocks.DISCOLORED_BRONZE_BLOCK.get())
+                    .put(RNBlocks.DISCOLORED_BRONZE_BLOCK.get(), RNBlocks.CORRODED_BRONZE_BLOCK.get())
+                    .put(RNBlocks.CORRODED_BRONZE_BLOCK.get(), RNBlocks.TARNISHED_BRONZE_BLOCK.get())
                     .build()
     );
 
-    Supplier<BiMap<RNBlocks, RNBlocks>> PREVIOUS_BY_BLOCK = Suppliers.memoize(() -> NEXT_BY_BLOCK.get().inverse());
+    Supplier<BiMap<Block, Block>> PREVIOUS_BY_BLOCK = Suppliers.memoize(() -> NEXT_BY_BLOCK.get().inverse());
 
-    static final Map<RNBlocks, RNBlocks> INVERSE_TARNISHABLES_DATAMAP_INTERNAL = new HashMap<>();
+    Map<Block, Block> INVERSE_TARNISHABLES_DATAMAP_INTERNAL = new HashMap<>();
 
-    public static final Map<RNBlocks, RNBlocks> INVERSE_TARNISHABLES_DATAMAP = Collections.unmodifiableMap(INVERSE_TARNISHABLES_DATAMAP_INTERNAL);
+    Map<Block, Block> INVERSE_TARNISHABLES_DATAMAP = Collections.unmodifiableMap(INVERSE_TARNISHABLES_DATAMAP_INTERNAL);
 
-    public static RNBlocks getPreviousTarnishStage(RNBlocks rnBlocks) {
-        return INVERSE_TARNISHABLES_DATAMAP.containsKey(rnBlocks) ? INVERSE_TARNISHABLES_DATAMAP.get(rnBlocks) : TarnishingBronze.PREVIOUS_BY_BLOCK.get().get(rnBlocks);
+    static Block getPreviousTarnishStage(Block block) {
+        return INVERSE_TARNISHABLES_DATAMAP.containsKey(block) ? INVERSE_TARNISHABLES_DATAMAP.get(block) : TarnishingBronze.PREVIOUS_BY_BLOCK.get().get(block);
     }
 
-    static Optional<RNBlocks> getPrevious(RNBlocks rnBlocks) {
-        return Optional.ofNullable(getPreviousTarnishStage(rnBlocks));
+    static Optional<Block> getPrevious(Block block) {
+        return Optional.ofNullable(getPreviousTarnishStage(block));
     }
 
-    static RNBlocks getFirst(RNBlocks p_block) {
-        RNBlocks block = p_block;
+    static Block getFirst(Block p_block) {
+        Block block = p_block;
 
-        for (RNBlocks block1 = getPreviousTarnishStage(p_block); block1 != null; block1 =getPreviousTarnishStage(block1)) {
+        for (Block block1 = getPreviousTarnishStage(p_block); block1 != null; block1 =getPreviousTarnishStage(block1)) {
             block = block1;
         }
 
@@ -59,22 +57,14 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
         return getPrevious(state.getBlock().defaultBlockState()).map(p_154903_ -> p_154903_.getBlock().withPropertiesOf(state));
     }
 
-    public record Tarnishable(RNBlocks nextTarnishStage) {
-        public static final Codec<Tarnishable> TARNISHABLE_CODEC = BuiltInRegistries.BLOCK.byNameCodec()
-                .xmap(Tarnishable::new, Tarnishable::nextTarnishStage);
-        public static final Codec<Tarnishable> CODEC = Codec.withAlternative(
-                RecordCodecBuilder.create(in -> in.group(
-                        BuiltInRegistries.BLOCK.byNameCodec().fieldOf("next_tarnish_stage").forGetter(Tarnishable::nextTarnishStage)).apply(in, Tarnishable::new)),
-                TARNISHABLE_CODEC);
+    public static Block getNextTarnishStage(Block block) {
+        // TODO: Create DataMap
+        Tarnishable tarnishable = block.builtInRegistryHolder().getData(RNDataMaps.TARNISHABLES);
+        return tarnishable != null ? tarnishable.nextTarnishmentStage() : TarnishingBronze.NEXT_BY_BLOCK.get().get(block);
     }
 
-    public static RNBlocks getNextTarnishStage(RNBlocks rnBlocks) {
-        Tarnishable tarnishable = rnBlocks.builtInRegistryHolder().getData(NeoForgeDataMaps.OXIDIZABLES);
-        return tarnishable != null ? tarnishable.nextTarnishStage() : TarnishingBronze.NEXT_BY_BLOCK.get().get(rnBlocks);
-    }
-
-    static Optional<RNBlocks> getNext(RNBlocks rnBlocks) {
-        return Optional.ofNullable(getNextTarnishStage(rnBlocks));
+    static Optional<Block> getNext(Block block) {
+        return Optional.ofNullable(getNextTarnishStage(block));
     }
 
     static BlockState getFirst(BlockState state) {
@@ -83,7 +73,7 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 
     @Override
     default Optional<BlockState> getNext(BlockState state) {
-        return getNext(state.getBlock()).map(p_154896_ -> p_154896_.getBlock().withPropertiesOf(state));
+        return getNext(state.getBlock()).map(block -> block.withPropertiesOf(state));
 
     }
 
@@ -92,18 +82,18 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
         return this.getAge() == TarnishingBronze.TarnishState.UNAFFECTED ? 0.75F : 1.0F;
     }
 
-    public static enum TarnishState implements StringRepresentable {
+    enum TarnishState implements StringRepresentable {
         UNAFFECTED("unaffected"),
         DISCOLORED("discolored"),
         CORRODED("corroded"),
-        TARNISHED("tarnished");
-        CRYSTALIZED("crystalized");
+        TARNISHED("tarnished"),
+        CRYSTALLIZED("crystallized");
 
 
         public static final Codec<TarnishingBronze.TarnishState> CODEC = StringRepresentable.fromEnum(TarnishingBronze.TarnishState::values);
         private final String name;
 
-        private TarnishState(String name) {
+        TarnishState(String name) {
             this.name = name;
         }
 

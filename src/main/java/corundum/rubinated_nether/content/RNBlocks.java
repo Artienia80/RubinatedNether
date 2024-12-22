@@ -256,9 +256,9 @@ public class RNBlocks {
 		)
 	);
 
-	public static final DeferredBlock<TarnishingBronzeFullBlock> BRONZE_BLOCK = registerBlockAndItem(
+	public static final DeferredBlock<Block> BRONZE_BLOCK = registerBlockAndItem(
 			"bronze_block",
-			() -> new TarnishingBronzeFullBlock(
+			() -> new TarnishingBronzeBlock(
 					TarnishingBronze.TarnishState.UNAFFECTED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
@@ -268,9 +268,9 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<TarnishingBronzeFullBlock> DISCOLORED_BRONZE_BLOCK = registerBlockAndItem(
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_BLOCK = registerBlockAndItem(
 			"discolored_bronze_block",
-			() -> new TarnishingBronzeFullBlock(
+			() -> new TarnishingBronzeBlock(
 					TarnishingBronze.TarnishState.DISCOLORED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
@@ -280,9 +280,9 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<TarnishingBronzeFullBlock> CORRODED_BRONZE_BLOCK = registerBlockAndItem(
+	public static final DeferredBlock<Block> CORRODED_BRONZE_BLOCK = registerBlockAndItem(
 			"corroded_bronze_block",
-			() -> new TarnishingBronzeFullBlock(
+			() -> new TarnishingBronzeBlock(
 					TarnishingBronze.TarnishState.CORRODED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
@@ -292,9 +292,9 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<TarnishingBronzeFullBlock> TARNISHED_BRONZE_BLOCK = registerBlockAndItem(
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_BLOCK = registerBlockAndItem(
 			"tarnished_bronze_block",
-			() -> new TarnishingBronzeFullBlock(
+			() -> new TarnishingBronzeBlock(
 					TarnishingBronze.TarnishState.TARNISHED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
@@ -304,9 +304,8 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<TarnishingBronzeFullBlock> CRYSTALLIZED_BRONZE_BLOCK = registerBlockAndItem(
-			"crystallized_bronze_block",
-			() -> new TarnishingBronzeFullBlock(
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_BLOCK = registerBlockAndItem("crystallized_bronze_block",
+			() -> new TarnishingBronzeBlock(
 					TarnishingBronze.TarnishState.CRYSTALLIZED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
