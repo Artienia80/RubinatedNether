@@ -68,8 +68,13 @@ public class RNBlockTags extends BlockTagsProvider {
 
 			RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
 			RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get(),
-			RNBlocks.RUNESTONE.get()
-		);
+			RNBlocks.RUNESTONE.get(),
+				RNBlocks.BRONZE_BLOCK.get(),
+				RNBlocks.DISCOLORED_BRONZE_BLOCK.get(),
+				RNBlocks.CORRODED_BRONZE_BLOCK.get(),
+				RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()
+				);
 
 		this.tag(BlockTags.NEEDS_STONE_TOOL).add(
 			RNBlocks.RUBY_GLASS.get(),
@@ -111,7 +116,13 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.ALTAR_STONE_BRICKS_SLAB.get(),
 			RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
 			RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get(),
-			RNBlocks.RUNESTONE.get()
+			RNBlocks.RUNESTONE.get(),
+
+				RNBlocks.BRONZE_BLOCK.get(),
+				RNBlocks.DISCOLORED_BRONZE_BLOCK.get(),
+				RNBlocks.CORRODED_BRONZE_BLOCK.get(),
+				RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()
 		);
 
 		this.tag(RNTags.Blocks.COLDEST_ICE).add(

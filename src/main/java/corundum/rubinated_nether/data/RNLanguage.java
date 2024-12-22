@@ -64,6 +64,11 @@ public class RNLanguage extends LanguageProvider {
 
 		this.addItem(RNItems.MUSIC_DISC_SHIMMER, "Rubinated Music Disc");
 
+		this.addBlock(RNBlocks.BRONZE_BLOCK, "Block of Bronze");
+		this.addBlock(RNBlocks.DISCOLORED_BRONZE_BLOCK, "Discolored Bronze");
+		this.addBlock(RNBlocks.CORRODED_BRONZE_BLOCK, "Corroded Bronze");
+		this.addBlock(RNBlocks.TARNISHED_BRONZE_BLOCK, "Tarnished Bronze");
+		this.addBlock(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK, "Crystallized Bronze");
 
 
 

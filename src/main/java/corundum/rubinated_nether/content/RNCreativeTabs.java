@@ -72,6 +72,13 @@ public class RNCreativeTabs {
 				output.accept(RNBlocks.RUNESTONE.get());
 
 				output.accept(RNItems.MUSIC_DISC_SHIMMER.get());
+
+				output.accept(RNBlocks.BRONZE_BLOCK.get());
+				output.accept(RNBlocks.DISCOLORED_BRONZE_BLOCK.get());
+				output.accept(RNBlocks.CORRODED_BRONZE_BLOCK.get());
+				output.accept(RNBlocks.TARNISHED_BRONZE_BLOCK.get());
+				output.accept(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
+
 			})
 			.build()
 	);

@@ -157,5 +157,15 @@ public class RNBlockStates extends BlockStateProvider {
 			.modelFile(state.getValue(LanternBlock.HANGING) ? hangingLantern : lantern)
 			.build()
 		);
+
+		this.simpleBlock(RNBlocks.BRONZE_BLOCK.get());
+		this.simpleBlock(RNBlocks.DISCOLORED_BRONZE_BLOCK.get());
+		this.simpleBlock(RNBlocks.CORRODED_BRONZE_BLOCK.get());
+		this.simpleBlock(RNBlocks.TARNISHED_BRONZE_BLOCK.get());
+		this.simpleBlock(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
+
+
 	}
+
+
 }
