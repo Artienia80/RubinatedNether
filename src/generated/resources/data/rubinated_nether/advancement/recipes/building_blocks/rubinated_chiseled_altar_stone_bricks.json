@@ -5,6 +5,16 @@
       "conditions": {
         "items": [
           {
+            "items": "rubinated_nether:chiseled_altar_stone_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_ruby": {
+      "conditions": {
+        "items": [
+          {
             "items": "rubinated_nether:ruby"
           }
         ]
@@ -21,7 +31,8 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_chiseled_altar_stone_bricks"
+      "has_chiseled_altar_stone_bricks",
+      "has_ruby"
     ]
   ],
   "rewards": {

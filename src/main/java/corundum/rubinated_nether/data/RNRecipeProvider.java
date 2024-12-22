@@ -207,7 +207,8 @@ public class RNRecipeProvider extends RecipeProvider {
 			.pattern("XXX")
 			.pattern("XOX")
 			.pattern("XXX")
-			.unlockedBy(getHasName(RNBlocks.CHISELED_ALTAR_STONE_BRICKS), has(RNItems.RUBY_ITEM))
+			.unlockedBy(getHasName(RNBlocks.CHISELED_ALTAR_STONE_BRICKS), has(RNBlocks.CHISELED_ALTAR_STONE_BRICKS))
+			.unlockedBy(getHasName(RNItems.RUBY_ITEM), has(RNItems.RUBY_ITEM))
 			.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BLEEDING_OBSIDIAN, 8)
@@ -216,7 +217,8 @@ public class RNRecipeProvider extends RecipeProvider {
 			.pattern("XXX")
 			.pattern("XOX")
 			.pattern("XXX")
-			.unlockedBy(getHasName(Blocks.CRYING_OBSIDIAN), has(RNItems.RUBY_ITEM))
+			.unlockedBy(getHasName(Blocks.CRYING_OBSIDIAN), has(Blocks.CRYING_OBSIDIAN))
+			.unlockedBy(getHasName(RNItems.RUBY_ITEM), has(RNItems.RUBY_ITEM))
 			.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.MUSIC_DISC_SHIMMER, 1)
@@ -225,8 +227,21 @@ public class RNRecipeProvider extends RecipeProvider {
 			.pattern("XXX")
 			.pattern("XOX")
 			.pattern("XXX")
-			.unlockedBy(getHasName(RNItems.RUBY_SHARD_ITEM), has(Items.MUSIC_DISC_PIGSTEP))
+			.unlockedBy(getHasName(RNItems.RUBY_SHARD_ITEM), has(RNItems.RUBY_SHARD_ITEM))
+			.unlockedBy(getHasName(Items.MUSIC_DISC_PIGSTEP), has(Items.MUSIC_DISC_PIGSTEP))
 			.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNBlocks.FREEZER, 1)
+				.define('X', Blocks.COPPER_BLOCK)
+				.define('O', Blocks.BASALT)
+				.define('I', Items.BREEZE_ROD)
+				.pattern("XXX")
+				.pattern("XIX")
+				.pattern("OOO")
+				.unlockedBy(getHasName(Blocks.COPPER_BLOCK), has(Blocks.COPPER_BLOCK))
+				.unlockedBy(getHasName(Blocks.BASALT), has(Blocks.BASALT))
+				.unlockedBy(getHasName(Items.BREEZE_ROD), has(Items.BREEZE_ROD))
+				.save(recipeOutput);
 	}
 
 	private void twoByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {

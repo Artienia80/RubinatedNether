@@ -5,6 +5,16 @@
       "conditions": {
         "items": [
           {
+            "items": "minecraft:crying_obsidian"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_ruby": {
+      "conditions": {
+        "items": [
+          {
             "items": "rubinated_nether:ruby"
           }
         ]
@@ -21,7 +31,8 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_crying_obsidian"
+      "has_crying_obsidian",
+      "has_ruby"
     ]
   ],
   "rewards": {

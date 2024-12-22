@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:breeze_rod"
+    },
+    "O": {
+      "item": "minecraft:basalt"
+    },
+    "X": {
+      "item": "minecraft:copper_block"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XIX",
+    "OOO"
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:freezer"
+  }
+}

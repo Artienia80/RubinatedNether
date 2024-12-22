@@ -1,21 +1,31 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_music_disc_pigstep": {
+    "has_basalt": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:music_disc_pigstep"
+            "items": "minecraft:basalt"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_ruby_shard": {
+    "has_breeze_rod": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:ruby_shard"
+            "items": "minecraft:breeze_rod"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_copper_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:copper_block"
           }
         ]
       },
@@ -23,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:music_disc_shimmer"
+        "recipe": "rubinated_nether:freezer"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -31,13 +41,14 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ruby_shard",
-      "has_music_disc_pigstep"
+      "has_copper_block",
+      "has_basalt",
+      "has_breeze_rod"
     ]
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:music_disc_shimmer"
+      "rubinated_nether:freezer"
     ]
   }
 }
