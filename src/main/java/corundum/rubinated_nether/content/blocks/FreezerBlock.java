@@ -42,12 +42,13 @@ public class FreezerBlock extends AbstractFurnaceBlock {
 
 	@Override
 	protected void openContainer(Level level, BlockPos blockPos, Player player) {
-		if (!level.isClientSide()) {
-			BlockEntity entity = level.getBlockEntity(blockPos);
-			if(entity instanceof FreezerBlockEntity freezer) {
-				player.openMenu(freezer);
-			}
-		}
+		if (level.isClientSide()) 
+			return;
+
+		BlockEntity entity = level.getBlockEntity(blockPos);
+
+		if(entity instanceof FreezerBlockEntity freezer)
+			player.openMenu(freezer);
 	}
 
 	@Override

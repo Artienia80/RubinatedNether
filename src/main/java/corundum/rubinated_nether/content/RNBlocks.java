@@ -151,9 +151,9 @@ public class RNBlocks {
 		"runestone",
 		() -> new RunestoneBlock(
 			Block.Properties
-				.ofFullCopy(Blocks.BASALT)
-				.lightLevel($ -> 2)
-				.noOcclusion()
+			.ofFullCopy(Blocks.BASALT)
+			.lightLevel($ -> 2)
+			.noOcclusion()
 		)
 	);
 	public static final DeferredBlock<Block> ALTAR_STONE = registerBlockAndItem(
@@ -257,62 +257,55 @@ public class RNBlocks {
 	);
 
 	public static final DeferredBlock<Block> BRONZE_BLOCK = registerBlockAndItem(
-			"bronze_block",
-			() -> new TarnishingBronzeBlock(
-					TarnishingBronze.TarnishState.UNAFFECTED,
-					BlockBehaviour.Properties.of()
-							.mapColor(MapColor.GOLD)
-							.requiresCorrectToolForDrops()
-							.strength(6.0F, 12.0F)
-							.sound(SoundType.COPPER)
-			)
+		"bronze_block",
+		() -> new TarnishingBronzeBlock(
+			TarnishingBronze.TarnishState.UNAFFECTED,
+			BlockBehaviour.Properties.of()
+				.mapColor(MapColor.GOLD)
+				.requiresCorrectToolForDrops()
+				.strength(6.0F, 12.0F)
+				.sound(SoundType.COPPER)
+		)
 	);
 
 	public static final DeferredBlock<Block> DISCOLORED_BRONZE_BLOCK = registerBlockAndItem(
-			"discolored_bronze_block",
-			() -> new TarnishingBronzeBlock(
-					TarnishingBronze.TarnishState.DISCOLORED,
-					BlockBehaviour.Properties.of()
-							.mapColor(MapColor.GOLD)
-							.requiresCorrectToolForDrops()
-							.strength(6.0F, 12.0F)
-							.sound(SoundType.COPPER)
-			)
+		"discolored_bronze_block",
+		() -> new TarnishingBronzeBlock(
+			TarnishingBronze.TarnishState.DISCOLORED,
+			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+		)
 	);
 
 	public static final DeferredBlock<Block> CORRODED_BRONZE_BLOCK = registerBlockAndItem(
-			"corroded_bronze_block",
-			() -> new TarnishingBronzeBlock(
-					TarnishingBronze.TarnishState.CORRODED,
-					BlockBehaviour.Properties.of()
-							.mapColor(MapColor.GOLD)
-							.requiresCorrectToolForDrops()
-							.strength(6.0F, 12.0F)
-							.sound(SoundType.COPPER)
-			)
+		"corroded_bronze_block",
+		() -> new TarnishingBronzeBlock(
+			TarnishingBronze.TarnishState.CORRODED,
+			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+		)
 	);
 
 	public static final DeferredBlock<Block> TARNISHED_BRONZE_BLOCK = registerBlockAndItem(
-			"tarnished_bronze_block",
-			() -> new TarnishingBronzeBlock(
-					TarnishingBronze.TarnishState.TARNISHED,
-					BlockBehaviour.Properties.of()
-							.mapColor(MapColor.GOLD)
-							.requiresCorrectToolForDrops()
-							.strength(6.0F, 12.0F)
-							.sound(SoundType.COPPER)
-			)
+		"tarnished_bronze_block",
+		() -> new TarnishingBronzeBlock(
+			TarnishingBronze.TarnishState.TARNISHED,
+			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+		)
 	);
 
-	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_BLOCK = registerBlockAndItem("crystallized_bronze_block",
-			() -> new TarnishingBronzeBlock(
-					TarnishingBronze.TarnishState.CRYSTALLIZED,
-					BlockBehaviour.Properties.of()
-							.mapColor(MapColor.GOLD)
-							.requiresCorrectToolForDrops()
-							.strength(6.0F, 12.0F)
-							.sound(SoundType.COPPER)
-			)
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_BLOCK = registerBlockAndItem(
+		"crystallized_bronze_block",
+		() -> new TarnishingBronzeBlock(
+			TarnishingBronze.TarnishState.CRYSTALLIZED,
+			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+		)
+	);
+
+	public static final DeferredBlock<Block> CUT_BRONZE = registerBlockAndItem(
+		"cut_bronze",
+		() -> new TarnishingBronzeBlock(
+			TarnishingBronze.TarnishState.UNAFFECTED,
+			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+		)
 	);
 
 	/// Registers a block and an item 

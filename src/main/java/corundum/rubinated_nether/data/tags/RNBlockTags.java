@@ -4,7 +4,6 @@ import java.util.concurrent.CompletableFuture;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
@@ -70,15 +69,15 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
 			RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get(),
 			RNBlocks.RUNESTONE.get(),
-				RNBlocks.BRONZE_BLOCK.get(),
-				RNBlocks.DISCOLORED_BRONZE_BLOCK.get(),
-				RNBlocks.CORRODED_BRONZE_BLOCK.get(),
-				RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
 
-				RNBlocks.FREEZER.get()
+			RNBlocks.BRONZE_BLOCK.get(),
+			RNBlocks.DISCOLORED_BRONZE_BLOCK.get(),
+			RNBlocks.CORRODED_BRONZE_BLOCK.get(),
+			RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
+			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
+			RNBlocks.CUT_BRONZE.get(),
 
-
+			RNBlocks.FREEZER.get()
 		);
 //
 //		this.tag(BlockTags.MINEABLE_WITH_SHOVEL).add(
@@ -105,35 +104,36 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.MOLTEN_RUBY_BLOCK.get(),
 			RNBlocks.BLEEDING_OBSIDIAN.get(),
 
-				RNBlocks.ALTAR_STONE.get(),
+			RNBlocks.ALTAR_STONE.get(),
 
-				RNBlocks.POLISHED_ALTAR_STONE.get(),
-				RNBlocks.POLISHED_ALTAR_STONE_STAIRS.get(),
-				RNBlocks.POLISHED_ALTAR_STONE_SLAB.get(),
-				RNBlocks.POLISHED_ALTAR_STONE_WALL.get(),
+			RNBlocks.POLISHED_ALTAR_STONE.get(),
+			RNBlocks.POLISHED_ALTAR_STONE_STAIRS.get(),
+			RNBlocks.POLISHED_ALTAR_STONE_SLAB.get(),
+			RNBlocks.POLISHED_ALTAR_STONE_WALL.get(),
 
-				RNBlocks.ALTAR_STONE_TILES.get(),
-				RNBlocks.ALTAR_STONE_TILES_SLAB.get(),
-				RNBlocks.ALTAR_STONE_TILES_STAIRS.get(),
-				RNBlocks.ALTAR_STONE_TILES_WALL.get(),
+			RNBlocks.ALTAR_STONE_TILES.get(),
+			RNBlocks.ALTAR_STONE_TILES_SLAB.get(),
+			RNBlocks.ALTAR_STONE_TILES_STAIRS.get(),
+			RNBlocks.ALTAR_STONE_TILES_WALL.get(),
 
-				RNBlocks.ALTAR_STONE_PILLAR.get(),
+			RNBlocks.ALTAR_STONE_PILLAR.get(),
 
-				RNBlocks.ALTAR_STONE_BRICKS.get(),
-				RNBlocks.ALTAR_STONE_BRICKS_STAIRS.get(),
-				RNBlocks.ALTAR_STONE_BRICKS_WALL.get(),
-				RNBlocks.ALTAR_STONE_BRICKS_SLAB.get(),
+			RNBlocks.ALTAR_STONE_BRICKS.get(),
+			RNBlocks.ALTAR_STONE_BRICKS_STAIRS.get(),
+			RNBlocks.ALTAR_STONE_BRICKS_WALL.get(),
+			RNBlocks.ALTAR_STONE_BRICKS_SLAB.get(),
 			RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
 			RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get(),
 			RNBlocks.RUNESTONE.get(),
 
-				RNBlocks.BRONZE_BLOCK.get(),
-				RNBlocks.DISCOLORED_BRONZE_BLOCK.get(),
-				RNBlocks.CORRODED_BRONZE_BLOCK.get(),
-				RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
+			RNBlocks.BRONZE_BLOCK.get(),
+			RNBlocks.DISCOLORED_BRONZE_BLOCK.get(),
+			RNBlocks.CORRODED_BRONZE_BLOCK.get(),
+			RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
+			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
+			RNBlocks.CUT_BRONZE.get(),
 
-				RNBlocks.FREEZER.get()
+			RNBlocks.FREEZER.get()
 		);
 
 		this.tag(RNTags.Blocks.COLDEST_ICE).add(
@@ -143,7 +143,7 @@ public class RNBlockTags extends BlockTagsProvider {
 		this.tag(BlockTags.WALLS).add(
 			RNBlocks.ALTAR_STONE_TILES_WALL.get(),
 			RNBlocks.ALTAR_STONE_BRICKS_WALL.get(),
-				RNBlocks.POLISHED_ALTAR_STONE_WALL.get()
+			RNBlocks.POLISHED_ALTAR_STONE_WALL.get()
 		);
 	}
 }
