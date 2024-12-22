@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:chiseled_altar_stone_bricks"
+        "recipe": "rubinated_nether:chiseled_altar_stone_bricks_via_onebytwo"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:chiseled_altar_stone_bricks"
+      "rubinated_nether:chiseled_altar_stone_bricks_via_onebytwo"
     ]
   }
 }

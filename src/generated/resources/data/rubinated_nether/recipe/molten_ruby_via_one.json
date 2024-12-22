@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "rubinated_nether:molten_ruby_block"
+    }
+  },
+  "pattern": [
+    "I"
+  ],
+  "result": {
+    "count": 9,
+    "id": "rubinated_nether:molten_ruby"
+  }
+}

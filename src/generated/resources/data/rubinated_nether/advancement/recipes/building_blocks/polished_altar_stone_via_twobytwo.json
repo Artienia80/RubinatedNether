@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:polished_altar_stone"
+        "recipe": "rubinated_nether:polished_altar_stone_via_twobytwo"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:polished_altar_stone"
+      "rubinated_nether:polished_altar_stone_via_twobytwo"
     ]
   }
 }

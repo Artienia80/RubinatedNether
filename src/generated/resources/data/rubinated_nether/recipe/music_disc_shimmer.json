@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "O": {
+      "item": "minecraft:music_disc_pigstep"
+    },
+    "X": {
+      "item": "rubinated_nether:ruby_shard"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XOX",
+    "XXX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:music_disc_shimmer"
+  }
+}

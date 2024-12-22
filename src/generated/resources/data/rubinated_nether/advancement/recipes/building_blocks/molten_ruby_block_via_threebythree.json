@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ruby": {
+    "has_molten_ruby": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:ruby"
+            "items": "rubinated_nether:molten_ruby"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:ruby_shard"
+        "recipe": "rubinated_nether:molten_ruby_block_via_threebythree"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ruby"
+      "has_molten_ruby"
     ]
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:ruby_shard"
+      "rubinated_nether:molten_ruby_block_via_threebythree"
     ]
   }
 }

@@ -8,11 +8,13 @@ import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
@@ -152,27 +154,27 @@ public class RNRecipeProvider extends RecipeProvider {
 				2
 		);
 
-//		threeByThree(
-//				recipeOutput,
-//				RNItems.RUBY_SHARD_ITEM,
-//				RNItems.RUBY_ITEM,
-//				1
-//		);
-//
-//		threeByThree(
-//				recipeOutput,
-//				RNItems.MOLTEN_RUBY_NUGGET_ITEM,
-//				RNItems.MOLTEN_RUBY_ITEM,
-//				1
-//		);
-//
-//		threeByThree(
-//				recipeOutput,
-//				RNItems.MOLTEN_RUBY_ITEM,
-//				RNBlocks.MOLTEN_RUBY_BLOCK,
-//				1
-//		);
-//
+		threeByThree(
+				recipeOutput,
+				RNItems.RUBY_SHARD_ITEM,
+				RNItems.RUBY_ITEM,
+				1
+		);
+
+		threeByThree(
+				recipeOutput,
+				RNItems.MOLTEN_RUBY_NUGGET_ITEM,
+				RNItems.MOLTEN_RUBY_ITEM,
+				1
+		);
+
+		threeByThree(
+				recipeOutput,
+				RNItems.MOLTEN_RUBY_ITEM,
+				RNBlocks.MOLTEN_RUBY_BLOCK,
+				1
+		);
+
 		threeByThree(
 				recipeOutput,
 				RNItems.RUBY_ITEM,
@@ -186,27 +188,27 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNItems.RUBY_ITEM,
 				9
 		);
-//
-//		one(
-//				recipeOutput,
-//				RNBlocks.MOLTEN_RUBY_BLOCK,
-//				RNItems.MOLTEN_RUBY_ITEM,
-//				9
-//		);
-//
+
+		one(
+				recipeOutput,
+				RNBlocks.MOLTEN_RUBY_BLOCK,
+				RNItems.MOLTEN_RUBY_ITEM,
+				9
+		);
+
 		one(
 				recipeOutput,
 				RNItems.RUBY_ITEM,
 				RNItems.RUBY_SHARD_ITEM,
 				9
 		);
-//
-//		one(
-//				recipeOutput,
-//				RNItems.MOLTEN_RUBY_ITEM,
-//				RNItems.MOLTEN_RUBY_NUGGET_ITEM,
-//				9
-//		);
+
+		one(
+				recipeOutput,
+				RNItems.MOLTEN_RUBY_ITEM,
+				RNItems.MOLTEN_RUBY_NUGGET_ITEM,
+				9
+		);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS, 8)
 				.define('X', RNBlocks.CHISELED_ALTAR_STONE_BRICKS)
@@ -242,7 +244,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern("II")
 				.pattern("II")
 				.unlockedBy(getHasName(input), has(input))
-				.save(recipeOutput);
+				.save(recipeOutput, output.asItem().toString().toLowerCase() + "_via_twobytwo");
 	}
 
 	private void oneByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
@@ -251,7 +253,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern("I")
 				.pattern("I")
 				.unlockedBy(getHasName(input), has(input))
-				.save(recipeOutput);
+				.save(recipeOutput, output.asItem().toString().toLowerCase() + "_via_onebytwo");
 	}
 
 	private void threeByThree(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
@@ -261,7 +263,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern("III")
 				.pattern("III")
 				.unlockedBy(getHasName(input), has(input))
-				.save(recipeOutput, output.asItem().toString() + "_from_" + input.asItem().toString());
+				.save(recipeOutput, output.asItem().toString().toLowerCase() + "_via_threebythree");
 	}
 
 	private void one(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
@@ -269,7 +271,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.define('I', input)
 				.pattern("I")
 				.unlockedBy(getHasName(input), has(input))
-				.save(recipeOutput);
+				.save(recipeOutput, output.asItem().toString().toLowerCase() + "_via_one");
 	}
 
 	private void stairsAndSlab(RecipeOutput recipeOutput, ItemLike input, ItemLike stairs, ItemLike slab) {
