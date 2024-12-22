@@ -1,8 +1,10 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -18,6 +20,8 @@ public class RNItems {
 	public static final DeferredItem<Item> MUSIC_DISC_SHIMMER = ITEMS.registerSimpleItem("music_disc_shimmer", new Item.Properties().stacksTo(1)
 			.rarity(Rarity.RARE)
 			.jukeboxPlayable(RNJukeboxSongs.SHIMMER));
+
+	public static final DeferredItem<BlockItem> FROSTED_ICE = ITEMS.registerSimpleBlockItem("frosted_ice", () -> Blocks.FROSTED_ICE);
 
 
 }

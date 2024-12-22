@@ -74,8 +74,6 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.TARNISHED_BRONZE_BLOCK.get());
 		this.dropSelf(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
 
-
-
 		this.dropOther(
 			RNBlocks.MOLTEN_RUBY_ORE.get(),
 			RNItems.MOLTEN_RUBY_ITEM.get()

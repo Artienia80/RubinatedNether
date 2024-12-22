@@ -79,6 +79,10 @@ public class RNBlockTags extends BlockTagsProvider {
 
 		);
 
+		this.tag(BlockTags.MINEABLE_WITH_SHOVEL).add(
+				Blocks.FROSTED_ICE
+		);
+
 		this.tag(BlockTags.NEEDS_STONE_TOOL).add(
 			RNBlocks.RUBY_GLASS.get(),
 			RNBlocks.RUBY_GLASS_PANE.get(),
@@ -127,7 +131,8 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
 
-				RNBlocks.FREEZER.get()
+				RNBlocks.FREEZER.get(),
+				Blocks.FROSTED_ICE
 		);
 
 		this.tag(RNTags.Blocks.COLDEST_ICE).add(
