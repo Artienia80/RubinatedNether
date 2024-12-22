@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
+  "group": "DeferredHolder{ResourceKey[minecraft:item / rubinated_nether:molten_ruby_nugget]}",
   "key": {
     "I": {
       "item": "rubinated_nether:molten_ruby"

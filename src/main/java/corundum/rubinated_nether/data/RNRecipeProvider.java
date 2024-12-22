@@ -240,6 +240,7 @@ public class RNRecipeProvider extends RecipeProvider {
 
 	private void twoByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
+				.group(output.toString())
 				.define('I', input)
 				.pattern("II")
 				.pattern("II")
@@ -249,6 +250,7 @@ public class RNRecipeProvider extends RecipeProvider {
 
 	private void oneByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
+				.group(output.toString())
 				.define('I', input)
 				.pattern("I")
 				.pattern("I")
@@ -258,6 +260,7 @@ public class RNRecipeProvider extends RecipeProvider {
 
 	private void threeByThree(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
+				.group(output.toString())
 				.define('I', input)
 				.pattern("III")
 				.pattern("III")
@@ -268,6 +271,7 @@ public class RNRecipeProvider extends RecipeProvider {
 
 	private void one(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
+				.group(output.toString())
 				.define('I', input)
 				.pattern("I")
 				.unlockedBy(getHasName(input), has(input))
