@@ -1,10 +1,12 @@
 {
   "type": "rubinated_nether:freezing",
   "category": "freezable_misc",
-  "cookingtime": 400,
+  "cookingtime": 600,
   "experience": 1.0,
   "ingredient": {
-	"item": "rubinated_nether:molten_ruby"
+    "item": "rubinated_nether:powder_snow"
   },
-  "result": "rubinated_nether:ruby"
+  "result": {
+    "id": "minecraft:snow_block"
+  }
 }

@@ -1,0 +1,12 @@
+{
+  "type": "rubinated_nether:freezing",
+  "category": "freezable_misc",
+  "cookingtime": 300,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "minecraft:powder_snow_bucket"
+  },
+  "result": {
+    "id": "rubinated_nether:powder_snow"
+  }
+}
