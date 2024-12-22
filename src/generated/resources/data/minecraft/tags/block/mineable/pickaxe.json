@@ -40,6 +40,10 @@
     "rubinated_nether:tarnished_bronze_block",
     "rubinated_nether:crystallized_bronze_block",
     "rubinated_nether:cut_bronze",
+    "rubinated_nether:discolored_cut_bronze",
+    "rubinated_nether:corroded_cut_bronze",
+    "rubinated_nether:tarnished_cut_bronze",
+    "rubinated_nether:crystallized_cut_bronze",
     "rubinated_nether:freezer"
   ]
 }

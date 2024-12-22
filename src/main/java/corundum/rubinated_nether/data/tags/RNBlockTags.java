@@ -77,6 +77,11 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
 			RNBlocks.CUT_BRONZE.get(),
 
+			RNBlocks.DISCOLORED_CUT_BRONZE.get(),
+			RNBlocks.CORRODED_CUT_BRONZE.get(),
+			RNBlocks.TARNISHED_CUT_BRONZE.get(),
+			RNBlocks.CRYSTALLIZED_CUT_BRONZE.get(),
+
 			RNBlocks.FREEZER.get()
 		);
 //
@@ -131,7 +136,12 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.CORRODED_BRONZE_BLOCK.get(),
 			RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
 			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
+
 			RNBlocks.CUT_BRONZE.get(),
+			RNBlocks.DISCOLORED_CUT_BRONZE.get(),
+			RNBlocks.CORRODED_CUT_BRONZE.get(),
+			RNBlocks.TARNISHED_CUT_BRONZE.get(),
+			RNBlocks.CRYSTALLIZED_CUT_BRONZE.get(),
 
 			RNBlocks.FREEZER.get()
 		);

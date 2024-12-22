@@ -308,6 +308,38 @@ public class RNBlocks {
 		)
 	);
 
+	public static final DeferredBlock<Block> DISCOLORED_CUT_BRONZE = registerBlockAndItem(
+			"discolored_cut_bronze",
+			() -> new TarnishingBronzeBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_CUT_BRONZE = registerBlockAndItem(
+			"corroded_cut_bronze",
+			() -> new TarnishingBronzeBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_CUT_BRONZE = registerBlockAndItem(
+			"tarnished_cut_bronze",
+			() -> new TarnishingBronzeBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_CUT_BRONZE = registerBlockAndItem(
+			"crystallized_cut_bronze",
+			() -> new TarnishingBronzeBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+			)
+	);
+
 	/// Registers a block and an item 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);
