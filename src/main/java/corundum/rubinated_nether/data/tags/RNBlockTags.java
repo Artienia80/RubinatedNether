@@ -4,6 +4,7 @@ import java.util.concurrent.CompletableFuture;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
@@ -75,8 +76,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
 
-				RNBlocks.FREEZER.get(),
-				Blocks.FROSTED_ICE
+				RNBlocks.FREEZER.get()
 
 
 		);
@@ -133,8 +133,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
 
-				RNBlocks.FREEZER.get(),
-				Blocks.FROSTED_ICE
+				RNBlocks.FREEZER.get()
 		);
 
 		this.tag(RNTags.Blocks.COLDEST_ICE).add(

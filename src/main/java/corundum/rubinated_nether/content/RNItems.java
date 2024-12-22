@@ -23,5 +23,7 @@ public class RNItems {
 
 	public static final DeferredItem<BlockItem> FROSTED_ICE = ITEMS.registerSimpleBlockItem("frosted_ice", () -> Blocks.FROSTED_ICE);
 
+	public static final DeferredItem<BlockItem> POWDER_SNOW = ITEMS.registerSimpleBlockItem("powder_snow", () -> Blocks.POWDER_SNOW);
+
 
 }

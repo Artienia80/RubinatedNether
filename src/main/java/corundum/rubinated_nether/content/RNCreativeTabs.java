@@ -68,6 +68,7 @@ public class RNCreativeTabs {
 				output.accept(RNBlocks.LAVA_LAMP.get());
 
 				output.accept(RNBlocks.FREEZER.get());
+				output.accept(RNItems.POWDER_SNOW.get());
 				output.accept(RNItems.FROSTED_ICE.get());
 				output.accept(RNBlocks.DRY_ICE.get());
 

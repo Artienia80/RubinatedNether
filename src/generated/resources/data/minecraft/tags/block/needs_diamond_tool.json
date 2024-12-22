@@ -28,7 +28,6 @@
     "rubinated_nether:corroded_bronze_block",
     "rubinated_nether:tarnished_bronze_block",
     "rubinated_nether:crystallized_bronze_block",
-    "rubinated_nether:freezer",
-    "minecraft:frosted_ice"
+    "rubinated_nether:freezer"
   ]
 }
