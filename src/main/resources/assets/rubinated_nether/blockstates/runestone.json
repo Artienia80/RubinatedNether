@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "rubinated_nether:block/runestone_bottom"
+    },
+    "half=upper": {
+      "model": "rubinated_nether:block/runestone_top"
+    }
+  }
+}

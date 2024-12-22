@@ -58,7 +58,8 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
     }
 
     public static Block getNextTarnishStage(Block block) {
-        // TODO: Create DataMap
+
+
         Tarnishable tarnishable = block.builtInRegistryHolder().getData(RNDataMaps.TARNISHABLES);
         return tarnishable != null ? tarnishable.nextTarnishmentStage() : TarnishingBronze.NEXT_BY_BLOCK.get().get(block);
     }

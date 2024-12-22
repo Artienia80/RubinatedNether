@@ -18,7 +18,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class RNBlocks {
 	public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(RubinatedNether.MODID);
 
-	public static final DeferredBlock<DropExperienceBlock> NETHER_RUBY_ORE = registerBlockAndItem(
+	public static final DeferredBlock<Block> NETHER_RUBY_ORE = registerBlockAndItem(
 		"nether_ruby_ore", 
 		() -> new DropExperienceBlock(
 			UniformInt.of(3, 6),
@@ -27,14 +27,14 @@ public class RNBlocks {
 				.requiresCorrectToolForDrops()
 		)
 	);
-	public static final DeferredBlock<DropExperienceBlock> RUBINATED_BLACKSTONE = registerBlockAndItem(
+	public static final DeferredBlock<Block> RUBINATED_BLACKSTONE = registerBlockAndItem(
 		"rubinated_blackstone", 
 		() -> new DropExperienceBlock(
 			UniformInt.of(0, 1), // TODO: Figure out actual values
 			Block.Properties.ofFullCopy(Blocks.GILDED_BLACKSTONE)
 		)
 	);
-	public static final DeferredBlock<MagmaExperienceBlock> MOLTEN_RUBY_ORE = registerBlockAndItem(
+	public static final DeferredBlock<Block> MOLTEN_RUBY_ORE = registerBlockAndItem(
 		"molten_ruby_ore",
 		() -> new MagmaExperienceBlock(
 			Block.Properties
@@ -63,11 +63,11 @@ public class RNBlocks {
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.CRYING_OBSIDIAN))
 	);
 
-	public static final DeferredBlock<LanternBlock> RUBY_LANTERN = registerBlockAndItem(
+	public static final DeferredBlock<Block> RUBY_LANTERN = registerBlockAndItem(
 		"ruby_lantern",
 		() -> new LanternBlock(Block.Properties.ofFullCopy(Blocks.LANTERN))
 	);
-	public static final DeferredBlock<ChandelierBlock> CHANDELIER = registerBlockAndItem(
+	public static final DeferredBlock<Block> CHANDELIER = registerBlockAndItem(
 		"ruby_chandelier",
 		() -> new ChandelierBlock(
 			Block.Properties
@@ -76,7 +76,7 @@ public class RNBlocks {
 				.lightLevel($ -> 15)
 		)
 	);
-	public static final DeferredBlock<LavaLampBlock> LAVA_LAMP = registerBlockAndItem(
+	public static final DeferredBlock<RotatedPillarBlock> LAVA_LAMP = registerBlockAndItem(
 		"lava_lamp",
 		() -> new LavaLampBlock(
 			Block.Properties
@@ -84,7 +84,7 @@ public class RNBlocks {
 				.lightLevel($ -> 15)
 		)
 	);
-	public static final DeferredBlock<DryIceBlock> DRY_ICE = registerBlockAndItem(
+	public static final DeferredBlock<Block> DRY_ICE = registerBlockAndItem(
 		"dry_ice",
 		() -> new DryIceBlock(
 			Block.Properties
@@ -93,12 +93,12 @@ public class RNBlocks {
 				.friction(0.995f)
 		)
 	);
-	public static final DeferredBlock<LavaSpongeBlock> SOAKSTONE = registerBlockAndItem(
+	public static final DeferredBlock<Block> SOAKSTONE = registerBlockAndItem(
 		"soakstone",
 		() -> new LavaSpongeBlock(Block.Properties.ofFullCopy(Blocks.NETHERRACK))
 	);
 
-	public static final DeferredBlock<StainedGlassBlock> RUBY_GLASS = registerBlockAndItem(
+	public static final DeferredBlock<Block> RUBY_GLASS = registerBlockAndItem(
 		"ruby_glass",
 		() -> new StainedGlassBlock(
 			DyeColor.RED,
@@ -109,28 +109,28 @@ public class RNBlocks {
 				.isViewBlocking(RNBlocks::never)
 		)
 	);
-	public static final DeferredBlock<StainedGlassPaneBlock> RUBY_GLASS_PANE = registerBlockAndItem(
+	public static final DeferredBlock<IronBarsBlock> RUBY_GLASS_PANE = registerBlockAndItem(
 		"ruby_glass_pane", 
 		() -> new StainedGlassPaneBlock(
 			DyeColor.RED, 
 			Block.Properties.ofFullCopy(RUBY_GLASS.get())
 		)
 	);
-	public static final DeferredBlock<StainedGlassBlock> ORNATE_RUBY_GLASS = registerBlockAndItem(
+	public static final DeferredBlock<Block> ORNATE_RUBY_GLASS = registerBlockAndItem(
 		"ornate_ruby_glass",
 		() -> new StainedGlassBlock(
 			DyeColor.RED,
 			Block.Properties.ofFullCopy(RUBY_GLASS.get())
 		)
 	);
-	public static final DeferredBlock<StainedGlassPaneBlock> ORNATE_RUBY_GLASS_PANE = registerBlockAndItem(
+	public static final DeferredBlock<IronBarsBlock> ORNATE_RUBY_GLASS_PANE = registerBlockAndItem(
 		"ornate_ruby_glass_pane", 
 		() -> new StainedGlassPaneBlock(
 			DyeColor.RED, 
 			Block.Properties.ofFullCopy(RUBY_GLASS.get())
 		)
 	);
-	public static final DeferredBlock<StainedGlassBlock> MOLTEN_RUBY_GLASS = registerBlockAndItem(
+	public static final DeferredBlock<Block> MOLTEN_RUBY_GLASS = registerBlockAndItem(
 		"molten_ruby_glass",
 		() -> new StainedGlassBlock(
 			DyeColor.RED,
@@ -139,7 +139,7 @@ public class RNBlocks {
 				.lightLevel($ -> 10)
 		)
 	);
-	public static final DeferredBlock<StainedGlassPaneBlock> MOLTEN_RUBY_GLASS_PANE = registerBlockAndItem(
+	public static final DeferredBlock<IronBarsBlock> MOLTEN_RUBY_GLASS_PANE = registerBlockAndItem(
 		"molten_ruby_glass_pane", 
 		() -> new StainedGlassPaneBlock(
 			DyeColor.RED, 
@@ -147,7 +147,7 @@ public class RNBlocks {
 		)
 	);
 
-	public static final DeferredBlock<RunestoneBlock> RUNESTONE = registerBlockAndItem(
+	public static final DeferredBlock<Block> RUNESTONE = registerBlockAndItem(
 		"runestone",
 		() -> new RunestoneBlock(
 			Block.Properties

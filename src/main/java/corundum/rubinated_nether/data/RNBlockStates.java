@@ -118,11 +118,11 @@ public class RNBlockStates extends BlockStateProvider {
 		this.simpleBlock(RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
 		this.axisBlock(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get());
 
-		this.simpleBlock(
-			RNBlocks.RUNESTONE.get(),
-			this.models()
-				.withExistingParent("runestone", this.modLoc("block/runestone_base"))
-		);
+//		this.simpleBlock(
+//			RNBlocks.RUNESTONE.get(),
+//			this.models()
+//				.withExistingParent("runestone", this.modLoc("block/runestone_base"))
+//		);
 	}
 
 	private void glassWithPane(Block glass, IronBarsBlock pane, String name, ResourceLocation edge) {
@@ -140,7 +140,7 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 	}
 
-	public void lantern(LanternBlock lamp, String name) {
+	public void lantern(Block lamp, String name) {
 		var location = "block/" + name;
 		
 		var lantern = models()
