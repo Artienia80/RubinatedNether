@@ -256,6 +256,8 @@ public class RNBlocks {
 		)
 	);
 
+	// BRONZE BLOCKS
+
 	public static final DeferredBlock<Block> BRONZE_BLOCK = registerBlockAndItem(
 		"bronze_block",
 		() -> new TarnishingBronzeBlock(
@@ -263,7 +265,7 @@ public class RNBlocks {
 			BlockBehaviour.Properties.of()
 				.mapColor(MapColor.GOLD)
 				.requiresCorrectToolForDrops()
-				.strength(6.0F, 12.0F)
+				.strength(5.0F, 150.0F)
 				.sound(SoundType.COPPER)
 		)
 	);
@@ -272,7 +274,11 @@ public class RNBlocks {
 		"discolored_bronze_block",
 		() -> new TarnishingBronzeBlock(
 			TarnishingBronze.TarnishState.DISCOLORED,
-			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+			BlockBehaviour.Properties.of()
+					.mapColor(MapColor.TERRACOTTA_PINK)
+					.requiresCorrectToolForDrops()
+					.strength(15.0F, 300.0F)
+					.sound(SoundType.COPPER)
 		)
 	);
 
@@ -280,7 +286,11 @@ public class RNBlocks {
 		"corroded_bronze_block",
 		() -> new TarnishingBronzeBlock(
 			TarnishingBronze.TarnishState.CORRODED,
-			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+			BlockBehaviour.Properties.of()
+					.mapColor(MapColor.CRIMSON_STEM)
+					.requiresCorrectToolForDrops()
+					.strength(25.0F, 600.0F)
+					.sound(SoundType.COPPER)
 		)
 	);
 
@@ -288,7 +298,11 @@ public class RNBlocks {
 		"tarnished_bronze_block",
 		() -> new TarnishingBronzeBlock(
 			TarnishingBronze.TarnishState.TARNISHED,
-			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+			BlockBehaviour.Properties.of()
+					.mapColor(MapColor.TERRACOTTA_BLACK)
+					.requiresCorrectToolForDrops()
+					.strength(50.0F, 1200.0F)
+					.sound(SoundType.COPPER)
 		)
 	);
 
@@ -296,9 +310,15 @@ public class RNBlocks {
 		"crystallized_bronze_block",
 		() -> new TarnishingBronzeBlock(
 			TarnishingBronze.TarnishState.CRYSTALLIZED,
-			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+			BlockBehaviour.Properties.of()
+					.mapColor(MapColor.TERRACOTTA_WHITE)
+					.requiresCorrectToolForDrops()
+					.strength(1.0F, 6.0F)
+					.sound(SoundType.COPPER)
 		)
 	);
+
+	// CUT BRONZE PILLAR BLOCKS
 
 	public static final DeferredBlock<Block> CUT_BRONZE_PILLAR = registerBlockAndItem(
 		"cut_bronze_pillar",
@@ -312,7 +332,7 @@ public class RNBlocks {
 			"discolored_cut_bronze_pillar",
 			() -> new TarnishingBronzeBlock(
 					TarnishingBronze.TarnishState.DISCOLORED,
-					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+					BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get())
 			)
 	);
 
@@ -320,7 +340,7 @@ public class RNBlocks {
 			"corroded_cut_bronze_pillar",
 			() -> new TarnishingBronzeBlock(
 					TarnishingBronze.TarnishState.CORRODED,
-					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+					BlockBehaviour.Properties.ofFullCopy(CORRODED_BRONZE_BLOCK.get())
 			)
 	);
 
@@ -328,7 +348,7 @@ public class RNBlocks {
 			"tarnished_cut_bronze_pillar",
 			() -> new TarnishingBronzeBlock(
 					TarnishingBronze.TarnishState.TARNISHED,
-					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+					BlockBehaviour.Properties.ofFullCopy(TARNISHED_BRONZE_BLOCK.get())
 			)
 	);
 
@@ -336,9 +356,11 @@ public class RNBlocks {
 			"crystallized_cut_bronze_pillar",
 			() -> new TarnishingBronzeBlock(
 					TarnishingBronze.TarnishState.CRYSTALLIZED,
-					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+					BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get())
 			)
 	);
+
+	// CUT BRONZE BRICKS BLOCKS
 
 	public static final DeferredBlock<Block> CUT_BRONZE_BRICKS = registerBlockAndItem(
 			"cut_bronze_bricks",
@@ -352,7 +374,7 @@ public class RNBlocks {
 			"discolored_cut_bronze_bricks",
 			() -> new TarnishingBronzeBlock(
 					TarnishingBronze.TarnishState.DISCOLORED,
-					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+					BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get())
 			)
 	);
 
@@ -360,7 +382,7 @@ public class RNBlocks {
 			"corroded_cut_bronze_bricks",
 			() -> new TarnishingBronzeBlock(
 					TarnishingBronze.TarnishState.CORRODED,
-					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+					BlockBehaviour.Properties.ofFullCopy(CORRODED_BRONZE_BLOCK.get())
 			)
 	);
 
@@ -368,7 +390,7 @@ public class RNBlocks {
 			"tarnished_cut_bronze_bricks",
 			() -> new TarnishingBronzeBlock(
 					TarnishingBronze.TarnishState.TARNISHED,
-					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+					BlockBehaviour.Properties.ofFullCopy(TARNISHED_BRONZE_BLOCK.get())
 			)
 	);
 
@@ -376,7 +398,7 @@ public class RNBlocks {
 			"crystallized_cut_bronze_bricks",
 			() -> new TarnishingBronzeBlock(
 					TarnishingBronze.TarnishState.CRYSTALLIZED,
-					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+					BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get())
 			)
 	);
 

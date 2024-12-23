@@ -121,19 +121,21 @@ public class RNBlockStates extends BlockStateProvider {
 		this.axisBlock(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get());
 
 		subfolder(
-			"bronze/",
+			"bronze/bronze_block/",
 			RNBlocks.BRONZE_BLOCK,
 			RNBlocks.DISCOLORED_BRONZE_BLOCK,
 			RNBlocks.CORRODED_BRONZE_BLOCK,
 			RNBlocks.TARNISHED_BRONZE_BLOCK,
-			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
-	
+			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK
+				);
+		subfolder("bronze/cut_bronze_pillar/",
 			RNBlocks.CUT_BRONZE_PILLAR,
 			RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
 			RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
 			RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
-			RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR,
-
+			RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR
+				);
+		subfolder("bronze/cut_bronze_bricks/",
 			RNBlocks.CUT_BRONZE_BRICKS,
 			RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
 			RNBlocks.CORRODED_CUT_BRONZE_BRICKS,

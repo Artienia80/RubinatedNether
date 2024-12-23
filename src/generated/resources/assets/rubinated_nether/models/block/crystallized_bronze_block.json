@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "rubinated_nether:block/bronze/crystallized_bronze_block"
+    "all": "rubinated_nether:block/bronze/bronze_block/crystallized_bronze_block"
   }
 }
