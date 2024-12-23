@@ -10,12 +10,14 @@ import net.minecraft.world.level.block.LanternBlock;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredBlock;
 
 public class RNBlockStates extends BlockStateProvider {
 	public RNBlockStates(PackOutput output, ExistingFileHelper fileHelper) {
 		super(output, RubinatedNether.MODID, fileHelper);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void registerStatesAndModels() {
 		this.simpleBlock(RNBlocks.NETHER_RUBY_ORE.get());
@@ -118,18 +120,20 @@ public class RNBlockStates extends BlockStateProvider {
 		this.simpleBlock(RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
 		this.axisBlock(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get());
 
-		this.simpleBlock(RNBlocks.BRONZE_BLOCK.get());
-		this.simpleBlock(RNBlocks.DISCOLORED_BRONZE_BLOCK.get());
-		this.simpleBlock(RNBlocks.CORRODED_BRONZE_BLOCK.get());
-		this.simpleBlock(RNBlocks.TARNISHED_BRONZE_BLOCK.get());
-		this.simpleBlock(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
-
-		this.simpleBlock(RNBlocks.CUT_BRONZE_PILLAR.get());
-		this.simpleBlock(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get());
-		this.simpleBlock(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get());
-		this.simpleBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get());
-		this.simpleBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
-
+		subfolder(
+			"bronze/",
+			RNBlocks.BRONZE_BLOCK,
+			RNBlocks.DISCOLORED_BRONZE_BLOCK,
+			RNBlocks.CORRODED_BRONZE_BLOCK,
+			RNBlocks.TARNISHED_BRONZE_BLOCK,
+			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
+	
+			RNBlocks.CUT_BRONZE_PILLAR,
+			RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
+			RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
+			RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
+			RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR
+		);
 	}
 
 	private void glassWithPane(Block glass, IronBarsBlock pane, String name, ResourceLocation edge) {
@@ -164,5 +168,18 @@ public class RNBlockStates extends BlockStateProvider {
 			.modelFile(state.getValue(LanternBlock.HANGING) ? hangingLantern : lantern)
 			.build()
 		);
+	}
+
+	@SuppressWarnings("unchecked")
+	public void subfolder(String folder, DeferredBlock<Block>... blocks) {
+		for (var block : blocks) {
+			var name = block.getId().toString().split(":")[1];
+
+			this.simpleBlock(
+				block.get(), 
+				this.models()
+					.cubeAll(name, this.modLoc("block/" + folder + name))
+			);
+		}
 	}
 }
