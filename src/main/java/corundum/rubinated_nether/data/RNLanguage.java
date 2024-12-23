@@ -76,6 +76,12 @@ public class RNLanguage extends LanguageProvider {
 		this.addBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR, "Tarnished Cut Bronze Pillar");
 		this.addBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR, "Crystallized Cut Bronze Pillar");
 
+		this.addBlock(RNBlocks.CUT_BRONZE_BRICKS, "Cut Bronze Bricks");
+		this.addBlock(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS, "Discolored Cut Bronze Bricks");
+		this.addBlock(RNBlocks.CORRODED_CUT_BRONZE_BRICKS, "Corroded Cut Bronze Bricks");
+		this.addBlock(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS, "Tarnished Cut Bronze Bricks");
+		this.addBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS, "Crystallized Cut Bronze Bricks");
+
 
 		this.add(RNCreativeTabs.RN_TAB.get().getDisplayName().getString(), "Rubinated Nether");
 

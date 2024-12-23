@@ -130,6 +130,12 @@ public class RNBlockStates extends BlockStateProvider {
 		this.simpleBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get());
 		this.simpleBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
 
+		this.simpleBlock(RNBlocks.CUT_BRONZE_BRICKS.get());
+		this.simpleBlock(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get());
+		this.simpleBlock(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get());
+		this.simpleBlock(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get());
+		this.simpleBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get());
+
 	}
 
 	private void glassWithPane(Block glass, IronBarsBlock pane, String name, ResourceLocation edge) {

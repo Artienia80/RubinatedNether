@@ -82,6 +82,18 @@ public class RNCreativeTabs {
 				output.accept(RNBlocks.TARNISHED_BRONZE_BLOCK.get());
 				output.accept(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
 
+				output.accept(RNBlocks.CUT_BRONZE_PILLAR.get());
+				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get());
+				output.accept(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get());
+				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get());
+				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
+
+				output.accept(RNBlocks.CUT_BRONZE_BRICKS.get());
+				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get());
+				output.accept(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get());
+				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get());
+				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get());
+
 			})
 			.build()
 	);
