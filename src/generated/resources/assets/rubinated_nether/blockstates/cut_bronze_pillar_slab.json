@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "rubinated_nether:block/cut_bronze_pillar_slab"
+    },
+    "type=double": {
+      "model": "rubinated_nether:block/cut_bronze_pillar"
+    },
+    "type=top": {
+      "model": "rubinated_nether:block/cut_bronze_pillar_slab_top"
+    }
+  }
+}

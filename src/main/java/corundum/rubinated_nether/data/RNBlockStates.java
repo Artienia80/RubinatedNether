@@ -135,6 +135,16 @@ public class RNBlockStates extends BlockStateProvider {
 			RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
 			RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR
 				);
+		this.slabBlock(
+				RNBlocks.CUT_BRONZE_PILLAR_SLAB.get(),
+				modLoc("block/bronze/cut_bronze_pillar/cut_bronze_pillar"),
+				modLoc("block/bronze/cut_bronze_pillar/cut_bronze_pillar")
+		);
+		this.stairsBlock(
+				RNBlocks.CUT_BRONZE_PILLAR_STAIRS.get(),
+				modLoc("block/bronze/cut_bronze_pillar/cut_bronze_pillar")
+		);
+
 		subfolder("bronze/cut_bronze_bricks/",
 			RNBlocks.CUT_BRONZE_BRICKS,
 			RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,

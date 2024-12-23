@@ -71,6 +71,9 @@ public class RNLanguage extends LanguageProvider {
 		this.addBlock(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK, "Crystallized Bronze");
 
 		this.addBlock(RNBlocks.CUT_BRONZE_PILLAR, "Cut Bronze Pillar");
+		this.addBlock(RNBlocks.CUT_BRONZE_PILLAR_STAIRS, "Cut Bronze Pillar Stairs");
+		this.addBlock(RNBlocks.CUT_BRONZE_PILLAR_SLAB, "Cut Bronze Pillar Slab");
+
 		this.addBlock(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR, "Discolored Cut Bronze Pillar");
 		this.addBlock(RNBlocks.CORRODED_CUT_BRONZE_PILLAR, "Corroded Cut Bronze Pillar");
 		this.addBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR, "Tarnished Cut Bronze Pillar");

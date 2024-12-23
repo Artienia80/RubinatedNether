@@ -77,6 +77,9 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
 
 			RNBlocks.CUT_BRONZE_PILLAR.get(),
+			RNBlocks.CUT_BRONZE_PILLAR_STAIRS.get(),
+			RNBlocks.CUT_BRONZE_PILLAR_SLAB.get(),
+
 			RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get(),
 			RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get(),
 			RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get(),
