@@ -73,11 +73,12 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.CORRODED_BRONZE_BLOCK.get());
 		this.dropSelf(RNBlocks.TARNISHED_BRONZE_BLOCK.get());
 		this.dropSelf(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
-		this.dropSelf(RNBlocks.CUT_BRONZE.get());
-		this.dropSelf(RNBlocks.DISCOLORED_CUT_BRONZE.get());
-		this.dropSelf(RNBlocks.CORRODED_CUT_BRONZE.get());
-		this.dropSelf(RNBlocks.TARNISHED_CUT_BRONZE.get());
-		this.dropSelf(RNBlocks.CRYSTALLIZED_CUT_BRONZE.get());
+
+		this.dropSelf(RNBlocks.CUT_BRONZE_PILLAR.get());
+		this.dropSelf(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get());
+		this.dropSelf(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get());
+		this.dropSelf(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get());
+		this.dropSelf(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
 
 
 		this.dropOther(

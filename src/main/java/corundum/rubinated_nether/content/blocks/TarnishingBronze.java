@@ -28,10 +28,10 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 				.put(RNBlocks.CORRODED_BRONZE_BLOCK.get(), RNBlocks.TARNISHED_BRONZE_BLOCK.get())
 				.put(RNBlocks.TARNISHED_BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get())
 
-				.put(RNBlocks.CUT_BRONZE.get(), RNBlocks.DISCOLORED_CUT_BRONZE.get())
-				.put(RNBlocks.DISCOLORED_CUT_BRONZE.get(), RNBlocks.CORRODED_CUT_BRONZE.get())
-				.put(RNBlocks.CORRODED_CUT_BRONZE.get(), RNBlocks.TARNISHED_CUT_BRONZE.get())
-				.put(RNBlocks.TARNISHED_CUT_BRONZE.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE.get())
+				.put(RNBlocks.CUT_BRONZE_PILLAR.get(), RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get())
+				.put(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get(), RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get())
+				.put(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get(), RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get())
+				.put(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get())
 				.build()
 	);
 

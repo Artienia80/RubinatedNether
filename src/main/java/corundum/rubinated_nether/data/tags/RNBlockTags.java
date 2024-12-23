@@ -75,12 +75,12 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.CORRODED_BRONZE_BLOCK.get(),
 			RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
 			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
-			RNBlocks.CUT_BRONZE.get(),
 
-			RNBlocks.DISCOLORED_CUT_BRONZE.get(),
-			RNBlocks.CORRODED_CUT_BRONZE.get(),
-			RNBlocks.TARNISHED_CUT_BRONZE.get(),
-			RNBlocks.CRYSTALLIZED_CUT_BRONZE.get(),
+			RNBlocks.CUT_BRONZE_PILLAR.get(),
+			RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get(),
+			RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get(),
+			RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get(),
+			RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get(),
 
 			RNBlocks.FREEZER.get()
 		);
@@ -137,11 +137,11 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
 			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
 
-			RNBlocks.CUT_BRONZE.get(),
-			RNBlocks.DISCOLORED_CUT_BRONZE.get(),
-			RNBlocks.CORRODED_CUT_BRONZE.get(),
-			RNBlocks.TARNISHED_CUT_BRONZE.get(),
-			RNBlocks.CRYSTALLIZED_CUT_BRONZE.get(),
+			RNBlocks.CUT_BRONZE_PILLAR.get(),
+			RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get(),
+			RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get(),
+			RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get(),
+			RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get(),
 
 			RNBlocks.FREEZER.get()
 		);

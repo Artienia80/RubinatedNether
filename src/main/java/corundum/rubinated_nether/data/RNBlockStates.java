@@ -123,11 +123,12 @@ public class RNBlockStates extends BlockStateProvider {
 		this.simpleBlock(RNBlocks.CORRODED_BRONZE_BLOCK.get());
 		this.simpleBlock(RNBlocks.TARNISHED_BRONZE_BLOCK.get());
 		this.simpleBlock(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
-		this.simpleBlock(RNBlocks.CUT_BRONZE.get());
-		this.simpleBlock(RNBlocks.DISCOLORED_CUT_BRONZE.get());
-		this.simpleBlock(RNBlocks.CORRODED_CUT_BRONZE.get());
-		this.simpleBlock(RNBlocks.TARNISHED_CUT_BRONZE.get());
-		this.simpleBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE.get());
+
+		this.simpleBlock(RNBlocks.CUT_BRONZE_PILLAR.get());
+		this.simpleBlock(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get());
+		this.simpleBlock(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get());
+		this.simpleBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get());
+		this.simpleBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
 
 	}
 
