@@ -36,5 +36,13 @@
 				"down": {"uv": [0, 0, 7, 7], "texture": "#missing"}
 			}
 		}
+	],
+	"groups": [
+		{
+			"name": "VoxelShapes",
+			"origin": [0, 8, 0],
+			"color": 0,
+			"children": [0, 1]
+		}
 	]
 }

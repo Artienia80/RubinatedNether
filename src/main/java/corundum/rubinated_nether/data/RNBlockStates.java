@@ -137,7 +137,7 @@ public class RNBlockStates extends BlockStateProvider {
 				);
 		this.slabBlock(
 				RNBlocks.CUT_BRONZE_PILLAR_SLAB.get(),
-				modLoc("block/bronze/cut_bronze_pillar/cut_bronze_pillar"),
+				modLoc("block/cut_bronze_pillar"),
 				modLoc("block/bronze/cut_bronze_pillar/cut_bronze_pillar")
 		);
 		this.stairsBlock(

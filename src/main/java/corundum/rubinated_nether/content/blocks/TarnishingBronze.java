@@ -68,10 +68,9 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 		return getPrevious(state.getBlock().defaultBlockState()).map(p_154903_ -> p_154903_.getBlock().withPropertiesOf(state));
 	}
 
-	public static Block getNextTarnishStage(Block block) {
-		@SuppressWarnings("deprecation") // IDK if theres a non-deprecated method 
+	@SuppressWarnings("deprecation") // IDK if theres a non-deprecated method
+	static Block getNextTarnishStage(Block block) {
 		Tarnishable tarnishable = block.builtInRegistryHolder().getData(RNDataMaps.TARNISHABLES);
-
 		return tarnishable != null ? tarnishable.nextTarnishmentStage() : TarnishingBronze.NEXT_BY_BLOCK.get().get(block);
 	}
 
@@ -100,7 +99,6 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 		CORRODED("corroded"),
 		TARNISHED("tarnished"),
 		CRYSTALLIZED("crystallized");
-
 
 		public static final Codec<TarnishingBronze.TarnishState> CODEC = StringRepresentable.fromEnum(TarnishingBronze.TarnishState::values);
 		private final String name;
