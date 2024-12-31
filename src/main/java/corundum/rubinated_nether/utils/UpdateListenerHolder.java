@@ -6,10 +6,10 @@ import net.minecraft.world.level.Level;
 public interface UpdateListenerHolder {
 
 	static void addUpdateListener(Level level, BlockUpdateListener listener) {
-		((UpdateListenerHolder) level).rn$addUpdateListener(listener);
+		((UpdateListenerHolder) level).rubinatedNether$addUpdateListener(listener);
 	}
 
-	void rn$addUpdateListener(BlockUpdateListener listener);
+	void rubinatedNether$addUpdateListener(BlockUpdateListener listener);
 
-	void rn$handleBlockUpdate(BlockPos pos);
+	void rubinatedNether$handleBlockUpdate(BlockPos pos);
 }

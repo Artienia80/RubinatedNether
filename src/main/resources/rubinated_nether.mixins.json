@@ -5,7 +5,8 @@
   "minVersion": "0.8",
   "mixins": [
     "AbstractFurnaceBlockEntityAccessor",
-    "DoublePlantBlockAccessor"
+    "DoublePlantBlockAccessor",
+    "LevelMixin"
   ],
   "injectors": {
     "defaultRequire": 1
