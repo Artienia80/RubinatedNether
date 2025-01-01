@@ -8,7 +8,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -75,11 +74,10 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 			.move(worldPosition.relative(facing));
 
 		MutableDouble lastDistance = new MutableDouble(blockRange);
-/* 		level.getEntities().get(range, entity -> {
+		level.getEntities().get(range, entity -> {
 			double distance = Math.sqrt(entity.distanceToSqr(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ())) - 1;
 			if(distance < lastDistance.getValue()) lastDistance.setValue(distance);
-		}); */
-
+		});
 
 		int blockDistance = Mth.clamp(Mth.floor(lastDistance.getValue()), 0, currentLaserRange);
 		powerLevel = currentLaserRange - blockDistance;
