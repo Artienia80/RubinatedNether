@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.blocks;
 
+import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -58,10 +59,9 @@ public class ChandelierBlock extends Block {
 		BlockState blockstate = pLevel.getBlockState(blockpos$mutableblockpos);
 		FallingBlockEntity fallingblockentity = FallingBlockEntity.fall(pLevel, blockpos$mutableblockpos, blockstate);
 
-		// TODO: Readd config
 		int i = Math.max(1 + pPos.getY() - blockpos$mutableblockpos.getY(), 6);
-		float f = 500 * (float)i;
+		float f = RNConfig.chandelierMultiplier * (float)i;
 	
-		fallingblockentity.setHurtsEntities(f, 500);
+		fallingblockentity.setHurtsEntities(f, RNConfig.chandelierMaxDamage);
 	}
 }

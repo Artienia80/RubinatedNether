@@ -58,5 +58,7 @@
   "item.rubinated_nether.ruby": "Ruby",
   "item.rubinated_nether.ruby_shard": "Ruby Shard",
   "itemGroup.examplemod": "Rubinated Nether",
-  "menu.rubinated_nether.freezer": "Freezer"
+  "menu.rubinated_nether.freezer": "Freezer",
+  "rubinated_nether.midnightconfig.category.brazier": "Brazier",
+  "rubinated_nether.midnightconfig.category.chandelier": "Chandelier"
 }

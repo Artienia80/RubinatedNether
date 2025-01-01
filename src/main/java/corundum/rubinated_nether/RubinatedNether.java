@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 
 import corundum.rubinated_nether.data.Datagen;
+import corundum.rubinated_nether.utils.RNConfig;
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -25,6 +27,7 @@ public class RubinatedNether {
 	public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
 		LOGGER.info("Rubinating all over your Nether...");
 		modEventBus.addListener(RubinatedNether::onSetup);
+		MidnightConfig.init(MODID, RNConfig.class);
 
 		RNBlocks.BLOCKS.register(modEventBus);
 		RNItems.ITEMS.register(modEventBus);
