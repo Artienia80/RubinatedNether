@@ -90,5 +90,8 @@ public class RNLanguage extends LanguageProvider {
 
 		this.add("menu." + RubinatedNether.MODID + ".freezer", "Freezer");
 		this.add("gui." + RubinatedNether.MODID + ".recipebook.toggleRecipes.freezable", "Showing Freezable");
+
+		this.add(RubinatedNether.MODID + ".midnightconfig.category.chandelier", "Chandelier");
+		this.add(RubinatedNether.MODID + ".midnightconfig.category.brazier", "Brazier");
 	}
 }

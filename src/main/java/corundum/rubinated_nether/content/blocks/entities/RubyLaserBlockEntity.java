@@ -74,10 +74,10 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 			.move(worldPosition.relative(facing));
 
 		MutableDouble lastDistance = new MutableDouble(blockRange);
-		level.getEntities().get(range, entity -> {
+/* 		level.getEntities().get(range, entity -> {
 			double distance = Math.sqrt(entity.distanceToSqr(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ())) - 1;
 			if(distance < lastDistance.getValue()) lastDistance.setValue(distance);
-		});
+		}); */
 
 		int blockDistance = Mth.clamp(Mth.floor(lastDistance.getValue()), 0, currentLaserRange);
 		powerLevel = currentLaserRange - blockDistance;
