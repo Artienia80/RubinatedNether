@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "bottom": "rubinated_nether:block/polished_altar_stone",
-    "side": "rubinated_nether:block/polished_altar_stone",
-    "top": "rubinated_nether:block/polished_altar_stone"
-  }
-}

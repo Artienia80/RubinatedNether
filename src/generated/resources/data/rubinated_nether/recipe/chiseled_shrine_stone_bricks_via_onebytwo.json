@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "DeferredHolder{ResourceKey[minecraft:block / rubinated_nether:chiseled_shrine_stone_bricks]}",
+  "key": {
+    "I": {
+      "item": "rubinated_nether:shrine_stone_bricks_slab"
+    }
+  },
+  "pattern": [
+    "I",
+    "I"
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:chiseled_shrine_stone_bricks"
+  }
+}
