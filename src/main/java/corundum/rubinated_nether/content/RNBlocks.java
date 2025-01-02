@@ -156,93 +156,93 @@ public class RNBlocks {
 			.noOcclusion()
 		)
 	);
-	public static final DeferredBlock<Block> ALTAR_STONE = registerBlockAndItem(
-		"altar_stone",
+	public static final DeferredBlock<Block> SHRINE_STONE = registerBlockAndItem(
+		"shrine_stone",
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.DEEPSLATE))
 	);
 
-	public static final DeferredBlock<Block> POLISHED_ALTAR_STONE = registerBlockAndItem(
-			"polished_altar_stone",
-			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.ALTAR_STONE.get()))
+	public static final DeferredBlock<Block> POLISHED_SHRINE_STONE = registerBlockAndItem(
+			"polished_shrine_stone",
+			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
 
-	public static final DeferredBlock<SlabBlock> POLISHED_ALTAR_STONE_SLAB = registerBlockAndItem(
-			"polished_altar_stone_slab",
-			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.POLISHED_ALTAR_STONE.get())
+	public static final DeferredBlock<SlabBlock> POLISHED_SHRINE_STONE_SLAB = registerBlockAndItem(
+			"polished_shrine_stone_slab",
+			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.POLISHED_SHRINE_STONE.get())
 			)
 	);
-	public static final DeferredBlock<StairBlock> POLISHED_ALTAR_STONE_STAIRS = registerBlockAndItem(
-			"polished_altar_stone_stairs",
+	public static final DeferredBlock<StairBlock> POLISHED_SHRINE_STONE_STAIRS = registerBlockAndItem(
+			"polished_shrine_stone_stairs",
 			() -> new StairBlock(
-					POLISHED_ALTAR_STONE.get().defaultBlockState(),
-					BlockBehaviour.Properties.ofFullCopy(RNBlocks.POLISHED_ALTAR_STONE.get())
+					POLISHED_SHRINE_STONE.get().defaultBlockState(),
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.POLISHED_SHRINE_STONE.get())
 			)
 	);
-	public static final DeferredBlock<WallBlock> POLISHED_ALTAR_STONE_WALL = registerBlockAndItem(
-			"polished_altar_stone_wall",
+	public static final DeferredBlock<WallBlock> POLISHED_SHRINE_STONE_WALL = registerBlockAndItem(
+			"polished_shrine_stone_wall",
 			() -> new WallBlock(
-					BlockBehaviour.Properties.ofFullCopy(RNBlocks.POLISHED_ALTAR_STONE.get())
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.POLISHED_SHRINE_STONE.get())
 			)
 	);
 
-	public static final DeferredBlock<Block> ALTAR_STONE_TILES = registerBlockAndItem(
-		"altar_stone_tiles",
-		() -> new Block(Block.Properties.ofFullCopy(RNBlocks.ALTAR_STONE.get()))
+	public static final DeferredBlock<Block> SHRINE_STONE_TILES = registerBlockAndItem(
+		"shrine_stone_tiles",
+		() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
-	public static final DeferredBlock<SlabBlock> ALTAR_STONE_TILES_SLAB = registerBlockAndItem(
-		"altar_stone_tiles_slab",
-		() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.ALTAR_STONE_TILES.get()))
+	public static final DeferredBlock<SlabBlock> SHRINE_STONE_TILES_SLAB = registerBlockAndItem(
+		"shrine_stone_tiles_slab",
+		() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_TILES.get()))
 	);
-	public static final DeferredBlock<StairBlock> ALTAR_STONE_TILES_STAIRS = registerBlockAndItem(
-		"altar_stone_tiles_stairs",
+	public static final DeferredBlock<StairBlock> SHRINE_STONE_TILES_STAIRS = registerBlockAndItem(
+		"shrine_stone_tiles_stairs",
 		() -> new StairBlock(
-			ALTAR_STONE_TILES.get().defaultBlockState(),
-			BlockBehaviour.Properties.ofFullCopy(RNBlocks.ALTAR_STONE_TILES.get())
+			SHRINE_STONE_TILES.get().defaultBlockState(),
+			BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_TILES.get())
 		)
 	);
-	public static final DeferredBlock<WallBlock> ALTAR_STONE_TILES_WALL = registerBlockAndItem(
-		"altar_stone_tiles_wall",
+	public static final DeferredBlock<WallBlock> SHRINE_STONE_TILES_WALL = registerBlockAndItem(
+		"shrine_stone_tiles_wall",
 		() -> new WallBlock(
-			BlockBehaviour.Properties.ofFullCopy(RNBlocks.ALTAR_STONE_TILES.get())
+			BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_TILES.get())
 		)
 	);
 
-	public static final DeferredBlock<RotatedPillarBlock> ALTAR_STONE_PILLAR = registerBlockAndItem(
-		"altar_stone_pillar",
-		() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(RNBlocks.ALTAR_STONE.get()))
+	public static final DeferredBlock<RotatedPillarBlock> SHRINE_STONE_PILLAR = registerBlockAndItem(
+		"shrine_stone_pillar",
+		() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
-	public static final DeferredBlock<Block> ALTAR_STONE_BRICKS = registerBlockAndItem(
-		"altar_stone_bricks",
-		() -> new Block(Block.Properties.ofFullCopy(RNBlocks.ALTAR_STONE.get()))
+	public static final DeferredBlock<Block> SHRINE_STONE_BRICKS = registerBlockAndItem(
+		"shrine_stone_bricks",
+		() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
 
-	public static final DeferredBlock<SlabBlock> ALTAR_STONE_BRICKS_SLAB = registerBlockAndItem(
-		"altar_stone_bricks_slab",
-		() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.ALTAR_STONE_BRICKS.get()))
+	public static final DeferredBlock<SlabBlock> SHRINE_STONE_BRICKS_SLAB = registerBlockAndItem(
+		"shrine_stone_bricks_slab",
+		() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_BRICKS.get()))
 	);
-	public static final DeferredBlock<StairBlock> ALTAR_STONE_BRICKS_STAIRS = registerBlockAndItem(
-		"altar_stone_bricks_stairs",
+	public static final DeferredBlock<StairBlock> SHRINE_STONE_BRICKS_STAIRS = registerBlockAndItem(
+		"shrine_stone_bricks_stairs",
 		() -> new StairBlock(
-			ALTAR_STONE_BRICKS.get().defaultBlockState(),
-			BlockBehaviour.Properties.ofFullCopy(RNBlocks.ALTAR_STONE_BRICKS.get())
+			SHRINE_STONE_BRICKS.get().defaultBlockState(),
+			BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_BRICKS.get())
 		)
 	);
-	public static final DeferredBlock<WallBlock> ALTAR_STONE_BRICKS_WALL = registerBlockAndItem(
-		"altar_stone_bricks_wall",
+	public static final DeferredBlock<WallBlock> SHRINE_STONE_BRICKS_WALL = registerBlockAndItem(
+		"shrine_stone_bricks_wall",
 		() -> new WallBlock(
-			BlockBehaviour.Properties.ofFullCopy(RNBlocks.ALTAR_STONE_BRICKS.get())
+			BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_BRICKS.get())
 		)
 	);
 
-	public static final DeferredBlock<Block> CHISELED_ALTAR_STONE_BRICKS = registerBlockAndItem(
-		"chiseled_altar_stone_bricks",
-		() -> new Block(Block.Properties.ofFullCopy(RNBlocks.ALTAR_STONE.get()))
+	public static final DeferredBlock<Block> CHISELED_SHRINE_STONE_BRICKS = registerBlockAndItem(
+		"chiseled_shrine_stone_bricks",
+		() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
 
-	public static final DeferredBlock<RotatedPillarBlock> RUBINATED_CHISELED_ALTAR_STONE_BRICKS = registerBlockAndItem(
-		"rubinated_chiseled_altar_stone_bricks",
+	public static final DeferredBlock<RotatedPillarBlock> RUBINATED_CHISELED_SHRINE_STONE_BRICKS = registerBlockAndItem(
+		"rubinated_chiseled_shrine_stone_bricks",
 		() -> new RotatedPillarBlock(
-			Block.Properties.ofFullCopy(RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get())
+			Block.Properties.ofFullCopy(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get())
 				.lightLevel($ -> 15)
 		)
 	);
