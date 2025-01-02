@@ -33,27 +33,27 @@ public class RNLanguage extends LanguageProvider {
 		this.addBlock(RNBlocks.MOLTEN_RUBY_GLASS, "Molten Ruby Glass");
 		this.addBlock(RNBlocks.MOLTEN_RUBY_GLASS_PANE, "Molten Ruby Glass Pane");
 
-		this.addBlock(RNBlocks.ALTAR_STONE, "Altar Stone");
+		this.addBlock(RNBlocks.SHRINE_STONE, "Shrine Stone");
 
-		this.addBlock(RNBlocks.POLISHED_ALTAR_STONE, "Polished Altar Stone");
-		this.addBlock(RNBlocks.POLISHED_ALTAR_STONE_STAIRS, "Polished Altar Stone Stairs");
-		this.addBlock(RNBlocks.POLISHED_ALTAR_STONE_SLAB, "Polished Altar Stone Slab");
-		this.addBlock(RNBlocks.POLISHED_ALTAR_STONE_WALL, "Polished Altar Stone Wall");
+		this.addBlock(RNBlocks.POLISHED_SHRINE_STONE, "Polished Shrine Stone");
+		this.addBlock(RNBlocks.POLISHED_SHRINE_STONE_STAIRS, "Polished Shrine Stone Stairs");
+		this.addBlock(RNBlocks.POLISHED_SHRINE_STONE_SLAB, "Polished Shrine Stone Slab");
+		this.addBlock(RNBlocks.POLISHED_SHRINE_STONE_WALL, "Polished Shrine Stone Wall");
 
-		this.addBlock(RNBlocks.ALTAR_STONE_TILES, "Altar Stone Tiles");
-		this.addBlock(RNBlocks.ALTAR_STONE_TILES_STAIRS, "Altar Stone Tile Stairs");
-		this.addBlock(RNBlocks.ALTAR_STONE_TILES_SLAB, "Altar Stone Tile Slab");
-		this.addBlock(RNBlocks.ALTAR_STONE_TILES_WALL, "Altar Stone Tile Wall");
+		this.addBlock(RNBlocks.SHRINE_STONE_TILES, "Shrine Stone Tiles");
+		this.addBlock(RNBlocks.SHRINE_STONE_TILES_STAIRS, "Shrine Stone Tile Stairs");
+		this.addBlock(RNBlocks.SHRINE_STONE_TILES_SLAB, "Shrine Stone Tile Slab");
+		this.addBlock(RNBlocks.SHRINE_STONE_TILES_WALL, "Shrine Stone Tile Wall");
 
-		this.addBlock(RNBlocks.ALTAR_STONE_PILLAR, "Altar Stone Pillar");
+		this.addBlock(RNBlocks.SHRINE_STONE_PILLAR, "Shrine Stone Pillar");
 
-		this.addBlock(RNBlocks.ALTAR_STONE_BRICKS, "Altar Stone Bricks");
-		this.addBlock(RNBlocks.ALTAR_STONE_BRICKS_STAIRS, "Altar Stone Brick Stairs");
-		this.addBlock(RNBlocks.ALTAR_STONE_BRICKS_SLAB, "Altar Stone Brick Slab");
-		this.addBlock(RNBlocks.ALTAR_STONE_BRICKS_WALL, "Altar Stone Brick Wall");
+		this.addBlock(RNBlocks.SHRINE_STONE_BRICKS, "Shrine Stone Bricks");
+		this.addBlock(RNBlocks.SHRINE_STONE_BRICKS_STAIRS, "Shrine Stone Brick Stairs");
+		this.addBlock(RNBlocks.SHRINE_STONE_BRICKS_SLAB, "Shrine Stone Brick Slab");
+		this.addBlock(RNBlocks.SHRINE_STONE_BRICKS_WALL, "Shrine Stone Brick Wall");
 
-		this.addBlock(RNBlocks.CHISELED_ALTAR_STONE_BRICKS, "Chiseled Altar Stone Bricks");
-		this.addBlock(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS, "Rubinated Chiseled Altar Stone Bricks");
+		this.addBlock(RNBlocks.CHISELED_SHRINE_STONE_BRICKS, "Chiseled Shrine Stone Bricks");
+		this.addBlock(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS, "Rubinated Chiseled Shrine Stone Bricks");
 		this.addBlock(RNBlocks.RUNESTONE, "Runestone");
 		this.addBlock(RNBlocks.FREEZER, "Freezer");
 
