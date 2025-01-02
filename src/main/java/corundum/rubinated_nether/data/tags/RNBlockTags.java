@@ -47,27 +47,27 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.MOLTEN_RUBY_GLASS.get(),
 			RNBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
 			
-			RNBlocks.ALTAR_STONE.get(),
+			RNBlocks.SHRINE_STONE.get(),
 
-			RNBlocks.POLISHED_ALTAR_STONE.get(),
-			RNBlocks.POLISHED_ALTAR_STONE_STAIRS.get(),
-			RNBlocks.POLISHED_ALTAR_STONE_SLAB.get(),
-			RNBlocks.POLISHED_ALTAR_STONE_WALL.get(),
+			RNBlocks.POLISHED_SHRINE_STONE.get(),
+			RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
+			RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(),
+			RNBlocks.POLISHED_SHRINE_STONE_WALL.get(),
 
-			RNBlocks.ALTAR_STONE_TILES.get(),
-			RNBlocks.ALTAR_STONE_TILES_SLAB.get(),
-			RNBlocks.ALTAR_STONE_TILES_STAIRS.get(),
-			RNBlocks.ALTAR_STONE_TILES_WALL.get(),
+			RNBlocks.SHRINE_STONE_TILES.get(),
+			RNBlocks.SHRINE_STONE_TILES_SLAB.get(),
+			RNBlocks.SHRINE_STONE_TILES_STAIRS.get(),
+			RNBlocks.SHRINE_STONE_TILES_WALL.get(),
 
-			RNBlocks.ALTAR_STONE_PILLAR.get(),
+			RNBlocks.SHRINE_STONE_PILLAR.get(),
 
-			RNBlocks.ALTAR_STONE_BRICKS.get(),
-			RNBlocks.ALTAR_STONE_BRICKS_STAIRS.get(),
-			RNBlocks.ALTAR_STONE_BRICKS_WALL.get(),
-			RNBlocks.ALTAR_STONE_BRICKS_SLAB.get(),
+			RNBlocks.SHRINE_STONE_BRICKS.get(),
+			RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get(),
+			RNBlocks.SHRINE_STONE_BRICKS_WALL.get(),
+			RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(),
 
-			RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
-			RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get(),
+			RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
+			RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
 			RNBlocks.RUNESTONE.get(),
 
 			RNBlocks.BRONZE_BLOCK.get(),
@@ -118,26 +118,26 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.MOLTEN_RUBY_BLOCK.get(),
 			RNBlocks.BLEEDING_OBSIDIAN.get(),
 
-			RNBlocks.ALTAR_STONE.get(),
+			RNBlocks.SHRINE_STONE.get(),
 
-			RNBlocks.POLISHED_ALTAR_STONE.get(),
-			RNBlocks.POLISHED_ALTAR_STONE_STAIRS.get(),
-			RNBlocks.POLISHED_ALTAR_STONE_SLAB.get(),
-			RNBlocks.POLISHED_ALTAR_STONE_WALL.get(),
+			RNBlocks.POLISHED_SHRINE_STONE.get(),
+			RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
+			RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(),
+			RNBlocks.POLISHED_SHRINE_STONE_WALL.get(),
 
-			RNBlocks.ALTAR_STONE_TILES.get(),
-			RNBlocks.ALTAR_STONE_TILES_SLAB.get(),
-			RNBlocks.ALTAR_STONE_TILES_STAIRS.get(),
-			RNBlocks.ALTAR_STONE_TILES_WALL.get(),
+			RNBlocks.SHRINE_STONE_TILES.get(),
+			RNBlocks.SHRINE_STONE_TILES_SLAB.get(),
+			RNBlocks.SHRINE_STONE_TILES_STAIRS.get(),
+			RNBlocks.SHRINE_STONE_TILES_WALL.get(),
 
-			RNBlocks.ALTAR_STONE_PILLAR.get(),
+			RNBlocks.SHRINE_STONE_PILLAR.get(),
 
-			RNBlocks.ALTAR_STONE_BRICKS.get(),
-			RNBlocks.ALTAR_STONE_BRICKS_STAIRS.get(),
-			RNBlocks.ALTAR_STONE_BRICKS_WALL.get(),
-			RNBlocks.ALTAR_STONE_BRICKS_SLAB.get(),
-			RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get(),
-			RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get(),
+			RNBlocks.SHRINE_STONE_BRICKS.get(),
+			RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get(),
+			RNBlocks.SHRINE_STONE_BRICKS_WALL.get(),
+			RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(),
+			RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
+			RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
 			RNBlocks.RUNESTONE.get(),
 
 			RNBlocks.BRONZE_BLOCK.get(),
@@ -166,9 +166,9 @@ public class RNBlockTags extends BlockTagsProvider {
 		);
 
 		this.tag(BlockTags.WALLS).add(
-			RNBlocks.ALTAR_STONE_TILES_WALL.get(),
-			RNBlocks.ALTAR_STONE_BRICKS_WALL.get(),
-			RNBlocks.POLISHED_ALTAR_STONE_WALL.get()
+			RNBlocks.SHRINE_STONE_TILES_WALL.get(),
+			RNBlocks.SHRINE_STONE_BRICKS_WALL.get(),
+			RNBlocks.POLISHED_SHRINE_STONE_WALL.get()
 		);
 	}
 }

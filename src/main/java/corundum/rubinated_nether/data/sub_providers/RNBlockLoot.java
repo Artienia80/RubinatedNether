@@ -33,28 +33,28 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.LAVA_LAMP.get());
 		this.dropSelf(RNBlocks.SOAKSTONE.get());
 
-		this.dropSelf(RNBlocks.ALTAR_STONE.get());
+		this.dropSelf(RNBlocks.SHRINE_STONE.get());
 
-		this.dropSelf(RNBlocks.POLISHED_ALTAR_STONE.get());
-		this.dropSelf(RNBlocks.POLISHED_ALTAR_STONE_STAIRS.get());
-		this.dropSelf(RNBlocks.POLISHED_ALTAR_STONE_SLAB.get());
-		this.dropSelf(RNBlocks.POLISHED_ALTAR_STONE_WALL.get());
+		this.dropSelf(RNBlocks.POLISHED_SHRINE_STONE.get());
+		this.dropSelf(RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get());
+		this.dropSelf(RNBlocks.POLISHED_SHRINE_STONE_SLAB.get());
+		this.dropSelf(RNBlocks.POLISHED_SHRINE_STONE_WALL.get());
 
 
-		this.dropSelf(RNBlocks.ALTAR_STONE_TILES.get());
-		this.dropSelf(RNBlocks.ALTAR_STONE_TILES_SLAB.get());
-		this.dropSelf(RNBlocks.ALTAR_STONE_TILES_STAIRS.get());
-		this.dropSelf(RNBlocks.ALTAR_STONE_TILES_WALL.get());
+		this.dropSelf(RNBlocks.SHRINE_STONE_TILES.get());
+		this.dropSelf(RNBlocks.SHRINE_STONE_TILES_SLAB.get());
+		this.dropSelf(RNBlocks.SHRINE_STONE_TILES_STAIRS.get());
+		this.dropSelf(RNBlocks.SHRINE_STONE_TILES_WALL.get());
 
-		this.dropSelf(RNBlocks.ALTAR_STONE_PILLAR.get());
+		this.dropSelf(RNBlocks.SHRINE_STONE_PILLAR.get());
 
-		this.dropSelf(RNBlocks.ALTAR_STONE_BRICKS.get());
-		this.dropSelf(RNBlocks.ALTAR_STONE_BRICKS_SLAB.get());
-		this.dropSelf(RNBlocks.ALTAR_STONE_BRICKS_STAIRS.get());
-		this.dropSelf(RNBlocks.ALTAR_STONE_BRICKS_WALL.get());
+		this.dropSelf(RNBlocks.SHRINE_STONE_BRICKS.get());
+		this.dropSelf(RNBlocks.SHRINE_STONE_BRICKS_SLAB.get());
+		this.dropSelf(RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get());
+		this.dropSelf(RNBlocks.SHRINE_STONE_BRICKS_WALL.get());
 
-		this.dropSelf(RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
-		this.dropSelf(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get());
+		this.dropSelf(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
+		this.dropSelf(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get());
 		this.dropSelf(RNBlocks.RUNESTONE.get());
 
 		this.dropWhenSilkTouch(RNBlocks.RUBY_GLASS.get());
