@@ -46,35 +46,35 @@ public class RNItemModels extends ItemModelProvider {
 			"block/molten_ruby_glass"
 		);
 
-		this.simpleBlockItem(RNBlocks.ALTAR_STONE.get());
+		this.simpleBlockItem(RNBlocks.SHRINE_STONE.get());
 
-		this.simpleBlockItem(RNBlocks.POLISHED_ALTAR_STONE.get());
-		this.simpleBlockItem(RNBlocks.POLISHED_ALTAR_STONE_STAIRS.get());
-		this.simpleBlockItem(RNBlocks.POLISHED_ALTAR_STONE_SLAB.get());
+		this.simpleBlockItem(RNBlocks.POLISHED_SHRINE_STONE.get());
+		this.simpleBlockItem(RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get());
+		this.simpleBlockItem(RNBlocks.POLISHED_SHRINE_STONE_SLAB.get());
 		wallInventory(
-				RNBlocks.POLISHED_ALTAR_STONE_WALL.getId().toString(),
-				modLoc("block/polished_altar_stone")
+				RNBlocks.POLISHED_SHRINE_STONE_WALL.getId().toString(),
+				modLoc("block/polished_shrine_stone")
 		);
 
-		this.simpleBlockItem(RNBlocks.ALTAR_STONE_TILES.get());
-		this.simpleBlockItem(RNBlocks.ALTAR_STONE_TILES_STAIRS.get());
-		this.simpleBlockItem(RNBlocks.ALTAR_STONE_TILES_SLAB.get());
+		this.simpleBlockItem(RNBlocks.SHRINE_STONE_TILES.get());
+		this.simpleBlockItem(RNBlocks.SHRINE_STONE_TILES_STAIRS.get());
+		this.simpleBlockItem(RNBlocks.SHRINE_STONE_TILES_SLAB.get());
 		wallInventory(
-				RNBlocks.ALTAR_STONE_TILES_WALL.getId().toString(),
-				modLoc("block/altar_stone_tiles")
+				RNBlocks.SHRINE_STONE_TILES_WALL.getId().toString(),
+				modLoc("block/shrine_stone_tiles")
 		);
 
-		this.simpleBlockItem(RNBlocks.ALTAR_STONE_PILLAR.get());
+		this.simpleBlockItem(RNBlocks.SHRINE_STONE_PILLAR.get());
 
-		this.simpleBlockItem(RNBlocks.ALTAR_STONE_BRICKS.get());
-		this.simpleBlockItem(RNBlocks.ALTAR_STONE_BRICKS_STAIRS.get());
-		this.simpleBlockItem(RNBlocks.ALTAR_STONE_BRICKS_SLAB.get());
+		this.simpleBlockItem(RNBlocks.SHRINE_STONE_BRICKS.get());
+		this.simpleBlockItem(RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get());
+		this.simpleBlockItem(RNBlocks.SHRINE_STONE_BRICKS_SLAB.get());
 		wallInventory(
-				RNBlocks.ALTAR_STONE_BRICKS_WALL.getId().toString(),
-				modLoc("block/altar_stone_bricks")
+				RNBlocks.SHRINE_STONE_BRICKS_WALL.getId().toString(),
+				modLoc("block/shrine_stone_bricks")
 		);
-		this.simpleBlockItem(RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
-		this.simpleBlockItem(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get());
+		this.simpleBlockItem(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
+		this.simpleBlockItem(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get());
 		this.basicItem(RNBlocks.RUNESTONE.asItem());
 
 		this.simpleBlockItem(RNBlocks.BRONZE_BLOCK.get());
