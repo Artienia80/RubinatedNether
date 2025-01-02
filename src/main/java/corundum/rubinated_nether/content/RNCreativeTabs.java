@@ -34,25 +34,25 @@ public class RNCreativeTabs {
 
 				output.accept(RNBlocks.BLEEDING_OBSIDIAN.get());
 
-				output.accept(RNBlocks.ALTAR_STONE.get());
-				output.accept(RNBlocks.POLISHED_ALTAR_STONE.get());
-				output.accept(RNBlocks.POLISHED_ALTAR_STONE_STAIRS.get());
-				output.accept(RNBlocks.POLISHED_ALTAR_STONE_SLAB.get());
-				output.accept(RNBlocks.POLISHED_ALTAR_STONE_WALL.get());
+				output.accept(RNBlocks.SHRINE_STONE.get());
+				output.accept(RNBlocks.POLISHED_SHRINE_STONE.get());
+				output.accept(RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get());
+				output.accept(RNBlocks.POLISHED_SHRINE_STONE_SLAB.get());
+				output.accept(RNBlocks.POLISHED_SHRINE_STONE_WALL.get());
 
-				output.accept(RNBlocks.ALTAR_STONE_BRICKS.get());
-				output.accept(RNBlocks.ALTAR_STONE_BRICKS_STAIRS.get());
-				output.accept(RNBlocks.ALTAR_STONE_BRICKS_SLAB.get());
-				output.accept(RNBlocks.ALTAR_STONE_BRICKS_WALL.get());
+				output.accept(RNBlocks.SHRINE_STONE_BRICKS.get());
+				output.accept(RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get());
+				output.accept(RNBlocks.SHRINE_STONE_BRICKS_SLAB.get());
+				output.accept(RNBlocks.SHRINE_STONE_BRICKS_WALL.get());
 
-				output.accept(RNBlocks.ALTAR_STONE_TILES.get());
-				output.accept(RNBlocks.ALTAR_STONE_TILES_STAIRS.get());
-				output.accept(RNBlocks.ALTAR_STONE_TILES_SLAB.get());
-				output.accept(RNBlocks.ALTAR_STONE_TILES_WALL.get());
+				output.accept(RNBlocks.SHRINE_STONE_TILES.get());
+				output.accept(RNBlocks.SHRINE_STONE_TILES_STAIRS.get());
+				output.accept(RNBlocks.SHRINE_STONE_TILES_SLAB.get());
+				output.accept(RNBlocks.SHRINE_STONE_TILES_WALL.get());
 
-				output.accept(RNBlocks.ALTAR_STONE_PILLAR.get());
-				output.accept(RNBlocks.CHISELED_ALTAR_STONE_BRICKS.get());
-				output.accept(RNBlocks.RUBINATED_CHISELED_ALTAR_STONE_BRICKS.get());
+				output.accept(RNBlocks.SHRINE_STONE_PILLAR.get());
+				output.accept(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
+				output.accept(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get());
 
 				output.accept(RNBlocks.SOAKSTONE.get());
 
