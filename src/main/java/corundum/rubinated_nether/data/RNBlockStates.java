@@ -188,6 +188,52 @@ public class RNBlockStates extends BlockStateProvider {
 			RNBlocks.TARNISHED_CUT_BRONZE_BRICKS,
 			RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS
 		);
+		this.slabBlock(
+				RNBlocks.CUT_BRONZE_BRICKS_SLAB.get(),
+				modLoc("block/cut_bronze_pillar"),
+				modLoc("block/bronze/cut_bronze_pillar/cut_bronze_pillar")
+		);
+		this.stairsBlock(
+				RNBlocks.CUT_BRONZE_BRICKS_STAIRS.get(),
+				modLoc("block/bronze/cut_bronze_pillar/cut_bronze_pillar")
+		);
+		this.slabBlock(
+				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get(),
+				modLoc("block/discolored_cut_bronze_pillar"),
+				modLoc("block/bronze/cut_bronze_pillar/discolored_cut_bronze_pillar")
+		);
+		this.stairsBlock(
+				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				modLoc("block/bronze/cut_bronze_pillar/discolored_cut_bronze_pillar")
+		);
+		this.slabBlock(
+				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get(),
+				modLoc("block/corroded_cut_bronze_pillar"),
+				modLoc("block/bronze/cut_bronze_pillar/corroded_cut_bronze_pillar")
+		);
+		this.stairsBlock(
+				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				modLoc("block/bronze/cut_bronze_pillar/corroded_cut_bronze_pillar")
+		);
+		this.slabBlock(
+				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get(),
+				modLoc("block/tarnished_cut_bronze_pillar"),
+				modLoc("block/bronze/cut_bronze_pillar/tarnished_cut_bronze_pillar")
+		);
+		this.stairsBlock(
+				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				modLoc("block/bronze/cut_bronze_pillar/tarnished_cut_bronze_pillar")
+		);
+		this.slabBlock(
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get(),
+				modLoc("block/crystallized_cut_bronze_pillar"),
+				modLoc("block/bronze/cut_bronze_pillar/crystallized_cut_bronze_pillar")
+		);
+		this.stairsBlock(
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				modLoc("block/bronze/cut_bronze_pillar/crystallized_cut_bronze_pillar")
+		);
+
 	}
 
 	private void glassWithPane(Block glass, IronBarsBlock pane, String name, ResourceLocation edge) {

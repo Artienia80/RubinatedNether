@@ -474,6 +474,68 @@ public class RNBlocks {
 			)
 	);
 
+	// CUT BRONZE BRICKS STAIRS AND SLABS
+
+	public static final DeferredBlock<SlabBlock> CUT_BRONZE_BRICKS_SLAB = registerBlockAndItem(
+			"cut_bronze_bricks_slab",
+			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.CUT_BRONZE_BRICKS.get()))
+	);
+	public static final DeferredBlock<StairBlock> CUT_BRONZE_BRICKS_STAIRS = registerBlockAndItem(
+			"cut_bronze_bricks_stairs",
+			() -> new StairBlock(
+					CUT_BRONZE_BRICKS.get().defaultBlockState(),
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CUT_BRONZE_BRICKS.get())
+			)
+	);
+
+	public static final DeferredBlock<SlabBlock> DISCOLORED_CUT_BRONZE_BRICKS_SLAB = registerBlockAndItem(
+			"discolored_cut_bronze_bricks_slab",
+			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get()))
+	);
+	public static final DeferredBlock<StairBlock> DISCOLORED_CUT_BRONZE_BRICKS_STAIRS = registerBlockAndItem(
+			"discolored_cut_bronze_bricks_stairs",
+			() -> new StairBlock(
+					DISCOLORED_CUT_BRONZE_BRICKS.get().defaultBlockState(),
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get())
+			)
+	);
+
+	public static final DeferredBlock<SlabBlock> CORRODED_CUT_BRONZE_BRICKS_SLAB = registerBlockAndItem(
+			"corroded_cut_bronze_bricks_slab",
+			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get()))
+	);
+	public static final DeferredBlock<StairBlock> CORRODED_CUT_BRONZE_BRICKS_STAIRS = registerBlockAndItem(
+			"corroded_cut_bronze_bricks_stairs",
+			() -> new StairBlock(
+					CORRODED_CUT_BRONZE_BRICKS.get().defaultBlockState(),
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get())
+			)
+	);
+
+	public static final DeferredBlock<SlabBlock> TARNISHED_CUT_BRONZE_BRICKS_SLAB = registerBlockAndItem(
+			"tarnished_cut_bronze_bricks_slab",
+			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get()))
+	);
+	public static final DeferredBlock<StairBlock> TARNISHED_CUT_BRONZE_BRICKS_STAIRS = registerBlockAndItem(
+			"tarnished_cut_bronze_bricks_stairs",
+			() -> new StairBlock(
+					TARNISHED_CUT_BRONZE_BRICKS.get().defaultBlockState(),
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get())
+			)
+	);
+
+	public static final DeferredBlock<SlabBlock> CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB = registerBlockAndItem(
+			"crystallized_cut_bronze_bricks_slab",
+			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get()))
+	);
+	public static final DeferredBlock<StairBlock> CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS = registerBlockAndItem(
+			"crystallized_cut_bronze_bricks_stairs",
+			() -> new StairBlock(
+					CRYSTALLIZED_CUT_BRONZE_BRICKS.get().defaultBlockState(),
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get())
+			)
+	);
+
 	/// Registers a block and an item 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);

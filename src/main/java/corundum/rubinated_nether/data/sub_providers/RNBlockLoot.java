@@ -92,10 +92,20 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_SLAB.get());
 
 		this.dropSelf(RNBlocks.CUT_BRONZE_BRICKS.get());
+		this.dropSelf(RNBlocks.CUT_BRONZE_BRICKS_STAIRS.get());
+		this.dropSelf(RNBlocks.CUT_BRONZE_BRICKS_SLAB.get());
 		this.dropSelf(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get());
+		this.dropSelf(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS.get());
+		this.dropSelf(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get());
 		this.dropSelf(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get());
+		this.dropSelf(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS.get());
+		this.dropSelf(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get());
 		this.dropSelf(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get());
+		this.dropSelf(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS.get());
+		this.dropSelf(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get());
 		this.dropSelf(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get());
+		this.dropSelf(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get());
+		this.dropSelf(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
 
 
 		this.dropOther(

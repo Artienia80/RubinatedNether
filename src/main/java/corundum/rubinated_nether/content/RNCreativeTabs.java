@@ -99,10 +99,20 @@ public class RNCreativeTabs {
 				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_SLAB.get());
 
 				output.accept(RNBlocks.CUT_BRONZE_BRICKS.get());
+				output.accept(RNBlocks.CUT_BRONZE_BRICKS_STAIRS.get());
+				output.accept(RNBlocks.CUT_BRONZE_BRICKS_SLAB.get());
 				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get());
+				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS.get());
+				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get());
 				output.accept(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get());
+				output.accept(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS.get());
+				output.accept(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get());
 				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get());
+				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS.get());
+				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get());
 				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get());
+				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get());
+				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
 
 			})
 			.build()
