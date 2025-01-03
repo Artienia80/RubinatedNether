@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -42,7 +43,7 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 		// Check if there is a diamond block in the vicinity
 		boolean hasDiamondNearby = BlockPos.betweenClosedStream(
 				pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
-		).anyMatch(neighborPos -> level.getBlockState(neighborPos).is(Blocks.DIAMOND_BLOCK));
+		).anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
 
 		if (hasDiamondNearby) {
 			// If a diamond block is nearby, crystallize the block (force it to crystallize)
