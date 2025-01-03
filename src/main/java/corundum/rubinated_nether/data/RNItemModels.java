@@ -86,11 +86,18 @@ public class RNItemModels extends ItemModelProvider {
 		this.simpleBlockItem(RNBlocks.CUT_BRONZE_PILLAR.get());
 		this.simpleBlockItem(RNBlocks.CUT_BRONZE_PILLAR_STAIRS.get());
 		this.simpleBlockItem(RNBlocks.CUT_BRONZE_PILLAR_SLAB.get());
-
 		this.simpleBlockItem(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get());
+		this.simpleBlockItem(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_STAIRS.get());
+		this.simpleBlockItem(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_SLAB.get());
 		this.simpleBlockItem(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get());
+		this.simpleBlockItem(RNBlocks.CORRODED_CUT_BRONZE_PILLAR_STAIRS.get());
+		this.simpleBlockItem(RNBlocks.CORRODED_CUT_BRONZE_PILLAR_SLAB.get());
 		this.simpleBlockItem(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get());
+		this.simpleBlockItem(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_STAIRS.get());
+		this.simpleBlockItem(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_SLAB.get());
 		this.simpleBlockItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
+		this.simpleBlockItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_STAIRS.get());
+		this.simpleBlockItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_SLAB.get());
 
 		this.simpleBlockItem(RNBlocks.CUT_BRONZE_BRICKS.get());
 		this.simpleBlockItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get());

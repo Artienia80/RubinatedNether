@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "rubinated_nether:block/bronze/cut_bronze_pillar/tarnished_cut_bronze_pillar",
+    "side": "rubinated_nether:block/bronze/cut_bronze_pillar/tarnished_cut_bronze_pillar",
+    "top": "rubinated_nether:block/bronze/cut_bronze_pillar/tarnished_cut_bronze_pillar"
+  }
+}

@@ -73,11 +73,18 @@ public class RNLanguage extends LanguageProvider {
 		this.addBlock(RNBlocks.CUT_BRONZE_PILLAR, "Cut Bronze Pillar");
 		this.addBlock(RNBlocks.CUT_BRONZE_PILLAR_STAIRS, "Cut Bronze Pillar Stairs");
 		this.addBlock(RNBlocks.CUT_BRONZE_PILLAR_SLAB, "Cut Bronze Pillar Slab");
-
 		this.addBlock(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR, "Discolored Cut Bronze Pillar");
+		this.addBlock(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_STAIRS, "Discolored Cut Bronze Pillar Stairs");
+		this.addBlock(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_SLAB, "Discolored Cut Bronze Pillar Slab");
 		this.addBlock(RNBlocks.CORRODED_CUT_BRONZE_PILLAR, "Corroded Cut Bronze Pillar");
+		this.addBlock(RNBlocks.CORRODED_CUT_BRONZE_PILLAR_STAIRS, "Corroded Cut Bronze Pillar Stairs");
+		this.addBlock(RNBlocks.CORRODED_CUT_BRONZE_PILLAR_SLAB, "Corroded Cut Bronze Pillar Slab");
 		this.addBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR, "Tarnished Cut Bronze Pillar");
+		this.addBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_STAIRS, "Tarnished Cut Bronze Pillar Stairs");
+		this.addBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_SLAB, "Tarnished Cut Bronze Pillar Slab");
 		this.addBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR, "Crystallized Cut Bronze Pillar");
+		this.addBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_STAIRS, "Crystallized Cut Bronze Pillar Stairs");
+		this.addBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_SLAB, "Crystallized Cut Bronze Pillar Slab");
 
 		this.addBlock(RNBlocks.CUT_BRONZE_BRICKS, "Cut Bronze Bricks");
 		this.addBlock(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS, "Discolored Cut Bronze Bricks");
