@@ -37,22 +37,6 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 		this.tarnishState = tarnishState;
 	}
 
-	private boolean hasDiamondNearby(ServerLevel level, BlockPos pos) {
-		int radius = 3; // Define the radius to search
-		for (int dx = -radius; dx <= radius; dx++) {
-			for (int dy = -radius; dy <= radius; dy++) {
-				for (int dz = -radius; dz <= radius; dz++) {
-					BlockPos nearbyPos = pos.offset(dx, dy, dz);
-					if (level.getBlockState(nearbyPos).is(net.minecraft.world.level.block.Blocks.DIAMOND_BLOCK)) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-
 	@Override
 	protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		// Check if there is a diamond block in the vicinity
@@ -62,7 +46,7 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 
 		if (hasDiamondNearby) {
 			// If a diamond block is nearby, crystallize the block (force it to crystallize)
-			Optional<Block> crystallizedBlockOptional = Optional.ofNullable(TarnishingBronze.getFirst(state.getBlock()));
+			Optional<Block> crystallizedBlockOptional = Optional.ofNullable(TarnishingBronze.getCrystallized(state.getBlock()));
 			if (crystallizedBlockOptional.isPresent()) {
 				Block crystallizedBlock = crystallizedBlockOptional.get();
 				BlockState crystallizedState = crystallizedBlock.defaultBlockState();
