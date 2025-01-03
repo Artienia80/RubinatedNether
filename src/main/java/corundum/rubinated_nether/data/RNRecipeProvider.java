@@ -201,6 +201,76 @@ public class RNRecipeProvider extends RecipeProvider {
 			9
 		);
 
+		stairsAndSlab(
+				recipeOutput,
+				RNBlocks.CUT_BRONZE_PILLAR,
+				RNBlocks.CUT_BRONZE_PILLAR_STAIRS,
+				RNBlocks.CUT_BRONZE_PILLAR_SLAB
+		);
+
+		stairsAndSlab(
+				recipeOutput,
+				RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
+				RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_STAIRS,
+				RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_SLAB
+		);
+
+		stairsAndSlab(
+				recipeOutput,
+				RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
+				RNBlocks.CORRODED_CUT_BRONZE_PILLAR_STAIRS,
+				RNBlocks.CORRODED_CUT_BRONZE_PILLAR_SLAB
+		);
+
+		stairsAndSlab(
+				recipeOutput,
+				RNBlocks.TARNISHED_BRONZE_BLOCK,
+				RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_STAIRS,
+				RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_SLAB
+		);
+
+		stairsAndSlab(
+				recipeOutput,
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR,
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_STAIRS,
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_SLAB
+		);
+
+		stairsAndSlab(
+				recipeOutput,
+				RNBlocks.CUT_BRONZE_BRICKS,
+				RNBlocks.CUT_BRONZE_BRICKS_STAIRS,
+				RNBlocks.CUT_BRONZE_BRICKS_SLAB
+		);
+
+		stairsAndSlab(
+				recipeOutput,
+				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
+				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS,
+				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB
+		);
+
+		stairsAndSlab(
+				recipeOutput,
+				RNBlocks.CORRODED_CUT_BRONZE_BRICKS,
+				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS,
+				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB
+		);
+
+		stairsAndSlab(
+				recipeOutput,
+				RNBlocks.TARNISHED_BRONZE_BLOCK,
+				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS,
+				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB
+		);
+
+		stairsAndSlab(
+				recipeOutput,
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS,
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS,
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB
+		);
+
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS, 8)
 			.define('X', RNBlocks.CHISELED_SHRINE_STONE_BRICKS)
 			.define('O', RNItems.RUBY_ITEM)

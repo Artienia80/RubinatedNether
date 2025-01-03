@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "S": {
+      "item": "rubinated_nether:crystallized_cut_bronze_pillar"
+    }
+  },
+  "pattern": [
+    "  S",
+    " SS",
+    "SSS"
+  ],
+  "result": {
+    "count": 4,
+    "id": "rubinated_nether:crystallized_cut_bronze_pillar_stairs"
+  }
+}

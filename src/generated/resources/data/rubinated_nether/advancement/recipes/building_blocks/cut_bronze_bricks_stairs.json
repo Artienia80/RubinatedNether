@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cut_bronze_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:cut_bronze_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "rubinated_nether:cut_bronze_bricks_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cut_bronze_bricks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "rubinated_nether:cut_bronze_bricks_stairs"
+    ]
+  }
+}
