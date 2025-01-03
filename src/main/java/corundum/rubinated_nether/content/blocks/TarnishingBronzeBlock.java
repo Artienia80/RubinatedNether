@@ -7,7 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChangeOverTimeBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -40,23 +39,18 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 
 	@Override
 	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-		// Check if there is a diamond block in the vicinity
-		boolean hasDiamondNearby = BlockPos.betweenClosedStream(
+		boolean hasCatalystNearby = BlockPos.betweenClosedStream(
 				pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
 		).anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
 
-		if (hasDiamondNearby) {
-			// If a diamond block is nearby, crystallize the block (force it to crystallize)
+		if (hasCatalystNearby) {
 			Optional<Block> crystallizedBlockOptional = Optional.ofNullable(TarnishingBronze.getCrystallized(state.getBlock()));
 			if (crystallizedBlockOptional.isPresent()) {
 				Block crystallizedBlock = crystallizedBlockOptional.get();
 				BlockState crystallizedState = crystallizedBlock.defaultBlockState();
-
-				// Set the block to crystallized state
 				level.setBlock(pos, crystallizedState, Block.UPDATE_ALL_IMMEDIATE);
 			}
 		} else {
-			// If no diamond block nearby, proceed with the regular tarnishing process
 			this.changeOverTime(state, level, pos, random);
 		}
 	}
