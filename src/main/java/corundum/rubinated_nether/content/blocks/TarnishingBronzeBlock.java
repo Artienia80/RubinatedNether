@@ -62,12 +62,9 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 		return state.setValue(property, property.getValueClass().cast(value));
 	}
 
-
-
-
 	@Override
 	protected boolean isRandomlyTicking(BlockState state) {
-		return TarnishingBronze.getNext(state.getBlock()).isPresent();
+		return TarnishingBronze.canCrystallize(state.getBlock());
 	}
 
 	public TarnishingBronze.TarnishState getAge() {

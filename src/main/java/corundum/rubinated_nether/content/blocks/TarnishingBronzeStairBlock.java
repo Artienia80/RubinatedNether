@@ -67,7 +67,7 @@ public class TarnishingBronzeStairBlock extends StairBlock implements Tarnishing
 
 	@Override
 	protected boolean isRandomlyTicking(BlockState state) {
-		return TarnishingBronze.getNext(state.getBlock()).isPresent();
+		return TarnishingBronze.canCrystallize(state.getBlock());
 	}
 
 	public TarnishState getAge() {

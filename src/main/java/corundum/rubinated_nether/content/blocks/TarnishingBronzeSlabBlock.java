@@ -70,7 +70,7 @@ public class TarnishingBronzeSlabBlock extends SlabBlock implements TarnishingBr
 
 	@Override
 	protected boolean isRandomlyTicking(BlockState state) {
-		return TarnishingBronze.getNext(state.getBlock()).isPresent();
+		return TarnishingBronze.canCrystallize(state.getBlock());
 	}
 
 	public TarnishState getAge() {

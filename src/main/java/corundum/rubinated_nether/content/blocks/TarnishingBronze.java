@@ -132,6 +132,10 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 		return CRYSTALLIZED_BY_BLOCK.get().getOrDefault(p_block, p_block);
 	}
 
+	static boolean canCrystallize(Block p_block) {
+		return CRYSTALLIZED_BY_BLOCK.get().get(p_block) != null;
+	}
+
 	static Optional<BlockState> getPrevious(BlockState state) {
 		return getPrevious(state.getBlock().defaultBlockState()).map(p_154903_ -> p_154903_.getBlock().withPropertiesOf(state));
 	}
