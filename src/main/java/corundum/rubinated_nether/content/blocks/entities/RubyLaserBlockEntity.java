@@ -8,6 +8,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -46,7 +47,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 	private boolean silly = false;
 
 	public RubyLaserBlockEntity(BlockPos pos, BlockState blockState) {
-		super(RNBlockEntities.LASER.get(), pos, blockState);
+		super(RNBlockEntities.RUBY_LASER.get(), pos, blockState);
 	}
 
 	@Override
@@ -183,5 +184,10 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
 	public Optional<Integer> getColor() {
 		return color;
+	}
+
+	@Override
+	public BlockEntityType<?> getType() {
+		return RNBlockEntities.RUBY_LASER.get();
 	}
 }

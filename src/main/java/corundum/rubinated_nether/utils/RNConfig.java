@@ -5,6 +5,7 @@ import eu.midnightdust.lib.config.MidnightConfig;
 public class RNConfig extends MidnightConfig {
 	public static final String CHANDELIER = "chandelier";
 	public static final String BRAZIER = "brazier";
+	public static final String LENS = "lens";
 
 	/* -- Chandelier -- */
 
@@ -45,4 +46,10 @@ public class RNConfig extends MidnightConfig {
 		name = "Brazier Effect Particles"
 	)
 	public static boolean brazierEffectParticles = false;
+
+	@Entry(
+			category = LENS,
+			name = "Ruby Lens Opacity"
+	)
+	public static float rubyLensOpacity = 1f;
 }

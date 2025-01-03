@@ -1,4 +1,4 @@
-package corundum.rubinated_nether.mixin;
+package corundum.rubinated_nether.mixin.accessors;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;

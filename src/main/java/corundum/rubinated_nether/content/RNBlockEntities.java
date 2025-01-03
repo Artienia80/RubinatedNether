@@ -18,8 +18,8 @@ public class RNBlockEntities {
 		"freezer", 
 		() -> BlockEntityType.Builder.of(FreezerBlockEntity::new, RNBlocks.FREEZER.get()).build(null)
 	);
-	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RubyLaserBlockEntity>> LASER = BLOCK_ENTITY_TYPES.register(
-		"laser", 
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RubyLaserBlockEntity>> RUBY_LASER = BLOCK_ENTITY_TYPES.register(
+		"ruby_laser",
 		() -> BlockEntityType.Builder.of(RubyLaserBlockEntity::new, RNBlocks.RUBY_LASER.get()).build(null)
 	);
 }

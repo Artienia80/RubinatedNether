@@ -63,7 +63,7 @@ public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLase
 
 	@Override
 	public BlockEntityType<? extends RubyLaserBlockEntity> getBlockEntityType() {
-		return RNBlockEntities.LASER.get();
+		return RNBlockEntities.RUBY_LASER.get();
 	}
 
 	@Override

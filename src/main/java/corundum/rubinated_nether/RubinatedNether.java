@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
@@ -57,5 +58,9 @@ public class RubinatedNether {
 		FreezerBlockEntity.addItemFreezingTime(Blocks.PACKED_ICE, 1200);
 		FreezerBlockEntity.addItemFreezingTime(Blocks.BLUE_ICE, 2400);
 		FreezerBlockEntity.addItemFreezingTime(RNBlocks.DRY_ICE, 4800);
+	}
+
+	public static ResourceLocation id(String s) {
+		return ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, s);
 	}
 }

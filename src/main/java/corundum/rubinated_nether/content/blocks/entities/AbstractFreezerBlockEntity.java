@@ -1,7 +1,7 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.content.recipe.FreezingRecipe;
-import corundum.rubinated_nether.mixin.AbstractFurnaceBlockEntityAccessor;
+import corundum.rubinated_nether.mixin.accessors.AbstractFurnaceBlockEntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;

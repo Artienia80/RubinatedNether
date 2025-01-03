@@ -1,6 +1,6 @@
 package corundum.rubinated_nether.content.blocks;
 
-import corundum.rubinated_nether.mixin.DoublePlantBlockAccessor;
+import corundum.rubinated_nether.mixin.accessors.DoublePlantBlockAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
