@@ -61,28 +61,20 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 		).anyMatch(neighborPos -> level.getBlockState(neighborPos).is(Blocks.DIAMOND_BLOCK));
 
 		if (hasDiamondNearby) {
-			// If diamond block is nearby, crystallize the block
+			// If a diamond block is nearby, crystallize the block (force it to crystallize)
 			Optional<Block> crystallizedBlockOptional = Optional.ofNullable(TarnishingBronze.getFirst(state.getBlock()));
 			if (crystallizedBlockOptional.isPresent()) {
 				Block crystallizedBlock = crystallizedBlockOptional.get();
 				BlockState crystallizedState = crystallizedBlock.defaultBlockState();
 
-				// Copy properties from the current state to the crystallized state
-				for (Property<?> property : state.getProperties()) {
-					if (crystallizedState.hasProperty(property)) {
-						crystallizedState = setProperty(crystallizedState, property, state.getValue(property));
-					}
-				}
-
-				// Set the block to the crystallized state
+				// Set the block to crystallized state
 				level.setBlock(pos, crystallizedState, Block.UPDATE_ALL_IMMEDIATE);
 			}
 		} else {
-			// If no diamond block nearby, proceed with the normal tarnishing state
+			// If no diamond block nearby, proceed with the regular tarnishing process
 			this.changeOverTime(state, level, pos, random);
 		}
 	}
-
 
 	/**
 	 * Helper method to safely set a property on a block state.
