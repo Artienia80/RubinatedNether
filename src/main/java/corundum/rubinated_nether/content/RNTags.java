@@ -28,6 +28,11 @@ public final class RNTags {
 
 		public static final TagKey<Block> COLDEST_ICE = createTag(Registries.BLOCK, "coldest_ice");
 
+		public static final TagKey<Block> LIT_SOUL_BLOCKS = createTag(Registries.BLOCK, "lit_soul_blocks");
+
+		public static final TagKey<Block> CRYSTALLIZATION_CATALYST = createTag(Registries.BLOCK, "crystallization_catalyst");
+
+
 	}
 
 	public static final class Items {

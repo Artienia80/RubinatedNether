@@ -10,6 +10,7 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -187,6 +188,27 @@ public class RNBlockTags extends BlockTagsProvider {
 		this.tag(RNTags.Blocks.COLDEST_ICE).add(
 			Blocks.BLUE_ICE	
 		);
+
+		this.tag(RNTags.Blocks.LIT_SOUL_BLOCKS).add(
+				Blocks.SOUL_CAMPFIRE,
+				Blocks.SOUL_FIRE,
+				Blocks.SOUL_LANTERN,
+				Blocks.SOUL_TORCH,
+				Blocks.SOUL_WALL_TORCH
+				);
+
+		this.tag(RNTags.Blocks.CRYSTALLIZATION_CATALYST).add(
+				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_STAIRS.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_STAIRS.get()
+				);
+		this.tag(RNTags.Blocks.CRYSTALLIZATION_CATALYST).addTag(RNTags.Blocks.LIT_SOUL_BLOCKS);
+
+
 
 		this.tag(BlockTags.WALLS).add(
 			RNBlocks.SHRINE_STONE_TILES_WALL.get(),

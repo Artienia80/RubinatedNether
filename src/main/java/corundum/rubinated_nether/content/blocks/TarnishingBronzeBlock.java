@@ -38,7 +38,7 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 	}
 
 	@Override
-	protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		// Check if there is a diamond block in the vicinity
 		boolean hasDiamondNearby = BlockPos.betweenClosedStream(
 				pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
