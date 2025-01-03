@@ -4,7 +4,7 @@
       "model": "rubinated_nether:block/tarnished_cut_bronze_bricks_slab"
     },
     "type=double": {
-      "model": "rubinated_nether:block/tarnished_cut_bronze_pillar"
+      "model": "rubinated_nether:block/tarnished_cut_bronze_bricks"
     },
     "type=top": {
       "model": "rubinated_nether:block/tarnished_cut_bronze_bricks_slab_top"

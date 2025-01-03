@@ -190,48 +190,48 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 		this.slabBlock(
 				RNBlocks.CUT_BRONZE_BRICKS_SLAB.get(),
-				modLoc("block/cut_bronze_pillar"),
-				modLoc("block/bronze/cut_bronze_pillar/cut_bronze_pillar")
+				modLoc("block/cut_bronze_bricks"),
+				modLoc("block/bronze/cut_bronze_bricks/cut_bronze_bricks")
 		);
 		this.stairsBlock(
 				RNBlocks.CUT_BRONZE_BRICKS_STAIRS.get(),
-				modLoc("block/bronze/cut_bronze_pillar/cut_bronze_pillar")
+				modLoc("block/bronze/cut_bronze_bricks/cut_bronze_bricks")
 		);
 		this.slabBlock(
 				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get(),
-				modLoc("block/discolored_cut_bronze_pillar"),
-				modLoc("block/bronze/cut_bronze_pillar/discolored_cut_bronze_pillar")
+				modLoc("block/discolored_cut_bronze_bricks"),
+				modLoc("block/bronze/cut_bronze_bricks/discolored_cut_bronze_bricks")
 		);
 		this.stairsBlock(
 				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS.get(),
-				modLoc("block/bronze/cut_bronze_pillar/discolored_cut_bronze_pillar")
+				modLoc("block/bronze/cut_bronze_bricks/discolored_cut_bronze_bricks")
 		);
 		this.slabBlock(
 				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get(),
-				modLoc("block/corroded_cut_bronze_pillar"),
-				modLoc("block/bronze/cut_bronze_pillar/corroded_cut_bronze_pillar")
+				modLoc("block/corroded_cut_bronze_bricks"),
+				modLoc("block/bronze/cut_bronze_bricks/corroded_cut_bronze_bricks")
 		);
 		this.stairsBlock(
 				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS.get(),
-				modLoc("block/bronze/cut_bronze_pillar/corroded_cut_bronze_pillar")
+				modLoc("block/bronze/cut_bronze_bricks/corroded_cut_bronze_bricks")
 		);
 		this.slabBlock(
 				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get(),
-				modLoc("block/tarnished_cut_bronze_pillar"),
-				modLoc("block/bronze/cut_bronze_pillar/tarnished_cut_bronze_pillar")
+				modLoc("block/tarnished_cut_bronze_bricks"),
+				modLoc("block/bronze/cut_bronze_bricks/tarnished_cut_bronze_bricks")
 		);
 		this.stairsBlock(
 				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS.get(),
-				modLoc("block/bronze/cut_bronze_pillar/tarnished_cut_bronze_pillar")
+				modLoc("block/bronze/cut_bronze_bricks/tarnished_cut_bronze_bricks")
 		);
 		this.slabBlock(
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get(),
-				modLoc("block/crystallized_cut_bronze_pillar"),
-				modLoc("block/bronze/cut_bronze_pillar/crystallized_cut_bronze_pillar")
+				modLoc("block/crystallized_cut_bronze_bricks"),
+				modLoc("block/bronze/cut_bronze_bricks/crystallized_cut_bronze_bricks")
 		);
 		this.stairsBlock(
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get(),
-				modLoc("block/bronze/cut_bronze_pillar/crystallized_cut_bronze_pillar")
+				modLoc("block/bronze/cut_bronze_bricks/crystallized_cut_bronze_bricks")
 		);
 
 	}
