@@ -206,6 +206,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_STAIRS.get(),
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_STAIRS.get()
 				);
+
 		this.tag(RNTags.Blocks.CRYSTALLIZATION_CATALYST).addTag(RNTags.Blocks.LIT_SOUL_BLOCKS);
 
 

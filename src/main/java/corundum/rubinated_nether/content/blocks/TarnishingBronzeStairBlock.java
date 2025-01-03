@@ -8,31 +8,32 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ChangeOverTimeBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
 import java.util.Optional;
 
-public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
-	public static final MapCodec<TarnishingBronzeBlock> CODEC = RecordCodecBuilder.mapCodec(
+public class TarnishingBronzeStairBlock extends StairBlock implements TarnishingBronze {
+	public static final MapCodec<TarnishingBronzeStairBlock> CODEC = RecordCodecBuilder.mapCodec(
 		blockInstance -> blockInstance.group(
-			TarnishingBronze.TarnishState.CODEC
+			TarnishState.CODEC
 				.fieldOf("tarnishing_state")
 				.forGetter(ChangeOverTimeBlock::getAge),
+				BlockState.CODEC.fieldOf("base_state").forGetter(stairBlock -> stairBlock.baseState),
 			propertiesCodec()
 		)
-		.apply(blockInstance, TarnishingBronzeBlock::new)
+		.apply(blockInstance, TarnishingBronzeStairBlock::new)
 	);
-	private final TarnishingBronze.TarnishState tarnishState;
+	private final TarnishState tarnishState;
 
 	@Override
-	public MapCodec<TarnishingBronzeBlock> codec() {
+	public MapCodec<TarnishingBronzeStairBlock> codec() {
 		return CODEC;
 	}
 
-	public TarnishingBronzeBlock(TarnishingBronze.TarnishState tarnishState, BlockBehaviour.Properties properties) {
-		super(properties);
+	public TarnishingBronzeStairBlock(TarnishState tarnishState, BlockState state, Properties properties) {
+		super(state, properties);
 		this.tarnishState = tarnishState;
 	}
 
@@ -45,7 +46,9 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 
 		if (hasCatalystNearby) {
 			Optional<Block> crystallizedBlockOptional = Optional.ofNullable(TarnishingBronze.getCrystallized(state.getBlock()));
+			System.out.println("Crystallized check before");
 			if (crystallizedBlockOptional.isPresent()) {
+				System.out.println("Crystallized check after");
 				Block crystallizedBlock = crystallizedBlockOptional.get();
 				BlockState crystallizedState = crystallizedBlock.defaultBlockState();
 				level.setBlock(pos, crystallizedState, Block.UPDATE_ALL_IMMEDIATE);
@@ -62,15 +65,12 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 		return state.setValue(property, property.getValueClass().cast(value));
 	}
 
-
-
-
 	@Override
 	protected boolean isRandomlyTicking(BlockState state) {
 		return TarnishingBronze.getNext(state.getBlock()).isPresent();
 	}
 
-	public TarnishingBronze.TarnishState getAge() {
+	public TarnishState getAge() {
 		return this.tarnishState;
 	}
 }

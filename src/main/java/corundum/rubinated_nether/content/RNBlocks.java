@@ -270,12 +270,13 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> BRONZE_BLOCK = registerBlockAndItem(
 		"bronze_block",
 		() -> new TarnishingBronzeBlock(
-			TarnishingBronze.TarnishState.UNAFFECTED,
-			BlockBehaviour.Properties.of()
-				.mapColor(MapColor.GOLD)
-				.requiresCorrectToolForDrops()
-				.strength(5.0F, 150.0F)
-				.sound(SoundType.COPPER)
+				TarnishingBronze.TarnishState.UNAFFECTED,
+				BlockBehaviour.Properties.of()
+					.mapColor(MapColor.GOLD)
+					.requiresCorrectToolForDrops()
+					.strength(5.0F, 150.0F)
+					.sound(SoundType.COPPER)
+						.randomTicks()
 		)
 	);
 
@@ -289,6 +290,7 @@ public class RNBlocks {
 					.requiresCorrectToolForDrops()
 					.strength(15.0F, 300.0F)
 					.sound(SoundType.COPPER)
+					.randomTicks()
 		)
 	);
 
@@ -301,6 +303,7 @@ public class RNBlocks {
 					.requiresCorrectToolForDrops()
 					.strength(25.0F, 600.0F)
 					.sound(SoundType.COPPER)
+					.randomTicks()
 		)
 	);
 
@@ -313,6 +316,7 @@ public class RNBlocks {
 					.requiresCorrectToolForDrops()
 					.strength(50.0F, 1200.0F)
 					.sound(SoundType.COPPER)
+					.randomTicks()
 		)
 	);
 
@@ -325,6 +329,7 @@ public class RNBlocks {
 					.requiresCorrectToolForDrops()
 					.strength(1.0F, 6.0F)
 					.sound(SoundType.COPPER)
+					.randomTicks()
 		)
 	);
 
@@ -374,11 +379,14 @@ public class RNBlocks {
 
 	public static final DeferredBlock<SlabBlock> CUT_BRONZE_PILLAR_SLAB = registerBlockAndItem(
 			"cut_bronze_pillar_slab",
-			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.CUT_BRONZE_PILLAR.get()))
+			() -> new TarnishingBronzeSlabBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					SlabBlock.Properties.ofFullCopy(RNBlocks.CUT_BRONZE_PILLAR.get()))
 	);
 	public static final DeferredBlock<StairBlock> CUT_BRONZE_PILLAR_STAIRS = registerBlockAndItem(
 			"cut_bronze_pillar_stairs",
-			() -> new StairBlock(
+			() -> new TarnishingBronzeStairBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
 					CUT_BRONZE_PILLAR.get().defaultBlockState(),
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CUT_BRONZE_PILLAR.get())
 			)
@@ -386,11 +394,14 @@ public class RNBlocks {
 
 	public static final DeferredBlock<SlabBlock> DISCOLORED_CUT_BRONZE_PILLAR_SLAB = registerBlockAndItem(
 			"discolored_cut_bronze_pillar_slab",
-			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get()))
+			() -> new TarnishingBronzeSlabBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					SlabBlock.Properties.ofFullCopy(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get()))
 	);
 	public static final DeferredBlock<StairBlock> DISCOLORED_CUT_BRONZE_PILLAR_STAIRS = registerBlockAndItem(
 			"discolored_cut_bronze_pillar_stairs",
-			() -> new StairBlock(
+			() -> new TarnishingBronzeStairBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
 					DISCOLORED_CUT_BRONZE_PILLAR.get().defaultBlockState(),
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get())
 			)
@@ -398,11 +409,14 @@ public class RNBlocks {
 
 	public static final DeferredBlock<SlabBlock> CORRODED_CUT_BRONZE_PILLAR_SLAB = registerBlockAndItem(
 			"corroded_cut_bronze_pillar_slab",
-			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get()))
+			() -> new TarnishingBronzeSlabBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					SlabBlock.Properties.ofFullCopy(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get()))
 	);
 	public static final DeferredBlock<StairBlock> CORRODED_CUT_BRONZE_PILLAR_STAIRS = registerBlockAndItem(
 			"corroded_cut_bronze_pillar_stairs",
-			() -> new StairBlock(
+			() -> new TarnishingBronzeStairBlock(
+					TarnishingBronze.TarnishState.CORRODED,
 					CORRODED_CUT_BRONZE_PILLAR.get().defaultBlockState(),
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get())
 			)
@@ -410,11 +424,14 @@ public class RNBlocks {
 
 	public static final DeferredBlock<SlabBlock> TARNISHED_CUT_BRONZE_PILLAR_SLAB = registerBlockAndItem(
 			"tarnished_cut_bronze_pillar_slab",
-			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get()))
+			() -> new TarnishingBronzeSlabBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					SlabBlock.Properties.ofFullCopy(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get()))
 	);
 	public static final DeferredBlock<StairBlock> TARNISHED_CUT_BRONZE_PILLAR_STAIRS = registerBlockAndItem(
 			"tarnished_cut_bronze_pillar_stairs",
-			() -> new StairBlock(
+			() -> new TarnishingBronzeStairBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
 					TARNISHED_CUT_BRONZE_PILLAR.get().defaultBlockState(),
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get())
 			)
@@ -422,11 +439,14 @@ public class RNBlocks {
 
 	public static final DeferredBlock<SlabBlock> CRYSTALLIZED_CUT_BRONZE_PILLAR_SLAB = registerBlockAndItem(
 			"crystallized_cut_bronze_pillar_slab",
-			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get()))
+			() -> new TarnishingBronzeSlabBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					SlabBlock.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get()))
 	);
 	public static final DeferredBlock<StairBlock> CRYSTALLIZED_CUT_BRONZE_PILLAR_STAIRS = registerBlockAndItem(
 			"crystallized_cut_bronze_pillar_stairs",
-			() -> new StairBlock(
+			() -> new TarnishingBronzeStairBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
 					CRYSTALLIZED_CUT_BRONZE_PILLAR.get().defaultBlockState(),
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get())
 			)
@@ -478,11 +498,14 @@ public class RNBlocks {
 
 	public static final DeferredBlock<SlabBlock> CUT_BRONZE_BRICKS_SLAB = registerBlockAndItem(
 			"cut_bronze_bricks_slab",
-			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.CUT_BRONZE_BRICKS.get()))
+			() -> new TarnishingBronzeSlabBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					SlabBlock.Properties.ofFullCopy(RNBlocks.CUT_BRONZE_BRICKS.get()))
 	);
 	public static final DeferredBlock<StairBlock> CUT_BRONZE_BRICKS_STAIRS = registerBlockAndItem(
 			"cut_bronze_bricks_stairs",
-			() -> new StairBlock(
+			() -> new TarnishingBronzeStairBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
 					CUT_BRONZE_BRICKS.get().defaultBlockState(),
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CUT_BRONZE_BRICKS.get())
 			)
@@ -490,11 +513,14 @@ public class RNBlocks {
 
 	public static final DeferredBlock<SlabBlock> DISCOLORED_CUT_BRONZE_BRICKS_SLAB = registerBlockAndItem(
 			"discolored_cut_bronze_bricks_slab",
-			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get()))
+			() -> new TarnishingBronzeSlabBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					SlabBlock.Properties.ofFullCopy(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get()))
 	);
 	public static final DeferredBlock<StairBlock> DISCOLORED_CUT_BRONZE_BRICKS_STAIRS = registerBlockAndItem(
 			"discolored_cut_bronze_bricks_stairs",
-			() -> new StairBlock(
+			() -> new TarnishingBronzeStairBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
 					DISCOLORED_CUT_BRONZE_BRICKS.get().defaultBlockState(),
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get())
 			)
@@ -502,11 +528,14 @@ public class RNBlocks {
 
 	public static final DeferredBlock<SlabBlock> CORRODED_CUT_BRONZE_BRICKS_SLAB = registerBlockAndItem(
 			"corroded_cut_bronze_bricks_slab",
-			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get()))
+			() -> new TarnishingBronzeSlabBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					SlabBlock.Properties.ofFullCopy(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get()))
 	);
 	public static final DeferredBlock<StairBlock> CORRODED_CUT_BRONZE_BRICKS_STAIRS = registerBlockAndItem(
 			"corroded_cut_bronze_bricks_stairs",
-			() -> new StairBlock(
+			() -> new TarnishingBronzeStairBlock(
+					TarnishingBronze.TarnishState.CORRODED,
 					CORRODED_CUT_BRONZE_BRICKS.get().defaultBlockState(),
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get())
 			)
@@ -514,11 +543,14 @@ public class RNBlocks {
 
 	public static final DeferredBlock<SlabBlock> TARNISHED_CUT_BRONZE_BRICKS_SLAB = registerBlockAndItem(
 			"tarnished_cut_bronze_bricks_slab",
-			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get()))
+			() -> new TarnishingBronzeSlabBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					SlabBlock.Properties.ofFullCopy(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get()))
 	);
 	public static final DeferredBlock<StairBlock> TARNISHED_CUT_BRONZE_BRICKS_STAIRS = registerBlockAndItem(
 			"tarnished_cut_bronze_bricks_stairs",
-			() -> new StairBlock(
+			() -> new TarnishingBronzeStairBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
 					TARNISHED_CUT_BRONZE_BRICKS.get().defaultBlockState(),
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get())
 			)
@@ -526,11 +558,14 @@ public class RNBlocks {
 
 	public static final DeferredBlock<SlabBlock> CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB = registerBlockAndItem(
 			"crystallized_cut_bronze_bricks_slab",
-			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get()))
+			() -> new TarnishingBronzeSlabBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					SlabBlock.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get()))
 	);
 	public static final DeferredBlock<StairBlock> CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS = registerBlockAndItem(
 			"crystallized_cut_bronze_bricks_stairs",
-			() -> new StairBlock(
+			() -> new TarnishingBronzeStairBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
 					CRYSTALLIZED_CUT_BRONZE_BRICKS.get().defaultBlockState(),
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get())
 			)

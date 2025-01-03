@@ -18,6 +18,7 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ChangeOverTimeBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.TarnishState> {
 
@@ -57,6 +58,12 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 	Supplier<Map<Block, Block>> CRYSTALLIZED_BY_BLOCK = Suppliers.memoize(
 			() -> {
 				Map<Block, Block> map = new HashMap<>();
+//				for (DeferredHolder<Block, ? extends Block> block : RNBlocks.BLOCKS.getEntries()){
+//					if(block.get().getDescriptionId().contains("bronze")){
+//						map.put(block.get(), "crystallized_".concat(block.getId().getPath()));
+//					}
+//				}
+
 				map.put(RNBlocks.BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
 				map.put(RNBlocks.DISCOLORED_BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
 				map.put(RNBlocks.CORRODED_BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
@@ -91,6 +98,7 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 				map.put(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
 				map.put(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
 				map.put(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
+
 				return Collections.unmodifiableMap(map);
 			}
 	);
