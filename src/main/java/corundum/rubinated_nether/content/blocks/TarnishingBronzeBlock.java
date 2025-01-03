@@ -52,7 +52,6 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 		return false;
 	}
 
-
 	@Override
 	protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		// Check if there is a diamond block in the vicinity
@@ -62,7 +61,7 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 
 		if (hasDiamondNearby) {
 			// If a diamond block is nearby, crystallize the block (force it to crystallize)
-			Optional<Block> crystallizedBlockOptional = Optional.ofNullable(TarnishingBronze.getFirst(state.getBlock()));
+			Optional<Block> crystallizedBlockOptional = Optional.ofNullable(TarnishingBronze.getCrystallized(state.getBlock()));
 			if (crystallizedBlockOptional.isPresent()) {
 				Block crystallizedBlock = crystallizedBlockOptional.get();
 				BlockState crystallizedState = crystallizedBlock.defaultBlockState();
