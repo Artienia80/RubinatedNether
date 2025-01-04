@@ -41,7 +41,7 @@ public class RNBlockStates extends BlockStateProvider {
 		this.simpleBlock(
 			RNBlocks.CHANDELIER.get(),
 			this.models()
-				.withExistingParent("ruby_chandelier", this.modLoc("block/ruby_brazier_base"))
+				.withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
 		);
 		this.axisBlock(
 			RNBlocks.LAVA_LAMP.get(),
