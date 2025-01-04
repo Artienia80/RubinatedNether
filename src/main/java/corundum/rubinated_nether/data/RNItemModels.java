@@ -30,6 +30,8 @@ public class RNItemModels extends ItemModelProvider {
 		this.simpleBlockItem(RNBlocks.DRY_ICE.get());
 		this.simpleBlockItem(RNBlocks.SOAKSTONE.get());
 
+		this.simpleBlockItem(RNBlocks.BRAZIER.get());
+
 		this.simpleBlockItem(RNBlocks.RUBY_GLASS.get());
 		paneItem(
 			RNBlocks.RUBY_GLASS_PANE.getId().toString(),

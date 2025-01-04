@@ -1,0 +1,55 @@
+package corundum.rubinated_nether.content.blocks;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.stream.Stream;
+
+import corundum.rubinated_nether.content.RNBlockEntities;
+import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
+import corundum.rubinated_nether.utils.BEBlock;
+
+public class BrazierBlock extends Block implements BEBlock<BrazierBlockEntity> {
+
+	protected static final VoxelShape SHAPE = Stream.of(
+		box(0, 0, 0, 16, 3, 16),
+		box(2, 2, 2, 14, 5, 14),
+		box(2, 5, 2, 14, 8, 14),
+		box(2, 6, 2, 14, 16,14)
+	).reduce(Shapes::or).get();
+
+	protected static final VoxelShape COLLISION_SHAPE =
+		Shapes.join(SHAPE, box(1.5, 6, 1.5, 14.5, 16, 14.5), BooleanOp.NOT_SAME);
+
+	public BrazierBlock(Properties properties) {
+		super(properties);
+	}
+
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		return SHAPE;
+	}
+
+	@Override
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		return COLLISION_SHAPE;
+	}
+
+	@Override
+	public BlockEntityType<? extends BrazierBlockEntity> getBlockEntityType() {
+		return RNBlockEntities.BRAZIER.get();
+	}
+
+	@Override
+	public Class<? extends BrazierBlockEntity> getBlockEntityClass() {
+		return BrazierBlockEntity.class;
+	}
+}
+

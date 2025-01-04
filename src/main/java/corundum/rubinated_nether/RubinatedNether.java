@@ -1,5 +1,6 @@
 package corundum.rubinated_nether;
 
+import corundum.rubinated_nether.client.RubinatedNetherClient;
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
@@ -32,6 +33,7 @@ public class RubinatedNether {
 
 		RNBlocks.BLOCKS.register(modEventBus);
 		RNItems.ITEMS.register(modEventBus);
+		RNParticleTypes.PARTICLES.register(modEventBus);
 		RNCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
 		RNRecipes.RECIPE_TYPES.register(modEventBus);
 		RNRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
@@ -40,6 +42,7 @@ public class RubinatedNether {
 
 		modEventBus.addListener(Datagen::datagen);
 		if (dist == Dist.CLIENT) {
+			RubinatedNetherClient.client(modEventBus);
 			modEventBus.addListener(RNRecipeCategories::registerRecipeCategories);
 		}
 	}

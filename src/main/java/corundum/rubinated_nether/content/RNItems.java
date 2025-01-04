@@ -1,6 +1,5 @@
 package corundum.rubinated_nether.content;
 
-import com.llamalad7.mixinextras.sugar.impl.SingleIterationList;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.items.RubyLens;
 import net.minecraft.world.item.BlockItem;

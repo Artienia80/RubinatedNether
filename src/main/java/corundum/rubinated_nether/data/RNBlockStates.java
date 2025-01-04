@@ -28,6 +28,12 @@ public class RNBlockStates extends BlockStateProvider {
 		this.axisBlock(RNBlocks.MOLTEN_RUBY_BLOCK.get());
 		this.simpleBlock(RNBlocks.BLEEDING_OBSIDIAN.get());
 
+		this.simpleBlock(
+			RNBlocks.BRAZIER.get(),
+			this.models()
+				.withExistingParent("ruby_brazier", this.modLoc("block/ruby_brazier_base"))
+		);
+
 		lantern(
 			RNBlocks.RUBY_LANTERN.get(),
 			"ruby_lantern"
@@ -35,7 +41,7 @@ public class RNBlockStates extends BlockStateProvider {
 		this.simpleBlock(
 			RNBlocks.CHANDELIER.get(),
 			this.models()
-				.withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
+				.withExistingParent("ruby_chandelier", this.modLoc("block/ruby_brazier_base"))
 		);
 		this.axisBlock(
 			RNBlocks.LAVA_LAMP.get(),

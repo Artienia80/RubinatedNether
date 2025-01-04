@@ -5,7 +5,7 @@ import eu.midnightdust.lib.config.MidnightConfig;
 public class RNConfig extends MidnightConfig {
 	public static final String CHANDELIER = "chandelier";
 	public static final String BRAZIER = "brazier";
-	public static final String LENS = "lens";
+	public static final String CLIENT = "client";
 
 	/* -- Chandelier -- */
 
@@ -47,9 +47,23 @@ public class RNConfig extends MidnightConfig {
 	)
 	public static boolean brazierEffectParticles = false;
 
+	/* -- Client -- */
+
 	@Entry(
-			category = LENS,
-			name = "Ruby Lens Opacity"
+		category = CLIENT,
+		name = "Ruby Lens Opacity",
+		isSlider = true, 
+		min = 0f, 
+		max = 1f
 	)
 	public static float rubyLensOpacity = 1f;
+
+	@Entry(
+		category = CLIENT,
+		name = "Brazier Particle Count",
+		isSlider = true, 
+		min = 1, 
+		max = 6
+	)
+	public static int brazierParticleCount = 2;
 }

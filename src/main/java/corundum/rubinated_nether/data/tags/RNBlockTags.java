@@ -99,7 +99,8 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get(),
 			RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get(),
 
-			RNBlocks.FREEZER.get()
+			RNBlocks.FREEZER.get(),
+			RNBlocks.BRAZIER.get()
 		);
 
 		this.tag(BlockTags.NEEDS_STONE_TOOL).add(
@@ -143,6 +144,7 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
 			RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
 			RNBlocks.RUNESTONE.get(),
+			RNBlocks.BRAZIER.get(),
 
 			RNBlocks.BRONZE_BLOCK.get(),
 			RNBlocks.DISCOLORED_BRONZE_BLOCK.get(),

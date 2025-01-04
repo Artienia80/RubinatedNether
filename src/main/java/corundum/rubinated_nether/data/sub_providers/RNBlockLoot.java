@@ -68,6 +68,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 
 		this.dropSelf(RNBlocks.FREEZER.get());
 		this.dropSelf(RNBlocks.RUBY_LASER.get());
+		this.dropSelf(RNBlocks.BRAZIER.get());
 
 		this.dropSelf(RNBlocks.BRONZE_BLOCK.get());
 		this.dropSelf(RNBlocks.DISCOLORED_BRONZE_BLOCK.get());

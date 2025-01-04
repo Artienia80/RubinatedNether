@@ -56,6 +56,7 @@ public class RNLanguage extends LanguageProvider {
 		this.addBlock(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS, "Rubinated Chiseled Shrine Stone Bricks");
 		this.addBlock(RNBlocks.RUNESTONE, "Runestone");
 		this.addBlock(RNBlocks.FREEZER, "Freezer");
+		this.addBlock(RNBlocks.BRAZIER, "Ruby Brazier");
 
 		this.addItem(RNItems.RUBY_ITEM, "Ruby");
 		this.addItem(RNItems.MOLTEN_RUBY_ITEM, "Molten Ruby");
@@ -110,5 +111,6 @@ public class RNLanguage extends LanguageProvider {
 
 		this.add(RubinatedNether.MODID + ".midnightconfig.category.chandelier", "Chandelier");
 		this.add(RubinatedNether.MODID + ".midnightconfig.category.brazier", "Brazier");
+		this.add(RubinatedNether.MODID + ".midnightconfig.category.client", "Client");
 	}
 }

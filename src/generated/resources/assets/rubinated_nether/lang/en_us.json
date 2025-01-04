@@ -46,6 +46,7 @@
   "block.rubinated_nether.rubinated_blackstone": "Rubinated Blackstone",
   "block.rubinated_nether.rubinated_chiseled_shrine_stone_bricks": "Rubinated Chiseled Shrine Stone Bricks",
   "block.rubinated_nether.ruby_block": "Block of Ruby",
+  "block.rubinated_nether.ruby_brazier": "Ruby Brazier",
   "block.rubinated_nether.ruby_chandelier": "Ruby Chandelier",
   "block.rubinated_nether.ruby_glass": "Ruby Glass",
   "block.rubinated_nether.ruby_glass_pane": "Ruby Glass Pane",
@@ -78,5 +79,6 @@
   "itemGroup.examplemod": "Rubinated Nether",
   "menu.rubinated_nether.freezer": "Freezer",
   "rubinated_nether.midnightconfig.category.brazier": "Brazier",
-  "rubinated_nether.midnightconfig.category.chandelier": "Chandelier"
+  "rubinated_nether.midnightconfig.category.chandelier": "Chandelier",
+  "rubinated_nether.midnightconfig.category.client": "Client"
 }

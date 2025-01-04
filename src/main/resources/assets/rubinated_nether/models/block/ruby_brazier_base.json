@@ -10,7 +10,7 @@
 		"6": "rubinated_nether:block/brazier/cauldron_bottom",
 		"7": "rubinated_nether:block/brazier/cauldron_side",
 		"8": "rubinated_nether:block/brazier/brazier_base",
-		"9": "rubinated_nether:block/molten_ruby_block_top",
+		"9": "rubinated_nether:block/molten_ruby_block_end",
 		"10": "rubinated_nether:block/brazier/cauldron_side_inner",
 		"particle": "block/obsidian"
 	},

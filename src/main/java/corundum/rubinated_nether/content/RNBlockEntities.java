@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RubyLaserBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -16,10 +17,25 @@ public class RNBlockEntities {
 
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FreezerBlockEntity>> FREEZER = BLOCK_ENTITY_TYPES.register(
 		"freezer", 
-		() -> BlockEntityType.Builder.of(FreezerBlockEntity::new, RNBlocks.FREEZER.get()).build(null)
+		() -> BlockEntityType.Builder.of(
+			FreezerBlockEntity::new, 
+			RNBlocks.FREEZER.get()
+		).build(null)
 	);
+
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BrazierBlockEntity>> BRAZIER = BLOCK_ENTITY_TYPES.register(
+		"brazier", 
+		() -> BlockEntityType.Builder.of(
+			BrazierBlockEntity::new, 
+			RNBlocks.BRAZIER.get()
+		).build(null)
+	);
+
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RubyLaserBlockEntity>> RUBY_LASER = BLOCK_ENTITY_TYPES.register(
 		"ruby_laser",
-		() -> BlockEntityType.Builder.of(RubyLaserBlockEntity::new, RNBlocks.RUBY_LASER.get()).build(null)
+		() -> BlockEntityType.Builder.of(
+			RubyLaserBlockEntity::new, 
+			RNBlocks.RUBY_LASER.get()
+		).build(null)
 	);
 }

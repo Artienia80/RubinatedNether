@@ -265,6 +265,16 @@ public class RNBlocks {
 		)
 	);
 
+	public static final DeferredBlock<Block> BRAZIER = registerBlockAndItem(
+		"ruby_brazier", 
+		() -> new BrazierBlock(
+			BlockBehaviour.Properties
+				.ofFullCopy(Blocks.COPPER_BLOCK)
+				.mapColor(MapColor.FIRE)
+				.noOcclusion()
+		)
+	);
+
 	// BRONZE BLOCKS
 
 	public static final DeferredBlock<Block> BRONZE_BLOCK = registerBlockAndItem(

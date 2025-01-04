@@ -18,7 +18,6 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ChangeOverTimeBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.registries.DeferredHolder;
 
 public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.TarnishState> {
 
