@@ -53,7 +53,7 @@ public class RNCreativeTabs {
 				output.accept(RNBlocks.SHRINE_STONE_PILLAR.get());
 				output.accept(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
 				output.accept(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get());
-				output.accept(RNBlocks.YET_ANOTHER_SHRINE_STONE_BRICKS.get());
+				output.accept(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get());
 
 				output.accept(RNBlocks.SOAKSTONE.get());
 

@@ -243,13 +243,13 @@ public class RNBlocks {
 		"rubinated_chiseled_shrine_stone_bricks",
 		() -> new RotatedPillarBlock(
 			Block.Properties.ofFullCopy(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get())
-				.lightLevel($ -> 15)
+				.lightLevel($ -> 7)
 		)
 	);
-	public static final DeferredBlock<Block> YET_ANOTHER_SHRINE_STONE_BRICKS = registerBlockAndItem(
-		"yet_another_shrine_stone_bricks",
+	public static final DeferredBlock<Block> RUBINATED_SHRINE_STONE_BRICKS = registerBlockAndItem(
+		"rubinated_shrine_stone_bricks",
 		() -> new Block(
-			Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
+			Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_BRICKS.get())
 				.lightLevel($ -> 7)
 		)
 	);

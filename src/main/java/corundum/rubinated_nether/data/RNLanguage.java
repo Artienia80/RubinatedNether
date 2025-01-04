@@ -54,7 +54,7 @@ public class RNLanguage extends LanguageProvider {
 
 		this.addBlock(RNBlocks.CHISELED_SHRINE_STONE_BRICKS, "Chiseled Shrine Stone Bricks");
 		this.addBlock(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS, "Rubinated Chiseled Shrine Stone Bricks");
-		this.addBlock(RNBlocks.YET_ANOTHER_SHRINE_STONE_BRICKS, "Yet Another Shrine Stone Bricks");
+		this.addBlock(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS, "Rubinated Shrine Stone Bricks");
 		this.addBlock(RNBlocks.RUNESTONE, "Runestone");
 		this.addBlock(RNBlocks.FREEZER, "Freezer");
 		this.addBlock(RNBlocks.BRAZIER, "Ruby Brazier");

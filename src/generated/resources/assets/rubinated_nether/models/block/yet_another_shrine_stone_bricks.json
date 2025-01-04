@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "rubinated_nether:block/yet_another_shrine_stone_bricks"
-  }
-}

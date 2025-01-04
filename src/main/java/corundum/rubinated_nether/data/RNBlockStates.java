@@ -28,8 +28,6 @@ public class RNBlockStates extends BlockStateProvider {
 		this.axisBlock(RNBlocks.MOLTEN_RUBY_BLOCK.get());
 		this.simpleBlock(RNBlocks.BLEEDING_OBSIDIAN.get());
 
-		this.simpleBlock(RNBlocks.YET_ANOTHER_SHRINE_STONE_BRICKS.get());
-
 		this.simpleBlock(
 			RNBlocks.BRAZIER.get(),
 			this.models()
@@ -127,6 +125,8 @@ public class RNBlockStates extends BlockStateProvider {
 
 		this.simpleBlock(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
 		this.axisBlock(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get());
+		this.simpleBlock(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get());
+
 
 		subfolder(
 			"bronze/bronze_block/",

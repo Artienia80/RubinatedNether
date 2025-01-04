@@ -77,7 +77,7 @@ public class RNItemModels extends ItemModelProvider {
 		);
 		this.simpleBlockItem(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
 		this.simpleBlockItem(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get());
-		this.simpleBlockItem(RNBlocks.YET_ANOTHER_SHRINE_STONE_BRICKS.get());
+		this.simpleBlockItem(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get());
 		this.basicItem(RNBlocks.RUNESTONE.asItem());
 
 		this.simpleBlockItem(RNBlocks.BRONZE_BLOCK.get());

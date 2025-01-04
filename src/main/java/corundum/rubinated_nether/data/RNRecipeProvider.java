@@ -281,6 +281,16 @@ public class RNRecipeProvider extends RecipeProvider {
 			.unlockedBy(getHasName(RNItems.RUBY_ITEM), has(RNItems.RUBY_ITEM))
 			.save(recipeOutput);
 
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBINATED_SHRINE_STONE_BRICKS, 8)
+				.define('X', RNBlocks.SHRINE_STONE_BRICKS)
+				.define('O', RNItems.RUBY_ITEM)
+				.pattern("XXX")
+				.pattern("XOX")
+				.pattern("XXX")
+				.unlockedBy(getHasName(RNBlocks.SHRINE_STONE_BRICKS), has(RNBlocks.SHRINE_STONE_BRICKS))
+				.unlockedBy(getHasName(RNItems.RUBY_ITEM), has(RNItems.RUBY_ITEM))
+				.save(recipeOutput);
+
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BLEEDING_OBSIDIAN, 8)
 			.define('X', Blocks.CRYING_OBSIDIAN)
 			.define('O', RNItems.RUBY_ITEM)
