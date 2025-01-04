@@ -246,6 +246,13 @@ public class RNBlocks {
 				.lightLevel($ -> 15)
 		)
 	);
+	public static final DeferredBlock<Block> YET_ANOTHER_SHRINE_STONE_BRICKS = registerBlockAndItem(
+		"yet_another_shrine_stone_bricks",
+		() -> new Block(
+			Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
+				.lightLevel($ -> 7)
+		)
+	);
 
 	public static final DeferredBlock<Block> FREEZER = registerBlockAndItem(
 		"freezer", 

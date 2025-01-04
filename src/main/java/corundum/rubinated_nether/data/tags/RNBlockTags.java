@@ -69,6 +69,7 @@ public class RNBlockTags extends BlockTagsProvider {
 
 			RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
 			RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
+			RNBlocks.YET_ANOTHER_SHRINE_STONE_BRICKS.get(),
 			RNBlocks.RUNESTONE.get(),
 
 			RNBlocks.BRONZE_BLOCK.get(),
@@ -143,6 +144,7 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(),
 			RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
 			RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
+			RNBlocks.YET_ANOTHER_SHRINE_STONE_BRICKS.get(),
 			RNBlocks.RUNESTONE.get(),
 			RNBlocks.BRAZIER.get(),
 
