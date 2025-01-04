@@ -115,6 +115,10 @@ public class RNCreativeTabs {
 				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get());
 				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
 
+				output.accept(RNItems.BRONZE_ROD.get());
+				output.accept(RNItems.BRONZE_SCRAP.get());
+
+
 			})
 			.build()
 	);

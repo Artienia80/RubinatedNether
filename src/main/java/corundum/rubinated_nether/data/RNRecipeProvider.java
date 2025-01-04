@@ -4,12 +4,10 @@ import java.util.concurrent.CompletableFuture;
 
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
@@ -271,6 +269,56 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB
 		);
 
+		one(
+				recipeOutput,
+				RNItems.BRONZE_ROD,
+				RNItems.BRONZE_SCRAP,
+				16
+		);
+
+		twoByTwo(
+				recipeOutput,
+				RNItems.BRONZE_SCRAP,
+				RNBlocks.BRONZE_BLOCK,
+				4
+		);
+
+		twoByTwo(
+				recipeOutput,
+				RNBlocks.BRONZE_BLOCK,
+				RNBlocks.CUT_BRONZE_BRICKS,
+				4
+		);
+
+		oneByTwo(
+				recipeOutput,
+				RNBlocks.BRONZE_BLOCK,
+				RNBlocks.CUT_BRONZE_PILLAR,
+				2
+		);
+
+
+
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, RNItems.BRONZE_SCRAP,4)
+				.requires(RNItems.BRONZE_SCRAP,1)
+				.requires(Items.COPPER_INGOT,3)
+				.requires(RNItems.MOLTEN_RUBY_NUGGET_ITEM, 3)
+				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_NUGGET_ITEM), has(RNItems.MOLTEN_RUBY_NUGGET_ITEM))
+				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
+				.group("bronze_dupe")
+				.save(recipeOutput);
+
+//		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, RNItems.BRONZE_SCRAP,4)
+//				.requires(RNItems.BRONZE_SCRAP,1)
+//				.requires(Items.COPPER_INGOT,3)
+//				.requires(RNItems.RUBY_SHARD_ITEM, 3)
+//				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+//				.unlockedBy(getHasName(RNItems.RUBY_SHARD_ITEM), has(RNItems.RUBY_SHARD_ITEM))
+//				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
+//				.group("bronze_dupe")
+//				.save(recipeOutput);
+
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS, 8)
 			.define('X', RNBlocks.CHISELED_SHRINE_STONE_BRICKS)
 			.define('O', RNItems.RUBY_ITEM)
@@ -343,6 +391,7 @@ public class RNRecipeProvider extends RecipeProvider {
 			.unlockedBy(getHasName(input), has(input))
 			.save(recipeOutput, output.asItem().toString().toLowerCase() + "_via_onebytwo");
 	}
+
 
 	private void threeByThree(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)

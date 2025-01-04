@@ -125,7 +125,8 @@ public class RNItemModels extends ItemModelProvider {
 		this.basicItem(RNItems.RUBY_SHARD_ITEM.get());
 		this.basicItem(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get());
 		this.basicItem(RNItems.MUSIC_DISC_SHIMMER.get());
-
+		this.basicItem(RNItems.BRONZE_ROD.get());
+		this.basicItem(RNItems.BRONZE_SCRAP.get());
 
 
 	}
