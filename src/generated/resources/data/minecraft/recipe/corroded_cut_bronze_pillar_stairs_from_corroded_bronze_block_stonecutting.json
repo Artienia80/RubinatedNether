@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "rubinated_nether:corroded_bronze_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:corroded_cut_bronze_pillar_stairs"
+  }
+}
