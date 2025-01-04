@@ -22,19 +22,19 @@ public abstract class LevelMixin implements UpdateListenerHolder {
     public abstract BlockState getBlockState(BlockPos pos);
 
     @Unique
-    private final Long2ReferenceMap<Set<BlockUpdateListener>> uwu$updateListeners = new Long2ReferenceOpenHashMap<>();
+    private final Long2ReferenceMap<Set<BlockUpdateListener>> rubinatedNether$updateListeners = new Long2ReferenceOpenHashMap<>();
 
     @Override
     public void rubinatedNether$addUpdateListener(BlockUpdateListener listener) {
         listener.getListenedPositions()
                 .mapToLong(BlockPos::asLong)
-                .forEach(l -> uwu$updateListeners.computeIfAbsent(l, $ -> new ObjectArraySet<>()).add(listener));
+                .forEach(l -> rubinatedNether$updateListeners.computeIfAbsent(l, $ -> new ObjectArraySet<>()).add(listener));
     }
 
     @Override
     public void rubinatedNether$handleBlockUpdate(BlockPos pos) {
         long longPos = pos.asLong();
-        Set<BlockUpdateListener> listeners = uwu$updateListeners.get(longPos);
+        Set<BlockUpdateListener> listeners = rubinatedNether$updateListeners.get(longPos);
         if(listeners != null) {
             Iterator<BlockUpdateListener> iterator = listeners.iterator();
             while (iterator.hasNext()) {
@@ -45,7 +45,7 @@ public abstract class LevelMixin implements UpdateListenerHolder {
                     listener.handleBlockUpdate((Level) (Object) this, pos, getBlockState(pos));
                 }
             }
-            if(listeners.isEmpty()) uwu$updateListeners.remove(longPos);
+            if(listeners.isEmpty()) rubinatedNether$updateListeners.remove(longPos);
         }
     }
 }

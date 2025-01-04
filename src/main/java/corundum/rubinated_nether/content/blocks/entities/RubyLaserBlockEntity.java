@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
+import corundum.rubinated_nether.mixin.accessors.LevelAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -12,6 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.Tags;
@@ -50,6 +52,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		super(RNBlockEntities.RUBY_LASER.get(), pos, blockState);
 	}
 
+
 	@Override
 	public void setLevel(Level level) {
 		if(!hasLevel()) UpdateListenerHolder.addUpdateListener(level, this);
@@ -58,12 +61,14 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
 	@Override
 	public void clientTick() {
-		if(blockRange == -1) handleBlockUpdate(level, worldPosition, getBlockState());
+		//if(blockRange == -1)
+			handleBlockUpdate(level, worldPosition, getBlockState());
 	}
 
 	@Override
 	public void tick() {
-		if(blockRange == -1) handleBlockUpdate(level, worldPosition, getBlockState());
+		//if(blockRange == -1)
+			handleBlockUpdate(level, worldPosition, getBlockState());
 
 		if(getBlockState().getValue(RubyLaserBlock.TINTED)) return;
 
@@ -71,14 +76,15 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
 		Vec3i rangeVec = facing.getNormal().multiply(blockRange);
 		AABB range = new AABB(0, 0, 0, 1, 1, 1)
-			.expandTowards(rangeVec.getX(), rangeVec.getY(), rangeVec.getZ())
-			.move(worldPosition.relative(facing));
+				.expandTowards(rangeVec.getX(), rangeVec.getY(), rangeVec.getZ())
+				.move(worldPosition.relative(facing));
 
 		MutableDouble lastDistance = new MutableDouble(blockRange);
-/* 		level.getEntities().get(range, entity -> {
+		((LevelAccessor) level).invokeGetEntities().get(range, entity -> {
 			double distance = Math.sqrt(entity.distanceToSqr(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ())) - 1;
 			if(distance < lastDistance.getValue()) lastDistance.setValue(distance);
-		}); */
+		});
+
 
 		int blockDistance = Mth.clamp(Mth.floor(lastDistance.getValue()), 0, currentLaserRange);
 		powerLevel = currentLaserRange - blockDistance;
@@ -87,7 +93,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		}
 	}
 
-	@SuppressWarnings({"ConstantValue", "DataFlowIssue"})
+	@SuppressWarnings({"DataFlowIssue"})
 	@Override
 	public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
 		this.currentLaserRange = 15;
@@ -103,10 +109,12 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
 			BlockState state = level.getBlockState(mutableBlockPos);
 
+			System.out.println("Before states checks");
 			boolean blocks = state.is(RNTags.Blocks.RUBY_LASER_NO_SIGNAL);
 			if (!blocks && state.is(RNTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
 
 			VoxelShape shape = Shapes.join(state.getCollisionShape(level, mutableBlockPos), BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND);
+			System.out.println("Before isEmpty");
 
 			if(!shape.isEmpty()) {
 				if(level.isClientSide) {
@@ -115,6 +123,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 				}
 				// In case of Tinted Glass the laser range is shortened
 				if(blocks) this.currentLaserRange = blockRange;
+				System.out.println("Darksonic: Block " + facing + " at " + mutableBlockPos + ". Range: " + this.blockRange);
 				break;
 			}
 		}

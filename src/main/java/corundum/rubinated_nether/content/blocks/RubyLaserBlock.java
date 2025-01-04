@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -40,8 +41,8 @@ public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLase
 	public static final MapCodec<RubyLaserBlock> CODEC = simpleCodec(RubyLaserBlock::new);
 
 	public static final Map<Direction, VoxelShape> SHAPES = ShapeUtils.allDirections(Shapes.or(
-		box(0, 0, 0, 16, 6, 16),
-		box(2, 0, 2, 14, 16, 14)
+			box(0, 0, 0, 16, 6, 16),
+			box(2, 0, 2, 14, 16, 14)
 	));
 
 	public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
@@ -50,9 +51,9 @@ public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLase
 	public RubyLaserBlock(Properties properties) {
 		super(properties);
 		this.registerDefaultState(this.defaultBlockState()
-			.setValue(FACING, Direction.NORTH)
-			.setValue(POWER, 0)
-			.setValue(TINTED, false)
+				.setValue(FACING, Direction.NORTH)
+				.setValue(POWER, 0)
+				.setValue(TINTED, false)
 		);
 	}
 
@@ -83,19 +84,11 @@ public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLase
 	}
 
 	@Override
-	public ItemInteractionResult useItemOn(
-		ItemStack stack, 
-		BlockState state, 
-		Level level, 
-		BlockPos pos,
-		Player player, 
-		InteractionHand hand,
-		BlockHitResult hitResult
-	) {
+	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 		boolean bl = state.getValue(TINTED);
 		level.playLocalSound(pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.5f, bl ? 0.55f : 0.5f, true);
 		level.setBlockAndUpdate(pos, state.cycle(TINTED));
-		return ItemInteractionResult.sidedSuccess(level.isClientSide);
+		return InteractionResult.sidedSuccess(level.isClientSide);
 	}
 
 	@Override

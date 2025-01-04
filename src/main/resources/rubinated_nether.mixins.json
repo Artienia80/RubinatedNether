@@ -6,7 +6,8 @@
   "mixins": [
     "LevelMixin",
     "accessors.AbstractFurnaceBlockEntityAccessor",
-    "accessors.DoublePlantBlockAccessor"
+    "accessors.DoublePlantBlockAccessor",
+    "accessors.LevelAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

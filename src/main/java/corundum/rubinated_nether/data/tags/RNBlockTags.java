@@ -209,7 +209,17 @@ public class RNBlockTags extends BlockTagsProvider {
 
 		this.tag(RNTags.Blocks.CRYSTALLIZATION_CATALYST).addTag(RNTags.Blocks.LIT_SOUL_BLOCKS);
 
+		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).addTag(Tags.Blocks.GLASS_BLOCKS_CHEAP);
 
+		this.tag(RNTags.Blocks.RUBY_LASER_NO_SIGNAL).add(
+				Blocks.TINTED_GLASS
+		);
+
+		this.tag(RNTags.Blocks.RUBY_GLASS).add(
+				RNBlocks.RUBY_GLASS.get(),
+				RNBlocks.MOLTEN_RUBY_GLASS.get(),
+				RNBlocks.ORNATE_RUBY_GLASS.get()
+		);
 
 		this.tag(BlockTags.WALLS).add(
 			RNBlocks.SHRINE_STONE_TILES_WALL.get(),
