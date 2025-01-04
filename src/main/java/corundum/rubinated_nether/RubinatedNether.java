@@ -34,6 +34,7 @@ public class RubinatedNether {
 		RNBlocks.BLOCKS.register(modEventBus);
 		RNItems.ITEMS.register(modEventBus);
 		RNParticleTypes.PARTICLES.register(modEventBus);
+		RNSoundEvents.SOUNDS.register(modEventBus);
 		RNCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
 		RNRecipes.RECIPE_TYPES.register(modEventBus);
 		RNRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);

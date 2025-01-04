@@ -1,24 +1,26 @@
 package corundum.rubinated_nether.content;
 
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 
 public class RNSoundEvents {
-	public static final Holder.Reference<SoundEvent> MUSIC_DISC_SHIMMER = registerForHolder("music_disc.shimmer");
+	public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(
+		BuiltInRegistries.SOUND_EVENT, 
+		RubinatedNether.MODID
+	);
 
-	private static Holder.Reference<SoundEvent> registerForHolder(String name) {
-		return registerForHolder(ResourceLocation.withDefaultNamespace(name));
-	}
-
-	private static Holder.Reference<SoundEvent> registerForHolder(ResourceLocation name) {
-		return registerForHolder(name, name);
-	}
-
-	private static Holder.Reference<SoundEvent> registerForHolder(ResourceLocation name, ResourceLocation location) {
-		return Registry.registerForHolder(BuiltInRegistries.SOUND_EVENT, name, SoundEvent.createVariableRangeEvent(location));
-	}
+	public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_DISC_SHIMMER = SOUNDS.register(
+		"shimmer", 
+		() -> SoundEvent.createVariableRangeEvent(
+			ResourceLocation.fromNamespaceAndPath(
+				RubinatedNether.MODID, 
+				"shimmer"
+			)
+		)
+	);
 }

@@ -1,4 +1,4 @@
-package corundum.rubinated_nether.data.worldgen;
+package corundum.rubinated_nether.data.registries;
 
 import java.util.List;
 

@@ -113,5 +113,6 @@ public class RNLanguage extends LanguageProvider {
 		this.add(RubinatedNether.MODID + ".midnightconfig.category.chandelier", "Chandelier");
 		this.add(RubinatedNether.MODID + ".midnightconfig.category.brazier", "Brazier");
 		this.add(RubinatedNether.MODID + ".midnightconfig.category.client", "Client");
+		this.add("jukebox_song." + RubinatedNether.MODID + ".shimmer", "Quizzly - Shimmer");
 	}
 }
