@@ -67,53 +67,60 @@ public class RNCreativeTabs {
 				output.accept(RNBlocks.RUBY_LANTERN.get());
 				output.accept(RNBlocks.CHANDELIER.get());
 				output.accept(RNBlocks.LAVA_LAMP.get());
+				output.accept(RNBlocks.BRAZIER.get());
 
 				output.accept(RNBlocks.FREEZER.get());
 				output.accept(RNItems.POWDER_SNOW.get());
 				output.accept(RNItems.FROSTED_ICE.get());
 				output.accept(RNBlocks.DRY_ICE.get());
 
+				output.accept(RNBlocks.RUBY_LASER.get());
+				output.accept(RNItems.RUBY_LENS.get());
+
 				output.accept(RNBlocks.RUNESTONE.get());
 
 				output.accept(RNItems.MUSIC_DISC_SHIMMER.get());
 
 				output.accept(RNBlocks.BRONZE_BLOCK.get());
-				output.accept(RNBlocks.DISCOLORED_BRONZE_BLOCK.get());
-				output.accept(RNBlocks.CORRODED_BRONZE_BLOCK.get());
-				output.accept(RNBlocks.TARNISHED_BRONZE_BLOCK.get());
-				output.accept(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
-
 				output.accept(RNBlocks.CUT_BRONZE_PILLAR.get());
 				output.accept(RNBlocks.CUT_BRONZE_PILLAR_STAIRS.get());
 				output.accept(RNBlocks.CUT_BRONZE_PILLAR_SLAB.get());
-				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get());
-				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_STAIRS.get());
-				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_SLAB.get());
-				output.accept(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get());
-				output.accept(RNBlocks.CORRODED_CUT_BRONZE_PILLAR_STAIRS.get());
-				output.accept(RNBlocks.CORRODED_CUT_BRONZE_PILLAR_SLAB.get());
-				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get());
-				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_STAIRS.get());
-				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_SLAB.get());
-				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
-				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_STAIRS.get());
-				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_SLAB.get());
-
 				output.accept(RNBlocks.CUT_BRONZE_BRICKS.get());
 				output.accept(RNBlocks.CUT_BRONZE_BRICKS_STAIRS.get());
 				output.accept(RNBlocks.CUT_BRONZE_BRICKS_SLAB.get());
+
+				output.accept(RNBlocks.DISCOLORED_BRONZE_BLOCK.get());
+				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get());
+				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_STAIRS.get());
+				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_SLAB.get());
 				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get());
 				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS.get());
 				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get());
+
+				output.accept(RNBlocks.CORRODED_BRONZE_BLOCK.get());
+				output.accept(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get());
+				output.accept(RNBlocks.CORRODED_CUT_BRONZE_PILLAR_STAIRS.get());
+				output.accept(RNBlocks.CORRODED_CUT_BRONZE_PILLAR_SLAB.get());
 				output.accept(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get());
 				output.accept(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS.get());
 				output.accept(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get());
+
+				output.accept(RNBlocks.TARNISHED_BRONZE_BLOCK.get());
+				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get());
+				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_STAIRS.get());
+				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_SLAB.get());
 				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get());
 				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS.get());
 				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get());
+
+				output.accept(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
+				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
+				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_STAIRS.get());
+				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_SLAB.get());
 				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get());
 				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get());
 				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
+
 
 				output.accept(RNItems.BRONZE_ROD.get());
 				output.accept(RNItems.BRONZE_SCRAP.get());
