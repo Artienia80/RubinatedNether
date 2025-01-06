@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:nether/root",
+  "criteria": {
+    "freezer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:freezer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.obtain_freezer.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:freezer"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.obtain_freezer.title"
+    }
+  },
+  "requirements": [
+    [
+      "freezer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

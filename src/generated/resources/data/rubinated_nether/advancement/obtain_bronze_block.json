@@ -1,0 +1,33 @@
+{
+  "parent": "rubinated_nether:obtain_bronze_rod",
+  "criteria": {
+    "bronze_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:bronze_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.bronze_block.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:bronze_block"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.bronze_block.title"
+    }
+  },
+  "requirements": [
+    [
+      "bronze_block"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,88 @@
+{
+  "parent": "rubinated_nether:obtain_ruby",
+  "criteria": {
+    "molten_ruby_glass": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:molten_ruby_glass"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "molten_ruby_glass_pane": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:molten_ruby_glass_pane"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "ornate_ruby_glass": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:ornate_ruby_glass"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "ornate_ruby_glass_pane": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:ornate_ruby_glass_pane"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "ruby_glass": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:ruby_glass"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "ruby_glass_pane": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:ruby_glass_pane"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.obtain_ruby_glass.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:ruby_glass"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.obtain_ruby_glass.title"
+    }
+  },
+  "requirements": [
+    [
+      "ruby_glass",
+      "ruby_glass_pane",
+      "molten_ruby_glass",
+      "molten_ruby_glass_pane",
+      "ornate_ruby_glass",
+      "ornate_ruby_glass_pane"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

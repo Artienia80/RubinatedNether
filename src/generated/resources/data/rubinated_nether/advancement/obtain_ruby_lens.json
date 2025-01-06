@@ -1,0 +1,33 @@
+{
+  "parent": "rubinated_nether:obtain_ruby_glass",
+  "criteria": {
+    "ruby_lens": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:ruby_lens"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.wear_lens.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:ruby_lens"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.wear_lens.title"
+    }
+  },
+  "requirements": [
+    [
+      "ruby_lens"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
