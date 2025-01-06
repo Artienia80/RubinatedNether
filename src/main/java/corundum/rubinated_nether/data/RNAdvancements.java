@@ -7,7 +7,9 @@ import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
@@ -30,12 +32,12 @@ public class RNAdvancements extends AdvancementProvider {
         public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer, ExistingFileHelper existingFileHelper) {
 
             AdvancementHolder bleedingObsidian = Advancement.Builder.advancement()
-                    .parent(ResourceLocation.fromNamespaceAndPath("minecraft", "nether/obtain_crying_obsidian")) // Correct way to set the parent
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/obtain_crying_obsidian"))
                     .display(RNBlocks.BLEEDING_OBSIDIAN.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_bleeding_obsidian.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_bleeding_obsidian.description"),
                             null,
-                            AdvancementType.GOAL, true, true, false)
+                            AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("bleeding_obsidian", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.BLEEDING_OBSIDIAN.get()))
                     .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "bleeding_obsidian"), existingFileHelper);
