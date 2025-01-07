@@ -20,6 +20,7 @@ group = mod_group_id
 
 repositories {
 	mavenLocal()
+	mavenCentral()
 	maven { url = "https://api.modrinth.com/maven" }
 }
 
@@ -92,6 +93,9 @@ configurations {
 
 dependencies {
 	implementation "net.neoforged:neoforge:${neo_version}"
+
+	// Iris Shaders (only needed for shader test, api is identical to oculus)
+	compileOnly("maven.modrinth:iris:1.8.1+1.21.1-neoforge")
 
 	implementation "maven.modrinth:midnightlib:${project.midnightlib_version}" 
 	jarJar ("maven.modrinth:midnightlib:${project.midnightlib_version}")  

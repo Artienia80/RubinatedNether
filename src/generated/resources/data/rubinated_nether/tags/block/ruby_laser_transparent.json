@@ -1,5 +1,8 @@
 {
   "values": [
-    "#c:glass_blocks/cheap"
+    "#c:glass_blocks/cheap",
+    "rubinated_nether:ruby_glass",
+    "rubinated_nether:molten_ruby_glass",
+    "rubinated_nether:ornate_ruby_glass"
   ]
 }
