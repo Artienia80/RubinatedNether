@@ -40,9 +40,10 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		Shapes.box(.4, 0, .4, .6, 1, .6)
 	);
 
+	private static final int LASER_RANGE = 15;
 	private int powerLevel;
 	private int blockRange = -1;
-	private int currentLaserRange = 15;
+	private int currentRange = LASER_RANGE;
 	private double rangeRemnant;
 	private boolean visible = false;
 	private Optional<Integer> color;
@@ -51,7 +52,6 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 	public RubyLaserBlockEntity(BlockPos pos, BlockState blockState) {
 		super(RNBlockEntities.RUBY_LASER.get(), pos, blockState);
 	}
-
 
 	@Override
 	public void setLevel(Level level) {
@@ -72,10 +72,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
 		Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
 
-		Vec3i rangeVec = facing.getNormal().multiply(blockRange);
-		AABB range = new AABB(0, 0, 0, 1, 1, 1)
-				.expandTowards(rangeVec.getX(), rangeVec.getY(), rangeVec.getZ())
-				.move(worldPosition.relative(facing));
+		AABB range = getLaserRangeAABB(worldPosition, facing);
 
 		AtomicInteger i = new AtomicInteger();
 		MutableDouble lastDistance = new MutableDouble(blockRange);
@@ -83,12 +80,12 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 			double distance = Math.sqrt(entity.distanceToSqr(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ())) - 1;
 			if(distance < lastDistance.getValue()) {
 				lastDistance.setValue(distance);
-				i.set(15 - this.currentLaserRange);
+				i.set(LASER_RANGE - this.currentRange);
 			}
 		});
 
-		int blockDistance = Mth.clamp(Mth.floor(lastDistance.getValue()), 0, this.currentLaserRange);
-		powerLevel = this.currentLaserRange - blockDistance + i.get();
+		int blockDistance = Mth.clamp(Mth.floor(lastDistance.getValue()), 0, this.currentRange);
+		powerLevel = this.currentRange - blockDistance + i.get();
 
 		if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
 			level.scheduleTick(getBlockPos(), RNBlocks.RUBY_LASER.get(), 2);
@@ -98,13 +95,13 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 	@SuppressWarnings({"DataFlowIssue"})
 	@Override
 	public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
-		this.currentLaserRange = 15;
+		this.currentRange = LASER_RANGE;
 		Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
 		// BlockPos that is being checked
 		BlockPos.MutableBlockPos mutableBlockPos = worldPosition.mutable();
 
 		// Iterating the range of the Laser to check each position
-		for (int i = 0; i <= 15; i++) {
+		for (int i = 0; i <= LASER_RANGE; i++) {
 			mutableBlockPos.move(facing);
 			blockRange = i;
 
@@ -121,7 +118,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 					rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.max(axis);
 				}
 				// In case of Tinted Glass the laser range is shortened
-				if(blockCheck) this.currentLaserRange = blockRange;
+				if(blockCheck) this.currentRange = blockRange;
 				break;
 			}
 		}
@@ -140,7 +137,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		}
 
 		if(getBlockState().getValue(RubyLaserBlock.TINTED)) {
-			powerLevel = Mth.clamp(currentLaserRange - blockRange, 0, 15);
+			powerLevel = Mth.clamp(currentRange - blockRange, 0, LASER_RANGE);
 			if (powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
 				level.scheduleTick(getBlockPos(), RNBlocks.RUBY_LASER.get(), 2);
 			}
@@ -154,15 +151,22 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
 	@Override
 	public Stream<BlockPos> getListenedPositions() {
-		Vec3i offset = getBlockState().getValue(RubyLaserBlock.FACING).getNormal().multiply(15);
+		Vec3i offset = getBlockState().getValue(RubyLaserBlock.FACING).getNormal().multiply(LASER_RANGE);
 		return BlockPos.betweenClosedStream(worldPosition, worldPosition.offset(offset));
 	}
 
 	// This overrides a forge thing
 	public AABB getRenderBoundingBox() {
 		Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
-		Vec3i end = facing.getNormal().multiply(currentLaserRange + 1);
+		Vec3i end = facing.getNormal().multiply(currentRange + 1);
 		return new AABB(worldPosition).expandTowards(end.getX(), end.getY(), end.getZ());
+	}
+
+	private AABB getLaserRangeAABB(BlockPos worldPosition, Direction facing) {
+		Vec3i rangeVec = facing.getNormal().multiply(blockRange);
+		return new AABB(0, 0, 0, 1, 1, 1)
+				.expandTowards(rangeVec.getX(), rangeVec.getY(), rangeVec.getZ())
+				.move(worldPosition.relative(facing));
 	}
 
 	public int getPowerLevel() {
@@ -170,7 +174,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 	}
 
 	public int getBlockRange() {
-		return (blockRange == -1) ? currentLaserRange : Mth.clamp(blockRange, 0, currentLaserRange);
+		return (blockRange == -1) ? currentRange : Mth.clamp(blockRange, 0, currentRange);
 	}
 
 	public double getRenderRange() {

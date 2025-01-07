@@ -127,8 +127,16 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 		return block;
 	}
 
-	static Block getCrystallized(Block p_block) {
+	static Block getCrystallizedStage(Block p_block) {
 		return CRYSTALLIZED_BY_BLOCK.get().getOrDefault(p_block, p_block);
+	}
+
+	static Optional<Block> getCrystallized(Block block) {
+		return Optional.ofNullable(getCrystallizedStage(block));
+	}
+
+	default Optional<BlockState> getCrystallized(BlockState state) {
+		return getCrystallized(state.getBlock()).map(block -> block.withPropertiesOf(state));
 	}
 
 	static boolean canCrystallize(Block p_block) {
@@ -136,7 +144,7 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 	}
 
 	static Optional<BlockState> getPrevious(BlockState state) {
-		return getPrevious(state.getBlock().defaultBlockState()).map(p_154903_ -> p_154903_.getBlock().withPropertiesOf(state));
+		return getPrevious(state.getBlock()).map(block -> block.withPropertiesOf(state));
 	}
 
 	@SuppressWarnings("deprecation") // IDK if theres a non-deprecated method
@@ -158,9 +166,7 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 	@Override
 	default Optional<BlockState> getNext(BlockState state) {
 		return getNext(state.getBlock()).map(block -> block.withPropertiesOf(state));
-
 	}
-
 
 	@Override
 	default float getChanceModifier() {

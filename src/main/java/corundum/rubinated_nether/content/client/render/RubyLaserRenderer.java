@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import org.joml.Quaternionf;
@@ -60,11 +61,11 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 			int color;
 
 			if(blockEntity.isColored()) {
-				color = blockEntity.getColor().get();
+				color = blockEntity.getColor().orElse(1);
 			} else if(blockEntity.isSilly()) {
 				float hue = lerpedTime % 50f / 50f;
 				int col = Mth.hsvToRgb(hue, .8f, 1f);
-				color = col;
+				color = FastColor.ARGB32.color(col, col);
 			} else {
 				color = blockEntity.getBlockState().getValue(RubyLaserBlock.TINTED) ? TINTED_COLOR : BASE_COLOR;
 			}
@@ -90,13 +91,13 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 		float v0 = 1 - (ticks % 150f) / 150f;
 		float v1 = v0 + (maxV * 0.4f);
 
-		buffer.addVertex(pose.pose(), minX, minY, minZ).setColor(color).setUv(0, v0).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 0)
+		buffer.addVertex(pose.pose(), minX, minY, minZ).setColor(color).setUv(0, v0).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 1)
 			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
-		buffer.addVertex(pose.pose(), maxX, minY, maxZ).setColor(color).setUv(1, v0).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 0)
+		buffer.addVertex(pose.pose(), maxX, minY, maxZ).setColor(color).setUv(1, v0).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 1)
 			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
-		buffer.addVertex(pose.pose(), maxX, maxY, maxZ).setColor(color).setUv(1, v1).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 0)
+		buffer.addVertex(pose.pose(), maxX, maxY, maxZ).setColor(color).setUv(1, v1).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 1)
 			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
-		buffer.addVertex(pose.pose(), minX, maxY, minZ).setColor(color).setUv(0, v1).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 0)
+		buffer.addVertex(pose.pose(), minX, maxY, minZ).setColor(color).setUv(0, v1).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 1)
 			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 	}
 

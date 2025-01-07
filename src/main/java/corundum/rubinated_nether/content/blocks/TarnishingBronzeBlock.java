@@ -44,12 +44,7 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 		).anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
 
 		if (hasCatalystNearby) {
-			Optional<Block> crystallizedBlockOptional = Optional.ofNullable(TarnishingBronze.getCrystallized(state.getBlock()));
-			if (crystallizedBlockOptional.isPresent()) {
-				Block crystallizedBlock = crystallizedBlockOptional.get();
-				BlockState crystallizedState = crystallizedBlock.defaultBlockState();
-				level.setBlock(pos, crystallizedState, Block.UPDATE_ALL_IMMEDIATE);
-			}
+			this.getCrystallized(state).ifPresent(blockState -> level.setBlockAndUpdate(pos, blockState));
 		} else {
 			this.changeOverTime(state, level, pos, random);
 		}
