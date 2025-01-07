@@ -175,6 +175,18 @@ public class RNAdvancements extends AdvancementProvider {
                     .addCriterion("shrine_stone", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.SHRINE_STONE.get()))
                     .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "enter_shrine"), existingFileHelper);
 
+            AdvancementHolder rubinousRitual = Advancement.Builder.advancement()
+                    .parent(sacredShrine)
+                    .display(RNItems.RUBY_ITEM.get(),
+                            Component.translatable("advancements.rubinated_nether.rubinous_ritual.title"),
+                            Component.translatable("advancements.rubinated_nether.rubinous_ritual.description"),
+                            null,
+                            AdvancementType.TASK, true, true, true)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("placeholder", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.RUNESTONE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "rubinous_ritual"), existingFileHelper);
+
+
             AdvancementHolder bronzeRod = Advancement.Builder.advancement()
                     .parent(sacredShrine)
                     .display(RNItems.BRONZE_ROD.get(),
@@ -196,6 +208,19 @@ public class RNAdvancements extends AdvancementProvider {
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("bronze_block", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.BRONZE_BLOCK.get()))
                     .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_bronze_block"), existingFileHelper);
+
+            AdvancementHolder shrineSentinel = Advancement.Builder.advancement()
+                    .parent(bronzeRod)
+                    .display(RNItems.BRONZE_SCRAP.get(),
+                            Component.translatable("advancements.rubinated_nether.shrine_sentinel.title"),
+                            Component.translatable("advancements.rubinated_nether.shrine_sentinel.description"),
+                            null,
+                            AdvancementType.TASK, true, true, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("placeholder", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.BRONZE_SCRAP.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_bronze_statue"), existingFileHelper);
+
+
         }
     }
 

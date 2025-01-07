@@ -1,0 +1,33 @@
+{
+  "parent": "rubinated_nether:obtain_bronze_rod",
+  "criteria": {
+    "placeholder": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:bronze_scrap"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.shrine_sentinel.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:bronze_scrap"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.shrine_sentinel.title"
+    }
+  },
+  "requirements": [
+    [
+      "placeholder"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

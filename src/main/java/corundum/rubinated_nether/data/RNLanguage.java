@@ -119,5 +119,38 @@ public class RNLanguage extends LanguageProvider {
 
 		this.add("death.attack.fallingBlock", "%1$s was embraced by a falling chandelier");
 		this.add("death.attack.fallingBlock.player", "%1$s was embraced by a falling chandelier whilst fighting %2$s");
+		
+		this.add("advancements.rubinated_nether.obtain_bleeding_obsidian.title","Blood For The Blood God!");
+		this.add("advancements.rubinated_nether.obtain_bleeding_obsidian.description","Obtain Bleeding Obsidian");
+		this.add("advancements.rubinated_nether.obtain_freezer.title","Cold! Cold! Cold!");
+		this.add("advancements.rubinated_nether.obtain_freezer.description","Craft the Freezer");
+		this.add("advancements.rubinated_nether.obtain_frosted_ice.title","Re-Obtainable");
+		this.add("advancements.rubinated_nether.obtain_frosted_ice.description","Freeze Snow or Water into Frosted Ice");
+		this.add("advancements.rubinated_nether.obtain_rubinated_blackstone.title","Legitimate Salvage");
+		this.add("advancements.rubinated_nether.obtain_rubinated_blackstone.description","Mine Rubinated Blackstone from a Bastion Remnant");
+		this.add("advancements.rubinated_nether.obtain_molten_ruby.title","Hot! Hot! Hot!");
+		this.add("advancements.rubinated_nether.obtain_molten_ruby.description"," Acquire a Molten Ruby from Magma Veins");
+		this.add("advancements.rubinated_nether.obtain_ruby.title","Welcome back, Old Friend");
+		this.add("advancements.rubinated_nether.obtain_ruby.description","Acquire a Ruby from Nether Ruby Ore or freezing");
+		this.add("advancements.rubinated_nether.obtain_ruby_glass.title","Over 9000!");
+		this.add("advancements.rubinated_nether.obtain_ruby_glass.description","Craft the blast-resistant Ruby Glass");
+		this.add("advancements.rubinated_nether.obtain_ruby_laser.title","Tag, You're It!");
+		this.add("advancements.rubinated_nether.obtain_ruby_laser.description","Craft the Ruby Laser");
+		this.add("advancements.rubinated_nether.obtain_ruby_lights.title","Brighten Your Day!");
+		this.add("advancements.rubinated_nether.obtain_ruby_lights.description","Have a Ruby Chandellier, Lantern and Lava Lamp at the same time in your inventory.");
+		this.add("advancements.rubinated_nether.obtain_brazier.title","I'll Be Back");
+		this.add("advancements.rubinated_nether.obtain_brazier.description","Craft the Brazier");
+		this.add("advancements.rubinated_nether.wear_lens.title","Rose-Tinted Glasses");
+		this.add("advancements.rubinated_nether.wear_lens.description","Equip a pair of Ruby Lenses to see lasers");
+		this.add("advancements.rubinated_nether.enter_shrine.title","Dimension Expansion");
+		this.add("advancements.rubinated_nether.enter_shrine.description","Dimension Expansion");
+		this.add("advancements.rubinated_nether.rubinous_ritual.title","Malevolent Shrine");
+		this.add("advancements.rubinated_nether.rubinous_ritual.description","Undergo a Rubinous Ritual");
+		this.add("advancements.rubinated_nether.bronze_rod.title","It's All Connected");
+		this.add("advancements.rubinated_nether.bronze_rod.description","Obtain a Bronze Rod");
+		this.add("advancements.rubinated_nether.bronze_block.title","The Emperor's New Ore");
+		this.add("advancements.rubinated_nether.bronze_block.description","Obtain any Bronze Block");
+		this.add("advancements.rubinated_nether.shrine_sentinel.title","A Heavy Burden");
+		this.add("advancements.rubinated_nether.shrine_sentinel.description","Obtain a Bronze Statue from a Shrine Sentinel");
 	}
 }
