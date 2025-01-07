@@ -55,9 +55,13 @@ public class RNLanguage extends LanguageProvider {
 		this.addBlock(RNBlocks.CHISELED_SHRINE_STONE_BRICKS, "Chiseled Shrine Stone Bricks");
 		this.addBlock(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS, "Rubinated Chiseled Shrine Stone Bricks");
 		this.addBlock(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS, "Rubinated Shrine Stone Bricks");
+
+		this.addBlock(RNBlocks.RUBY_LASER, "Ruby Laser");
+		this.addItem(RNItems.RUBY_LENS, "Ruby Lens");
+
 		this.addBlock(RNBlocks.RUNESTONE, "Runestone");
 		this.addBlock(RNBlocks.FREEZER, "Freezer");
-		this.addBlock(RNBlocks.BRAZIER, "Ruby Brazier");
+		this.addBlock(RNBlocks.BRAZIER, "Brazier");
 
 		this.addItem(RNItems.RUBY_ITEM, "Ruby");
 		this.addItem(RNItems.MOLTEN_RUBY_ITEM, "Molten Ruby");
@@ -143,7 +147,7 @@ public class RNLanguage extends LanguageProvider {
 		this.add("advancements.rubinated_nether.wear_lens.title","Rose-Tinted Glasses");
 		this.add("advancements.rubinated_nether.wear_lens.description","Equip a pair of Ruby Lenses to see lasers");
 		this.add("advancements.rubinated_nether.enter_shrine.title","Dimension Expansion");
-		this.add("advancements.rubinated_nether.enter_shrine.description","Dimension Expansion");
+		this.add("advancements.rubinated_nether.enter_shrine.description","Undergo a Shrine Ritual");
 		this.add("advancements.rubinated_nether.rubinous_ritual.title","Malevolent Shrine");
 		this.add("advancements.rubinated_nether.rubinous_ritual.description","Undergo a Rubinous Ritual");
 		this.add("advancements.rubinated_nether.bronze_rod.title","It's All Connected");

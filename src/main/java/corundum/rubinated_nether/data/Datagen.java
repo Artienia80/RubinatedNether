@@ -37,6 +37,8 @@ public class Datagen {
 		datagen.addProvider(event.includeClient(), new RNBlockStates(output, fileHelper));
 		datagen.addProvider(event.includeClient(), new RNItemModels(output, fileHelper));
 		datagen.addProvider(event.includeClient(), new RNLanguage(output));
+		datagen.addProvider(event.includeClient(), new RNLanguageHU(output));
+
 
 		datagen.addProvider(event.includeServer(), new RNRecipeProvider(output, lookupProvider));
 		datagen.addProvider(event.includeServer(), new RNAdvancements(output, lookupProvider, fileHelper));
