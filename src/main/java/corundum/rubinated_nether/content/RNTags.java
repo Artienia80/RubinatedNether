@@ -32,6 +32,9 @@ public final class RNTags {
 
 		public static final TagKey<Block> CRYSTALLIZATION_CATALYST = createTag(Registries.BLOCK, "crystallization_catalyst");
 
+		public static final TagKey<Block> RAINBOW_LASER = createTag(Registries.BLOCK, "rainbow_laser");
+
+
 
 	}
 

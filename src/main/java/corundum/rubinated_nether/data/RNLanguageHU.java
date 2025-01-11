@@ -151,8 +151,8 @@ public class RNLanguageHU extends LanguageProvider {
 		this.add("advancements.rubinated_nether.obtain_brazier.description", "Varkécsold a parázstartót");
 		this.add("advancements.rubinated_nether.enter_shrine.title", "Szezám tárulj");
 		this.add("advancements.rubinated_nether.enter_shrine.description", "Vegyél részt a templom-rituáléban");
-		this.add("advancements.rubinated_nether.rubinous_ritual.title", "Negatív energiák (????)");
-		this.add("advancements.rubinated_nether.rubinous_ritual.description", "Vegély részt a rubinozott-rituáléban");
+		this.add("advancements.rubinated_nether.rubinous_ritual.title", "Vöröseső hulljon nékem");
+		this.add("advancements.rubinated_nether.rubinous_ritual.description", "Vegyél részt a rubinozott-rituáléban");
 		this.add("advancements.rubinated_nether.bronze_rod.title", "Mindennek mindenhez köze van");
 		this.add("advancements.rubinated_nether.bronze_rod.description", "Szerezz egy bronzrúdat");
 		this.add("advancements.rubinated_nether.bronze_block.title", "Egyszer volt templomba bronzvásár");
