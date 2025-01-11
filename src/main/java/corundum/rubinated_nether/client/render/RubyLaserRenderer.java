@@ -62,7 +62,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 			int color;
 
 			if(blockEntity.isColored()) {
-				color = blockEntity.getColor().orElse(1);
+				color = blockEntity.getColor().orElse(BASE_COLOR);
 			} else if(blockEntity.isSilly()) {
 				float hue = lerpedTime % 50f / 50f;
 				int col = Mth.hsvToRgb(hue, .8f, 1f);
