@@ -89,12 +89,12 @@ public class RunestoneBlock extends Block {
 
 	@Override
 	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-		if (!level.isClientSide) {
-			if (player.isCreative()) {
+		if (!level.isClientSide && (player.isCreative() || !player.hasCorrectToolForDrops(state, level, pos))) {
 				DoublePlantBlockAccessor.invokePreventDropFromBottomPart(level, pos, state, player);
-			} else {
-				dropResources(state, level, pos, null, player, player.getMainHandItem());
-			}
+//			}
+//			else {
+//				dropResources(state, level, pos, null, player, player.getMainHandItem());
+//			}
 		}
 
 		return super.playerWillDestroy(level, pos, state, player);
