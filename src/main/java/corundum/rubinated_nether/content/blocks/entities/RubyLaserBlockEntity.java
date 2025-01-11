@@ -162,6 +162,8 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		return new AABB(worldPosition).expandTowards(end.getX(), end.getY(), end.getZ());
 	}
 
+
+
 	private AABB getLaserRangeAABB(BlockPos worldPosition, Direction facing) {
 		Vec3i rangeVec = facing.getNormal().multiply(blockRange);
 		return new AABB(0, 0, 0, 1, 1, 1)

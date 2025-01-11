@@ -16,10 +16,12 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.phys.AABB;
 import org.joml.Quaternionf;
 
 public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEntity> {
@@ -99,6 +101,12 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 		buffer.addVertex(pose.pose(), minX, maxY, minZ).setColor(color, color, color, endAlpha).setUv(0, v1).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 200)
 			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
+	}
+
+	public AABB getRenderBoundingBox(RubyLaserBlockEntity blockEntity) {
+		Direction facing = blockEntity.getBlockState().getValue(RubyLaserBlock.FACING);
+		Vec3i end = facing.getNormal().multiply(blockEntity.getCurrentRange() + 1);
+		return new AABB(blockEntity.getBlockPos()).expandTowards(end.getX(), end.getY(), end.getZ());
 	}
 
 	protected RenderType getRenderType(boolean colored) {
