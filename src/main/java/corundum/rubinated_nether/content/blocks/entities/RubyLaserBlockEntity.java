@@ -177,6 +177,10 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		return (blockRange == -1) ? currentRange : Mth.clamp(blockRange, 0, currentRange);
 	}
 
+	public int getCurrentRange() {
+		return currentRange;
+	}
+
 	public double getRenderRange() {
 		return getBlockRange() + rangeRemnant;
 	}

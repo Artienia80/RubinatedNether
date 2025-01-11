@@ -86,6 +86,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 	private void renderFace(PoseStack matrices, VertexConsumer buffer, float minX, float minY, float minZ, float maxX, float maxY, float maxZ, int color, float ticks, Direction face) {
 		PoseStack.Pose pose = matrices.last();
 		float maxV = (maxY - 1f) / 15f;
+		float endAlpha = Mth.clamp(1f - maxV, 0, 1);
 
 		float v0 = 1 - (ticks % 150f) / 150f;
 		float v1 = v0 + (maxV * 0.4f);
@@ -94,9 +95,9 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 		buffer.addVertex(pose.pose(), maxX, minY, maxZ).setColor(color).setUv(1, v0).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 1)
 			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
-		buffer.addVertex(pose.pose(), maxX, maxY, maxZ).setColor(color).setUv(1, v1).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 1)
+		buffer.addVertex(pose.pose(), maxX, maxY, maxZ).setColor(color, color, color, endAlpha).setUv(1, v1).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 200)
 			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
-		buffer.addVertex(pose.pose(), minX, maxY, minZ).setColor(color).setUv(0, v1).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 1)
+		buffer.addVertex(pose.pose(), minX, maxY, minZ).setColor(color, color, color, endAlpha).setUv(0, v1).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(LightTexture.FULL_BRIGHT, 200)
 			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 	}
 
