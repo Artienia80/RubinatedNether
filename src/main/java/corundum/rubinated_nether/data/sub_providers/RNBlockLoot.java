@@ -5,9 +5,17 @@ import java.util.Set;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 public class RNBlockLoot extends BlockLootSubProvider {
 	public RNBlockLoot(HolderLookup.Provider lookupProvider) {
@@ -121,6 +129,42 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropOther(
 			RNBlocks.RUBINATED_BLACKSTONE.get(),
 			RNItems.RUBY_SHARD_ITEM.get()
+		);
+
+		this.add(
+			RNBlocks.RUBINATED_BLACKSTONE.get(), 
+			(block) -> {
+				return LootTable.lootTable()
+					.withPool(
+						LootPool.lootPool()
+							.when(this.hasSilkTouch())
+							.add(LootItem.lootTableItem(RNBlocks.RUBINATED_BLACKSTONE))
+					)
+					.withPool(RubinatedBlackstonePool());
+			}
+		);
+	}
+
+	private LootPool.Builder RubinatedBlackstonePool() {
+		// My internal "never-nester" is screaming right now
+		// Forced to pick between going off the edge of the screen, or 20 layers of nesting :anguish:
+		return applyExplosionCondition(
+			RNBlocks.RUBINATED_BLACKSTONE,
+			LootPool.lootPool()
+				.when(this.hasSilkTouch().invert())
+				.add(
+					LootItem.lootTableItem(RNItems.RUBY_SHARD_ITEM)
+						.apply(
+							SetItemCountFunction.setCount(UniformGenerator.between(2, 5))
+						)
+						.apply(
+							ApplyBonusCount.addOreBonusCount(
+								registries
+									.lookupOrThrow(Registries.ENCHANTMENT)
+									.getOrThrow(Enchantments.FORTUNE)
+							)
+						)
+				)
 		);
 	}
 }

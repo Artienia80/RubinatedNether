@@ -10,9 +10,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ChangeOverTimeBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.Property;
-
-import java.util.Optional;
 
 public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 	public static final MapCodec<TarnishingBronzeBlock> CODEC = RecordCodecBuilder.mapCodec(
@@ -48,13 +45,6 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 		} else {
 			this.changeOverTime(state, level, pos, random);
 		}
-	}
-
-	/**
-	 * Helper method to safely set a property on a block state.
-	 */
-	private <T extends Comparable<T>> BlockState setProperty(BlockState state, Property<T> property, Comparable<?> value) {
-		return state.setValue(property, property.getValueClass().cast(value));
 	}
 
 	@Override
