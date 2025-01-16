@@ -21,7 +21,12 @@ group = mod_group_id
 repositories {
 	mavenLocal()
 	mavenCentral()
-	maven { url = "https://api.modrinth.com/maven" }
+	maven { 
+		url = "https://api.modrinth.com/maven"
+	}
+	maven {
+	    url = "https://modmaven.dev"
+  	}
 }
 
 base {
@@ -96,6 +101,11 @@ dependencies {
 
 	// Iris Shaders (only needed for shader test, api is identical to oculus)
 	compileOnly("maven.modrinth:iris:1.8.1+1.21.1-neoforge")
+
+	// compile against the JEI API but do not include it at runtime
+	compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+	// at runtime, use the full JEI jar
+	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
 	implementation "maven.modrinth:midnightlib:${project.midnightlib_version}" 
 	jarJar ("maven.modrinth:midnightlib:${project.midnightlib_version}")  
