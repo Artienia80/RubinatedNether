@@ -46,6 +46,10 @@ public class RNItems {
 	public static final DeferredItem<Item> BRONZE_ROD = ITEMS.registerSimpleItem("bronze_rod", new Item.Properties());
 	public static final DeferredItem<Item> BRONZE_SCRAP = ITEMS.registerSimpleItem("bronze_scrap", new Item.Properties());
 
-	public static final DeferredItem<Item> BRONZE_SHOT = ITEMS.register("bronze_shot",
-			() -> new BronzeShot(new Item.Properties().stacksTo(16)));
+	public static final DeferredItem<Item> BRONZE_SHOT = ITEMS.register(
+		"bronze_shot",
+		() -> new BronzeShot(
+			new Item.Properties().stacksTo(16)
+		)
+	);
 }

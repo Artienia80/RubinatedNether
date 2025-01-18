@@ -18,6 +18,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
+import com.google.common.collect.ImmutableList;
 import com.mojang.logging.LogUtils;
 
 import corundum.rubinated_nether.data.Datagen;
@@ -26,27 +27,33 @@ import eu.midnightdust.lib.config.MidnightConfig;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 @Mod(RubinatedNether.MODID)
 public class RubinatedNether {
 	public static final String MODID = "rubinated_nether";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
+	private static final ImmutableList<DeferredRegister<?>> REGISTRIES = ImmutableList.of(
+		RNBlocks.BLOCKS,
+		RNItems.ITEMS,
+		RNEntities.ENTITY_TYPES,
+		RNParticleTypes.PARTICLES,
+		RNSoundEvents.SOUNDS,
+		RNCreativeTabs.CREATIVE_MODE_TABS,
+		RNRecipes.RECIPE_TYPES,
+		RNRecipeSerializers.RECIPE_SERIALIZERS,
+		RNBlockEntities.BLOCK_ENTITY_TYPES,
+		RNMenuTypes.MENUS
+	);
+
 	public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
 		LOGGER.info("Rubinating all over your Nether...");
 		modEventBus.addListener(RubinatedNether::onSetup);
 		MidnightConfig.init(MODID, RNConfig.class);
 
-		RNBlocks.BLOCKS.register(modEventBus);
-		RNItems.ITEMS.register(modEventBus);
-		RNParticleTypes.PARTICLES.register(modEventBus);
-		RNSoundEvents.SOUNDS.register(modEventBus);
-		RNCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
-		RNRecipes.RECIPE_TYPES.register(modEventBus);
-		RNRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
-		RNBlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus);
-		RNMenuTypes.MENUS.register(modEventBus);
-		RNEntities.register(modEventBus);
+		for (var registry : REGISTRIES) 
+			registry.register(modEventBus);
 
 		modEventBus.addListener(Datagen::datagen);
 		if (dist == Dist.CLIENT) {
@@ -75,8 +82,10 @@ public class RubinatedNether {
 	public static class ClientModEvents {
 		@SubscribeEvent
 		public static void onClientSetup(FMLClientSetupEvent event) {
-
-			EntityRenderers.register(RNEntities.BRONZE_SHOT.get(), BronzeShotProjectileRenderer::new);
+			EntityRenderers.register(
+				RNEntities.BRONZE_SHOT.get(), 
+				BronzeShotProjectileRenderer::new
+			);
 		}
 	}
 

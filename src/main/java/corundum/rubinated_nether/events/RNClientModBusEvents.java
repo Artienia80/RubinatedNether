@@ -18,21 +18,31 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 @EventBusSubscriber(modid = RubinatedNether.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class RNClientModBusEvents {
 
-    @SubscribeEvent
-    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(BronzeShotProjectileModel.LAYER_LOCATION, BronzeShotProjectileModel::createBodyLayer);
-    }
+	@SubscribeEvent
+	public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+		event.registerLayerDefinition(
+			BronzeShotProjectileModel.LAYER_LOCATION, 
+			BronzeShotProjectileModel::createBodyLayer
+		);
+	}
 
-    @SubscribeEvent
-    public static void registerMenuScreens(RegisterMenuScreensEvent event) {
-        event.register(RNMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
-    }
+	@SubscribeEvent
+	public static void registerMenuScreens(RegisterMenuScreensEvent event) {
+		event.register(
+			RNMenuTypes.FREEZER_MENU.get(), 
+			FreezerScreen::new
+		);
+	}
 
 
-    @SubscribeEvent
-    public static void registerOverlays(RegisterGuiLayersEvent event) {
-        Minecraft minecraft = Minecraft.getInstance();
-        event.registerAbove(VanillaGuiLayers.DEMO_OVERLAY, RubinatedNether.id("ruby_lens_overlay"),
-                (guiGraphics, deltaTracker) -> RubyLensOverlay.renderHud(new Gui(minecraft), guiGraphics));
-    }
+	@SubscribeEvent
+	public static void registerOverlays(RegisterGuiLayersEvent event) {
+		Minecraft minecraft = Minecraft.getInstance();
+
+		event.registerAbove(
+			VanillaGuiLayers.DEMO_OVERLAY, 
+			RubinatedNether.id("ruby_lens_overlay"),
+			(guiGraphics, deltaTracker) -> RubyLensOverlay.renderHud(new Gui(minecraft), guiGraphics)
+		);
+	}
 }
