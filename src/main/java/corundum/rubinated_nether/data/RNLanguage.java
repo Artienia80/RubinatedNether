@@ -110,6 +110,8 @@ public class RNLanguage extends LanguageProvider {
 
 		this.addItem(RNItems.BRONZE_ROD, "Bronze Rod");
 		this.addItem(RNItems.BRONZE_SCRAP, "Bronze Scrap");
+		this.addItem(RNItems.BRONZE_SHOT, "Bronze Shot");
+
 
 		this.add(RNCreativeTabs.RN_TAB.get().getDisplayName().getString(), "Rubinated Nether");
 

@@ -5,8 +5,8 @@ import corundum.rubinated_nether.content.*;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
-public class RNLanguage extends LanguageProvider {
-	public RNLanguage(PackOutput output) {
+public class RNLanguagePL extends LanguageProvider {
+	public RNLanguagePL(PackOutput output) {
 		super(output, RubinatedNether.MODID, "pl_pl");
 	}
 

@@ -128,6 +128,7 @@ public class RNItemModels extends ItemModelProvider {
 		this.basicItem(RNItems.MUSIC_DISC_SHIMMER.get());
 		this.basicItem(RNItems.BRONZE_ROD.get());
 		this.basicItem(RNItems.BRONZE_SCRAP.get());
+		this.basicItem(RNItems.BRONZE_SHOT.get());
 
 
 	}

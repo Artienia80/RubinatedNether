@@ -4,7 +4,6 @@ import java.util.concurrent.CompletableFuture;
 
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -413,7 +412,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				recipeOutput,
 				RNItems.BRONZE_ROD,
 				RNItems.BRONZE_SCRAP,
-				16
+				64
 		);
 
 		twoByTwo(
@@ -509,6 +508,16 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(Blocks.COPPER_BLOCK), has(Blocks.COPPER_BLOCK))
 				.unlockedBy(getHasName(Blocks.BASALT), has(Blocks.BASALT))
 				.unlockedBy(getHasName(Items.BREEZE_ROD), has(Items.BREEZE_ROD))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.BRONZE_SHOT, 1)
+				.define('X', RNItems.BRONZE_SCRAP)
+				.define('O', Items.COPPER_INGOT)
+				.pattern(" X ")
+				.pattern("XOX")
+				.pattern(" X ")
+				.unlockedBy(getHasName(RNItems.BRONZE_SHOT), has(RNItems.BRONZE_SHOT))
+				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
 				.save(recipeOutput);
 	}
 

@@ -3,13 +3,19 @@ package corundum.rubinated_nether;
 import corundum.rubinated_nether.client.RubinatedNetherClient;
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
+import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
+import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileRenderer;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
@@ -40,6 +46,7 @@ public class RubinatedNether {
 		RNRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
 		RNBlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus);
 		RNMenuTypes.MENUS.register(modEventBus);
+		RNEntities.register(modEventBus);
 
 		modEventBus.addListener(Datagen::datagen);
 		if (dist == Dist.CLIENT) {
@@ -62,6 +69,15 @@ public class RubinatedNether {
 		FreezerBlockEntity.addItemFreezingTime(Blocks.PACKED_ICE, 1200);
 		FreezerBlockEntity.addItemFreezingTime(Blocks.BLUE_ICE, 2400);
 		FreezerBlockEntity.addItemFreezingTime(RNBlocks.DRY_ICE, 4800);
+	}
+
+	@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+	public static class ClientModEvents {
+		@SubscribeEvent
+		public static void onClientSetup(FMLClientSetupEvent event) {
+
+			EntityRenderers.register(RNEntities.BRONZE_SHOT.get(), BronzeShotProjectileRenderer::new);
+		}
 	}
 
 	public static ResourceLocation id(String s) {

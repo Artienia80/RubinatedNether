@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "O": {
+      "item": "minecraft:copper_ingot"
+    },
+    "X": {
+      "item": "rubinated_nether:bronze_scrap"
+    }
+  },
+  "pattern": [
+    " X ",
+    "XOX",
+    " X "
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:bronze_shot"
+  }
+}
