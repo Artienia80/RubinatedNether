@@ -6,13 +6,9 @@ import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ChangeOverTimeBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.Property;
-
-import java.util.Optional;
 
 public class TarnishingBronzeStairBlock extends StairBlock implements TarnishingBronze {
 	public static final MapCodec<TarnishingBronzeStairBlock> CODEC = RecordCodecBuilder.mapCodec(
@@ -49,13 +45,6 @@ public class TarnishingBronzeStairBlock extends StairBlock implements Tarnishing
 		} else {
 			this.changeOverTime(state, level, pos, random);
 		}
-	}
-
-	/**
-	 * Helper method to safely set a property on a block state.
-	 */
-	private <T extends Comparable<T>> BlockState setProperty(BlockState state, Property<T> property, Comparable<?> value) {
-		return state.setValue(property, property.getValueClass().cast(value));
 	}
 
 	@Override
