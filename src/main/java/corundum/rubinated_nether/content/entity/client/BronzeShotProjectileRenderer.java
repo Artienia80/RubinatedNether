@@ -27,18 +27,19 @@ public class BronzeShotProjectileRenderer extends EntityRenderer<BronzeShotProje
     public void render(BronzeShotProjectileEntity pEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
 
-        if(!pEntity.isGrounded()) {
+        if (!pEntity.isGrounded()) {
             poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, pEntity.yRotO, pEntity.getYRot())));
             poseStack.mulPose(Axis.XP.rotationDegrees(pEntity.getRenderingRotation() * 5f));
             poseStack.translate(0, -1.0f, 0);
         } else {
-            poseStack.mulPose(Axis.YP.rotationDegrees(pEntity.groundedOffset.y));
-            poseStack.mulPose(Axis.XP.rotationDegrees(pEntity.groundedOffset.x));
+            // Removed groundedOffset and set rotation based on default behavior
+            poseStack.mulPose(Axis.YP.rotationDegrees(pEntity.getYRot()));
+            poseStack.mulPose(Axis.XP.rotationDegrees(pEntity.getXRot()));
             poseStack.translate(0, -1.0f, 0);
         }
 
         VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(
-                buffer, this.model.renderType(this.getTextureLocation(pEntity)),false, false);
+                buffer, this.model.renderType(this.getTextureLocation(pEntity)), false, false);
         this.model.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();
         super.render(pEntity, entityYaw, partialTicks, poseStack, buffer, packedLight);
