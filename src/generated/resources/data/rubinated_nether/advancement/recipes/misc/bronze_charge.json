@@ -1,6 +1,16 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
+    "has_bronze_charge": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:bronze_charge"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_bronze_scrap": {
       "conditions": {
         "items": [
@@ -11,19 +21,9 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_bronze_shot": {
-      "conditions": {
-        "items": [
-          {
-            "items": "rubinated_nether:bronze_shot"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:bronze_shot"
+        "recipe": "rubinated_nether:bronze_charge"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -31,13 +31,13 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_bronze_shot",
+      "has_bronze_charge",
       "has_bronze_scrap"
     ]
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:bronze_shot"
+      "rubinated_nether:bronze_charge"
     ]
   }
 }

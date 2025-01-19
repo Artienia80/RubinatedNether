@@ -1,8 +1,8 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.items.BronzeShot;
-import corundum.rubinated_nether.content.items.RubyLens;
+import corundum.rubinated_nether.content.items.BronzeChargeItem;
+import corundum.rubinated_nether.content.items.RubyLensItem;
 import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -12,17 +12,16 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class RNItems {
-	// Create a Deferred Register to hold Items which will all be registered under the "examplemod" namespace
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(RubinatedNether.MODID);
 
-	public static final DeferredItem<Item> RUBY_ITEM = ITEMS.registerSimpleItem("ruby", new Item.Properties());
-	public static final DeferredItem<Item> MOLTEN_RUBY_ITEM = ITEMS.registerSimpleItem("molten_ruby", new Item.Properties());
-	public static final DeferredItem<Item> RUBY_SHARD_ITEM = ITEMS.registerSimpleItem("ruby_shard", new Item.Properties());
-	public static final DeferredItem<Item> MOLTEN_RUBY_NUGGET_ITEM = ITEMS.registerSimpleItem("molten_ruby_nugget", new Item.Properties());
+	public static final DeferredItem<Item> RUBY_ITEM = basicItem("ruby");
+	public static final DeferredItem<Item> MOLTEN_RUBY_ITEM = basicItem("molten_ruby");
+	public static final DeferredItem<Item> RUBY_SHARD_ITEM = basicItem("ruby_shard");
+	public static final DeferredItem<Item> MOLTEN_RUBY_NUGGET_ITEM = basicItem("molten_ruby_nugget");
 
 	public static final DeferredItem<Item> RUBY_LENS = ITEMS.register(
 		"ruby_lens", 
-		() -> new RubyLens(new Item.Properties())
+		() -> new RubyLensItem(new Item.Properties())
 	);
 
 	public static final DeferredItem<Item> MUSIC_DISC_SHIMMER = ITEMS.registerSimpleItem(
@@ -43,13 +42,18 @@ public class RNItems {
 		() -> Blocks.POWDER_SNOW
 	);
 
-	public static final DeferredItem<Item> BRONZE_ROD = ITEMS.registerSimpleItem("bronze_rod", new Item.Properties());
-	public static final DeferredItem<Item> BRONZE_SCRAP = ITEMS.registerSimpleItem("bronze_scrap", new Item.Properties());
+	public static final DeferredItem<Item> BRONZE_ROD = basicItem("bronze_rod");
+	public static final DeferredItem<Item> BRONZE_SCRAP = basicItem("bronze_scrap");
 
-	public static final DeferredItem<Item> BRONZE_SHOT = ITEMS.register(
-		"bronze_shot",
-		() -> new BronzeShot(
-			new Item.Properties().stacksTo(16)
-		)
+	public static final DeferredItem<Item> BRONZE_CHARGE = ITEMS.register(
+		"bronze_charge",
+		() -> new BronzeChargeItem(new Item.Properties())
 	);
+
+	public static DeferredItem<Item> basicItem(String name) {
+		return ITEMS.registerSimpleItem(
+			name, 
+			new Item.Properties()
+		);
+	}
 }

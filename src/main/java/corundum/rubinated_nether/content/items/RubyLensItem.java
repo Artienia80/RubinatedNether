@@ -9,8 +9,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class RubyLens extends Item implements Equipable {
-    public RubyLens(Properties properties) {
+public class RubyLensItem extends Item implements Equipable {
+    public RubyLensItem(Properties properties) {
         super(properties);
     }
 

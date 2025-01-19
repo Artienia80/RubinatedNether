@@ -3,8 +3,7 @@ package corundum.rubinated_nether;
 import corundum.rubinated_nether.client.RubinatedNetherClient;
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
-import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
-import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileRenderer;
+import corundum.rubinated_nether.content.entity.client.BronzeChargeProjectileRenderer;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
@@ -83,8 +82,8 @@ public class RubinatedNether {
 		@SubscribeEvent
 		public static void onClientSetup(FMLClientSetupEvent event) {
 			EntityRenderers.register(
-				RNEntities.BRONZE_SHOT.get(), 
-				BronzeShotProjectileRenderer::new
+				RNEntities.BRONZE_CHARGE.get(), 
+				BronzeChargeProjectileRenderer::new
 			);
 		}
 	}

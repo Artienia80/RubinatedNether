@@ -124,7 +124,7 @@ public class RNCreativeTabs {
 
 				output.accept(RNItems.BRONZE_ROD.get());
 				output.accept(RNItems.BRONZE_SCRAP.get());
-				output.accept(RNItems.BRONZE_SHOT.get());
+				output.accept(RNItems.BRONZE_CHARGE.get());
 
 
 

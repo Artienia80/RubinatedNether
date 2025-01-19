@@ -4,9 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
-import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileModel;
-
+import corundum.rubinated_nether.content.entity.BronzeChargeProjectileEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -15,16 +13,16 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class BronzeShotProjectileRenderer extends EntityRenderer<BronzeShotProjectileEntity> {
-    private BronzeShotProjectileModel model;
+public class BronzeChargeProjectileRenderer extends EntityRenderer<BronzeChargeProjectileEntity> {
+    private BronzeChargeProjectileModel model;
 
-    public BronzeShotProjectileRenderer(EntityRendererProvider.Context context) {
+    public BronzeChargeProjectileRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.model = new BronzeShotProjectileModel(context.bakeLayer(BronzeShotProjectileModel.LAYER_LOCATION));
+        this.model = new BronzeChargeProjectileModel(context.bakeLayer(BronzeChargeProjectileModel.LAYER_LOCATION));
     }
 
     @Override
-    public void render(BronzeShotProjectileEntity pEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(BronzeChargeProjectileEntity pEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
 
         if (!pEntity.isGrounded()) {
@@ -46,7 +44,7 @@ public class BronzeShotProjectileRenderer extends EntityRenderer<BronzeShotProje
     }
 
     @Override
-    public ResourceLocation getTextureLocation(BronzeShotProjectileEntity entity) {
+    public ResourceLocation getTextureLocation(BronzeChargeProjectileEntity entity) {
         return ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/entity/bronze_shot/bronze_shot.png");
     }
 }

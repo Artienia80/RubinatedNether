@@ -1,7 +1,7 @@
 package corundum.rubinated_nether.events;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileModel;
+import corundum.rubinated_nether.content.entity.client.BronzeChargeProjectileModel;
 import corundum.rubinated_nether.content.gui.RubyLensOverlay;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.screen.FreezerScreen;
@@ -21,8 +21,8 @@ public class RNClientModBusEvents {
 	@SubscribeEvent
 	public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(
-			BronzeShotProjectileModel.LAYER_LOCATION, 
-			BronzeShotProjectileModel::createBodyLayer
+			BronzeChargeProjectileModel.LAYER_LOCATION, 
+			BronzeChargeProjectileModel::createBodyLayer
 		);
 	}
 
