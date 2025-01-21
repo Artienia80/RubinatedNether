@@ -8,24 +8,24 @@ import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
 import com.google.common.collect.ImmutableList;
 import com.mojang.logging.LogUtils;
 
 import corundum.rubinated_nether.data.Datagen;
+import corundum.rubinated_nether.misc.DatapackRegistry;
 import corundum.rubinated_nether.utils.RNConfig;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 @Mod(RubinatedNether.MODID)
@@ -48,34 +48,18 @@ public class RubinatedNether {
 
 	public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
 		LOGGER.info("Rubinating all over your Nether...");
-		modEventBus.addListener(RubinatedNether::onSetup);
 		MidnightConfig.init(MODID, RNConfig.class);
 
 		for (var registry : REGISTRIES) 
 			registry.register(modEventBus);
 
 		modEventBus.addListener(Datagen::datagen);
+		modEventBus.addListener(DatapackRegistry::datapackRegistry);
+
 		if (dist == Dist.CLIENT) {
 			RubinatedNetherClient.client(modEventBus);
 			modEventBus.addListener(RNRecipeCategories::registerRecipeCategories);
 		}
-	}
-
-	public static void onSetup(FMLCommonSetupEvent event) {
-		event.enqueueWork(RubinatedNether::setup);
-	}
-
-	public static void setup() {
-		// Register freezing times
-		// TODO: Make data-driven
-		FreezerBlockEntity.addItemFreezingTime(Items.SNOWBALL, 30);
-		FreezerBlockEntity.addItemFreezingTime(Blocks.POWDER_SNOW, 75);
-		FreezerBlockEntity.addItemFreezingTime(Blocks.SNOW_BLOCK, 150);
-		FreezerBlockEntity.addItemFreezingTime(Blocks.FROSTED_ICE, 300);
-		FreezerBlockEntity.addItemFreezingTime(Blocks.ICE, 600);
-		FreezerBlockEntity.addItemFreezingTime(Blocks.PACKED_ICE, 1200);
-		FreezerBlockEntity.addItemFreezingTime(Blocks.BLUE_ICE, 2400);
-		FreezerBlockEntity.addItemFreezingTime(RNBlocks.DRY_ICE, 4800);
 	}
 
 	@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -86,6 +70,23 @@ public class RubinatedNether {
 				RNEntities.BRONZE_CHARGE.get(), 
 				BronzeChargeProjectileRenderer::new
 			);
+		}
+	}
+
+	@EventBusSubscriber(modid = MODID)
+	public static class ServerModEvents {
+		@SubscribeEvent
+		public static void freezerFuel(ServerAboutToStartEvent event) {
+			var entries = event.getServer().registryAccess().registryOrThrow(DatapackRegistry.FREEZER_FUELS).entrySet();
+			LOGGER.info("Registered Freezer Fuels: " + entries.size());
+
+			for (var entry : entries) {
+				var x = entry.getValue();
+				var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(x.item()));
+
+				LOGGER.info(x.toString());
+				FreezerBlockEntity.addItemFreezingTime(item, x.freezeTime());
+			}
 		}
 	}
 
