@@ -80,6 +80,11 @@ public class FreezerBlockEntity extends AbstractFreezerBlockEntity {
 		tagFreezingMap.put(itemTag, burnTime);
 	}
 
+	public static void cleanFreezingTimes() {
+		freezingMap.clear();
+		tagFreezingMap.clear();
+	}
+
 	public static void removeItemFreezingTime(ItemLike itemProvider) {
 		Item item = itemProvider.asItem();
 		freezingMap.removeInt(item);

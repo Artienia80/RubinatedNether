@@ -77,6 +77,8 @@ public class RubinatedNether {
 	public static class ServerModEvents {
 		@SubscribeEvent
 		public static void freezerFuel(ServerAboutToStartEvent event) {
+			FreezerBlockEntity.cleanFreezingTimes();
+
 			var entries = event.getServer().registryAccess().registryOrThrow(DatapackRegistry.FREEZER_FUELS).entrySet();
 			LOGGER.info("Registered Freezer Fuels: " + entries.size());
 
