@@ -106,6 +106,7 @@
   "block.rubinated_nether.tarnished_cut_bronze_pillar_stairs": "Tarnished Cut Bronze Pillar Stairs",
   "death.attack.fallingBlock": "%1$s was embraced by a falling chandelier",
   "death.attack.fallingBlock.player": "%1$s was embraced by a falling chandelier whilst fighting %2$s",
+  "gui.rubinated_nether.jei.freezer": "Freezing",
   "gui.rubinated_nether.recipebook.toggleRecipes.freezable": "Showing Freezable",
   "item.rubinated_nether.bronze_charge": "Bronze Charge",
   "item.rubinated_nether.bronze_rod": "Bronze Rod",

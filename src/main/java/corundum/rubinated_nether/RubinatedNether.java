@@ -67,6 +67,7 @@ public class RubinatedNether {
 
 	public static void setup() {
 		// Register freezing times
+		// TODO: Make data-driven
 		FreezerBlockEntity.addItemFreezingTime(Items.SNOWBALL, 30);
 		FreezerBlockEntity.addItemFreezingTime(Blocks.POWDER_SNOW, 75);
 		FreezerBlockEntity.addItemFreezingTime(Blocks.SNOW_BLOCK, 150);

@@ -159,5 +159,7 @@ public class RNLanguageHU extends LanguageProvider {
 		this.add("advancements.rubinated_nether.bronze_block.description", "Szerezz bármi bronzblokkot");
 		this.add("advancements.rubinated_nether.shrine_sentinel.title", "Nehéz súly");
 		this.add("advancements.rubinated_nether.shrine_sentinel.description", "Szerezz egy bronz szobrot a templomőröktől");
+	
+		this.add("gui.rubinated_nether.jei.freezer", "TODO!");
 	}
 }

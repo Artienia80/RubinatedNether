@@ -156,5 +156,7 @@ public class RNLanguagePL extends LanguageProvider {
 		this.add("advancements.rubinated_nether.bronze_block.description","Zdobądz Jakikolwiek Blok Brązu");
 		this.add("advancements.rubinated_nether.shrine_sentinel.title","Ogromny Ciężar");
 		this.add("advancements.rubinated_nether.shrine_sentinel.description","Zdobądź Brązową Statue z Świątynnego Wartownika");
+	
+		this.add("gui.rubinated_nether.jei.freezer", "TODO!");
 	}
 }

@@ -107,6 +107,7 @@
   "block.rubinated_nether.tarnished_cut_bronze_pillar_stairs": "Kopott vágott bronzoszlop-lépcső",
   "death.attack.fallingBlock": "%1$s megölelt egy hulló rubincsillárt",
   "death.attack.fallingBlock.player": "%1$s megölelt egy hulló rubincsillárt miközbén %2$s támadta",
+  "gui.rubinated_nether.jei.freezer": "TODO!",
   "gui.rubinated_nether.recipebook.toggleRecipes.freezable": "Fagyaszthatók",
   "item.rubinated_nether.bronze_rod": "Bronzrúd",
   "item.rubinated_nether.bronze_scrap": "Bronzdarab",

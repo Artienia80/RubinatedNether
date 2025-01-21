@@ -158,5 +158,7 @@ public class RNLanguage extends LanguageProvider {
 		this.add("advancements.rubinated_nether.bronze_block.description","Obtain any Bronze Block");
 		this.add("advancements.rubinated_nether.shrine_sentinel.title","A Heavy Burden");
 		this.add("advancements.rubinated_nether.shrine_sentinel.description","Obtain a Bronze Statue from a Shrine Sentinel");
+	
+		this.add("gui.rubinated_nether.jei.freezer", "Freezing");
 	}
 }
