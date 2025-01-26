@@ -17,35 +17,34 @@ import java.util.Set;
 
 @Mixin(Level.class)
 public abstract class LevelMixin implements UpdateListenerHolder {
+	@Shadow
+	public abstract BlockState getBlockState(BlockPos pos);
 
-    @Shadow
-    public abstract BlockState getBlockState(BlockPos pos);
+	@Unique
+	private final Long2ReferenceMap<Set<BlockUpdateListener>> rubinatedNether$updateListeners = new Long2ReferenceOpenHashMap<>();
 
-    @Unique
-    private final Long2ReferenceMap<Set<BlockUpdateListener>> rubinatedNether$updateListeners = new Long2ReferenceOpenHashMap<>();
+	@Override
+	public void rubinatedNether$addUpdateListener(BlockUpdateListener listener) {
+		listener.getListenedPositions()
+				.mapToLong(BlockPos::asLong)
+				.forEach(l -> rubinatedNether$updateListeners.computeIfAbsent(l, $ -> new ObjectArraySet<>()).add(listener));
+	}
 
-    @Override
-    public void rubinatedNether$addUpdateListener(BlockUpdateListener listener) {
-        listener.getListenedPositions()
-                .mapToLong(BlockPos::asLong)
-                .forEach(l -> rubinatedNether$updateListeners.computeIfAbsent(l, $ -> new ObjectArraySet<>()).add(listener));
-    }
-
-    @Override
-    public void rubinatedNether$handleBlockUpdate(BlockPos pos) {
-        long longPos = pos.asLong();
-        Set<BlockUpdateListener> listeners = rubinatedNether$updateListeners.get(longPos);
-        if(listeners != null) {
-            Iterator<BlockUpdateListener> iterator = listeners.iterator();
-            while (iterator.hasNext()) {
-                BlockUpdateListener listener = iterator.next();
-                if(listener.shouldRemove()) {
-                    iterator.remove();
-                } else {
-                    listener.handleBlockUpdate((Level) (Object) this, pos, getBlockState(pos));
-                }
-            }
-            if(listeners.isEmpty()) rubinatedNether$updateListeners.remove(longPos);
-        }
-    }
+	@Override
+	public void rubinatedNether$handleBlockUpdate(BlockPos pos) {
+		long longPos = pos.asLong();
+		Set<BlockUpdateListener> listeners = rubinatedNether$updateListeners.get(longPos);
+		if(listeners != null) {
+			Iterator<BlockUpdateListener> iterator = listeners.iterator();
+			while (iterator.hasNext()) {
+				BlockUpdateListener listener = iterator.next();
+				if(listener.shouldRemove()) {
+					iterator.remove();
+				} else {
+					listener.handleBlockUpdate((Level) (Object) this, pos, getBlockState(pos));
+				}
+			}
+			if(listeners.isEmpty()) rubinatedNether$updateListeners.remove(longPos);
+		}
+	}
 }

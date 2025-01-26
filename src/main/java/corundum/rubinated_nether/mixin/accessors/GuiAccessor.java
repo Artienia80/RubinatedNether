@@ -8,6 +8,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(Gui.class)
 public interface GuiAccessor {
-    @Invoker("renderTextureOverlay")
-    void invokeRenderTextureOverlay(GuiGraphics guiGraphics, ResourceLocation shaderLocation, float alpha);
+	@Invoker("renderTextureOverlay")
+	void invokeRenderTextureOverlay(GuiGraphics guiGraphics, ResourceLocation shaderLocation, float alpha);
 }
