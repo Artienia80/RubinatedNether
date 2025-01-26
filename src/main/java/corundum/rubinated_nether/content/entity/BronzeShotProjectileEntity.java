@@ -21,23 +21,23 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
-public class BronzeChargeProjectileEntity extends AbstractArrow {
+public class BronzeShotProjectileEntity extends AbstractArrow {
 	private float rotation;
 	private ItemStack firedFromWeapon;
 
 	private float weight = 0.05F;
 
-	public BronzeChargeProjectileEntity(EntityType<? extends AbstractArrow> entityType, Level level) {
+	public BronzeShotProjectileEntity(EntityType<? extends AbstractArrow> entityType, Level level) {
 		super(entityType, level);
 	}
 
-	public BronzeChargeProjectileEntity(LivingEntity shooter, Level level) {
-		super(RNEntities.BRONZE_CHARGE.get(), shooter, level, new ItemStack(RNItems.BRONZE_CHARGE.get()), null);
+	public BronzeShotProjectileEntity(LivingEntity shooter, Level level) {
+		super(RNEntities.BRONZE_SHOT.get(), shooter, level, new ItemStack(RNItems.BRONZE_SHOT.get()), null);
 	}
 
 	@Override
 	protected ItemStack getDefaultPickupItem() {
-		return new ItemStack(RNItems.BRONZE_CHARGE.get());
+		return new ItemStack(RNItems.BRONZE_SHOT.get());
 	}
 
 	public float getRenderingRotation() {

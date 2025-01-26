@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.entity.BronzeChargeProjectileEntity;
+import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class BronzeChargeProjectileRenderer extends EntityRenderer<BronzeChargeProjectileEntity> {
+public class BronzeChargeProjectileRenderer extends EntityRenderer<BronzeShotProjectileEntity> {
     private BronzeChargeProjectileModel model;
 
     public BronzeChargeProjectileRenderer(EntityRendererProvider.Context context) {
@@ -22,7 +22,7 @@ public class BronzeChargeProjectileRenderer extends EntityRenderer<BronzeChargeP
     }
 
     @Override
-    public void render(BronzeChargeProjectileEntity pEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(BronzeShotProjectileEntity pEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
 
         if (!pEntity.isGrounded()) {
@@ -44,7 +44,7 @@ public class BronzeChargeProjectileRenderer extends EntityRenderer<BronzeChargeP
     }
 
     @Override
-    public ResourceLocation getTextureLocation(BronzeChargeProjectileEntity entity) {
+    public ResourceLocation getTextureLocation(BronzeShotProjectileEntity entity) {
         return ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/entity/bronze_shot/bronze_shot.png");
     }
 }

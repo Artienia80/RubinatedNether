@@ -1,7 +1,7 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.items.BronzeChargeItem;
+import corundum.rubinated_nether.content.items.BronzeShotItem;
 import corundum.rubinated_nether.content.items.RubyLensItem;
 import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
 import net.minecraft.world.item.BlockItem;
@@ -45,9 +45,9 @@ public class RNItems {
 	public static final DeferredItem<Item> BRONZE_ROD = basicItem("bronze_rod");
 	public static final DeferredItem<Item> BRONZE_SCRAP = basicItem("bronze_scrap");
 
-	public static final DeferredItem<Item> BRONZE_CHARGE = ITEMS.register(
-		"bronze_charge",
-		() -> new BronzeChargeItem(new Item.Properties())
+	public static final DeferredItem<Item> BRONZE_SHOT = ITEMS.register(
+		"bronze_shot",
+		() -> new BronzeShotItem(new Item.Properties())
 	);
 
 	public static DeferredItem<Item> basicItem(String name) {

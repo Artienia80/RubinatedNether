@@ -1,6 +1,6 @@
 package corundum.rubinated_nether.content.items;
 
-import corundum.rubinated_nether.content.entity.BronzeChargeProjectileEntity;
+import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -11,8 +11,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class BronzeChargeItem extends Item {
-    public BronzeChargeItem(Properties properties) {
+public class BronzeShotItem extends Item {
+    public BronzeShotItem(Properties properties) {
         super(properties);
     }
 
@@ -22,7 +22,7 @@ public class BronzeChargeItem extends Item {
         pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(),
                 SoundEvents.METAL_FALL, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
         if (!pLevel.isClientSide) {
-            BronzeChargeProjectileEntity bronzeShotProjectile = new BronzeChargeProjectileEntity(pPlayer, pLevel);
+            BronzeShotProjectileEntity bronzeShotProjectile = new BronzeShotProjectileEntity(pPlayer, pLevel);
             bronzeShotProjectile.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.5F, 0F);
             pLevel.addFreshEntity(bronzeShotProjectile);
         }

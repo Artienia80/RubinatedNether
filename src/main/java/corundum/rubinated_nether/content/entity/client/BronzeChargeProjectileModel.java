@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.entity.BronzeChargeProjectileEntity;
+import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -12,7 +12,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 
-public class BronzeChargeProjectileModel extends EntityModel<BronzeChargeProjectileEntity> {
+public class BronzeChargeProjectileModel extends EntityModel<BronzeShotProjectileEntity> {
     public static final ModelLayerLocation LAYER_LOCATION =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "bronze_shot"), "main");
     private final ModelPart bronze_shot;
@@ -38,7 +38,7 @@ public class BronzeChargeProjectileModel extends EntityModel<BronzeChargeProject
     }
 
     @Override
-    public void setupAnim(BronzeChargeProjectileEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(BronzeShotProjectileEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
     }
 

@@ -510,13 +510,13 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(Items.BREEZE_ROD), has(Items.BREEZE_ROD))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.BRONZE_CHARGE, 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.BRONZE_SHOT, 1)
 				.define('X', RNItems.BRONZE_SCRAP)
 				.define('O', Items.COPPER_INGOT)
 				.pattern(" X ")
 				.pattern("XOX")
 				.pattern(" X ")
-				.unlockedBy(getHasName(RNItems.BRONZE_CHARGE), has(RNItems.BRONZE_CHARGE))
+				.unlockedBy(getHasName(RNItems.BRONZE_SHOT), has(RNItems.BRONZE_SHOT))
 				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
 				.save(recipeOutput);
 	}

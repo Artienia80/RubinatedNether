@@ -68,7 +68,7 @@ public class RubinatedNether {
 		@SubscribeEvent
 		public static void onClientSetup(FMLClientSetupEvent event) {
 			EntityRenderers.register(
-				RNEntities.BRONZE_CHARGE.get(), 
+				RNEntities.BRONZE_SHOT.get(), 
 				BronzeChargeProjectileRenderer::new
 			);
 		}
