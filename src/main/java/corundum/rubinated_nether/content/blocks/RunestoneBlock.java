@@ -35,10 +35,6 @@ public class RunestoneBlock extends Block {
 
 	public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
-//	protected static final VoxelShape SHAPE_BOTTOM = Block.box(0.0, 0.0, 0.0, 16.0, 10.0, 16.0);
-//	protected static final VoxelShape SHAPE_MIDDLE = Block.box(1.0, 10.0, 1.0, 15.0, 16.0, 15.0);
-//	protected static final VoxelShape SHAPE_TOP = Block.box(0.0, 24.0, 0.0, 16.0, 32.0, 16.0);
-
 	protected static final VoxelShape SHAPE_TOP = Shapes.or(Block.box(1.0, 0.0, 1.0, 15.0, 8.0, 15.0), Block.box(0.0, 8.0, 0.0, 16.0, 16.0, 16.0));
 	protected static final VoxelShape SHAPE_BOTTOM = Shapes.or(Block.box(0.0, 0.0, 0.0, 16.0, 10.0, 16.0), Block.box(1.0, 10.0, 1.0, 15.0, 16.0, 15.0));
 
@@ -89,13 +85,8 @@ public class RunestoneBlock extends Block {
 
 	@Override
 	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-		if (!level.isClientSide && (player.isCreative() || !player.hasCorrectToolForDrops(state, level, pos))) {
-				DoublePlantBlockAccessor.invokePreventDropFromBottomPart(level, pos, state, player);
-//			}
-//			else {
-//				dropResources(state, level, pos, null, player, player.getMainHandItem());
-//			}
-		}
+		if (!level.isClientSide && (player.isCreative() || !player.hasCorrectToolForDrops(state, level, pos)))
+			DoublePlantBlockAccessor.invokePreventDropFromBottomPart(level, pos, state, player);
 
 		return super.playerWillDestroy(level, pos, state, player);
 	}

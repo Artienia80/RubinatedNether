@@ -1,0 +1,36 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+
+[[mods]]
+
+modId="${mod_id}" 
+version="${mod_version}"
+displayName="${mod_name}"
+logoFile="icon.png"
+authors="${mod_authors}"
+description='''${mod_description}'''
+
+# Complex things
+enumExtensions = "META-INF/enumextensions.json"
+
+[[mixins]]
+	config="${mod_id}.mixins.json"
+
+[[accessTransformers]]
+	file="META-INF/accesstransformer.cfg"
+
+# Dependencies
+[[dependencies.rubinated_nether]]
+	modId="neoforge"
+	type="required"
+	versionRange="${neo_version_range}"
+	ordering="NONE"
+	side="BOTH"
+
+[[dependencies.rubinated_nether]]
+	modId="minecraft"
+	type="required"
+	versionRange="${minecraft_version_range}"
+	ordering="NONE"
+	side="BOTH"

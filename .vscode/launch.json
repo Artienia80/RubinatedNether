@@ -46,7 +46,7 @@
         "jdk.naming.dns/com.sun.jndi.dns\u003djava.naming",
         "-Dforge.logging.markers\u003dREGISTRIES",
         "-Dforge.logging.console.level\u003ddebug",
-        "-Dforge.enabledGameTestNamespaces\u003drubinated_nether",
+        "-Dneoforge.enabledGameTestNamespaces\u003drubinated_nether",
         "-Dneoforge.enableGameTest\u003dtrue",
         "-DlegacyClassPath.file\u003d/var/home/ultrasquid/Documents/Github/RubinatedNether/.gradle/configuration/neoForm/neoFormJoined1.21.1-20240808.144430/steps/writeMinecraftClasspathClient/classpath.txt",
         "-DignoreList\u003dsecurejarhandler-3.0.8.jar,asm-9.7.jar,asm-commons-9.7.jar,asm-tree-9.7.jar,asm-util-9.7.jar,asm-analysis-9.7.jar,bootstraplauncher-2.0.2.jar,JarJarFileSystems-0.4.1.jar,mixinextras-neoforge-0.4.1.jar,client-extra,neoforge-",
