@@ -100,16 +100,14 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 	) {
 		PoseStack.Pose pose = matrices.last();
 		float maxV = (maxY - 1f) / 15f;
-		float endAlpha = Mth.clamp(1f - maxV, 0, 1);
 
 		float v0 = 1 - (ticks % 150f) / 150f;
 		float v1 = v0 + (maxV * 0.4f);
 
-		int endAlphaInt = (int)(endAlpha * 15);
-		var str = Integer.toHexString(color);
-
-		var endColor = Integer.decode(
-			"0x" + str.substring(0, str.length() - 2) + Integer.toHexString(endAlphaInt)
+		int endAlpha = (int)(maxY) - 16;
+		var endColor = FastColor.ARGB32.color(
+			-endAlpha * 15,
+			color
 		);
 
 		buffer.addVertex(pose.pose(), minX, minY, minZ)
