@@ -21,7 +21,10 @@ public class RNItems {
 
 	public static final DeferredItem<Item> RUBY_LENS = ITEMS.register(
 		"ruby_lens", 
-		() -> new RubyLensItem(new Item.Properties())
+		() -> new RubyLensItem(
+			new Item.Properties()
+				.stacksTo(1)
+		)
 	);
 
 	public static final DeferredItem<Item> MUSIC_DISC_SHIMMER = ITEMS.registerSimpleItem(
