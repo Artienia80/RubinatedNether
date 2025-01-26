@@ -17,6 +17,8 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
 @OnlyIn(Dist.CLIENT)
 public class RubinatedNetherClient {
+	public static final int WHITE = 0xFFFFFFFF;
+
 	public static void client(IEventBus bussin) {
 		bussin.addListener(RubinatedNetherClient::registerParticleProviders);
 		bussin.addListener(RubinatedNetherClient::registerEntityLayers);

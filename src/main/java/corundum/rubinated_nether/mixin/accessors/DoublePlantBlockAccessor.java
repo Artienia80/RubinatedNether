@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(DoublePlantBlock.class)
 public interface DoublePlantBlockAccessor {
-    @Invoker
-    static void invokePreventDropFromBottomPart(Level level, BlockPos pos, BlockState state, Player player) {
-        throw new AssertionError();
-    }
+	@Invoker
+	static void invokePreventDropFromBottomPart(Level level, BlockPos pos, BlockState state, Player player) {
+		throw new AssertionError();
+	}
 }

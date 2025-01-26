@@ -8,6 +8,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(Level.class)
 public interface LevelAccessor {
-    @Invoker("getEntities")
-    LevelEntityGetter<Entity> invokeGetEntities();
+	@Invoker("getEntities")
+	LevelEntityGetter<Entity> invokeGetEntities();
 }
