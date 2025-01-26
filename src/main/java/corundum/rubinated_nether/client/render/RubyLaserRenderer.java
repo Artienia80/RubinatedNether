@@ -105,10 +105,12 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 		float v0 = 1 - (ticks % 150f) / 150f;
 		float v1 = v0 + (maxV * 0.4f);
 
+		int endAlphaInt = (int)(endAlpha * 15);
 		var str = Integer.toHexString(color);
-		var r = Integer.decode("0x" + str.substring(0, 2));
-		var g = Integer.decode("0x" + str.substring(2, 4));
-		var b = Integer.decode("0x" + str.substring(4, 6));
+
+		var endColor = Integer.decode(
+			"0x" + str.substring(0, str.length() - 2) + Integer.toHexString(endAlphaInt)
+		);
 
 		buffer.addVertex(pose.pose(), minX, minY, minZ)
 			.setColor(color)
@@ -125,14 +127,14 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 
 		buffer.addVertex(pose.pose(), maxX, maxY, maxZ)
-			.setColor(r, g, b, endAlpha)
+			.setColor(endColor)
 			.setUv(1, v1)
 			.setOverlay(OverlayTexture.NO_OVERLAY)
 			.setUv2(LightTexture.FULL_BRIGHT, 200)
 			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 
 		buffer.addVertex(pose.pose(), minX, maxY, minZ)
-			.setColor(r, g, b, endAlpha)
+			.setColor(endColor)
 			.setUv(0, v1)
 			.setOverlay(OverlayTexture.NO_OVERLAY)
 			.setUv2(LightTexture.FULL_BRIGHT, 200)
