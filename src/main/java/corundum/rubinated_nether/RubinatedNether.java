@@ -36,6 +36,7 @@ public class RubinatedNether {
 	private static final ImmutableList<DeferredRegister<?>> REGISTRIES = ImmutableList.of(
 		RNBlocks.BLOCKS,
 		RNItems.ITEMS,
+		RNArmorMaterials.ARMOR_MATERIALS,
 		RNEntities.ENTITY_TYPES,
 		RNParticleTypes.PARTICLES,
 		RNSoundEvents.SOUNDS,
