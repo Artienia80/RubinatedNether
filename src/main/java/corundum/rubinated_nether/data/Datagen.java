@@ -12,6 +12,7 @@ import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
 import corundum.rubinated_nether.data.registries.RNPlacedFeatures;
 import corundum.rubinated_nether.data.sub_providers.RNBlockLoot;
 import corundum.rubinated_nether.data.tags.RNBlockTags;
+import corundum.rubinated_nether.data.tags.RNEntityTags;
 import corundum.rubinated_nether.data.tags.RNFluidTags;
 import corundum.rubinated_nether.data.tags.RNItemTags;
 import net.minecraft.core.HolderLookup;
@@ -60,6 +61,7 @@ public class Datagen {
 		);
 
 		datagen.addProvider(event.includeClient(), new RNFluidTags(output, lookupProvider, fileHelper));
+		datagen.addProvider(event.includeClient(), new RNEntityTags(output, lookupProvider, fileHelper));
 
 		// Worldgen
 		datagen.addProvider(

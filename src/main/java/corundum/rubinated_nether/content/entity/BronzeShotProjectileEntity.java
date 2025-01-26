@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 
 import corundum.rubinated_nether.content.RNEntities;
 import corundum.rubinated_nether.content.RNItems;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -26,6 +28,8 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 	private ItemStack firedFromWeapon;
 
 	private float weight = 0.05F;
+	private boolean hasBounced = false;
+	private boolean hasBeenDeflected = false;
 
 	public BronzeShotProjectileEntity(EntityType<? extends AbstractArrow> entityType, Level level) {
 		super(entityType, level);
@@ -54,9 +58,9 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 
 	protected void doKnockback(LivingEntity entity, DamageSource damageSource) {
 		double d0 = (double)(
-				this.firedFromWeapon != null && this.level() instanceof ServerLevel serverlevel
-						? EnchantmentHelper.modifyKnockback(serverlevel, this.firedFromWeapon, entity, damageSource, 0.0F)
-						: 0.0F
+			this.firedFromWeapon != null && this.level() instanceof ServerLevel serverlevel
+				? EnchantmentHelper.modifyKnockback(serverlevel, this.firedFromWeapon, entity, damageSource, 0.0F)
+				: 0.0F
 		);
 		if (d0 > 0.0) {
 			double d1 = Math.max(0.0, 1.0 - entity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
@@ -69,17 +73,18 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 
 	@Override
 	protected void onHitEntity(EntityHitResult result) {
-		super.onHitEntity(result);
+		if (hasBounced && !hasBeenDeflected) 
+			return;
+
 		Entity entity = result.getEntity();
 		entity.hurt(this.damageSources().thrown(this, this.getOwner()), 4);
 
-		if (!this.level().isClientSide) {
-			this.level().broadcastEntityEvent(this, (byte) 3);
-			this.discard();
-		}
+		if (!hasBeenDeflected)
+			this.setDeltaMovement(this.getDeltaMovement().multiply(-0.001, -0.3, -0.001));
 
-		this.playSound(SoundEvents.ANVIL_HIT, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
-
+		this.playSound(SoundEvents.ANVIL_PLACE, 1.0F, 1.0F);
+		hasBounced = true;
+		weight = 0;
 
 		if (entity instanceof LivingEntity livingEntity) {
 			// Apply potion effects
@@ -117,11 +122,14 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 		this.shakeTime = 7;
 		this.setCritArrow(false);
 		this.setSoundEvent(SoundEvents.ANVIL_LAND);
+
+		if (hasBeenDeflected)
+			this.discard();
 	}
 
 	@Override
 	public void tick() {
-		if (weight < 0.2)
+		if (!hasBeenDeflected && weight < 0.2)
 			weight += weight / 4;
 
 		
@@ -136,5 +144,50 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 		}
 
 		super.tick();
+	}
+
+	@Override
+	public boolean shouldRenderAtSqrDistance(double distance) {
+		double d0 = this.getBoundingBox().getSize() * 4.0;
+		if (Double.isNaN(d0)) {
+			d0 = 4.0;
+		}
+
+		d0 *= 64.0;
+		return distance < d0 * d0;
+	}
+
+	@Override
+	public boolean deflect(ProjectileDeflection deflection, Entity entity, Entity owner, boolean deflectedByPlayer) {
+		deflection.deflect(this, entity, random);
+
+		setOwner(owner);
+		hasBeenDeflected = true;
+		weight = 0;
+
+		return true;
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundTag compound) {
+		super.addAdditionalSaveData(compound);
+
+		compound.putFloat("weight", weight);
+		compound.putBoolean("has_bounced", hasBounced);
+		compound.putBoolean("has_been_deflected", hasBeenDeflected);
+	}
+
+	@Override
+	public void readAdditionalSaveData(CompoundTag compound) {
+		super.readAdditionalSaveData(compound);
+
+		if (compound.contains("weight"))
+			this.weight = compound.getFloat("weight");
+		
+		if (compound.contains("has_bounced"))
+			this.hasBounced = compound.getBoolean("has_bounced");
+
+		if (compound.contains("has_been_deflected"))
+			this.hasBeenDeflected = compound.getBoolean("has_been_deflected");
 	}
 }
