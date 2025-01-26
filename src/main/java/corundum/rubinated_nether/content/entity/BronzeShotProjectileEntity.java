@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 
 import corundum.rubinated_nether.content.RNEntities;
 import corundum.rubinated_nether.content.RNItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -19,6 +21,7 @@ import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -77,7 +80,7 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 			return;
 
 		Entity entity = result.getEntity();
-		entity.hurt(this.damageSources().thrown(this, this.getOwner()), 4);
+		entity.hurt(this.damageSources().thrown(this, this.getOwner()), (float)getBaseDamage());
 
 		if (!hasBeenDeflected)
 			this.setDeltaMovement(this.getDeltaMovement().multiply(-0.001, -0.3, -0.001));
@@ -123,8 +126,10 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 		this.setCritArrow(false);
 		this.setSoundEvent(SoundEvents.ANVIL_LAND);
 
-		if (hasBeenDeflected)
+		if (hasBeenDeflected) {
+			level().levelEvent(2013, BlockPos.containing(position()), 750);
 			this.discard();
+		}
 	}
 
 	@Override
@@ -164,6 +169,24 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 		setOwner(owner);
 		hasBeenDeflected = true;
 		weight = 0;
+
+		for (var eType : level().getEntities(this, new AABB(position().add(-2,-2,-2), position().add(2,2,2)))) {
+			if (eType.getType() == this.getType())  {
+				playSound(SoundEvents.AMETHYST_BLOCK_BREAK, 10, 1);
+
+				level().addParticle(
+					ParticleTypes.CRIT, 
+					this.getX(), 
+					this.getY(), 
+					this.getZ(), 
+					0, 
+					0, 
+					0
+				);
+	
+				setBaseDamage(getBaseDamage() * 10);
+			}
+		}
 
 		return true;
 	}
