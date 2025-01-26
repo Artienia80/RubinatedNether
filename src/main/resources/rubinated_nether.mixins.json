@@ -1,18 +1,19 @@
 {
-  "required": true,
-  "package": "corundum.rubinated_nether.mixin",
-  "compatibilityLevel": "JAVA_17",
-  "minVersion": "0.8",
-  "mixins": [
-    "LevelMixin",
-    "accessors.AbstractFurnaceBlockEntityAccessor",
-    "accessors.DoublePlantBlockAccessor",
-    "accessors.LevelAccessor"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  },
-  "client": [
-    "accessors.GuiAccessor"
-  ]
+	"required": true,
+	"package": "corundum.rubinated_nether.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"minVersion": "0.8",
+	"mixins": [
+		"LevelMixin",
+		"accessors.AbstractFurnaceBlockEntityAccessor",
+		"accessors.EntityRenderDispatcherAccessor",
+		"accessors.DoublePlantBlockAccessor",
+		"accessors.LevelAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"client": [
+		"accessors.GuiAccessor"
+	]
 }
