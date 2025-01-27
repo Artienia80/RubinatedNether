@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "rubinated_nether:block/tarnished_cut_bronze_pillar"
+    },
+    "facing=west": {
+      "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

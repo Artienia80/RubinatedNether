@@ -151,11 +151,11 @@ public class RNBlockStates extends BlockStateProvider {
 					modLoc(rloc + "_end")
 				);
 			},
-			RNBlocks.CUT_BRONZE_PILLAR
-/* 			RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
+			RNBlocks.CUT_BRONZE_PILLAR,
+			RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
 			RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
 			RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
-			RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR */
+			RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR
 		);
 
 		subfolder("bronze/cut_bronze_bricks/",
