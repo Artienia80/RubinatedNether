@@ -126,8 +126,12 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 
 		this.simpleBlock(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
-		this.axisBlock(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get());
 		this.simpleBlock(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get());
+		sixWayPillar(
+			RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS, 
+			modLoc("block/" + blockName(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS) + "_side"), 
+			modLoc("block/" + blockName(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS) + "_end")
+		);
 
 
 		subfolder(

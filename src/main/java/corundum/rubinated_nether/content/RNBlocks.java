@@ -239,9 +239,9 @@ public class RNBlocks {
 		() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
 
-	public static final DeferredBlock<RotatedPillarBlock> RUBINATED_CHISELED_SHRINE_STONE_BRICKS = registerBlockAndItem(
+	public static final DeferredBlock<SixWayPillarBlock> RUBINATED_CHISELED_SHRINE_STONE_BRICKS = registerBlockAndItem(
 		"rubinated_chiseled_shrine_stone_bricks",
-		() -> new RotatedPillarBlock(
+		() -> new SixWayPillarBlock(
 			Block.Properties.ofFullCopy(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get())
 				.lightLevel($ -> 7)
 		)
