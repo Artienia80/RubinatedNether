@@ -1,24 +1,36 @@
 package corundum.rubinated_nether.content.blocks;
 
-import com.google.common.base.Suppliers;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.ImmutableBiMap;
-import com.mojang.serialization.Codec;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import com.google.common.base.Suppliers;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.ImmutableBiMap;
+import com.mojang.serialization.Codec;
+
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNDataMaps;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ChangeOverTimeBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
 
 public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.TarnishState> {
+	public static final BooleanProperty WAXED = BooleanProperty.create("waxed");
 
 	Supplier<BiMap<Block, Block>> NEXT_BY_BLOCK = Suppliers.memoize(
 		() -> ImmutableBiMap.<Block, Block>builder()
@@ -169,5 +181,49 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 		public String getSerializedName() {
 			return this.name;
 		}
+	}
+
+	default boolean waxing(
+		ItemStack stack, 
+		BlockState state, 
+		Level level, 
+		BlockPos pos,
+		Player player, 
+		InteractionHand hand, 
+		BlockHitResult hitResult
+	) {
+		var bool = state.getValue(WAXED);
+
+		if (stack.is(ItemTags.AXES)) {
+			if (!bool && getPrevious(state).isEmpty())
+				return false;
+
+			stack.hurtAndBreak(1, player, null);
+			level.playSound(player, pos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1F, 1F);
+			
+			if (bool) {
+				level.setBlock(pos, state.setValue(WAXED, false), 2);
+				level.levelEvent(player, 3004, pos, 0);
+			} else {
+				level.setBlock(pos, getPrevious(state).get(), 2);
+				level.levelEvent(player, 3005, pos, 0);
+			}
+
+			return true;
+		}
+
+		if (stack.is(Items.HONEYCOMB) && !bool) {
+			level.setBlock(pos, state.setValue(WAXED, true), 2);
+
+			if (!player.isCreative())
+				stack.shrink(1);
+
+			level.playSound(player, pos, SoundEvents.HONEYCOMB_WAX_ON, SoundSource.BLOCKS, 1F, 1F);
+            level.levelEvent(player, 3003, pos, 0);
+	
+			return true;
+		}
+
+		return false;
 	}
 }
