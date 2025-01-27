@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "rubinated_nether:block/bronze/cut_bronze_pillar/cut_bronze_pillar"
+    "end": "rubinated_nether:block/bronze/cut_bronze_pillar/corroded_cut_bronze_pillar",
+    "side": "rubinated_nether:block/bronze/cut_bronze_pillar/cut_bronze_pillar"
   }
 }

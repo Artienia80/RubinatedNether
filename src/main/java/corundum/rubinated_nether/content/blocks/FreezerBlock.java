@@ -53,12 +53,13 @@ public class FreezerBlock extends AbstractFurnaceBlock {
 
 	@Override
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-		if (state.getValue(LIT)) {
-			double x = pos.getX() + 0.5;
-			double y = pos.getY() + 1.0 + (random.nextFloat() * 6.0) / 16.0;
-			double z = pos.getZ() + 0.5;
-			level.addParticle(ParticleTypes.SNOWFLAKE, x, y, z, 0.0, 0.0, 0.0);
-		}
+		if (!state.getValue(LIT)) 
+			return;
+		
+		double x = pos.getX() + 0.5;
+		double y = pos.getY() + 1.0 + (random.nextFloat() * 6.0) / 16.0;
+		double z = pos.getZ() + 0.5;
+		level.addParticle(ParticleTypes.SNOWFLAKE, x, y, z, 0.0, 0.0, 0.0);
 	}
 
 	@Nullable
@@ -69,11 +70,8 @@ public class FreezerBlock extends AbstractFurnaceBlock {
 
 	@Nullable
 	protected static <T extends BlockEntity> BlockEntityTicker<T> createTicker(Level level, BlockEntityType<T> serverType, BlockEntityType<? extends FreezerBlockEntity> clientType) {
-		return level.isClientSide() ? null : createTickerHelper(serverType, clientType, FreezerBlockEntity::serverTick);
+		return level.isClientSide() 
+			? null 
+			: createTickerHelper(serverType, clientType, FreezerBlockEntity::serverTick);
 	}
 }
-
-
-
-
-

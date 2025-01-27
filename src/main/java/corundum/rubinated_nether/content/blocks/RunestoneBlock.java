@@ -59,28 +59,26 @@ public class RunestoneBlock extends Block {
 	}
 
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-		if (level.isClientSide) {
+		if (level.isClientSide)
 			return InteractionResult.SUCCESS;
-		} else {
-			BlockEntity blockEntity = level.getBlockEntity(pos);
-				player.openMenu((BarrelBlockEntity)blockEntity);
+	
+		BlockEntity blockEntity = level.getBlockEntity(pos);
+		player.openMenu((BarrelBlockEntity)blockEntity);
 
-			return InteractionResult.CONSUME;
-		}
+		return InteractionResult.CONSUME;
 	}
 
 	@Override
 	protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
 		DoubleBlockHalf doubleblockhalf = state.getValue(HALF);
-		if (facing.getAxis() != Direction.Axis.Y || doubleblockhalf == DoubleBlockHalf.LOWER != (facing == Direction.UP)) {
+		if (facing.getAxis() != Direction.Axis.Y || doubleblockhalf == DoubleBlockHalf.LOWER != (facing == Direction.UP))
 			return doubleblockhalf == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos)
-					? Blocks.AIR.defaultBlockState()
-					: super.updateShape(state, facing, facingState, level, currentPos, facingPos);
-		} else {
+				? Blocks.AIR.defaultBlockState()
+				: super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+		else
 			return facingState.getBlock() instanceof RunestoneBlock && facingState.getValue(HALF) != doubleblockhalf
-					? facingState.setValue(HALF, doubleblockhalf)
-					: Blocks.AIR.defaultBlockState();
-		}
+				? facingState.setValue(HALF, doubleblockhalf)
+				: Blocks.AIR.defaultBlockState();
 	}
 
 	@Override
@@ -96,11 +94,11 @@ public class RunestoneBlock extends Block {
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		BlockPos blockpos = context.getClickedPos();
 		Level level = context.getLevel();
-		if (blockpos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(blockpos.above()).canBeReplaced(context)) {
+
+		if (blockpos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(blockpos.above()).canBeReplaced(context))
 			return this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER);
-		} else {
+		else
 			return null;
-		}
 	}
 
 	@Override
@@ -112,7 +110,10 @@ public class RunestoneBlock extends Block {
 	protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
 		BlockPos blockpos = pos.below();
 		BlockState blockstate = level.getBlockState(blockpos);
-		return state.getValue(HALF) == DoubleBlockHalf.LOWER ? blockstate.isFaceSturdy(level, blockpos, Direction.UP) : blockstate.is(this);
+
+		return state.getValue(HALF) == DoubleBlockHalf.LOWER 
+			? blockstate.isFaceSturdy(level, blockpos, Direction.UP) 
+			: blockstate.is(this);
 	}
 
 	@Override

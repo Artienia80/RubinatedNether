@@ -352,10 +352,10 @@ public class RNBlocks {
 
 	// CUT BRONZE PILLAR BLOCKS
 
-	public static final DeferredBlock<Block> CUT_BRONZE_PILLAR = registerBlockAndItem(
+	public static final DeferredBlock<SixWayPillarBlock> CUT_BRONZE_PILLAR = registerBlockAndItem(
 		"cut_bronze_pillar",
-		() -> new TarnishingBronzeBlock(
-			TarnishingBronze.TarnishState.UNAFFECTED,
+		() -> new SixWayPillarBlock(
+			//TarnishingBronze.TarnishState.UNAFFECTED,
 			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
 		)
 	);

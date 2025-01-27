@@ -29,17 +29,10 @@ public class ChandelierBlock extends Block {
 		return SHAPE;
 	}
 
-	/**
-	* Update the provided state given the provided neighbor direction and neighbor state, returning a new state.
-	* For example, fences make their connections to the passed in state if possible, and wet concrete powder immediately
-	* returns its solidified counterpart.
-	* Note that this method should ideally consider only the specific direction passed in.
-	*/
 	@Override
 	public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
 		pLevel.scheduleTick(pCurrentPos, this, 2);
 		return pState;
-		//return super.updateShape(pFacingState, pFacing, pState, pLevel, pCurrentPos, pFacingPos);
 	}
 
 	@Override

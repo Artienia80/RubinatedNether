@@ -38,13 +38,13 @@ public class TarnishingBronzeSlabBlock extends SlabBlock implements TarnishingBr
 	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		boolean hasCatalystNearby = BlockPos.betweenClosedStream(
 				pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
-		).anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
+		)
+		.anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
 
-		if (hasCatalystNearby) {
+		if (hasCatalystNearby)
 			this.getCrystallized(state).ifPresent(blockState -> level.setBlockAndUpdate(pos, blockState));
-		} else {
+		else
 			this.changeOverTime(state, level, pos, random);
-		}
 	}
 
 	@Override
