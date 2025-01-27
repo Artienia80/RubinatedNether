@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "rubinated_nether:block/bronze/cut_bronze_pillar/discolored_cut_bronze_pillar"
-  }
-}

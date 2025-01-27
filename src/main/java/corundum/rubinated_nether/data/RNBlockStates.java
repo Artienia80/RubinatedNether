@@ -1,9 +1,10 @@
 package corundum.rubinated_nether.data;
 
+import org.apache.commons.lang3.function.TriConsumer;
+
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.blocks.SixWayPillarBlock;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -19,7 +20,6 @@ public class RNBlockStates extends BlockStateProvider {
 		super(output, RubinatedNether.MODID, fileHelper);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void registerStatesAndModels() {
 		this.simpleBlock(RNBlocks.NETHER_RUBY_ORE.get());
@@ -138,63 +138,20 @@ public class RNBlockStates extends BlockStateProvider {
 			RNBlocks.TARNISHED_BRONZE_BLOCK,
 			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK
 		);
+
 		subfolder("bronze/cut_bronze_pillar/",
-			//RNBlocks.CUT_BRONZE_PILLAR,
-			RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
+			(rloc, name, block) -> {
+				sixWayPillar(
+					block, 
+					modLoc(rloc + "_side"), 
+					modLoc(rloc + "_end")
+				);
+			},
+			RNBlocks.CUT_BRONZE_PILLAR
+/* 			RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
 			RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
 			RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
-			RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR
-		);
-		this.sixWayPillar(
-			RNBlocks.CUT_BRONZE_PILLAR, 
-			modLoc("block/bronze/cut_bronze_pillar/cut_bronze_pillar"), 
-			modLoc("block/bronze/cut_bronze_pillar/corroded_cut_bronze_pillar")
-		);
-
-		this.slabBlock(
-			RNBlocks.CUT_BRONZE_PILLAR_SLAB.get(),
-			modLoc("block/cut_bronze_pillar"),
-			modLoc("block/bronze/cut_bronze_pillar/cut_bronze_pillar")
-		);
-		this.stairsBlock(
-			RNBlocks.CUT_BRONZE_PILLAR_STAIRS.get(),
-			modLoc("block/bronze/cut_bronze_pillar/cut_bronze_pillar")
-		);
-		this.slabBlock(
-			RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_SLAB.get(),
-			modLoc("block/discolored_cut_bronze_pillar"),
-			modLoc("block/bronze/cut_bronze_pillar/discolored_cut_bronze_pillar")
-		);
-		this.stairsBlock(
-			RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_STAIRS.get(),
-			modLoc("block/bronze/cut_bronze_pillar/discolored_cut_bronze_pillar")
-		);
-		this.slabBlock(
-			RNBlocks.CORRODED_CUT_BRONZE_PILLAR_SLAB.get(),
-			modLoc("block/corroded_cut_bronze_pillar"),
-			modLoc("block/bronze/cut_bronze_pillar/corroded_cut_bronze_pillar")
-		);
-		this.stairsBlock(
-			RNBlocks.CORRODED_CUT_BRONZE_PILLAR_STAIRS.get(),
-			modLoc("block/bronze/cut_bronze_pillar/corroded_cut_bronze_pillar")
-		);
-		this.slabBlock(
-			RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_SLAB.get(),
-			modLoc("block/tarnished_cut_bronze_pillar"),
-			modLoc("block/bronze/cut_bronze_pillar/tarnished_cut_bronze_pillar")
-		);
-		this.stairsBlock(
-			RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_STAIRS.get(),
-			modLoc("block/bronze/cut_bronze_pillar/tarnished_cut_bronze_pillar")
-		);
-		this.slabBlock(
-			RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_SLAB.get(),
-			modLoc("block/crystallized_cut_bronze_pillar"),
-			modLoc("block/bronze/cut_bronze_pillar/crystallized_cut_bronze_pillar")
-		);
-		this.stairsBlock(
-			RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_STAIRS.get(),
-			modLoc("block/bronze/cut_bronze_pillar/crystallized_cut_bronze_pillar")
+			RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR */
 		);
 
 		subfolder("bronze/cut_bronze_bricks/",
@@ -267,11 +224,11 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 	}
 
-	public void sixWayPillar(DeferredBlock<SixWayPillarBlock> block, ResourceLocation side, ResourceLocation end) {
+	public void sixWayPillar(DeferredBlock<?> block, ResourceLocation side, ResourceLocation end) {
 		getVariantBuilder(block.get()).forAllStates((state) -> ConfiguredModel.builder()
 			.modelFile(
 				models().withExistingParent(
-					BuiltInRegistries.BLOCK.getKey(block.get()).toString().split(":")[1], 
+					blockName(block), 
 					mcLoc("block/cube_column")
 				)
 				.texture("side", side)
@@ -312,16 +269,34 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 	}
 
-	@SuppressWarnings("unchecked")
-	public void subfolder(String folder, DeferredBlock<Block>... blocks) {
+	public void subfolder(String folder, DeferredBlock<?>... blocks) {
 		for (var block : blocks) {
-			var name = block.getId().toString().split(":")[1];
+			var name = blockName(block);
 
 			this.simpleBlock(
 				block.get(), 
 				this.models()
-					.cubeAll(name, this.modLoc("block/" + folder + name))
+					.cubeAll(name, modLoc("block/" + folder + name))
 			);
 		}
+	}
+
+	public void subfolder(
+		String folder, 
+		TriConsumer<String, String, DeferredBlock<?>> fn, 
+		DeferredBlock<?>... blocks
+	) {
+		for (var block : blocks) {
+			var name = blockName(block);
+			fn.accept(
+				"block/" + folder + name,
+				name, 
+				block
+			);
+		}
+	}
+
+	private String blockName(DeferredBlock<?> block) {
+		return block.getId().toString().split(":")[1];
 	}
 }

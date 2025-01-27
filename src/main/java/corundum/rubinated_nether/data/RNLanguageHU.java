@@ -78,20 +78,10 @@ public class RNLanguageHU extends LanguageProvider {
 		this.addBlock(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK, "Kristályosodott bronzblokk");
 
 		this.addBlock(RNBlocks.CUT_BRONZE_PILLAR, "Vágott bronzoszlop");
-		this.addBlock(RNBlocks.CUT_BRONZE_PILLAR_STAIRS, "Vágott bronzoszlop-lépcső");
-		this.addBlock(RNBlocks.CUT_BRONZE_PILLAR_SLAB, "Vágott bronzoszlop-lap");
 		this.addBlock(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR, "Elszíneződött vágott bronzoszlop");
-		this.addBlock(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_STAIRS, "Elszíneződött vágott bronzoszlop-lépcső");
-		this.addBlock(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_SLAB, "Elszíneződött vágott bronzoszlop-lap");
 		this.addBlock(RNBlocks.CORRODED_CUT_BRONZE_PILLAR, "Rozsdásodott vágott bronzoszlop");
-		this.addBlock(RNBlocks.CORRODED_CUT_BRONZE_PILLAR_STAIRS, "Rozsdásodott vágott bronzoszlop-lépcső");
-		this.addBlock(RNBlocks.CORRODED_CUT_BRONZE_PILLAR_SLAB, "Rozsdásodott vágott bronzoszlop-lap");
 		this.addBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR, "Kopott vágott bronzoszlop");
-		this.addBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_STAIRS, "Kopott vágott bronzoszlop-lépcső");
-		this.addBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_SLAB, "Kopott vágott bronzoszlop-lap");
 		this.addBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR, "Kristályosodott vágott bronzoszlop");
-		this.addBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_STAIRS, "Kristályosodott vágott bronzoszlop-lépcső");
-		this.addBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_SLAB, "Kristályosodott vágott bronzoszlop-lap");
 
 		this.addBlock(RNBlocks.CUT_BRONZE_BRICKS, "Vágott bronztégla");
 		this.addBlock(RNBlocks.CUT_BRONZE_BRICKS_STAIRS, "Vágott bronztégla-lépcső");

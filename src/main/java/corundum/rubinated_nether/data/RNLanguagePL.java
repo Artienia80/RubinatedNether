@@ -77,20 +77,10 @@ public class RNLanguagePL extends LanguageProvider {
 		this.addBlock(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK, "Skrystalizowany Brąz");
 
 		this.addBlock(RNBlocks.CUT_BRONZE_PILLAR, "Przycięty Brązowy Filar");
-		this.addBlock(RNBlocks.CUT_BRONZE_PILLAR_STAIRS, "Przycięte Brązowe Filarowe Schody");
-		this.addBlock(RNBlocks.CUT_BRONZE_PILLAR_SLAB, "Przycięta Brązowa Filarowa Płyta");
 		this.addBlock(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR, "Przebarwiony Przycięty Brązowy Filar");
-		this.addBlock(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_STAIRS, "Przebarwione Przycięte Brązowe Filarowe Schody");
-		this.addBlock(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR_SLAB, "Przebarwiona Przycięta Brązowa Filarowe Płyta");
 		this.addBlock(RNBlocks.CORRODED_CUT_BRONZE_PILLAR, "Zardzewiały Przycięty Brązowy Filar");
-		this.addBlock(RNBlocks.CORRODED_CUT_BRONZE_PILLAR_STAIRS, "Zardzewiałe Przycięte Brązowe Filarowe Schody");
-		this.addBlock(RNBlocks.CORRODED_CUT_BRONZE_PILLAR_SLAB, "Zardzewiała Przycięta Brązowa Filarowe Płyta");
 		this.addBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR, "Wyniszczony Przycięty Brązowy Filar");
-		this.addBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_STAIRS, "Wyniszczone Przycięte Brązowe Filarowe Schody");
-		this.addBlock(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR_SLAB, "Wyniszczona Przycięta Brązowa Filarowa Płyta");
 		this.addBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR, "Skrystalizowany Przycięty Brązowy Filar");
-		this.addBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_STAIRS, "Skrystalizowane Przycięte Brązowe Filarowe Schody");
-		this.addBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR_SLAB, "Skrystalizowana Przycięta Brązowa Filarowa Płyta");
 
 		this.addBlock(RNBlocks.CUT_BRONZE_BRICKS, "Przycięte Brązowe Cegły");
 		this.addBlock(RNBlocks.CUT_BRONZE_BRICKS_STAIRS, "Przycięte Brązowe Ceglane Schody");

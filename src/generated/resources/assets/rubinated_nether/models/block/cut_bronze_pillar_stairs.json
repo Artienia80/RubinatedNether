@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "rubinated_nether:block/bronze/cut_bronze_pillar/cut_bronze_pillar",
-    "side": "rubinated_nether:block/bronze/cut_bronze_pillar/cut_bronze_pillar",
-    "top": "rubinated_nether:block/bronze/cut_bronze_pillar/cut_bronze_pillar"
-  }
-}
