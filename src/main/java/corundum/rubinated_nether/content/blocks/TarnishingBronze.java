@@ -22,6 +22,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ChangeOverTimeBlock;
@@ -225,5 +226,11 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 		}
 
 		return false;
+	}
+
+	default BlockState shouldBeWaxed(BlockPlaceContext context, BlockState state) {
+		return context.getItemInHand().toString().contains("waxed")
+			? state.setValue(WAXED, true)
+			: state;
 	}
 }

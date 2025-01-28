@@ -5,7 +5,6 @@ import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -15,7 +14,6 @@ public class RNItemModels extends ItemModelProvider {
 		super(output, RubinatedNether.MODID, fileHelper);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void registerModels() {
 		// Block items
@@ -52,8 +50,9 @@ public class RNItemModels extends ItemModelProvider {
 			RNBlocks.SHRINE_STONE_BRICKS_SLAB,
 			RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
 			RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS,
-			RNBlocks.RUBINATED_SHRINE_STONE_BRICKS,
-
+			RNBlocks.RUBINATED_SHRINE_STONE_BRICKS
+		);
+		waxableBlockItems(
 			RNBlocks.BRONZE_BLOCK,
 			RNBlocks.DISCOLORED_BRONZE_BLOCK,
 			RNBlocks.CORRODED_BRONZE_BLOCK,
@@ -97,16 +96,16 @@ public class RNItemModels extends ItemModelProvider {
 		);
 
 		wallInventory(
-				RNBlocks.POLISHED_SHRINE_STONE_WALL.getId().toString(),
-				modLoc("block/polished_shrine_stone")
+			RNBlocks.POLISHED_SHRINE_STONE_WALL.getId().toString(),
+			modLoc("block/polished_shrine_stone")
 		);
 		wallInventory(
-				RNBlocks.SHRINE_STONE_TILES_WALL.getId().toString(),
-				modLoc("block/shrine_stone_tiles")
+			RNBlocks.SHRINE_STONE_TILES_WALL.getId().toString(),
+			modLoc("block/shrine_stone_tiles")
 		);
 		wallInventory(
-				RNBlocks.SHRINE_STONE_BRICKS_WALL.getId().toString(),
-				modLoc("block/shrine_stone_bricks")
+			RNBlocks.SHRINE_STONE_BRICKS_WALL.getId().toString(),
+			modLoc("block/shrine_stone_bricks")
 		);
 
 		basicItems(
@@ -129,7 +128,7 @@ public class RNItemModels extends ItemModelProvider {
 		);
 	}
 
-	private void paneItem(DeferredBlock<? extends Block> block, String texture) {
+	private void paneItem(DeferredBlock<?> block, String texture) {
 		withExistingParent(
 			block.getId().toString(), 
 			mcLoc("item/generated")
@@ -138,13 +137,22 @@ public class RNItemModels extends ItemModelProvider {
 		.renderType(mcLoc("translucent"));
 	}
 
-	@SuppressWarnings("unchecked")
-	private void simpleBlockItems(DeferredBlock<? extends Block>... blocks) {
+	private void simpleBlockItems(DeferredBlock<?>... blocks) {
 		for (var block : blocks)
 			simpleBlockItem(block.get());
 	}
 	private void basicItems(ItemLike... items) {
 		for (var item : items)
 			basicItem(item.asItem());
+	}
+
+	private void waxableBlockItems(DeferredBlock<?>... blocks) {
+		for (var block : blocks) {
+			simpleBlockItem(block.get());
+			withExistingParent(
+				modLoc("waxed_" + block.getId().toString().split(":")[1]).toString(),
+				block.getId()
+			);
+		}
 	}
 }

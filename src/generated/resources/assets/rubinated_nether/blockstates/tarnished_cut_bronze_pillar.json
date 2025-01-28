@@ -1,27 +1,53 @@
 {
   "variants": {
-    "facing=down": {
+    "facing=down,waxed=false": {
       "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
       "x": 180
     },
-    "facing=east": {
+    "facing=down,waxed=true": {
+      "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
+      "x": 180
+    },
+    "facing=east,waxed=false": {
       "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
       "x": 90,
       "y": 90
     },
-    "facing=north": {
+    "facing=east,waxed=true": {
+      "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,waxed=false": {
       "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
       "x": 90
     },
-    "facing=south": {
+    "facing=north,waxed=true": {
+      "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
+      "x": 90
+    },
+    "facing=south,waxed=false": {
       "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
       "x": 90,
       "y": 180
     },
-    "facing=up": {
+    "facing=south,waxed=true": {
+      "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,waxed=false": {
       "model": "rubinated_nether:block/tarnished_cut_bronze_pillar"
     },
-    "facing=west": {
+    "facing=up,waxed=true": {
+      "model": "rubinated_nether:block/tarnished_cut_bronze_pillar"
+    },
+    "facing=west,waxed=false": {
+      "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,waxed=true": {
       "model": "rubinated_nether:block/tarnished_cut_bronze_pillar",
       "x": 90,
       "y": 270

@@ -107,10 +107,15 @@
   "item.rubinated_nether.ruby": "Ruby",
   "item.rubinated_nether.ruby_lens": "Ruby Lens",
   "item.rubinated_nether.ruby_shard": "Ruby Shard",
+  "item.rubinated_nether.waxed_bronze_block": "Waxed Block of Bronze",
+  "item.rubinated_nether.waxed_corroded_bronze_block": "Waxed Corroded Bronze",
+  "item.rubinated_nether.waxed_crystallized_bronze_block": "Waxed Crystallized Bronze",
+  "item.rubinated_nether.waxed_discolored_bronze_block": "Waxed Discolored Bronze",
+  "item.rubinated_nether.waxed_tarnished_bronze_block": "Waxed Tarnished Bronze",
   "itemGroup.examplemod": "Rubinated Nether",
   "jukebox_song.rubinated_nether.shimmer": "Quizzly - Shimmer",
   "menu.rubinated_nether.freezer": "Freezer",
-  "rubinated_nether.midnightconfig.category.brazier": "Brazier",
+  "rubinated_nether.midnightconfig.categor() -> BuiltInRegistries.ITEM.get(item)y.brazier": "Brazier",
   "rubinated_nether.midnightconfig.category.chandelier": "Chandelier",
   "rubinated_nether.midnightconfig.category.client": "Client"
 }
