@@ -1,10 +1,12 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.items.WaxableBlockItem;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.CreativeModeTab.Output;
+import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -17,105 +19,123 @@ public class RNCreativeTabs {
 	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> RN_TAB = CREATIVE_MODE_TABS.register(
 		"rubinated_nether_tab", 
 		() -> CreativeModeTab.builder()
-			.title(Component.translatable("itemGroup.examplemod"))
-			.withTabsBefore(CreativeModeTabs.COMBAT)
+			.title(net.minecraft.network.chat.Component.translatable("itemGroup.examplemod"))
+			.withTabsBefore(net.minecraft.world.item.CreativeModeTabs.COMBAT)
 			.icon(() -> RNItems.RUBY_ITEM.get().getDefaultInstance())
 			.displayItems((parameters, output) -> {
-				output.accept(RNItems.RUBY_ITEM.get());
-				output.accept(RNItems.MOLTEN_RUBY_ITEM.get());
-				output.accept(RNItems.RUBY_SHARD_ITEM.get());
-				output.accept(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get());
 
-				output.accept(RNBlocks.NETHER_RUBY_ORE.get());
-				output.accept(RNBlocks.MOLTEN_RUBY_ORE.get());
-				output.accept(RNBlocks.RUBINATED_BLACKSTONE.get());
-				output.accept(RNBlocks.RUBY_BLOCK.get());
-				output.accept(RNBlocks.MOLTEN_RUBY_BLOCK.get());
+				addItems(
+					output,
 
-				output.accept(RNBlocks.BLEEDING_OBSIDIAN.get());
+					RNItems.RUBY_ITEM,
+					RNItems.MOLTEN_RUBY_ITEM,
+					RNItems.RUBY_SHARD_ITEM,
+					RNItems.MOLTEN_RUBY_NUGGET_ITEM,
 
-				output.accept(RNBlocks.SHRINE_STONE.get());
-				output.accept(RNBlocks.POLISHED_SHRINE_STONE.get());
-				output.accept(RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get());
-				output.accept(RNBlocks.POLISHED_SHRINE_STONE_SLAB.get());
-				output.accept(RNBlocks.POLISHED_SHRINE_STONE_WALL.get());
+					RNBlocks.NETHER_RUBY_ORE,
+					RNBlocks.MOLTEN_RUBY_ORE,
+					RNBlocks.RUBINATED_BLACKSTONE,
+					RNBlocks.RUBY_BLOCK,
+					RNBlocks.MOLTEN_RUBY_BLOCK,
 
-				output.accept(RNBlocks.SHRINE_STONE_BRICKS.get());
-				output.accept(RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get());
-				output.accept(RNBlocks.SHRINE_STONE_BRICKS_SLAB.get());
-				output.accept(RNBlocks.SHRINE_STONE_BRICKS_WALL.get());
+					RNBlocks.BLEEDING_OBSIDIAN,
+					RNBlocks.RUNESTONE,
 
-				output.accept(RNBlocks.SHRINE_STONE_TILES.get());
-				output.accept(RNBlocks.SHRINE_STONE_TILES_STAIRS.get());
-				output.accept(RNBlocks.SHRINE_STONE_TILES_SLAB.get());
-				output.accept(RNBlocks.SHRINE_STONE_TILES_WALL.get());
+					RNBlocks.SHRINE_STONE,
+					RNBlocks.POLISHED_SHRINE_STONE,
+					RNBlocks.POLISHED_SHRINE_STONE_STAIRS,
+					RNBlocks.POLISHED_SHRINE_STONE_SLAB,
+					RNBlocks.POLISHED_SHRINE_STONE_WALL,
 
-				output.accept(RNBlocks.SHRINE_STONE_PILLAR.get());
-				output.accept(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
-				output.accept(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get());
-				output.accept(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get());
+					RNBlocks.SHRINE_STONE_BRICKS,
+					RNBlocks.SHRINE_STONE_BRICKS_STAIRS,
+					RNBlocks.SHRINE_STONE_BRICKS_SLAB,
+					RNBlocks.SHRINE_STONE_BRICKS_WALL,
 
-				output.accept(RNBlocks.SOAKSTONE.get());
+					RNBlocks.SHRINE_STONE_TILES,
+					RNBlocks.SHRINE_STONE_TILES_STAIRS,
+					RNBlocks.SHRINE_STONE_TILES_SLAB,
+					RNBlocks.SHRINE_STONE_TILES_WALL,
 
-				output.accept(RNBlocks.RUBY_GLASS.get());
-				output.accept(RNBlocks.RUBY_GLASS_PANE.get());
-				output.accept(RNBlocks.MOLTEN_RUBY_GLASS.get());
-				output.accept(RNBlocks.MOLTEN_RUBY_GLASS_PANE.get());
-				output.accept(RNBlocks.ORNATE_RUBY_GLASS.get());
-				output.accept(RNBlocks.ORNATE_RUBY_GLASS_PANE.get());
+					RNBlocks.SHRINE_STONE_PILLAR,
+					RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
+					RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS,
+					RNBlocks.RUBINATED_SHRINE_STONE_BRICKS,
 
-				output.accept(RNBlocks.RUBY_LANTERN.get());
-				output.accept(RNBlocks.CHANDELIER.get());
-				output.accept(RNBlocks.LAVA_LAMP.get());
-				output.accept(RNBlocks.BRAZIER.get());
+					RNBlocks.SOAKSTONE,
 
-				output.accept(RNBlocks.FREEZER.get());
-				output.accept(RNItems.POWDER_SNOW.get());
-				output.accept(RNItems.FROSTED_ICE.get());
-				output.accept(RNBlocks.DRY_ICE.get());
+					RNBlocks.RUBY_GLASS,
+					RNBlocks.RUBY_GLASS_PANE,
+					RNBlocks.MOLTEN_RUBY_GLASS,
+					RNBlocks.MOLTEN_RUBY_GLASS_PANE,
+					RNBlocks.ORNATE_RUBY_GLASS,
+					RNBlocks.ORNATE_RUBY_GLASS_PANE,
 
-				output.accept(RNBlocks.RUBY_LASER.get());
-				output.accept(RNItems.RUBY_LENS.get());
+					RNBlocks.RUBY_LANTERN,
+					RNBlocks.CHANDELIER,
+					RNBlocks.LAVA_LAMP,
+					RNBlocks.BRAZIER,
 
-				output.accept(RNBlocks.RUNESTONE.get());
+					RNBlocks.FREEZER,
+					RNItems.POWDER_SNOW,
+					RNItems.FROSTED_ICE,
+					RNBlocks.DRY_ICE,
 
-				output.accept(RNItems.MUSIC_DISC_SHIMMER.get());
+					RNBlocks.RUBY_LASER,
+					RNItems.RUBY_LENS,
 
-				output.accept(RNBlocks.BRONZE_BLOCK.get());
-				output.accept(RNBlocks.CUT_BRONZE_PILLAR.get());
-				output.accept(RNBlocks.CUT_BRONZE_BRICKS.get());
-				output.accept(RNBlocks.CUT_BRONZE_BRICKS_STAIRS.get());
-				output.accept(RNBlocks.CUT_BRONZE_BRICKS_SLAB.get());
+					RNItems.MUSIC_DISC_SHIMMER,
 
-				output.accept(RNBlocks.DISCOLORED_BRONZE_BLOCK.get());
-				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get());
-				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get());
-				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS.get());
-				output.accept(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get());
+					RNItems.BRONZE_ROD,
+					RNItems.BRONZE_SCRAP,
+					RNItems.BRONZE_SHOT
+				);
 
-				output.accept(RNBlocks.CORRODED_BRONZE_BLOCK.get());
-				output.accept(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get());
-				output.accept(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get());
-				output.accept(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS.get());
-				output.accept(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get());
+				addWaxableItems(
+					output,
+					RNBlocks.BRONZE_BLOCK,
+					RNBlocks.CUT_BRONZE_PILLAR,
+					RNBlocks.CUT_BRONZE_BRICKS,
+					RNBlocks.CUT_BRONZE_BRICKS_STAIRS,
+					RNBlocks.CUT_BRONZE_BRICKS_SLAB,
 
-				output.accept(RNBlocks.TARNISHED_BRONZE_BLOCK.get());
-				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get());
-				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get());
-				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS.get());
-				output.accept(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get());
+					RNBlocks.DISCOLORED_BRONZE_BLOCK,
+					RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
+					RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
+					RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS,
+					RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB,
 
-				output.accept(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
-				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
-				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get());
-				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get());
-				output.accept(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
+					RNBlocks.CORRODED_BRONZE_BLOCK,
+					RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
+					RNBlocks.CORRODED_CUT_BRONZE_BRICKS,
+					RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS,
+					RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB,
 
+					RNBlocks.TARNISHED_BRONZE_BLOCK,
+					RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
+					RNBlocks.TARNISHED_CUT_BRONZE_BRICKS,
+					RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS,
+					RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB,
 
-				output.accept(RNItems.BRONZE_ROD.get());
-				output.accept(RNItems.BRONZE_SCRAP.get());
-				output.accept(RNItems.BRONZE_SHOT.get());
+					RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
+					RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR,
+					RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS,
+					RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS,
+					RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB
+				);
 			})
 			.build()
 	);
+
+	private static void addItems(Output output, ItemLike... items) {
+		for (var item : items)
+			output.accept(item);
+	}
+
+	private static void addWaxableItems(Output output, ItemLike... items) {
+		addItems(output, items);
+
+		for (var item : items)
+			output.accept(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(item))));
+	}
 }
