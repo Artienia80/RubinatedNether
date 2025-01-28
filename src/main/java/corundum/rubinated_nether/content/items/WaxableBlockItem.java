@@ -8,6 +8,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -30,5 +31,9 @@ public class WaxableBlockItem extends BlockItem {
 	@Override
 	public void registerBlocks(Map<Block, Item> blockToItemMap, Item item) {
 		// >:3c
+	}
+
+	public static String getWaxableItem(ItemLike og) {
+		return "waxed_" + og.asItem().toString().split(":")[1];
 	}
 }

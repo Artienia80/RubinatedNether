@@ -6,6 +6,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
+import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -174,7 +175,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 			);
 
 		var waxedItem = BuiltInRegistries.ITEM.get(
-			RubinatedNether.id("waxed_" + block.getId().toString().split(":")[1])
+			RubinatedNether.id(WaxableBlockItem.getWaxableItem(block))
 		);
 
 		var fn = LootTable.lootTable()

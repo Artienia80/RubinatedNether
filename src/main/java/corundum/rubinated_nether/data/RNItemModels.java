@@ -3,6 +3,7 @@ package corundum.rubinated_nether.data;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
@@ -150,7 +151,7 @@ public class RNItemModels extends ItemModelProvider {
 		for (var block : blocks) {
 			simpleBlockItem(block.get());
 			withExistingParent(
-				modLoc("waxed_" + block.getId().toString().split(":")[1]).toString(),
+				modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
 				block.getId()
 			);
 		}

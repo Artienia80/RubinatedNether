@@ -2,6 +2,7 @@ package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.*;
+import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -155,8 +156,6 @@ public class RNLanguage extends LanguageProvider {
 
 	private void addWaxableBlock(DeferredBlock<?> block, String name) {
 		addBlock(block, name);
-
-		var item = ".waxed_" + block.getId().toString().split(":")[1];
-		add("item." + RubinatedNether.MODID + item, "Waxed " + name);
+		add("item." + RubinatedNether.MODID + "." + WaxableBlockItem.getWaxableItem(block), "Waxed " + name);
 	}
 }
