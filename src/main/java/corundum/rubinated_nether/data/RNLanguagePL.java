@@ -2,12 +2,12 @@ package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.*;
+import corundum.rubinated_nether.data.providers.RNLanguageProvider;
 import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.common.data.LanguageProvider;
 
-public class RNLanguagePL extends LanguageProvider {
+public class RNLanguagePL extends RNLanguageProvider {
 	public RNLanguagePL(PackOutput output) {
-		super(output, RubinatedNether.MODID, "pl_pl");
+		super(output, "pl_pl");
 	}
 
 	@Override

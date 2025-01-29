@@ -1,15 +1,15 @@
 package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.*;
-import corundum.rubinated_nether.content.items.WaxableBlockItem;
+import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.RNCreativeTabs;
+import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.data.providers.RNLanguageProvider;
 import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.common.data.LanguageProvider;
-import net.neoforged.neoforge.registries.DeferredBlock;
 
-public class RNLanguage extends LanguageProvider {
+public class RNLanguage extends RNLanguageProvider {
 	public RNLanguage(PackOutput output) {
-		super(output, RubinatedNether.MODID, "en_us");
+		super(output, "en_us");
 	}
 
 	@Override
@@ -118,44 +118,23 @@ public class RNLanguage extends LanguageProvider {
 		add("death.attack.fallingBlock", "%1$s was embraced by a falling chandelier");
 		add("death.attack.fallingBlock.player", "%1$s was embraced by a falling chandelier whilst fighting %2$s");
 		
-		add("advancements.rubinated_nether.obtain_bleeding_obsidian.title","Blood For The Blood God!");
-		add("advancements.rubinated_nether.obtain_bleeding_obsidian.description","Obtain Bleeding Obsidian");
-		add("advancements.rubinated_nether.obtain_freezer.title","Cold! Cold! Cold!");
-		add("advancements.rubinated_nether.obtain_freezer.description","Craft the Freezer");
-		add("advancements.rubinated_nether.obtain_frosted_ice.title","Re-Obtainable");
-		add("advancements.rubinated_nether.obtain_frosted_ice.description","Freeze Snow or Water into Frosted Ice");
-		add("advancements.rubinated_nether.obtain_rubinated_blackstone.title","Legitimate Salvage");
-		add("advancements.rubinated_nether.obtain_rubinated_blackstone.description","Mine Rubinated Blackstone from a Bastion Remnant");
-		add("advancements.rubinated_nether.obtain_molten_ruby.title","Hot! Hot! Hot!");
-		add("advancements.rubinated_nether.obtain_molten_ruby.description"," Acquire a Molten Ruby from Magma Veins");
-		add("advancements.rubinated_nether.obtain_ruby.title","Welcome back, Old Friend");
-		add("advancements.rubinated_nether.obtain_ruby.description","Acquire a Ruby from Nether Ruby Ore or freezing");
-		add("advancements.rubinated_nether.obtain_ruby_glass.title","Over 9000!");
-		add("advancements.rubinated_nether.obtain_ruby_glass.description","Craft the blast-resistant Ruby Glass");
-		add("advancements.rubinated_nether.obtain_ruby_laser.title","Tag, You're It!");
-		add("advancements.rubinated_nether.obtain_ruby_laser.description","Craft the Ruby Laser");
-		add("advancements.rubinated_nether.obtain_ruby_lights.title","Brighten Your Day!");
-		add("advancements.rubinated_nether.obtain_ruby_lights.description","Have a Ruby Chandellier, Lantern and Lava Lamp at the same time in your inventory.");
-		add("advancements.rubinated_nether.obtain_brazier.title","I'll Be Back");
-		add("advancements.rubinated_nether.obtain_brazier.description","Craft the Brazier");
-		add("advancements.rubinated_nether.wear_lens.title","Rose-Tinted Glasses");
-		add("advancements.rubinated_nether.wear_lens.description","Equip a pair of Ruby Lenses to see lasers");
-		add("advancements.rubinated_nether.enter_shrine.title","Dimension Expansion");
-		add("advancements.rubinated_nether.enter_shrine.description","Undergo a Shrine Ritual");
-		add("advancements.rubinated_nether.rubinous_ritual.title","Malevolent Shrine");
-		add("advancements.rubinated_nether.rubinous_ritual.description","Undergo a Rubinous Ritual");
-		add("advancements.rubinated_nether.bronze_rod.title","It's All Connected");
-		add("advancements.rubinated_nether.bronze_rod.description","Obtain a Bronze Rod");
-		add("advancements.rubinated_nether.bronze_block.title","The Emperor's New Ore");
-		add("advancements.rubinated_nether.bronze_block.description","Obtain any Bronze Block");
-		add("advancements.rubinated_nether.shrine_sentinel.title","A Heavy Burden");
-		add("advancements.rubinated_nether.shrine_sentinel.description","Obtain a Bronze Statue from a Shrine Sentinel");
-	
-		add("gui.rubinated_nether.jei.freezer", "Freezing");
-	}
+		addAdvancement("obtain_bleeding_obsidian", "Blood For The Blood God!", "Obtain Bleeding Obsidian");
+		addAdvancement("obtain_freezer", "Cold! Cold! Cold!", "Craft a Freezer");
+		addAdvancement("obtain_frosted_ice", "Re-Obtainable", "Freeze Snow or Water into Frosted Ice");
+		addAdvancement("obtain_rubinated_blackstone", "Legitimate Salvage", "Mine Rubinated Blackstone from a Bastion Remnant");
+		addAdvancement("obtain_molten_ruby", "Hot! Hot! Hot!", "Acquire a Molten Ruby from Magma Veins");
+		addAdvancement("obtain_ruby","Welcome back, Old Friend", "Acquire a Ruby from Nether Ruby Ore or freezing");
+		addAdvancement("obtain_ruby_glass", "Over 9000!", "Craft the blast-resistant Ruby Glass");
+		addAdvancement("obtain_ruby_laser", "Tag, You're It!", "Craft the Ruby Laser");		
+		addAdvancement("obtain_ruby_lights", "Brighten Your Day!", "Have a Ruby Chandellier, Lantern and Lava Lamp at the same time in your inventory.");
+		addAdvancement("obtain_brazier", "I'll Be Back", "Craft a Brazier");
+		addAdvancement("wear_lens", "Rose-Tinted Glasses", "Equip a pair of Ruby Lenses to see lasers");
+		addAdvancement("enter_shrine", "Dimension Expansion", "Undergo a Shrine Ritual");
+		addAdvancement("rubinous_ritual", "Malevolent Shrine", "Undergo a Rubinous Ritual");
+		addAdvancement("bronze_rod", "It's All Connected", "Obtain a Bronze Rod");
+		addAdvancement("bronze_block", "The Emperor's New Ore", "Obtain any Bronze Block");
+		addAdvancement("shrine_sentinel", "A Heavy Burden", "Obtain a Bronze Statue from a Shrine Sentinel");
 
-	private void addWaxableBlock(DeferredBlock<?> block, String name) {
-		addBlock(block, name);
-		add("item." + RubinatedNether.MODID + "." + WaxableBlockItem.getWaxableItem(block), "Waxed " + name);
+		add("gui.rubinated_nether.jei.freezer", "Freezing");
 	}
 }

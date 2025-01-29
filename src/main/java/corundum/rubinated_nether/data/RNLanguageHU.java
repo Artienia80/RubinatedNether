@@ -4,12 +4,12 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNCreativeTabs;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.data.providers.RNLanguageProvider;
 import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.common.data.LanguageProvider;
 
-public class RNLanguageHU extends LanguageProvider {
+public class RNLanguageHU extends RNLanguageProvider {
 	public RNLanguageHU(PackOutput output) {
-		super(output, RubinatedNether.MODID, "hu_hu");
+		super(output, "hu_hu");
 	}
 
 	@Override

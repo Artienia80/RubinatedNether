@@ -4,7 +4,6 @@ import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -33,9 +32,6 @@ public final class RNTags {
 		public static final TagKey<Block> CRYSTALLIZATION_CATALYST = createTag(Registries.BLOCK, "crystallization_catalyst");
 
 		public static final TagKey<Block> RAINBOW_LASER = createTag(Registries.BLOCK, "rainbow_laser");
-
-
-
 	}
 
 	public static final class Items {
@@ -60,6 +56,6 @@ public final class RNTags {
 	}
 
 	private static <T> TagKey<T> createTag(ResourceKey<? extends Registry<T>> registry, String str) {
-		return TagKey.create(registry, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, str));
+		return TagKey.create(registry, RubinatedNether.id(str));
 	}
 }
