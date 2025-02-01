@@ -20,7 +20,12 @@ public class WaxableBlockItem extends BlockItem {
 
 	@Override
 	protected BlockState getPlacementState(BlockPlaceContext context) {
-		return super.getPlacementState(context).setValue(TarnishingBronze.WAXED, true);
+		var state = super.getPlacementState(context);
+
+		if (state != null)
+			return state.setValue(TarnishingBronze.WAXED, true);
+
+		return state;
 	}
 
 	@Override
