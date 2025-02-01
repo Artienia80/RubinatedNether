@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import corundum.rubinated_nether.content.RNEntities;
 import corundum.rubinated_nether.content.RNItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Position;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -39,7 +40,25 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 	}
 
 	public BronzeShotProjectileEntity(LivingEntity shooter, Level level) {
-		super(RNEntities.BRONZE_SHOT.get(), shooter, level, new ItemStack(RNItems.BRONZE_SHOT.get()), null);
+		super(
+			RNEntities.BRONZE_SHOT.get(), 
+			shooter, 
+			level, 
+			new ItemStack(RNItems.BRONZE_SHOT.get()), 
+			null
+		);
+	}
+
+	public BronzeShotProjectileEntity(Level level, Position pos) {
+		super(
+			RNEntities.BRONZE_SHOT.get(),
+			pos.x(),
+			pos.y(),
+			pos.z(),
+			level,
+			new ItemStack(RNItems.BRONZE_SHOT.get()),
+			null
+		);
 	}
 
 	@Override
