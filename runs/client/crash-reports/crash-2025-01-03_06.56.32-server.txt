@@ -1,0 +1,142 @@
+---- Minecraft Crash Report ----
+// I let you down. Sorry :(
+
+Time: 2025-01-03 06:56:32
+Description: Exception ticking world
+
+java.lang.IllegalArgumentException: Multiple entries with same value: Block{rubinated_nether:discolored_bronze_block}=Block{rubinated_nether:crystallized_bronze_block} and Block{rubinated_nether:bronze_block}=Block{rubinated_nether:crystallized_bronze_block}
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.collect.ImmutableMap.conflictException(ImmutableMap.java:378) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.collect.ImmutableMap.checkNoConflict(ImmutableMap.java:372) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.collect.RegularImmutableBiMap.checkNoConflictInValueBucket(RegularImmutableBiMap.java:140) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.collect.RegularImmutableBiMap.fromEntryArray(RegularImmutableBiMap.java:98) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.collect.ImmutableBiMap$Builder.buildOrThrow(ImmutableBiMap.java:478) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.collect.ImmutableBiMap$Builder.build(ImmutableBiMap.java:438) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at TRANSFORMER/rubinated_nether@2.0.0.A/corundum.rubinated_nether.content.blocks.TarnishingBronze.lambda$static$1(TarnishingBronze.java:93) ~[%23191!/:?] {re:classloading}
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.base.Suppliers$NonSerializableMemoizingSupplier.get(Suppliers.java:181) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at TRANSFORMER/rubinated_nether@2.0.0.A/corundum.rubinated_nether.content.blocks.TarnishingBronze.getCrystallized(TarnishingBronze.java:124) ~[%23191!/:?] {re:classloading}
+	at TRANSFORMER/rubinated_nether@2.0.0.A/corundum.rubinated_nether.content.blocks.TarnishingBronzeBlock.randomTick(TarnishingBronzeBlock.java:65) ~[%23191!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase.randomTick(BlockBehaviour.java:813) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ServerLevel.tickChunk(ServerLevel.java:532) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ServerChunkCache.tickChunks(ServerChunkCache.java:374) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ServerChunkCache.tick(ServerChunkCache.java:324) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ServerLevel.tick(ServerLevel.java:382) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1052) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:932) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:113) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:713) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:267) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Server thread
+Stacktrace:
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.collect.ImmutableMap.conflictException(ImmutableMap.java:378) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.collect.ImmutableMap.checkNoConflict(ImmutableMap.java:372) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.collect.RegularImmutableBiMap.checkNoConflictInValueBucket(RegularImmutableBiMap.java:140) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.collect.RegularImmutableBiMap.fromEntryArray(RegularImmutableBiMap.java:98) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.collect.ImmutableBiMap$Builder.buildOrThrow(ImmutableBiMap.java:478) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.collect.ImmutableBiMap$Builder.build(ImmutableBiMap.java:438) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at TRANSFORMER/rubinated_nether@2.0.0.A/corundum.rubinated_nether.content.blocks.TarnishingBronze.lambda$static$1(TarnishingBronze.java:93) ~[%23191!/:?] {re:classloading}
+	at MC-BOOTSTRAP/com.google.common@32.1.2-jre/com.google.common.base.Suppliers$NonSerializableMemoizingSupplier.get(Suppliers.java:181) ~[guava-32.1.2-jre.jar%23110!/:?] {}
+	at TRANSFORMER/rubinated_nether@2.0.0.A/corundum.rubinated_nether.content.blocks.TarnishingBronze.getCrystallized(TarnishingBronze.java:124) ~[%23191!/:?] {re:classloading}
+	at TRANSFORMER/rubinated_nether@2.0.0.A/corundum.rubinated_nether.content.blocks.TarnishingBronzeBlock.randomTick(TarnishingBronzeBlock.java:65) ~[%23191!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase.randomTick(BlockBehaviour.java:813) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ServerLevel.tickChunk(ServerLevel.java:532) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ServerChunkCache.tickChunks(ServerChunkCache.java:374) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ServerChunkCache.tick(ServerChunkCache.java:324) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+-- Affected level --
+Details:
+	All players: 1 total; [ServerPlayer['Dev'/7, l='ServerLevel[Test World]', x=31.88, y=-57.51, z=2.51]]
+	Chunk stats: 1260
+	Level dimension: minecraft:overworld
+	Level spawn location: World: (0,-60,0), Section: (at 0,4,0 in 0,-4,0; chunk contains blocks 0,-64,0 to 15,319,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,-64,0 to 511,319,511)
+	Level time: 261845 game time, 6000 day time
+	Level name: Test World
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Commands: true
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Known server brands: neoforge
+	Removed feature flags: 
+	Level was modded: true
+	Level storage version: 0x04ABD - Anvil
+	Loaded entity count: 18
+Stacktrace:
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ServerLevel.fillReportDetails(ServerLevel.java:1742) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1055) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:932) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:113) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:713) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:267) ~[neoforge-21.1.83.jar%23189!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?] {}
+
+
+-- System Details --
+Details:
+	Minecraft Version: 1.21.1
+	Minecraft Version ID: 1.21.1
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 21.0.4, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode, sharing), Oracle Corporation
+	Memory: 112748176 bytes (107 MiB) / 646971392 bytes (617 MiB) up to 1965031424 bytes (1874 MiB)
+	CPUs: 8
+	Processor Vendor: AuthenticAMD
+	Processor Name: AMD Ryzen 3 5425U with Radeon Graphics         
+	Identifier: AuthenticAMD Family 25 Model 80 Stepping 0
+	Microarchitecture: Zen 3
+	Frequency (GHz): 2.70
+	Number of physical packages: 1
+	Number of physical CPUs: 4
+	Number of logical CPUs: 8
+	Graphics card #0 name: AMD Radeon (TM) Graphics
+	Graphics card #0 vendor: Advanced Micro Devices, Inc.
+	Graphics card #0 VRAM (MiB): 512.00
+	Graphics card #0 deviceId: VideoController1
+	Graphics card #0 versionInfo: 31.0.21916.2
+	Memory slot #0 capacity (MiB): 8192.00
+	Memory slot #0 clockSpeed (GHz): 3.20
+	Memory slot #0 type: DDR4
+	Virtual memory max (MiB): 29983.06
+	Virtual memory used (MiB): 25091.45
+	Swap memory total (MiB): 22495.06
+	Swap memory used (MiB): 3894.35
+	Space in storage for jna.tmpdir (MiB): <path not set>
+	Space in storage for org.lwjgl.system.SharedLibraryExtractPath (MiB): <path not set>
+	Space in storage for io.netty.native.workdir (MiB): <path not set>
+	Space in storage for java.io.tmpdir (MiB): available: 122149.46, total: 487291.00
+	Space in storage for workdir (MiB): available: 122149.46, total: 487291.00
+	JVM Flags: 1 total; -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump
+	Server Running: true
+	Player Count: 1 / 8; [ServerPlayer['Dev'/7, l='ServerLevel[Test World]', x=31.88, y=-57.51, z=2.51]]
+	Active Data Packs: vanilla, mod_data, mod/rubinated_nether, mod/midnightlib, mod/neoforge
+	Available Data Packs: bundle, trade_rebalance, vanilla, mod/midnightlib, mod/neoforge, mod/rubinated_nether, mod_data
+	Enabled Feature Flags: minecraft:vanilla
+	World Generation: Stable
+	World Seed: -3036124108454425169
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'neoforge'; Server brand changed to 'neoforge'
+	Launched Version: 21.1.83
+	ModLauncher: 11.0.4+main.d2e20e43
+	ModLauncher launch target: forgeclientuserdev
+	ModLauncher services: 
+		sponge-mixin-0.15.2+mixin.0.8.7.jar mixin PLUGINSERVICE 
+		loader-4.0.34.jar slf4jfixer PLUGINSERVICE 
+		loader-4.0.34.jar runtime_enum_extender PLUGINSERVICE 
+		at-modlauncher-10.0.1.jar accesstransformer PLUGINSERVICE 
+		loader-4.0.34.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-11.0.4.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-11.0.4.jar fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		javafml@4.0
+		lowcodefml@4.0
+		minecraft@4.0
+	Mod List: 
+		midnightlib-1.6.3-neoforge.jar                    |MidnightLib                   |midnightlib                   |1.6.3               |Manifest: NOSIGNATURE
+		neoforge-21.1.83.jar                              |Minecraft                     |minecraft                     |1.21.1              |Manifest: a1:d4:5e:04:4f:d3:d6:e0:7b:37:97:cf:77:b0:de:ad:4a:47:ce:8c:96:49:5f:0a:cf:8c:ae:b2:6d:4b:8a:3f
+		neoforge-21.1.83.jar                              |NeoForge                      |neoforge                      |21.1.83             |Manifest: NOSIGNATURE
+		main                                              |Rubinated Nether              |rubinated_nether              |2.0.0.A             |Manifest: NOSIGNATURE
+	Crash Report UUID: 9942517a-2874-4375-aa69-96b224fe2f1e
+	FML: 4.0.34
+	NeoForge: 21.1.83

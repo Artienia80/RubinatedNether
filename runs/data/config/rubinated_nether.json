@@ -1,0 +1,7 @@
+{
+  "chandelierMaxDamage": 500,
+  "chandelierMultiplier": 0.22,
+  "brazierEffectRange": 16,
+  "brazierEffectDuration": 15.0,
+  "brazierEffectParticles": false
+}

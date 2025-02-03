@@ -1,0 +1,50 @@
+/fill 47 -60 -4 62 -60 11 rubinated_nether:bronze_block
+/fill 47 -60 24
+/fill 47 -60 24 62 -60 35 rubinated_nether:bronze_block
+/tick rate
+/tick rate 10000
+/fill 47 -60 -4
+/fill 47 -60 -4 62 -60 11 rubinated_nether:corroded_bronze_block
+/fill 47 -60 -4 62 -60 11 rubinated_nether:tarnished_bronze_block
+/tick rate 10000
+/fill 47 -60 11
+/fill 47 -60 11 62 -60 -4 rubinated_nether:bronze_block
+/fill 47 -60 11 62 -60 -4 rubinated_nether:discolored_cut_bronze_bricks
+/fill 47 -60 11 62 -60 -4 rubinated_nether:corroded_cut_bronze_bricks_slab
+/fill 47 -60 11 62 -60 -4 rubinated_nether:corroded_cut_bronze_bricks
+/fill 47 -60 11 62 -60 -4 rubinated_nether:tarnished_cut_bronze_bricks
+/tick rate 10000
+/fill 47 -60 11
+/fill 47 -60 11 62 -60 -4 rubinated_nether:bronze_block
+/fill 47 -60 -4
+/fill 47 -60 -4 97 -60 36 rubinated_nether:bronze_block
+/fill 47 -60 -4 97 -60 36 rubinated_nether:cut_bronze_bricks
+/fill 47 -60 -4 97 -60 36 rubinated_nether:cut_bronze_bricks_slab
+/fill 97 -60 36
+/fill 97 -60 36 47 -60 -4 rubinated_nether:bronze_block
+/tick rate 1000
+/tick rate 10000
+/fill 97 -60 36
+/fill 97 -60 36 47 -60 -4 rubinated_nether:bronze_block
+/tick rate 10000
+/tick rate 20
+/give Dev rubinated_nether:ruby_laser
+/give Dev rubinated_nether:ruby_lens
+/gamemode survival
+/damage 19
+/damage Dev 19
+/setblock 39 -47 3 minecraft:air
+/gamemode creative
+/gamemode survival
+/damage Dev 19
+/setblock 39 -47 3 minecraft:air
+/damage Dev 19
+/setblock 39 -47 4 minecraft:air
+/gamemode creative
+/advancement grant Dev everything
+/gamemode survival
+/summon minecraft:phantom
+/time set night
+/summon minecraft:phantom
+/time set noon
+/gamemode creative
