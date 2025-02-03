@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "O": {
+      "item": "rubinated_nether:ruby_glass_pane"
+    },
+    "X": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "OXO"
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:ruby_lens"
+  }
+}

@@ -4,6 +4,7 @@ import java.util.concurrent.CompletableFuture;
 
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -523,6 +524,77 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern(" X ")
 				.unlockedBy(getHasName(RNItems.BRONZE_SHOT), has(RNItems.BRONZE_SHOT))
 				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBY_LANTERN, 1)
+				.define('X', Items.COPPER_INGOT)
+				.define('O', RNItems.MOLTEN_RUBY_ITEM)
+				.pattern("XXX")
+				.pattern("XOX")
+				.pattern("XXX")
+				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CHANDELIER, 1)
+				.define('X', RNBlocks.RUBY_LANTERN)
+				.define('O', Items.COPPER_INGOT)
+				.pattern("XXX")
+				.pattern("XOX")
+				.pattern("XXX")
+				.unlockedBy(getHasName(RNBlocks.RUBY_LANTERN), has(RNBlocks.RUBY_LANTERN))
+				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.LAVA_LAMP, 1)
+				.define('X', Items.COPPER_INGOT)
+				.define('O', RNItems.MOLTEN_RUBY_ITEM)
+				.define('I', RNBlocks.RUBY_GLASS_PANE)
+				.pattern("XXX")
+				.pattern("IOI")
+				.pattern("XXX")
+				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
+				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
+				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNItems.RUBY_LENS, 1)
+				.define('X', Items.COPPER_INGOT)
+				.define('O', RNBlocks.RUBY_GLASS_PANE)
+				.pattern("XXX")
+				.pattern("OXO")
+				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
+				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBY_LASER, 1)
+				.define('A', Blocks.COPPER_BLOCK)
+				.define('B', Items.COPPER_INGOT)
+				.define('C', Items.REDSTONE)
+				.define('D', Items.GLOWSTONE)
+				.define('E', RNBlocks.RUBY_BLOCK)
+				.pattern(" E ")
+				.pattern("BDB")
+				.pattern("ACA")
+				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
+				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
+				.unlockedBy(getHasName(Blocks.COPPER_BLOCK), has(Blocks.COPPER_BLOCK))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRAZIER, 1)
+				.define('A', Blocks.OBSIDIAN)
+				.define('B', Items.COPPER_INGOT)
+				.define('C', RNBlocks.MOLTEN_RUBY_BLOCK)
+				.define('D', Items.NETHERITE_INGOT)
+				.pattern("BCB")
+				.pattern("BDB")
+				.pattern("AAA")
+				.unlockedBy(getHasName(RNBlocks.MOLTEN_RUBY_BLOCK), has(RNBlocks.MOLTEN_RUBY_BLOCK))
+				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+				.unlockedBy(getHasName(Items.NETHERITE_INGOT), has(Items.NETHERITE_INGOT))
+				.unlockedBy(getHasName(Blocks.OBSIDIAN), has(Blocks.OBSIDIAN))
 				.save(recipeOutput);
 	}
 
