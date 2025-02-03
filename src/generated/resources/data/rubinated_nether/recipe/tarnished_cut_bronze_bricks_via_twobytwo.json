@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "DeferredHolder{ResourceKey[minecraft:block / rubinated_nether:tarnished_cut_bronze_bricks]}",
+  "key": {
+    "I": {
+      "item": "rubinated_nether:tarnished_bronze_block"
+    }
+  },
+  "pattern": [
+    "II",
+    "II"
+  ],
+  "result": {
+    "count": 4,
+    "id": "rubinated_nether:tarnished_cut_bronze_bricks"
+  }
+}
