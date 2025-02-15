@@ -9,6 +9,7 @@ import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 public class RNItemModels extends ItemModelProvider {
 	public RNItemModels(PackOutput output, ExistingFileHelper fileHelper) {
@@ -109,6 +110,16 @@ public class RNItemModels extends ItemModelProvider {
 			modLoc("block/shrine_stone_bricks")
 		);
 
+		paneItem(
+				RNBlocks.MOLTEN_RUBY_GLASS_PANE,
+				"block/molten_ruby_glass"
+		);
+
+		handheldItem(
+				RNItems.BRONZE_DRILL,
+				"item/bronze_drill"
+		);
+
 		basicItems(
 			// BlockItems with an Item Texture
 			RNBlocks.RUBY_LANTERN,
@@ -125,9 +136,7 @@ public class RNItemModels extends ItemModelProvider {
 			RNItems.MUSIC_DISC_SHIMMER,
 			RNItems.BRONZE_ROD,
 			RNItems.BRONZE_SCRAP,
-			RNItems.BRONZE_SHOT,
-			RNItems.BRONZE_DRILL
-
+			RNItems.BRONZE_SHOT
 		);
 	}
 
@@ -138,6 +147,14 @@ public class RNItemModels extends ItemModelProvider {
 		)
 		.texture("layer0", texture)
 		.renderType(mcLoc("translucent"));
+	}
+
+	private void handheldItem(DeferredItem<?> item, String texture) {
+		withExistingParent(
+				item.getId().toString(),
+				mcLoc("item/handheld")
+		)
+				.texture("layer0", texture);
 	}
 
 	private void simpleBlockItems(DeferredBlock<?>... blocks) {
