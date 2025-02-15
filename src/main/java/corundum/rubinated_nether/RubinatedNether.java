@@ -14,6 +14,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 import com.google.common.collect.ImmutableList;
 import com.mojang.logging.LogUtils;
@@ -60,17 +61,6 @@ public class RubinatedNether {
 		if (dist == Dist.CLIENT) {
 			RubinatedNetherClient.client(modEventBus);
 			modEventBus.addListener(RNRecipeCategories::registerRecipeCategories);
-		}
-	}
-
-	@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-	public static class ClientModEvents {
-		@SubscribeEvent
-		public static void onClientSetup(FMLClientSetupEvent event) {
-			EntityRenderers.register(
-				RNEntities.BRONZE_SHOT.get(), 
-				BronzeChargeProjectileRenderer::new
-			);
 		}
 	}
 

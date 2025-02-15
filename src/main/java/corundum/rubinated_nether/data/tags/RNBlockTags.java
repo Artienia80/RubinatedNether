@@ -210,6 +210,11 @@ public class RNBlockTags extends BlockTagsProvider {
 
 		this.tag(RNTags.Blocks.RAINBOW_LASER).addTag(RNTags.Blocks.RUBY_GLASS);
 
+		this.tag(RNTags.Blocks.MINEABLE_WITH_DRILL).addTags(
+				BlockTags.MINEABLE_WITH_PICKAXE,
+				BlockTags.MINEABLE_WITH_SHOVEL
+		);
+
 		this.tag(BlockTags.WALLS).add(
 			RNBlocks.SHRINE_STONE_TILES_WALL.get(),
 			RNBlocks.SHRINE_STONE_BRICKS_WALL.get(),
