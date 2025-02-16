@@ -3,6 +3,7 @@ package corundum.rubinated_nether.events;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.items.DrillItem;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -24,18 +25,22 @@ public class RNGameBusEvents {
     public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player player = event.getEntity();
         ItemStack itemStack = player.getMainHandItem();
-        if (itemStack.getItem() instanceof DrillItem drillItem) {
-            if (!event.isCanceled()) {
-                // Retrieve the current counter and calculate a multiplier
-                int ticksUsed = drillItem.getNBT().getInt("ticksUsed");
+
+        if (!event.isCanceled()) {
+            if (itemStack.getItem() instanceof DrillItem drillItem) {
                 // Update the last mining tick for the player
                 long currentTick = player.level().getGameTime();
                 lastMiningTick.put(player.getUUID(), currentTick);
 
-                float multiplier = 1.0f + ((float) ticksUsed / 500)
-                        * (20 - 1.0f);
+                // Retrieve the current counter and calculate a multiplier
+                int ticksUsed = drillItem.getNBT().getInt("ticksUsed");
 
-                drillItem.getNBT().putInt("ticksUsed", ticksUsed + 1);
+                float multiplier = 1.0f + ((float) ticksUsed / DrillItem.MAX_USE_TICKS)
+                        * (DrillItem.MAX_MULTIPLIER_BOOST - 1.0f);
+
+                // If the tick count goes over the max, it doesn't get incremented - darksonic300
+                if(ticksUsed < DrillItem.MAX_USE_TICKS)
+                    drillItem.getNBT().putInt("ticksUsed", ticksUsed + 1);
 
                 event.setNewSpeed(event.getNewSpeed() * multiplier);
             }

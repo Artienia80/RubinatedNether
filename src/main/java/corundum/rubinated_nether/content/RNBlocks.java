@@ -358,6 +358,8 @@ public class RNBlocks {
 		() -> new TarnishingPillarBlock(
 			TarnishingBronze.TarnishState.UNAFFECTED,
 			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(5.0F, 150.0F)
 		)
 	);
 
@@ -366,6 +368,8 @@ public class RNBlocks {
 		() -> new TarnishingPillarBlock(
 			TarnishingBronze.TarnishState.DISCOLORED,
 			BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(15.0F, 300.0F)
 		)
 	);
 
@@ -374,6 +378,8 @@ public class RNBlocks {
 		() -> new TarnishingPillarBlock(
 			TarnishingBronze.TarnishState.CORRODED,
 			BlockBehaviour.Properties.ofFullCopy(CORRODED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(25.0F, 600.0F)
 		)
 	);
 
@@ -382,6 +388,8 @@ public class RNBlocks {
 		() -> new TarnishingPillarBlock(
 			TarnishingBronze.TarnishState.TARNISHED,
 			BlockBehaviour.Properties.ofFullCopy(TARNISHED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(50.0F, 1200.0F)
 		)
 	);
 
@@ -390,6 +398,8 @@ public class RNBlocks {
 		() -> new TarnishingPillarBlock(
 			TarnishingBronze.TarnishState.CRYSTALLIZED,
 			BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(1.0F, 6.0F)
 		)
 	);
 
@@ -400,6 +410,8 @@ public class RNBlocks {
 		() -> new TarnishingBronzeBlock(
 			TarnishingBronze.TarnishState.UNAFFECTED,
 			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(5.0F, 150.0F)
 		)
 	);
 
@@ -408,6 +420,8 @@ public class RNBlocks {
 		() -> new TarnishingBronzeBlock(
 			TarnishingBronze.TarnishState.DISCOLORED,
 			BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(15.0F, 300.0F)
 		)
 	);
 
@@ -416,6 +430,8 @@ public class RNBlocks {
 		() -> new TarnishingBronzeBlock(
 			TarnishingBronze.TarnishState.CORRODED,
 			BlockBehaviour.Properties.ofFullCopy(CORRODED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(25.0F, 600.0F)
 		)
 	);
 
@@ -424,6 +440,8 @@ public class RNBlocks {
 		() -> new TarnishingBronzeBlock(
 			TarnishingBronze.TarnishState.TARNISHED,
 			BlockBehaviour.Properties.ofFullCopy(TARNISHED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(50.0F, 1200.0F)
 		)
 	);
 
@@ -432,6 +450,8 @@ public class RNBlocks {
 		() -> new TarnishingBronzeBlock(
 			TarnishingBronze.TarnishState.CRYSTALLIZED,
 			BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(1.0F, 6.0F)
 		)
 	);
 
@@ -441,14 +461,20 @@ public class RNBlocks {
 		"cut_bronze_bricks_slab",
 		() -> new TarnishingBronzeSlabBlock(
 			TarnishingBronze.TarnishState.UNAFFECTED,
-			SlabBlock.Properties.ofFullCopy(RNBlocks.CUT_BRONZE_BRICKS.get()))
+			SlabBlock.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(5.0F, 150.0F)
+		)
+
 	);
 	public static final DeferredBlock<StairBlock> CUT_BRONZE_BRICKS_STAIRS = registerWaxableBlock(
 		"cut_bronze_bricks_stairs",
 		() -> new TarnishingBronzeStairBlock(
 			TarnishingBronze.TarnishState.UNAFFECTED,
-			CUT_BRONZE_BRICKS.get().defaultBlockState(),
-			BlockBehaviour.Properties.ofFullCopy(RNBlocks.CUT_BRONZE_BRICKS.get())
+				BRONZE_BLOCK.get().defaultBlockState(),
+			BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(5.0F, 150.0F)
 		)
 	);
 
@@ -456,14 +482,19 @@ public class RNBlocks {
 		"discolored_cut_bronze_bricks_slab",
 		() -> new TarnishingBronzeSlabBlock(
 			TarnishingBronze.TarnishState.DISCOLORED,
-			SlabBlock.Properties.ofFullCopy(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get()))
+			SlabBlock.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(15.0F, 300.0F)
+		)
 	);
 	public static final DeferredBlock<StairBlock> DISCOLORED_CUT_BRONZE_BRICKS_STAIRS = registerWaxableBlock(
 		"discolored_cut_bronze_bricks_stairs",
 		() -> new TarnishingBronzeStairBlock(
 			TarnishingBronze.TarnishState.DISCOLORED,
-			DISCOLORED_CUT_BRONZE_BRICKS.get().defaultBlockState(),
-			BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get())
+				DISCOLORED_BRONZE_BLOCK.get().defaultBlockState(),
+			BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(15.0F, 300.0F)
 		)
 	);
 
@@ -471,14 +502,19 @@ public class RNBlocks {
 		"corroded_cut_bronze_bricks_slab",
 		() -> new TarnishingBronzeSlabBlock(
 			TarnishingBronze.TarnishState.CORRODED,
-			SlabBlock.Properties.ofFullCopy(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get()))
+			SlabBlock.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get())
+				.requiresCorrectToolForDrops()
+				.strength(25.0F, 600.0F)
+		)
 	);
 	public static final DeferredBlock<StairBlock> CORRODED_CUT_BRONZE_BRICKS_STAIRS = registerWaxableBlock(
 		"corroded_cut_bronze_bricks_stairs",
 		() -> new TarnishingBronzeStairBlock(
 			TarnishingBronze.TarnishState.CORRODED,
-			CORRODED_CUT_BRONZE_BRICKS.get().defaultBlockState(),
-			BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get())
+				CORRODED_BRONZE_BLOCK.get().defaultBlockState(),
+			BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(25.0F, 600.0F)
 		)
 	);
 
@@ -486,14 +522,19 @@ public class RNBlocks {
 		"tarnished_cut_bronze_bricks_slab",
 		() -> new TarnishingBronzeSlabBlock(
 			TarnishingBronze.TarnishState.TARNISHED,
-			SlabBlock.Properties.ofFullCopy(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get()))
+			SlabBlock.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(50.0F, 1200.0F)
+		)
 	);
 	public static final DeferredBlock<StairBlock> TARNISHED_CUT_BRONZE_BRICKS_STAIRS = registerWaxableBlock(
 		"tarnished_cut_bronze_bricks_stairs",
 		() -> new TarnishingBronzeStairBlock(
 			TarnishingBronze.TarnishState.TARNISHED,
-			TARNISHED_CUT_BRONZE_BRICKS.get().defaultBlockState(),
-			BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get())
+				TARNISHED_BRONZE_BLOCK.get().defaultBlockState(),
+			BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(50.0F, 1200.0F)
 		)
 	);
 
@@ -501,14 +542,19 @@ public class RNBlocks {
 		"crystallized_cut_bronze_bricks_slab",
 		() -> new TarnishingBronzeSlabBlock(
 			TarnishingBronze.TarnishState.CRYSTALLIZED,
-			SlabBlock.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get()))
+			SlabBlock.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(1.0F, 6.0F)
+		)
 	);
 	public static final DeferredBlock<StairBlock> CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS = registerWaxableBlock(
 		"crystallized_cut_bronze_bricks_stairs",
 		() -> new TarnishingBronzeStairBlock(
 			TarnishingBronze.TarnishState.CRYSTALLIZED,
-			CRYSTALLIZED_CUT_BRONZE_BRICKS.get().defaultBlockState(),
-			BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get())
+				CRYSTALLIZED_BRONZE_BLOCK.get().defaultBlockState(),
+			BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get())
+					.requiresCorrectToolForDrops()
+					.strength(1.0F, 6.0F)
 		)
 	);
 
@@ -531,7 +577,7 @@ public class RNBlocks {
 		RNItems.ITEMS.register(
 			"waxed_" + name,
 			() -> new WaxableBlockItem(
-				register, 
+				register,
 				new Item.Properties()
 			)
 		);
