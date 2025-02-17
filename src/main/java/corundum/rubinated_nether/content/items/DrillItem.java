@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.state.BlockState;
 public class DrillItem extends PickShovelItem {
     public CompoundTag data;
 
-    public static int MAX_USE_TICKS = 300;
-    public static int MAX_MULTIPLIER_BOOST = 20;
+    public static int MAX_USE_TICKS = 800;
+    public static int MAX_MULTIPLIER_BOOST = 90;
 
     public DrillItem(Properties properties) {
         super(RNTiers.BRONZE, properties);

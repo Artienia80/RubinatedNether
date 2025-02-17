@@ -18,59 +18,83 @@ import java.util.UUID;
 @EventBusSubscriber(modid = RubinatedNether.MODID, bus = EventBusSubscriber.Bus.GAME)
 public class RNGameBusEvents {
 
-    // Stores the last tick a mining event occurred for each player
     private static final Map<UUID, Long> lastMiningTick = new HashMap<>();
+    private static final Map<UUID, Integer> decayTicks = new HashMap<>();
+    private static final Map<UUID, Long> lastLoggedTick = new HashMap<>();
 
     @SubscribeEvent
     public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player player = event.getEntity();
         ItemStack itemStack = player.getMainHandItem();
 
-        if (!event.isCanceled()) {
-            if (itemStack.getItem() instanceof DrillItem drillItem) {
-                // Update the last mining tick for the player
-                long currentTick = player.level().getGameTime();
-                lastMiningTick.put(player.getUUID(), currentTick);
+        if (!event.isCanceled() && itemStack.getItem() instanceof DrillItem drillItem) {
+            long currentTick = player.level().getGameTime();
+            UUID playerId = player.getUUID();
+            lastMiningTick.put(playerId, currentTick);
 
-                // Retrieve the current counter and calculate a multiplier
-                int ticksUsed = drillItem.getNBT().getInt("ticksUsed");
+            // Retrieve current counter
+            CompoundTag tag = drillItem.getNBT();
+            int ticksUsed = tag.getInt("ticksUsed");
 
-                float multiplier = 1.0f + ((float) ticksUsed / DrillItem.MAX_USE_TICKS)
-                        * (DrillItem.MAX_MULTIPLIER_BOOST - 1.0f);
+            // Calculate multiplier
+            float multiplier = 1.0f + ((float) ticksUsed / DrillItem.MAX_USE_TICKS) *
+                    (DrillItem.MAX_MULTIPLIER_BOOST - 1.0f);
 
-                // If the tick count goes over the max, it doesn't get incremented - darksonic300
-                if(ticksUsed < DrillItem.MAX_USE_TICKS)
-                    drillItem.getNBT().putInt("ticksUsed", ticksUsed + 1);
-
-                event.setNewSpeed(event.getNewSpeed() * multiplier);
+            // Increment ticksUsed but cap at MAX_USE_TICKS
+            if (ticksUsed < DrillItem.MAX_USE_TICKS) {
+                tag.putInt("ticksUsed", ticksUsed + 1);
             }
+
+            event.setNewSpeed(event.getNewSpeed() * multiplier);
         }
     }
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
-        // We're only interested in the end phase to avoid duplicate work
-            Player player = event.getEntity();
-            ItemStack stack = player.getMainHandItem();
+        Player player = event.getEntity();
+        ItemStack stack = player.getMainHandItem();
+        UUID playerId = player.getUUID();
+        long currentTick = player.level().getGameTime();
 
-            // Only act if the player is holding the drill
-            if (stack.getItem() instanceof DrillItem drill) {
-                UUID playerId = player.getUUID();
-                long currentTick = player.level().getGameTime();
+        if (stack.getItem() instanceof DrillItem drill) {
+            CompoundTag tag = drill.getNBT();
+            if (tag == null) return;
 
-                // Check when the last mining event occurred for this player
-                if (lastMiningTick.containsKey(playerId)) {
-                    long lastTick = lastMiningTick.get(playerId);
-                    // If the player hasn't mined for a while, reset the multiplier
-                    if (currentTick - lastTick > 15) {
-                        CompoundTag tag = drill.getNBT();
-                        if(tag != null) {
-                            tag.putInt("ticksUsed", 0); // Reset multiplier progress
-                            // Optionally remove the player from the map if no longer needed
+            // Log multiplier every 2 seconds (40 ticks)
+            if (!lastLoggedTick.containsKey(playerId) || currentTick - lastLoggedTick.get(playerId) >= 40) {
+                int ticksUsed = tag.getInt("ticksUsed");
+                float multiplier = 1.0f + ((float) ticksUsed / DrillItem.MAX_USE_TICKS) *
+                        (DrillItem.MAX_MULTIPLIER_BOOST - 1.0f);
+                player.sendSystemMessage(Component.literal("Current Drill Speed Multiplier: " + multiplier));
+                lastLoggedTick.put(playerId, currentTick);
+            }
+
+            // Handle multiplier decay when stopping
+            if (lastMiningTick.containsKey(playerId)) {
+                long lastTick = lastMiningTick.get(playerId);
+
+                if (currentTick - lastTick > 20) { // Raised from 15 to 20 ticks
+                    if (!decayTicks.containsKey(playerId)) {
+                        decayTicks.put(playerId, 0);
+                    }
+
+                    int decayCount = decayTicks.get(playerId);
+
+                    if (currentTick % 20 == 0) { // Every 20 ticks
+                        int ticksUsed = tag.getInt("ticksUsed");
+
+                        if (ticksUsed > 0) {
+                            int reduction = (int) Math.ceil(ticksUsed * 0.25);
+                            tag.putInt("ticksUsed", Math.max(ticksUsed - reduction, 0));
+                        } else {
                             lastMiningTick.remove(playerId);
+                            decayTicks.remove(playerId);
                         }
+
+                        decayTicks.put(playerId, decayCount + 1);
                     }
                 }
             }
         }
+    }
 }

@@ -2,6 +2,7 @@
   "values": [
     "#minecraft:mineable/pickaxe",
     "#minecraft:mineable/shovel",
+    "minecraft:reinforced_deepslate",
     "rubinated_nether:bronze_block",
     "rubinated_nether:discolored_bronze_block",
     "rubinated_nether:corroded_bronze_block",
