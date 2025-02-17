@@ -143,6 +143,15 @@ public class RNBlockStates extends BlockStateProvider {
 			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK
 		);
 
+		subfolder(
+				"bronze/bronze_bulb/",
+				RNBlocks.BRONZE_BULB,
+				RNBlocks.DISCOLORED_BRONZE_BULB,
+				RNBlocks.CORRODED_BRONZE_BULB,
+				RNBlocks.TARNISHED_BRONZE_BULB,
+				RNBlocks.CRYSTALLIZED_BRONZE_BULB
+		);
+
 		subfolder("bronze/cut_bronze_pillar/",
 			(rloc, name, block) -> {
 				sixWayPillar(
@@ -253,6 +262,7 @@ public class RNBlockStates extends BlockStateProvider {
 			.build()
 		);
 	}
+
 
 	public void lantern(Block lamp, String name) {
 		var location = "block/" + name;
