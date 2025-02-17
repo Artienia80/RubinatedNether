@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public enum RNTiers implements Tier {
-    BRONZE(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, -1, 2.0F, 2.0F, 0, () -> Ingredient.of(RNItems.BRONZE_SCRAP.get()));
+    BRONZE(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, -1, 2.0F, 2.0F, 0, () -> Ingredient.of(RNItems.BRONZE_SCRAP.get()));
 
     private final TagKey<Block> incorrectBlocksForDrops;
     private final int uses;
