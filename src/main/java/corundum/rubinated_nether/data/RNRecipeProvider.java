@@ -2,10 +2,13 @@ package corundum.rubinated_nether.data;
 
 import java.util.concurrent.CompletableFuture;
 
+import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.world.item.Items;
@@ -596,6 +599,128 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(Items.NETHERITE_INGOT), has(Items.NETHERITE_INGOT))
 				.unlockedBy(getHasName(Blocks.OBSIDIAN), has(Blocks.OBSIDIAN))
 				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.BRONZE_BULB, 1)
+				.define('B', RNBlocks.BRONZE_BLOCK)
+				.define('R', Items.REDSTONE)
+				.define('X', Items.BLAZE_ROD)
+				.pattern(" B ")
+				.pattern("BXB")
+				.pattern(" R ")
+				.unlockedBy(getHasName(RNBlocks.BRONZE_BLOCK), has(RNBlocks.BRONZE_BLOCK))
+				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.DISCOLORED_BRONZE_BULB, 1)
+				.define('B', RNBlocks.DISCOLORED_BRONZE_BLOCK)
+				.define('R', Items.REDSTONE)
+				.define('X', Items.BLAZE_ROD)
+				.pattern(" B ")
+				.pattern("BXB")
+				.pattern(" R ")
+				.unlockedBy(getHasName(RNBlocks.DISCOLORED_BRONZE_BLOCK), has(RNBlocks.DISCOLORED_BRONZE_BLOCK))
+				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.CORRODED_BRONZE_BULB, 1)
+				.define('B', RNBlocks.CORRODED_BRONZE_BLOCK)
+				.define('R', Items.REDSTONE)
+				.define('X', Items.BLAZE_ROD)
+				.pattern(" B ")
+				.pattern("BXB")
+				.pattern(" R ")
+				.unlockedBy(getHasName(RNBlocks.CORRODED_BRONZE_BLOCK), has(RNBlocks.CORRODED_BRONZE_BLOCK))
+				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.TARNISHED_BRONZE_BULB, 1)
+				.define('B', RNBlocks.TARNISHED_BRONZE_BLOCK)
+				.define('R', Items.REDSTONE)
+				.define('X', Items.BLAZE_ROD)
+				.pattern(" B ")
+				.pattern("BXB")
+				.pattern(" R ")
+				.unlockedBy(getHasName(RNBlocks.TARNISHED_BRONZE_BLOCK), has(RNBlocks.TARNISHED_BRONZE_BLOCK))
+				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.CRYSTALLIZED_BRONZE_BULB, 1)
+				.define('B', RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)
+				.define('R', Items.REDSTONE)
+				.define('X', Items.BLAZE_ROD)
+				.pattern(" B ")
+				.pattern("BXB")
+				.pattern(" R ")
+				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK), has(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))
+				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BULB))), 1)
+				.define('B', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK))))
+				.define('R', Items.REDSTONE)
+				.define('X', Items.BLAZE_ROD)
+				.pattern(" B ")
+				.pattern("BXB")
+				.pattern(" R ")
+				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK)))))
+				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BULB))), 1)
+				.define('B', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK))))
+				.define('R', Items.REDSTONE)
+				.define('X', Items.BLAZE_ROD)
+				.pattern(" B ")
+				.pattern("BXB")
+				.pattern(" R ")
+				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK)))))
+				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BULB))), 1)
+				.define('B', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK))))
+				.define('R', Items.REDSTONE)
+				.define('X', Items.BLAZE_ROD)
+				.pattern(" B ")
+				.pattern("BXB")
+				.pattern(" R ")
+				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK)))))
+				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BULB))), 1)
+				.define('B', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK))))
+				.define('R', Items.REDSTONE)
+				.define('X', Items.BLAZE_ROD)
+				.pattern(" B ")
+				.pattern("BXB")
+				.pattern(" R ")
+				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK)))))
+				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BULB))), 1)
+				.define('B', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))))
+				.define('R', Items.REDSTONE)
+				.define('X', Items.BLAZE_ROD)
+				.pattern(" B ")
+				.pattern("BXB")
+				.pattern(" R ")
+				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)))))
+				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
+				.save(recipeOutput);
+
+
 	}
 
 	private void twoByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {

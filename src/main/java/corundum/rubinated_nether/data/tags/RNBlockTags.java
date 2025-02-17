@@ -156,6 +156,15 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_BULB.get()
 				);
 
+		this.tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).add(
+				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_BULB.get()
+		);
+
 		this.tag(RNTags.Blocks.CRYSTALLIZATION_CATALYST).addTag(RNTags.Blocks.LIT_SOUL_BLOCKS);
 
 		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).addTag(Tags.Blocks.GLASS_BLOCKS_CHEAP);
