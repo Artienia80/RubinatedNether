@@ -53,6 +53,11 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 			.put(RNBlocks.CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get())
 			.put(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get())
 			.put(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get())
+
+			.put(RNBlocks.BRONZE_BULB.get(), RNBlocks.DISCOLORED_BRONZE_BULB.get())
+			.put(RNBlocks.DISCOLORED_BRONZE_BULB.get(), RNBlocks.CORRODED_BRONZE_BULB.get())
+			.put(RNBlocks.CORRODED_BRONZE_BULB.get(), RNBlocks.TARNISHED_BRONZE_BULB.get())
+
 			.build()
 	);
 
