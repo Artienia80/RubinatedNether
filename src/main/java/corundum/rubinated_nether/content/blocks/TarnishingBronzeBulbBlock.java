@@ -6,15 +6,21 @@ import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ChangeOverTimeBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 
 public class TarnishingBronzeBulbBlock extends BronzeBulbBlock implements TarnishingBronze {
 	public static final MapCodec<TarnishingBronzeBulbBlock> CODEC = RecordCodecBuilder.mapCodec(
-			p_309135_ -> p_309135_.group(
-							TarnishingBronze.TarnishState.CODEC.fieldOf("weathering_state").forGetter(TarnishingBronzeBulbBlock::getAge), propertiesCodec()
+			blockInstance -> blockInstance.group(
+							TarnishingBronze.TarnishState.CODEC
+									.fieldOf("tarnishing_state")
+									.forGetter(ChangeOverTimeBlock::getAge),
+							propertiesCodec()
 					)
-					.apply(p_309135_, TarnishingBronzeBulbBlock::new)
+					.apply(blockInstance, TarnishingBronzeBulbBlock::new)
 	);
 	private final TarnishingBronze.TarnishState tarnishState;
 
@@ -26,6 +32,13 @@ public class TarnishingBronzeBulbBlock extends BronzeBulbBlock implements Tarnis
 	public TarnishingBronzeBulbBlock(TarnishingBronze.TarnishState tarnishState, BlockBehaviour.Properties properties) {
 		super(properties);
 		this.tarnishState = tarnishState;
+		this.registerDefaultState(defaultBlockState().setValue(WAXED, false));
+	}
+
+	@Override
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		builder.add(WAXED);
+		super.createBlockStateDefinition(builder);
 	}
 
 	/**
@@ -33,7 +46,6 @@ public class TarnishingBronzeBulbBlock extends BronzeBulbBlock implements Tarnis
 	 */
 	@Override
 	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-
 		if (state.getValue(WAXED))
 			return;
 

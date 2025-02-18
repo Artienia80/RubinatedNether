@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.WeatheringCopperBulbBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -52,7 +53,6 @@ public class BronzeBulbBlock extends Block {
 						null, pos, blockstate.getValue(LIT) ? SoundEvents.COPPER_BULB_TURN_ON : SoundEvents.COPPER_BULB_TURN_OFF, SoundSource.BLOCKS
 				);
 			}
-
 			level.setBlock(pos, blockstate.setValue(POWERED, Boolean.valueOf(flag)), 3);
 		}
 	}
@@ -69,7 +69,6 @@ public class BronzeBulbBlock extends Block {
 
 	/**
 	 * Returns the analog signal this block emits. This is the signal a comparator can read from it.
-	 *
 	 */
 	@Override
 	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {

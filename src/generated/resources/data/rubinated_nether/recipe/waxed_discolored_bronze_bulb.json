@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": {
+      "item": "rubinated_nether:waxed_discolored_bronze_block"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "X": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "pattern": [
+    " B ",
+    "BXB",
+    " R "
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:waxed_discolored_bronze_bulb"
+  }
+}

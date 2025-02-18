@@ -4,6 +4,7 @@ import corundum.rubinated_nether.content.blocks.*;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 
 import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
 
 import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.core.BlockPos;
@@ -13,7 +14,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -570,6 +573,8 @@ public class RNBlocks {
 							.strength(5.0F, 150.0F)
 							.sound(SoundType.COPPER)
 							.randomTicks()
+							.isRedstoneConductor(RNBlocks::never)
+							.lightLevel(litBlockEmission(15))
 			)
 	);
 
@@ -583,6 +588,8 @@ public class RNBlocks {
 							.strength(15.0F, 300.0F)
 							.sound(SoundType.COPPER)
 							.randomTicks()
+							.isRedstoneConductor(RNBlocks::never)
+							.lightLevel(litBlockEmission(12))
 			)
 	);
 
@@ -596,6 +603,8 @@ public class RNBlocks {
 							.strength(25.0F, 600.0F)
 							.sound(SoundType.COPPER)
 							.randomTicks()
+							.isRedstoneConductor(RNBlocks::never)
+							.lightLevel(litBlockEmission(8))
 			)
 	);
 
@@ -609,6 +618,8 @@ public class RNBlocks {
 							.strength(50.0F, 1200.0F)
 							.sound(SoundType.COPPER)
 							.randomTicks()
+							.isRedstoneConductor(RNBlocks::never)
+							.lightLevel(litBlockEmission(4))
 			)
 	);
 
@@ -622,6 +633,8 @@ public class RNBlocks {
 							.strength(1.0F, 6.0F)
 							.sound(SoundType.COPPER)
 							.randomTicks()
+							.isRedstoneConductor(RNBlocks::never)
+							.lightLevel(litBlockEmission(15))
 			)
 	);
 
@@ -654,5 +667,9 @@ public class RNBlocks {
 
 	private static boolean never(BlockState state, BlockGetter blockGetter, BlockPos pos) {
 		return false;
+	}
+
+	private static ToIntFunction<BlockState> litBlockEmission(int lightValue) {
+		return blockState -> blockState.getValue(BlockStateProperties.LIT) ? lightValue : 0;
 	}
 }
