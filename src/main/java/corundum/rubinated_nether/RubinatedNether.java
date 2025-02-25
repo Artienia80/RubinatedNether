@@ -31,6 +31,12 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 @Mod(RubinatedNether.MODID)
 public class RubinatedNether {
+
+	//TODO: Code Cleanup (including reduction in the use of "var")
+	//TODO: Add more comments
+
+	//TODO: Figure out why the f**k accesstransformers are not working
+
 	public static final String MODID = "rubinated_nether";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
@@ -50,13 +56,14 @@ public class RubinatedNether {
 
 	public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
 		LOGGER.info("Rubinating all over your Nether...");
-		MidnightConfig.init(MODID, RNConfig.class);
-
-		for (var registry : REGISTRIES) 
-			registry.register(modEventBus);
 
 		modEventBus.addListener(Datagen::datagen);
 		modEventBus.addListener(DatapackRegistry::datapackRegistry);
+
+		for (DeferredRegister<?> registry : REGISTRIES)
+			registry.register(modEventBus);
+
+		MidnightConfig.init(MODID, RNConfig.class);
 
 		if (dist == Dist.CLIENT) {
 			RubinatedNetherClient.client(modEventBus);
@@ -64,6 +71,7 @@ public class RubinatedNether {
 		}
 	}
 
+	//TODO: Move this in RNGameBusEvents
 	@EventBusSubscriber(modid = MODID)
 	public static class ServerModEvents {
 		@SubscribeEvent
