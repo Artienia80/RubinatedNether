@@ -1,25 +1,21 @@
 package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
-import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNBlockStateProperties;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
 import corundum.rubinated_nether.mixin.accessors.DoublePlantBlockAccessor;
-import corundum.rubinated_nether.utils.BEBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.JukeboxPlayable;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.item.component.CustomData;
@@ -27,8 +23,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.JukeboxBlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -57,10 +51,28 @@ public class RunestoneBlock extends BaseEntityBlock {
 		this.registerDefaultState(this.stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(HAS_RUNE, Boolean.FALSE));
 	}
 
+
+	// General Block Definitions
+
 	@Override
 	protected MapCodec<? extends BaseEntityBlock> codec() {
 		return codec;
 	}
+
+	@Override
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		builder.add(HALF);
+		builder.add(HAS_RUNE);
+	}
+
+	@Override
+	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+		tooltipComponents.add(Component.translatable("tooltip.rubinated_nether.wip.tooltip"));
+		super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+	}
+
+
+	// Model and Shape handling
 
 	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return state.getValue(HALF) == DoubleBlockHalf.LOWER ? SHAPE_BOTTOM : SHAPE_TOP;
@@ -72,22 +84,16 @@ public class RunestoneBlock extends BaseEntityBlock {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-		tooltipComponents.add(Component.translatable("tooltip.rubinated_nether.wip.tooltip"));
-		super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-	}
-
-	@Override
 	protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
 		DoubleBlockHalf doubleblockhalf = state.getValue(HALF);
 		if (facing.getAxis() != Direction.Axis.Y || doubleblockhalf == DoubleBlockHalf.LOWER != (facing == Direction.UP))
 			return doubleblockhalf == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos)
-				? Blocks.AIR.defaultBlockState()
-				: super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+					? Blocks.AIR.defaultBlockState()
+					: super.updateShape(state, facing, facingState, level, currentPos, facingPos);
 		else
 			return facingState.getBlock() instanceof RunestoneBlock && facingState.getValue(HALF) != doubleblockhalf
-				? facingState.setValue(HALF, doubleblockhalf)
-				: Blocks.AIR.defaultBlockState();
+					? facingState.setValue(HALF, doubleblockhalf)
+					: Blocks.AIR.defaultBlockState();
 	}
 
 	@Override
@@ -118,6 +124,7 @@ public class RunestoneBlock extends BaseEntityBlock {
 		CustomData customdata = stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
 		if (customdata.contains("RuneItem")) {
 			level.setBlock(pos, state.setValue(HAS_RUNE, Boolean.TRUE), 2);
+			level.setBlock(pos.above(), state.setValue(HAS_RUNE, Boolean.TRUE).setValue(HALF, DoubleBlockHalf.UPPER), 2);
 		}
 	}
 
@@ -131,17 +138,14 @@ public class RunestoneBlock extends BaseEntityBlock {
 			: blockstate.is(this);
 	}
 
-	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(HALF);
-		builder.add(HAS_RUNE);
-	}
+
+	// Block Entity handling
 
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 		if (state.getValue(HAS_RUNE) && level.getBlockEntity(getCorrectBlockPos(pos, state)) instanceof RunestoneBlockEntity runestoneBlockEntity) {
-
-			runestoneBlockEntity.popOutTheItem(getCorrectBlockPos(pos, state));
+			runestoneBlockEntity.popOutTheItem();
+			handleSyncValue(level, pos, false);
 			return InteractionResult.sidedSuccess(level.isClientSide);
 		} else {
 			return InteractionResult.PASS;
@@ -163,13 +167,40 @@ public class RunestoneBlock extends BaseEntityBlock {
 	protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
 			if (level.getBlockEntity(pos) instanceof RunestoneBlockEntity runestoneBlockEntity) {
-				runestoneBlockEntity.popOutTheItem(getCorrectBlockPos(pos, state));
+				runestoneBlockEntity.popOutTheItem();
 			}
 			super.onRemove(state, level, pos, newState, isMoving);
 		}
 	}
 
-	public ItemInteractionResult tryInsertIntoRunestone(Level level, BlockPos pos, ItemStack stack, Player player) {
+	@Override
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new RunestoneBlockEntity(blockPos, blockState);
+	}
+
+
+	// Private utility methods
+
+	/**
+	 * Always ensures that the position of the upper half of the block is returned.
+	 * This is used mainly for the BlockEntity checks.
+	 */
+	private BlockPos getCorrectBlockPos(BlockPos pos, BlockState state) {
+		return state.getValue(HALF) == DoubleBlockHalf.UPPER ? pos.below() : pos;
+	}
+
+	private void handleSyncValue(Level level, BlockPos pos, boolean bool){
+		BlockState state = level.getBlockState(pos);
+		if(state.getValue(HALF) == DoubleBlockHalf.LOWER) {
+			level.setBlock(pos, state.setValue(HAS_RUNE, bool).setValue(HALF, DoubleBlockHalf.LOWER), 2);
+			level.setBlock(pos.above(), state.setValue(HAS_RUNE, bool).setValue(HALF, DoubleBlockHalf.UPPER), 2);
+		} else {
+			level.setBlock(pos, state.setValue(HAS_RUNE, bool).setValue(HALF, DoubleBlockHalf.UPPER), 2);
+			level.setBlock(pos.below(), state.setValue(HAS_RUNE, bool).setValue(HALF, DoubleBlockHalf.LOWER), 2);
+		}
+	}
+
+	private ItemInteractionResult tryInsertIntoRunestone(Level level, BlockPos pos, ItemStack stack, Player player) {
 		if (!stack.is(RNItems.RUBY_ITEM.asItem()))
 			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
@@ -180,7 +211,7 @@ public class RunestoneBlock extends BaseEntityBlock {
 				BlockEntity blockEntity = level.getBlockEntity(getCorrectBlockPos(pos, blockstate));
 				if (blockEntity instanceof RunestoneBlockEntity runestoneBlockEntity) {
 					runestoneBlockEntity.setTheItem(itemstack);
-					blockstate.setValue(HAS_RUNE, Boolean.TRUE);
+					handleSyncValue(level, pos, true);
 					level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockstate));
 				}
 			}
@@ -188,18 +219,5 @@ public class RunestoneBlock extends BaseEntityBlock {
 		} else {
 			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 		}
-	}
-
-	@Override
-	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-		return new RunestoneBlockEntity(blockPos, blockState);
-	}
-
-	/**
-	 * Always ensures that the position of the upper half of the block is returned.
-	 * This is used mainly for the BlockEntity checks.
-	 */
-	private BlockPos getCorrectBlockPos(BlockPos pos, BlockState state) {
-		return state.getValue(HALF) == DoubleBlockHalf.UPPER ? pos.below() : pos;
 	}
 }

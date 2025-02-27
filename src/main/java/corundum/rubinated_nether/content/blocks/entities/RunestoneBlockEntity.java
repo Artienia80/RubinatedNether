@@ -34,12 +34,13 @@ public class RunestoneBlockEntity extends BlockEntity implements Clearable, Cont
         }
     }
 
-    public void popOutTheItem(BlockPos blockpos) {
+    public void popOutTheItem() {
         if (this.level != null && !this.level.isClientSide) {
             ItemStack itemstack = this.getTheItem();
+            BlockPos blockpos = this.getBlockPos();
             if (!itemstack.isEmpty()) {
                 this.removeTheItem();
-                Vec3 vec3 = Vec3.atLowerCornerWithOffset(blockpos, 0.5F, 1.01, 0.5F).offsetRandom(this.level.random, 0.7F);
+                Vec3 vec3 = Vec3.atLowerCornerWithOffset(blockpos.above(), 0.5F, 1.01, 0.5F).offsetRandom(this.level.random, 0.7F);
                 ItemStack itemstack1 = itemstack.copy();
                 ItemEntity itementity = new ItemEntity(this.level, vec3.x(), vec3.y(), vec3.z(), itemstack1);
                 itementity.setDefaultPickUpDelay();
