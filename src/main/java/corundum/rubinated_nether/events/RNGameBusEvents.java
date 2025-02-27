@@ -1,22 +1,31 @@
 package corundum.rubinated_nether.events;
 
+import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.items.DrillItem;
+import corundum.rubinated_nether.misc.DatapackRegistry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@EventBusSubscriber(modid = RubinatedNether.MODID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = RubinatedNether.MODID)
 public class RNGameBusEvents {
+
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     private static final Map<UUID, Long> lastMiningTick = new HashMap<>();
     private static final Map<UUID, Integer> decayTicks = new HashMap<>();
@@ -95,6 +104,22 @@ public class RNGameBusEvents {
                     }
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void freezerFuel(ServerAboutToStartEvent event) {
+        FreezerBlockEntity.cleanFreezingTimes();
+
+        var entries = event.getServer().registryAccess().registryOrThrow(DatapackRegistry.FREEZER_FUELS).entrySet();
+        LOGGER.info("Registered Freezer Fuels: {}", entries.size());
+
+        for (var entry : entries) {
+            var x = entry.getValue();
+            var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(x.item()));
+
+            LOGGER.info(x.toString());
+            FreezerBlockEntity.addItemFreezingTime(item, x.freezeTime());
         }
     }
 }

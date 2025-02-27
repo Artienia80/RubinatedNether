@@ -71,26 +71,6 @@ public class RubinatedNether {
 		}
 	}
 
-	//TODO: Move this in RNGameBusEvents
-	@EventBusSubscriber(modid = MODID)
-	public static class ServerModEvents {
-		@SubscribeEvent
-		public static void freezerFuel(ServerAboutToStartEvent event) {
-			FreezerBlockEntity.cleanFreezingTimes();
-
-			var entries = event.getServer().registryAccess().registryOrThrow(DatapackRegistry.FREEZER_FUELS).entrySet();
-			LOGGER.info("Registered Freezer Fuels: " + entries.size());
-
-			for (var entry : entries) {
-				var x = entry.getValue();
-				var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(x.item()));
-
-				LOGGER.info(x.toString());
-				FreezerBlockEntity.addItemFreezingTime(item, x.freezeTime());
-			}
-		}
-	}
-
 	public static ResourceLocation id(String s) {
 		return ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, s);
 	}

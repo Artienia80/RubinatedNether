@@ -4,6 +4,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RubyLaserBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -37,5 +38,13 @@ public class RNBlockEntities {
 			RubyLaserBlockEntity::new, 
 			RNBlocks.RUBY_LASER.get()
 		).build(null)
+	);
+
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RunestoneBlockEntity>> RUNESTONE = BLOCK_ENTITY_TYPES.register(
+			"runestone",
+			() -> BlockEntityType.Builder.of(
+					RunestoneBlockEntity::new,
+					RNBlocks.RUNESTONE.get()
+			).build(null)
 	);
 }
