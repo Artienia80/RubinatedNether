@@ -18,9 +18,20 @@ public class RNRecipeCategories {
 	*/
 	public static void registerRecipeCategories(RegisterRecipeBookCategoriesEvent event) {
 		// Freezing
-		event.registerBookCategories(RNRecipeBookTypes.FREEZER, ImmutableList.of(RUBINATED_NETHER_FREEZABLE_SEARCH.get(), RUBINATED_NETHER_FREEZABLE_MISC.get()));
-		event.registerAggregateCategory(RUBINATED_NETHER_FREEZABLE_SEARCH.get(), ImmutableList.of(RUBINATED_NETHER_FREEZABLE_MISC.get()));
+		event.registerBookCategories(
+					RNRecipeBookTypes.FREEZER,
+					ImmutableList.of(RUBINATED_NETHER_FREEZABLE_SEARCH.get(),
+					RUBINATED_NETHER_FREEZABLE_MISC.get())
+				);
 
-		event.registerRecipeCategoryFinder(RNRecipes.FREEZING.get(), recipe -> RUBINATED_NETHER_FREEZABLE_MISC.get());
+		event.registerAggregateCategory(
+					RUBINATED_NETHER_FREEZABLE_SEARCH.get(),
+					ImmutableList.of(RUBINATED_NETHER_FREEZABLE_MISC.get())
+				);
+
+		event.registerRecipeCategoryFinder(
+					RNRecipes.FREEZING.get(),
+				recipe -> RUBINATED_NETHER_FREEZABLE_MISC.get()
+				);
 	}
 }

@@ -2,7 +2,6 @@ package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.blocks.RunestoneBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -12,7 +11,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.ticks.ContainerSingleItem;
 
@@ -27,33 +25,32 @@ public class RunestoneBlockEntity extends BlockEntity implements Clearable, Cont
 
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        if (tag.contains("RuneItem")) {
+        if (tag.contains("RuneItem"))
             this.item = ItemStack.parse(registries, tag.getCompound("RuneItem")).orElse(ItemStack.EMPTY);
-        } else {
+        else
             this.item = ItemStack.EMPTY;
-        }
+
     }
 
     public void popOutTheItem() {
-        if (this.level != null && !this.level.isClientSide) {
-            ItemStack itemstack = this.getTheItem();
-            BlockPos blockpos = this.getBlockPos();
-            if (!itemstack.isEmpty()) {
-                this.removeTheItem();
-                Vec3 vec3 = Vec3.atLowerCornerWithOffset(blockpos, 0.5F, 1.01, 0.5F).offsetRandom(this.level.random, 0.7F);
-                ItemStack itemstack1 = itemstack.copy();
-                ItemEntity itementity = new ItemEntity(this.level, vec3.x(), vec3.y(), vec3.z(), itemstack1);
-                itementity.setDefaultPickUpDelay();
-                this.level.addFreshEntity(itementity);
-            }
-        }
+        if (this.level == null || this.level.isClientSide) return;
+
+        ItemStack itemstack = this.getTheItem();
+        if (itemstack.isEmpty()) return;
+
+        this.removeTheItem();
+        Vec3 vec3 = Vec3.atLowerCornerWithOffset(this.getBlockPos(), 0.5F, 1.01, 0.5F)
+                .offsetRandom(this.level.random, 0.7F);
+        ItemStack itemstackCopy = itemstack.copy();
+        ItemEntity itementity = new ItemEntity(this.level, vec3.x(), vec3.y(), vec3.z(), itemstackCopy);
+        itementity.setDefaultPickUpDelay();
+        this.level.addFreshEntity(itementity);
     }
 
     public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        if (!this.getTheItem().isEmpty()) {
+        if (!this.getTheItem().isEmpty())
             tag.put("RuneItem", this.getTheItem().save(registries));
-        }
     }
 
     public ItemStack getTheItem() {

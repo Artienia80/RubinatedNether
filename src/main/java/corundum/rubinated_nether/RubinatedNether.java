@@ -29,6 +29,15 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+/**
+ * A couple of guidelines for this codebase: <br>
+ * 		<b>-</b> The number of parameters in a method should never be more than <b>7</b>. <br>
+ * 		<b>-</b> In normal circumstances, methods should not be longer than <b>10</b> lines of code.
+ * 		Having more than that likely means some behaviour can be detached. And yes, lines with just
+ * 		a bracket or single line breakdowns don't count.	<br>
+ * 		<b>-</b> It is recommended that a line doesn't go over <b>100</b> columns. If it does it is either
+ * 		by a small count, or they should be cut down into more lines. <br>
+ */
 @Mod(RubinatedNether.MODID)
 public class RubinatedNether {
 

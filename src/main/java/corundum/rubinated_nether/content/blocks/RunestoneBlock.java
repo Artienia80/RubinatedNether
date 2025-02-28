@@ -107,25 +107,28 @@ public class RunestoneBlock extends BaseEntityBlock {
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		BlockPos blockpos = context.getClickedPos();
+		BlockPos blockPos = context.getClickedPos();
 		Level level = context.getLevel();
+		BlockPos abovePos = blockPos.above();
+		BlockState aboveState = level.getBlockState(abovePos);
 
-		if (blockpos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(blockpos.above()).canBeReplaced(context))
+		if (blockPos.getY() < level.getMaxBuildHeight() - 1 && aboveState.canBeReplaced(context))
 			return this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(HAS_RUNE, Boolean.FALSE);
-		else
-			return null;
+
+		return null;
 	}
 
 	@Override
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(level, pos, state, placer, stack);
 
-		level.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), 3);
 		CustomData customdata = stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
 		if (customdata.contains("RuneItem")) {
 			level.setBlock(pos, state.setValue(HAS_RUNE, Boolean.TRUE), 2);
-			level.setBlock(pos.above(), state.setValue(HAS_RUNE, Boolean.TRUE).setValue(HALF, DoubleBlockHalf.UPPER), 2);
-		}
+			level.setBlock(pos.above(), state.setValue(HAS_RUNE, Boolean.TRUE)
+					.setValue(HALF, DoubleBlockHalf.UPPER), 3);
+		} else
+			level.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), 3);
 	}
 
 	@Override
@@ -145,32 +148,31 @@ public class RunestoneBlock extends BaseEntityBlock {
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 		if (state.getValue(HAS_RUNE) && level.getBlockEntity(getCorrectBlockPos(pos, state)) instanceof RunestoneBlockEntity runestoneBlockEntity) {
 			runestoneBlockEntity.popOutTheItem();
-			handleSyncValue(level, pos, false);
+			handleSyncRuneValue(level, pos, false);
 			return InteractionResult.sidedSuccess(level.isClientSide);
-		} else {
-			return InteractionResult.PASS;
 		}
+
+		return InteractionResult.PASS;
 	}
 
 	@Override
 	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-		if (state.getValue(HAS_RUNE)) {
+		if (state.getValue(HAS_RUNE))
 			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-		} else {
-			ItemStack itemstack = player.getItemInHand(hand);
-			ItemInteractionResult iteminteractionresult = tryInsertIntoRunestone(level, pos, itemstack, player);
-			return !iteminteractionresult.consumesAction() ? ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION : iteminteractionresult;
-		}
+
+		ItemStack itemstack = player.getItemInHand(hand);
+		ItemInteractionResult iteminteractionresult = tryInsertIntoRunestone(level, pos, itemstack, player);
+		return !iteminteractionresult.consumesAction() ? ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION : iteminteractionresult;
 	}
 
 	@Override
 	protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!state.is(newState.getBlock())) {
-			if (level.getBlockEntity(pos) instanceof RunestoneBlockEntity runestoneBlockEntity) {
-				runestoneBlockEntity.popOutTheItem();
-			}
-			super.onRemove(state, level, pos, newState, isMoving);
-		}
+		if (state.is(newState.getBlock())) return;
+
+		if (level.getBlockEntity(pos) instanceof RunestoneBlockEntity runestoneBlockEntity)
+			runestoneBlockEntity.popOutTheItem();
+
+		super.onRemove(state, level, pos, newState, isMoving);
 	}
 
 	@Override
@@ -182,42 +184,55 @@ public class RunestoneBlock extends BaseEntityBlock {
 	// Private utility methods
 
 	/**
-	 * Always ensures that the position of the upper half of the block is returned.
+	 * Always ensures that the position of the lower half of the block is returned.
 	 * This is used mainly for the BlockEntity checks.
 	 */
 	private BlockPos getCorrectBlockPos(BlockPos pos, BlockState state) {
 		return state.getValue(HALF) == DoubleBlockHalf.UPPER ? pos.below() : pos;
 	}
 
-	private void handleSyncValue(Level level, BlockPos pos, boolean bool){
+	/**
+	 * Ensures the {@code HAS_RUNE} value is always synced and updated for both blocks.
+	 * <p>
+	 * The blocks NEED to be replaced to alter their values.
+	 */
+	private void handleSyncRuneValue(Level level, BlockPos pos, boolean bool) {
 		BlockState state = level.getBlockState(pos);
 		if(state.getValue(HALF) == DoubleBlockHalf.LOWER) {
-			level.setBlock(pos, state.setValue(HAS_RUNE, bool).setValue(HALF, DoubleBlockHalf.LOWER), 2);
-			level.setBlock(pos.above(), state.setValue(HAS_RUNE, bool).setValue(HALF, DoubleBlockHalf.UPPER), 2);
+			level.setBlock(pos, state.setValue(HAS_RUNE, bool)
+					.setValue(HALF, DoubleBlockHalf.LOWER), 2);
+			level.setBlock(pos.above(), state.setValue(HAS_RUNE, bool)
+					.setValue(HALF, DoubleBlockHalf.UPPER), 2);
 		} else {
-			level.setBlock(pos, state.setValue(HAS_RUNE, bool).setValue(HALF, DoubleBlockHalf.UPPER), 2);
-			level.setBlock(pos.below(), state.setValue(HAS_RUNE, bool).setValue(HALF, DoubleBlockHalf.LOWER), 2);
+			level.setBlock(pos, state.setValue(HAS_RUNE, bool)
+					.setValue(HALF, DoubleBlockHalf.UPPER), 2);
+			level.setBlock(pos.below(), state.setValue(HAS_RUNE, bool)
+					.setValue(HALF, DoubleBlockHalf.LOWER), 2);
 		}
 	}
 
 	private ItemInteractionResult tryInsertIntoRunestone(Level level, BlockPos pos, ItemStack stack, Player player) {
+		BlockState blockState = level.getBlockState(pos);
+
 		if (!stack.is(RNItems.RUBY_ITEM.asItem()))
 			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-		BlockState blockstate = level.getBlockState(pos);
-		if (blockstate.is(RNBlocks.RUNESTONE) && !blockstate.getValue(HAS_RUNE)) {
-			if (!level.isClientSide) {
-				ItemStack itemstack = stack.consumeAndReturn(1, player);
-				BlockEntity blockEntity = level.getBlockEntity(getCorrectBlockPos(pos, blockstate));
-				if (blockEntity instanceof RunestoneBlockEntity runestoneBlockEntity) {
-					runestoneBlockEntity.setTheItem(itemstack);
-					handleSyncValue(level, pos, true);
-					level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockstate));
-				}
-			}
-			return ItemInteractionResult.sidedSuccess(level.isClientSide);
-		} else {
+		if (!blockState.is(RNBlocks.RUNESTONE) || blockState.getValue(HAS_RUNE))
 			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-		}
+
+		if (!level.isClientSide)
+			setItemIntoRunestone(level, pos, blockState, player, stack);
+
+		return ItemInteractionResult.sidedSuccess(level.isClientSide);
+	}
+
+	private void setItemIntoRunestone(Level level, BlockPos pos, BlockState blockState, Player player, ItemStack stack) {
+		BlockEntity blockEntity = level.getBlockEntity(getCorrectBlockPos(pos, blockState));
+		if (!(blockEntity instanceof RunestoneBlockEntity)) return;
+
+		ItemStack itemStack = stack.consumeAndReturn(1, player);
+		((RunestoneBlockEntity) blockEntity).setTheItem(itemStack);
+		handleSyncRuneValue(level, pos, true);
+		level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockState));
 	}
 }
