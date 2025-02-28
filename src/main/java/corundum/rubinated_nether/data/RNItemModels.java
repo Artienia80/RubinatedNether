@@ -34,6 +34,7 @@ public class RNItemModels extends ItemModelProvider {
 			RNBlocks.SOAKSTONE,
 
 			RNBlocks.BRAZIER,
+			RNBlocks.RUBINATION_ALTAR,
 
 			RNBlocks.RUBY_GLASS,
 			RNBlocks.ORNATE_RUBY_GLASS,

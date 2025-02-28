@@ -49,7 +49,8 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
 
 			RNBlocks.FREEZER.get(),
-			RNBlocks.BRAZIER.get()
+			RNBlocks.BRAZIER.get(),
+			RNBlocks.RUBINATION_ALTAR.get()
 		);
 
 		this.tag(BlockTags.NEEDS_STONE_TOOL).add(
@@ -99,6 +100,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
 				RNBlocks.RUNESTONE.get(),
 				RNBlocks.BRAZIER.get(),
+				RNBlocks.RUBINATION_ALTAR.get(),
 
 				RNBlocks.BRONZE_BLOCK.get(),
 				RNBlocks.DISCOLORED_BRONZE_BLOCK.get(),

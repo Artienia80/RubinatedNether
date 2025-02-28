@@ -20,6 +20,8 @@ public class RNItems {
 	public static final DeferredItem<Item> RUBY_SHARD_ITEM = basicItem("ruby_shard");
 	public static final DeferredItem<Item> MOLTEN_RUBY_NUGGET_ITEM = basicItem("molten_ruby_nugget");
 
+	public static final DeferredItem<Item> TEMPLATE_RUNE = basicItem("template_rune", 1);
+
 	public static final DeferredItem<Item> BRONZE_DRILL = ITEMS.register(
 			"bronze_drill",
 			() -> new DrillItem(
@@ -65,6 +67,13 @@ public class RNItems {
 		return ITEMS.registerSimpleItem(
 			name, 
 			new Item.Properties()
+		);
+	}
+
+	public static DeferredItem<Item> basicItem(String name, int stacksTo) {
+		return ITEMS.registerSimpleItem(
+				name,
+				new Item.Properties().stacksTo(stacksTo)
 		);
 	}
 }

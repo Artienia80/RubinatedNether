@@ -1,10 +1,7 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
-import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
-import corundum.rubinated_nether.content.blocks.entities.RubyLaserBlockEntity;
-import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -45,6 +42,14 @@ public class RNBlockEntities {
 			() -> BlockEntityType.Builder.of(
 					RunestoneBlockEntity::new,
 					RNBlocks.RUNESTONE.get()
+			).build(null)
+	);
+
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RubinationAltarBlockEntity>> RUBINATION_ALTAR = BLOCK_ENTITY_TYPES.register(
+			"rubination_altar",
+			() -> BlockEntityType.Builder.of(
+					RubinationAltarBlockEntity::new,
+					RNBlocks.RUBINATION_ALTAR.get()
 			).build(null)
 	);
 }

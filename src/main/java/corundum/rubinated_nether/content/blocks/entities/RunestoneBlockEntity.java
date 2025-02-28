@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -75,9 +76,8 @@ public class RunestoneBlockEntity extends BlockEntity implements Clearable, Cont
         return this;
     }
 
-    //TODO: replace with Runes tag
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return stack.is(RNItems.RUBY_ITEM.asItem()) && this.getItem(slot).isEmpty();
+        return stack.is(RNTags.Items.RUNES) && this.getItem(slot).isEmpty();
     }
 
     public boolean canTakeItem(Container target, int slot, ItemStack stack) {

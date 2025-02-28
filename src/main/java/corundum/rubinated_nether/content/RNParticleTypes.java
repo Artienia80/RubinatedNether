@@ -18,4 +18,9 @@ public final class RNParticleTypes {
 		"ruby_aura",
 		() -> new SimpleParticleType(true)
 	);
+
+	public static final Supplier<SimpleParticleType> RUBINATE = PARTICLES.register(
+			"rubinate",
+			() -> new SimpleParticleType(false)
+	);
 }

@@ -11,7 +11,7 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.material.Fluid;
 
 /**
- * Utility class for accessing modded tags
+ * Custom Tags definition
  */
 public final class RNTags {
 
@@ -47,6 +47,8 @@ public final class RNTags {
 		public static final TagKey<Item> RUBY_SHARDS = createTag(Registries.ITEM, "ruby_shard_tag");
 
 		public static final TagKey<Item> LOW_RUBY = createTag(Registries.ITEM, "low_ruby");
+
+		public static final TagKey<Item> RUNES = createTag(Registries.ITEM, "runes");
 	}
 
 	public static final class Dimensions {

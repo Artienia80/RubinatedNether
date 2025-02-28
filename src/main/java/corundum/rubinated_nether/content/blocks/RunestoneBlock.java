@@ -3,7 +3,7 @@ package corundum.rubinated_nether.content.blocks;
 import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.content.RNBlockStateProperties;
 import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
 import corundum.rubinated_nether.mixin.accessors.DoublePlantBlockAccessor;
 import net.minecraft.core.BlockPos;
@@ -146,7 +146,9 @@ public class RunestoneBlock extends BaseEntityBlock {
 
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-		if (state.getValue(HAS_RUNE) && level.getBlockEntity(getCorrectBlockPos(pos, state)) instanceof RunestoneBlockEntity runestoneBlockEntity) {
+		if (!state.getValue(HAS_RUNE)) return InteractionResult.PASS;
+
+		if(level.getBlockEntity(getCorrectBlockPos(pos, state)) instanceof RunestoneBlockEntity runestoneBlockEntity) {
 			runestoneBlockEntity.popOutTheItem();
 			handleSyncRuneValue(level, pos, false);
 			return InteractionResult.sidedSuccess(level.isClientSide);
@@ -214,7 +216,7 @@ public class RunestoneBlock extends BaseEntityBlock {
 	private ItemInteractionResult tryInsertIntoRunestone(Level level, BlockPos pos, ItemStack stack, Player player) {
 		BlockState blockState = level.getBlockState(pos);
 
-		if (!stack.is(RNItems.RUBY_ITEM.asItem()))
+		if (!stack.is(RNTags.Items.RUNES))
 			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
 		if (!blockState.is(RNBlocks.RUNESTONE) || blockState.getValue(HAS_RUNE))

@@ -36,6 +36,12 @@ public class RNBlockStates extends BlockStateProvider {
 				.withExistingParent("ruby_brazier", this.modLoc("block/ruby_brazier_base"))
 		);
 
+		this.simpleBlock(
+				RNBlocks.RUBINATION_ALTAR.get(),
+				this.models()
+						.withExistingParent("rubination_altar", this.modLoc("block/rubination_altar_base"))
+		);
+
 		lantern(
 			RNBlocks.RUBY_LANTERN.get(),
 			"ruby_lantern"

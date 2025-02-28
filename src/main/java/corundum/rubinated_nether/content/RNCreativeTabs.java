@@ -75,6 +75,7 @@ public class RNCreativeTabs {
 					RNBlocks.CHANDELIER,
 					RNBlocks.LAVA_LAMP,
 					RNBlocks.BRAZIER,
+					RNBlocks.RUBINATION_ALTAR,
 
 					RNBlocks.FREEZER,
 					RNItems.POWDER_SNOW,

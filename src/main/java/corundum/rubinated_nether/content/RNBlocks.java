@@ -32,6 +32,7 @@ public class RNBlocks {
 				.requiresCorrectToolForDrops()
 		)
 	);
+
 	public static final DeferredBlock<Block> RUBINATED_BLACKSTONE = registerBlockAndItem(
 		"rubinated_blackstone", 
 		() -> new DropExperienceBlock(
@@ -39,6 +40,7 @@ public class RNBlocks {
 			Block.Properties.ofFullCopy(Blocks.GILDED_BLACKSTONE)
 		)
 	);
+
 	public static final DeferredBlock<Block> MOLTEN_RUBY_ORE = registerBlockAndItem(
 		"molten_ruby_ore",
 		() -> new MagmaExperienceBlock(
@@ -63,6 +65,7 @@ public class RNBlocks {
 			"molten_ruby_block",
 			() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK))
 	);
+
 	public static final DeferredBlock<Block> BLEEDING_OBSIDIAN = registerBlockAndItem(
 		"bleeding_obsidian", 
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.CRYING_OBSIDIAN))
@@ -72,6 +75,7 @@ public class RNBlocks {
 		"ruby_lantern",
 		() -> new LanternBlock(Block.Properties.ofFullCopy(Blocks.LANTERN))
 	);
+
 	public static final DeferredBlock<Block> CHANDELIER = registerBlockAndItem(
 		"ruby_chandelier",
 		() -> new ChandelierBlock(
@@ -81,6 +85,7 @@ public class RNBlocks {
 				.lightLevel($ -> 15)
 		)
 	);
+
 	public static final DeferredBlock<RotatedPillarBlock> LAVA_LAMP = registerBlockAndItem(
 		"lava_lamp",
 		() -> new LavaLampBlock(
@@ -89,6 +94,7 @@ public class RNBlocks {
 				.lightLevel($ -> 15)
 		)
 	);
+
 	public static final DeferredBlock<Block> DRY_ICE = registerBlockAndItem(
 		"dry_ice",
 		() -> new DryIceBlock(
@@ -98,6 +104,7 @@ public class RNBlocks {
 				.friction(0.995f)
 		)
 	);
+
 	public static final DeferredBlock<Block> SOAKSTONE = registerBlockAndItem(
 		"soakstone",
 		() -> new LavaSpongeBlock(Block.Properties.ofFullCopy(Blocks.NETHERRACK))
@@ -286,6 +293,17 @@ public class RNBlocks {
 				.noOcclusion()
 		)
 	);
+
+	public static final DeferredBlock<Block> RUBINATION_ALTAR = registerBlockAndItem(
+			"rubination_altar",
+			() -> new RubinationAltarBlock(
+					BlockBehaviour.Properties
+							.ofFullCopy(Blocks.OBSIDIAN)
+							.mapColor(MapColor.NETHER)
+			)
+	);
+
+
 
 	// BRONZE BLOCKS
 

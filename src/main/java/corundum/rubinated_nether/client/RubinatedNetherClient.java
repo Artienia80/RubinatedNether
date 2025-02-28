@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.client;
 
+import corundum.rubinated_nether.client.particles.RubinationAltarParticle;
 import corundum.rubinated_nether.client.particles.RubyAuraParticle;
 import corundum.rubinated_nether.client.render.entity.RubyLensModel;
 import corundum.rubinated_nether.client.render.entity.RubyLensRenderLayer;
@@ -54,5 +55,5 @@ public class RubinatedNetherClient {
 
 	public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
 		event.registerSpriteSet(RNParticleTypes.RUBY_AURA.get(), RubyAuraParticle.Provider::new);
-	}
+		event.registerSpriteSet(RNParticleTypes.RUBINATE.get(), RubinationAltarParticle.Provider::new);	}
 }
