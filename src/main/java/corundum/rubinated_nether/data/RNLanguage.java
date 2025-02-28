@@ -62,6 +62,8 @@ public class RNLanguage extends RNLanguageProvider {
 		addItem(RNItems.RUBY_LENS, "Ruby Lens");
 
 		addBlock(RNBlocks.RUNESTONE, "Runestone");
+		addBlock(RNBlocks.RUBINATION_ALTAR, "Rubination Altar");
+
 		addBlock(RNBlocks.FREEZER, "Freezer");
 		addBlock(RNBlocks.BRAZIER, "Brazier");
 
@@ -100,9 +102,18 @@ public class RNLanguage extends RNLanguageProvider {
 		addWaxableBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS, "Crystallized Cut Bronze Brick Stairs");
 		addWaxableBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB, "Crystallized Cut Bronze Brick Slab");
 
+		addWaxableBlock(RNBlocks.BRONZE_BULB, "Bronze Bulb");
+		addWaxableBlock(RNBlocks.DISCOLORED_BRONZE_BULB, "Discolored Bronze Bulb");
+		addWaxableBlock(RNBlocks.CORRODED_BRONZE_BULB, "Corroded Bronze Bulb");
+		addWaxableBlock(RNBlocks.TARNISHED_BRONZE_BULB, "Tarnished Bronze Bulb");
+		addWaxableBlock(RNBlocks.CRYSTALLIZED_BRONZE_BULB, "Crystallized Bronze Bulb");
+
+
 		addItem(RNItems.BRONZE_ROD, "Bronze Rod");
 		addItem(RNItems.BRONZE_SCRAP, "Bronze Scrap");
 		addItem(RNItems.BRONZE_SHOT, "Bronze Shot");
+		addItem(RNItems.BRONZE_DRILL, "Bronze Drill");
+
 
 
 		add(RNCreativeTabs.RN_TAB.get().getDisplayName().getString(), "Rubinated Nether");
