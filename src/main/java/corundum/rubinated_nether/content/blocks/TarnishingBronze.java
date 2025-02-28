@@ -91,6 +91,11 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 			map.put(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
 			map.put(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
 
+			map.put(RNBlocks.BRONZE_BULB.get(), RNBlocks.CRYSTALLIZED_BRONZE_BULB.get());
+			map.put(RNBlocks.DISCOLORED_BRONZE_BULB.get(), RNBlocks.CRYSTALLIZED_BRONZE_BULB.get());
+			map.put(RNBlocks.CORRODED_BRONZE_BULB.get(), RNBlocks.CRYSTALLIZED_BRONZE_BULB.get());
+			map.put(RNBlocks.TARNISHED_BRONZE_BULB.get(), RNBlocks.CRYSTALLIZED_BRONZE_BULB.get());
+
 			return Collections.unmodifiableMap(map);
 		}
 	);
