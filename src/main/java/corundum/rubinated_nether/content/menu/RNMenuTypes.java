@@ -14,10 +14,18 @@ public class RNMenuTypes {
 	);
 
 	public static final DeferredHolder<MenuType<?>, MenuType<FreezerMenu>> FREEZER_MENU = MENUS.register(
-		"freezer_menu", 
-		() -> new MenuType<>(
-			FreezerMenu::new, 
-			FeatureFlags.VANILLA_SET
-		)
+			"freezer_menu",
+			() -> new MenuType<>(
+					FreezerMenu::new,
+					FeatureFlags.VANILLA_SET
+			)
 	);
+
+	public static final DeferredHolder<MenuType<?>, MenuType<RubinationMenu>> RUBINATION_MENU = MENUS.register(
+			"rubination_menu",
+			() -> new MenuType<>(
+					RubinationMenu::new,
+					FeatureFlags.VANILLA_SET
+			)
+																										);
 }
