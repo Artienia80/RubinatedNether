@@ -8,8 +8,10 @@ import corundum.rubinated_nether.content.gui.RubyLensOverlay;
 import corundum.rubinated_nether.content.items.DrillItem;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.screen.FreezerScreen;
+import corundum.rubinated_nether.content.screen.RubinationScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -45,10 +47,8 @@ public class RNClientModBusEvents {
 
 	@SubscribeEvent
 	public static void registerMenuScreens(RegisterMenuScreensEvent event) {
-		event.register(
-			RNMenuTypes.FREEZER_MENU.get(), 
-			FreezerScreen::new
-		);
+		event.register(RNMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
+		event.register(RNMenuTypes.RUBINATION_MENU.get(), RubinationScreen::new);
 	}
 
 

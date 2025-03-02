@@ -6,6 +6,7 @@ import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNParticleTypes;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RubinationAltarBlockEntity;
+import corundum.rubinated_nether.content.menu.RubinationMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
@@ -70,15 +71,15 @@ public class RubinationAltarBlock extends BaseEntityBlock {
 
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         super.animateTick(state, level, pos, random);
-        Iterator<BlockPos> iterator = RUNESTONE_OFFSETS.iterator();
 
-        while(iterator.hasNext()) {
-            BlockPos blockPos = iterator.next();
-            if (random.nextInt(1) == 0 && isValidCatalyst(level, pos, blockPos)) {
-                level.addParticle(RNParticleTypes.RUBINATE.get(), (double)pos.getX() + 0.5, (double)pos.getY() + 2.0, (double)pos.getZ() + 0.5, (double)((float)blockPos.getX() + random.nextFloat()) - 0.5, (double)((float)blockPos.getY() - random.nextFloat() - 0.5F), (double)((float)blockPos.getZ() + random.nextFloat()) - 0.5);
-            }
+        for (BlockPos blockPos : RUNESTONE_OFFSETS) {
+            if (random.nextInt(1) == 0 && isValidCatalyst(level, pos, blockPos))
+                level.addParticle(RNParticleTypes.RUBINATE.get(),
+                        (double) pos.getX() + 0.5, (double) pos.getY() + 2.0, (double) pos.getZ() + 0.5,
+                        (double) ((float) blockPos.getX() + random.nextFloat()) - 0.5,
+                        (float) blockPos.getY() - random.nextFloat() - 0.5F,
+                        (double) ((float) blockPos.getZ() + random.nextFloat()) - 0.5);
         }
-
     }
 
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
@@ -103,8 +104,11 @@ public class RubinationAltarBlock extends BaseEntityBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        use(state, level, pos, player);
-        return ItemInteractionResult.SUCCESS;
+        return switch(use(state, level, pos, player)) {
+            case InteractionResult.SUCCESS -> ItemInteractionResult.SUCCESS;
+            case InteractionResult.CONSUME -> ItemInteractionResult.CONSUME;
+            default -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
     }
 
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player) {
@@ -117,12 +121,16 @@ public class RubinationAltarBlock extends BaseEntityBlock {
     }
 
     @Nullable
+    @Override
     public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
+        if(!(blockEntity instanceof RubinationAltarBlockEntity altarBlockEntity)) return null;
 
-        Component component = ((Nameable)blockEntity).getDisplayName();
-        return new SimpleMenuProvider((i, inventory, player) -> new EnchantmentMenu(i, inventory, ContainerLevelAccess.create(level, pos)),
-                component);
+        Component component = altarBlockEntity.getDisplayName();
+        return new SimpleMenuProvider(
+                (i, inventory, player) -> new RubinationMenu(i, inventory, ContainerLevelAccess.create(level, pos)),
+                component
+        );
     }
 
     @Override
