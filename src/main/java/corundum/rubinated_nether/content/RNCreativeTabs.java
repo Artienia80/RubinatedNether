@@ -90,7 +90,11 @@ public class RNCreativeTabs {
 					RNItems.BRONZE_ROD,
 					RNItems.BRONZE_SCRAP,
 					RNItems.BRONZE_SHOT,
-					RNItems.BRONZE_DRILL
+					RNItems.BRONZE_DRILL,
+
+					RNItems.RITUAL_OFFERING,
+					RNItems.GRAND_RITUAL_OFFERING
+
 				);
 
 				addWaxableItems(

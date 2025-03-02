@@ -58,6 +58,11 @@ public class RNItems {
 	public static final DeferredItem<Item> BRONZE_ROD = basicItem("bronze_rod");
 	public static final DeferredItem<Item> BRONZE_SCRAP = basicItem("bronze_scrap");
 
+	public static final DeferredItem<Item> RITUAL_OFFERING = basicItem("ritual_offering");
+	public static final DeferredItem<Item> GRAND_RITUAL_OFFERING = basicItem("grand_ritual_offering");
+
+
+
 	public static final DeferredItem<Item> BRONZE_SHOT = ITEMS.register(
 		"bronze_shot",
 		() -> new BronzeShotItem(new Item.Properties())

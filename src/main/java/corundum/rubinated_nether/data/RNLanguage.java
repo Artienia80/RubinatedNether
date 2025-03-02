@@ -114,6 +114,9 @@ public class RNLanguage extends RNLanguageProvider {
 		addItem(RNItems.BRONZE_SHOT, "Bronze Shot");
 		addItem(RNItems.BRONZE_DRILL, "Bronze Drill");
 
+		addItem(RNItems.RITUAL_OFFERING, "Ritual Offering");
+		addItem(RNItems.GRAND_RITUAL_OFFERING, "Grand Ritual Offering");
+
 
 
 		add(RNCreativeTabs.RN_TAB.get().getDisplayName().getString(), "Rubinated Nether");
