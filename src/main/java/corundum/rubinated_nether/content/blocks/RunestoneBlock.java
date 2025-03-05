@@ -5,6 +5,8 @@ import corundum.rubinated_nether.content.RNBlockStateProperties;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
+import corundum.rubinated_nether.content.items.Rubination;
+import corundum.rubinated_nether.content.items.RuneItem;
 import corundum.rubinated_nether.mixin.accessors.DoublePlantBlockAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,9 +40,9 @@ import java.util.List;
 
 public class RunestoneBlock extends BaseEntityBlock {
 
-	private MapCodec<? extends BaseEntityBlock> codec = simpleCodec(RunestoneBlock::new);
+	private final MapCodec<? extends BaseEntityBlock> codec = simpleCodec(RunestoneBlock::new);
 
-	public static final BooleanProperty HAS_RUNE = RNBlockStateProperties.HAS_RUNE;
+	public static final EnumProperty<Rubination> HAS_RUNE = RNBlockStateProperties.HAS_RUNE;
 	public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
 	protected static final VoxelShape SHAPE_TOP = Shapes.or(Block.box(1.0, 0.0, 1.0, 15.0, 8.0, 15.0), Block.box(0.0, 8.0, 0.0, 16.0, 16.0, 16.0));
@@ -48,7 +50,7 @@ public class RunestoneBlock extends BaseEntityBlock {
 
 	public RunestoneBlock(BlockBehaviour.Properties properties) {
 		super(properties);
-		this.registerDefaultState(this.stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(HAS_RUNE, Boolean.FALSE));
+		this.registerDefaultState(this.stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(HAS_RUNE, Rubination.EMPTY));
 	}
 
 
@@ -113,7 +115,7 @@ public class RunestoneBlock extends BaseEntityBlock {
 		BlockState aboveState = level.getBlockState(abovePos);
 
 		if (blockPos.getY() < level.getMaxBuildHeight() - 1 && aboveState.canBeReplaced(context))
-			return this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(HAS_RUNE, Boolean.FALSE);
+			return this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(HAS_RUNE, Rubination.EMPTY);
 
 		return null;
 	}
@@ -122,12 +124,13 @@ public class RunestoneBlock extends BaseEntityBlock {
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(level, pos, state, placer, stack);
 
-		CustomData customdata = stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
-		if (customdata.contains("RuneItem")) {
-			level.setBlock(pos, state.setValue(HAS_RUNE, Boolean.TRUE), 2);
-			level.setBlock(pos.above(), state.setValue(HAS_RUNE, Boolean.TRUE)
-					.setValue(HALF, DoubleBlockHalf.UPPER), 3);
-		} else
+		//TODO: figure this out later
+//		CustomData customdata = stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+//		if (customdata.contains("RuneItem")) {
+//			level.setBlock(pos, state.setValue(HAS_RUNE, Boolean.TRUE), 2);
+//			level.setBlock(pos.above(), state.setValue(HAS_RUNE, Boolean.TRUE)
+//					.setValue(HALF, DoubleBlockHalf.UPPER), 3);
+//		} else
 			level.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), 3);
 	}
 
@@ -146,11 +149,11 @@ public class RunestoneBlock extends BaseEntityBlock {
 
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-		if (!state.getValue(HAS_RUNE)) return InteractionResult.PASS;
+		if (state.getValue(HAS_RUNE) == Rubination.EMPTY) return InteractionResult.PASS;
 
 		if(level.getBlockEntity(getCorrectBlockPos(pos, state)) instanceof RunestoneBlockEntity runestoneBlockEntity) {
 			runestoneBlockEntity.popOutTheItem();
-			handleSyncRuneValue(level, pos, false);
+			handleSyncRuneValue(level, pos, Rubination.EMPTY);
 			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
 
@@ -159,7 +162,7 @@ public class RunestoneBlock extends BaseEntityBlock {
 
 	@Override
 	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-		if (state.getValue(HAS_RUNE))
+		if (state.getValue(HAS_RUNE) != Rubination.EMPTY)
 			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
 		ItemStack itemstack = player.getItemInHand(hand);
@@ -198,17 +201,17 @@ public class RunestoneBlock extends BaseEntityBlock {
 	 * <p>
 	 * The blocks NEED to be replaced to alter their values.
 	 */
-	private void handleSyncRuneValue(Level level, BlockPos pos, boolean bool) {
+	private void handleSyncRuneValue(Level level, BlockPos pos, Rubination rubination) {
 		BlockState state = level.getBlockState(pos);
 		if(state.getValue(HALF) == DoubleBlockHalf.LOWER) {
-			level.setBlock(pos, state.setValue(HAS_RUNE, bool)
+			level.setBlock(pos, state.setValue(HAS_RUNE, rubination)
 					.setValue(HALF, DoubleBlockHalf.LOWER), 2);
-			level.setBlock(pos.above(), state.setValue(HAS_RUNE, bool)
+			level.setBlock(pos.above(), state.setValue(HAS_RUNE, rubination)
 					.setValue(HALF, DoubleBlockHalf.UPPER), 2);
 		} else {
-			level.setBlock(pos, state.setValue(HAS_RUNE, bool)
+			level.setBlock(pos, state.setValue(HAS_RUNE, rubination)
 					.setValue(HALF, DoubleBlockHalf.UPPER), 2);
-			level.setBlock(pos.below(), state.setValue(HAS_RUNE, bool)
+			level.setBlock(pos.below(), state.setValue(HAS_RUNE, rubination)
 					.setValue(HALF, DoubleBlockHalf.LOWER), 2);
 		}
 	}
@@ -216,10 +219,10 @@ public class RunestoneBlock extends BaseEntityBlock {
 	private ItemInteractionResult tryInsertIntoRunestone(Level level, BlockPos pos, ItemStack stack, Player player) {
 		BlockState blockState = level.getBlockState(pos);
 
-		if (!stack.is(RNTags.Items.RUNES))
+		if (!stack.is(RNTags.Items.RUNES) || !(stack.getItem() instanceof RuneItem))
 			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-		if (!blockState.is(RNBlocks.RUNESTONE) || blockState.getValue(HAS_RUNE))
+		if (!blockState.is(RNBlocks.RUNESTONE) || blockState.getValue(HAS_RUNE) != Rubination.EMPTY)
 			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
 		if (!level.isClientSide)
@@ -234,7 +237,8 @@ public class RunestoneBlock extends BaseEntityBlock {
 
 		ItemStack itemStack = stack.consumeAndReturn(1, player);
 		((RunestoneBlockEntity) blockEntity).setTheItem(itemStack);
-		handleSyncRuneValue(level, pos, true);
+
+		handleSyncRuneValue(level, pos, ((RuneItem) stack.getItem()).getRubination());
 		level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockState));
 	}
 }

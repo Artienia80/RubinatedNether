@@ -1,9 +1,7 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.items.BronzeShotItem;
-import corundum.rubinated_nether.content.items.DrillItem;
-import corundum.rubinated_nether.content.items.RubyLensItem;
+import corundum.rubinated_nether.content.items.*;
 import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -20,7 +18,13 @@ public class RNItems {
 	public static final DeferredItem<Item> RUBY_SHARD_ITEM = basicItem("ruby_shard");
 	public static final DeferredItem<Item> MOLTEN_RUBY_NUGGET_ITEM = basicItem("molten_ruby_nugget");
 
-	public static final DeferredItem<Item> TEMPLATE_RUNE = basicItem("template_rune", 1);
+	public static final DeferredItem<Item> GREED_RUNE = ITEMS.register(
+			"greed_rune",
+			() -> new RuneItem(
+					new Item.Properties().stacksTo(1),
+					Rubination.GREED
+			)
+	);
 
 	public static final DeferredItem<Item> BRONZE_DRILL = ITEMS.register(
 			"bronze_drill",

@@ -25,7 +25,7 @@ public class RNItemTags extends ItemTagsProvider {
 	@Override
 	protected void addTags(Provider provider) {
 		this.tag(RNTags.Items.RUNES).add(
-				RNItems.TEMPLATE_RUNE.asItem()
+				RNItems.GREED_RUNE.asItem()
 		);
 	}
 }

@@ -168,6 +168,7 @@ public class RNBlocks {
 			.noOcclusion()
 		)
 	);
+
 	public static final DeferredBlock<Block> SHRINE_STONE = registerBlockAndItem(
 		"shrine_stone",
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.DEEPSLATE))
@@ -201,10 +202,12 @@ public class RNBlocks {
 		"shrine_stone_tiles",
 		() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
+
 	public static final DeferredBlock<SlabBlock> SHRINE_STONE_TILES_SLAB = registerBlockAndItem(
 		"shrine_stone_tiles_slab",
 		() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_TILES.get()))
 	);
+
 	public static final DeferredBlock<StairBlock> SHRINE_STONE_TILES_STAIRS = registerBlockAndItem(
 		"shrine_stone_tiles_stairs",
 		() -> new StairBlock(
@@ -212,6 +215,7 @@ public class RNBlocks {
 			BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_TILES.get())
 		)
 	);
+
 	public static final DeferredBlock<WallBlock> SHRINE_STONE_TILES_WALL = registerBlockAndItem(
 		"shrine_stone_tiles_wall",
 		() -> new WallBlock(
