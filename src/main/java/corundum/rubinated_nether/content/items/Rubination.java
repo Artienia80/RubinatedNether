@@ -1,6 +1,5 @@
 package corundum.rubinated_nether.content.items;
 
-import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 
 public enum Rubination implements StringRepresentable {
@@ -21,7 +20,7 @@ public enum Rubination implements StringRepresentable {
     NIMIS("nimis"),
     EMPTY("empty");
 
-    private String name;
+    private final String name;
 
     Rubination(String name) {
         this.name = name;

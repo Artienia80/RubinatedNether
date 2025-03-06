@@ -23,9 +23,23 @@ public class RNItemTags extends ItemTagsProvider {
     }
 
 	@Override
-	protected void addTags(Provider provider) {
+	public void addTags(Provider provider) {
 		this.tag(RNTags.Items.RUNES).add(
-				RNItems.GREED_RUNE.asItem()
+				RNItems.GREED_RUNE.asItem(),
+				RNItems.WRATH_RUNE.asItem(),
+				RNItems.SLOTH_RUNE.asItem(),
+				RNItems.GLUTTONY_RUNE.asItem(),
+				RNItems.ENVY_RUNE.asItem(),
+				RNItems.VAINGLORY_RUNE.asItem(),
+				RNItems.PRIDE_RUNE.asItem(),
+				RNItems.ACEDIA_RUNE.asItem(),
+				RNItems.LUXURIA_RUNE.asItem(),
+				RNItems.INSIDIAE_RUNE.asItem(),
+				RNItems.SUPERBIA_RUNE.asItem(),
+				RNItems.TRISTIA_RUNE.asItem(),
+				RNItems.STUDIOSE_RUNE.asItem(),
+				RNItems.ARDENTER_RUNE.asItem(),
+				RNItems.NIMIS_RUNE.asItem()
 		);
 	}
 }
