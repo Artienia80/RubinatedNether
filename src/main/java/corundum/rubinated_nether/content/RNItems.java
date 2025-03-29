@@ -7,10 +7,7 @@ import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -18,6 +15,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class RNItems {
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(RubinatedNether.MODID);
+
+	private static DeferredItem<Item> redItem(String name) {
+		return ITEMS.register(name, () -> new Item(new Item.Properties()) {
+			@Override
+			public Component getName(ItemStack stack) {
+				return RNRarity.formatRarity(this.getDescriptionId(stack));
+			}
+		});
+	}
 
 	public static final DeferredItem<Item> RUBY_ITEM = basicItem("ruby");
 	public static final DeferredItem<Item> MOLTEN_RUBY_ITEM = basicItem("molten_ruby");
@@ -103,12 +109,7 @@ public class RNItems {
 	}
 
 	private static @NotNull DeferredItem<Item> makeRune(Rubination rubination) {
-		return ITEMS.register(
-				rubination.name().toLowerCase().concat("_rune"), // Converts name to lowercase
-				() -> new RuneItem(
-						new Item.Properties().stacksTo(1),
-						rubination
-				)
-		);
+		return redItem(rubination.name().toLowerCase().concat("_rune"));
 	}
+
 }
