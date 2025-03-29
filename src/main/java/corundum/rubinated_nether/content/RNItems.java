@@ -102,7 +102,7 @@ public class RNItems {
 
 	private static @NotNull DeferredItem<Item> makeRune(Rubination rubination) {
 		return ITEMS.register(
-				rubination.name().concat("_rune"),
+				rubination.name().toLowerCase().concat("_rune"), // Converts name to lowercase
 				() -> new RuneItem(
 						new Item.Properties().stacksTo(1),
 						rubination
