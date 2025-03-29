@@ -1,10 +1,16 @@
 {
   "variants": {
-    "half=lower": {
+    "half=lower,has_rune=empty": {
       "model": "rubinated_nether:block/runestone_bottom"
     },
-    "half=upper": {
+    "half=upper,has_rune=empty": {
       "model": "rubinated_nether:block/runestone_top"
+    },
+    "half=lower,has_rune=greed": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=greed": {
+      "model": "rubinated_nether:block/runestone_top_glow"
     }
   }
 }

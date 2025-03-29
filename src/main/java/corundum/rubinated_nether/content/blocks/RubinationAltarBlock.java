@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNParticleTypes;
-import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RubinationAltarBlockEntity;
 import corundum.rubinated_nether.content.menu.RubinationMenu;
 import net.minecraft.core.BlockPos;
@@ -14,7 +13,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -32,12 +30,11 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class RubinationAltarBlock extends BaseEntityBlock {
 
-    private MapCodec<? extends BaseEntityBlock> codec = simpleCodec(RubinationAltarBlock::new);
+    private final MapCodec<? extends BaseEntityBlock> codec = simpleCodec(RubinationAltarBlock::new);
 
     protected static final VoxelShape SHAPE_BOTTOM = Block.box(2.0, 0.0, 2.0, 14.0, 4.0, 14.0);
     protected static final VoxelShape SHAPE_TOP = Block.box(0.0, 4.0, 0.0, 16.0, 14.0, 16.0);
@@ -97,7 +94,7 @@ public class RubinationAltarBlock extends BaseEntityBlock {
     }
 
 
-        @Override
+    @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         return use(state, level, pos, player);
     }

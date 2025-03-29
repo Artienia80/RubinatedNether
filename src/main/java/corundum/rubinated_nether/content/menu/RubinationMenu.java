@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.menu;
 import com.mojang.datafixers.util.Pair;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.blocks.RubinationAltarBlock;
 import net.minecraft.Util;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.*;
@@ -24,8 +25,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.EnchantingTableBlock;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.event.EventHooks;
 
@@ -105,8 +104,8 @@ public class RubinationMenu extends AbstractContainerMenu {
                     IdMap<Holder<Enchantment>> idmap = level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).asHolderIdMap();
                     float j = 0.0F;
 
-                    for(BlockPos blockpos : EnchantingTableBlock.BOOKSHELF_OFFSETS) {
-                        if (EnchantingTableBlock.isValidBookShelf(level, blockPos, blockpos)) {
+                    for(BlockPos blockpos : RubinationAltarBlock.RUNESTONE_OFFSETS) {
+                        if (RubinationAltarBlock.isValidCatalyst(level, blockPos, blockpos)) {
                             j += level.getBlockState(blockPos.offset(blockpos)).getEnchantPowerBonus(level, blockPos.offset(blockpos));
                         }
                     }
@@ -128,7 +127,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                         if (this.costs[l] > 0) {
                             List<EnchantmentInstance> list = this.getEnchantmentList(level.registryAccess(), itemstack, l, this.costs[l]);
                             if (list != null && !list.isEmpty()) {
-                                EnchantmentInstance enchantmentinstance = (EnchantmentInstance)list.get(this.random.nextInt(list.size()));
+                                EnchantmentInstance enchantmentinstance = list.get(this.random.nextInt(list.size()));
                                 this.enchantClue[l] = idmap.getId(enchantmentinstance.enchantment);
                                 this.levelClue[l] = enchantmentinstance.level;
                             }
