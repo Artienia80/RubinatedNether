@@ -11,6 +11,6 @@ public class RuneItem extends Item {
     }
 
     public Rubination getRubination() {
-        return rubination;
+        return this.rubination;
     }
 }

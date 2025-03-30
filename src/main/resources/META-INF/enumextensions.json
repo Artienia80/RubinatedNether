@@ -23,6 +23,15 @@
         "class": "corundum/rubinated_nether/content/RNEnumExtensions",
         "method": "freezingMiscIcon"
       }
+    },
+    {
+      "enum": "net/minecraft/world/item/Rarity",
+      "name": "RUBINATED_NETHER_RUBY",
+      "constructor": "(ILjava/lang/String;Lnet/minecraft/ChatFormatting;)V",
+      "parameters": {
+        "class": "corundum/rubinated_nether/content/RNEnumExtensions",
+        "field": "RUBY_RARITY_ENUM_PROXY"
+      }
     }
   ]
 }

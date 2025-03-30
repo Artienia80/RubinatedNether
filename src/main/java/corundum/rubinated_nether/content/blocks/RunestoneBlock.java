@@ -12,6 +12,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -154,6 +156,7 @@ public class RunestoneBlock extends BaseEntityBlock {
 		if(level.getBlockEntity(getCorrectBlockPos(pos, state)) instanceof RunestoneBlockEntity runestoneBlockEntity) {
 			runestoneBlockEntity.popOutTheItem();
 			handleSyncRuneValue(level, pos, Rubination.EMPTY);
+			level.playLocalSound(player, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
 			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
 
@@ -227,6 +230,8 @@ public class RunestoneBlock extends BaseEntityBlock {
 
 		if (!level.isClientSide)
 			setItemIntoRunestone(level, pos, blockState, player, stack);
+
+		level.playLocalSound(player, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
 
 		return ItemInteractionResult.sidedSuccess(level.isClientSide);
 	}

@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.items;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.StringRepresentable;
 
 public enum Rubination implements StringRepresentable {
