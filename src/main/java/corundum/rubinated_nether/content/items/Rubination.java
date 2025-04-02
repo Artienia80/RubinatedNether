@@ -1,35 +1,31 @@
 package corundum.rubinated_nether.content.items;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public enum Rubination implements StringRepresentable {
-    GREED("greed", Map.of("minecraft:unbreaking", 5, "minecraft:knockback", 5, "minecraft:fire_aspect", 5)),
-    WRATH("wrath", Map.of()),
-    SLOTH("sloth", Map.of()),
-    GLUTTONY("gluttony", Map.of()),
-    ENVY("envy", Map.of()),
-    VAINGLORY("vainglory", Map.of()),
-    PRIDE("pride", Map.of()),
-    ACEDIA("acedia", Map.of()),
-    LUXURIA("luxuria", Map.of()),
-    INSIDIAE("insidiae", Map.of()),
-    SUPERBIA("superbia", Map.of()),
-    TRISTIA("tristia", Map.of()),
-    STUDIOSE("studiose", Map.of()),
-    ARDENTER("ardenter", Map.of()),
-    NIMIS("nimis", Map.of()),
+    SLOTH("sloth", Map.of("minecraft:unbreaking", 5, "minecraft:fortune", 4, "minecraft:infinity", 1)),
+    GLUTTONY("gluttony", Map.of("minecraft:unbreaking", 4, "minecraft:efficency", 7, "minecraft:infinity", 1)),
+    GREED("greed", Map.of("minecraft:fortune", 5, "minecraft:efficency", 4, "minecraft:infinity", 1)),
+    VAINGLORY("vainglory", Map.of("minecraft:unbreaking", 5, "minecraft:looting", 4, "minecraft:infinity", 1)),
+    WRATH("wrath", Map.of("minecraft:sharpness", 7, "minecraft:unbreaking", 4, "minecraft:infinity", 1)),
+    ENVY("envy", Map.of("minecraft:looting", 5, "minecraft:sharpness", 6, "minecraft:infinity", 1)),
+    PRIDE("pride", Map.of("minecraft:unbreaking", 5, "minecraft:protection", 6, "minecraft:infinity", 1)),
+    ACEDIA("acedia", Map.of("minecraft:thorns", 5, "minecraft:unbreaking", 4, "minecraft:infinity", 1)),
+    LUXURIA("luxuria", Map.of("minecraft:protection", 7, "minecraft:thorns", 6, "minecraft:infinity", 1)),
+    INSIDIAE("insidiae", Map.of("minecraft:unbreaking", 5, "minecraft:punch", 3, "minecraft:infinity", 1)),
+    SUPERBIA("superbia", Map.of("minecraft:power", 7, "minecraft:unbreaking", 4, "minecraft:infinity", 1)),
+    TRISTIA("tristia", Map.of("minecraft:punch", 4, "minecraft:power", 6, "minecraft:infinity", 1)),
+    STUDIOSE("studiose", Map.of("minecraft:unbreaking", 5, "minecraft:multishot", 2, "minecraft:infinity", 1)),
+    ARDENTER("ardenter", Map.of("minecraft:quick_charge", 5, "minecraft:unbreaking", 4, "minecraft:infinity", 1)),
+    NIMIS("nimis", Map.of("minecraft:multishot", 3, "minecraft:quick_charge", 4, "minecraft:infinity", 1)),
     EMPTY("empty", Map.of());
 
     private final String name;
