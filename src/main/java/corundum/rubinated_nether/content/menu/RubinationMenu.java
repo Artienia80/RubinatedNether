@@ -5,6 +5,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.blocks.RubinationAltarBlock;
+import corundum.rubinated_nether.content.items.RuneItem;
 import net.minecraft.Util;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.*;
@@ -14,7 +15,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -28,8 +28,8 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.event.EventHooks;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class RubinationMenu extends AbstractContainerMenu {
     static final ResourceLocation EMPTY_SLOT_RUBIES = RubinatedNether.id("item/empty_slot_ruby");
@@ -37,6 +37,7 @@ public class RubinationMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess access;
     public final int[] costs;
     public final int[] rubinationClue;
+    public final List<RuneItem> runes = new ArrayList<>();
 
     public RubinationMenu(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, ContainerLevelAccess.NULL);
@@ -95,9 +96,9 @@ public class RubinationMenu extends AbstractContainerMenu {
                     float j = 0.0F;
 
                     for(BlockPos blockpos : RubinationAltarBlock.RUNESTONE_OFFSETS) {
-                        if (RubinationAltarBlock.isValidCatalyst(level, blockPos, blockpos)) {
-                            j += level.getBlockState(blockPos.offset(blockpos)).getEnchantPowerBonus(level, blockPos.offset(blockpos));
-                        }
+                        if (RubinationAltarBlock.isValidCatalyst(level, blockPos, blockpos))
+                            if(RubinationAltarBlock.getRuneFromCatalyst(level, blockPos, blockpos) instanceof RuneItem runeItem)
+                                runes.add(runeItem);
                     }
 
                     for(int k = 0; k < 3; ++k) {
@@ -112,7 +113,7 @@ public class RubinationMenu extends AbstractContainerMenu {
 
                     for(int l = 0; l < 3; ++l) {
                         if (this.costs[l] > 0) {
-                            List<EnchantmentInstance> list = this.getRubinationList(level.registryAccess(), itemstack, l, this.costs[l]);
+                            List<EnchantmentInstance> list = this.getRubinationList(level.registryAccess(), itemstack, runes, l, this.costs[l]);
                             if (list != null && !list.isEmpty()) {
                                 EnchantmentInstance enchantmentinstance = list.get(list.size() - 1);
                                 this.rubinationClue[l] = idmap.getId(enchantmentinstance.enchantment);
@@ -141,7 +142,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                 return false;
             } else if (this.costs[id] > 0 && !itemstack.isEmpty() && (player.experienceLevel >= i && player.experienceLevel >= this.costs[id] || player.getAbilities().instabuild)) {
                 this.access.execute((level, blockPos) -> {
-                    List<EnchantmentInstance> list = this.getRubinationList(level.registryAccess(), itemstack, id, this.costs[id]);
+                    List<EnchantmentInstance> list = this.getRubinationList(level.registryAccess(), itemstack, runes, id, this.costs[id]);
                     if (!list.isEmpty()) {
                         player.onEnchantmentPerformed(itemstack, i);
                         ItemStack itemstack2 = itemstack.getItem().applyEnchantments(itemstack, list);
@@ -174,14 +175,11 @@ public class RubinationMenu extends AbstractContainerMenu {
         }
     }
 
-    private List<EnchantmentInstance> getRubinationList(RegistryAccess registryAccess, ItemStack stack, int slot, int cost) {
-        Optional<HolderSet.Named<Enchantment>> optional = registryAccess.registryOrThrow(Registries.ENCHANTMENT).getTag(EnchantmentTags.IN_ENCHANTING_TABLE);
-        if (optional.isEmpty()) {
-            return List.of();
-        } else {
-            List<EnchantmentInstance> list = EnchantmentHelper.selectEnchantment(RandomSource.create(), stack, cost, ((HolderSet.Named)optional.get()).stream());
-            return list;
-        }
+    private List<EnchantmentInstance> getRubinationList(RegistryAccess registryAccess, ItemStack stack, List<RuneItem> runes, int slot, int cost) {
+        List<EnchantmentInstance> list = new ArrayList<>();
+        for(RuneItem rune : runes)
+            list.addAll(rune.getRubination().getEnchantments(registryAccess));
+        return list;
     }
 
     public int getGoldCount() {

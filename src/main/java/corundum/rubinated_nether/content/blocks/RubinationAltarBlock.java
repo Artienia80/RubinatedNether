@@ -5,6 +5,8 @@ import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNParticleTypes;
 import corundum.rubinated_nether.content.blocks.entities.RubinationAltarBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
+import corundum.rubinated_nether.content.items.RuneItem;
 import corundum.rubinated_nether.content.menu.RubinationMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -141,6 +143,11 @@ public class RubinationAltarBlock extends BaseEntityBlock {
     }
 
     public static boolean isValidCatalyst(Level level, BlockPos tablePos, BlockPos offsetPos) {
-        return level.getBlockState(tablePos.offset(offsetPos)).is(RNBlocks.RUNESTONE.get()) && level.getBlockState(tablePos.offset(offsetPos.getX() / 2, offsetPos.getY(), offsetPos.getZ() / 2)).is(BlockTags.ENCHANTMENT_POWER_TRANSMITTER);
+        return level.getBlockState(tablePos.offset(offsetPos)).is(RNBlocks.RUNESTONE.get());
+    }
+
+    public static Item getRuneFromCatalyst(Level level, BlockPos tablePos, BlockPos offsetPos) {
+        if(!(level.getBlockEntity(tablePos.offset(offsetPos)) instanceof RunestoneBlockEntity runestoneBlockEntity)) return null;
+        return runestoneBlockEntity.getTheItem().getItem();
     }
 }
