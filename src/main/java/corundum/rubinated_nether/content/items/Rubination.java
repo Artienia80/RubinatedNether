@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+//TODO: Add custom debuff enchants
+//TODO: Maybe add tool-tag checking here?
+
 public enum Rubination implements StringRepresentable {
     SLOTH("sloth", Map.of("minecraft:unbreaking", 5, "minecraft:fortune", 4, "minecraft:infinity", 1)),
     GLUTTONY("gluttony", Map.of("minecraft:unbreaking", 4, "minecraft:efficency", 7, "minecraft:infinity", 1)),
@@ -34,6 +37,7 @@ public enum Rubination implements StringRepresentable {
     Rubination(String name, Map<String, Integer> enchantmentData) {
         this.name = name;
         this.enchantmentData = enchantmentData.entrySet().stream()
+                // Parsing Strings to ResourceLocations for simplicity
                 .collect(Collectors.toMap(e -> ResourceLocation.parse(e.getKey()), Map.Entry::getValue));
     }
 
