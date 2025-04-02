@@ -8,14 +8,13 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.menu.RubinationMenu;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.*;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -25,14 +24,15 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
 @OnlyIn(Dist.CLIENT)
 public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
-    private static final ResourceLocation RUBINATION_SLOT_DISABLED_SPRITE = RubinatedNether.id("textures/gui/rubination_altar/enchantment_slot_disabled");
-    private static final ResourceLocation RUBINATION_SLOT_HIGHLIGHTED_SPRITE = RubinatedNether.id("textures/gui/rubination_altar/enchantment_slot_highlighted");
-    private static final ResourceLocation RUBINATION_SLOT_SPRITE = RubinatedNether.id("textures/gui/rubination_altar/enchantment_slot");
+    private static final ResourceLocation RUBINATION_SLOT_DISABLED_SPRITE = RubinatedNether.id("textures/gui/rubination_altar/rubination_slot_disabled");
+    private static final ResourceLocation RUBINATION_SLOT_HIGHLIGHTED_SPRITE = RubinatedNether.id("textures/gui/rubination_altar/rubination_slot_highlighted");
+    private static final ResourceLocation RUBINATION_SLOT_SPRITE = RubinatedNether.id("textures/gui/rubination_altar/rubination_slot");
     private static final ResourceLocation RUBINATION_ALTAR_LOCATION = RubinatedNether.id("textures/gui/rubination_altar.png");
     private final RandomSource random = RandomSource.create();
     public int time;
@@ -48,7 +48,6 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
         super(menu, playerInventory, title);
         this.last = ItemStack.EMPTY;
         this.imageHeight = 183;
-        this.inventoryLabelY = this.imageHeight - 76;
     }
 
     protected void init() {
@@ -57,7 +56,6 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 
     public void containerTick() {
         super.containerTick();
-        this.tickBook();
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
@@ -83,8 +81,8 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
         int k = this.menu.getGoldCount();
 
         for(int l = 0; l < 3; ++l) {
-            int i1 = i + 60;
-            int j1 = i1 + 20;
+            int i1 = i + 42 + (l * 37);
+            int j1 = j + 11;
             int k1 = this.menu.costs[l];
             if (k1 == 0) {
                 RenderSystem.enableBlend();
@@ -92,12 +90,12 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
                 RenderSystem.disableBlend();
             } else {
                 String s = "" + k1;
-                int l1 = 86 - this.font.width(s);
-                FormattedText formattedtext = EnchantmentNames.getInstance().getRandomName(this.font, l1);
+                int l1 = 19 - this.font.width(s);
+                FormattedText formattedtext = FormattedText.of(this.font.getSplitter().formattedHeadByWidth("Greed", 10, Style.EMPTY));
                 int i2 = 6839882;
                 if ((k >= l + 1 && this.minecraft.player.experienceLevel >= k1 || this.minecraft.player.getAbilities().instabuild) && (this.menu).rubinationClue[l] != -1) {
-                    int j2 = mouseX - (i + 60);
-                    int k2 = mouseY - (j + 14 + 19 * l);
+                    int j2 = mouseX - (i + 42 + (l * 37));
+                    int k2 = mouseY - (j + 11);
                     RenderSystem.enableBlend();
                     if (j2 >= 0 && k2 >= 0 && j2 < 108 && k2 < 19) {
                         guiGraphics.blitSprite(RUBINATION_SLOT_HIGHLIGHTED_SPRITE, i + 42 + (l * 37), j + 11, 19, 57);
@@ -107,17 +105,17 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
                     }
 
                     RenderSystem.disableBlend();
-                    guiGraphics.drawWordWrap(this.font, formattedtext, j1, j + 16 + 19 * l, l1, i2);
+                    guiGraphics.drawWordWrap(this.font, formattedtext, i + 42 + (l * 37), j + 11, l1, i2);
                     i2 = 8453920;
                 } else {
                     RenderSystem.enableBlend();
                     guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i + 42 + (l * 37), j + 11, 19, 57);
                     RenderSystem.disableBlend();
-                    guiGraphics.drawWordWrap(this.font, formattedtext, j1, j + 16 + 19 * l, l1, (i2 & 16711422) >> 1);
+                    guiGraphics.drawWordWrap(this.font, formattedtext, i + 42 + (l * 37), j + 11, l1, (i2 & 16711422) >> 1);
                     i2 = 4226832;
                 }
 
-                guiGraphics.drawString(this.font, s, j1 + 86 - this.font.width(s), j + 16 + 19 * l + 7, i2);
+                guiGraphics.drawString(this.font, s, i + 42 + (l * 37) - this.font.width(s), j + 11, i2);
             }
         }
 
@@ -133,9 +131,9 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
             int k = this.menu.costs[j];
             Optional<Holder.Reference<Enchantment>> optional = this.minecraft.level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder((this.menu).rubinationClue[j]);
             int i1 = j + 1;
-            if (this.isHovering(60, 14 + 19 * j, 108, 17, (double)mouseX, (double)mouseY) && k > 0) {
+            if (this.isHovering(42 + (39 * j), 11, 19, 57, mouseX, mouseY) && k > 0) {
                 List<Component> list = Lists.newArrayList();
-                list.add(Component.translatable("container.enchant.clue", new Object[]{optional.isEmpty() ? "" : Enchantment.getFullname((Holder)optional.get(), 1)}).withStyle(ChatFormatting.WHITE));
+                list.add(Component.translatable("container.enchant.clue", optional.isEmpty() ? "" : Enchantment.getFullname(optional.get(), 1)).withStyle(ChatFormatting.WHITE));
                 if (optional.isEmpty()) {
                     list.add(Component.literal(""));
                     list.add(Component.translatable("neoforge.container.enchant.limitedEnchantability").withStyle(ChatFormatting.RED));
@@ -168,40 +166,5 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
             }
         }
 
-    }
-
-    public void tickBook() {
-        ItemStack itemstack = this.menu.getSlot(0).getItem();
-        if (!ItemStack.matches(itemstack, this.last)) {
-            this.last = itemstack;
-
-            do {
-                this.flipT += (float)(this.random.nextInt(4) - this.random.nextInt(4));
-            } while(this.flip <= this.flipT + 1.0F && this.flip >= this.flipT - 1.0F);
-        }
-
-        ++this.time;
-        this.oFlip = this.flip;
-        this.oOpen = this.open;
-        boolean flag = false;
-
-        for(int i = 0; i < 3; ++i) {
-            if (this.menu.costs[i] != 0) {
-                flag = true;
-            }
-        }
-
-        if (flag) {
-            this.open += 0.2F;
-        } else {
-            this.open -= 0.2F;
-        }
-
-        this.open = Mth.clamp(this.open, 0.0F, 1.0F);
-        float f1 = (this.flipT - this.flip) * 0.4F;
-        float f = 0.2F;
-        f1 = Mth.clamp(f1, -0.2F, 0.2F);
-        this.flipA += (f1 - this.flipA) * 0.9F;
-        this.flip += this.flipA;
     }
 }

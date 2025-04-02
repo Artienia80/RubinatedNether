@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.menu;
 
 import com.mojang.datafixers.util.Pair;
+import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.blocks.RubinationAltarBlock;
@@ -21,7 +22,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class RubinationMenu extends AbstractContainerMenu {
-    static final ResourceLocation EMPTY_SLOT_RUBIES = ResourceLocation.withDefaultNamespace("item/empty_slot_ruby");
+    static final ResourceLocation EMPTY_SLOT_RUBIES = RubinatedNether.id("item/empty_slot_ruby");
     private final Container rubinationSlots;
     private final ContainerLevelAccess access;
     public final int[] costs;
@@ -53,12 +53,12 @@ public class RubinationMenu extends AbstractContainerMenu {
         this.costs = new int[3];
         this.rubinationClue = new int[]{-1, -1, -1};
         this.access = access;
-        this.addSlot(new Slot(this.rubinationSlots, 0, 15, 47) {
+        this.addSlot(new Slot(this.rubinationSlots, 0, 70, 76) {
             public int getMaxStackSize() {
                 return 1;
             }
         });
-        this.addSlot(new Slot(this.rubinationSlots, 1, 35, 47) {
+        this.addSlot(new Slot(this.rubinationSlots, 1, 90, 76) {
             public boolean mayPlace(ItemStack itemStack) {
                 return itemStack.is(RNItems.RUBY_ITEM.get());
             }
@@ -180,10 +180,6 @@ public class RubinationMenu extends AbstractContainerMenu {
             return List.of();
         } else {
             List<EnchantmentInstance> list = EnchantmentHelper.selectEnchantment(RandomSource.create(), stack, cost, ((HolderSet.Named)optional.get()).stream());
-            if (stack.is(Items.BOOK) && list.size() > 1) {
-                list.remove(list.size() - 1);
-            }
-
             return list;
         }
     }
@@ -221,7 +217,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             } else {
-                if (((Slot)this.slots.get(0)).hasItem() || !((Slot)this.slots.get(0)).mayPlace(itemstack1)) {
+                if (this.slots.get(0).hasItem() || !this.slots.get(0).mayPlace(itemstack1)) {
                     return ItemStack.EMPTY;
                 }
 
