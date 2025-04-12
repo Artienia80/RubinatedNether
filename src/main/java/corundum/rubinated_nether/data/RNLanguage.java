@@ -130,10 +130,12 @@ public class RNLanguage extends RNLanguageProvider {
 		addItem(RNItems.ARDENTER_RUNE, "Rune of Ardenter");
 		addItem(RNItems.NIMIS_RUNE, "Rune of Nimis");
 
+		add("tooltip.rubinated_nether.rune.greed", "Unbreaking V\nFortune IV\n\u00A7cSlugishness");
+
+
+
 		addItem(RNItems.RITUAL_OFFERING, "Ritual Offering");
 		addItem(RNItems.GRAND_RITUAL_OFFERING, "Grand Ritual Offering");
-
-
 
 		add(RNCreativeTabs.RN_TAB.get().getDisplayName().getString(), "Rubinated Nether");
 
