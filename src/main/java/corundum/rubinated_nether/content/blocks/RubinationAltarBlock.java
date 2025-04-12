@@ -54,12 +54,6 @@ public class RubinationAltarBlock extends BaseEntityBlock {
         return codec;
     }
 
-    @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltip.rubinated_nether.wip.tooltip"));
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-    }
-
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }

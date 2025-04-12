@@ -114,6 +114,22 @@ public class RNLanguage extends RNLanguageProvider {
 		addItem(RNItems.BRONZE_SHOT, "Bronze Shot");
 		addItem(RNItems.BRONZE_DRILL, "Bronze Drill");
 
+		addItem(RNItems.GREED_RUNE, "Rune of Greed");
+		addItem(RNItems.WRATH_RUNE, "Rune of Wrath");
+		addItem(RNItems.SLOTH_RUNE, "Rune of Sloth");
+		addItem(RNItems.GLUTTONY_RUNE, "Rune of Gluttony");
+		addItem(RNItems.ENVY_RUNE, "Rune of Envy");
+		addItem(RNItems.VAINGLORY_RUNE, "Rune of Vainglory");
+		addItem(RNItems.PRIDE_RUNE, "Rune of Pride");
+		addItem(RNItems.ACEDIA_RUNE, "Rune of Acedia");
+		addItem(RNItems.LUXURIA_RUNE, "Rune of Luxuria");
+		addItem(RNItems.INSIDIAE_RUNE, "Rune of Insidiae");
+		addItem(RNItems.SUPERBIA_RUNE, "Rune of Superbia");
+		addItem(RNItems.TRISTIA_RUNE, "Rune of Tristia");
+		addItem(RNItems.STUDIOSE_RUNE, "Rune of Studiose");
+		addItem(RNItems.ARDENTER_RUNE, "Rune of Ardenter");
+		addItem(RNItems.NIMIS_RUNE, "Rune of Nimis");
+
 		addItem(RNItems.RITUAL_OFFERING, "Ritual Offering");
 		addItem(RNItems.GRAND_RITUAL_OFFERING, "Grand Ritual Offering");
 

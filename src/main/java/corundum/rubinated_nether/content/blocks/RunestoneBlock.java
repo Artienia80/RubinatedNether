@@ -69,13 +69,6 @@ public class RunestoneBlock extends BaseEntityBlock {
 		builder.add(HAS_RUNE);
 	}
 
-	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-		tooltipComponents.add(Component.translatable("tooltip.rubinated_nether.wip.tooltip"));
-		super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-	}
-
-
 	// Model and Shape handling
 
 	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

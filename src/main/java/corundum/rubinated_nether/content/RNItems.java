@@ -119,9 +119,12 @@ public class RNItems {
 	}
 
 	private static @NotNull DeferredItem<Item> makeRune(Rubination rubination) {
+		String name = rubination.name().toLowerCase();
+		String tooltipKey = "tooltip.rune." + name;
+
 		return ITEMS.register(
 				rubination.name().toLowerCase().concat("_rune"), // Converts name to lowercase
-				() -> new RuneItem(new Item.Properties().stacksTo(1).rarity(RNRarity.RUBINATED_NETHER_RUBY.get()), rubination)
+				() -> new RuneItem(new Item.Properties().stacksTo(1).rarity(RNRarity.RUBINATED_NETHER_RUBY.get()), rubination, tooltipKey)
 		);
 	}
 }
