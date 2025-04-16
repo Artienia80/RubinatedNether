@@ -166,6 +166,5 @@
   "menu.rubinated_nether.freezer": "Freezer",
   "rubinated_nether.midnightconfig.category.brazier": "Brazier",
   "rubinated_nether.midnightconfig.category.chandelier": "Chandelier",
-  "rubinated_nether.midnightconfig.category.client": "Client",
-  "tooltip.rubinated_nether.rune.greed": "Unbreaking V\nFortune IV\n§cSlugishness"
+  "rubinated_nether.midnightconfig.category.client": "Client"
 }

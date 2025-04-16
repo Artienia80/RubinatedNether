@@ -4,7 +4,10 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNCreativeTabs;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.items.RuneItem;
 import corundum.rubinated_nether.data.providers.RNLanguageProvider;
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.PackOutput;
 
 public class RNLanguage extends RNLanguageProvider {
@@ -129,10 +132,6 @@ public class RNLanguage extends RNLanguageProvider {
 		addItem(RNItems.STUDIOSE_RUNE, "Rune of Studiose");
 		addItem(RNItems.ARDENTER_RUNE, "Rune of Ardenter");
 		addItem(RNItems.NIMIS_RUNE, "Rune of Nimis");
-
-		add("tooltip.rubinated_nether.rune.greed", "Unbreaking V\\nFortune IV\\n\u00A7cSlugishness");
-
-
 
 		addItem(RNItems.RITUAL_OFFERING, "Ritual Offering");
 		addItem(RNItems.GRAND_RITUAL_OFFERING, "Grand Ritual Offering");

@@ -30,6 +30,8 @@ import net.neoforged.neoforge.event.EventHooks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class RubinationMenu extends AbstractContainerMenu {
     static final ResourceLocation EMPTY_SLOT_RUBIES = RubinatedNether.id("item/empty_slot_ruby");
@@ -143,6 +145,7 @@ public class RubinationMenu extends AbstractContainerMenu {
             } else if (this.costs[id] > 0 && !itemstack.isEmpty() && (player.experienceLevel >= i && player.experienceLevel >= this.costs[id] || player.getAbilities().instabuild)) {
                 this.access.execute((level, blockPos) -> {
                     List<EnchantmentInstance> list = this.getRubinationList(level.registryAccess(), itemstack, runes, id, this.costs[id]);
+                    list = list.stream().filter(Objects::nonNull).collect(Collectors.toList());
                     if (!list.isEmpty()) {
                         player.onEnchantmentPerformed(itemstack, i);
                         ItemStack itemstack2 = itemstack.getItem().applyEnchantments(itemstack, list);
@@ -177,9 +180,17 @@ public class RubinationMenu extends AbstractContainerMenu {
 
     private List<EnchantmentInstance> getRubinationList(RegistryAccess registryAccess, ItemStack stack, List<RuneItem> runes, int slot, int cost) {
         List<EnchantmentInstance> list = new ArrayList<>();
-        for(RuneItem rune : runes)
-            list.addAll(rune.getRubination().getEnchantments(registryAccess));
-        return list;
+        List<EnchantmentInstance> cleanList = new ArrayList<>();
+        for(RuneItem rune : runes) {
+            if(stack.is(rune.getRubination().getItemTag()))
+                list.addAll(rune.getRubination().getEnchantments(registryAccess));
+        }
+
+        for(int k = 0; k < 3; k++) {
+            cleanList.add(list.get(k + (slot * 3)));
+        }
+
+        return cleanList;
     }
 
     public int getGoldCount() {

@@ -41,21 +41,21 @@ public class RNItems {
 	public static final DeferredItem<Item> MOLTEN_RUBY_NUGGET_ITEM = basicItem("molten_ruby_nugget");
 
 	// Runes
-	public static final DeferredItem<Item> GREED_RUNE = makeRune(Rubination.GREED);
-	public static final DeferredItem<Item> WRATH_RUNE = makeRune(Rubination.WRATH);
-	public static final DeferredItem<Item> SLOTH_RUNE = makeRune(Rubination.SLOTH);
-	public static final DeferredItem<Item> GLUTTONY_RUNE = makeRune(Rubination.GLUTTONY);
-	public static final DeferredItem<Item> ENVY_RUNE = makeRune(Rubination.ENVY);
-	public static final DeferredItem<Item> VAINGLORY_RUNE = makeRune(Rubination.VAINGLORY);
-	public static final DeferredItem<Item> PRIDE_RUNE = makeRune(Rubination.PRIDE);
-	public static final DeferredItem<Item> ACEDIA_RUNE = makeRune(Rubination.ACEDIA);
-	public static final DeferredItem<Item> LUXURIA_RUNE = makeRune(Rubination.LUXURIA);
-	public static final DeferredItem<Item> INSIDIAE_RUNE = makeRune(Rubination.INSIDIAE);
-	public static final DeferredItem<Item> SUPERBIA_RUNE = makeRune(Rubination.SUPERBIA);
-	public static final DeferredItem<Item> TRISTIA_RUNE = makeRune(Rubination.TRISTIA);
-	public static final DeferredItem<Item> STUDIOSE_RUNE = makeRune(Rubination.STUDIOSE);
-	public static final DeferredItem<Item> ARDENTER_RUNE = makeRune(Rubination.ARDENTER);
-	public static final DeferredItem<Item> NIMIS_RUNE = makeRune(Rubination.NIMIS);
+	public static final DeferredItem<RuneItem> GREED_RUNE = makeRune(Rubination.GREED);
+	public static final DeferredItem<RuneItem> WRATH_RUNE = makeRune(Rubination.WRATH);
+	public static final DeferredItem<RuneItem> SLOTH_RUNE = makeRune(Rubination.SLOTH);
+	public static final DeferredItem<RuneItem> GLUTTONY_RUNE = makeRune(Rubination.GLUTTONY);
+	public static final DeferredItem<RuneItem> ENVY_RUNE = makeRune(Rubination.ENVY);
+	public static final DeferredItem<RuneItem> VAINGLORY_RUNE = makeRune(Rubination.VAINGLORY);
+	public static final DeferredItem<RuneItem> PRIDE_RUNE = makeRune(Rubination.PRIDE);
+	public static final DeferredItem<RuneItem> ACEDIA_RUNE = makeRune(Rubination.ACEDIA);
+	public static final DeferredItem<RuneItem> LUXURIA_RUNE = makeRune(Rubination.LUXURIA);
+	public static final DeferredItem<RuneItem> INSIDIAE_RUNE = makeRune(Rubination.INSIDIAE);
+	public static final DeferredItem<RuneItem> SUPERBIA_RUNE = makeRune(Rubination.SUPERBIA);
+	public static final DeferredItem<RuneItem> TRISTIA_RUNE = makeRune(Rubination.TRISTIA);
+	public static final DeferredItem<RuneItem> STUDIOSE_RUNE = makeRune(Rubination.STUDIOSE);
+	public static final DeferredItem<RuneItem> ARDENTER_RUNE = makeRune(Rubination.ARDENTER);
+	public static final DeferredItem<RuneItem> NIMIS_RUNE = makeRune(Rubination.NIMIS);
 
 
 	public static final DeferredItem<Item> BRONZE_DRILL = ITEMS.register(
@@ -118,7 +118,7 @@ public class RNItems {
 		);
 	}
 
-	private static @NotNull DeferredItem<Item> makeRune(Rubination rubination) {
+	private static @NotNull DeferredItem<RuneItem> makeRune(Rubination rubination) {
 		String name = rubination.name().toLowerCase();
 		String tooltipKey = "tooltip.rune." + name;
 
