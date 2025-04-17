@@ -139,19 +139,31 @@ public class RNItemModels extends ItemModelProvider {
 		);
 
 		// Runes (all share the same texture)
-		runeItem(
-				RNItems.GREED_RUNE,
-				RNItems.WRATH_RUNE,
+		runeItemTool(
 				RNItems.SLOTH_RUNE,
 				RNItems.GLUTTONY_RUNE,
-				RNItems.ENVY_RUNE,
+				RNItems.GREED_RUNE
+		);
+
+		runeItemWeapon(
 				RNItems.VAINGLORY_RUNE,
+				RNItems.WRATH_RUNE,
+				RNItems.ENVY_RUNE
+		);
+
+		runeItemArmor(
 				RNItems.PRIDE_RUNE,
 				RNItems.ACEDIA_RUNE,
-				RNItems.LUXURIA_RUNE,
+				RNItems.LUXURIA_RUNE
+		);
+
+		runeItemBow(
 				RNItems.INSIDIAE_RUNE,
 				RNItems.SUPERBIA_RUNE,
-				RNItems.TRISTIA_RUNE,
+				RNItems.TRISTIA_RUNE
+		);
+
+		runeItemCrossbow(
 				RNItems.STUDIOSE_RUNE,
 				RNItems.ARDENTER_RUNE,
 				RNItems.NIMIS_RUNE
@@ -185,11 +197,39 @@ public class RNItemModels extends ItemModelProvider {
 			basicItem(item.asItem());
 	}
 
-	private void runeItem(DeferredItem<?>... runes) {
+	private void runeItemTool(DeferredItem<?>... runes) {
 		for (var rune : runes)
 			withExistingParent(
 					rune.getId().toString(),
-					modLoc("item/rune_base") // All runes use the same model
+					modLoc("item/rune_tool")
+			);
+	}
+	private void runeItemWeapon(DeferredItem<?>... runes) {
+		for (var rune : runes)
+			withExistingParent(
+					rune.getId().toString(),
+					modLoc("item/rune_weapon")
+			);
+	}
+	private void runeItemArmor(DeferredItem<?>... runes) {
+		for (var rune : runes)
+			withExistingParent(
+					rune.getId().toString(),
+					modLoc("item/rune_armor")
+			);
+	}
+	private void runeItemBow(DeferredItem<?>... runes) {
+		for (var rune : runes)
+			withExistingParent(
+					rune.getId().toString(),
+					modLoc("item/rune_bow")
+			);
+	}
+	private void runeItemCrossbow(DeferredItem<?>... runes) {
+		for (var rune : runes)
+			withExistingParent(
+					rune.getId().toString(),
+					modLoc("item/rune_crossbow")
 			);
 	}
 
