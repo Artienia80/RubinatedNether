@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public enum Rubination implements StringRepresentable {
     SLOTH("sloth", Map.of("minecraft:unbreaking", 5, "minecraft:fortune", 4, "minecraft:infinity", 1), Tags.Items.MINING_TOOL_TOOLS),
-    GLUTTONY("gluttony", Map.of("minecraft:unbreaking", 4, "minecraft:efficiency", 7, "minecraft:infinity", 1), Tags.Items.MINING_TOOL_TOOLS),
+    GLUTTONY("gluttony", Map.of("minecraft:efficiency", 7,"minecraft:unbreaking", 4,  "minecraft:infinity", 1), Tags.Items.MINING_TOOL_TOOLS),
     GREED("greed", Map.of("minecraft:fortune", 5, "minecraft:efficiency", 4, "minecraft:infinity", 1), Tags.Items.MINING_TOOL_TOOLS),
     VAINGLORY("vainglory", Map.of("minecraft:unbreaking", 5, "minecraft:looting", 4, "minecraft:infinity", 1), Tags.Items.MELEE_WEAPON_TOOLS),
     WRATH("wrath", Map.of("minecraft:sharpness", 7, "minecraft:unbreaking", 4, "minecraft:infinity", 1), Tags.Items.MELEE_WEAPON_TOOLS),
@@ -32,6 +32,7 @@ public enum Rubination implements StringRepresentable {
     STUDIOSE("studiose", Map.of("minecraft:unbreaking", 5, "minecraft:multishot", 2, "minecraft:infinity", 1), Tags.Items.TOOLS_CROSSBOW),
     ARDENTER("ardenter", Map.of("minecraft:quick_charge", 5, "minecraft:unbreaking", 4, "minecraft:infinity", 1), Tags.Items.TOOLS_CROSSBOW),
     NIMIS("nimis", Map.of("minecraft:multishot", 3, "minecraft:quick_charge", 4, "minecraft:infinity", 1), Tags.Items.TOOLS_CROSSBOW),
+
     EMPTY("empty", Map.of(), Tags.Items.BRICKS),;
 
     private final String name;

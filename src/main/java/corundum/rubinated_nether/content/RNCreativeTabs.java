@@ -137,19 +137,22 @@ public class RNCreativeTabs {
 
 				addItems(
 						output,
-
-						RNItems.GREED_RUNE,
-						RNItems.WRATH_RUNE,
 						RNItems.SLOTH_RUNE,
 						RNItems.GLUTTONY_RUNE,
-						RNItems.ENVY_RUNE,
+						RNItems.GREED_RUNE,
+
 						RNItems.VAINGLORY_RUNE,
+						RNItems.WRATH_RUNE,
+						RNItems.ENVY_RUNE,
+
 						RNItems.PRIDE_RUNE,
 						RNItems.ACEDIA_RUNE,
 						RNItems.LUXURIA_RUNE,
+
 						RNItems.INSIDIAE_RUNE,
 						RNItems.SUPERBIA_RUNE,
 						RNItems.TRISTIA_RUNE,
+
 						RNItems.STUDIOSE_RUNE,
 						RNItems.ARDENTER_RUNE,
 						RNItems.NIMIS_RUNE
