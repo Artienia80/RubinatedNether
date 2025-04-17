@@ -41,7 +41,8 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
     public RubinationScreen(RubinationMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         this.last = ItemStack.EMPTY;
-        this.imageHeight = 183;
+        this.imageHeight = 208;
+        this.inventoryLabelY = this.imageHeight - 95;
     }
 
     protected void init() {
@@ -75,12 +76,12 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
         int k = this.menu.getGoldCount();
 
         for(int l = 0; l < 3; ++l) {
-            int i1 = i + 42 + (l * 37);
-            int j1 = j + 11;
+            int i1 = i + 43 + (l * 36);
+            int j1 = j + 17;
             int k1 = this.menu.costs[l];
             if (k1 == 0) {
                 RenderSystem.enableBlend();
-                guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i + 42 + (l * 37), j + 11, 19, 57);
+                guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 19, 57);
                 RenderSystem.disableBlend();
             } else {
                 String s = "" + k1;
@@ -92,24 +93,24 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
                     int k2 = mouseY - (j + 11);
                     RenderSystem.enableBlend();
                     if (j2 >= 0 && k2 >= 0 && j2 < 108 && k2 < 19) {
-                        guiGraphics.blitSprite(RUBINATION_SLOT_HIGHLIGHTED_SPRITE, i + 42 + (l * 37), j + 11, 19, 57);
+                        guiGraphics.blitSprite(RUBINATION_SLOT_HIGHLIGHTED_SPRITE, i1, j1, 19, 57);
                         i2 = 16777088;
                     } else {
-                        guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i + 42 + (l * 37), j + 11, 19, 57);
+                        guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 19, 57);
                     }
 
                     RenderSystem.disableBlend();
-                    guiGraphics.drawWordWrap(this.font, formattedtext, i + 42 + (l * 37), j + 11, l1, i2);
+                    guiGraphics.drawWordWrap(this.font, formattedtext, i1, j1, l1, i2);
                     i2 = 8453920;
                 } else {
                     RenderSystem.enableBlend();
                     guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i + 42 + (l * 37), j + 11, 19, 57);
                     RenderSystem.disableBlend();
-                    guiGraphics.drawWordWrap(this.font, formattedtext, i + 42 + (l * 37), j + 11, l1, (i2 & 16711422) >> 1);
+                    guiGraphics.drawWordWrap(this.font, formattedtext, i1, j1, l1, (i2 & 16711422) >> 1);
                     i2 = 4226832;
                 }
 
-                guiGraphics.drawString(this.font, s, i + 42 + (l * 37) - this.font.width(s), j + 11, i2);
+                guiGraphics.drawString(this.font, s, i1 - this.font.width(s), j1, i2);
             }
         }
 

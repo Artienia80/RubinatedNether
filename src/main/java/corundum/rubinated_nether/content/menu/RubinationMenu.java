@@ -56,12 +56,12 @@ public class RubinationMenu extends AbstractContainerMenu {
         this.costs = new int[3];
         this.rubinationClue = new int[]{-1, -1, -1};
         this.access = access;
-        this.addSlot(new Slot(this.rubinationSlots, 0, 70, 76) {
+        this.addSlot(new Slot(this.rubinationSlots, 0, 70, 92) {
             public int getMaxStackSize() {
                 return 1;
             }
         });
-        this.addSlot(new Slot(this.rubinationSlots, 1, 90, 76) {
+        this.addSlot(new Slot(this.rubinationSlots, 1, 90, 92) {
             public boolean mayPlace(ItemStack itemStack) {
                 return itemStack.is(RNItems.RUBY_ITEM.get());
             }
@@ -73,12 +73,12 @@ public class RubinationMenu extends AbstractContainerMenu {
 
         for(int i = 0; i < 3; ++i) {
             for(int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 102 + i * 18));
+                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 126 + i * 18));
             }
         }
 
         for(int k = 0; k < 9; ++k) {
-            this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 160));
+            this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 184));
         }
 
         this.addDataSlot(DataSlot.shared(this.costs, 0));
