@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 //TODO: Maybe add tool-tag checking here?
 
 public enum Rubination implements StringRepresentable {
-    SLOTH("sloth", Map.of("minecraft:unbreaking", 5, "minecraft:fortune", 4, "minecraft:infinity", 1), Tags.Items.MINING_TOOL_TOOLS),
+    SLOTH("sloth", Map.of("minecraft:unbreaking", 5, "minecraft:fortune", 4, "rubinated_nether:sluggishness", 1), Tags.Items.MINING_TOOL_TOOLS),
     GLUTTONY("gluttony", Map.of("minecraft:efficiency", 7,"minecraft:unbreaking", 4,  "minecraft:infinity", 1), Tags.Items.MINING_TOOL_TOOLS),
     GREED("greed", Map.of("minecraft:fortune", 5, "minecraft:efficiency", 4, "minecraft:infinity", 1), Tags.Items.MINING_TOOL_TOOLS),
     VAINGLORY("vainglory", Map.of("minecraft:unbreaking", 5, "minecraft:looting", 4, "minecraft:infinity", 1), Tags.Items.MELEE_WEAPON_TOOLS),

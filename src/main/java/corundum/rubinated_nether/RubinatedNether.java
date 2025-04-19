@@ -2,19 +2,13 @@ package corundum.rubinated_nether;
 
 import corundum.rubinated_nether.client.RubinatedNetherClient;
 import corundum.rubinated_nether.content.*;
-import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
-import corundum.rubinated_nether.content.entity.client.BronzeChargeProjectileRenderer;
+import corundum.rubinated_nether.content.enchantments.RNEnchantmentEffects;
+import corundum.rubinated_nether.content.enchantments.RNEnchantments;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
-import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 import com.google.common.collect.ImmutableList;
 import com.mojang.logging.LogUtils;
@@ -26,7 +20,6 @@ import eu.midnightdust.lib.config.MidnightConfig;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
@@ -52,6 +45,7 @@ public class RubinatedNether {
 	private static final ImmutableList<DeferredRegister<?>> REGISTRIES = ImmutableList.of(
 		RNBlocks.BLOCKS,
 		RNItems.ITEMS,
+		RNEnchantmentEffects.ENTITY_ENCHANTMENT_EFFECTS,
 		RNArmorMaterials.ARMOR_MATERIALS,
 		RNEntities.ENTITY_TYPES,
 		RNParticleTypes.PARTICLES,
@@ -61,7 +55,7 @@ public class RubinatedNether {
 		RNRecipeSerializers.RECIPE_SERIALIZERS,
 		RNBlockEntities.BLOCK_ENTITY_TYPES,
 		RNMenuTypes.MENUS
-	);
+		);
 
 	public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
 		LOGGER.info("Rubinating all over your Nether...");
