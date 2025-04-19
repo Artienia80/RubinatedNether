@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.menu.RubinationMenu;
+import corundum.rubinated_nether.utils.RubinationNames;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -19,23 +20,17 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @OnlyIn(Dist.CLIENT)
 public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
-    private static final ResourceLocation RUBINATION_SLOT_DISABLED_SPRITE = RubinatedNether.id("textures/gui/rubination_altar/rubination_slot_disabled");
-    private static final ResourceLocation RUBINATION_SLOT_HIGHLIGHTED_SPRITE = RubinatedNether.id("textures/gui/rubination_altar/rubination_slot_highlighted");
-    private static final ResourceLocation RUBINATION_SLOT_SPRITE = RubinatedNether.id("textures/gui/rubination_altar/rubination_slot");
+    private static final ResourceLocation RUBINATION_SLOT_DISABLED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_disabled");
+    private static final ResourceLocation RUBINATION_SLOT_HIGHLIGHTED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_highlighted");
+    private static final ResourceLocation RUBINATION_SLOT_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot");
     private static final ResourceLocation RUBINATION_ALTAR_LOCATION = RubinatedNether.id("textures/gui/rubination_altar.png");
     private final RandomSource random = RandomSource.create();
-    public int time;
-    public float flip;
-    public float oFlip;
-    public float flipT;
-    public float flipA;
-    public float open;
-    public float oOpen;
     private ItemStack last;
 
     public RubinationScreen(RubinationMenu menu, Inventory playerInventory, Component title) {
@@ -58,9 +53,11 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
         int j = (this.height - this.imageHeight) / 2;
 
         for(int k = 0; k < 3; ++k) {
-            double d0 = mouseX - (double)(i + 60);
-            double d1 = mouseY - (double)(j + 14 + 19 * k);
-            if (d0 >= (double)0.0F && d1 >= (double)0.0F && d0 < (double)108.0F && d1 < (double)19.0F && this.menu.clickMenuButton(this.minecraft.player, k)) {
+            int i1 = i + 43 + (k * 36);
+            int j1 = j + 17;
+            double d0 = mouseX - i1;
+            double d1 = mouseY - j1;
+            if (d0 >= (double)0.0F && d1 >= (double)0.0F && d0 < (double)19.0F && d1 < (double)57.0F && this.menu.clickMenuButton(this.minecraft.player, k)) {
                 this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, k);
                 return true;
             }
@@ -85,14 +82,13 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
                 RenderSystem.disableBlend();
             } else {
                 String s = "" + k1;
-                int l1 = 19 - this.font.width(s);
-                FormattedText formattedtext = FormattedText.of(this.font.getSplitter().formattedHeadByWidth("Greed", 10, Style.EMPTY));
+                FormattedText formattedtext = RubinationNames.getInstance().getRandomName(this.font, 20);
                 int i2 = 6839882;
-                if ((k >= l + 1 && this.minecraft.player.experienceLevel >= k1 || this.minecraft.player.getAbilities().instabuild) && (this.menu).rubinationClue[l] != -1) {
-                    int j2 = mouseX - (i + 42 + (l * 37));
-                    int k2 = mouseY - (j + 11);
+                if ((k >= l + 1 && this.minecraft.player.experienceLevel >= k1 || this.minecraft.player.getAbilities().instabuild) && (this.menu).rubinationClue[l][l] != -1) {
+                    int j2 = mouseX - i1;
+                    int k2 = mouseY - j1;
                     RenderSystem.enableBlend();
-                    if (j2 >= 0 && k2 >= 0 && j2 < 108 && k2 < 19) {
+                    if (j2 >= 0 && k2 >= 0 && j2 < 19 && k2 < 57) {
                         guiGraphics.blitSprite(RUBINATION_SLOT_HIGHLIGHTED_SPRITE, i1, j1, 19, 57);
                         i2 = 16777088;
                     } else {
@@ -100,17 +96,17 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
                     }
 
                     RenderSystem.disableBlend();
-                    guiGraphics.drawWordWrap(this.font, formattedtext, i1, j1, l1, i2);
+                    guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 7, j1 + 19, 1, i2);
                     i2 = 8453920;
                 } else {
                     RenderSystem.enableBlend();
-                    guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i + 42 + (l * 37), j + 11, 19, 57);
+                    guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 19, 57);
                     RenderSystem.disableBlend();
-                    guiGraphics.drawWordWrap(this.font, formattedtext, i1, j1, l1, (i2 & 16711422) >> 1);
+                    guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 7, j1 + 19, 1, (i2 & 16711422) >> 1);
                     i2 = 4226832;
                 }
 
-                guiGraphics.drawString(this.font, s, i1 - this.font.width(s), j1, i2);
+                //guiGraphics.drawString(this.font, s, i1 - this.font.width(s), j1, i2);
             }
         }
 
@@ -124,35 +120,40 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 
         for(int j = 0; j < 3; ++j) {
             int k = this.menu.costs[j];
-            Optional<Holder.Reference<Enchantment>> optional = this.minecraft.level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder((this.menu).rubinationClue[j]);
+            List<Optional<Holder.Reference<Enchantment>>> optionalList = new ArrayList<>();
+            for(int h = 0; h < 3; ++h) {
+                optionalList.add(this.minecraft.level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder((this.menu).rubinationClue[j][h]));
+            }
+
             int i1 = j + 1;
-            if (this.isHovering(42 + (39 * j), 11, 19, 57, mouseX, mouseY) && k > 0) {
+            if (this.isHovering(43 + (36 * j), 17, 19, 57, mouseX, mouseY) && k > 0) {
                 List<Component> list = Lists.newArrayList();
-                list.add(Component.translatable("container.enchant.clue", optional.isEmpty() ? "" : Enchantment.getFullname(optional.get(), 1)).withStyle(ChatFormatting.WHITE));
-                if (optional.isEmpty()) {
-                    list.add(Component.literal(""));
-                    list.add(Component.translatable("neoforge.container.enchant.limitedEnchantability").withStyle(ChatFormatting.RED));
-                } else if (!flag) {
-                    list.add(CommonComponents.EMPTY);
-                    if (this.minecraft.player.experienceLevel < k) {
-                        list.add(Component.translatable("container.enchant.level.requirement", (this.menu).costs[j]).withStyle(ChatFormatting.RED));
-                    } else {
-                        MutableComponent mutablecomponent;
-                        if (i1 == 1) {
-                            mutablecomponent = Component.translatable("container.enchant.lapis.one");
+                for(int h = 0; h < 3; ++h) {
+                    list.add(Component.translatable("container.enchant.clue", optionalList.get(h).isEmpty() ? "" : Enchantment.getFullname(optionalList.get(h).get(), 1)).withStyle(ChatFormatting.WHITE));
+                    if (optionalList.get(h).isEmpty()) {
+                        list.add(Component.translatable("neoforge.container.enchant.limitedEnchantability").withStyle(ChatFormatting.RED));
+                    } else if (!flag) {
+                        list.add(CommonComponents.EMPTY);
+                        if (this.minecraft.player.experienceLevel < k) {
+                            list.add(Component.translatable("container.enchant.level.requirement", (this.menu).costs[j]).withStyle(ChatFormatting.RED));
                         } else {
-                            mutablecomponent = Component.translatable("container.enchant.lapis.many", new Object[]{i1});
-                        }
+                            MutableComponent mutablecomponent;
+                            if (i1 == 1) {
+                                mutablecomponent = Component.translatable("container.enchant.lapis.one");
+                            } else {
+                                mutablecomponent = Component.translatable("container.enchant.lapis.many", i1);
+                            }
 
-                        list.add(mutablecomponent.withStyle(i >= i1 ? ChatFormatting.GRAY : ChatFormatting.RED));
-                        MutableComponent mutablecomponent1;
-                        if (i1 == 1) {
-                            mutablecomponent1 = Component.translatable("container.enchant.level.one");
-                        } else {
-                            mutablecomponent1 = Component.translatable("container.enchant.level.many", new Object[]{i1});
-                        }
+                            list.add(mutablecomponent.withStyle(i >= i1 ? ChatFormatting.GRAY : ChatFormatting.RED));
+                            MutableComponent mutablecomponent1;
+                            if (i1 == 1) {
+                                mutablecomponent1 = Component.translatable("container.enchant.level.one");
+                            } else {
+                                mutablecomponent1 = Component.translatable("container.enchant.level.many", i1);
+                            }
 
-                        list.add(mutablecomponent1.withStyle(ChatFormatting.GRAY));
+                            list.add(mutablecomponent1.withStyle(ChatFormatting.GRAY));
+                        }
                     }
                 }
 

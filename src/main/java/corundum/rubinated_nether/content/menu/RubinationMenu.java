@@ -38,7 +38,7 @@ public class RubinationMenu extends AbstractContainerMenu {
     private final Container rubinationSlots;
     private final ContainerLevelAccess access;
     public final int[] costs;
-    public final int[] rubinationClue;
+    public final int[][] rubinationClue;
     public final List<RuneItem> runes = new ArrayList<>();
 
     public RubinationMenu(int containerId, Inventory playerInventory) {
@@ -54,7 +54,7 @@ public class RubinationMenu extends AbstractContainerMenu {
             }
         };
         this.costs = new int[3];
-        this.rubinationClue = new int[]{-1, -1, -1};
+        this.rubinationClue = new int[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
         this.access = access;
         this.addSlot(new Slot(this.rubinationSlots, 0, 70, 92) {
             public int getMaxStackSize() {
@@ -84,9 +84,9 @@ public class RubinationMenu extends AbstractContainerMenu {
         this.addDataSlot(DataSlot.shared(this.costs, 0));
         this.addDataSlot(DataSlot.shared(this.costs, 1));
         this.addDataSlot(DataSlot.shared(this.costs, 2));
-        this.addDataSlot(DataSlot.shared(this.rubinationClue, 0));
-        this.addDataSlot(DataSlot.shared(this.rubinationClue, 1));
-        this.addDataSlot(DataSlot.shared(this.rubinationClue, 2));
+        this.addDataSlot(DataSlot.shared(this.rubinationClue[0], 0));
+        this.addDataSlot(DataSlot.shared(this.rubinationClue[1], 1));
+        this.addDataSlot(DataSlot.shared(this.rubinationClue[2], 2));
     }
 
     public void slotsChanged(Container inventory) {
@@ -105,7 +105,9 @@ public class RubinationMenu extends AbstractContainerMenu {
 
                     for(int k = 0; k < 3; ++k) {
                         this.costs[k] = EnchantmentHelper.getEnchantmentCost(RandomSource.create(), k, (int)j, itemstack);
-                        this.rubinationClue[k] = -1;
+                        for(int i = 0; i < 3; ++i) {
+                            this.rubinationClue[k][i] = -1;
+                        }
                         if (this.costs[k] < k + 1) {
                             this.costs[k] = 0;
                         }
@@ -115,10 +117,12 @@ public class RubinationMenu extends AbstractContainerMenu {
 
                     for(int l = 0; l < 3; ++l) {
                         if (this.costs[l] > 0) {
-                            List<EnchantmentInstance> list = this.getRubinationList(level.registryAccess(), itemstack, runes, l, this.costs[l]);
-                            if (list != null && !list.isEmpty()) {
-                                EnchantmentInstance enchantmentinstance = list.get(list.size() - 1);
-                                this.rubinationClue[l] = idmap.getId(enchantmentinstance.enchantment);
+                            for(int c = 0; c < 3; ++c) {
+                                List<EnchantmentInstance> list = this.getRubinationList(level.registryAccess(), itemstack, runes, l);
+                                if (list != null && !list.isEmpty()) {
+                                    EnchantmentInstance enchantmentinstance = list.get(c + l);
+                                    this.rubinationClue[l][c] = idmap.getId(enchantmentinstance.enchantment);
+                                }
                             }
                         }
                     }
@@ -128,7 +132,9 @@ public class RubinationMenu extends AbstractContainerMenu {
             } else {
                 for(int i = 0; i < 3; ++i) {
                     this.costs[i] = 0;
-                    this.rubinationClue[i] = -1;
+                    for(int k = 0; k < 3; ++k) {
+                        this.rubinationClue[i][k] = -1;
+                    }
                 }
             }
         }
@@ -144,7 +150,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                 return false;
             } else if (this.costs[id] > 0 && !itemstack.isEmpty() && (player.experienceLevel >= i && player.experienceLevel >= this.costs[id] || player.getAbilities().instabuild)) {
                 this.access.execute((level, blockPos) -> {
-                    List<EnchantmentInstance> list = this.getRubinationList(level.registryAccess(), itemstack, runes, id, this.costs[id]);
+                    List<EnchantmentInstance> list = this.getRubinationList(level.registryAccess(), itemstack, runes, id);
                     list = list.stream().filter(Objects::nonNull).collect(Collectors.toList());
                     if (!list.isEmpty()) {
                         player.onEnchantmentPerformed(itemstack, i);
@@ -178,7 +184,7 @@ public class RubinationMenu extends AbstractContainerMenu {
         }
     }
 
-    private List<EnchantmentInstance> getRubinationList(RegistryAccess registryAccess, ItemStack stack, List<RuneItem> runes, int slot, int cost) {
+    private List<EnchantmentInstance> getRubinationList(RegistryAccess registryAccess, ItemStack stack, List<RuneItem> runes, int slot) {
         List<EnchantmentInstance> list = new ArrayList<>();
         List<EnchantmentInstance> cleanList = new ArrayList<>();
         for(RuneItem rune : runes) {
