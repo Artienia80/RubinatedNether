@@ -6,10 +6,94 @@
     "half=upper,has_rune=empty": {
       "model": "rubinated_nether:block/runestone_top"
     },
+    "half=lower,has_rune=sloth": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=sloth": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
     "half=lower,has_rune=greed": {
       "model": "rubinated_nether:block/runestone_bottom_glow"
     },
     "half=upper,has_rune=greed": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
+    "half=lower,has_rune=gluttony": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=gluttony": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
+    "half=lower,has_rune=vainglory": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=vainglory": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
+    "half=lower,has_rune=wrath": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=wrath": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
+    "half=lower,has_rune=envy": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=envy": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
+    "half=lower,has_rune=pride": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=pride": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
+    "half=lower,has_rune=acedia": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=acedia": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
+    "half=lower,has_rune=luxuria": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=luxuria": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
+    "half=lower,has_rune=insidiae": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=insidiae": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
+    "half=lower,has_rune=superbia": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=superbia": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
+    "half=lower,has_rune=tristia": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=tristia": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
+    "half=lower,has_rune=studiose": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=studiose": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
+    "half=lower,has_rune=ardenter": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=ardenter": {
+      "model": "rubinated_nether:block/runestone_top_glow"
+    },
+    "half=lower,has_rune=nimis": {
+      "model": "rubinated_nether:block/runestone_bottom_glow"
+    },
+    "half=upper,has_rune=nimis": {
       "model": "rubinated_nether:block/runestone_top_glow"
     }
   }

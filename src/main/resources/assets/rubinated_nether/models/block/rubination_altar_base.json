@@ -10,6 +10,7 @@
 		"4": "rubinated_nether:block/altar/altar_top",
 		"5": "rubinated_nether:block/bleeding_obsidian",
 		"6": "rubinated_nether:block/altar/altar_side",
+		"overlay6": "rubinated_nether:block/altar/altar_side_glow",
 		"particle": "block/obsidian"
 	},
 	"elements": [
