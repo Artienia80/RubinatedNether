@@ -66,7 +66,7 @@ public class RubinationAltarBlock extends BaseEntityBlock {
         super.animateTick(state, level, pos, random);
 
         for (BlockPos blockPos : RUNESTONE_OFFSETS) {
-            if (random.nextInt(1) == 0 && isValidCatalyst(level, pos, blockPos))
+            if (random.nextInt(2) == 0 && isValidCatalyst(level, pos, blockPos))
                 level.addParticle(RNParticleTypes.RUBINATE.get(),
                         (double) pos.getX() + 0.5, (double) pos.getY() + 2.0, (double) pos.getZ() + 0.5,
                         (double) ((float) blockPos.getX() + random.nextFloat()) - 0.5,
