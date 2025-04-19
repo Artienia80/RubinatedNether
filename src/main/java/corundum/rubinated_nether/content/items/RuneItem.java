@@ -35,11 +35,9 @@ public class RuneItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-
         for(var enchant : this.getRubination().getEnchantments(Minecraft.getInstance().level.registryAccess())) {
             stack.enchant(enchant.enchantment, enchant.level);
         }
-
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 }

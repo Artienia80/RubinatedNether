@@ -138,32 +138,28 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.GRAND_RITUAL_OFFERING
 		);
 
-		// Runes (all share the same texture)
-		runeItemTool(
-				RNItems.SLOTH_RUNE,
-				RNItems.GLUTTONY_RUNE,
-				RNItems.GREED_RUNE
-		);
-
-		runeItemWeapon(
-				RNItems.VAINGLORY_RUNE,
+		// Runes
+		runeItem("tool",
+				RNItems.GREED_RUNE,
 				RNItems.WRATH_RUNE,
-				RNItems.ENVY_RUNE
+				RNItems.SLOTH_RUNE
 		);
-
-		runeItemArmor(
+		runeItem("weapon",
+				RNItems.GLUTTONY_RUNE,
+				RNItems.ENVY_RUNE,
+				RNItems.VAINGLORY_RUNE
+		);
+		runeItem("armor",
 				RNItems.PRIDE_RUNE,
 				RNItems.ACEDIA_RUNE,
 				RNItems.LUXURIA_RUNE
 		);
-
-		runeItemBow(
+		runeItem("bow",
 				RNItems.INSIDIAE_RUNE,
 				RNItems.SUPERBIA_RUNE,
 				RNItems.TRISTIA_RUNE
 		);
-
-		runeItemCrossbow(
+		runeItem("crossbow",
 				RNItems.STUDIOSE_RUNE,
 				RNItems.ARDENTER_RUNE,
 				RNItems.NIMIS_RUNE
@@ -197,39 +193,11 @@ public class RNItemModels extends ItemModelProvider {
 			basicItem(item.asItem());
 	}
 
-	private void runeItemTool(DeferredItem<?>... runes) {
+	private void runeItem(String type, DeferredItem<?>... runes) {
 		for (var rune : runes)
 			withExistingParent(
 					rune.getId().toString(),
-					modLoc("item/rune_tool")
-			);
-	}
-	private void runeItemWeapon(DeferredItem<?>... runes) {
-		for (var rune : runes)
-			withExistingParent(
-					rune.getId().toString(),
-					modLoc("item/rune_weapon")
-			);
-	}
-	private void runeItemArmor(DeferredItem<?>... runes) {
-		for (var rune : runes)
-			withExistingParent(
-					rune.getId().toString(),
-					modLoc("item/rune_armor")
-			);
-	}
-	private void runeItemBow(DeferredItem<?>... runes) {
-		for (var rune : runes)
-			withExistingParent(
-					rune.getId().toString(),
-					modLoc("item/rune_bow")
-			);
-	}
-	private void runeItemCrossbow(DeferredItem<?>... runes) {
-		for (var rune : runes)
-			withExistingParent(
-					rune.getId().toString(),
-					modLoc("item/rune_crossbow")
+					modLoc("item/" + type + "_rune")
 			);
 	}
 
