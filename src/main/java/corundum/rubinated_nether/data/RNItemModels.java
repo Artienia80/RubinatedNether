@@ -141,11 +141,11 @@ public class RNItemModels extends ItemModelProvider {
 		// Runes
 		runeItem("tool",
 				RNItems.GREED_RUNE,
-				RNItems.WRATH_RUNE,
+				RNItems.GLUTTONY_RUNE,
 				RNItems.SLOTH_RUNE
 		);
 		runeItem("weapon",
-				RNItems.GLUTTONY_RUNE,
+				RNItems.WRATH_RUNE,
 				RNItems.ENVY_RUNE,
 				RNItems.VAINGLORY_RUNE
 		);
