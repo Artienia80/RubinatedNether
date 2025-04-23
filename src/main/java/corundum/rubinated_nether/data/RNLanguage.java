@@ -92,15 +92,19 @@ public class RNLanguage extends RNLanguageProvider {
 		addWaxableBlock(RNBlocks.CUT_BRONZE_BRICKS, "Cut Bronze Bricks");
 		addWaxableBlock(RNBlocks.CUT_BRONZE_BRICKS_STAIRS, "Cut Bronze Brick Stairs");
 		addWaxableBlock(RNBlocks.CUT_BRONZE_BRICKS_SLAB, "Cut Bronze Brick Slab");
+
 		addWaxableBlock(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS, "Discolored Cut Bronze Bricks");
 		addWaxableBlock(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS, "Discolored Cut Bronze Brick Stairs");
 		addWaxableBlock(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB, "Discolored Cut Bronze Brick Slab");
+
 		addWaxableBlock(RNBlocks.CORRODED_CUT_BRONZE_BRICKS, "Corroded Cut Bronze Bricks");
 		addWaxableBlock(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS, "Corroded Cut Bronze Brick Stairs");
 		addWaxableBlock(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB, "Corroded Cut Bronze Brick Slab");
+
 		addWaxableBlock(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS, "Tarnished Cut Bronze Bricks");
 		addWaxableBlock(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS, "Tarnished Cut Bronze Brick Stairs");
 		addWaxableBlock(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB, "Tarnished Cut Bronze Brick Slab");
+
 		addWaxableBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS, "Crystallized Cut Bronze Bricks");
 		addWaxableBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS, "Crystallized Cut Bronze Brick Stairs");
 		addWaxableBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB, "Crystallized Cut Bronze Brick Slab");
@@ -118,17 +122,21 @@ public class RNLanguage extends RNLanguageProvider {
 		addItem(RNItems.BRONZE_DRILL, "Bronze Drill");
 
 		addItem(RNItems.GREED_RUNE, "Rune of Greed");
-		addItem(RNItems.WRATH_RUNE, "Rune of Wrath");
 		addItem(RNItems.SLOTH_RUNE, "Rune of Sloth");
 		addItem(RNItems.GLUTTONY_RUNE, "Rune of Gluttony");
+
+		addItem(RNItems.WRATH_RUNE, "Rune of Wrath");
 		addItem(RNItems.ENVY_RUNE, "Rune of Envy");
 		addItem(RNItems.VAINGLORY_RUNE, "Rune of Vainglory");
+
 		addItem(RNItems.PRIDE_RUNE, "Rune of Pride");
 		addItem(RNItems.ACEDIA_RUNE, "Rune of Acedia");
 		addItem(RNItems.LUXURIA_RUNE, "Rune of Luxuria");
+
 		addItem(RNItems.INSIDIAE_RUNE, "Rune of Insidiae");
 		addItem(RNItems.SUPERBIA_RUNE, "Rune of Superbia");
 		addItem(RNItems.TRISTIA_RUNE, "Rune of Tristia");
+
 		addItem(RNItems.STUDIOSE_RUNE, "Rune of Studiose");
 		addItem(RNItems.ARDENTER_RUNE, "Rune of Ardenter");
 		addItem(RNItems.NIMIS_RUNE, "Rune of Nimis");
