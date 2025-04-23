@@ -7,58 +7,58 @@
       "model": "rubinated_nether:block/runestone_top"
     },
     "half=lower,has_rune=sloth": {
-      "model": "rubinated_nether:block/runestone_bottom_glow"
+      "model": "rubinated_nether:block/runestone_bottom_glow_tool"
     },
     "half=upper,has_rune=sloth": {
-      "model": "rubinated_nether:block/runestone_top_glow"
+      "model": "rubinated_nether:block/runestone_top_glow_tool"
     },
     "half=lower,has_rune=greed": {
-      "model": "rubinated_nether:block/runestone_bottom_glow"
+      "model": "rubinated_nether:block/runestone_bottom_glow_tool"
     },
     "half=upper,has_rune=greed": {
-      "model": "rubinated_nether:block/runestone_top_glow"
+      "model": "rubinated_nether:block/runestone_top_glow_tool"
     },
     "half=lower,has_rune=gluttony": {
-      "model": "rubinated_nether:block/runestone_bottom_glow"
+      "model": "rubinated_nether:block/runestone_bottom_glow_tool"
     },
     "half=upper,has_rune=gluttony": {
-      "model": "rubinated_nether:block/runestone_top_glow"
+      "model": "rubinated_nether:block/runestone_top_glow_tool"
     },
     "half=lower,has_rune=vainglory": {
-      "model": "rubinated_nether:block/runestone_bottom_glow"
+      "model": "rubinated_nether:block/runestone_bottom_glow_weapon"
     },
     "half=upper,has_rune=vainglory": {
-      "model": "rubinated_nether:block/runestone_top_glow"
+      "model": "rubinated_nether:block/runestone_top_glow_weapon"
     },
     "half=lower,has_rune=wrath": {
-      "model": "rubinated_nether:block/runestone_bottom_glow"
+      "model": "rubinated_nether:block/runestone_bottom_glow_weapon"
     },
     "half=upper,has_rune=wrath": {
-      "model": "rubinated_nether:block/runestone_top_glow"
+      "model": "rubinated_nether:block/runestone_top_glow_weapon"
     },
     "half=lower,has_rune=envy": {
-      "model": "rubinated_nether:block/runestone_bottom_glow"
+      "model": "rubinated_nether:block/runestone_bottom_glow_weapon"
     },
     "half=upper,has_rune=envy": {
-      "model": "rubinated_nether:block/runestone_top_glow"
+      "model": "rubinated_nether:block/runestone_top_glow_weapon"
     },
     "half=lower,has_rune=pride": {
-      "model": "rubinated_nether:block/runestone_bottom_glow"
+      "model": "rubinated_nether:block/runestone_bottom_glow_armor"
     },
     "half=upper,has_rune=pride": {
-      "model": "rubinated_nether:block/runestone_top_glow"
+      "model": "rubinated_nether:block/runestone_top_glow_armor"
     },
     "half=lower,has_rune=acedia": {
-      "model": "rubinated_nether:block/runestone_bottom_glow"
+      "model": "rubinated_nether:block/runestone_bottom_glow_armor"
     },
     "half=upper,has_rune=acedia": {
-      "model": "rubinated_nether:block/runestone_top_glow"
+      "model": "rubinated_nether:block/runestone_top_glow_armor"
     },
     "half=lower,has_rune=luxuria": {
-      "model": "rubinated_nether:block/runestone_bottom_glow"
+      "model": "rubinated_nether:block/runestone_bottom_glow_armor"
     },
     "half=upper,has_rune=luxuria": {
-      "model": "rubinated_nether:block/runestone_top_glow"
+      "model": "rubinated_nether:block/runestone_top_glow_armor"
     },
     "half=lower,has_rune=insidiae": {
       "model": "rubinated_nether:block/runestone_bottom_glow"

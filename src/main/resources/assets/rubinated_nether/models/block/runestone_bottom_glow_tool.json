@@ -1,0 +1,81 @@
+{
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout",
+	"textures": {
+		"8": "rubinated_nether:block/runestone/feet",
+		"12": "rubinated_nether:block/runestone/pillar_tool",
+		"13": "rubinated_nether:block/runestone/padding",
+		"overlay8": "rubinated_nether:block/runestone/feet_glow",
+		"overlay12": "rubinated_nether:block/runestone/pillar_glow_tool",
+		"overlay13": "rubinated_nether:block/runestone/padding_glow",
+		"particle": "rubinated_nether:block/runestone/padding"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 11, 16],
+			"faces": {
+				"north": {"uv": [0, 5, 16, 16], "texture": "#8"},
+				"east": {"uv": [0, 5, 16, 16], "texture": "#8"},
+				"south": {"uv": [0, 5, 16, 16], "texture": "#8"},
+				"west": {"uv": [0, 5, 16, 16], "texture": "#8"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#13"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#missing"}
+			}
+		},
+		{
+			"from": [1, 11, 1],
+			"to": [15, 16, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1, 10, 1]},
+			"faces": {
+				"north": {"uv": [1, 11, 15, 16], "texture": "#12"},
+				"east": {"uv": [1, 11, 15, 16], "texture": "#12"},
+				"south": {"uv": [1, 11, 15, 16], "texture": "#12"},
+				"west": {"uv": [1, 11, 15, 16], "texture": "#12"},
+				"up": {"uv": [0, 0, 7, 7], "texture": "#missing"},
+				"down": {"uv": [0, 0, 7, 7], "texture": "#missing"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [16, 11, 16],
+			"faces": {
+				"north": {"uv": [0, 5, 16, 16], "texture": "#overlay8"},
+				"east": {"uv": [0, 5, 16, 16], "texture": "#overlay8"},
+				"south": {"uv": [0, 5, 16, 16], "texture": "#overlay8"},
+				"west": {"uv": [0, 5, 16, 16], "texture": "#overlay8"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#overlay13"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#missing"}
+			},
+			"neoforge_data": {
+				"block_light": 15,
+				"sky_light": 15
+			}
+		},
+		{
+			"from": [1, 11, 1],
+			"to": [15, 16, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1, 10, 1]},
+			"faces": {
+				"north": {"uv": [1, 11, 15, 16], "texture": "#overlay12"},
+				"east": {"uv": [1, 11, 15, 16], "texture": "#overlay12"},
+				"south": {"uv": [1, 11, 15, 16], "texture": "#overlay12"},
+				"west": {"uv": [1, 11, 15, 16], "texture": "#overlay12"},
+				"up": {"uv": [0, 0, 7, 7], "texture": "#missing"},
+				"down": {"uv": [0, 0, 7, 7], "texture": "#missing"}
+			},
+			"neoforge_data": {
+				"block_light": 15,
+				"sky_light": 15
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "runestone",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1]
+		}
+	]
+}
