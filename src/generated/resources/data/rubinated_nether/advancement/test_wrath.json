@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:nether/root",
+  "criteria": {
+    "wrath": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:wrath_rune"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.rubinated_nether.obtain_freezer.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:wrath_rune"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.rubinated_nether.obtain_freezer.title"
+    }
+  },
+  "requirements": [
+    [
+      "wrath"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

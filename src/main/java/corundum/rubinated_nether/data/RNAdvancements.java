@@ -217,6 +217,171 @@ public class RNAdvancements extends AdvancementProvider {
                     .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_bronze_statue"), existingFileHelper);
 
 
+            AdvancementHolder runeSloth = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.SLOTH_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("sloth", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.SLOTH_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_sloth"), existingFileHelper);
+
+            AdvancementHolder runeGluttony = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.GLUTTONY_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("gluttony", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.GLUTTONY_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_gluttony"), existingFileHelper);
+
+            AdvancementHolder runeGreed = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.GREED_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("greed", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.GREED_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_greed"), existingFileHelper);
+
+            AdvancementHolder runeVainglory = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.VAINGLORY_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("vainglory", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.VAINGLORY_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_vainglory"), existingFileHelper);
+
+            AdvancementHolder runeWrath = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.WRATH_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("wrath", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.WRATH_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_wrath"), existingFileHelper);
+
+            AdvancementHolder runeEnvy = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.ENVY_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("envy", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.ENVY_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_envy"), existingFileHelper);
+
+            AdvancementHolder runePride = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.PRIDE_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("pride", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.PRIDE_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_pride"), existingFileHelper);
+
+            AdvancementHolder runeAcedia = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.ACEDIA_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("acedia", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.ACEDIA_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_acedia"), existingFileHelper);
+
+            AdvancementHolder runeLuxuria = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.LUXURIA_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("luxuria", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.LUXURIA_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_luxuria"), existingFileHelper);
+
+            AdvancementHolder runeInsidiae = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.INSIDIAE_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("insidiae", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.INSIDIAE_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_insidiae"), existingFileHelper);
+
+            AdvancementHolder runeSuperbia = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.SUPERBIA_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("superbia", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.SUPERBIA_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_superbia"), existingFileHelper);
+
+            AdvancementHolder runeTristia = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.TRISTIA_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("tristia", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.TRISTIA_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_tristia"), existingFileHelper);
+
+            AdvancementHolder runeStudiose = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.STUDIOSE_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("studiose", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.STUDIOSE_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_studiose"), existingFileHelper);
+
+            AdvancementHolder runeArdenter = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.ARDENTER_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("ardenter", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.ARDENTER_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_ardenter"), existingFileHelper);
+
+            AdvancementHolder runeNimis = Advancement.Builder.advancement()
+                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+                    .display(RNItems.NIMIS_RUNE.get(),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
+                            Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
+                            null,
+                            AdvancementType.TASK, false, false, false)
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("nimis", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.NIMIS_RUNE.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_nimis"), existingFileHelper);
+
         }
     }
 
