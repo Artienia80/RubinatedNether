@@ -3,17 +3,11 @@
   "conditions": [
     {
       "condition": "minecraft:random_chance",
-      "chance": 0.025
-    },
-    {
-      "condition": "minecraft:location_check",
-      "predicate": {
-        "dimension": "minecraft:overworld"
-      }
+      "chance": 0.05
     },
     {
       "condition": "neoforge:match_loot_table",
-      "loot_table": "minecraft:chests/end_city"
+      "loot_table": "minecraft:chests/end_city_treasure"
     }
   ],
   "item": "rubinated_nether:greed_rune"

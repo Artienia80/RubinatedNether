@@ -3,11 +3,11 @@
   "conditions": [
     {
       "condition": "minecraft:random_chance",
-      "chance": 0.025
+      "chance": 0.05
     },
     {
       "condition": "neoforge:match_loot_table",
-      "loot_table": "minecraft:chests/desert_pyramid"
+      "loot_table": "minecraft:chests/woodland_mansion"
     }
   ],
   "item": "rubinated_nether:studiose_rune"

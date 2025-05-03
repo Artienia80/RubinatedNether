@@ -3,11 +3,11 @@
   "conditions": [
     {
       "condition": "minecraft:random_chance",
-      "chance": 0.025
+      "chance": 0.05
     },
     {
       "condition": "neoforge:match_loot_table",
-      "loot_table": "minecraft:chests/jungle_temple"
+      "loot_table": "minecraft:chests/buried_treasure"
     }
   ],
   "item": "rubinated_nether:luxuria_rune"

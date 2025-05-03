@@ -3,11 +3,11 @@
   "conditions": [
     {
       "condition": "minecraft:random_chance",
-      "chance": 0.025
+      "chance": 0.1
     },
     {
       "condition": "neoforge:match_loot_table",
-      "loot_table": "minecraft:chests/trial_chambers_reward"
+      "loot_table": "minecraft:chests/trial_chambers/reward_unique"
     }
   ],
   "item": "rubinated_nether:nimis_rune"
