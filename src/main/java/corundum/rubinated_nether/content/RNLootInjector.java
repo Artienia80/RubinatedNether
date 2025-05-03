@@ -12,10 +12,10 @@ import net.neoforged.neoforge.event.LootTableLoadEvent;
 
 import static corundum.rubinated_nether.content.RNItems.*;
 
-public class ModLootInjector {
+public class RNLootInjector {
 
     public static void init() {
-        NeoForge.EVENT_BUS.register(ModLootInjector.class);
+        NeoForge.EVENT_BUS.register(RNLootInjector.class);
     }
 
     @SubscribeEvent

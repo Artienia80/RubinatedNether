@@ -62,6 +62,8 @@ public class RubinatedNether {
 
 		modEventBus.addListener(Datagen::datagen);
 		modEventBus.addListener(DatapackRegistry::datapackRegistry);
+		modEventBus.addListener(RNLootInjector::onLootTableLoad);
+
 
 		for (DeferredRegister<?> registry : REGISTRIES)
 			registry.register(modEventBus);
@@ -72,6 +74,7 @@ public class RubinatedNether {
 			RubinatedNetherClient.client(modEventBus);
 			modEventBus.addListener(RNRecipeCategories::registerRecipeCategories);
 		}
+
 	}
 
 	public static ResourceLocation id(String s) {
