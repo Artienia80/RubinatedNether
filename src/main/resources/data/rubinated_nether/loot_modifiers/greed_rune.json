@@ -1,0 +1,20 @@
+{
+  "type": "rubinated_nether:add_item",
+  "conditions": [
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.025
+    },
+    {
+      "condition": "minecraft:location_check",
+      "predicate": {
+        "dimension": "minecraft:overworld"
+      }
+    },
+    {
+      "condition": "neoforge:match_loot_table",
+      "loot_table": "minecraft:chests/end_city"
+    }
+  ],
+  "item": "rubinated_nether:greed_rune"
+}

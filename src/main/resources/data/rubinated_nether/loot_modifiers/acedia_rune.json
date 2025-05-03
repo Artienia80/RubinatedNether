@@ -1,0 +1,14 @@
+{
+  "type": "rubinated_nether:add_item",
+  "conditions": [
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.025
+    },
+    {
+      "condition": "neoforge:match_loot_table",
+      "loot_table": "minecraft:chests/trial_chambers_reward"
+    }
+  ],
+  "item": "rubinated_nether:acedia_rune"
+}
