@@ -62,8 +62,6 @@ public class RubinatedNether {
 
 		modEventBus.addListener(Datagen::datagen);
 		modEventBus.addListener(DatapackRegistry::datapackRegistry);
-		modEventBus.addListener(RNLootInjector::onLootTableLoad);
-
 
 		for (DeferredRegister<?> registry : REGISTRIES)
 			registry.register(modEventBus);
@@ -75,7 +73,10 @@ public class RubinatedNether {
 			modEventBus.addListener(RNRecipeCategories::registerRecipeCategories);
 		}
 
+		// Register RNLootInjector to the NeoForge event bus
+		RNLootInjector.init();
 	}
+
 
 	public static ResourceLocation id(String s) {
 		return ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, s);

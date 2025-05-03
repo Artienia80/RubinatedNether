@@ -23,31 +23,36 @@ public class RNLootInjector {
         ResourceLocation name = event.getName();
 
         // Add runes to loot tables with 2.5% chance
-        if (name.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "chests/end_city"))) {
-            addRune(event, GREED_RUNE.get(), 0.025f);
-            addRune(event, ENVY_RUNE.get(), 0.025f);
-        } else if (name.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "chests/ancient_city"))) {
-            addRune(event, GLUTTONY_RUNE.get(), 0.025f);
-            addRune(event, WRATH_RUNE.get(), 0.025f);
-        } else if (name.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "chests/jungle_temple"))) {
-            addRune(event, LUXURIA_RUNE.get(), 0.025f);
-            addRune(event, PRIDE_RUNE.get(), 0.025f);
-        } else if (name.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "chests/stronghold_library"))) {
-            addRune(event, SUPERBIA_RUNE.get(), 0.025f);
-            addRune(event, ARDENTER_RUNE.get(), 0.025f);
-        } else if (
-                name.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "chests/nether_bridge")) ||
-                        name.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "chests/bastion_treasure")) ||
-                        name.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "chests/underwater_ruin_big"))
-        ) {
-            addRune(event, SLOTH_RUNE.get(), 0.025f);
-            addRune(event, VAINGLORY_RUNE.get(), 0.025f);
-            addRune(event, INSIDIAE_RUNE.get(), 0.025f);
-            addRune(event, STUDIOSE_RUNE.get(), 0.025f);
-        } else if (name.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "chests/trial_chambers_reward"))) {
-            addRune(event, NIMIS_RUNE.get(), 0.025f);
-            addRune(event, TRISTIA_RUNE.get(), 0.025f);
-            addRune(event, ACEDIA_RUNE.get(), 0.025f);
+        switch (name.toString()) {
+            case "minecraft:chests/end_city":
+                addRune(event, GREED_RUNE.get(), 0.025f);
+                addRune(event, ENVY_RUNE.get(), 0.025f);
+                break;
+            case "minecraft:chests/ancient_city":
+                addRune(event, GLUTTONY_RUNE.get(), 0.025f);
+                addRune(event, WRATH_RUNE.get(), 0.025f);
+                break;
+            case "minecraft:chests/jungle_temple":
+                addRune(event, LUXURIA_RUNE.get(), 0.025f);
+                addRune(event, PRIDE_RUNE.get(), 0.025f);
+                break;
+            case "minecraft:chests/stronghold_library":
+                addRune(event, SUPERBIA_RUNE.get(), 0.025f);
+                addRune(event, ARDENTER_RUNE.get(), 0.025f);
+                break;
+            case "minecraft:chests/nether_bridge":
+            case "minecraft:chests/bastion_treasure":
+            case "minecraft:chests/underwater_ruin_big":
+                addRune(event, SLOTH_RUNE.get(), 0.025f);
+                addRune(event, VAINGLORY_RUNE.get(), 0.025f);
+                addRune(event, INSIDIAE_RUNE.get(), 0.025f);
+                addRune(event, STUDIOSE_RUNE.get(), 0.025f);
+                break;
+            case "minecraft:chests/trial_chambers_reward":
+                addRune(event, NIMIS_RUNE.get(), 0.025f);
+                addRune(event, TRISTIA_RUNE.get(), 0.025f);
+                addRune(event, ACEDIA_RUNE.get(), 0.025f);
+                break;
         }
     }
 
