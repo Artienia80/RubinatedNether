@@ -1,0 +1,14 @@
+{
+  "type": "rubinated_nether:add_item",
+  "conditions": [
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.05
+    },
+    {
+      "condition": "neoforge:match_loot_table",
+      "loot_table": "minecraft:chests/underwater_ruin_big"
+    }
+  ],
+  "item": "rubinated_nether:insidiae_rune"
+}

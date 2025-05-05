@@ -72,7 +72,11 @@ public class RubinatedNether {
 			RubinatedNetherClient.client(modEventBus);
 			modEventBus.addListener(RNRecipeCategories::registerRecipeCategories);
 		}
+
+		// Register RNLootInjector to the NeoForge event bus
+		RNLootInjector.init();
 	}
+
 
 	public static ResourceLocation id(String s) {
 		return ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, s);
