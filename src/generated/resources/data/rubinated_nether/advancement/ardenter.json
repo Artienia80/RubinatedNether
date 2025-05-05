@@ -1,5 +1,4 @@
 {
-  "parent": "minecraft:nether/root",
   "criteria": {
     "ardenter": {
       "conditions": {
@@ -17,6 +16,7 @@
     "description": {
       "translate": "advancements.rubinated_nether.obtain_freezer.description"
     },
+    "hidden": true,
     "icon": {
       "count": 1,
       "id": "rubinated_nether:ardenter_rune"

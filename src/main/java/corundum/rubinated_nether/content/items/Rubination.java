@@ -1,23 +1,27 @@
 package corundum.rubinated_nether.content.items;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.neoforged.neoforge.common.Tags;
+import org.codehaus.plexus.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 //TODO: Add custom debuff enchants
 //TODO: Maybe add tool-tag checking here?
 
 public enum Rubination implements StringRepresentable {
-    SLOTH("sloth", Map.of("minecraft:unbreaking", 5, "minecraft:fortune", 4, "minecraft:infinity", 1), Tags.Items.MINING_TOOL_TOOLS),
+    SLOTH("sloth", Map.of("minecraft:unbreaking", 5, "minecraft:fortune", 4, "minecraft:infinity", 1), Tags.Items.TOOLS),
     GLUTTONY("gluttony", Map.of("minecraft:efficiency", 7,"minecraft:unbreaking", 4,  "minecraft:infinity", 1), Tags.Items.MINING_TOOL_TOOLS),
     GREED("greed", Map.of("minecraft:fortune", 5, "minecraft:efficiency", 4, "minecraft:infinity", 1), Tags.Items.MINING_TOOL_TOOLS),
     VAINGLORY("vainglory", Map.of("minecraft:unbreaking", 5, "minecraft:looting", 4, "minecraft:infinity", 1), Tags.Items.MELEE_WEAPON_TOOLS),
@@ -52,9 +56,13 @@ public enum Rubination implements StringRepresentable {
         return this.name;
     }
 
+    public String getCapitalisedName() {
+        return StringUtils.capitalise(this.name);
+    }
+
     /*
         I didn't like doing this, but I'm forced to make it work like we want.
-        Also, I don't really have much experience with streams, so I had some help here.
+        Also, I really have little experience with streams, so I had some help here.
     */
     public List<EnchantmentInstance> getEnchantments(RegistryAccess registryAccess) {
         return enchantmentData
@@ -71,4 +79,39 @@ public enum Rubination implements StringRepresentable {
     public TagKey<Item> getItemTag() {
         return this.itemKey;
     }
+    
+    public static String parseRubinationTextureName(Rubination rubination){
+        if(rubination.getItemTag() == Tags.Items.MINING_TOOL_TOOLS)
+            return "tool";
+        else if(rubination.getItemTag() == Tags.Items.MELEE_WEAPON_TOOLS)
+            return "weapon";
+        else if(rubination.getItemTag() == Tags.Items.ARMORS)
+            return "armor";
+        else if(rubination.getItemTag() == Tags.Items.TOOLS_BOW)
+            return "bow";
+        else if(rubination.getItemTag() == Tags.Items.TOOLS_CROSSBOW)
+            return "crossbow";
+        return "tool";
+    }
+
+    public static Rubination parseRubinationFromEnchantList(RegistryAccess registry, List<Optional<Holder.Reference<Enchantment>>> enchantments){
+        for(var entry : Rubination.values()){
+            if(entry.getEnchantments(registry).stream().map(enchantmentInstance -> enchantmentInstance.enchantment)
+                    .allMatch(enchantment -> enchantments.stream()
+                            .anyMatch(optional -> optional.isPresent() && optional.get().equals(enchantment))))
+                return entry;
+        }
+        return EMPTY;
+    }
+
+
+
+//            if (this.minecraft != null && this.minecraft.player != null) {
+//        return this.minecraft.player.connection.getAdvancements()
+//                .getAdvancements()
+//                .stream()
+//                .anyMatch(advancement ->
+//                        advancement.getId().equals(new ResourceLocation("rubinated_nether", "rubinous_ritual")));
+//    }
+
 }

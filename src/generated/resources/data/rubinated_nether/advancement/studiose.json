@@ -1,11 +1,10 @@
 {
-  "parent": "minecraft:nether/root",
   "criteria": {
-    "vainglory": {
+    "studiose": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:vainglory_rune"
+            "items": "rubinated_nether:studiose_rune"
           }
         ]
       },
@@ -17,9 +16,10 @@
     "description": {
       "translate": "advancements.rubinated_nether.obtain_freezer.description"
     },
+    "hidden": true,
     "icon": {
       "count": 1,
-      "id": "rubinated_nether:vainglory_rune"
+      "id": "rubinated_nether:studiose_rune"
     },
     "show_toast": false,
     "title": {
@@ -28,7 +28,7 @@
   },
   "requirements": [
     [
-      "vainglory"
+      "studiose"
     ]
   ],
   "sends_telemetry_event": true

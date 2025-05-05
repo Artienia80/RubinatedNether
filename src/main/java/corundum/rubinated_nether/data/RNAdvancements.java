@@ -41,7 +41,7 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("bleeding_obsidian", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.BLEEDING_OBSIDIAN.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_bleeding_obsidian"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_bleeding_obsidian"), existingFileHelper);
 
             AdvancementHolder freezer = Advancement.Builder.advancement()
                     .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
@@ -52,7 +52,7 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("freezer", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.FREEZER.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_freezer"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_freezer"), existingFileHelper);
 
             AdvancementHolder frostedIce = Advancement.Builder.advancement()
                     .parent(freezer)
@@ -63,7 +63,7 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("frosted_ice", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.FROSTED_ICE))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_frosted_ice"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_frosted_ice"), existingFileHelper);
 
             AdvancementHolder rubinatedBlackstone = Advancement.Builder.advancement()
                     .parent(AdvancementSubProvider.createPlaceholder("nether/find_bastion"))
@@ -74,7 +74,7 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("rubinated_blackstone", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.RUBINATED_BLACKSTONE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_rubinated_blackstone"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_rubinated_blackstone"), existingFileHelper);
 
             AdvancementHolder moltenRuby = Advancement.Builder.advancement()
                     .parent(freezer)
@@ -85,7 +85,7 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("molten_ruby", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.MOLTEN_RUBY_ITEM))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_molten_ruby"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_molten_ruby"), existingFileHelper);
 
             AdvancementHolder ruby = Advancement.Builder.advancement()
                     .parent(moltenRuby)
@@ -96,7 +96,7 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("ruby", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.RUBY_ITEM))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_ruby"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_ruby"), existingFileHelper);
 
             AdvancementHolder rubyGlass = Advancement.Builder.advancement()
                     .parent(ruby)
@@ -112,7 +112,7 @@ public class RNAdvancements extends AdvancementProvider {
                     .addCriterion("molten_ruby_glass_pane", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.MOLTEN_RUBY_GLASS_PANE.get()))
                     .addCriterion("ornate_ruby_glass", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.ORNATE_RUBY_GLASS.get()))
                     .addCriterion("ornate_ruby_glass_pane", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.ORNATE_RUBY_GLASS_PANE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_ruby_glass"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_ruby_glass"), existingFileHelper);
 
             AdvancementHolder rubyLaser = Advancement.Builder.advancement()
                     .parent(rubyGlass)
@@ -123,7 +123,7 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("ruby_laser", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.RUBY_LASER.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_ruby_laser"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_ruby_laser"), existingFileHelper);
 
             AdvancementHolder rubyLights = Advancement.Builder.advancement()
                     .parent(moltenRuby)
@@ -136,7 +136,7 @@ public class RNAdvancements extends AdvancementProvider {
                     .addCriterion("ruby_lantern", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.RUBY_LANTERN.get()))
                     .addCriterion("ruby_chandelier", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.CHANDELIER.get()))
                     .addCriterion("ruby_lamp", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.LAVA_LAMP.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_ruby_lights"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_ruby_lights"), existingFileHelper);
 
             AdvancementHolder brazier = Advancement.Builder.advancement()
                     .parent(moltenRuby)
@@ -147,7 +147,7 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("brazier", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.BRAZIER.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_brazier"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_brazier"), existingFileHelper);
 
             AdvancementHolder rubyLens = Advancement.Builder.advancement()
                     .parent(rubyGlass)
@@ -158,7 +158,7 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("ruby_lens", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.RUBY_LENS.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_ruby_lens"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_ruby_lens"), existingFileHelper);
 
             AdvancementHolder sacredShrine = Advancement.Builder.advancement()
                     .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
@@ -169,7 +169,7 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("shrine_stone", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.SHRINE_STONE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "enter_shrine"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "enter_shrine"), existingFileHelper);
 
             AdvancementHolder rubinousRitual = Advancement.Builder.advancement()
                     .parent(sacredShrine)
@@ -180,7 +180,7 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("placeholder", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.RUNESTONE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "rubinous_ritual"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "rubinous_ritual"), existingFileHelper);
 
 
             AdvancementHolder bronzeRod = Advancement.Builder.advancement()
@@ -192,7 +192,7 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("bronze_rod", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.BRONZE_ROD.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_bronze_rod"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_bronze_rod"), existingFileHelper);
 
             AdvancementHolder bronzeBlock = Advancement.Builder.advancement()
                     .parent(bronzeRod)
@@ -203,7 +203,7 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("bronze_block", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.BRONZE_BLOCK.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_bronze_block"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_bronze_block"), existingFileHelper);
 
             AdvancementHolder shrineSentinel = Advancement.Builder.advancement()
                     .parent(bronzeRod)
@@ -214,173 +214,159 @@ public class RNAdvancements extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("placeholder", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.BRONZE_SCRAP.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "obtain_bronze_statue"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "obtain_bronze_statue"), existingFileHelper);
 
+            // Runes
 
-            AdvancementHolder runeSloth = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
+            AdvancementHolder runeSloth = Advancement.Builder.recipeAdvancement()
                     .display(RNItems.SLOTH_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("sloth", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.SLOTH_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_sloth"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "sloth"), existingFileHelper);
 
             AdvancementHolder runeGluttony = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.GLUTTONY_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("gluttony", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.GLUTTONY_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_gluttony"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "gluttony"), existingFileHelper);
 
             AdvancementHolder runeGreed = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.GREED_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("greed", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.GREED_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_greed"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "greed"), existingFileHelper);
 
             AdvancementHolder runeVainglory = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.VAINGLORY_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("vainglory", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.VAINGLORY_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_vainglory"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "vainglory"), existingFileHelper);
 
             AdvancementHolder runeWrath = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.WRATH_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("wrath", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.WRATH_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_wrath"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "wrath"), existingFileHelper);
 
             AdvancementHolder runeEnvy = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.ENVY_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("envy", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.ENVY_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_envy"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "envy"), existingFileHelper);
 
             AdvancementHolder runePride = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.PRIDE_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("pride", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.PRIDE_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_pride"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "pride"), existingFileHelper);
 
             AdvancementHolder runeAcedia = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.ACEDIA_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("acedia", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.ACEDIA_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_acedia"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "acedia"), existingFileHelper);
 
             AdvancementHolder runeLuxuria = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.LUXURIA_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("luxuria", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.LUXURIA_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_luxuria"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "luxuria"), existingFileHelper);
 
             AdvancementHolder runeInsidiae = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.INSIDIAE_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("insidiae", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.INSIDIAE_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_insidiae"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "insidiae"), existingFileHelper);
 
             AdvancementHolder runeSuperbia = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.SUPERBIA_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("superbia", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.SUPERBIA_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_superbia"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "superbia"), existingFileHelper);
 
             AdvancementHolder runeTristia = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.TRISTIA_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("tristia", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.TRISTIA_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_tristia"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "tristia"), existingFileHelper);
 
             AdvancementHolder runeStudiose = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.STUDIOSE_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("studiose", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.STUDIOSE_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_studiose"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "studiose"), existingFileHelper);
 
             AdvancementHolder runeArdenter = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.ARDENTER_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("ardenter", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.ARDENTER_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_ardenter"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "ardenter"), existingFileHelper);
 
             AdvancementHolder runeNimis = Advancement.Builder.advancement()
-                    .parent(AdvancementSubProvider.createPlaceholder("nether/root"))
                     .display(RNItems.NIMIS_RUNE.get(),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.title"),
                             Component.translatable("advancements.rubinated_nether.obtain_freezer.description"),
                             null,
-                            AdvancementType.TASK, false, false, false)
+                            AdvancementType.TASK, false, false, true)
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("nimis", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.NIMIS_RUNE.get()))
-                    .save(consumer, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "test_nimis"), existingFileHelper);
+                    .save(consumer, RubinatedNether.id( "nimis"), existingFileHelper);
 
         }
     }

@@ -193,6 +193,23 @@
   "gui.rubinated_nether.jei.freezer": "Freezing",
   "gui.rubinated_nether.recipebook.toggleRecipes.freezable": "Showing Freezable",
 
+  "gui.rubinated_nether.rubination_altar": "Rubination Altar",
+  "container.sloth.clue": "Sloth",
+  "container.gluttony.clue": "Gluttony",
+  "container.greed.clue": "Greed",
+  "container.vainglory.clue": "Vainglory",
+  "container.wrath.clue": "Wrath",
+  "container.envy.clue": "Envy",
+  "container.pride.clue": "Pride",
+  "container.acedia.clue": "Acedia",
+  "container.luxuria.clue": "Luxuria",
+  "container.insidiae.clue": "Insidiae",
+  "container.superbia.clue": "Superbia",
+  "container.tristia.clue": "Tristia",
+  "container.studiose.clue": "Studiose",
+  "container.ardenter.clue": "Ardenter",
+  "container.nimis.clue": "Nimis",
+
   "death.attack.fallingBlock": "%1$s was embraced by a falling chandelier",
   "death.attack.fallingBlock.player": "%1$s was embraced by a falling chandelier whilst fighting %2$s",
 

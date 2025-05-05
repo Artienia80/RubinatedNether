@@ -3,11 +3,13 @@ package corundum.rubinated_nether.content.screen;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.menu.RubinationMenu;
 import corundum.rubinated_nether.utils.RubinationNames;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.*;
@@ -29,13 +31,12 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
     private static final ResourceLocation RUBINATION_SLOT_DISABLED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_disabled");
     private static final ResourceLocation RUBINATION_SLOT_HIGHLIGHTED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_highlighted");
     private static final ResourceLocation RUBINATION_SLOT_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot");
+    private static final ResourceLocation DISABLED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/disabled_rune.png");
     private static final ResourceLocation RUBINATION_ALTAR_LOCATION = RubinatedNether.id("textures/gui/rubination_altar.png");
     private final RandomSource random = RandomSource.create();
-    private ItemStack last;
 
     public RubinationScreen(RubinationMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
-        this.last = ItemStack.EMPTY;
         this.imageHeight = 208;
         this.inventoryLabelY = this.imageHeight - 95;
     }
@@ -70,44 +71,47 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - this.imageHeight) / 2;
         guiGraphics.blit(RUBINATION_ALTAR_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight);
-        int k = this.menu.getGoldCount();
+        int k = this.menu.getRubyCount();
 
         for(int l = 0; l < 3; ++l) {
             int i1 = i + 43 + (l * 36);
             int j1 = j + 17;
-            int k1 = this.menu.costs[l];
-            if (k1 == 0) {
-                RenderSystem.enableBlend();
-                guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 19, 57);
-                RenderSystem.disableBlend();
-            } else {
-                String s = "" + k1;
-                FormattedText formattedtext = RubinationNames.getInstance().getRandomName(this.font, 20);
-                int i2 = 6839882;
-                if ((k >= l + 1 && this.minecraft.player.experienceLevel >= k1 || this.minecraft.player.getAbilities().instabuild) && (this.menu).rubinationClue[l][l] != -1) {
-                    int j2 = mouseX - i1;
-                    int k2 = mouseY - j1;
-                    RenderSystem.enableBlend();
-                    if (j2 >= 0 && k2 >= 0 && j2 < 19 && k2 < 57) {
-                        guiGraphics.blitSprite(RUBINATION_SLOT_HIGHLIGHTED_SPRITE, i1, j1, 19, 57);
-                        i2 = 16777088;
-                    } else {
-                        guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 19, 57);
-                    }
 
-                    RenderSystem.disableBlend();
-                    guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 7, j1 + 19, 1, i2);
-                    i2 = 8453920;
+            FormattedText formattedtext = RubinationNames.getInstance().getRandomName(this.font, 20);
+            int i2 = 6839882;
+            if ((k >= 1 || this.minecraft.player.getAbilities().instabuild) && this.menu.rubinationClue[l][l] != -1) {
+                int j2 = mouseX - i1;
+                int k2 = mouseY - j1;
+                RenderSystem.enableBlend();
+                if (j2 >= 0 && k2 >= 0 && j2 < 19 && k2 < 57) {
+                    guiGraphics.blitSprite(RUBINATION_SLOT_HIGHLIGHTED_SPRITE, i1, j1, 19, 57);
+                    i2 = 16777088;
                 } else {
-                    RenderSystem.enableBlend();
-                    guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 19, 57);
-                    RenderSystem.disableBlend();
-                    guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 7, j1 + 19, 1, (i2 & 16711422) >> 1);
-                    i2 = 4226832;
+                    guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 19, 57);
                 }
 
-                //guiGraphics.drawString(this.font, s, i1 - this.font.width(s), j1, i2);
+                List<Optional<Holder.Reference<Enchantment>>> optionalList = new ArrayList<>();
+                for(int h = 0; h < 3; ++h) {
+                    optionalList.add(this.minecraft.level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(this.menu.rubinationClue[l][h]));
+                }
+
+                var result = Rubination.parseRubinationFromEnchantList(this.minecraft.level.registryAccess(), optionalList);
+
+                guiGraphics.blit(RubinatedNether.id("textures/item/" + Rubination.parseRubinationTextureName(result) + "_rune.png"), i1 + 2, j1 + 1, 0, 0, 16, 16, 16, 16);
+
+                RenderSystem.disableBlend();
+                guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 7, j1 + 19, 1, i2);
+                i2 = 8453920;
+            } else {
+                RenderSystem.enableBlend();
+                guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 19, 57);
+                guiGraphics.blit(DISABLED_RUNE, i1 + 2, j1 + 1,0, 0, 16, 16, 16, 16);
+                RenderSystem.disableBlend();
+                guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 7, j1 + 19, 1, (i2 & 16711422) >> 1);
+                i2 = 4226832;
             }
+
+                //guiGraphics.drawString(this.font, s, i1 - this.font.width(s), j1, i2);
         }
 
     }
@@ -116,47 +120,29 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
         boolean flag = this.minecraft.player.getAbilities().instabuild;
-        int i = this.menu.getGoldCount();
 
         for(int j = 0; j < 3; ++j) {
-            int k = this.menu.costs[j];
             List<Optional<Holder.Reference<Enchantment>>> optionalList = new ArrayList<>();
             for(int h = 0; h < 3; ++h) {
-                optionalList.add(this.minecraft.level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder((this.menu).rubinationClue[j][h]));
+                optionalList.add(this.minecraft.level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(this.menu.rubinationClue[j][h]));
             }
 
-            int i1 = j + 1;
-            if (this.isHovering(43 + (36 * j), 17, 19, 57, mouseX, mouseY) && k > 0) {
+            var result = Rubination.parseRubinationFromEnchantList(this.minecraft.level.registryAccess(), optionalList);
+
+            if (this.isHovering(43 + (36 * j), 17, 19, 57, mouseX, mouseY) && this.menu.getItemInSlot() != ItemStack.EMPTY) {
                 List<Component> list = Lists.newArrayList();
-                for(int h = 0; h < 3; ++h) {
-                    list.add(Component.translatable("container.enchant.clue", optionalList.get(h).isEmpty() ? "" : Enchantment.getFullname(optionalList.get(h).get(), 1)).withStyle(ChatFormatting.WHITE));
-                    if (optionalList.get(h).isEmpty()) {
+                if (!flag) {
+                    list.add(CommonComponents.EMPTY);
+                } else {
+                    if (optionalList.getFirst().isEmpty())
                         list.add(Component.translatable("neoforge.container.enchant.limitedEnchantability").withStyle(ChatFormatting.RED));
-                    } else if (!flag) {
-                        list.add(CommonComponents.EMPTY);
-                        if (this.minecraft.player.experienceLevel < k) {
-                            list.add(Component.translatable("container.enchant.level.requirement", (this.menu).costs[j]).withStyle(ChatFormatting.RED));
-                        } else {
-                            MutableComponent mutablecomponent;
-                            if (i1 == 1) {
-                                mutablecomponent = Component.translatable("container.enchant.lapis.one");
-                            } else {
-                                mutablecomponent = Component.translatable("container.enchant.lapis.many", i1);
-                            }
-
-                            list.add(mutablecomponent.withStyle(i >= i1 ? ChatFormatting.GRAY : ChatFormatting.RED));
-                            MutableComponent mutablecomponent1;
-                            if (i1 == 1) {
-                                mutablecomponent1 = Component.translatable("container.enchant.level.one");
-                            } else {
-                                mutablecomponent1 = Component.translatable("container.enchant.level.many", i1);
-                            }
-
-                            list.add(mutablecomponent1.withStyle(ChatFormatting.GRAY));
+                    else {
+                        list.add(Component.translatable("container." + result.getSerializedName() + ".clue").withStyle(ChatFormatting.RED));
+                        for (int h = 0; h < 3; ++h) {
+                            list.add(Component.translatable("container.enchant.clue", Enchantment.getFullname(optionalList.get(h).get(), 1)).withStyle(ChatFormatting.WHITE));
                         }
                     }
                 }
-
                 guiGraphics.renderComponentTooltip(this.font, list, mouseX, mouseY);
                 break;
             }

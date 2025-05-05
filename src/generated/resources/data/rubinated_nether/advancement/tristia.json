@@ -1,11 +1,10 @@
 {
-  "parent": "minecraft:nether/root",
   "criteria": {
-    "greed": {
+    "tristia": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:greed_rune"
+            "items": "rubinated_nether:tristia_rune"
           }
         ]
       },
@@ -17,9 +16,10 @@
     "description": {
       "translate": "advancements.rubinated_nether.obtain_freezer.description"
     },
+    "hidden": true,
     "icon": {
       "count": 1,
-      "id": "rubinated_nether:greed_rune"
+      "id": "rubinated_nether:tristia_rune"
     },
     "show_toast": false,
     "title": {
@@ -28,7 +28,7 @@
   },
   "requirements": [
     [
-      "greed"
+      "tristia"
     ]
   ],
   "sends_telemetry_event": true
