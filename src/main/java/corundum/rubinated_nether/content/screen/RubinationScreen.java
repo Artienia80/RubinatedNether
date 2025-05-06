@@ -136,6 +136,10 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
                 } else {
                     if (optionalList.getFirst().isEmpty())
                         list.add(Component.translatable("gui.rubinated_nether.rubination_altar.unusable").withStyle(ChatFormatting.RED));
+                        //                         FormattedText randomName = RubinationNames.getInstance().getRandomName(this.font, 20);
+                        //                        guiGraphics.drawWordWrap(this.font, randomName, mouseX, mouseY, 100, 0xFF5555);
+                        //                        break;
+                        // Enchantment table lang random, doesnt work
                     else {
                         list.add(Component.translatable("container." + result.getSerializedName() + ".clue").withStyle(ChatFormatting.RED));
                         for (int h = 0; h < 3; ++h) {

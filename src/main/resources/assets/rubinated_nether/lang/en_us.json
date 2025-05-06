@@ -209,7 +209,7 @@
   "container.studiose.clue": "Studiose",
   "container.ardenter.clue": "Ardenter",
   "container.nimis.clue": "Nimis",
-  "gui.rubinated_nether.rubination_altar.unusable": "§kRUBINATED",
+  "gui.rubinated_nether.rubination_altar.unusable": "RUBINATED",
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
 
   "death.attack.fallingBlock": "%1$s was embraced by a falling chandelier",
