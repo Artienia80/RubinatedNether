@@ -49,6 +49,14 @@ public final class RNTags {
 		public static final TagKey<Item> LOW_RUBY = createTag(Registries.ITEM, "low_ruby");
 
 		public static final TagKey<Item> RUNES = createTag(Registries.ITEM, "runes");
+
+		public static final TagKey<Item> RUBINATION_TOOL = createTag(Registries.ITEM, "rubination_tool");
+		public static final TagKey<Item> RUBINATION_WEAPON = createTag(Registries.ITEM, "rubination_weapon");
+		public static final TagKey<Item> RUBINATION_ARMOR = createTag(Registries.ITEM, "rubination_armor");
+		public static final TagKey<Item> RUBINATION_BOW = createTag(Registries.ITEM, "rubination_bow");
+		public static final TagKey<Item> RUBINATION_CROSSBOW = createTag(Registries.ITEM, "rubination_crossbow");
+
+
 	}
 
 	public static final class Dimensions {

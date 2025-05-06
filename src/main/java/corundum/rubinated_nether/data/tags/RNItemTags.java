@@ -9,7 +9,11 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class RNItemTags extends ItemTagsProvider {
@@ -41,5 +45,61 @@ public class RNItemTags extends ItemTagsProvider {
 				RNItems.ARDENTER_RUNE.asItem(),
 				RNItems.NIMIS_RUNE.asItem()
 		);
+
+		this.tag(RNTags.Items.RUBINATION_TOOL).addTag(Tags.Items.MINING_TOOL_TOOLS); //Included bc tag only has pickaxes
+
+
+		// this.tag(RNTags.Items.RUBINATION_WEAPON).addTag(Tags.Items.MELEE_WEAPON_TOOLS);
+		// Intentionally OMMITTED due to tag including Tridents and Mace.
+
+		this.tag(RNTags.Items.RUBINATION_ARMOR).addTag(Tags.Items.ARMORS); //Included for backup
+		this.tag(RNTags.Items.RUBINATION_BOW).addTag(Tags.Items.TOOLS_BOW); //Included for backup
+		this.tag(RNTags.Items.RUBINATION_CROSSBOW).addTag(Tags.Items.TOOLS_CROSSBOW); //Included for backup
+
+		this.tag(RNTags.Items.RUBINATION_TOOL).add(
+				Items.WOODEN_SHOVEL,
+				Items.WOODEN_HOE,
+				Items.WOODEN_AXE,
+
+				Items.STONE_SHOVEL,
+				Items.STONE_HOE,
+				Items.STONE_AXE,
+
+				Items.IRON_SHOVEL,
+				Items.IRON_HOE,
+				Items.IRON_AXE,
+
+				Items.GOLDEN_SHOVEL,
+				Items.GOLDEN_HOE,
+				Items.GOLDEN_AXE,
+
+				Items.DIAMOND_SHOVEL,
+				Items.DIAMOND_HOE,
+				Items.DIAMOND_AXE,
+
+				Items.NETHERITE_SHOVEL,
+				Items.NETHERITE_HOE,
+				Items.NETHERITE_AXE
+		);
+
+		this.tag(RNTags.Items.RUBINATION_WEAPON).add(
+				Items.WOODEN_SWORD,
+				Items.STONE_SWORD,
+				Items.GOLDEN_SWORD,
+				Items.IRON_SWORD,
+				Items.DIAMOND_SWORD,
+				Items.NETHERITE_SWORD,
+
+				Items.WOODEN_AXE,
+				Items.STONE_AXE,
+				Items.GOLDEN_AXE,
+				Items.IRON_AXE,
+				Items.DIAMOND_AXE,
+				Items.NETHERITE_AXE
+		);
+
+
+
+
 	}
 }

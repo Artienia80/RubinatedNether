@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.items;
 
+import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
@@ -21,21 +22,21 @@ import java.util.stream.Collectors;
 //TODO: Maybe add tool-tag checking here?
 
 public enum Rubination implements StringRepresentable {
-    SLOTH("sloth", Map.of("minecraft:unbreaking", 5, "minecraft:fortune", 4, "minecraft:infinity", 1), Tags.Items.MINING_TOOL_TOOLS),
-    GLUTTONY("gluttony", Map.of("minecraft:efficiency", 7,"minecraft:unbreaking", 4,  "minecraft:infinity", 1), Tags.Items.MINING_TOOL_TOOLS),
-    GREED("greed", Map.of("minecraft:fortune", 5, "minecraft:efficiency", 4, "minecraft:infinity", 1), Tags.Items.MINING_TOOL_TOOLS),
-    VAINGLORY("vainglory", Map.of("minecraft:unbreaking", 5, "minecraft:looting", 4, "minecraft:infinity", 1), Tags.Items.MELEE_WEAPON_TOOLS),
-    WRATH("wrath", Map.of("minecraft:sharpness", 7, "minecraft:unbreaking", 4, "minecraft:infinity", 1), Tags.Items.MELEE_WEAPON_TOOLS),
-    ENVY("envy", Map.of("minecraft:looting", 5, "minecraft:sharpness", 6, "minecraft:infinity", 1), Tags.Items.MELEE_WEAPON_TOOLS),
-    PRIDE("pride", Map.of("minecraft:unbreaking", 5, "minecraft:protection", 6, "minecraft:infinity", 1), Tags.Items.ARMORS),
-    ACEDIA("acedia", Map.of("minecraft:thorns", 5, "minecraft:unbreaking", 4, "minecraft:infinity", 1), Tags.Items.ARMORS),
-    LUXURIA("luxuria", Map.of("minecraft:protection", 7, "minecraft:thorns", 6, "minecraft:infinity", 1), Tags.Items.ARMORS),
-    INSIDIAE("insidiae", Map.of("minecraft:unbreaking", 5, "minecraft:punch", 3, "minecraft:infinity", 1), Tags.Items.TOOLS_BOW),
-    SUPERBIA("superbia", Map.of("minecraft:power", 7, "minecraft:unbreaking", 4, "minecraft:infinity", 1), Tags.Items.TOOLS_BOW),
-    TRISTIA("tristia", Map.of("minecraft:punch", 4, "minecraft:power", 6, "minecraft:infinity", 1), Tags.Items.TOOLS_BOW),
-    STUDIOSE("studiose", Map.of("minecraft:unbreaking", 5, "minecraft:multishot", 2, "minecraft:infinity", 1), Tags.Items.TOOLS_CROSSBOW),
-    ARDENTER("ardenter", Map.of("minecraft:quick_charge", 5, "minecraft:unbreaking", 4, "minecraft:infinity", 1), Tags.Items.TOOLS_CROSSBOW),
-    NIMIS("nimis", Map.of("minecraft:multishot", 3, "minecraft:quick_charge", 4, "minecraft:infinity", 1), Tags.Items.TOOLS_CROSSBOW),
+    SLOTH("sloth", Map.of("minecraft:unbreaking", 5, "minecraft:fortune", 4, "minecraft:infinity", 1), RNTags.Items.RUBINATION_TOOL),
+    GLUTTONY("gluttony", Map.of("minecraft:efficiency", 7,"minecraft:unbreaking", 4,  "minecraft:infinity", 1), RNTags.Items.RUBINATION_TOOL),
+    GREED("greed", Map.of("minecraft:fortune", 5, "minecraft:efficiency", 4, "minecraft:infinity", 1), RNTags.Items.RUBINATION_TOOL),
+    VAINGLORY("vainglory", Map.of("minecraft:unbreaking", 5, "minecraft:looting", 4, "minecraft:infinity", 1), RNTags.Items.RUBINATION_WEAPON),
+    WRATH("wrath", Map.of("minecraft:sharpness", 7, "minecraft:unbreaking", 4, "minecraft:infinity", 1), RNTags.Items.RUBINATION_WEAPON),
+    ENVY("envy", Map.of("minecraft:looting", 5, "minecraft:sharpness", 6, "minecraft:infinity", 1), RNTags.Items.RUBINATION_WEAPON),
+    PRIDE("pride", Map.of("minecraft:unbreaking", 5, "minecraft:protection", 6, "minecraft:infinity", 1), RNTags.Items.RUBINATION_ARMOR),
+    ACEDIA("acedia", Map.of("minecraft:thorns", 5, "minecraft:unbreaking", 4, "minecraft:infinity", 1), RNTags.Items.RUBINATION_ARMOR),
+    LUXURIA("luxuria", Map.of("minecraft:protection", 7, "minecraft:thorns", 6, "minecraft:infinity", 1), RNTags.Items.RUBINATION_ARMOR),
+    INSIDIAE("insidiae", Map.of("minecraft:unbreaking", 5, "minecraft:punch", 3, "minecraft:infinity", 1), RNTags.Items.RUBINATION_BOW),
+    SUPERBIA("superbia", Map.of("minecraft:power", 7, "minecraft:unbreaking", 4, "minecraft:infinity", 1), RNTags.Items.RUBINATION_BOW),
+    TRISTIA("tristia", Map.of("minecraft:punch", 4, "minecraft:power", 6, "minecraft:infinity", 1), RNTags.Items.RUBINATION_BOW),
+    STUDIOSE("studiose", Map.of("minecraft:unbreaking", 5, "minecraft:multishot", 2, "minecraft:infinity", 1), RNTags.Items.RUBINATION_CROSSBOW),
+    ARDENTER("ardenter", Map.of("minecraft:quick_charge", 5, "minecraft:unbreaking", 4, "minecraft:infinity", 1), RNTags.Items.RUBINATION_CROSSBOW),
+    NIMIS("nimis", Map.of("minecraft:multishot", 3, "minecraft:quick_charge", 4, "minecraft:infinity", 1), RNTags.Items.RUBINATION_CROSSBOW),
 
     EMPTY("empty", Map.of(), Tags.Items.BRICKS),;
 
