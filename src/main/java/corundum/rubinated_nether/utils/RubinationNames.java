@@ -1,13 +1,15 @@
 package corundum.rubinated_nether.utils;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.Style;
+import net.minecraft.core.Holder;
+import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
