@@ -135,11 +135,11 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
                     list.add(CommonComponents.EMPTY);
                 } else {
                     if (optionalList.getFirst().isEmpty())
-                        list.add(Component.translatable("neoforge.container.enchant.limitedEnchantability").withStyle(ChatFormatting.RED));
+                        list.add(Component.translatable("gui.rubinated_nether.rubination_altar.unusable").withStyle(ChatFormatting.RED));
                     else {
                         list.add(Component.translatable("container." + result.getSerializedName() + ".clue").withStyle(ChatFormatting.RED));
                         for (int h = 0; h < 3; ++h) {
-                            list.add(Component.translatable("container.enchant.clue", Enchantment.getFullname(optionalList.get(h).get(), 1)).withStyle(ChatFormatting.WHITE));
+                            list.add(Component.translatable("gui.rubinated_nether.rubination_altar.enchant", Enchantment.getFullname(optionalList.get(h).get(), 2)).withStyle(ChatFormatting.WHITE));
                         }
                     }
                 }
