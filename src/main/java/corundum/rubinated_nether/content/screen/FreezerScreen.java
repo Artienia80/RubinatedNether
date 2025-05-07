@@ -11,28 +11,28 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 
 public class FreezerScreen extends AbstractRecipeBookScreen<SingleRecipeInput, FreezingRecipe, FreezerMenu, FreezerRecipeBookComponent> {
-    public static final ResourceLocation FREEZER_GUI_TEXTURES = ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/gui/freezer_gui.png");
+	public static final ResourceLocation FREEZER_GUI_TEXTURES = ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/gui/freezer_gui.png");
 
-    public FreezerScreen(FreezerMenu menu, Inventory inventory, Component title) {
-        super(menu, new FreezerRecipeBookComponent(), inventory, title);
-    }
+	public FreezerScreen(FreezerMenu menu, Inventory inventory, Component title) {
+		super(menu, new FreezerRecipeBookComponent(), inventory, title);
+	}
 
-    @Override
-    public void init() {
-        super.init();
-        this.initScreen(20);
-    }
+	@Override
+	public void init() {
+		super.init();
+		this.initScreen(20);
+	}
 
-    @Override
-    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
-        int left = this.leftPos;
-        int top = this.topPos;
-        guiGraphics.blit(FREEZER_GUI_TEXTURES, left, top, 0, 0, this.imageWidth, this.imageHeight);
-        if (this.getMenu().isLit()) {
-            int litProgress = this.getMenu().getLitProgress();
-            guiGraphics.blit(FREEZER_GUI_TEXTURES, left + 56, top + 36 + 12 - litProgress, 176, 12 - litProgress, 14, litProgress + 1);
-        }
-        int burnProgress = this.getMenu().getBurnProgress();
-        guiGraphics.blit(FREEZER_GUI_TEXTURES, left + 79, top + 34, 176, 14, burnProgress + 1, 16);
-    }
+	@Override
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
+		int left = this.leftPos;
+		int top = this.topPos;
+		guiGraphics.blit(FREEZER_GUI_TEXTURES, left, top, 0, 0, this.imageWidth, this.imageHeight);
+		if (this.getMenu().isLit()) {
+			int litProgress = this.getMenu().getLitProgress();
+			guiGraphics.blit(FREEZER_GUI_TEXTURES, left + 56, top + 36 + 12 - litProgress, 176, 12 - litProgress, 14, litProgress + 1);
+		}
+		int burnProgress = this.getMenu().getBurnProgress();
+		guiGraphics.blit(FREEZER_GUI_TEXTURES, left + 79, top + 34, 176, 14, burnProgress + 1, 16);
+	}
 }

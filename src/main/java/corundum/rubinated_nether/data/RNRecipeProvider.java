@@ -5,7 +5,6 @@ import java.util.concurrent.CompletableFuture;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;

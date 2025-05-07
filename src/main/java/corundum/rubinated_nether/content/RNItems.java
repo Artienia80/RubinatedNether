@@ -1,39 +1,16 @@
 package corundum.rubinated_nether.content;
 
-import com.mojang.serialization.Codec;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.items.*;
 import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.*;
-import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.Unbreakable;
-import net.minecraft.world.item.enchantment.*;
-import net.minecraft.world.item.enchantment.effects.RemoveBinomial;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.MatchTool;
-import net.minecraft.world.level.storage.loot.providers.number.EnchantmentLevelProvider;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
 public class RNItems {
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(RubinatedNether.MODID);
-
-	private static DeferredItem<Item> redItem(String name) {
-		return ITEMS.register(name, () -> new Item(new Item.Properties().rarity(RNRarity.RUBINATED_NETHER_RUBY.get())));
-	}
 
 	public static final DeferredItem<Item> RUBY_ITEM = basicItem("ruby");
 	public static final DeferredItem<Item> MOLTEN_RUBY_ITEM = basicItem("molten_ruby");

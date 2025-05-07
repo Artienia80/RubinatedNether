@@ -14,37 +14,37 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class BronzeChargeProjectileRenderer extends EntityRenderer<BronzeShotProjectileEntity> {
-    private BronzeChargeProjectileModel model;
+	private BronzeChargeProjectileModel model;
 
-    public BronzeChargeProjectileRenderer(EntityRendererProvider.Context context) {
-        super(context);
-        this.model = new BronzeChargeProjectileModel(context.bakeLayer(BronzeChargeProjectileModel.LAYER_LOCATION));
-    }
+	public BronzeChargeProjectileRenderer(EntityRendererProvider.Context context) {
+		super(context);
+		this.model = new BronzeChargeProjectileModel(context.bakeLayer(BronzeChargeProjectileModel.LAYER_LOCATION));
+	}
 
-    @Override
-    public void render(BronzeShotProjectileEntity pEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-        poseStack.pushPose();
+	@Override
+	public void render(BronzeShotProjectileEntity pEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+		poseStack.pushPose();
 
-        if (!pEntity.isGrounded()) {
-            poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, pEntity.yRotO, pEntity.getYRot())));
-            poseStack.mulPose(Axis.XP.rotationDegrees(pEntity.getRenderingRotation() * 5f));
-            poseStack.translate(0, -1.0f, 0);
-        } else {
-            // Removed groundedOffset and set rotation based on default behavior
-            poseStack.mulPose(Axis.YP.rotationDegrees(pEntity.getYRot()));
-            poseStack.mulPose(Axis.XP.rotationDegrees(pEntity.getXRot()));
-            poseStack.translate(0, -1.0f, 0);
-        }
+		if (!pEntity.isGrounded()) {
+			poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, pEntity.yRotO, pEntity.getYRot())));
+			poseStack.mulPose(Axis.XP.rotationDegrees(pEntity.getRenderingRotation() * 5f));
+			poseStack.translate(0, -1.0f, 0);
+		} else {
+			// Removed groundedOffset and set rotation based on default behavior
+			poseStack.mulPose(Axis.YP.rotationDegrees(pEntity.getYRot()));
+			poseStack.mulPose(Axis.XP.rotationDegrees(pEntity.getXRot()));
+			poseStack.translate(0, -1.0f, 0);
+		}
 
-        VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(
-                buffer, this.model.renderType(this.getTextureLocation(pEntity)), false, false);
-        this.model.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY);
-        poseStack.popPose();
-        super.render(pEntity, entityYaw, partialTicks, poseStack, buffer, packedLight);
-    }
+		VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(
+				buffer, this.model.renderType(this.getTextureLocation(pEntity)), false, false);
+		this.model.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY);
+		poseStack.popPose();
+		super.render(pEntity, entityYaw, partialTicks, poseStack, buffer, packedLight);
+	}
 
-    @Override
-    public ResourceLocation getTextureLocation(BronzeShotProjectileEntity entity) {
-        return ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/entity/bronze_shot/bronze_shot.png");
-    }
+	@Override
+	public ResourceLocation getTextureLocation(BronzeShotProjectileEntity entity) {
+		return ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/entity/bronze_shot/bronze_shot.png");
+	}
 }

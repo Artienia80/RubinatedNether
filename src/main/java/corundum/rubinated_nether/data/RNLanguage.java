@@ -4,10 +4,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNCreativeTabs;
 import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.items.RuneItem;
 import corundum.rubinated_nether.data.providers.RNLanguageProvider;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.PackOutput;
 
 public class RNLanguage extends RNLanguageProvider {

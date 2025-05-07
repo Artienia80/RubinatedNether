@@ -18,52 +18,52 @@ import java.util.Arrays;
  */
 public interface BEBlock<BE extends BlockEntity> extends EntityBlock {
 
-    /**
-     * @return The type of this block's entity
-     */
-    BlockEntityType<? extends BE> getBlockEntityType();
+	/**
+	 * @return The type of this block's entity
+	 */
+	BlockEntityType<? extends BE> getBlockEntityType();
 
-    /**
-     * @return The class of this block's entity
-     */
-    Class<? extends BE> getBlockEntityClass();
+	/**
+	 * @return The class of this block's entity
+	 */
+	Class<? extends BE> getBlockEntityClass();
 
-    @Nullable
-    @Override
-    default BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return getBlockEntityType().create(pos, state);
-    }
+	@Nullable
+	@Override
+	default BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return getBlockEntityType().create(pos, state);
+	}
 
-    @Nullable
-    @Override
-    default <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        if(Arrays.asList(getBlockEntityClass().getInterfaces()).contains(TickableBlockEntity.class)) {
-            return (beLevel, blockPos, blockState, blockEntity) -> {
-                if(!blockEntity.hasLevel()) {
-                    blockEntity.setLevel(beLevel);
-                }
-                ((TickableBlockEntity) blockEntity).tick(beLevel.isClientSide);
-            };
-        }
+	@Nullable
+	@Override
+	default <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+		if(Arrays.asList(getBlockEntityClass().getInterfaces()).contains(TickableBlockEntity.class)) {
+			return (beLevel, blockPos, blockState, blockEntity) -> {
+				if(!blockEntity.hasLevel()) {
+					blockEntity.setLevel(beLevel);
+				}
+				((TickableBlockEntity) blockEntity).tick(beLevel.isClientSide);
+			};
+		}
 
-        return EntityBlock.super.getTicker(level, state, blockEntityType);
-    }
+		return EntityBlock.super.getTicker(level, state, blockEntityType);
+	}
 
-    /**
-     * More convenient method for getting a block entity from this block
-     * @param access BlockGetter to get the BE from (usually a {@link Level})
-     * @param pos Block entity's position
-     * @return Block entity with the type specified by this interface
-     */
-    @Nullable
-    @SuppressWarnings("unchecked")
-    default BE getBlockEntity(BlockGetter access, BlockPos pos) {
-        BlockEntity blockEntity = access.getBlockEntity(pos);
-        Class<?> expectedClass = getBlockEntityClass();
+	/**
+	 * More convenient method for getting a block entity from this block
+	 * @param access BlockGetter to get the BE from (usually a {@link Level})
+	 * @param pos Block entity's position
+	 * @return Block entity with the type specified by this interface
+	 */
+	@Nullable
+	@SuppressWarnings("unchecked")
+	default BE getBlockEntity(BlockGetter access, BlockPos pos) {
+		var blockEntity = access.getBlockEntity(pos);
+		var expectedClass = getBlockEntityClass();
 
-        if (!expectedClass.isInstance(blockEntity) || blockEntity.getType() != getBlockEntityType())
-            return null;
+		if (!expectedClass.isInstance(blockEntity) || blockEntity.getType() != getBlockEntityType())
+			return null;
 
-        return (BE) blockEntity;
-    }
+		return (BE) blockEntity;
+	}
 }

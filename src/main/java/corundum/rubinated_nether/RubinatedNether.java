@@ -3,7 +3,6 @@ package corundum.rubinated_nether;
 import corundum.rubinated_nether.client.RubinatedNetherClient;
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.enchantments.RNEnchantmentEffects;
-import corundum.rubinated_nether.content.enchantments.RNEnchantments;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;

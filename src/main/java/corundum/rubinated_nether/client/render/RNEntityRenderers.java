@@ -9,8 +9,8 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class RNEntityRenderers {
 
-    @SubscribeEvent
-    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(RNBlockEntities.RUBY_LASER.get(), RubyLaserRenderer::new);
-    }
+	@SubscribeEvent
+	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+		event.registerBlockEntityRenderer(RNBlockEntities.RUBY_LASER.get(), RubyLaserRenderer::new);
+	}
 }

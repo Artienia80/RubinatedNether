@@ -11,13 +11,13 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.function.Supplier;
 
 public class RNEnchantmentEffects {
-    public static final DeferredRegister<MapCodec<? extends EnchantmentEntityEffect>> ENTITY_ENCHANTMENT_EFFECTS =
-            DeferredRegister.create(Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE, RubinatedNether.MODID);
+	public static final DeferredRegister<MapCodec<? extends EnchantmentEntityEffect>> ENTITY_ENCHANTMENT_EFFECTS =
+			DeferredRegister.create(Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE, RubinatedNether.MODID);
 
-    public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> SLUGGISHNESS =
-            ENTITY_ENCHANTMENT_EFFECTS.register("sluggishness", () -> SluggishnessEnchantment.CODEC);
+	public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> SLUGGISHNESS =
+			ENTITY_ENCHANTMENT_EFFECTS.register("sluggishness", () -> SluggishnessEnchantment.CODEC);
 
-    public static void register(IEventBus eventBus) {
-        ENTITY_ENCHANTMENT_EFFECTS.register(eventBus);
-    }
+	public static void register(IEventBus eventBus) {
+		ENTITY_ENCHANTMENT_EFFECTS.register(eventBus);
+	}
 }

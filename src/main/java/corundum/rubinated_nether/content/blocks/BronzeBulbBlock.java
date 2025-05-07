@@ -7,7 +7,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.WeatheringCopperBulbBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -44,13 +43,16 @@ public class BronzeBulbBlock extends Block {
 	}
 
 	public void checkAndFlip(BlockState state, ServerLevel level, BlockPos pos) {
-		boolean flag = level.hasNeighborSignal(pos);
+		var flag = level.hasNeighborSignal(pos);
 		if (flag != state.getValue(POWERED)) {
 			BlockState blockstate = state;
 			if (!state.getValue(POWERED)) {
 				blockstate = state.cycle(LIT);
 				level.playSound(
-						null, pos, blockstate.getValue(LIT) ? SoundEvents.COPPER_BULB_TURN_ON : SoundEvents.COPPER_BULB_TURN_OFF, SoundSource.BLOCKS
+					null, 
+					pos, 
+					blockstate.getValue(LIT) ? SoundEvents.COPPER_BULB_TURN_ON : SoundEvents.COPPER_BULB_TURN_OFF, 
+					SoundSource.BLOCKS
 				);
 			}
 			level.setBlock(pos, blockstate.setValue(POWERED, Boolean.valueOf(flag)), 3);

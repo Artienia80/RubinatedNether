@@ -229,7 +229,7 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 				stack.shrink(1);
 
 			level.playSound(player, pos, SoundEvents.HONEYCOMB_WAX_ON, SoundSource.BLOCKS, 1F, 1F);
-            level.levelEvent(player, 3003, pos, 0);
+			level.levelEvent(player, 3003, pos, 0);
 	
 			return true;
 		}

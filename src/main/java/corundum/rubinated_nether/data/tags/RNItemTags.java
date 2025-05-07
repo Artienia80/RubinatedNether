@@ -9,10 +9,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -23,27 +21,27 @@ public class RNItemTags extends ItemTagsProvider {
 		CompletableFuture<TagLookup<Block>> blockTags, 
 		ExistingFileHelper helper
 	) {
-        super(output, registries, blockTags, RubinatedNether.MODID, helper);
-    }
+		super(output, registries, blockTags, RubinatedNether.MODID, helper);
+	}
 
 	@Override
 	public void addTags(Provider provider) {
 		this.tag(RNTags.Items.RUNES).add(
-				RNItems.GREED_RUNE.asItem(),
-				RNItems.WRATH_RUNE.asItem(),
-				RNItems.SLOTH_RUNE.asItem(),
-				RNItems.GLUTTONY_RUNE.asItem(),
-				RNItems.ENVY_RUNE.asItem(),
-				RNItems.VAINGLORY_RUNE.asItem(),
-				RNItems.PRIDE_RUNE.asItem(),
-				RNItems.ACEDIA_RUNE.asItem(),
-				RNItems.LUXURIA_RUNE.asItem(),
-				RNItems.INSIDIAE_RUNE.asItem(),
-				RNItems.SUPERBIA_RUNE.asItem(),
-				RNItems.TRISTIA_RUNE.asItem(),
-				RNItems.STUDIOSE_RUNE.asItem(),
-				RNItems.ARDENTER_RUNE.asItem(),
-				RNItems.NIMIS_RUNE.asItem()
+			RNItems.GREED_RUNE.asItem(),
+			RNItems.WRATH_RUNE.asItem(),
+			RNItems.SLOTH_RUNE.asItem(),
+			RNItems.GLUTTONY_RUNE.asItem(),
+			RNItems.ENVY_RUNE.asItem(),
+			RNItems.VAINGLORY_RUNE.asItem(),
+			RNItems.PRIDE_RUNE.asItem(),
+			RNItems.ACEDIA_RUNE.asItem(),
+			RNItems.LUXURIA_RUNE.asItem(),
+			RNItems.INSIDIAE_RUNE.asItem(),
+			RNItems.SUPERBIA_RUNE.asItem(),
+			RNItems.TRISTIA_RUNE.asItem(),
+			RNItems.STUDIOSE_RUNE.asItem(),
+			RNItems.ARDENTER_RUNE.asItem(),
+			RNItems.NIMIS_RUNE.asItem()
 		);
 
 		this.tag(RNTags.Items.RUBINATION_TOOL).addTag(Tags.Items.MINING_TOOL_TOOLS); //Included bc tag only has pickaxes
@@ -57,49 +55,45 @@ public class RNItemTags extends ItemTagsProvider {
 		this.tag(RNTags.Items.RUBINATION_CROSSBOW).addTag(Tags.Items.TOOLS_CROSSBOW); //Included for backup
 
 		this.tag(RNTags.Items.RUBINATION_TOOL).add(
-				Items.WOODEN_SHOVEL,
-				Items.WOODEN_HOE,
-				Items.WOODEN_AXE,
+			Items.WOODEN_SHOVEL,
+			Items.WOODEN_HOE,
+			Items.WOODEN_AXE,
 
-				Items.STONE_SHOVEL,
-				Items.STONE_HOE,
-				Items.STONE_AXE,
+			Items.STONE_SHOVEL,
+			Items.STONE_HOE,
+			Items.STONE_AXE,
 
-				Items.IRON_SHOVEL,
-				Items.IRON_HOE,
-				Items.IRON_AXE,
+			Items.IRON_SHOVEL,
+			Items.IRON_HOE,
+			Items.IRON_AXE,
 
-				Items.GOLDEN_SHOVEL,
-				Items.GOLDEN_HOE,
-				Items.GOLDEN_AXE,
+			Items.GOLDEN_SHOVEL,
+			Items.GOLDEN_HOE,
+			Items.GOLDEN_AXE,
 
-				Items.DIAMOND_SHOVEL,
-				Items.DIAMOND_HOE,
-				Items.DIAMOND_AXE,
+			Items.DIAMOND_SHOVEL,
+			Items.DIAMOND_HOE,
+			Items.DIAMOND_AXE,
 
-				Items.NETHERITE_SHOVEL,
-				Items.NETHERITE_HOE,
-				Items.NETHERITE_AXE
+			Items.NETHERITE_SHOVEL,
+			Items.NETHERITE_HOE,
+			Items.NETHERITE_AXE
 		);
 
 		this.tag(RNTags.Items.RUBINATION_WEAPON).add(
-				Items.WOODEN_SWORD,
-				Items.STONE_SWORD,
-				Items.GOLDEN_SWORD,
-				Items.IRON_SWORD,
-				Items.DIAMOND_SWORD,
-				Items.NETHERITE_SWORD,
+			Items.WOODEN_SWORD,
+			Items.STONE_SWORD,
+			Items.GOLDEN_SWORD,
+			Items.IRON_SWORD,
+			Items.DIAMOND_SWORD,
+			Items.NETHERITE_SWORD,
 
-				Items.WOODEN_AXE,
-				Items.STONE_AXE,
-				Items.GOLDEN_AXE,
-				Items.IRON_AXE,
-				Items.DIAMOND_AXE,
-				Items.NETHERITE_AXE
+			Items.WOODEN_AXE,
+			Items.STONE_AXE,
+			Items.GOLDEN_AXE,
+			Items.IRON_AXE,
+			Items.DIAMOND_AXE,
+			Items.NETHERITE_AXE
 		);
-
-
-
-
 	}
 }
