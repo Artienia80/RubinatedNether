@@ -25,6 +25,7 @@ import java.util.Optional;
 @OnlyIn(Dist.CLIENT)
 public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	private static final ResourceLocation RUBINATION_SLOT_DISABLED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_disabled");
+	private static final ResourceLocation RUBINATION_SLOT_UNDISCOVERED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_undiscovered");
 	private static final ResourceLocation RUBINATION_SLOT_HIGHLIGHTED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_highlighted");
 	private static final ResourceLocation RUBINATION_SLOT_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot");
 	private static final ResourceLocation DISABLED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/disabled_rune.png");
@@ -102,7 +103,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				i2 = 8453920;
 			} else {
 				RenderSystem.enableBlend();
-				guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 19, 57);
+				guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1-1, j1-1, 21, 59);
 				guiGraphics.blit(DISABLED_RUNE, i1 + 2, j1 + 1,0, 0, 16, 16, 16, 16);
 				RenderSystem.disableBlend();
 				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 7, j1 + 19, 1, (i2 & 16711422) >> 1);
