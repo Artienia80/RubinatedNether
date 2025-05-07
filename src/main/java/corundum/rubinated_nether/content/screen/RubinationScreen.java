@@ -9,6 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.*;
 import net.minecraft.network.chat.Component;
@@ -18,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -87,32 +89,20 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 					guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 19, 57);
 				}
 
-				var optionalList = new ArrayList<Optional<Holder.Reference<Enchantment>>>();
-				for(int h = 0; h < 3; ++h) {
-					optionalList.add(
-						this.minecraft.level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(this.menu.rubinationClue[l][h])
-					);
-				}
+				var result = Rubination.parseRubinationFromEnchantList(getRegistryAccess(), getEnchantReferences(l));
 
-				var result = Rubination.parseRubinationFromEnchantList(this.minecraft.level.registryAccess(), optionalList);
-
-				guiGraphics.blit(RubinatedNether.id("textures/item/" + Rubination.parseRubinationTextureName(result) + "_rune.png"), i1 + 2, j1 + 1, 0, 0, 16, 16, 16, 16);
+				guiGraphics.blit(RubinatedNether.id("textures/item/" + Rubination.parseRubinationTextureName(result) + "_rune.png"), i1 + 2, j1 + 1, 0.5f, 0.5f, 16, 16, 16, 16);
 
 				RenderSystem.disableBlend();
 				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 7, j1 + 19, 1, i2);
-				i2 = 8453920;
 			} else {
 				RenderSystem.enableBlend();
-				guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1-1, j1-1, 21, 59);
+				guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1 - 1, j1 - 1, 21, 59);
 				guiGraphics.blit(DISABLED_RUNE, i1 + 2, j1 + 1,0, 0, 16, 16, 16, 16);
 				RenderSystem.disableBlend();
 				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 7, j1 + 19, 1, (i2 & 16711422) >> 1);
-				i2 = 4226832;
 			}
-
-			//guiGraphics.drawString(this.font, s, i1 - this.font.width(s), j1, i2);
 		}
-
 	}
 
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
@@ -122,14 +112,8 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 		this.renderTooltip(guiGraphics, mouseX, mouseY);
 
 		for(int j = 0; j < 3; ++j) {
-			var optionalList = new ArrayList<Optional<Holder.Reference<Enchantment>>>();
-			for(int h = 0; h < 3; ++h) {
-				optionalList.add(
-					this.minecraft.level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(this.menu.rubinationClue[j][h])
-				);
-			}
-
-			var result = Rubination.parseRubinationFromEnchantList(this.minecraft.level.registryAccess(), optionalList);
+			var optionalList = getEnchantReferences(j);
+			var result = Rubination.parseRubinationFromEnchantList(getRegistryAccess(), optionalList);
 
 			if (this.isHovering(43 + (36 * j), 17, 19, 57, mouseX, mouseY) && this.menu.getItemInSlot() != ItemStack.EMPTY) {
 				var list = new ArrayList<Component>();
@@ -148,7 +132,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 								Component.translatable(
 									"gui.rubinated_nether.rubination_altar.enchant", 
 									Enchantment.getFullname(optionalList.get(h).get(), 
-									result.getEnchantments(this.minecraft.level.registryAccess()).get(h).level)
+									result.getEnchantments(getRegistryAccess()).get(h).level)
 								)
 								.withStyle(ChatFormatting.WHITE)
 							);
@@ -159,5 +143,19 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				break;
 			}
 		}
+	}
+
+	private @NotNull RegistryAccess getRegistryAccess() {
+		return this.minecraft.level.registryAccess();
+	}
+
+	private @NotNull ArrayList<Optional<Holder.Reference<Enchantment>>> getEnchantReferences(int l) {
+		var optionalList = new ArrayList<Optional<Holder.Reference<Enchantment>>>();
+		for(int h = 0; h < 3; ++h) {
+			optionalList.add(
+					getRegistryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(this.menu.rubinationClue[l][h])
+			);
+		}
+		return optionalList;
 	}
 }
