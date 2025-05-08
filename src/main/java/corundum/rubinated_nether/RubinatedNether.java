@@ -2,7 +2,7 @@ package corundum.rubinated_nether;
 
 import corundum.rubinated_nether.client.RubinatedNetherClient;
 import corundum.rubinated_nether.content.*;
-import corundum.rubinated_nether.content.enchantments.RNEnchantmentEffects;
+import corundum.rubinated_nether.content.enchantment.RNEnchantmentEffects;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
@@ -41,10 +41,10 @@ public class RubinatedNether {
 	public static final String MODID = "rubinated_nether";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
+	private static net.neoforged.bus.api.IEventBus IEventBus;
 	private static final ImmutableList<DeferredRegister<?>> REGISTRIES = ImmutableList.of(
 		RNBlocks.BLOCKS,
 		RNItems.ITEMS,
-		RNEnchantmentEffects.ENTITY_ENCHANTMENT_EFFECTS,
 		RNArmorMaterials.ARMOR_MATERIALS,
 		RNEntities.ENTITY_TYPES,
 		RNParticleTypes.PARTICLES,
@@ -61,6 +61,8 @@ public class RubinatedNether {
 
 		modEventBus.addListener(Datagen::datagen);
 		modEventBus.addListener(DatapackRegistry::datapackRegistry);
+		RNEnchantmentEffects.register(modEventBus);
+
 
 		for (var registry : REGISTRIES)
 			registry.register(modEventBus);
