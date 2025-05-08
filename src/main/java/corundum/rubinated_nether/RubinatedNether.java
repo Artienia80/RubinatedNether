@@ -33,7 +33,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 @Mod(RubinatedNether.MODID)
 public class RubinatedNether {
 
-	//TODO: Code Cleanup (including reduction in the use of "var")
+	//TODO: Code Cleanup (including mandating the use of "var")
 	//TODO: Add more comments
 
 	//TODO: Figure out why the f**k accesstransformers are not working
@@ -54,7 +54,7 @@ public class RubinatedNether {
 		RNRecipeSerializers.RECIPE_SERIALIZERS,
 		RNBlockEntities.BLOCK_ENTITY_TYPES,
 		RNMenuTypes.MENUS
-		);
+	);
 
 	public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
 		LOGGER.info("Rubinating all over your Nether...");
@@ -62,7 +62,7 @@ public class RubinatedNether {
 		modEventBus.addListener(Datagen::datagen);
 		modEventBus.addListener(DatapackRegistry::datapackRegistry);
 
-		for (DeferredRegister<?> registry : REGISTRIES)
+		for (var registry : REGISTRIES)
 			registry.register(modEventBus);
 
 		MidnightConfig.init(MODID, RNConfig.class);

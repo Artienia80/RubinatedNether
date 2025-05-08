@@ -132,6 +132,10 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+
+	// Enable linting 
+	// TODO: Add '-Werror' flag, to turn warnings into errors
+	options.compilerArgs += ['-Xlint:all']
 }
 
 idea {
