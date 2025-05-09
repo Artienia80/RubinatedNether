@@ -178,7 +178,7 @@
   "container.studiose.clue": "Studiose",
   "container.ardenter.clue": "Ardenter",
   "container.nimis.clue": "Nimis",
-  "gui.rubinated_nether.rubination_altar.unusable": "RUBINATED",
+  "enchantment.rubinated_nether.fragility_curse": "Curse of Greed: Fragility",
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
   "death.attack.fallingBlock": "%1$s was embraced by a falling chandelier",
   "death.attack.fallingBlock.player": "%1$s was embraced by a falling chandelier whilst fighting %2$s",
