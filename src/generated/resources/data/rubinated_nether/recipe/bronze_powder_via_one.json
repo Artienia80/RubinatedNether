@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
-  "group": "DeferredHolder{ResourceKey[minecraft:item / rubinated_nether:bronze_scrap]}",
+  "group": "DeferredHolder{ResourceKey[minecraft:item / rubinated_nether:bronze_powder]}",
   "key": {
     "I": {
       "item": "rubinated_nether:bronze_rod"
@@ -12,6 +12,6 @@
   ],
   "result": {
     "count": 64,
-    "id": "rubinated_nether:bronze_scrap"
+    "id": "rubinated_nether:bronze_powder"
   }
 }

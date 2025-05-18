@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:bronze_scrap"
+            "items": "rubinated_nether:bronze_powder"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "rubinated_nether:bronze_scrap"
+      "id": "rubinated_nether:bronze_powder"
     },
     "title": {
       "translate": "advancements.rubinated_nether.shrine_sentinel.title"

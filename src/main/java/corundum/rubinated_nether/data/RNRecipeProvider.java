@@ -329,13 +329,13 @@ public class RNRecipeProvider extends RecipeProvider {
 		one(
 				recipeOutput,
 				RNItems.BRONZE_ROD,
-				RNItems.BRONZE_SCRAP,
+				RNItems.BRONZE_POWDER,
 				64
 		);
 
 		twoByTwo(
 				recipeOutput,
-				RNItems.BRONZE_SCRAP,
+				RNItems.BRONZE_POWDER,
 				RNBlocks.BRONZE_BLOCK,
 				4
 		);
@@ -436,13 +436,13 @@ public class RNRecipeProvider extends RecipeProvider {
 		);
 
 
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, RNItems.BRONZE_SCRAP,4)
-				.requires(RNItems.BRONZE_SCRAP,1)
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, RNItems.BRONZE_POWDER,4)
+				.requires(RNItems.BRONZE_POWDER,1)
 				.requires(Items.COPPER_INGOT,3)
 				.requires(RNItems.MOLTEN_RUBY_NUGGET_ITEM, 3)
 				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
 				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_NUGGET_ITEM), has(RNItems.MOLTEN_RUBY_NUGGET_ITEM))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
+				.unlockedBy(getHasName(RNItems.BRONZE_POWDER), has(RNItems.BRONZE_POWDER))
 				.group("bronze_dupe")
 				.save(recipeOutput);
 
@@ -519,13 +519,13 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.BRONZE_SHOT, 1)
-				.define('X', RNItems.BRONZE_SCRAP)
+				.define('X', RNItems.BRONZE_POWDER)
 				.define('O', Items.COPPER_INGOT)
 				.pattern(" X ")
 				.pattern("XOX")
 				.pattern(" X ")
 				.unlockedBy(getHasName(RNItems.BRONZE_SHOT), has(RNItems.BRONZE_SHOT))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
+				.unlockedBy(getHasName(RNItems.BRONZE_POWDER), has(RNItems.BRONZE_POWDER))
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBY_LANTERN, 1)

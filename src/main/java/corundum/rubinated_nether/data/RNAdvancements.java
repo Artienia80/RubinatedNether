@@ -206,13 +206,13 @@ public class RNAdvancements extends AdvancementProvider {
 
 			AdvancementHolder shrineSentinel = Advancement.Builder.advancement()
 					.parent(bronzeRod)
-					.display(RNItems.BRONZE_SCRAP.get(),
+					.display(RNItems.BRONZE_POWDER.get(),
 							Component.translatable("advancements.rubinated_nether.shrine_sentinel.title"),
 							Component.translatable("advancements.rubinated_nether.shrine_sentinel.description"),
 							null,
 							AdvancementType.TASK, true, true, false)
 					.requirements(AdvancementRequirements.Strategy.OR)
-					.addCriterion("placeholder", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.BRONZE_SCRAP.get()))
+					.addCriterion("placeholder", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.BRONZE_POWDER.get()))
 					.save(consumer, RubinatedNether.id( "obtain_bronze_statue"), existingFileHelper);
 
 			// Runes

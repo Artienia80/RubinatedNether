@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bronze_scrap": {
+    "has_bronze_powder": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:bronze_scrap"
+            "items": "rubinated_nether:bronze_powder"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_bronze_scrap"
+      "has_bronze_powder"
     ]
   ],
   "rewards": {

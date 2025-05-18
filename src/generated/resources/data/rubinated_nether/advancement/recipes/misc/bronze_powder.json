@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bronze_scrap": {
+    "has_bronze_powder": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:bronze_scrap"
+            "items": "rubinated_nether:bronze_powder"
           }
         ]
       },
@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:bronze_scrap"
+        "recipe": "rubinated_nether:bronze_powder"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -43,12 +43,12 @@
       "has_the_recipe",
       "has_copper_ingot",
       "has_molten_ruby_nugget",
-      "has_bronze_scrap"
+      "has_bronze_powder"
     ]
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:bronze_scrap"
+      "rubinated_nether:bronze_powder"
     ]
   }
 }
