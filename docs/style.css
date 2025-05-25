@@ -17,7 +17,7 @@ body {
 }
 
 .logo {
-    width: 75%;
+    width: 40%;
     height: auto;
     display: block;
     margin: 0 auto 10px;
@@ -61,9 +61,11 @@ body {
 .section-image {
     width: 100%;
     height: calc(100% - 40px);
-    object-fit: cover;
+    object-fit: contain;
     display: block;
+    scale: 1;
 }
+
 
 .section-label {
     width: 100%;
