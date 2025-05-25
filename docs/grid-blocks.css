@@ -27,11 +27,13 @@
 
 .item-slot {
     aspect-ratio: 1;
+    width: 100%;
     padding: 8px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
+    justify-content: flex-start;
+    position: relative;
     text-decoration: none;
     color: white;
     background-color: #A09172;
@@ -39,39 +41,46 @@
     font-weight: bold;
     text-align: center;
     box-sizing: border-box;
-    min-height: 60px;
-    overflow: hidden; /* This prevents any overflow from image or text */
+    overflow: hidden;
+
     border-top: calc(0.3vw) solid #E0CA9F;
     border-left: calc(0.3vw) solid #E0CA9F;
     border-bottom: calc(0.3vw) solid #544C3B;
     border-right: calc(0.3vw) solid #544C3B;
+
     transition: all 0.1s ease;
 }
 
-/* Contain image within item-slot */
 .item-image {
-    width: 80%;
+    width: 70%;
     height: auto;
-    max-height: 75%;
     object-fit: contain;
     flex-shrink: 0;
+    z-index: 0;
+    pointer-events: none;
 }
 
 .item-label {
     width: 100%;
-    font-size: 1.2em;
-    margin-top: auto;
+    font-size: 1.3em;
+    padding: 6px 4px 4px;
     text-transform: uppercase;
     text-shadow: 1px 1px 0 #41423F;
-    padding: 4px;
-    box-sizing: border-box;
-
-    /* NEW: allow text wrapping and multiple lines */
+    line-height: 1.2;
     white-space: normal;
     word-wrap: break-word;
     text-align: center;
-    line-height: 1.2;
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    box-sizing: border-box;
 }
+
+
+
+
 
 @media (max-width: 1200px) {
     .grid-container {
