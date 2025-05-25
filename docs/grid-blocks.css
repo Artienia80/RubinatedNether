@@ -10,27 +10,6 @@
     grid-template-columns: repeat(8, 1fr);
     gap: 10px;
 }
-.item-slot {
-    aspect-ratio: 1;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-decoration: none;
-    color: white;
-    background-color: #A09172;
-    font-size: 10px;
-    font-weight: bold;
-    text-align: center;
-    box-sizing: border-box;
-    min-height: 60px;
-    border-top: calc(0.3vw) solid #E0CA9F;
-    border-left: calc(0.3vw) solid #E0CA9F;
-    border-bottom: calc(0.3vw) solid #544C3B;
-    border-right: calc(0.3vw) solid #544C3B;
-    transition: all 0.1s ease;
-}
 .item-slot:hover {
     background-color: #B688AE;
     border-top: calc(0.3vw) solid #FAB9EF;
@@ -45,18 +24,55 @@
     border-right: calc(0.3vw) solid #E0CA9F;
     transform: translate(2px, 2px);
 }
+
+.item-slot {
+    aspect-ratio: 1;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    background-color: #A09172;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    box-sizing: border-box;
+    min-height: 60px;
+    overflow: hidden; /* This prevents any overflow from image or text */
+    border-top: calc(0.3vw) solid #E0CA9F;
+    border-left: calc(0.3vw) solid #E0CA9F;
+    border-bottom: calc(0.3vw) solid #544C3B;
+    border-right: calc(0.3vw) solid #544C3B;
+    transition: all 0.1s ease;
+}
+
+/* Contain image within item-slot */
 .item-image {
-    width: 70%;
-    height: 70%;
+    width: 80%;
+    height: auto;
+    max-height: 75%;
     object-fit: contain;
+    flex-shrink: 0;
 }
+
 .item-label {
+    width: 100%;
+    font-size: 1.2em;
     margin-top: auto;
-    color: inherit;
-    font-size: 1em;
     text-transform: uppercase;
-    text-shadow: 2px 2px 0 #41423F;
+    text-shadow: 1px 1px 0 #41423F;
+    padding: 4px;
+    box-sizing: border-box;
+
+    /* NEW: allow text wrapping and multiple lines */
+    white-space: normal;
+    word-wrap: break-word;
+    text-align: center;
+    line-height: 1.2;
 }
+
 @media (max-width: 1200px) {
     .grid-container {
         grid-template-columns: repeat(6, 1fr);

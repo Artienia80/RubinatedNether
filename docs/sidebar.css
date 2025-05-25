@@ -12,7 +12,7 @@
     background-color: #ccc;
 }
 .logo {
-    width: 100px;
+    width: 150px;
     height: auto;
     display: block;
     margin: 0 auto;
@@ -42,17 +42,16 @@
     border-right: calc(0.2vw) solid #654C61;
 }
 .nav-icon {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     margin: 10px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    border: 1px solid #333;
 }
 .nav-text {
     font-weight: bold;
-    font-size: 12px;
+    font-size: 15px;
     color: white;
     text-shadow: 1px 1px 0 black;
 }
