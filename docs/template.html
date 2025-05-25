@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Blocks - Rubinated Nether</title>
+    <link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Minecraft', 'Minecraftia', sans-serif;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .page-container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        /* Left Sidebar */
+        .sidebar {
+            width: 200px;
+            background-color: #ddd;
+            border-right: 3px solid black;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+
+        .logo-section {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid black;
+            background-color: #ccc;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            text-decoration: none;
+            color: black;
+            border-bottom: 1px solid black;
+            background-color: #A09172;
+
+            /* 3D border effect */
+            border-top: calc(0.2vw) solid #E0CA9F;
+            border-left: calc(0.2vw) solid #E0CA9F;
+            border-bottom: calc(0.2vw) solid #544C3B;
+            border-right: calc(0.2vw) solid #544C3B;
+
+            transition: all 0.1s ease;
+        }
+
+        .nav-item:hover {
+            background-color: #B688AE;
+            border-top: calc(0.2vw) solid #FAB9EF;
+            border-left: calc(0.2vw) solid #FAB9EF;
+            border-bottom: calc(0.2vw) solid #654C61;
+            border-right: calc(0.2vw) solid #654C61;
+        }
+
+        .nav-icon {
+            width: 30px;
+            height: 30px;
+            margin: 10px;
+            background-color: white;
+            border: 1px solid black;
+            display: inline-block;
+        }
+
+        .nav-text {
+            font-weight: bold;
+            font-size: 12px;
+            color: white;
+            text-shadow: 1px 1px 0 black;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .content-text {
+            margin-bottom: 30px;
+        }
+
+        .placeholder-text {
+            font-size: 16px;
+            line-height: 1.5;
+            color: black;
+        }
+
+        /* Items Grid */
+        .items-grid {
+            border: 3px solid black;
+            padding: 20px;
+            background-color: #f0f0f0;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+        }
+
+        .item-slot {
+            aspect-ratio: 1;
+            border: 2px solid black;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+
+            /* 3D border effect for slots */
+            border-top: 2px solid #ddd;
+            border-left: 2px solid #ddd;
+            border-bottom: 2px solid #888;
+            border-right: 2px solid #888;
+        }
+
+        .item-slot:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Make it responsive */
+        @media (max-width: 1200px) {
+            .grid-container {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .sidebar {
+                width: 150px;
+            }
+            .grid-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+        <div class="logo-section">
+            <a href="index.html" class="section">
+                <img src="assets/logo.png" alt="Rubinated Nether Logo" class="logo" />
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="blocks.html" class="nav-item">
+                <div class="nav-icon"></div>
+                <span class="nav-text">BLOCKS</span>
+            </a>
+            <a href="items.html" class="nav-item">
+                <div class="nav-icon"></div>
+                <span class="nav-text">ITEMS</span>
+            </a>
+            <a href="structures.html" class="nav-item">
+                <div class="nav-icon"></div>
+                <span class="nav-text">STRUCTURES</span>
+            </a>
+            <a href="history.html" class="nav-item">
+                <div class="nav-icon"></div>
+                <span class="nav-text">HISTORY</span>
+            </a>
+            <a href="biomes.html" class="nav-item">
+                <div class="nav-icon"></div>
+                <span class="nav-text">BIOMES</span>
+            </a>
+            <a href="mobs.html" class="nav-item">
+                <div class="nav-icon"></div>
+                <span class="nav-text">MOBS</span>
+            </a>
+            <a href="tutorial.html" class="nav-item">
+                <div class="nav-icon"></div>
+                <span class="nav-text">TUTORIAL</span>
+            </a>
+            <a href="resources.html" class="nav-item">
+                <div class="nav-icon"></div>
+                <span class="nav-text">RESOURCES</span>
+            </a>
+            <a href="crafting.html" class="nav-item">
+                <div class="nav-icon"></div>
+                <span class="nav-text">CRAFTING</span>
+            </a>
+            <a href="updates.html" class="nav-item">
+                <div class="nav-icon"></div>
+                <span class="nav-text">UPDATES</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-text">
+            <div class="placeholder-text">
+                placeholder text aaaaaaaaaaaaa<br>
+                aaaaaaaaaaaaaaaa<br>
+                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                aaaaaaaaa<br>
+                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            </div>
+        </div>
+
+        <div class="items-grid">
+            <div class="grid-container">
+                <!-- Generate 24 item slots (3 rows of 8) -->
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+                <div class="item-slot"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
