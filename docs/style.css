@@ -37,38 +37,72 @@ body {
 }
 
 .section {
-    border: 1px solid black;
     width: 18%;
     aspect-ratio: 1;
+    padding: 0;
+    margin-bottom: 2.5%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
+    align-items: center;
     position: relative;
-    margin-bottom: 20px;
     overflow: hidden;
     text-decoration: none;
-    color: black;
-    transition: transform 0.2s;
-}
+    color: white;
+    background-color: #A09172; /* normal-main */
+    font-size: 1.2vw;
+    font-weight: bold;
+    text-align: center;
+    box-sizing: border-box;
 
-.section:hover {
-    transform: scale(1.05);
+    /* Thick 3D border effect - Normal state */
+    border-top: calc(0.45vw) solid #E0CA9F;    /* light color top - 2.5% scale */
+    border-left: calc(0.45vw) solid #E0CA9F;   /* light color left */
+    border-bottom: calc(0.45vw) solid #544C3B; /* dark color bottom */
+    border-right: calc(0.45vw) solid #544C3B;  /* dark color right */
+
+    transition: all 0.1s ease;
 }
 
 .section-image {
-    width: 100%;
-    height: calc(100% - 40px);
+    width: 80%;
+    height: 70%;
     object-fit: contain;
     display: block;
-    scale: 1;
+    margin: 5% auto 0;
+    position: relative;
+    z-index: 1;
 }
-
 
 .section-label {
     width: 100%;
-    padding: 8px 0;
-    background-color: white;
+    padding: 0.8em 0;
+    margin-top: auto;
+    background-color: transparent;
+    color: inherit;
+    position: relative;
+    z-index: 1;
+    font-size: 1em;
+
+    /* Text shadow using the black shadow technique */
+    text-shadow: 2px 2px 0 #41423F;
+}
+
+.section:hover {
+    background-color: #B688AE; /* hover-main */
+
+    /* Thick 3D border effect - Hover state */
+    border-top: calc(0.45vw) solid #FAB9EF;    /* hover light top - 2.5% scale */
+    border-left: calc(0.45vw) solid #FAB9EF;   /* hover light left */
+    border-bottom: calc(0.45vw) solid #654C61; /* hover dark bottom */
+    border-right: calc(0.45vw) solid #654C61;  /* hover dark right */
+}
+
+.section:active {
+    /* Pressed button effect - inverted borders */
+    border-top: calc(0.45vw) solid #654C61;    /* dark color top when pressed - 2.5% scale */
+    border-left: calc(0.45vw) solid #654C61;   /* dark color left when pressed */
+    border-bottom: calc(0.45vw) solid #FAB9EF; /* light color bottom when pressed */
+    border-right: calc(0.45vw) solid #FAB9EF;  /* light color right when pressed */
+    transform: translate(2px, 2px);
 }
