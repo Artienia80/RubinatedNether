@@ -100,7 +100,7 @@ public class RNLanguageHU extends RNLanguageProvider {
 		this.addBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB, "Kristályosodott vágott bronztégla-lap");
 
 		this.addItem(RNItems.BRONZE_ROD, "Bronzrúd");
-		this.addItem(RNItems.BRONZE_SCRAP, "Bronzdarab");
+		this.addItem(RNItems.BRONZE_POWDER, "Bronzdarab");
 
 		this.add(RNCreativeTabs.RN_TAB.get().getDisplayName().getString(), "Rubinated Nether");
 

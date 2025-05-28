@@ -88,7 +88,7 @@ public class RNCreativeTabs {
 					RNItems.MUSIC_DISC_SHIMMER,
 
 					RNItems.BRONZE_ROD,
-					RNItems.BRONZE_SCRAP,
+					RNItems.BRONZE_POWDER,
 					RNItems.BRONZE_SHOT,
 					RNItems.BRONZE_DRILL,
 

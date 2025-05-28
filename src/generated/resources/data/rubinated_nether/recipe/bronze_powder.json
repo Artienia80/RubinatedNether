@@ -4,7 +4,7 @@
   "group": "bronze_dupe",
   "ingredients": [
     {
-      "item": "rubinated_nether:bronze_scrap"
+      "item": "rubinated_nether:bronze_powder"
     },
     {
       "item": "minecraft:copper_ingot"
@@ -27,6 +27,6 @@
   ],
   "result": {
     "count": 4,
-    "id": "rubinated_nether:bronze_scrap"
+    "id": "rubinated_nether:bronze_powder"
   }
 }

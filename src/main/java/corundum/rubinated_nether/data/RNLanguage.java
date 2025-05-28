@@ -114,7 +114,7 @@ public class RNLanguage extends RNLanguageProvider {
 
 
 		addItem(RNItems.BRONZE_ROD, "Bronze Rod");
-		addItem(RNItems.BRONZE_SCRAP, "Bronze Scrap");
+		addItem(RNItems.BRONZE_POWDER, "Bronze Scrap");
 		addItem(RNItems.BRONZE_SHOT, "Bronze Shot");
 		addItem(RNItems.BRONZE_DRILL, "Bronze Drill");
 

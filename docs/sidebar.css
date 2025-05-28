@@ -1,0 +1,62 @@
+.sidebar {
+    width: 200px;
+    background-color: #ddd;
+    border-right: 3px solid black;
+    display: flex;
+    flex-direction: column;
+}
+.logo-section {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid black;
+    background-color: #ccc;
+}
+.logo {
+    width: 150px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+.sidebar-nav {
+    flex: 1;
+    padding: 0;
+}
+.nav-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid black;
+    background-color: #A09172;
+    border-top: calc(0.2vw) solid #E0CA9F;
+    border-left: calc(0.2vw) solid #E0CA9F;
+    border-bottom: calc(0.2vw) solid #544C3B;
+    border-right: calc(0.2vw) solid #544C3B;
+    transition: all 0.1s ease;
+}
+.nav-item:hover {
+    background-color: #B688AE;
+    border-top: calc(0.2vw) solid #FAB9EF;
+    border-left: calc(0.2vw) solid #FAB9EF;
+    border-bottom: calc(0.2vw) solid #654C61;
+    border-right: calc(0.2vw) solid #654C61;
+}
+.nav-icon {
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.nav-text {
+    font-weight: bold;
+    font-size: 15px;
+    color: white;
+    text-shadow: 1px 1px 0 black;
+}
+@media (max-width: 800px) {
+    .sidebar {
+        width: 150px;
+    }
+}

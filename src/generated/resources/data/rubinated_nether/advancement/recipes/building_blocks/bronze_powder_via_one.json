@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:bronze_scrap_via_one"
+        "recipe": "rubinated_nether:bronze_powder_via_one"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:bronze_scrap_via_one"
+      "rubinated_nether:bronze_powder_via_one"
     ]
   }
 }

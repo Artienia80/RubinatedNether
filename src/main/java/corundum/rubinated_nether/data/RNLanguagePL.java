@@ -99,7 +99,7 @@ public class RNLanguagePL extends RNLanguageProvider {
 		this.addBlock(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB, "Crystallized Cut Bronze Brick Slab");
 
 		this.addItem(RNItems.BRONZE_ROD, "Brązowa Różdzka");
-		this.addItem(RNItems.BRONZE_SCRAP, "Brązowy Odłamek");
+		this.addItem(RNItems.BRONZE_POWDER, "Brązowy Odłamek");
 
 		this.add(RNCreativeTabs.RN_TAB.get().getDisplayName().getString(), "Rubinated Nether");
 

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Blocks - Rubinated Nether</title>
+    <link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet" />
+    <link rel="stylesheet" href="category.css" />
+    <link rel="stylesheet" href="sidebar.css" />
+    <link rel="stylesheet" href="grid-things.css" />
+</head>
+<body>
+<div class="page-container">
+    <div id="sidebar-container"></div>
+    <div class="main-content">
+        <div class="content-text">
+            <div class="placeholder-text">
+                Explore the diverse blocks found in the Rubinated Nether dimension.<br>
+                From common building materials to rare ores and unique blocks,<br>
+                discover the properties and uses of each block type.<br>
+                Click on any block to learn more about its properties,<br>
+                crafting recipes, and where to find it in the dimension.<br>
+                Build your knowledge of the Rubinated Nether's building blocks!
+            </div>
+        </div>
+        <div id="grid-container"></div>
+    </div>
+</div>
+
+<!-- Async JS module for includes -->
+<script type="module">
+    async function injectHTML(id, file) {
+      try {
+        const res = await fetch(file);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        document.getElementById(id).innerHTML = await res.text();
+      } catch (err) {
+        document.getElementById(id).innerHTML = `<p style="color:red">Failed to load ${file}: ${err}</p>`;
+      }
+    }
+
+    injectHTML("sidebar-container", "sidebar.html");
+    injectHTML("grid-container", "grid-blocks.html");
+</script>
+</body>
+</html>
