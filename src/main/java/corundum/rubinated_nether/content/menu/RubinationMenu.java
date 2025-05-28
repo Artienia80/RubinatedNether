@@ -136,7 +136,7 @@ public class RubinationMenu extends AbstractContainerMenu {
 			var itemstack1 = this.rubinationSlots.getItem(1);
 			var i = id + 1;
 	
-			if ((itemstack1.isEmpty() || itemstack1.getCount() < i) && !player.hasInfiniteMaterials()) {
+			if ((itemstack1.isEmpty() || itemstack1.getCount() < i)) {
 				return false;
 			} else if (!itemstack.isEmpty() && (player.experienceLevel >= i || player.getAbilities().instabuild)) {
 				this.access.execute((level, blockPos) -> {

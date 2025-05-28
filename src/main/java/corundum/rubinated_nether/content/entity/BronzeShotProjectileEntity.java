@@ -127,17 +127,11 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 
 	@Override
 	protected void onHitBlock(BlockHitResult result) {
-		// Match AbstractArrow functionality
 		super.onHitBlock(result);
-		Vec3 vec3 = result.getLocation().subtract(this.getX(), this.getY(), this.getZ());
-		this.setDeltaMovement(vec3);
 		ItemStack itemstack = this.getWeaponItem();
 		if (this.level() instanceof ServerLevel serverlevel && itemstack != null) {
 			this.hitBlockEnchantmentEffects(serverlevel, result, itemstack);
 		}
-
-		Vec3 vec31 = vec3.normalize().scale(0.05F);
-		this.setPosRaw(this.getX() - vec31.x, this.getY() - vec31.y, this.getZ() - vec31.z);
 		this.playSound(SoundEvents.ANVIL_LAND, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
 
 		this.inGround = true;
