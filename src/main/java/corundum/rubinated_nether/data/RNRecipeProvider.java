@@ -2,6 +2,7 @@ package corundum.rubinated_nether.data;
 
 import java.util.concurrent.CompletableFuture;
 
+import com.electronwill.nightconfig.core.CommentedConfig;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
@@ -10,9 +11,12 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.flag.FeatureFlagSet;
+
 
 public class RNRecipeProvider extends RecipeProvider {
 	protected RNRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
@@ -435,16 +439,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.ORNATE_RUBY_GLASS_PANE
 		);
 
-
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, RNItems.BRONZE_POWDER,4)
-				.requires(RNItems.BRONZE_POWDER,1)
-				.requires(Items.COPPER_INGOT,3)
-				.requires(RNItems.MOLTEN_RUBY_NUGGET_ITEM, 3)
-				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_NUGGET_ITEM), has(RNItems.MOLTEN_RUBY_NUGGET_ITEM))
-				.unlockedBy(getHasName(RNItems.BRONZE_POWDER), has(RNItems.BRONZE_POWDER))
-				.group("bronze_dupe")
-				.save(recipeOutput);
+		waxRecipes(recipeOutput, FeatureFlagSet.of(FeatureFlags.VANILLA));
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBY_GLASS, 8)
 				.define('X', Blocks.GLASS)

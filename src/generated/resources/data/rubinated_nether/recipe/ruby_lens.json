@@ -2,6 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
+    "L": {
+      "item": "minecraft:leather"
+    },
     "O": {
       "item": "rubinated_nether:ruby_glass_pane"
     },
@@ -10,7 +13,7 @@
     }
   },
   "pattern": [
-    "XXX",
+    "XLX",
     "OXO"
   ],
   "result": {
