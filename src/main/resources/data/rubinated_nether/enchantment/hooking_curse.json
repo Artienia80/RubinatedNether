@@ -1,7 +1,7 @@
 {
   "anvil_cost": 4,
   "description": {
-    "translate": "enchantment.rubinated_nether.knockback_replica"
+    "translate": "enchantment.rubinated_nether.hooking_curse"
   },
   "effects": {
     "minecraft:post_attack": [
@@ -18,7 +18,7 @@
     "base": 55,
     "per_level_above_first": 20
   },
-  "max_level": 2,
+  "max_level": 1,
   "min_cost": {
     "base": 5,
     "per_level_above_first": 20
@@ -26,6 +26,6 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#minecraft:enchantable/weapon",
+  "supported_items": "#minecraft:enchantable/bow",
   "weight": 2
 }

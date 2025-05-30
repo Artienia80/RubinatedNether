@@ -37,7 +37,7 @@ public record HookingCurseEffect() implements EnchantmentEntityEffect {
 
         // Apply knockback with vanilla-like strength calculation
         // Knockback I = 0.4 strength, Knockback II = 0.8 strength (0.4 * level)
-        double knockbackStrength = 0.4 * enchantmentLevel;
+        double knockbackStrength = 1.2;
 
         // Apply the knockback using vanilla logic
         applyKnockback(victim, knockbackStrength, dx, dz);

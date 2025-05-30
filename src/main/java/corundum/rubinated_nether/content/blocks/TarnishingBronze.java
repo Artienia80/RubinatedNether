@@ -13,12 +13,14 @@ import com.mojang.serialization.Codec;
 
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNDataMaps;
+import corundum.rubinated_nether.content.RNItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -194,13 +196,13 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 	}
 
 	default boolean waxing(
-		ItemStack stack, 
-		BlockState state, 
-		Level level, 
-		BlockPos pos,
-		Player player, 
-		InteractionHand hand, 
-		BlockHitResult hitResult
+			ItemStack stack,
+			BlockState state,
+			Level level,
+			BlockPos pos,
+			Player player,
+			InteractionHand hand,
+			BlockHitResult hitResult
 	) {
 		var bool = state.getValue(WAXED);
 
@@ -210,13 +212,20 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 
 			stack.hurtAndBreak(1, player, null);
 			level.playSound(player, pos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1F, 1F);
-			
+
 			if (bool) {
 				level.setBlock(pos, state.setValue(WAXED, false), 2);
 				level.levelEvent(player, 3004, pos, 0);
 			} else {
 				level.setBlock(pos, getPrevious(state).get(), 2);
 				level.levelEvent(player, 3005, pos, 0);
+			}
+
+			if (!level.isClientSide() && level.random.nextFloat() < 0.5f) {
+				ItemEntity bronzeDrop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+						new ItemStack(RNItems.BRONZE_POWDER.get()));
+				bronzeDrop.setDefaultPickUpDelay();
+				level.addFreshEntity(bronzeDrop);
 			}
 
 			return true;
@@ -230,7 +239,7 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 
 			level.playSound(player, pos, SoundEvents.HONEYCOMB_WAX_ON, SoundSource.BLOCKS, 1F, 1F);
 			level.levelEvent(player, 3003, pos, 0);
-	
+
 			return true;
 		}
 
