@@ -23,4 +23,8 @@ public final class RNParticleTypes {
 			"rubinate",
 			() -> new SimpleParticleType(false)
 	);
+
+	public static final Supplier<SimpleParticleType> BRONZE_SCRAPE = PARTICLES.register(
+			"bronze_scrape", () -> new SimpleParticleType(true));
+
 }
