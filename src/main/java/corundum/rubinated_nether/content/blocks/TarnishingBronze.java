@@ -11,17 +11,10 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.mojang.serialization.Codec;
 
-import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNDataMaps;
 import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.RNParticleTypes;
-import net.minecraft.client.particle.GlowParticle;
-import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
@@ -33,7 +26,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChangeOverTimeBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -227,22 +219,22 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 			} else {
 				level.setBlock(pos, getPrevious(state).get(), 2);
 				// Use bronze block colored particles for scraping
-					RubinatedNether.LOGGER.debug("Attempting to spawn bronze particles at {}", pos);
-					for (int i = 0; i < 8; ++i) {
-						level.addParticle(RNParticleTypes.BRONZE_SCRAPE.get(),
-								pos.getX() + level.random.nextDouble(),
-								pos.getY() + level.random.nextDouble(),
-								pos.getZ() + level.random.nextDouble(),
-								0.0D, 0.0D, 0.0D);
-					}
+//					RubinatedNether.LOGGER.debug("Attempting to spawn bronze particles at {}", pos);
+//					for (int i = 0; i < 4; ++i) {
+//						level.addParticle(RNParticleTypes.BRONZE_SCRAPE.get(),
+//								pos.getX() + level.random.nextDouble(),
+//								pos.getY() + level.random.nextDouble(),
+//								pos.getZ() + level.random.nextDouble(),
+//								0.0D, 0.0D, 0.0D);
+//					}
+				level.levelEvent(player, 3005, pos, 0);
 			}
 
-			// Drop gold ingot when scraping occurs (25% chance)
-			if (!level.isClientSide() && level.random.nextFloat() < 0.25f) {
-				ItemEntity goldDrop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-						new ItemStack(Items.GOLD_INGOT));
-				goldDrop.setDefaultPickUpDelay();
-				level.addFreshEntity(goldDrop);
+			if (!level.isClientSide() && level.random.nextFloat() < 0.50f) {
+				ItemEntity bronzeDrop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+						new ItemStack(RNItems.BRONZE_POWDER.get()));
+				bronzeDrop.setDefaultPickUpDelay();
+				level.addFreshEntity(bronzeDrop);
 			}
 
 			return true;

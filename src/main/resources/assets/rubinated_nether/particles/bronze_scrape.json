@@ -1,3 +1,6 @@
 {
-  "textures": ["rubinated_nether:block/bronze/bronze_block/bronze_block"]
+  "textures": [
+    "rubinated_nether:bronze_scrape_1",
+    "rubinated_nether:bronze_scrape_2"
+  ]
 }

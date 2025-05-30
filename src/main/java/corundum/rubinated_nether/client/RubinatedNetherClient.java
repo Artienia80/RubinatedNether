@@ -55,5 +55,8 @@ public class RubinatedNetherClient {
 
 	public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
 		event.registerSpriteSet(RNParticleTypes.RUBY_AURA.get(), RubyAuraParticle.Provider::new);
-		event.registerSpriteSet(RNParticleTypes.RUBINATE.get(), RubinationAltarParticle.Provider::new);	}
+		event.registerSpriteSet(RNParticleTypes.RUBINATE.get(), RubinationAltarParticle.Provider::new);
+		event.registerSpriteSet(RNParticleTypes.BRONZE_SCRAPE.get(), RubinationAltarParticle.Provider::new);
+
+	}
 }
