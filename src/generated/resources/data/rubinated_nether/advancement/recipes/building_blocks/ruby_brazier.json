@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bronze_powder": {
+    "has_copper_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:bronze_powder"
+            "items": "minecraft:copper_ingot"
           }
         ]
       },
@@ -52,7 +52,7 @@
     [
       "has_the_recipe",
       "has_molten_ruby_block",
-      "has_bronze_powder",
+      "has_copper_ingot",
       "has_netherite_ingot",
       "has_obsidian"
     ]
