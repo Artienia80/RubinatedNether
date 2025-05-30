@@ -417,19 +417,19 @@ public class RNRecipeProvider extends RecipeProvider {
 				2
 		);
 
-		wall(
+		pane(
 				recipeOutput,
 				RNBlocks.RUBY_GLASS,
 				RNBlocks.RUBY_GLASS_PANE
 		);
 
-		wall(
+		pane(
 				recipeOutput,
 				RNBlocks.MOLTEN_RUBY_GLASS,
 				RNBlocks.MOLTEN_RUBY_GLASS_PANE
 		);
 
-		wall(
+		pane(
 				recipeOutput,
 				RNBlocks.ORNATE_RUBY_GLASS,
 				RNBlocks.ORNATE_RUBY_GLASS_PANE
@@ -562,8 +562,9 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNItems.RUBY_LENS, 1)
 				.define('X', Items.COPPER_INGOT)
+				.define('L', Items.LEATHER)
 				.define('O', RNBlocks.RUBY_GLASS_PANE)
-				.pattern("XXX")
+				.pattern("XLX")
 				.pattern("OXO")
 				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
 				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
@@ -587,14 +588,14 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRAZIER, 1)
 				.define('A', Blocks.OBSIDIAN)
-				.define('B', Items.COPPER_INGOT)
+				.define('B', RNItems.BRONZE_POWDER)
 				.define('C', RNBlocks.MOLTEN_RUBY_BLOCK)
 				.define('D', Items.NETHERITE_INGOT)
 				.pattern("BCB")
 				.pattern("BDB")
 				.pattern("AAA")
 				.unlockedBy(getHasName(RNBlocks.MOLTEN_RUBY_BLOCK), has(RNBlocks.MOLTEN_RUBY_BLOCK))
-				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+				.unlockedBy(getHasName(RNItems.BRONZE_POWDER), has(RNItems.BRONZE_POWDER))
 				.unlockedBy(getHasName(Items.NETHERITE_INGOT), has(Items.NETHERITE_INGOT))
 				.unlockedBy(getHasName(Blocks.OBSIDIAN), has(Blocks.OBSIDIAN))
 				.save(recipeOutput);
@@ -785,6 +786,15 @@ public class RNRecipeProvider extends RecipeProvider {
 			.pattern("PPP")
 			.unlockedBy(getHasName(input), has(input))
 			.save(recipeOutput);
+	}
+
+	private void pane(RecipeOutput recipeOutput, ItemLike input, ItemLike wall) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, wall, 16)
+				.define('P', input)
+				.pattern("PPP")
+				.pattern("PPP")
+				.unlockedBy(getHasName(input), has(input))
+				.save(recipeOutput);
 	}
 
 	private void stonecutterList(RecipeOutput recipeOutput, ItemLike input, ItemLike... outputs) {
