@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "rubinated_nether:waxed_discolored_cut_bronze_bricks",
+  "key": {
+    "I": {
+      "item": "rubinated_nether:waxed_discolored_bronze_block"
+    }
+  },
+  "pattern": [
+    "II",
+    "II"
+  ],
+  "result": {
+    "count": 4,
+    "id": "rubinated_nether:waxed_discolored_cut_bronze_bricks"
+  }
+}

@@ -1,18 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
-  "group": "DeferredHolder{ResourceKey[minecraft:block / rubinated_nether:bronze_block]}",
   "key": {
-    "I": {
+    "O": {
       "item": "rubinated_nether:bronze_powder"
+    },
+    "X": {
+      "item": "minecraft:copper_ingot"
     }
   },
   "pattern": [
-    "II",
-    "II"
+    "XXX",
+    "XOX",
+    "XXX"
   ],
   "result": {
-    "count": 4,
+    "count": 1,
     "id": "rubinated_nether:bronze_block"
   }
 }

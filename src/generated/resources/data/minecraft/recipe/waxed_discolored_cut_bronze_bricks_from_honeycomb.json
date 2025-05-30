@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "waxed_discolored_cut_bronze_bricks",
+  "ingredients": [
+    {
+      "item": "rubinated_nether:discolored_cut_bronze_bricks"
+    },
+    {
+      "item": "minecraft:honeycomb"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:waxed_discolored_cut_bronze_bricks"
+  }
+}

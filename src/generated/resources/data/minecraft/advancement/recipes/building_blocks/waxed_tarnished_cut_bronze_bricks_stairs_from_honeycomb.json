@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_tarnished_cut_bronze_bricks_stairs": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:tarnished_cut_bronze_bricks_stairs"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:waxed_tarnished_cut_bronze_bricks_stairs_from_honeycomb"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tarnished_cut_bronze_bricks_stairs"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:waxed_tarnished_cut_bronze_bricks_stairs_from_honeycomb"
+    ]
+  }
+}
