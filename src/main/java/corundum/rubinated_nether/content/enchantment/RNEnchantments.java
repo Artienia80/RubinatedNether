@@ -103,9 +103,9 @@ public class RNEnchantments {
 								Attributes.ATTACK_DAMAGE, new LevelBasedValue.LevelsSquared(-3.0F), AttributeModifier.Operation.ADD_VALUE)));
 
 		register(context, HOOKING_CURSE, Enchantment.enchantment(Enchantment.definition(
-						items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+						items.getOrThrow(ItemTags.BOW_ENCHANTABLE),
 						5,
-						2,
+						1,
 						Enchantment.dynamicCost(5, 7),
 						Enchantment.dynamicCost(25, 7),
 						2,
