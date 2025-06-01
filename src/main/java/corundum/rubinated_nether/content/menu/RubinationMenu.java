@@ -134,22 +134,22 @@ public class RubinationMenu extends AbstractContainerMenu {
 		if (id >= 0) {
 			var itemstack = this.rubinationSlots.getItem(0);
 			var itemstack1 = this.rubinationSlots.getItem(1);
-			var i = id + 1;
-	
-			if ((itemstack1.isEmpty() || itemstack1.getCount() < i)) {
+			var rubyCost = 1; // Always consume exactly 1 ruby
+
+			if (itemstack1.isEmpty() || itemstack1.getCount() < rubyCost) {
 				return false;
-			} else if (!itemstack.isEmpty() && (player.experienceLevel >= i || player.getAbilities().instabuild)) {
+			} else if (!itemstack.isEmpty()) { // Remove XP level requirement
 				this.access.execute((level, blockPos) -> {
 					var arrayList = this.getRubinationMap(itemstack, runes);
 					var selectedEnchantments = this.getSelectedEnchants(level.registryAccess(), arrayList, id);
 
 					if (!arrayList.isEmpty() && selectedEnchantments != null) {
-						player.onEnchantmentPerformed(itemstack, i);
+						// Remove XP cost - player.onEnchantmentPerformed(itemstack, i);
 
 						var itemstack2 = itemstack.getItem().applyEnchantments(itemstack, selectedEnchantments);
 						this.rubinationSlots.setItem(0, itemstack2);
 						CommonHooks.onPlayerEnchantItem(player, itemstack2, selectedEnchantments);
-						itemstack1.consume(i, player);
+						itemstack1.consume(rubyCost, player);
 
 						if (itemstack1.isEmpty()) {
 							this.rubinationSlots.setItem(1, ItemStack.EMPTY);
@@ -157,18 +157,18 @@ public class RubinationMenu extends AbstractContainerMenu {
 
 						player.awardStat(Stats.ENCHANT_ITEM);
 						if (player instanceof ServerPlayer) {
-							CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer) player, itemstack2, i);
+							CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer) player, itemstack2, rubyCost);
 						}
 
 						this.rubinationSlots.setChanged();
 						this.slotsChanged(this.rubinationSlots);
 						level.playSound(
-							null, 
-							blockPos, 
-							SoundEvents.ENCHANTMENT_TABLE_USE, 
-							SoundSource.BLOCKS, 
-							1.0F, 
-							level.random.nextFloat() * 0.1F + 0.9F
+								null,
+								blockPos,
+								SoundEvents.ENCHANTMENT_TABLE_USE,
+								SoundSource.BLOCKS,
+								1.0F,
+								level.random.nextFloat() * 0.1F + 0.9F
 						);
 					}
 

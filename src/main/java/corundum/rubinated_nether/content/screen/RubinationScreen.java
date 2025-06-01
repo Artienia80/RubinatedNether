@@ -104,9 +104,11 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 		}
 	}
 
+	// Replace the render method in RubinationScreen.java with this fixed version:
+
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
 		var flag = this.minecraft.player.getAbilities().instabuild;
-	
+
 		super.render(guiGraphics, mouseX, mouseY, partialTick);
 		this.renderTooltip(guiGraphics, mouseX, mouseY);
 
@@ -116,26 +118,23 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 
 			if (this.isHovering(43 + (36 * j), 17, 19, 57, mouseX, mouseY) && this.menu.getItemInSlot() != ItemStack.EMPTY) {
 				var list = new ArrayList<Component>();
-	
-				if (!flag) {
-					list.add(CommonComponents.EMPTY);
+
+				// REMOVED THE CREATIVE-ONLY CHECK - show tooltips in both creative and survival
+				if (optionalList.getFirst().isEmpty()) {
+					//list.add(Component.translatable("gui.rubinated_nether.rubination_altar.unusable").withStyle(ChatFormatting.RED));
+					var randomName = RubinationNames.getInstance().getRandomName(this.font, 100);
+					list.add(Component.literal(randomName.getString()).withStyle(ChatFormatting.RED, ChatFormatting.OBFUSCATED));
 				} else {
-					if (optionalList.getFirst().isEmpty()) {
-						//list.add(Component.translatable("gui.rubinated_nether.rubination_altar.unusable").withStyle(ChatFormatting.RED));
-						var randomName = RubinationNames.getInstance().getRandomName(this.font, 100);
-						list.add(Component.literal(randomName.getString()).withStyle(ChatFormatting.RED, ChatFormatting.OBFUSCATED));
-					} else {
-						list.add(Component.translatable("container." + result.getSerializedName() + ".clue").withStyle(ChatFormatting.RED));
-						for (var h = 0; h < 3; ++h) {
-							list.add(
+					list.add(Component.translatable("container." + result.getSerializedName() + ".clue").withStyle(ChatFormatting.RED));
+					for (var h = 0; h < 3; ++h) {
+						list.add(
 								Component.translatable(
-									"gui.rubinated_nether.rubination_altar.enchant", 
-									Enchantment.getFullname(optionalList.get(h).get(), 
-									result.getEnchantments(getRegistryAccess()).get(h).level)
-								)
-								.withStyle(ChatFormatting.WHITE)
-							);
-						}
+												"gui.rubinated_nether.rubination_altar.enchant",
+												Enchantment.getFullname(optionalList.get(h).get(),
+														result.getEnchantments(getRegistryAccess()).get(h).level)
+										)
+										.withStyle(ChatFormatting.WHITE)
+						);
 					}
 				}
 				guiGraphics.renderComponentTooltip(this.font, list, mouseX, mouseY);
@@ -143,6 +142,11 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 			}
 		}
 	}
+
+// Also, what does your renderBg method condition look like?
+// It should be checking for valid enchantments properly.
+// Make sure the condition in renderBg is:
+// if ((k >= 1 || this.minecraft.player.getAbilities().instabuild) && this.menu.rubinationClue[l][0] != -1) {
 
 	private @NotNull RegistryAccess getRegistryAccess() {
 		return this.minecraft.level.registryAccess();
