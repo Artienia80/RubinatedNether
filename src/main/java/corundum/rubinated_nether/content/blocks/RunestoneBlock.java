@@ -223,16 +223,21 @@ public class RunestoneBlock extends BaseEntityBlock {
 		level.playLocalSound(player, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
 
 		return ItemInteractionResult.sidedSuccess(level.isClientSide);
+		//  ItemInteractionResult.CONSUME; // Changed from sidedSuccess
 	}
 
 	private void setItemIntoRunestone(Level level, BlockPos pos, BlockState blockState, Player player, ItemStack stack) {
+		// Update the block state FIRST
+		handleSyncRuneValue(level, pos, ((RuneItem) stack.getItem()).getRubination());
+
+		// NOW get the block entity (which will be the new one after the block state change)
 		var blockEntity = level.getBlockEntity(getCorrectBlockPos(pos, blockState));
 		if (!(blockEntity instanceof RunestoneBlockEntity)) return;
 
 		var itemStack = stack.consumeAndReturn(1, player);
 		((RunestoneBlockEntity) blockEntity).setTheItem(itemStack);
+		blockEntity.setChanged();
 
-		handleSyncRuneValue(level, pos, ((RuneItem) stack.getItem()).getRubination());
 		level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockState));
 	}
 }
