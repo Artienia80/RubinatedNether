@@ -49,12 +49,14 @@ public class RubinationMenu extends AbstractContainerMenu {
 
 		this.rubinationClue = new int[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
 		this.access = access;
-		this.addSlot(new Slot(this.rubinationSlots, 0, 70, 92) {
+
+		// Middle buttons moved up 8 pixels: from Y=92 to Y=84
+		this.addSlot(new Slot(this.rubinationSlots, 0, 70, 84) {
 			public int getMaxStackSize() {
 				return 1;
 			}
 		});
-		this.addSlot(new Slot(this.rubinationSlots, 1, 90, 92) {
+		this.addSlot(new Slot(this.rubinationSlots, 1, 90, 84) {
 			public boolean mayPlace(ItemStack itemStack) {
 				return itemStack.is(RNItems.RUBY_ITEM.get());
 			}
@@ -64,14 +66,16 @@ public class RubinationMenu extends AbstractContainerMenu {
 			}
 		});
 
+		// Inventory moved up 16 pixels: from Y=126 to Y=110
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 9; ++j) {
-				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 126 + i * 18));
+				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 110 + i * 18));
 			}
 		}
 
+		// Hotbar moved up 16 pixels: from Y=184 to Y=168
 		for(int k = 0; k < 9; ++k) {
-			this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 184));
+			this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 168));
 		}
 
 		this.addDataSlot(DataSlot.shared(this.rubinationClue[0], 0));
@@ -106,17 +110,17 @@ public class RubinationMenu extends AbstractContainerMenu {
 
 					var arrayList = this.getRubinationMap(itemstack, runes);
 					for(int l = 0; l < 3; l++) {
-							for(int c = 0; c < 3; c++) {
-								if (arrayList != null && !arrayList.isEmpty()) {
-									var list = this.getSelectedEnchants(level.registryAccess(), arrayList, l);
-									if (list != null) {
-										var enchantmentinstance = this.getSelectedEnchants(level.registryAccess(), arrayList, l).get(c);
-										this.rubinationClue[l][c] = idmap.getId(enchantmentinstance.enchantment);
-									} else {
-										this.rubinationClue[l][c] = -1;
-									}
+						for(int c = 0; c < 3; c++) {
+							if (arrayList != null && !arrayList.isEmpty()) {
+								var list = this.getSelectedEnchants(level.registryAccess(), arrayList, l);
+								if (list != null) {
+									var enchantmentinstance = this.getSelectedEnchants(level.registryAccess(), arrayList, l).get(c);
+									this.rubinationClue[l][c] = idmap.getId(enchantmentinstance.enchantment);
+								} else {
+									this.rubinationClue[l][c] = -1;
 								}
 							}
+						}
 					}
 					this.broadcastChanges();
 				});
@@ -186,7 +190,7 @@ public class RubinationMenu extends AbstractContainerMenu {
 
 	private List<Rubination> getRubinationMap(ItemStack stack, Set<RuneItem> runes) {
 		var arrayList = new ArrayList<Rubination>(3);
-	
+
 		for(RuneItem rune : runes) {
 			if(stack.is(rune.getRubination().getItemTag()))
 				arrayList.add(rune.getRubination());
@@ -227,7 +231,7 @@ public class RubinationMenu extends AbstractContainerMenu {
 		if (slot != null && slot.hasItem()) {
 			var itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
-	
+
 			if (index == 0) {
 				if (!this.moveItemStackTo(itemstack1, 2, 38, true)) {
 					return ItemStack.EMPTY;
