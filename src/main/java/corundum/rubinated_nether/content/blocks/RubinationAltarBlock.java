@@ -4,8 +4,10 @@ import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNParticleTypes;
+import corundum.rubinated_nether.content.RNBlockStateProperties; // Added import
 import corundum.rubinated_nether.content.blocks.entities.RubinationAltarBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
+import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.menu.RubinationMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -63,14 +65,20 @@ public class RubinationAltarBlock extends BaseEntityBlock {
 		super.animateTick(state, level, pos, random);
 
 		for (BlockPos blockPos : RUNESTONE_OFFSETS) {
-			if (random.nextInt(2) == 0 && isValidCatalyst(level, pos, blockPos))
-				level.addParticle(
-					RNParticleTypes.RUBINATE.get(),
-					(double) pos.getX() + 0.5, (double) pos.getY() + 2.0, (double) pos.getZ() + 0.5,
-					(double) ((float) blockPos.getX() + random.nextFloat()) - 0.5,
-					(float) blockPos.getY() - random.nextFloat() - 0.5F,
-					(double) ((float) blockPos.getZ() + random.nextFloat()) - 0.5
-				);
+			if (random.nextInt(2) == 0) {
+				BlockPos stonePos = pos.offset(blockPos);
+				// Only generate particles if runestone exists and has empty rune slot
+				if (isValidCatalyst(level, pos, blockPos) &&
+						level.getBlockState(stonePos).getValue(RNBlockStateProperties.HAS_RUNE) != Rubination.EMPTY) {
+					level.addParticle(
+							RNParticleTypes.RUBINATE.get(),
+							(double) pos.getX() + 0.5, (double) pos.getY() + 2.0, (double) pos.getZ() + 0.5,
+							(double) ((float) blockPos.getX() + random.nextFloat()) - 0.5,
+							(float) blockPos.getY() - random.nextFloat() - 0.5F,
+							(double) ((float) blockPos.getZ() + random.nextFloat()) - 0.5
+					);
+				}
+			}
 		}
 	}
 
@@ -87,7 +95,6 @@ public class RubinationAltarBlock extends BaseEntityBlock {
 	private static <T extends BlockEntity> BlockEntityTicker<T> createTicker(Level level, BlockEntityType<T> serverType, BlockEntityType<? extends RubinationAltarBlockEntity> clientType) {
 		return level.isClientSide ? createTickerHelper(serverType, clientType, RubinationAltarBlockEntity::tick) : null;
 	}
-
 
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
