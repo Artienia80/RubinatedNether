@@ -95,5 +95,12 @@ public class RNItemTags extends ItemTagsProvider {
 			Items.DIAMOND_AXE,
 			Items.NETHERITE_AXE
 		);
+
+		this.tag(RNTags.Items.RUBINATABLE)
+				.addTag(RNTags.Items.RUBINATION_TOOL)
+				.addTag(RNTags.Items.RUBINATION_ARMOR)
+				.addTag(RNTags.Items.RUBINATION_WEAPON)
+				.addTag(RNTags.Items.RUBINATION_BOW)
+				.addTag(RNTags.Items.RUBINATION_CROSSBOW);
 	}
 }

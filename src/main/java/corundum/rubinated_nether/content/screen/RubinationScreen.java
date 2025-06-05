@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.menu.RubinationMenu;
 import corundum.rubinated_nether.utils.RubinationNames;
@@ -99,16 +100,17 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 			} else {
 				RenderSystem.enableBlend();
 				var optionalList = getEnchantReferences(l);
-				boolean hasItemButNoRubination = this.menu.getItemInSlot() != ItemStack.EMPTY && optionalList.getFirst().isEmpty();
+				ItemStack currentItem = this.menu.getItemInSlot();
+				boolean hasRubinationOptions = !optionalList.getFirst().isEmpty();
+				boolean hasRubinatable = currentItem != ItemStack.EMPTY && currentItem.is(RNTags.Items.RUBINATABLE);
+				boolean hasItemButNoRubination = hasRubinatable && !hasRubinationOptions;
 
 				if (hasItemButNoRubination) {
 					guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 21, 59);
 					guiGraphics.blit(UNDISCOVERED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
-
 				} else {
 					guiGraphics.blitSprite(RUBINATION_SLOT_UNDISCOVERED_SPRITE, i1, j1, 21, 59);
 					guiGraphics.blit(DISABLED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
-
 				}
 
 				RenderSystem.disableBlend();
