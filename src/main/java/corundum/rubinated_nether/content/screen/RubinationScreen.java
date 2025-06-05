@@ -30,13 +30,14 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	private static final ResourceLocation RUBINATION_SLOT_HIGHLIGHTED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_highlighted");
 	private static final ResourceLocation RUBINATION_SLOT_UNDISCOVERED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_undiscovered");
 	private static final ResourceLocation RUBINATION_SLOT_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot");
+	private static final ResourceLocation UNDISCOVERED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/undiscovered_rune.png");
 	private static final ResourceLocation DISABLED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/disabled_rune.png");
 	private static final ResourceLocation RUBINATION_ALTAR_LOCATION = RubinatedNether.id("textures/gui/rubination_altar.png");
 
 	public RubinationScreen(RubinationMenu menu, Inventory playerInventory, Component title) {
 		super(menu, playerInventory, title);
 		this.imageHeight = 208;
-		this.inventoryLabelY = this.imageHeight - 109; // Moved up 30 pixels: from -79 to -109
+		this.inventoryLabelY = this.imageHeight - 109;
 	}
 
 	protected void init() {
@@ -52,11 +53,11 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 		var j = (this.height - this.imageHeight) / 2;
 
 		for(var k = 0; k < 3; ++k) {
-			var i1 = i + 42 + (k * 36); // Adjusted from 43 to 42 (1 pixel left to center the wider button)
-			var j1 = j + 16; // Moved up 9 pixels: from 25 to 16
+			var i1 = i + 42 + (k * 36);
+			var j1 = j + 16;
 			var d0 = mouseX - i1;
 			var d1 = mouseY - j1;
-			if (d0 >= 0.0 && d1 >= 0.0 && d0 < 21.0 && d1 < 59.0 && this.menu.clickMenuButton(this.minecraft.player, k)) { // Updated hit detection to 21x59
+			if (d0 >= 0.0 && d1 >= 0.0 && d0 < 21.0 && d1 < 59.0 && this.menu.clickMenuButton(this.minecraft.player, k)) {
 				this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, k);
 				return true;
 			}
@@ -73,8 +74,8 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 		guiGraphics.blit(RUBINATION_ALTAR_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
 		for(int l = 0; l < 3; ++l) {
-			var i1 = i + 42 + (l * 36); // Adjusted from 43 to 42
-			var j1 = j + 16; // Moved up 9 pixels: from 25 to 16
+			var i1 = i + 42 + (l * 36);
+			var j1 = j + 16;
 
 			var formattedtext = RubinationNames.getInstance().getRandomName(this.font, 20);
 			var i2 = 6839882;
@@ -82,11 +83,11 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				var j2 = mouseX - i1;
 				var k2 = mouseY - j1;
 				RenderSystem.enableBlend();
-				if (j2 >= 0 && k2 >= 0 && j2 < 21 && k2 < 59) { // Updated hover detection to 21x59
-					guiGraphics.blitSprite(RUBINATION_SLOT_HIGHLIGHTED_SPRITE, i1, j1, 21, 59); // Updated sprite size to 21x59
+				if (j2 >= 0 && k2 >= 0 && j2 < 21 && k2 < 59) {
+					guiGraphics.blitSprite(RUBINATION_SLOT_HIGHLIGHTED_SPRITE, i1, j1, 21, 59);
 					i2 = 16777088;
 				} else {
-					guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 21, 59); // Updated sprite size to 21x59
+					guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 21, 59);
 				}
 
 				var result = Rubination.parseRubinationFromEnchantList(getRegistryAccess(), getEnchantReferences(l));
@@ -94,18 +95,36 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				guiGraphics.blit(RubinatedNether.id("textures/item/" + Rubination.parseRubinationTextureName(result) + "_rune.png"), i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
 
 				RenderSystem.disableBlend();
-				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 8, j1 + 20, 1, i2); // Adjusted text position: x+1, y+1 to account for centering
+				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 8, j1 + 20, 1, i2);
 			} else {
 				RenderSystem.enableBlend();
-				guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 21, 59); // Updated sprite size to 21x59
-				guiGraphics.blit(DISABLED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+				var optionalList = getEnchantReferences(l);
+				boolean hasItemButNoRubination = this.menu.getItemInSlot() != ItemStack.EMPTY && optionalList.getFirst().isEmpty();
+
+				if (hasItemButNoRubination) {
+					guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 21, 59);
+					guiGraphics.blit(UNDISCOVERED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+
+				} else {
+					guiGraphics.blitSprite(RUBINATION_SLOT_UNDISCOVERED_SPRITE, i1, j1, 21, 59);
+					guiGraphics.blit(DISABLED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+
+				}
+
 				RenderSystem.disableBlend();
-				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 8, j1 + 20, 1, (i2 & 16711422) >> 1); // Adjusted text position: x+1, y+1
+
+				int textColor;
+				if (hasItemButNoRubination) {
+					textColor = (i2 & 16711422) >> 1;
+				} else {
+					textColor = 0x494949;
+
+				}
+				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 8, j1 + 20, 1, textColor);
 			}
 		}
 	}
 
-	// Replace the render method in RubinationScreen.java with this fixed version:
 
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
 		var flag = this.minecraft.player.getAbilities().instabuild;
@@ -117,7 +136,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 			var optionalList = getEnchantReferences(j);
 			var result = Rubination.parseRubinationFromEnchantList(getRegistryAccess(), optionalList);
 
-			if (this.isHovering(42 + (36 * j), 16, 21, 59, mouseX, mouseY) && this.menu.getItemInSlot() != ItemStack.EMPTY) { // Updated Y position to 16 (moved up 9 pixels from 25)
+			if (this.isHovering(42 + (36 * j), 16, 21, 59, mouseX, mouseY) && this.menu.getItemInSlot() != ItemStack.EMPTY) {
 				var list = new ArrayList<Component>();
 
 				if (optionalList.getFirst().isEmpty()) {
