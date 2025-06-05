@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.RubinationAltarBlock;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneItem;
@@ -34,6 +35,8 @@ public class RubinationMenu extends AbstractContainerMenu {
 	public final int[][] rubinationClue;
 	public final Set<RuneItem> runes = new HashSet<>();
 
+	private final Random random = new Random();
+
 	public RubinationMenu(int containerId, Inventory playerInventory) {
 		this(containerId, playerInventory, ContainerLevelAccess.NULL);
 	}
@@ -50,7 +53,6 @@ public class RubinationMenu extends AbstractContainerMenu {
 		this.rubinationClue = new int[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
 		this.access = access;
 
-		// Middle buttons moved up 8 pixels: from Y=92 to Y=84
 		this.addSlot(new Slot(this.rubinationSlots, 0, 70, 84) {
 			public int getMaxStackSize() {
 				return 1;
@@ -66,14 +68,12 @@ public class RubinationMenu extends AbstractContainerMenu {
 			}
 		});
 
-		// Inventory moved down 3 pixels: from Y=110 to Y=113
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 9; ++j) {
 				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 113 + i * 18));
 			}
 		}
 
-		// Hotbar moved down 3 pixels: from Y=168 to Y=171
 		for(int k = 0; k < 9; ++k) {
 			this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 171));
 		}
@@ -89,67 +89,20 @@ public class RubinationMenu extends AbstractContainerMenu {
 		this.addDataSlot(DataSlot.shared(this.rubinationClue[2], 2));
 	}
 
-	public void slotsChanged(Container inventory) {
-		if (inventory == this.rubinationSlots) {
-			var itemstack = inventory.getItem(0);
-			if (!itemstack.isEmpty() && itemstack.isEnchantable()) {
-				this.access.execute((level, blockPos) -> {
-					var idmap = level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).asHolderIdMap();
-
-					for(var blockpos : RubinationAltarBlock.RUNESTONE_OFFSETS) {
-						if (RubinationAltarBlock.isValidCatalyst(level, blockPos, blockpos))
-							if(RubinationAltarBlock.getRuneFromCatalyst(level, blockPos, blockpos) instanceof RuneItem runeItem)
-								runes.add(runeItem);
-					}
-
-					for(int k = 0; k < 3; ++k) {
-						for(int i = 0; i < 3; ++i) {
-							this.rubinationClue[k][i] = -1;
-						}
-					}
-
-					var arrayList = this.getRubinationMap(itemstack, runes);
-					for(int l = 0; l < 3; l++) {
-						for(int c = 0; c < 3; c++) {
-							if (arrayList != null && !arrayList.isEmpty()) {
-								var list = this.getSelectedEnchants(level.registryAccess(), arrayList, l);
-								if (list != null) {
-									var enchantmentinstance = this.getSelectedEnchants(level.registryAccess(), arrayList, l).get(c);
-									this.rubinationClue[l][c] = idmap.getId(enchantmentinstance.enchantment);
-								} else {
-									this.rubinationClue[l][c] = -1;
-								}
-							}
-						}
-					}
-					this.broadcastChanges();
-				});
-			} else {
-				for(int i = 0; i < 3; ++i) {
-					for(int k = 0; k < 3; ++k) {
-						this.rubinationClue[i][k] = -1;
-					}
-				}
-			}
-		}
-	}
-
 	public boolean clickMenuButton(Player player, int id) {
 		if (id >= 0) {
 			var itemstack = this.rubinationSlots.getItem(0);
 			var itemstack1 = this.rubinationSlots.getItem(1);
-			var rubyCost = 1; // Always consume exactly 1 ruby
+			var rubyCost = 1;
 
 			if (itemstack1.isEmpty() || itemstack1.getCount() < rubyCost) {
 				return false;
-			} else if (!itemstack.isEmpty()) { // Remove XP level requirement
+			} else if (!itemstack.isEmpty()) {
 				this.access.execute((level, blockPos) -> {
 					var arrayList = this.getRubinationMap(itemstack, runes);
 					var selectedEnchantments = this.getSelectedEnchants(level.registryAccess(), arrayList, id);
 
 					if (!arrayList.isEmpty() && selectedEnchantments != null) {
-						// Remove XP cost - player.onEnchantmentPerformed(itemstack, i);
-
 						var itemstack2 = itemstack.getItem().applyEnchantments(itemstack, selectedEnchantments);
 						this.rubinationSlots.setItem(0, itemstack2);
 						CommonHooks.onPlayerEnchantItem(player, itemstack2, selectedEnchantments);
@@ -191,12 +144,83 @@ public class RubinationMenu extends AbstractContainerMenu {
 	private List<Rubination> getRubinationMap(ItemStack stack, Set<RuneItem> runes) {
 		var arrayList = new ArrayList<Rubination>(3);
 
-		for(RuneItem rune : runes) {
-			if(stack.is(rune.getRubination().getItemTag()))
-				arrayList.add(rune.getRubination());
+		if (stack.is(RNTags.Items.AXES)) {
+			var toolRubinations = new ArrayList<Rubination>();
+			var weaponRubinations = new ArrayList<Rubination>();
+
+			for(RuneItem rune : runes) {
+				Rubination rubination = rune.getRubination();
+
+				if(stack.is(rubination.getItemTag())) {
+					if (rubination.getItemTag().equals(RNTags.Items.RUBINATION_TOOL)) {
+						toolRubinations.add(rubination);
+					} else if (rubination.getItemTag().equals(RNTags.Items.RUBINATION_WEAPON)) {
+						weaponRubinations.add(rubination);
+					}
+				}
+			}
+
+			boolean showToolsOnly = random.nextBoolean();
+
+			if (showToolsOnly) {
+				arrayList.addAll(toolRubinations);
+			} else {
+				arrayList.addAll(weaponRubinations);
+			}
+		} else {
+			for(RuneItem rune : runes) {
+				if(stack.is(rune.getRubination().getItemTag()))
+					arrayList.add(rune.getRubination());
+			}
 		}
 
 		return arrayList;
+	}
+
+	public void slotsChanged(Container inventory) {
+		if (inventory == this.rubinationSlots) {
+			var itemstack = inventory.getItem(0);
+
+			if (!itemstack.isEmpty() && itemstack.isEnchantable()) {
+				this.access.execute((level, blockPos) -> {
+					var idmap = level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).asHolderIdMap();
+
+					for(var blockpos : RubinationAltarBlock.RUNESTONE_OFFSETS) {
+						if (RubinationAltarBlock.isValidCatalyst(level, blockPos, blockpos))
+							if(RubinationAltarBlock.getRuneFromCatalyst(level, blockPos, blockpos) instanceof RuneItem runeItem)
+								runes.add(runeItem);
+					}
+
+					for(int k = 0; k < 3; ++k) {
+						for(int i = 0; i < 3; ++i) {
+							this.rubinationClue[k][i] = -1;
+						}
+					}
+
+					var arrayList = this.getRubinationMap(itemstack, runes);
+					for(int l = 0; l < 3; l++) {
+						for(int c = 0; c < 3; c++) {
+							if (arrayList != null && !arrayList.isEmpty()) {
+								var list = this.getSelectedEnchants(level.registryAccess(), arrayList, l);
+								if (list != null && c < list.size()) {
+									var enchantmentinstance = list.get(c);
+									this.rubinationClue[l][c] = idmap.getId(enchantmentinstance.enchantment);
+								} else {
+									this.rubinationClue[l][c] = -1;
+								}
+							}
+						}
+					}
+					this.broadcastChanges();
+				});
+			} else {
+				for(int i = 0; i < 3; ++i) {
+					for(int k = 0; k < 3; ++k) {
+						this.rubinationClue[i][k] = -1;
+					}
+				}
+			}
+		}
 	}
 
 	private List<EnchantmentInstance> getSelectedEnchants(RegistryAccess registryAccess, List<Rubination> arrayList, int id) {

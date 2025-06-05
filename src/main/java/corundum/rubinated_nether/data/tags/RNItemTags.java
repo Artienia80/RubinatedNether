@@ -46,7 +46,6 @@ public class RNItemTags extends ItemTagsProvider {
 
 		this.tag(RNTags.Items.RUBINATION_TOOL).addTag(Tags.Items.MINING_TOOL_TOOLS); //Included bc tag only has pickaxes
 
-
 		// this.tag(RNTags.Items.RUBINATION_WEAPON).addTag(Tags.Items.MELEE_WEAPON_TOOLS);
 		// Intentionally OMMITTED due to tag including Tridents and Mace.
 
@@ -54,46 +53,44 @@ public class RNItemTags extends ItemTagsProvider {
 		this.tag(RNTags.Items.RUBINATION_BOW).addTag(Tags.Items.TOOLS_BOW); //Included for backup
 		this.tag(RNTags.Items.RUBINATION_CROSSBOW).addTag(Tags.Items.TOOLS_CROSSBOW); //Included for backup
 
+		this.tag(RNTags.Items.AXES).add(
+				Items.WOODEN_AXE,
+				Items.STONE_AXE,
+				Items.GOLDEN_AXE,
+				Items.IRON_AXE,
+				Items.DIAMOND_AXE,
+				Items.NETHERITE_AXE
+		);
+
+		this.tag(RNTags.Items.RUBINATION_TOOL).addTags(RNTags.Items.AXES);
 		this.tag(RNTags.Items.RUBINATION_TOOL).add(
 			Items.WOODEN_SHOVEL,
 			Items.WOODEN_HOE,
-			Items.WOODEN_AXE,
 
 			Items.STONE_SHOVEL,
 			Items.STONE_HOE,
-			Items.STONE_AXE,
 
 			Items.IRON_SHOVEL,
 			Items.IRON_HOE,
-			Items.IRON_AXE,
 
 			Items.GOLDEN_SHOVEL,
 			Items.GOLDEN_HOE,
-			Items.GOLDEN_AXE,
 
 			Items.DIAMOND_SHOVEL,
 			Items.DIAMOND_HOE,
-			Items.DIAMOND_AXE,
 
 			Items.NETHERITE_SHOVEL,
-			Items.NETHERITE_HOE,
-			Items.NETHERITE_AXE
+			Items.NETHERITE_HOE
 		);
 
+		this.tag(RNTags.Items.RUBINATION_WEAPON).addTags(RNTags.Items.AXES);
 		this.tag(RNTags.Items.RUBINATION_WEAPON).add(
 			Items.WOODEN_SWORD,
 			Items.STONE_SWORD,
 			Items.GOLDEN_SWORD,
 			Items.IRON_SWORD,
 			Items.DIAMOND_SWORD,
-			Items.NETHERITE_SWORD,
-
-			Items.WOODEN_AXE,
-			Items.STONE_AXE,
-			Items.GOLDEN_AXE,
-			Items.IRON_AXE,
-			Items.DIAMOND_AXE,
-			Items.NETHERITE_AXE
+			Items.NETHERITE_SWORD
 		);
 
 		this.tag(RNTags.Items.RUBINATABLE)

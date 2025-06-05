@@ -58,6 +58,8 @@ public final class RNTags {
 
 		public static final TagKey<Item> RUBINATABLE = createTag(Registries.ITEM, "rubinatable");
 
+		public static final TagKey<Item> AXES = createTag(Registries.ITEM, "axes");
+
 
 	}
 
