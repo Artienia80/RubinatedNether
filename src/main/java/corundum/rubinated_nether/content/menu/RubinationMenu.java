@@ -66,16 +66,16 @@ public class RubinationMenu extends AbstractContainerMenu {
 			}
 		});
 
-		// Inventory moved up 16 pixels: from Y=126 to Y=110
+		// Inventory moved down 3 pixels: from Y=110 to Y=113
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 9; ++j) {
-				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 110 + i * 18));
+				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 113 + i * 18));
 			}
 		}
 
-		// Hotbar moved up 16 pixels: from Y=184 to Y=168
+		// Hotbar moved down 3 pixels: from Y=168 to Y=171
 		for(int k = 0; k < 9; ++k) {
-			this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 168));
+			this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 171));
 		}
 
 		this.addDataSlot(DataSlot.shared(this.rubinationClue[0], 0));
