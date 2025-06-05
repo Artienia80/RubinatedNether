@@ -35,7 +35,8 @@ public class RubinationMenu extends AbstractContainerMenu {
 	public final int[][] rubinationClue;
 	public final Set<RuneItem> runes = new HashSet<>();
 
-	private final Random random = new Random();
+	private int axeCycle = 0;
+	private boolean hadAxeInSlot = false;
 
 	public RubinationMenu(int containerId, Inventory playerInventory) {
 		this(containerId, playerInventory, ContainerLevelAccess.NULL);
@@ -160,7 +161,9 @@ public class RubinationMenu extends AbstractContainerMenu {
 				}
 			}
 
-			boolean showToolsOnly = random.nextBoolean();
+			// Use axeCycle to determine which rubinations to show
+			// Even numbers (0, 2, 4, ...) show tools, odd numbers (1, 3, 5, ...) show weapons
+			boolean showToolsOnly = (axeCycle % 2 == 0);
 
 			if (showToolsOnly) {
 				arrayList.addAll(toolRubinations);
@@ -180,6 +183,22 @@ public class RubinationMenu extends AbstractContainerMenu {
 	public void slotsChanged(Container inventory) {
 		if (inventory == this.rubinationSlots) {
 			var itemstack = inventory.getItem(0);
+
+			// Handle axe cycle logic
+			boolean currentlyHasAxe = !itemstack.isEmpty() && itemstack.is(RNTags.Items.AXES);
+
+			if (currentlyHasAxe && !hadAxeInSlot) {
+				// Axe was just placed in slot
+				axeCycle++;
+				hadAxeInSlot = true;
+			} else if (!currentlyHasAxe && hadAxeInSlot) {
+				// Axe was removed from slot
+				hadAxeInSlot = false;
+			} else if (!itemstack.isEmpty() && !currentlyHasAxe) {
+				// Non-axe item was placed in slot, reset cycle
+				axeCycle = 0;
+				hadAxeInSlot = false;
+			}
 
 			if (!itemstack.isEmpty() && itemstack.isEnchantable()) {
 				this.access.execute((level, blockPos) -> {
@@ -241,6 +260,9 @@ public class RubinationMenu extends AbstractContainerMenu {
 
 	public void removed(Player player) {
 		super.removed(player);
+		// Reset axe cycle when GUI is closed
+		axeCycle = 0;
+		hadAxeInSlot = false;
 		this.access.execute((level, blockPos) -> this.clearContainer(player, this.rubinationSlots));
 	}
 
