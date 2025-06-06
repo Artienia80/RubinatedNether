@@ -14,18 +14,13 @@ public record HookingCurseEffect() implements EnchantmentEntityEffect {
 
     @Override
     public void apply(ServerLevel level, int enchantmentLevel, EnchantedItemInUse enchantedItem, Entity target, Vec3 vec3) {
-        System.out.println("HookingCurseEffect triggered with level: " + enchantmentLevel); // Debug
 
         if (!(enchantedItem.owner() instanceof LivingEntity attacker)) {
-            System.out.println("No valid attacker");
             return;
         }
         if (!(target instanceof LivingEntity victim)) {
-            System.out.println("No valid victim");
             return;
         }
-
-        System.out.println("Applying knockback to: " + victim.getName().getString());
 
         // Calculate knockback direction (from attacker to victim)
         Vec3 attackerPos = attacker.position();
@@ -35,11 +30,8 @@ public record HookingCurseEffect() implements EnchantmentEntityEffect {
         double dx = victimPos.x - attackerPos.x;
         double dz = victimPos.z - attackerPos.z;
 
-        // Apply knockback with vanilla-like strength calculation
-        // Knockback I = 0.4 strength, Knockback II = 0.8 strength (0.4 * level)
         double knockbackStrength = 1.2;
 
-        // Apply the knockback using vanilla logic
         applyKnockback(victim, knockbackStrength, dx, dz);
     }
 
