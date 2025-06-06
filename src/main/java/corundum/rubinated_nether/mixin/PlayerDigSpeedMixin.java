@@ -17,13 +17,10 @@ public class PlayerDigSpeedMixin {
     private float allowNegativeMiningEfficiency(float f, BlockState blockState, BlockPos pos) {
         Player player = (Player) (Object) this;
 
-        // Check for sluggishness curse directly on the held item
         ItemStack heldItem = player.getMainHandItem();
-        int curseLevel = EnchantmentHelper.getItemEnchantmentLevel(player.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(RNEnchantments.SLUGGISHNESS_CURSE), heldItem);
-
+        int curseLevel = EnchantmentHelper.getItemEnchantmentLevel(player.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(RNEnchantments.DEFICIENCY_CURSE), heldItem);
 
         if (curseLevel > 0) {
-            // Apply curse: reduce speed by curse level
             float reduction = curseLevel;
             f = Math.max(0.1f, f - reduction);
         }

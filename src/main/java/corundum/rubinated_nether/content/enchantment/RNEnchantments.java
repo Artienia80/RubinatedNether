@@ -22,10 +22,7 @@ import net.minecraft.world.item.enchantment.EnchantmentTarget;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.item.enchantment.effects.EnchantmentAttributeEffect;
 import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
-import net.minecraft.world.item.enchantment.effects.RemoveBinomial;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 
 public class RNEnchantments {
 	public static final ResourceKey<Enchantment> FRAGILITY_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
@@ -43,8 +40,8 @@ public class RNEnchantments {
 	public static final ResourceKey<Enchantment> HOOKING_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "hooking_curse"));
 
-	public static final ResourceKey<Enchantment> SLUGGISHNESS_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
-			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "sluggishness_curse"));
+	public static final ResourceKey<Enchantment> DEFICIENCY_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
+			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "deficiency_curse"));
 
 	public static final ResourceKey<Enchantment> SLOW_CHARGE_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "slow_charge_curse"));
@@ -114,14 +111,13 @@ public class RNEnchantments {
 				.withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
 						EnchantmentTarget.VICTIM, new HookingCurseEffect()));
 
-		// Replace your existing SLUGGISHNESS_CURSE registration with this:
-		register(context, SLUGGISHNESS_CURSE, Enchantment.enchantment(
+		register(context, DEFICIENCY_CURSE, Enchantment.enchantment(
 						Enchantment.definition(holdergetter2.getOrThrow(ItemTags.MINING_ENCHANTABLE), 10, 3,
 								Enchantment.dynamicCost(1, 10), Enchantment.dynamicCost(51, 10), 1,
 								new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND}))
 				.withEffect(EnchantmentEffectComponents.ATTRIBUTES,
 						new EnchantmentAttributeEffect(
-								ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "enchantment.sluggishness_curse"),
+								ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "enchantment.deficiency_curse"),
 								Attributes.MINING_EFFICIENCY,
 								new LevelBasedValue.LevelsSquared(-20.0F), // Negative value now works
 								AttributeModifier.Operation.ADD_VALUE)));

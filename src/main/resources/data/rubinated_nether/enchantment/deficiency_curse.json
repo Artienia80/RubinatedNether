@@ -1,7 +1,7 @@
 {
   "anvil_cost": 1,
   "description": {
-    "translate": "enchantment.rubinated_nether.sluggishness_curse"
+    "translate": "enchantment.rubinated_nether.deficiency_curse"
   },
   "effects": {
     "minecraft:attributes": [
@@ -11,7 +11,7 @@
           "added": -20.0
         },
         "attribute": "minecraft:player.mining_efficiency",
-        "id": "rubinated_nether:sluggishness_curse",
+        "id": "rubinated_nether:deficiency_curse",
         "operation": "add_value"
       }
     ]
