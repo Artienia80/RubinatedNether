@@ -8,7 +8,7 @@
       {
         "amount": {
           "type": "minecraft:levels_squared",
-          "added": -10.0
+          "added": -20.0
         },
         "attribute": "minecraft:player.mining_efficiency",
         "id": "rubinated_nether:sluggishness_curse",

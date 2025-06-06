@@ -114,12 +114,17 @@ public class RNEnchantments {
 				.withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
 						EnchantmentTarget.VICTIM, new HookingCurseEffect()));
 
+		// Replace your existing SLUGGISHNESS_CURSE registration with this:
 		register(context, SLUGGISHNESS_CURSE, Enchantment.enchantment(
-						Enchantment.definition(holdergetter2.getOrThrow(ItemTags.MINING_ENCHANTABLE), 10, 1, Enchantment.dynamicCost(1, 10),
-								Enchantment.dynamicCost(51, 10), 1, new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND}))
+						Enchantment.definition(holdergetter2.getOrThrow(ItemTags.MINING_ENCHANTABLE), 10, 3,
+								Enchantment.dynamicCost(1, 10), Enchantment.dynamicCost(51, 10), 1,
+								new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND}))
 				.withEffect(EnchantmentEffectComponents.ATTRIBUTES,
-						new EnchantmentAttributeEffect(ResourceLocation.withDefaultNamespace("enchantment.rubinated_nether.sluggishness_curse"),
-								Attributes.MINING_EFFICIENCY, new LevelBasedValue.LevelsSquared(-1.0F), AttributeModifier.Operation.ADD_VALUE)));
+						new EnchantmentAttributeEffect(
+								ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "enchantment.sluggishness_curse"),
+								Attributes.MINING_EFFICIENCY,
+								new LevelBasedValue.LevelsSquared(-20.0F), // Negative value now works
+								AttributeModifier.Operation.ADD_VALUE)));
 
 		register(context, SLOW_CHARGE_CURSE, Enchantment.enchantment(
 						Enchantment.definition(holdergetter2.getOrThrow(ItemTags.CROSSBOW_ENCHANTABLE), 10, 1, Enchantment.dynamicCost(1, 10),
