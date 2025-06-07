@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.enchantment;
 import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.enchantment.custom.HookingCurseEffect;
+import corundum.rubinated_nether.content.enchantment.custom.LeechingCurseEffect;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -23,6 +24,8 @@ import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.item.enchantment.effects.EnchantmentAttributeEffect;
 import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.providers.number.EnchantmentLevelProvider;
 
 public class RNEnchantments {
 	public static final ResourceKey<Enchantment> FRAGILITY_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
@@ -49,7 +52,8 @@ public class RNEnchantments {
 	public static final ResourceKey<Enchantment> DESTRUCTION_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "destruction_curse"));
 
-
+	public static final ResourceKey<Enchantment> LEECHING_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
+			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "leeching_curse"));
 
 
 
@@ -135,7 +139,31 @@ public class RNEnchantments {
 				.withEffect(EnchantmentEffectComponents.ATTRIBUTES,
 						new EnchantmentAttributeEffect(ResourceLocation.withDefaultNamespace("enchantment.rubinated_nether.destruction_curse"),
 								Attributes.ATTACK_SPEED, new LevelBasedValue.LevelsSquared(-1.0F), AttributeModifier.Operation.ADD_VALUE)));
+
+		register(context, LEECHING_CURSE, Enchantment.enchantment(
+						Enchantment.definition(
+								holdergetter2.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
+								holdergetter2.getOrThrow(ItemTags.CHEST_ARMOR_ENCHANTABLE),
+								1, 3,
+								Enchantment.dynamicCost(10, 20),
+								Enchantment.dynamicCost(60, 20),
+								8,
+								new EquipmentSlotGroup[]{EquipmentSlotGroup.ANY}))
+				.withEffect(EnchantmentEffectComponents.POST_ATTACK,
+						EnchantmentTarget.VICTIM,
+						EnchantmentTarget.ATTACKER,
+						new LeechingCurseEffect(
+						),
+						LootItemRandomChanceCondition.randomChance(
+								EnchantmentLevelProvider.forEnchantmentLevel(
+										LevelBasedValue.perLevel(0.15F) // 15% chance per level
+								)
+						)
+				)
+		);
+
 	}
+
 
 	private static void register(BootstrapContext<Enchantment> registry, ResourceKey<Enchantment> key,
 								 Enchantment.Builder builder) {

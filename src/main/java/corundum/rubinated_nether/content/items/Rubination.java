@@ -28,7 +28,7 @@ public enum Rubination implements StringRepresentable {
 	VAINGLORY("vainglory", Map.of("minecraft:unbreaking", 5, "minecraft:looting", 4, "minecraft:vanishing_curse", 1), RNTags.Items.RUBINATION_WEAPON),
 	WRATH("wrath", Map.of("minecraft:sharpness", 7, "minecraft:unbreaking", 4, "minecraft:vanishing_curse", 1), RNTags.Items.RUBINATION_WEAPON),
 	ENVY("envy", Map.of("minecraft:looting", 5, "minecraft:sharpness", 6, "minecraft:vanishing_curse", 1), RNTags.Items.RUBINATION_WEAPON),
-	PRIDE("pride", Map.of("minecraft:unbreaking", 5, "minecraft:protection", 6, "minecraft:vanishing_curse", 1), RNTags.Items.RUBINATION_ARMOR),
+	PRIDE("pride", Map.of("minecraft:unbreaking", 5, "rubinated_nether:leeching_curse", 6, "minecraft:vanishing_curse", 1), RNTags.Items.RUBINATION_ARMOR),
 	ACEDIA("acedia", Map.of("minecraft:thorns", 5, "minecraft:unbreaking", 4, "minecraft:vanishing_curse", 1), RNTags.Items.RUBINATION_ARMOR),
 	LUXURIA("luxuria", Map.of("minecraft:protection", 7, "minecraft:thorns", 6, "minecraft:vanishing_curse", 1), RNTags.Items.RUBINATION_ARMOR),
 	INSIDIAE("insidiae", Map.of("minecraft:unbreaking", 5, "minecraft:punch", 3, "minecraft:vanishing_curse", 1), RNTags.Items.RUBINATION_BOW),
