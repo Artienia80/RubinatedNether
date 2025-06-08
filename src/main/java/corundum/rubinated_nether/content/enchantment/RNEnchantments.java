@@ -133,7 +133,7 @@ public class RNEnchantments {
 						new EnchantmentAttributeEffect(
 								ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "enchantment.deficiency_curse"),
 								Attributes.MINING_EFFICIENCY,
-								new LevelBasedValue.LevelsSquared(-20.0F), // Negative value now works
+								new LevelBasedValue.LevelsSquared(-20.0F),
 								AttributeModifier.Operation.ADD_VALUE)));
 
 		register(context, SLOW_CHARGE_CURSE, Enchantment.enchantment(
@@ -166,7 +166,7 @@ public class RNEnchantments {
 						),
 						LootItemRandomChanceCondition.randomChance(
 								EnchantmentLevelProvider.forEnchantmentLevel(
-										LevelBasedValue.perLevel(0.15F) // 15% chance per level
+										LevelBasedValue.perLevel(0.15F)
 								)
 						)
 				)

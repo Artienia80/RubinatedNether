@@ -22,7 +22,6 @@ public class RNEnchantmentEffects {
 	public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> LEECHING_CURSE =
 			ENTITY_ENCHANTMENT_EFFECTS.register("leeching_curse", () -> LeechingCurseEffect.CODEC);
 
-	// ExposureCurseEffect no longer needed - using built-in attribute effects
 
 	public static void register(IEventBus eventBus) {
 		ENTITY_ENCHANTMENT_EFFECTS.register(eventBus);
