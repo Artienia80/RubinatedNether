@@ -1,10 +1,16 @@
 package corundum.rubinated_nether.content.blocks;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -12,6 +18,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
 public class BronzeBulbBlock extends Block {
     public static final BooleanProperty POWERED;
@@ -65,9 +76,9 @@ public class BronzeBulbBlock extends Block {
         return level.getBlockState(pos).getValue(LIT) ? 15 : 0;
     }
 
-
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+    protected ItemInteractionResult useItemOn(
+            ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack itemStack = player.getItemInHand(hand);
         if (player.getAbilities().mayBuild) {
             if (player.getItemInHand(hand).is(Items.HONEYCOMB)) {
@@ -75,18 +86,17 @@ public class BronzeBulbBlock extends Block {
                 if (!player.isCreative()) {
                     itemStack.shrink(1);
                 }
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
             if (player.getItemInHand(hand).is(ItemTags.AXES)) {
                 setScraped(player, state, level, pos);
                 if (!player.isCreative()) {
-                    itemStack.hurtAndBreak(1, player, p ->
-                            p.broadcastBreakEvent(hand));
+                    itemStack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
                 }
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
         } else {
-            return InteractionResult.PASS;
+            return ItemInteractionResult.FAIL;
         }
         return null;
     }
@@ -118,3 +128,4 @@ public class BronzeBulbBlock extends Block {
         LIT = BlockStateProperties.LIT;
         POWERED = BlockStateProperties.POWERED;
     }
+}
