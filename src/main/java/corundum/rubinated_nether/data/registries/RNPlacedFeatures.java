@@ -20,69 +20,40 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
 public class RNPlacedFeatures {
-	public static final ResourceKey<PlacedFeature> NETHER_RUBY_ORE = createKey("nether_ruby_ore");
 	public static final ResourceKey<PlacedFeature> MOLTEN_RUBY_ORE = createKey("molten_ruby_ore");
-	public static final ResourceKey<PlacedFeature> RUBINATED_BLACKSTONE = createKey("rubinated_blackstone");
 
 	public static void bootstap(BootstrapContext<PlacedFeature> context) {
 		HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
 		context.register(
-			NETHER_RUBY_ORE, 
-			new PlacedFeature(
-				configuredFeatures.getOrThrow(RNConfiguredFeatures.NETHER_RUBY_ORE),
-				orePlacement(
-					1,
-					HeightRangePlacement.triangle(
-						VerticalAnchor.belowTop(30), 
-						VerticalAnchor.belowTop(0)
-					)
+				MOLTEN_RUBY_ORE,
+				new PlacedFeature(
+						configuredFeatures.getOrThrow(RNConfiguredFeatures.MOLTEN_RUBY_ORE),
+						orePlacement(
+								50,
+								HeightRangePlacement.triangle(
+										VerticalAnchor.absolute(0),
+										VerticalAnchor.absolute(40)
+								)
+						)
 				)
-			)
 		);
 
-		context.register(
-			MOLTEN_RUBY_ORE, 
-			new PlacedFeature(
-				configuredFeatures.getOrThrow(RNConfiguredFeatures.MOLTEN_RUBY_ORE),
-				orePlacement(
-					100,
-					HeightRangePlacement.triangle(
-						VerticalAnchor.absolute(0), 
-						VerticalAnchor.absolute(40)
-					)
-				)
-			)
-		);
-
-		context.register(
-			RUBINATED_BLACKSTONE, 
-			new PlacedFeature(
-				configuredFeatures.getOrThrow(RNConfiguredFeatures.RUBINATED_BLACKSTONE),
-				orePlacement(
-					250,
-					HeightRangePlacement.triangle(
-						VerticalAnchor.absolute(32), 
-						VerticalAnchor.absolute(200)
-					)
-				)
-			)
-		);
 	}
 
 	public static ResourceKey<PlacedFeature> createKey(String name) {
 		return ResourceKey.create(
-			Registries.PLACED_FEATURE, 
-			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, name)
+				Registries.PLACED_FEATURE,
+				ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, name)
 		);
 	}
 
 	public static List<PlacementModifier> orePlacement(int count, PlacementModifier heightRange) {
 		return ImmutableList.<PlacementModifier>builder()
-			.add(heightRange)
-			.add(CountPlacement.of(count))
-			.add(InSquarePlacement.spread())
-			.add(BiomeFilter.biome())
-			.build();
+				.add(heightRange)
+				.add(CountPlacement.of(count))
+				.add(InSquarePlacement.spread())
+				.add(BiomeFilter.biome())
+				.build();
 	}
 }
