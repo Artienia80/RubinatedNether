@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.enchantment.custom.HookingCurseEffect;
 import corundum.rubinated_nether.content.enchantment.custom.LeechingCurseEffect;
+
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -56,7 +57,6 @@ public class RNEnchantments {
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "leeching_curse"));
 
 
-
 	public static void bootstrap(BootstrapContext<Enchantment> context) {
 		var enchantments = context.lookup(Registries.ENCHANTMENT);
 		var items = context.lookup(Registries.ITEM);
@@ -67,8 +67,8 @@ public class RNEnchantments {
 		HolderGetter<Block> holdergetter3 = context.lookup(Registries.BLOCK);
 
 		register(context, FRAGILITY_CURSE, Enchantment.enchantment(
-				Enchantment.definition(holdergetter2.getOrThrow(ItemTags.DURABILITY_ENCHANTABLE), 10, 1, Enchantment.dynamicCost(1, 10),
-				Enchantment.dynamicCost(51, 10), 1, new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND}))
+						Enchantment.definition(holdergetter2.getOrThrow(ItemTags.DURABILITY_ENCHANTABLE), 10, 1, Enchantment.dynamicCost(1, 10),
+								Enchantment.dynamicCost(51, 10), 1, new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND}))
 				.withEffect(EnchantmentEffectComponents.DAMAGE,
 						new EnchantmentValueEffect() {
 							@Override
@@ -90,11 +90,21 @@ public class RNEnchantments {
 								Attributes.ATTACK_DAMAGE, new LevelBasedValue.LevelsSquared(-3.0F), AttributeModifier.Operation.ADD_VALUE)));
 
 		register(context, EXPOSURE_CURSE, Enchantment.enchantment(
-						Enchantment.definition(holdergetter2.getOrThrow(ItemTags.ARMOR_ENCHANTABLE), 10, 1, Enchantment.dynamicCost(1, 10),
-								Enchantment.dynamicCost(51, 10), 1, new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND}))
+						Enchantment.definition(holdergetter2.getOrThrow(ItemTags.ARMOR_ENCHANTABLE), 1, 1,
+								Enchantment.dynamicCost(25, 25), Enchantment.dynamicCost(75, 25), 8,
+								new EquipmentSlotGroup[]{EquipmentSlotGroup.ARMOR}))
 				.withEffect(EnchantmentEffectComponents.ATTRIBUTES,
-						new EnchantmentAttributeEffect(ResourceLocation.withDefaultNamespace("enchantment.rubinated_nether.exposure_curse"),
-								Attributes.ARMOR_TOUGHNESS, new LevelBasedValue.LevelsSquared(-3.0F), AttributeModifier.Operation.ADD_VALUE)));
+						new EnchantmentAttributeEffect(
+								ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "enchantment.exposure_curse.armor"),
+								Attributes.ARMOR,
+								new LevelBasedValue.Constant(-0.5F),
+								AttributeModifier.Operation.ADD_MULTIPLIED_BASE))
+				.withEffect(EnchantmentEffectComponents.ATTRIBUTES,
+						new EnchantmentAttributeEffect(
+								ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "enchantment.exposure_curse.armor_toughness"),
+								Attributes.ARMOR_TOUGHNESS,
+								new LevelBasedValue.Constant(-0.5F),
+								AttributeModifier.Operation.ADD_MULTIPLIED_BASE)));
 
 		register(context, POWERLESSNESS_CURSE, Enchantment.enchantment(
 						Enchantment.definition(holdergetter2.getOrThrow(ItemTags.BOW_ENCHANTABLE), 10, 1, Enchantment.dynamicCost(1, 10),
@@ -161,9 +171,7 @@ public class RNEnchantments {
 						)
 				)
 		);
-
 	}
-
 
 	private static void register(BootstrapContext<Enchantment> registry, ResourceKey<Enchantment> key,
 								 Enchantment.Builder builder) {

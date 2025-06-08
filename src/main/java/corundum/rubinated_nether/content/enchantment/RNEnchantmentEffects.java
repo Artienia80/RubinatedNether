@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.enchantment.custom.HookingCurseEffect;
 import corundum.rubinated_nether.content.enchantment.custom.LeechingCurseEffect;
+// ExposureCurseEffect no longer needed - using built-in attribute effects
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect;
 import net.neoforged.bus.api.IEventBus;
@@ -20,6 +21,8 @@ public class RNEnchantmentEffects {
 
 	public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> LEECHING_CURSE =
 			ENTITY_ENCHANTMENT_EFFECTS.register("leeching_curse", () -> LeechingCurseEffect.CODEC);
+
+	// ExposureCurseEffect no longer needed - using built-in attribute effects
 
 	public static void register(IEventBus eventBus) {
 		ENTITY_ENCHANTMENT_EFFECTS.register(eventBus);

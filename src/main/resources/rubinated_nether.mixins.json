@@ -6,6 +6,7 @@
 	"mixins": [
 		"LevelMixin",
 		"PlayerDigSpeedMixin",
+		"ExposureCurseMixin",
 		"accessors.AbstractFurnaceBlockEntityAccessor",
 		"accessors.EntityRenderDispatcherAccessor",
 		"accessors.DoublePlantBlockAccessor",
