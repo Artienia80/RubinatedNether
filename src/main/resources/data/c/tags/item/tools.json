@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#c:tools/drills",
+    {
+      "id": "#forge:tools",
+      "required": false
+    }
+  ]
+}

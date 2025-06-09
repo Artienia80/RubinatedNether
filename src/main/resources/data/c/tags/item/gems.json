@@ -1,0 +1,10 @@
+{
+  "values": [
+    "#c:gems/ruby",
+    "#c:gems/molten_ruby",
+    {
+      "id": "#forge:gems",
+      "required": false
+    }
+  ]
+}

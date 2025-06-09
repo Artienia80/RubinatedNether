@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#c:shards/ruby",
+    {
+      "id": "#forge:shards",
+      "required": false
+    }
+  ]
+}

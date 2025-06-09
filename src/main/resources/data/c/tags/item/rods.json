@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#c:rods/bronze",
+    {
+      "id": "#forge:rods",
+      "required": false
+    }
+  ]
+}

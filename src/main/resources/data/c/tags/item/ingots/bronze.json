@@ -1,0 +1,9 @@
+{
+  "values": [
+    "rubinated_nether:bronze_powder",
+    {
+      "id": "#forge:ingots/bronze",
+      "required": false
+    }
+  ]
+}

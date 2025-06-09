@@ -186,6 +186,11 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.MOLTEN_RUBY_GLASS.get(),
 				RNBlocks.ORNATE_RUBY_GLASS.get()
 		);
+		this.tag(RNTags.Blocks.RUBY_GLASS_PANES).add(
+				RNBlocks.RUBY_GLASS_PANE.get(),
+				RNBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
+				RNBlocks.ORNATE_RUBY_GLASS_PANE.get()
+		);
 
 		this.tag(RNTags.Blocks.RAINBOW_LASER).addTag(RNTags.Blocks.RUBY_GLASS);
 

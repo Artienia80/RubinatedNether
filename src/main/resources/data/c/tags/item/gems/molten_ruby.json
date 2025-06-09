@@ -1,0 +1,9 @@
+{
+  "values": [
+    "rubinated_nether:molten_ruby",
+    {
+      "id": "#forge:gems/molten_ruby",
+      "required": false
+    }
+  ]
+}

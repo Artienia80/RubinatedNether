@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#c:raw_materials/ruby",
+    {
+      "id": "#forge:raw_materials",
+      "required": false
+    }
+  ]
+}
