@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.enchantment;
 
 import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.enchantment.custom.CrookedShotCurseEffect;
 import corundum.rubinated_nether.content.enchantment.custom.HookingCurseEffect;
 import corundum.rubinated_nether.content.enchantment.custom.LeechingCurseEffect;
 
@@ -55,6 +56,9 @@ public class RNEnchantments {
 
 	public static final ResourceKey<Enchantment> LEECHING_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "leeching_curse"));
+
+	public static final ResourceKey<Enchantment> CROOKED_SHOT_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
+			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "crooked_shot_curse"));
 
 
 	public static void bootstrap(BootstrapContext<Enchantment> context) {
@@ -171,6 +175,17 @@ public class RNEnchantments {
 						)
 				)
 		);
+
+		register(context, CROOKED_SHOT_CURSE, Enchantment.enchantment(
+						Enchantment.definition(
+								holdergetter2.getOrThrow(ItemTags.CROSSBOW_ENCHANTABLE),
+								5, 1,
+								Enchantment.dynamicCost(1, 10),
+								Enchantment.dynamicCost(51, 10),
+								2,
+								EquipmentSlotGroup.MAINHAND))
+				.withEffect(EnchantmentEffectComponents.PROJECTILE_SPAWNED,
+						new CrookedShotCurseEffect()));
 	}
 
 	private static void register(BootstrapContext<Enchantment> registry, ResourceKey<Enchantment> key,

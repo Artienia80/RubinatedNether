@@ -1,0 +1,30 @@
+{
+  "description": {
+    "translate": "enchantment.rubinated_nether.crooked_shot_curse"
+  },
+  "supported_items": "#minecraft:crossbow_enchantable",
+  "primary_items": "#minecraft:crossbow_enchantable",
+  "weight": 5,
+  "max_level": 1,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 10
+  },
+  "max_cost": {
+    "base": 51,
+    "per_level_above_first": 10
+  },
+  "anvil_cost": 2,
+  "slots": [
+    "mainhand"
+  ],
+  "effects": {
+    "minecraft:projectile_spawned": [
+      {
+        "effect": {
+          "type": "rubinated_nether:crooked_shot_curse"
+        }
+      }
+    ]
+  }
+}

@@ -35,7 +35,7 @@ public enum Rubination implements StringRepresentable {
 	SUPERBIA("superbia", Map.of("minecraft:power", 7, "minecraft:unbreaking", 4, "rubinated_nether:hooking_curse", 1), RNTags.Items.RUBINATION_BOW),
 	TRISTIA("tristia", Map.of("minecraft:punch", 4, "minecraft:power", 6, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_BOW),
 	STUDIOSE("studiose", Map.of("minecraft:unbreaking", 5, "minecraft:multishot", 2, "rubinated_nether:slow_charge_curse", 1), RNTags.Items.RUBINATION_CROSSBOW),
-	ARDENTER("ardenter", Map.of("minecraft:quick_charge", 5, "minecraft:unbreaking", 4, "minecraft:vanishing_curse", 1), RNTags.Items.RUBINATION_CROSSBOW),
+	ARDENTER("ardenter", Map.of("minecraft:quick_charge", 5, "minecraft:unbreaking", 4, "rubinated_nether:crooked_shot_curse", 1), RNTags.Items.RUBINATION_CROSSBOW),
 	NIMIS("nimis", Map.of("minecraft:multishot", 3, "minecraft:quick_charge", 4, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_CROSSBOW),
 
 	EMPTY("empty", Map.of(), Tags.Items.BRICKS),;
