@@ -17,14 +17,5 @@
   "anvil_cost": 2,
   "slots": [
     "mainhand"
-  ],
-  "effects": {
-    "minecraft:projectile_spawned": [
-      {
-        "effect": {
-          "type": "rubinated_nether:crooked_shot_curse"
-        }
-      }
-    ]
-  }
+  ]
 }

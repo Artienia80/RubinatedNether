@@ -2,7 +2,6 @@ package corundum.rubinated_nether.content.enchantment;
 
 import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.enchantment.custom.CrookedShotCurseEffect;
 import corundum.rubinated_nether.content.enchantment.custom.HookingCurseEffect;
 import corundum.rubinated_nether.content.enchantment.custom.LeechingCurseEffect;
 import net.minecraft.core.registries.Registries;
@@ -21,9 +20,6 @@ public class RNEnchantmentEffects {
 
 	public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> LEECHING_CURSE =
 			ENTITY_ENCHANTMENT_EFFECTS.register("leeching_curse", () -> LeechingCurseEffect.CODEC);
-
-	public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> CROOKED_SHOT_CURSE =
-			ENTITY_ENCHANTMENT_EFFECTS.register("crooked_shot_curse", () -> CrookedShotCurseEffect.CODEC);
 
 	public static void register(IEventBus eventBus) {
 		ENTITY_ENCHANTMENT_EFFECTS.register(eventBus);

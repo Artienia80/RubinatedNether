@@ -8,6 +8,7 @@
 		"PlayerDigSpeedMixin",
 		"ExposureCurseMixin",
 		"MultishotSpreadMixin",
+		"CrookedShotCrossbowMixin",
 		"accessors.AbstractFurnaceBlockEntityAccessor",
 		"accessors.EntityRenderDispatcherAccessor",
 		"accessors.DoublePlantBlockAccessor",
