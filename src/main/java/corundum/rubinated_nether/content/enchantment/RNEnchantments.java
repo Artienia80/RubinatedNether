@@ -50,8 +50,8 @@ public class RNEnchantments {
 	public static final ResourceKey<Enchantment> SLOW_CHARGE_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "slow_charge_curse"));
 
-	public static final ResourceKey<Enchantment> DESTRUCTION_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
-			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "destruction_curse"));
+	public static final ResourceKey<Enchantment> RAVAGING_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
+			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "ravaging_curse"));
 
 	public static final ResourceKey<Enchantment> LEECHING_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "leeching_curse"));
@@ -59,6 +59,8 @@ public class RNEnchantments {
 	public static final ResourceKey<Enchantment> CROOKED_SHOT_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "crooked_shot_curse"));
 
+	public static final ResourceKey<Enchantment> MISFORTUNE_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
+			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "misfortune_curse"));
 
 	public static void bootstrap(BootstrapContext<Enchantment> context) {
 		var enchantments = context.lookup(Registries.ENCHANTMENT);
@@ -146,12 +148,15 @@ public class RNEnchantments {
 						new EnchantmentAttributeEffect(ResourceLocation.withDefaultNamespace("enchantment.rubinated_nether.slow_charge_curse"),
 								Attributes.ATTACK_SPEED, new LevelBasedValue.LevelsSquared(-1.0F), AttributeModifier.Operation.ADD_VALUE)));
 
-		register(context, DESTRUCTION_CURSE, Enchantment.enchantment(
-						Enchantment.definition(holdergetter2.getOrThrow(ItemTags.SWORD_ENCHANTABLE), 10, 1, Enchantment.dynamicCost(1, 10),
-								Enchantment.dynamicCost(51, 10), 1, new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND}))
-				.withEffect(EnchantmentEffectComponents.ATTRIBUTES,
-						new EnchantmentAttributeEffect(ResourceLocation.withDefaultNamespace("enchantment.rubinated_nether.destruction_curse"),
-								Attributes.ATTACK_SPEED, new LevelBasedValue.LevelsSquared(-1.0F), AttributeModifier.Operation.ADD_VALUE)));
+		register(context, RAVAGING_CURSE, Enchantment.enchantment(
+						Enchantment.definition(
+								holdergetter2.getOrThrow(ItemTags.SWORD_ENCHANTABLE), // Can be applied to swords
+								5, 1, // rarity 5, max level 1
+								Enchantment.dynamicCost(25, 25),
+								Enchantment.dynamicCost(75, 25),
+								8, // anvil cost
+								new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND}))
+				.exclusiveWith(enchantments.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE)));
 
 		register(context, LEECHING_CURSE, Enchantment.enchantment(
 						Enchantment.definition(
@@ -175,7 +180,6 @@ public class RNEnchantments {
 				)
 		);
 
-
 		register(context, CROOKED_SHOT_CURSE, Enchantment.enchantment(
 				Enchantment.definition(
 						holdergetter2.getOrThrow(ItemTags.CROSSBOW_ENCHANTABLE),
@@ -184,7 +188,17 @@ public class RNEnchantments {
 						Enchantment.dynamicCost(51, 10),
 						2,
 						EquipmentSlotGroup.MAINHAND)));
+
+		register(context, MISFORTUNE_CURSE, Enchantment.enchantment(
+				Enchantment.definition(
+						holdergetter2.getOrThrow(ItemTags.MINING_ENCHANTABLE), // Can be applied to mining tools
+						5, 1, // rarity 5, max level 1
+						Enchantment.dynamicCost(25, 25),
+						Enchantment.dynamicCost(75, 25),
+						8, // anvil cost
+						new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND})));
 	}
+
 
 	private static void register(BootstrapContext<Enchantment> registry, ResourceKey<Enchantment> key,
 								 Enchantment.Builder builder) {

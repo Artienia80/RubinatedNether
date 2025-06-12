@@ -9,6 +9,7 @@
 		"ExposureCurseMixin",
 		"MultishotSpreadMixin",
 		"CrookedShotCrossbowMixin",
+		"RavagingCurseMixin",
 		"accessors.AbstractFurnaceBlockEntityAccessor",
 		"accessors.EntityRenderDispatcherAccessor",
 		"accessors.DoublePlantBlockAccessor",
