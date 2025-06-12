@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "rubinated_nether:ruby",
+    {
+      "id": "#forge:gems/ruby",
+      "required": false
+    }
+  ]
+}

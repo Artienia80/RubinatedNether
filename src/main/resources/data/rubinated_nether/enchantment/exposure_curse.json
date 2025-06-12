@@ -1,46 +1,36 @@
 {
-  "anvil_cost": 1,
   "description": {
     "translate": "enchantment.rubinated_nether.exposure_curse"
   },
-  "effects": {
-    "minecraft:damage_protection": [
-      {
-        "effect": {
-          "type": "minecraft:add",
-          "value": {
-            "type": "minecraft:linear",
-            "base": -3.0,
-            "per_level_above_first": -0.5
-          }
-        },
-        "requirements": {
-          "condition": "minecraft:damage_source_properties",
-          "predicate": {
-            "tags": [
-              {
-                "expected": false,
-                "id": "minecraft:bypasses_invulnerability"
-              }
-            ]
-          }
-        }
-      }
-    ]
-  },
-  "exclusive_set": "#minecraft:exclusive_set/armor",
-  "max_cost": {
-    "base": 12,
-    "per_level_above_first": 11
-  },
+  "supported_items": "#minecraft:enchantable/armor",
+  "weight": 1,
   "max_level": 1,
   "min_cost": {
-    "base": 1,
-    "per_level_above_first": 11
+    "base": 25,
+    "per_level_above_first": 25
   },
+  "max_cost": {
+    "base": 75,
+    "per_level_above_first": 25
+  },
+  "anvil_cost": 8,
   "slots": [
     "armor"
   ],
-  "supported_items": "#minecraft:enchantable/armor",
-  "weight": 10
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "id": "rubinated_nether:curse_of_exposure.armor",
+        "attribute": "minecraft:generic.armor",
+        "operation": "add_multiplied_base",
+        "amount": -0.5
+      },
+      {
+        "id": "rubinated_nether:curse_of_exposure.armor_toughness",
+        "attribute": "minecraft:generic.armor_toughness",
+        "operation": "add_multiplied_base",
+        "amount": -0.5
+      }
+    ]
+  }
 }

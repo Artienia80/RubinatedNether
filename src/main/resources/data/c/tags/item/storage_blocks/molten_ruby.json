@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "rubinated_nether:molten_ruby_block",
+    {
+      "id": "#forge:storage_blocks/molten_ruby",
+      "required": false
+    }
+  ]
+}

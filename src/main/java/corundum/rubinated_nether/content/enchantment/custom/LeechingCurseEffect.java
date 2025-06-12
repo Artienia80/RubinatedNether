@@ -20,19 +20,14 @@ public record LeechingCurseEffect() implements EnchantmentEntityEffect {
 
     @Override
     public void apply(ServerLevel level, int enchantmentLevel, EnchantedItemInUse enchantedItemInUse, Entity entity, Vec3 origin) {
-        // This is the method that gets called for post_attack events
-        // entity = the attacker (the one who should be healed)
-        // enchantedItemInUse contains info about the enchanted item (on the victim)
+
 
         if (entity instanceof LivingEntity livingEntity) {
-            // 50% chance to trigger the healing
             if (level.random.nextFloat() < 0.5f) {
-                // Heal between 1-5 HP (0.5 - 2.5 hearts)
                 float healAmount = 1.0f + level.random.nextFloat() * 4.0f;
 
                 livingEntity.heal(healAmount);
 
-                // Spawn heart particles around the healed entity
                 level.sendParticles(ParticleTypes.HEART,
                         livingEntity.getX(), livingEntity.getY() + 1.0, livingEntity.getZ(),
                         1, 0.5, 0.5, 0.5, 0.1);

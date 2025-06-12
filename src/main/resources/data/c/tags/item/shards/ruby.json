@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "rubinated_nether:ruby_shard",
+    {
+      "id": "#forge:shards/ruby",
+      "required": false
+    }
+  ]
+}

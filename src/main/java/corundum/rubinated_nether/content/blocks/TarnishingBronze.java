@@ -204,43 +204,56 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 			InteractionHand hand,
 			BlockHitResult hitResult
 	) {
-		var bool = state.getValue(WAXED);
+		var waxed = state.getValue(WAXED);
 
 		if (stack.is(ItemTags.AXES)) {
-			if (!bool && getPrevious(state).isEmpty())
+			if (!waxed && getPrevious(state).isEmpty())
 				return false;
 
 			stack.hurtAndBreak(1, player, null);
 			level.playSound(player, pos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1F, 1F);
 
-			if (bool) {
+			if (waxed) {
+				// Remove wax - no bronze powder drop
 				level.setBlock(pos, state.setValue(WAXED, false), 2);
 				level.levelEvent(player, 3004, pos, 0);
 			} else {
+				// Scrape to previous tarnish state - drop bronze powder
 				level.setBlock(pos, getPrevious(state).get(), 2);
-				// Use bronze block colored particles for scraping
-//					RubinatedNether.LOGGER.debug("Attempting to spawn bronze particles at {}", pos);
-//					for (int i = 0; i < 4; ++i) {
-//						level.addParticle(RNParticleTypes.BRONZE_SCRAPE.get(),
-//								pos.getX() + level.random.nextDouble(),
-//								pos.getY() + level.random.nextDouble(),
-//								pos.getZ() + level.random.nextDouble(),
-//								0.0D, 0.0D, 0.0D);
-//					}
 				level.levelEvent(player, 3005, pos, 0);
-			}
 
-			if (!level.isClientSide() && level.random.nextFloat() < 0.50f) {
-				ItemEntity bronzeDrop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-						new ItemStack(RNItems.BRONZE_POWDER.get()));
-				bronzeDrop.setDefaultPickUpDelay();
-				level.addFreshEntity(bronzeDrop);
+				// Drop bronze powder only when scraping (not when removing wax)
+				if (!level.isClientSide() && level.random.nextFloat() < 0.50f) {
+					ItemEntity bronzeDrop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+							new ItemStack(RNItems.BRONZE_POWDER.get()));
+					bronzeDrop.setDefaultPickUpDelay();
+					level.addFreshEntity(bronzeDrop);
+				}
 			}
 
 			return true;
 		}
 
-		if (stack.is(Items.HONEYCOMB) && !bool) {
+		// Bronze powder advances tarnish state
+		if (stack.is(RNItems.BRONZE_POWDER.get())) {
+			var nextState = getNext(state);
+			if (nextState.isPresent()) {
+				level.setBlock(pos, nextState.get(), 2);
+
+				if (!player.isCreative()) {
+					stack.shrink(1);
+				}
+
+				level.playSound(player, pos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1F, 0.8F);
+				level.levelEvent(player, 3005, pos, 0);
+
+
+				return true;
+			}
+			return false; // Already at max tarnish state
+		}
+
+		if (stack.is(Items.HONEYCOMB) && !waxed) {
 			level.setBlock(pos, state.setValue(WAXED, true), 2);
 
 			if (!player.isCreative())
@@ -255,5 +268,3 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 		return false;
 	}
 }
-
-

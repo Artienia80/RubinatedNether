@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "rubinated_nether:molten_ruby_nugget",
+    {
+      "id": "#forge:nuggets/ruby",
+      "required": false
+    }
+  ]
+}

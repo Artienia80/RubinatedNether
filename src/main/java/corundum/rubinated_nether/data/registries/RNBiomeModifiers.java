@@ -16,15 +16,14 @@ import net.neoforged.neoforge.common.world.BiomeModifiers.AddFeaturesBiomeModifi
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class RNBiomeModifiers {
-	public static final ResourceKey<BiomeModifier> NETHER_RUBY_ORE = createKey("nether_ruby_ore");
+
 	public static final ResourceKey<BiomeModifier> MOLTEN_RUBY_ORE = createKey("molten_ruby_ore");
-	public static final ResourceKey<BiomeModifier> RUBINATED_BLACKSTONE = createKey("rubinated_blackstone");
 
 	private static ResourceKey<BiomeModifier> createKey(String key) {
 		return ResourceKey.create(
-			NeoForgeRegistries.Keys.BIOME_MODIFIERS, 
-			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, key)
-		); 
+				NeoForgeRegistries.Keys.BIOME_MODIFIERS,
+				ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, key)
+		);
 	}
 
 	public static void bootstap(BootstrapContext<BiomeModifier> context) {
@@ -32,28 +31,13 @@ public class RNBiomeModifiers {
 		HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
 
 		context.register(
-			NETHER_RUBY_ORE, 
-			new AddFeaturesBiomeModifier(
-				biomes.getOrThrow(BiomeTags.IS_NETHER),
-				HolderSet.direct(placedFeatures.getOrThrow(RNPlacedFeatures.NETHER_RUBY_ORE)),
-				GenerationStep.Decoration.UNDERGROUND_ORES
-			)
+				MOLTEN_RUBY_ORE,
+				new AddFeaturesBiomeModifier(
+						biomes.getOrThrow(BiomeTags.IS_NETHER),
+						HolderSet.direct(placedFeatures.getOrThrow(RNPlacedFeatures.MOLTEN_RUBY_ORE)),
+						GenerationStep.Decoration.VEGETAL_DECORATION
+				)
 		);
-		context.register(
-			MOLTEN_RUBY_ORE, 
-			new AddFeaturesBiomeModifier(
-				biomes.getOrThrow(BiomeTags.IS_NETHER),
-				HolderSet.direct(placedFeatures.getOrThrow(RNPlacedFeatures.MOLTEN_RUBY_ORE)),
-				GenerationStep.Decoration.VEGETAL_DECORATION
-			)
-		);
-		context.register(
-			RUBINATED_BLACKSTONE, 
-			new AddFeaturesBiomeModifier(
-				biomes.getOrThrow(BiomeTags.IS_NETHER),
-				HolderSet.direct(placedFeatures.getOrThrow(RNPlacedFeatures.RUBINATED_BLACKSTONE)),
-				GenerationStep.Decoration.UNDERGROUND_ORES
-			)
-		);
+
 	}
 }

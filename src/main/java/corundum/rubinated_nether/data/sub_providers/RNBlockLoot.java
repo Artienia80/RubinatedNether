@@ -7,6 +7,7 @@ import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
@@ -122,9 +124,37 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.waxableDrop(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB);
 
 
-		this.dropOther(
-			RNBlocks.MOLTEN_RUBY_ORE.get(),
-			RNItems.MOLTEN_RUBY_ITEM.get()
+
+		this.add(
+				RNBlocks.MOLTEN_RUBY_ORE.get(),
+				(block) -> {
+					return LootTable.lootTable()
+							.withPool(
+									LootPool.lootPool()
+											.when(this.hasSilkTouch())
+											.add(LootItem.lootTableItem(RNBlocks.MOLTEN_RUBY_ORE))
+							)
+							.withPool(
+									applyExplosionCondition(
+											RNBlocks.MOLTEN_RUBY_ORE,
+											LootPool.lootPool()
+													.when(this.hasSilkTouch().invert())
+													.add(
+															LootItem.lootTableItem(RNItems.MOLTEN_RUBY_NUGGET_ITEM)
+																	.apply(
+																			SetItemCountFunction.setCount(UniformGenerator.between(3, 9))
+																	)
+																	.apply(
+																			ApplyBonusCount.addOreBonusCount(
+																					registries
+																							.lookupOrThrow(Registries.ENCHANTMENT)
+																							.getOrThrow(Enchantments.FORTUNE)
+																			)
+																	)
+													)
+									)
+							);
+				}
 		);
 		this.dropOther(
 			RNBlocks.NETHER_RUBY_ORE.get(),

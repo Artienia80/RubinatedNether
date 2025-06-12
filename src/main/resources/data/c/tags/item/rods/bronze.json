@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "rubinated_nether:bronze_rod",
+    {
+      "id": "#forge:rods/bronze",
+      "required": false
+    }
+  ]
+}

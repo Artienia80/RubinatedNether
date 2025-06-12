@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#c:ingots/bronze",
+    {
+      "id": "#forge:ingots",
+      "required": false
+    }
+  ]
+}

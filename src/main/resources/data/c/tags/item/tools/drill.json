@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "rubinated_nether:bronze_drill",
+    {
+      "id": "#forge:tools/drills",
+      "required": false
+    },
+    {
+      "id": "#c:tools/drills",
+      "required": false
+    }
+  ]
+}

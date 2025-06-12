@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "rubinated_:nether:shrine_stone",
+    {
+      "id": "#forge:stone",
+      "required": false
+    }
+  ]
+}

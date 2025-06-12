@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "rubinated_nether:magma_ruby_ore",
+    {
+      "id": "#forge:ores_in_ground/magma_block",
+      "required": false
+    }
+  ]
+}

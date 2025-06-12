@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:magma_block",
+    {
+      "id": "#forge:ore_bearing_ground/magma_block",
+      "required": false
+    }
+  ]
+}

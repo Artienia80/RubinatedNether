@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#c:ores/ruby",
+    {
+      "id": "#forge:ores",
+      "required": false
+    }
+  ]
+}

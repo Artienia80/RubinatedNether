@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#c:obsidians/bleeding",
+    {
+      "id": "#forge:obsidian",
+      "required": false
+    }
+  ]
+}

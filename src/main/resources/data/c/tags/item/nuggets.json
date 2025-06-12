@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#c:nuggets/ruby",
+    {
+      "id": "#forge:nuggets",
+      "required": false
+    }
+  ]
+}
