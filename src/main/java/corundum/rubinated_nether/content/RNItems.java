@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.items.*;
 import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
@@ -80,6 +81,11 @@ public class RNItems {
 		"bronze_shot",
 		() -> new BronzeShotItem(new Item.Properties())
 	);
+
+
+	public static final DeferredItem<Item> BRONZE_SPAWN_EGG = ITEMS.register("bronze_spawn_egg",
+			() -> new DeferredSpawnEggItem(RNEntityCreator.BRONZE, 0xbf8142, 0x76422c,
+					new Item.Properties()));
 
 	public static DeferredItem<Item> basicItem(String name) {
 		return ITEMS.registerSimpleItem(

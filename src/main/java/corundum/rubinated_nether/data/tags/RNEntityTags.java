@@ -3,7 +3,7 @@ package corundum.rubinated_nether.data.tags;
 import java.util.concurrent.CompletableFuture;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNEntities;
+import corundum.rubinated_nether.content.RNEntityCreator;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
@@ -23,7 +23,7 @@ public class RNEntityTags extends EntityTypeTagsProvider {
 	@Override
 	protected void addTags(Provider provider) {
 		tag(EntityTypeTags.REDIRECTABLE_PROJECTILE).add(
-			RNEntities.BRONZE_SHOT.get()
+			RNEntityCreator.BRONZE_SHOT.get()
 		);
 	}
 }

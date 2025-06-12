@@ -2,7 +2,7 @@ package corundum.rubinated_nether.content.entity;
 
 import com.google.common.collect.ImmutableList;
 
-import corundum.rubinated_nether.content.RNEntities;
+import corundum.rubinated_nether.content.RNEntityCreator;
 import corundum.rubinated_nether.content.RNItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
@@ -41,7 +41,7 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 
 	public BronzeShotProjectileEntity(LivingEntity shooter, Level level) {
 		super(
-			RNEntities.BRONZE_SHOT.get(), 
+			RNEntityCreator.BRONZE_SHOT.get(),
 			shooter, 
 			level, 
 			new ItemStack(RNItems.BRONZE_SHOT.get()), 
@@ -51,7 +51,7 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 
 	public BronzeShotProjectileEntity(Level level, Position pos) {
 		super(
-			RNEntities.BRONZE_SHOT.get(),
+			RNEntityCreator.BRONZE_SHOT.get(),
 			pos.x(),
 			pos.y(),
 			pos.z(),
@@ -60,6 +60,7 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 			null
 		);
 	}
+
 
 	@Override
 	protected ItemStack getDefaultPickupItem() {

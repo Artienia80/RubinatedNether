@@ -14,7 +14,6 @@ public record HookingCurseEffect() implements EnchantmentEntityEffect {
 
     @Override
     public void apply(ServerLevel level, int enchantmentLevel, EnchantedItemInUse enchantedItem, Entity target, Vec3 vec3) {
-
         if (!(enchantedItem.owner() instanceof LivingEntity attacker)) {
             return;
         }
