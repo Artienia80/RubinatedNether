@@ -1,7 +1,7 @@
 package corundum.rubinated_nether.events;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNEntities;
+import corundum.rubinated_nether.content.RNEntityCreator;
 import corundum.rubinated_nether.content.entity.client.BronzeChargeProjectileModel;
 import corundum.rubinated_nether.content.entity.client.BronzeChargeProjectileRenderer;
 import corundum.rubinated_nether.content.gui.RubyLensOverlay;
@@ -26,7 +26,7 @@ public class RNClientModBusEvents {
 	@SubscribeEvent
 	public static void onClientSetup(FMLClientSetupEvent event) {
 		EntityRenderers.register(
-			RNEntities.BRONZE_SHOT.get(),
+			RNEntityCreator.BRONZE_SHOT.get(),
 			BronzeChargeProjectileRenderer::new
 		);
 	}
