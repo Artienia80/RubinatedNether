@@ -31,7 +31,7 @@ public enum Rubination implements StringRepresentable {
 	PRIDE("pride", Map.of("minecraft:unbreaking", 5, "minecraft:thorns", 4, "rubinated_nether:exposure_curse", 1), RNTags.Items.RUBINATION_ARMOR),
 	ACEDIA("acedia", Map.of("minecraft:protection", 7, "minecraft:unbreaking", 4, "rubinated_nether:leeching_curse", 1), RNTags.Items.RUBINATION_ARMOR),
 	LUXURIA("luxuria", Map.of("minecraft:thorns", 5, "minecraft:protection", 6, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_ARMOR),
-	INSIDIAE("insidiae", Map.of("minecraft:unbreaking", 5, "minecraft:punch", 3, "rubinated_nether:powerlessness_curse", 1), RNTags.Items.RUBINATION_BOW),
+	INSIDIAE("insidiae", Map.of("minecraft:unbreaking", 5, "minecraft:punch", 3, "rubinated_nether:dullness_curse", 1), RNTags.Items.RUBINATION_BOW),
 	SUPERBIA("superbia", Map.of("minecraft:power", 7, "minecraft:unbreaking", 4, "rubinated_nether:hooking_curse", 1), RNTags.Items.RUBINATION_BOW),
 	TRISTIA("tristia", Map.of("minecraft:punch", 4, "minecraft:power", 6, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_BOW),
 	STUDIOSE("studiose", Map.of("minecraft:unbreaking", 5, "minecraft:multishot", 2, "rubinated_nether:slow_charge_curse", 1), RNTags.Items.RUBINATION_CROSSBOW),

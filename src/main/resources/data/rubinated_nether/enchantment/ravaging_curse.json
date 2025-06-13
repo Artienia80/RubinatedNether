@@ -38,5 +38,7 @@
     "mainhand"
   ],
   "supported_items": "#minecraft:enchantable/sword",
+  "exclusive_set": "#rubinated_nether:exclusive_set/ravaging",
+
   "weight": 2
 }

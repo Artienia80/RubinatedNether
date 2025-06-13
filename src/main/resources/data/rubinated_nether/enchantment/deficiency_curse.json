@@ -29,5 +29,6 @@
     "mainhand"
   ],
   "supported_items": "#minecraft:enchantable/mining",
+  "exclusive_set": "#rubinated_nether:exclusive_set/deficiency",
   "weight": 10
 }

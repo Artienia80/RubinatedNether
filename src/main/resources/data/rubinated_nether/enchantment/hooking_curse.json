@@ -27,5 +27,7 @@
     "mainhand"
   ],
   "supported_items": "#minecraft:enchantable/bow",
+  "exclusive_set": "#rubinated_nether:exclusive_set/hooking",
+
   "weight": 2
 }

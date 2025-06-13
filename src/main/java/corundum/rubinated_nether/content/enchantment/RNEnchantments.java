@@ -39,8 +39,8 @@ public class RNEnchantments {
 	public static final ResourceKey<Enchantment> EXPOSURE_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "exposure_curse"));
 
-	public static final ResourceKey<Enchantment> POWERLESSNESS_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
-			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "powerlessness_curse"));
+	public static final ResourceKey<Enchantment> DULLNESS_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
+			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "dullness_curse"));
 
 	public static final ResourceKey<Enchantment> HOOKING_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "hooking_curse"));
@@ -112,11 +112,11 @@ public class RNEnchantments {
 								new LevelBasedValue.Constant(-0.5F),
 								AttributeModifier.Operation.ADD_MULTIPLIED_BASE)));
 
-		register(context, POWERLESSNESS_CURSE, Enchantment.enchantment(
+		register(context, DULLNESS_CURSE, Enchantment.enchantment(
 						Enchantment.definition(holdergetter2.getOrThrow(ItemTags.BOW_ENCHANTABLE), 10, 1, Enchantment.dynamicCost(1, 10),
 								Enchantment.dynamicCost(51, 10), 1, new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND}))
 				.withEffect(EnchantmentEffectComponents.ATTRIBUTES,
-						new EnchantmentAttributeEffect(ResourceLocation.withDefaultNamespace("enchantment.rubinated_nether.powerlessness_curse"),
+						new EnchantmentAttributeEffect(ResourceLocation.withDefaultNamespace("enchantment.rubinated_nether.dullness_curse"),
 								Attributes.ATTACK_DAMAGE, new LevelBasedValue.LevelsSquared(-3.0F), AttributeModifier.Operation.ADD_VALUE)));
 
 		register(context, HOOKING_CURSE, Enchantment.enchantment(Enchantment.definition(

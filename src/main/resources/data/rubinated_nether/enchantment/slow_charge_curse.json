@@ -41,5 +41,6 @@
     "offhand"
   ],
   "supported_items": "#minecraft:enchantable/crossbow",
+  "exclusive_set": "#rubinated_nether:exclusive_set/slow_charge",
   "weight": 5
 }

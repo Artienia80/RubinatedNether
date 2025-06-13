@@ -3,6 +3,7 @@
     "translate": "enchantment.rubinated_nether.exposure_curse"
   },
   "supported_items": "#minecraft:enchantable/armor",
+  "exclusive_set": "#rubinated_nether:exclusive_set/exposure",
   "weight": 1,
   "max_level": 1,
   "min_cost": {

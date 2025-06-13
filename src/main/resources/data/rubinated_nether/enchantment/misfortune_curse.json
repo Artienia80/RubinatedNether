@@ -4,6 +4,7 @@
   },
   "supported_items": "#minecraft:enchantable/mining",
   "primary_items": "#minecraft:enchantable/mining",
+
   "weight": 5,
   "max_level": 1,
   "min_cost": {
@@ -18,7 +19,7 @@
   "slots": [
     "mainhand"
   ],
-  "exclusive_set": "#minecraft:curse",
+  "exclusive_set": "#rubinated_nether:exclusive_set/misfortune",
   "effects": {
     "minecraft:block_experience": [
       {

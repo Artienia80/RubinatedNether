@@ -1,7 +1,7 @@
 {
   "anvil_cost": 1,
   "description": {
-    "translate": "enchantment.rubinated_nether.powerlessness_curse"
+    "translate": "enchantment.rubinated_nether.dullness_curse"
   },
   "effects": {
     "minecraft:damage": [
@@ -37,5 +37,6 @@
     "mainhand"
   ],
   "supported_items": "#minecraft:enchantable/bow",
+  "exclusive_set": "#rubinated_nether:exclusive_set/dullness",
   "weight": 10
 }
