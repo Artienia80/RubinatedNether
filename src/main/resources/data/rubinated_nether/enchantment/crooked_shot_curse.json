@@ -3,6 +3,7 @@
     "translate": "enchantment.rubinated_nether.crooked_shot_curse"
   },
   "primary_items": "#minecraft:enchantable/crossbow",
+  "supported_items": "#minecraft:enchantable/crossbow",
   "exclusive_set": "#rubinated_nether:exclusive_set/crooked_shot",
   "weight": 5,
   "max_level": 1,
