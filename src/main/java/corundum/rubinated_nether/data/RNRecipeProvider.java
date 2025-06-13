@@ -627,6 +627,25 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		waxRecipes(recipeOutput, FeatureFlagSet.of(FeatureFlags.VANILLA));
 
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBINATION_ALTAR, 1)
+				.define('X', Blocks.OBSIDIAN)
+				.define('O', RNItems.RUBY_ITEM)
+				.define('E', Blocks.ENCHANTING_TABLE)
+				.pattern("XOX")
+				.pattern("XEX")
+				.pattern("XXX")
+				.unlockedBy(getHasName(RNItems.RUBY_ITEM), has(RNItems.RUBY_ITEM))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUNESTONE, 1)
+				.define('X', Blocks.OBSIDIAN)
+				.define('O', RNBlocks.RUBY_BLOCK)
+				.pattern("XXX")
+				.pattern("XOX")
+				.pattern("XXX")
+				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
+				.save(recipeOutput);
+
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBY_GLASS, 8)
 				.define('X', Blocks.GLASS)
 				.define('O', RNItems.RUBY_ITEM)
