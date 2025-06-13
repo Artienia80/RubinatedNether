@@ -1,7 +1,7 @@
 {
   "anvil_cost": 4,
   "description": {
-    "translate": "enchantment.rubinated_nether.destruction_curse"
+    "translate": "enchantment.rubinated_nether.ravaging_curse"
   },
   "effects": {
     "minecraft:equipment_drops": [

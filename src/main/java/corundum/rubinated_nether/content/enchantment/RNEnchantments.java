@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.enchantment.custom.HookingCurseEffect;
 import corundum.rubinated_nether.content.enchantment.custom.LeechingCurseEffect;
+import corundum.rubinated_nether.content.enchantment.custom.MisfortuneCurseEffect;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -190,15 +191,17 @@ public class RNEnchantments {
 						EquipmentSlotGroup.MAINHAND)));
 
 		register(context, MISFORTUNE_CURSE, Enchantment.enchantment(
-				Enchantment.definition(
-						holdergetter2.getOrThrow(ItemTags.MINING_ENCHANTABLE), // Can be applied to mining tools
-						5, 1, // rarity 5, max level 1
-						Enchantment.dynamicCost(25, 25),
-						Enchantment.dynamicCost(75, 25),
-						8, // anvil cost
-						new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND})));
+						Enchantment.definition(
+								holdergetter2.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+								5, 1,
+								Enchantment.dynamicCost(25, 25),
+								Enchantment.dynamicCost(75, 25),
+								8,
+								new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND}))
+				.withEffect(EnchantmentEffectComponents.BLOCK_EXPERIENCE,
+						new MisfortuneCurseEffect())
+				.exclusiveWith(enchantments.getOrThrow(EnchantmentTags.CURSE)));
 	}
-
 
 	private static void register(BootstrapContext<Enchantment> registry, ResourceKey<Enchantment> key,
 								 Enchantment.Builder builder) {

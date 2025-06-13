@@ -1,0 +1,31 @@
+{
+  "description": {
+    "translate": "enchantment.rubinated_nether.misfortune_curse"
+  },
+  "supported_items": "#minecraft:enchantable/mining",
+  "primary_items": "#minecraft:enchantable/mining",
+  "weight": 5,
+  "max_level": 1,
+  "min_cost": {
+    "base": 25,
+    "per_level_above_first": 25
+  },
+  "max_cost": {
+    "base": 75,
+    "per_level_above_first": 25
+  },
+  "anvil_cost": 8,
+  "slots": [
+    "mainhand"
+  ],
+  "exclusive_set": "#minecraft:curse",
+  "effects": {
+    "minecraft:block_experience": [
+      {
+        "effect": {
+          "type": "rubinated_nether:misfortune_curse"
+        }
+      }
+    ]
+  }
+}
