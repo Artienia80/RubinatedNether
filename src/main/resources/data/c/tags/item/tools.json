@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#c:tools/drills",
+    "rubinated_nether:bronze_drill",
     {
       "id": "#forge:tools",
       "required": false

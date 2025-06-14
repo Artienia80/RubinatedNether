@@ -26,7 +26,7 @@ public class RNEntityCreator {
 	);
 
 	public static final Supplier<EntityType<BronzeShotProjectileEntity>> BRONZE_SHOT = registerEntity(
-			"rock",
+			"bronze_shot",
 			EntityType.Builder.<BronzeShotProjectileEntity>of(BronzeShotProjectileEntity::new, MobCategory.MISC)
 					.sized(0.5F, 0.5F)
 	);

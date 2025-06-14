@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rubinated_nether:magma_ruby_ore",
+    "rubinated_nether:molten_ruby_ore",
     {
       "id": "#forge:ores_in_ground/magma_block",
       "required": false
