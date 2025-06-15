@@ -36,7 +36,7 @@ public record HookingCurseEffect() implements EnchantmentEntityEffect {
 
     @Override
     public MapCodec<? extends EnchantmentEntityEffect> codec() {
-        return null;
+        return CODEC;
     }
 
     private void applyKnockback(LivingEntity entity, double strength, double x, double z) {
