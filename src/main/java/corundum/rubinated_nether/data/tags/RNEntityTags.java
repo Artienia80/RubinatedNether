@@ -20,10 +20,10 @@ public class RNEntityTags extends EntityTypeTagsProvider {
 		super(output, lookupProvider, RubinatedNether.MODID, existingFileHelper);
 	}
 
-//	@Override
-//	protected void addTags(Provider provider) {
+	@Override
+	protected void addTags(Provider provider) {
 //		tag(EntityTypeTags.REDIRECTABLE_PROJECTILE).add(
 //			RNEntityCreator.BRONZE_SHOT.get()
 //		);
-//	}
+	}
 }

@@ -635,6 +635,8 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern("XEX")
 				.pattern("XXX")
 				.unlockedBy(getHasName(RNItems.RUBY_ITEM), has(RNItems.RUBY_ITEM))
+				.unlockedBy(getHasName(Blocks.OBSIDIAN), has(Blocks.OBSIDIAN))
+				.unlockedBy(getHasName(Blocks.ENCHANTING_TABLE), has(Blocks.ENCHANTING_TABLE))
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUNESTONE, 1)
@@ -644,6 +646,17 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern("XOX")
 				.pattern("XXX")
 				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
+				.unlockedBy(getHasName(Blocks.OBSIDIAN), has(Blocks.OBSIDIAN))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.SHRINE_STONE, 9)
+				.define('X', Blocks.BASALT)
+				.define('O', Blocks.OBSIDIAN)
+				.pattern("XXX")
+				.pattern("XOX")
+				.pattern("XXX")
+				.unlockedBy(getHasName(Blocks.BASALT), has(Blocks.BASALT))
+				.unlockedBy(getHasName(Blocks.OBSIDIAN), has(Blocks.OBSIDIAN))
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBY_GLASS, 8)

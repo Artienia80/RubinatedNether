@@ -51,7 +51,65 @@ public class RNBlockTags extends BlockTagsProvider {
 
 			RNBlocks.FREEZER.get(),
 			RNBlocks.BRAZIER.get(),
-			RNBlocks.RUBINATION_ALTAR.get()
+
+				RNBlocks.SHRINE_STONE.get(),
+
+				RNBlocks.POLISHED_SHRINE_STONE.get(),
+				RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
+				RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(),
+				RNBlocks.POLISHED_SHRINE_STONE_WALL.get(),
+
+				RNBlocks.SHRINE_STONE_TILES.get(),
+				RNBlocks.SHRINE_STONE_TILES_SLAB.get(),
+				RNBlocks.SHRINE_STONE_TILES_STAIRS.get(),
+				RNBlocks.SHRINE_STONE_TILES_WALL.get(),
+
+				RNBlocks.SHRINE_STONE_PILLAR.get(),
+
+				RNBlocks.SHRINE_STONE_BRICKS.get(),
+				RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get(),
+				RNBlocks.SHRINE_STONE_BRICKS_WALL.get(),
+				RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(),
+				RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
+				RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
+				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
+				RNBlocks.RUNESTONE.get(),
+				RNBlocks.BRAZIER.get(),
+				RNBlocks.RUBINATION_ALTAR.get(),
+
+				RNBlocks.BRONZE_BLOCK.get(),
+				RNBlocks.DISCOLORED_BRONZE_BLOCK.get(),
+				RNBlocks.CORRODED_BRONZE_BLOCK.get(),
+				RNBlocks.TARNISHED_BRONZE_BLOCK.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
+
+				RNBlocks.CUT_BRONZE_PILLAR.get(),
+				RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get(),
+				RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get(),
+				RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get(),
+
+				RNBlocks.CUT_BRONZE_BRICKS.get(),
+				RNBlocks.CUT_BRONZE_BRICKS_STAIRS.get(),
+				RNBlocks.CUT_BRONZE_BRICKS_SLAB.get(),
+				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get(),
+				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get(),
+				RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get(),
+				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get(),
+				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get(),
+				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get(),
+
+				RNBlocks.BRONZE_BULB.get(),
+				RNBlocks.DISCOLORED_BRONZE_BULB.get(),
+				RNBlocks.CORRODED_BRONZE_BULB.get(),
+				RNBlocks.TARNISHED_BRONZE_BULB.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_BULB.get()
 		);
 
 		this.tag(BlockTags.NEEDS_STONE_TOOL).add(
@@ -74,10 +132,8 @@ public class RNBlockTags extends BlockTagsProvider {
 			RNBlocks.MOLTEN_RUBY_BLOCK.get(),
 			RNBlocks.BLEEDING_OBSIDIAN.get(),
 
-			RNBlocks.FREEZER.get()
-		);
+			RNBlocks.FREEZER.get(),
 
-		this.tag(RNTags.Blocks.MINEABLE_WITH_DRILL).add(
 				RNBlocks.SHRINE_STONE.get(),
 
 				RNBlocks.POLISHED_SHRINE_STONE.get(),
