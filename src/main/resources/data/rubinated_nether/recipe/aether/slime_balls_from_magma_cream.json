@@ -6,7 +6,9 @@
   "ingredient": {
 	"item": "minecraft:magma_cream"
   },
-  "result": "minecraft:slime_ball",
+  "result": {
+    "id": "minecraft:slime_ball"
+  },
   "fabric:load_conditions": [
 	{
 	  "condition": "fabric:all_mods_loaded",
