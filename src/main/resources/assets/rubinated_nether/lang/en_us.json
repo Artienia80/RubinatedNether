@@ -75,6 +75,18 @@
   "item.rubinated_nether.waxed_tarnished_bronze_block": "Waxed Tarnished Bronze",
   "item.rubinated_nether.waxed_crystallized_bronze_block": "Waxed Crystallized Bronze",
 
+  "block.rubinated_nether.chiseled_bronze": "Chiseled Bronze",
+  "block.rubinated_nether.discolored_chiseled_bronze": "Discolored Chiseled Bronze",
+  "block.rubinated_nether.corroded_chiseled_bronze": "Corroded Chiseled Bronze",
+  "block.rubinated_nether.tarnished_chiseled_bronze": "Tarnished Chiseled Bronze",
+  "block.rubinated_nether.crystallized_chiseled_bronze": "Crystallized Chiseled Bronze",
+
+  "item.rubinated_nether.waxed_chiseled_bronze": "Waxed Chiseled Bronze",
+  "item.rubinated_nether.waxed_discolored_chiseled_bronze": "Waxed Discolored Chiseled Bronze",
+  "item.rubinated_nether.waxed_corroded_chiseled_bronze": "Waxed Corroded Chiseled Bronze",
+  "item.rubinated_nether.waxed_tarnished_chiseled_bronze": "Waxed Tarnished Chiseled Bronze",
+  "item.rubinated_nether.waxed_crystallized_chiseled_bronze": "Waxed Crystallized Chiseled Bronze",
+
   "block.rubinated_nether.cut_bronze_pillar": "Cut Bronze Pillar",
   "block.rubinated_nether.discolored_cut_bronze_pillar": "Discolored Cut Bronze Pillar",
   "block.rubinated_nether.corroded_cut_bronze_pillar": "Corroded Cut Bronze Pillar",

@@ -80,6 +80,12 @@ public class RNLanguage extends RNLanguageProvider {
 		addWaxableBlock(RNBlocks.TARNISHED_BRONZE_BLOCK, "Tarnished Bronze");
 		addWaxableBlock(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK, "Crystallized Bronze");
 
+		addWaxableBlock(RNBlocks.CHISELED_BRONZE, "Chiseled Bronze");
+		addWaxableBlock(RNBlocks.DISCOLORED_CHISELED_BRONZE, "Discolored Chiseled Bronze");
+		addWaxableBlock(RNBlocks.CORRODED_CHISELED_BRONZE, "Corroded Chiseled Bronze");
+		addWaxableBlock(RNBlocks.TARNISHED_CHISELED_BRONZE, "Tarnished Chiseled Bronze");
+		addWaxableBlock(RNBlocks.CRYSTALLIZED_CHISELED_BRONZE, "Crystallized Chiseled Bronze");
+
 		addWaxableBlock(RNBlocks.CUT_BRONZE_PILLAR, "Cut Bronze Pillar");
 		addWaxableBlock(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR, "Discolored Cut Bronze Pillar");
 		addWaxableBlock(RNBlocks.CORRODED_CUT_BRONZE_PILLAR, "Corroded Cut Bronze Pillar");

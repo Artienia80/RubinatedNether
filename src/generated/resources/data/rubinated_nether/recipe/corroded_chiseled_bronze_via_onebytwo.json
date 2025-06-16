@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "DeferredHolder{ResourceKey[minecraft:block / rubinated_nether:corroded_chiseled_bronze]}",
+  "key": {
+    "I": {
+      "item": "rubinated_nether:corroded_cut_bronze_bricks_slab"
+    }
+  },
+  "pattern": [
+    "I",
+    "I"
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:corroded_chiseled_bronze"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "waxed_discolored_chiseled_bronze",
+  "ingredients": [
+    {
+      "item": "rubinated_nether:discolored_chiseled_bronze"
+    },
+    {
+      "item": "minecraft:honeycomb"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:waxed_discolored_chiseled_bronze"
+  }
+}

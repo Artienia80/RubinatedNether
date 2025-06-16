@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "waxed_tarnished_chiseled_bronze",
+  "ingredients": [
+    {
+      "item": "rubinated_nether:tarnished_chiseled_bronze"
+    },
+    {
+      "item": "minecraft:honeycomb"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:waxed_tarnished_chiseled_bronze"
+  }
+}

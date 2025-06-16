@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_discolored_cut_bronze_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:discolored_cut_bronze_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:discolored_chiseled_bronze_from_discolored_cut_bronze_bricks_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_discolored_cut_bronze_bricks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:discolored_chiseled_bronze_from_discolored_cut_bronze_bricks_stonecutting"
+    ]
+  }
+}

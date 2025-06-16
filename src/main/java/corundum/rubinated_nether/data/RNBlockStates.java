@@ -149,6 +149,15 @@ public class RNBlockStates extends BlockStateProvider {
 			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK
 		);
 
+		subfolder(
+				"bronze/chiseled_bronze/",
+				RNBlocks.CHISELED_BRONZE,
+				RNBlocks.DISCOLORED_CHISELED_BRONZE,
+				RNBlocks.CORRODED_CHISELED_BRONZE,
+				RNBlocks.TARNISHED_CHISELED_BRONZE,
+				RNBlocks.CRYSTALLIZED_CHISELED_BRONZE
+		);
+
 		subfolder("bronze/cut_bronze_pillar/",
 			(rloc, name, block) -> {
 				sixWayPillar(

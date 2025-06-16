@@ -660,6 +660,73 @@ public class RNBlocks {
 			)
 	);
 
+	// CHISELED BRONZE
+
+	public static final DeferredBlock<Block> CHISELED_BRONZE = registerWaxableBlock(
+			"chiseled_bronze",
+			() -> new TarnishingBronzeBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.requiresCorrectToolForDrops()
+							.strength(5.0F, 150.0F)
+							.sound(SoundType.COPPER)
+							.randomTicks()
+			)
+	);
+
+	public static final DeferredBlock<Block> DISCOLORED_CHISELED_BRONZE = registerWaxableBlock(
+			"discolored_chiseled_bronze",
+			() -> new TarnishingBronzeBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.TERRACOTTA_PINK)
+							.requiresCorrectToolForDrops()
+							.strength(15.0F, 300.0F)
+							.sound(SoundType.COPPER)
+							.randomTicks()
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_CHISELED_BRONZE = registerWaxableBlock(
+			"corroded_chiseled_bronze",
+			() -> new TarnishingBronzeBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.CRIMSON_STEM)
+							.requiresCorrectToolForDrops()
+							.strength(25.0F, 600.0F)
+							.sound(SoundType.COPPER)
+							.randomTicks()
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_CHISELED_BRONZE = registerWaxableBlock(
+			"tarnished_chiseled_bronze",
+			() -> new TarnishingBronzeBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.TERRACOTTA_BLACK)
+							.requiresCorrectToolForDrops()
+							.strength(50.0F, 1200.0F)
+							.sound(SoundType.COPPER)
+							.randomTicks()
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_CHISELED_BRONZE = registerWaxableBlock(
+			"crystallized_chiseled_bronze",
+			() -> new TarnishingBronzeBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.TERRACOTTA_WHITE)
+							.requiresCorrectToolForDrops()
+							.strength(1.0F, 6.0F)
+							.sound(SoundType.COPPER)
+							.randomTicks()
+			)
+	);
+
 	/// Registers a block and an item 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);

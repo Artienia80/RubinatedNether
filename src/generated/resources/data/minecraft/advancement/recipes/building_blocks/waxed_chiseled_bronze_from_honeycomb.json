@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_chiseled_bronze": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:chiseled_bronze"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:waxed_chiseled_bronze_from_honeycomb"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_chiseled_bronze"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:waxed_chiseled_bronze_from_honeycomb"
+    ]
+  }
+}
