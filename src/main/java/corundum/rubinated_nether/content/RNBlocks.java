@@ -727,6 +727,74 @@ public class RNBlocks {
 			)
 	);
 
+	// BRONZE GRATE
+
+	public static final DeferredBlock<Block> BRONZE_GRATE = registerWaxableBlock(
+			"bronze_grate",
+			() -> new BronzeGrateBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.requiresCorrectToolForDrops()
+							.strength(4.0F, 110.0F)
+							.sound(SoundType.COPPER)
+							.randomTicks()
+			)
+	);
+
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_GRATE = registerWaxableBlock(
+			"discolored_bronze_grate",
+			() -> new BronzeGrateBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.requiresCorrectToolForDrops()
+							.strength(4.0F, 110.0F)
+							.sound(SoundType.COPPER)
+							.randomTicks()
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_BRONZE_GRATE = registerWaxableBlock(
+			"corroded_bronze_grate",
+			() -> new BronzeGrateBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.requiresCorrectToolForDrops()
+							.strength(4.0F, 110.0F)
+							.sound(SoundType.COPPER)
+							.randomTicks()
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_GRATE = registerWaxableBlock(
+			"crystallized_bronze_grate",
+			() -> new BronzeGrateBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.requiresCorrectToolForDrops()
+							.strength(4.0F, 110.0F)
+							.sound(SoundType.COPPER)
+							.randomTicks()
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_GRATE = registerWaxableBlock(
+			"tarnished_bronze_grate",
+			() -> new BronzeGrateBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.requiresCorrectToolForDrops()
+							.strength(4.0F, 110.0F)
+							.sound(SoundType.COPPER)
+							.randomTicks()
+			)
+	);
+
+
 	/// Registers a block and an item 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);

@@ -143,6 +143,18 @@
   "item.rubinated_nether.waxed_tarnished_bronze_bulb": "Waxed Tarnished Bronze Bulb",
   "item.rubinated_nether.waxed_crystallized_bronze_bulb": "Waxed Crystallized Bronze Bulb",
 
+  "block.rubinated_nether.bronze_grate": "Bronze Grate",
+  "block.rubinated_nether.discolored_bronze_grate": "Discolored Bronze Grate",
+  "block.rubinated_nether.corroded_bronze_grate": "Corroded Bronze Grate",
+  "block.rubinated_nether.tarnished_bronze_grate": "Tarnished Bronze Grate",
+  "block.rubinated_nether.crystallized_bronze_grate": "Crystallized Bronze Grate",
+
+  "item.rubinated_nether.waxed_bronze_grate": "Waxed Bronze Grate",
+  "item.rubinated_nether.waxed_discolored_bronze_grate": "Waxed Discolored Bronze Grate",
+  "item.rubinated_nether.waxed_corroded_bronze_grate": "Waxed Corroded Bronze Grate",
+  "item.rubinated_nether.waxed_tarnished_bronze_grate": "Waxed Tarnished Bronze Grate",
+  "item.rubinated_nether.waxed_crystallized_bronze_grate": "Waxed Crystallized Bronze Grate",
+
   "item.rubinated_nether.bronze_rod": "Bronze Rod",
   "item.rubinated_nether.bronze_powder": "Bronze Powder",
   "item.rubinated_nether.bronze_shot": "Bronze Shot",

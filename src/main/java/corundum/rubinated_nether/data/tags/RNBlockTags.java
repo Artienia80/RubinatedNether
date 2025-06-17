@@ -115,7 +115,13 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.DISCOLORED_BRONZE_BULB.get(),
 				RNBlocks.CORRODED_BRONZE_BULB.get(),
 				RNBlocks.TARNISHED_BRONZE_BULB.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_BULB.get()
+				RNBlocks.CRYSTALLIZED_BRONZE_BULB.get(),
+
+				RNBlocks.BRONZE_GRATE.get(),
+				RNBlocks.DISCOLORED_BRONZE_GRATE.get(),
+				RNBlocks.CORRODED_BRONZE_GRATE.get(),
+				RNBlocks.TARNISHED_BRONZE_GRATE.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get()
 		);
 
 		this.tag(BlockTags.NEEDS_STONE_TOOL).add(
@@ -203,7 +209,13 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.DISCOLORED_BRONZE_BULB.get(),
 				RNBlocks.CORRODED_BRONZE_BULB.get(),
 				RNBlocks.TARNISHED_BRONZE_BULB.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_BULB.get()
+				RNBlocks.CRYSTALLIZED_BRONZE_BULB.get(),
+
+				RNBlocks.BRONZE_GRATE.get(),
+				RNBlocks.DISCOLORED_BRONZE_GRATE.get(),
+				RNBlocks.CORRODED_BRONZE_GRATE.get(),
+				RNBlocks.TARNISHED_BRONZE_GRATE.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get()
 		);
 
 				this.tag(RNTags.Blocks.COLDEST_ICE).add(
@@ -224,7 +236,8 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get(),
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get(),
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_BULB.get()
+				RNBlocks.CRYSTALLIZED_BRONZE_BULB.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get()
 				);
 
 		this.tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).add(
