@@ -39,14 +39,6 @@ public sealed abstract class AbstractBronzeEntity extends Monster permits Bronze
         super(entityType, level);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 20.0)
-                .add(Attributes.FOLLOW_RANGE, 35.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.2)
-                .add(Attributes.ATTACK_DAMAGE, 4.0);
-    }
-
     /**
      * Needs to be overridden to be able to set up SpawnPlacements in an
      * organized way.

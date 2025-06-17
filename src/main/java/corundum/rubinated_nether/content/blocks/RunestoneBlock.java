@@ -5,6 +5,8 @@ import corundum.rubinated_nether.content.RNBlockStateProperties;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
+import corundum.rubinated_nether.content.entity.living.BronzeEntity;
+import corundum.rubinated_nether.content.entity.living.CorrodedEntity;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneItem;
 import corundum.rubinated_nether.mixin.accessors.DoublePlantBlockAccessor;
@@ -146,7 +148,6 @@ public class RunestoneBlock extends BaseEntityBlock {
 			level.playLocalSound(player, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
 			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
-
 		return InteractionResult.PASS;
 	}
 

@@ -46,7 +46,7 @@ public class RubinatedNether {
 		RNBlocks.BLOCKS,
 		RNItems.ITEMS,
 		RNArmorMaterials.ARMOR_MATERIALS,
-		RNEntityCreator.ENTITY_TYPES,
+		RNEntities.ENTITY_TYPES,
 		RNParticleTypes.PARTICLES,
 		RNSoundEvents.SOUNDS,
 		RNCreativeTabs.CREATIVE_MODE_TABS,

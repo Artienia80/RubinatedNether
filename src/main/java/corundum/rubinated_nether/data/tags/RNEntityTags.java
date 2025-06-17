@@ -3,12 +3,10 @@ package corundum.rubinated_nether.data.tags;
 import java.util.concurrent.CompletableFuture;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNEntityCreator;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
-import net.minecraft.tags.EntityTypeTags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class RNEntityTags extends EntityTypeTagsProvider {

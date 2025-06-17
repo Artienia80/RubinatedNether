@@ -84,7 +84,7 @@ public class RNItems {
 
 
 	public static final DeferredItem<Item> BRONZE_SPAWN_EGG = ITEMS.register("bronze_spawn_egg",
-			() -> new DeferredSpawnEggItem(RNEntityCreator.BRONZE, 0xbf8142, 0x76422c,
+			() -> new DeferredSpawnEggItem(RNEntities.BRONZE_ENTITY, 0xbf8142, 0x76422c,
 					new Item.Properties()));
 
 	public static DeferredItem<Item> basicItem(String name) {

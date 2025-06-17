@@ -22,12 +22,21 @@ import net.minecraft.world.level.LevelReader;
 import org.jetbrains.annotations.Nullable;
 
 public final class DiscoloredEntity extends AbstractBronzeEntity {
-    private DiscoloredEntity(EntityType<? extends Monster> entityType, Level level) {
+    public DiscoloredEntity(EntityType<? extends Monster> entityType,
+                         Level level) {
         super(entityType, level);
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        return Monster.createMonsterAttributes()
+                .add(Attributes.MAX_HEALTH, 20.0)
+                .add(Attributes.FOLLOW_RANGE, 35.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.2)
+                .add(Attributes.ATTACK_DAMAGE, 4.0);
     }
 
     @Override
     public BronzeTarnishingStep getTarnishingLevel() {
-        return BronzeTarnishingStep.CRYSTALLIZED;
+        return BronzeTarnishingStep.DISCOLORED;
     }
 }
