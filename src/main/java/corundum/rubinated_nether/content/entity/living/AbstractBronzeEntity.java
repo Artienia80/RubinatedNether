@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.entity.living;
 
+import corundum.rubinated_nether.content.BronzeTarnishingStep;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -30,9 +31,9 @@ public sealed abstract class AbstractBronzeEntity extends Monster permits Bronze
 
     //TODO: Overall cleanup and well-defined base structure
 
-    public int idleAnimationTimeout = 0;
-    public final AnimationState idleAnimationState = new AnimationState();
-    public final AnimationState walkAnimationState = new AnimationState();
+    protected int idleAnimationTimeout = 0;
+    protected final AnimationState idleAnimationState = new AnimationState();
+    protected final AnimationState walkAnimationState = new AnimationState();
 
     protected AbstractBronzeEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -74,9 +75,7 @@ public sealed abstract class AbstractBronzeEntity extends Monster permits Bronze
         }
         super.tick();
 
-        if (this.level() == null || this.level().isClientSide) {
-            return;
-        }
+        if (this.level().isClientSide()) return;
 
         if (this.isMoving()) {
             walkAnimationState.startIfStopped(tickCount);
@@ -124,4 +123,6 @@ public sealed abstract class AbstractBronzeEntity extends Monster permits Bronze
     }
 
     //TODO: Analyze and elaborate more specific behaviours and methods
+
+    public abstract BronzeTarnishingStep getTarnishingLevel();
 }

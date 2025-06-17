@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.entity.living;
 
+import corundum.rubinated_nether.content.BronzeTarnishingStep;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -103,4 +104,8 @@ public final class BronzeEntity extends AbstractBronzeEntity {
         return level.getBlockState(pos).isAir() ? 10.0F : 0.0F;
     }
 
+    @Override
+    public BronzeTarnishingStep getTarnishingLevel() {
+        return BronzeTarnishingStep.BRONZE;
+    }
 }

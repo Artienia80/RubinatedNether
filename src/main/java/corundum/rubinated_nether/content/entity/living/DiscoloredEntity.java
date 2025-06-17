@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.entity.living;
 
+import corundum.rubinated_nether.content.BronzeTarnishingStep;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -23,5 +24,10 @@ import org.jetbrains.annotations.Nullable;
 public final class DiscoloredEntity extends AbstractBronzeEntity {
     private DiscoloredEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
+    }
+
+    @Override
+    public BronzeTarnishingStep getTarnishingLevel() {
+        return BronzeTarnishingStep.CRYSTALLIZED;
     }
 }
