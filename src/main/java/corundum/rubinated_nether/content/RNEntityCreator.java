@@ -1,7 +1,7 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.entity.BronzeEntity;
+import corundum.rubinated_nether.content.entity.living.BronzeEntity;
 import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
 import corundum.rubinated_nether.content.entity.client.BronzeModel;
 import corundum.rubinated_nether.content.entity.client.BronzeRenderer;

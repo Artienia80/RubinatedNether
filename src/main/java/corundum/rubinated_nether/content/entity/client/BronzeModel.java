@@ -2,7 +2,7 @@ package corundum.rubinated_nether.content.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import corundum.rubinated_nether.content.entity.BronzeEntity;
+import corundum.rubinated_nether.content.entity.living.BronzeEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;

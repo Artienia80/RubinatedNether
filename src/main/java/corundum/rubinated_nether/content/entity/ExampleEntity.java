@@ -61,6 +61,7 @@ public class ExampleEntity extends Animal {
     protected boolean isSunSensitive() {
         return false;
     }
+
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
