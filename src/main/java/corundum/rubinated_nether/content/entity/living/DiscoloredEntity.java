@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.entity.living;
 
 import corundum.rubinated_nether.content.BronzeTarnishingStep;
+import corundum.rubinated_nether.content.RNEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -22,9 +23,13 @@ import net.minecraft.world.level.LevelReader;
 import org.jetbrains.annotations.Nullable;
 
 public final class DiscoloredEntity extends AbstractBronzeEntity {
-    public DiscoloredEntity(EntityType<? extends Monster> entityType,
-                         Level level) {
+
+    public DiscoloredEntity(EntityType<? extends AbstractBronzeEntity> entityType, Level level) {
         super(entityType, level);
+    }
+
+    public DiscoloredEntity(Level level) {
+        super(RNEntities.DISCOLORED_ENTITY.get(), level);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -38,5 +43,15 @@ public final class DiscoloredEntity extends AbstractBronzeEntity {
     @Override
     public BronzeTarnishingStep getTarnishingLevel() {
         return BronzeTarnishingStep.DISCOLORED;
+    }
+
+    @Override
+    public BronzeTarnishingStep getNextTarnishingLevel() {
+        return BronzeTarnishingStep.CORRODED;
+    }
+
+    @Override
+    public BronzeTarnishingStep getPreviousTarnishingLevel() {
+        return BronzeTarnishingStep.BRONZE;
     }
 }

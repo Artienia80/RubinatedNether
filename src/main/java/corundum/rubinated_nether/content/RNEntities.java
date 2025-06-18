@@ -40,31 +40,31 @@ public class RNEntities {
 	public static final Supplier<EntityType<BronzeEntity>> BRONZE_ENTITY =
 			registerEntity(
 			"bronze",
-			EntityType.Builder.of(BronzeEntity::new, MobCategory.MONSTER)
+			EntityType.Builder.<BronzeEntity>of(BronzeEntity::new, MobCategory.MONSTER)
 					.sized(0.7F, 1.4F)
 	);
 	public static final Supplier<EntityType<DiscoloredEntity>> DISCOLORED_ENTITY =
 			registerEntity(
 			"discolored",
-			EntityType.Builder.of(DiscoloredEntity::new, MobCategory.MONSTER)
+			EntityType.Builder.<DiscoloredEntity>of(DiscoloredEntity::new, MobCategory.MONSTER)
 					.sized(0.7F, 1.4F)
 	);
 	public static final Supplier<EntityType<CorrodedEntity>> CORRODED_ENTITY =
 			registerEntity(
 			"corroded",
-			EntityType.Builder.of(CorrodedEntity::new, MobCategory.MONSTER)
+			EntityType.Builder.<CorrodedEntity>of(CorrodedEntity::new, MobCategory.MONSTER)
 					.sized(0.7F, 1.4F)
 	);
 	public static final Supplier<EntityType<TarnishedEntity>> TARNISHED_ENTITY =
 			registerEntity(
 			"tarnished",
-			EntityType.Builder.of(TarnishedEntity::new, MobCategory.MONSTER)
+			EntityType.Builder.<TarnishedEntity>of(TarnishedEntity::new, MobCategory.MONSTER)
 					.sized(0.7F, 1.4F)
 	);
 	public static final Supplier<EntityType<CrystallizedEntity>> CRYSTALLIZED_ENTITY =
 			registerEntity(
 			"crystallized",
-			EntityType.Builder.of(CrystallizedEntity::new, MobCategory.MONSTER)
+			EntityType.Builder.<CrystallizedEntity>of(CrystallizedEntity::new, MobCategory.MONSTER)
 					.sized(0.7F, 1.4F)
 	);
 

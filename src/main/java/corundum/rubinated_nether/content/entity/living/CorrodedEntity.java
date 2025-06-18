@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.entity.living;
 
 import corundum.rubinated_nether.content.BronzeTarnishingStep;
+import corundum.rubinated_nether.content.RNEntities;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -8,8 +9,12 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 
 public final class CorrodedEntity extends AbstractBronzeEntity {
-    public CorrodedEntity(EntityType<? extends Monster> entityType, Level level) {
+    public CorrodedEntity(EntityType<? extends AbstractBronzeEntity> entityType, Level level) {
         super(entityType, level);
+    }
+
+    public CorrodedEntity(Level level) {
+        super(RNEntities.CORRODED_ENTITY.get(), level);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -23,5 +28,15 @@ public final class CorrodedEntity extends AbstractBronzeEntity {
     @Override
     public BronzeTarnishingStep getTarnishingLevel() {
         return BronzeTarnishingStep.CORRODED;
+    }
+
+    @Override
+    public BronzeTarnishingStep getNextTarnishingLevel() {
+        return BronzeTarnishingStep.TARNISHED;
+    }
+
+    @Override
+    public BronzeTarnishingStep getPreviousTarnishingLevel() {
+        return BronzeTarnishingStep.DISCOLORED;
     }
 }

@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.entity.living;
 
 import corundum.rubinated_nether.content.BronzeTarnishingStep;
+import corundum.rubinated_nether.content.RNEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -22,8 +23,12 @@ public final class BronzeEntity extends AbstractBronzeEntity {
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState walkAnimationState = new AnimationState();
 
-    public BronzeEntity(EntityType<? extends Monster> entityType, Level level) {
+    public BronzeEntity(EntityType<? extends AbstractBronzeEntity> entityType, Level level) {
         super(entityType, level);
+    }
+
+    public BronzeEntity(Level level) {
+        super(RNEntities.BRONZE_ENTITY.get(), level);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -61,6 +66,7 @@ public final class BronzeEntity extends AbstractBronzeEntity {
 
     @Override
     protected void registerGoals() {
+        super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0, 0.0F));
@@ -79,25 +85,6 @@ public final class BronzeEntity extends AbstractBronzeEntity {
             --this.idleAnimationTimeout;
         }
     }
-    @Override
-    public void tick() {
-        if (this.level().isClientSide()) {
-            this.setupAnimationStates();
-        }
-        super.tick();
-
-        if (this.level() == null || this.level().isClientSide) {
-            return;
-        }
-
-        if (isMoving()) {
-            walkAnimationState.startIfStopped(tickCount);
-            idleAnimationState.stop();
-        } else {
-            idleAnimationState.startIfStopped(tickCount);
-            walkAnimationState.stop();
-        }
-    }
 
     @Override
     public float getWalkTargetValue(BlockPos pos, LevelReader level) {
@@ -107,5 +94,15 @@ public final class BronzeEntity extends AbstractBronzeEntity {
     @Override
     public BronzeTarnishingStep getTarnishingLevel() {
         return BronzeTarnishingStep.BRONZE;
+    }
+
+    @Override
+    public BronzeTarnishingStep getNextTarnishingLevel() {
+        return BronzeTarnishingStep.DISCOLORED;
+    }
+
+    @Override
+    public BronzeTarnishingStep getPreviousTarnishingLevel() {
+        return null;
     }
 }
