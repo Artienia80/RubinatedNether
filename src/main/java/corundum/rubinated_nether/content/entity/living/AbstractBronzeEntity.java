@@ -2,10 +2,10 @@ package corundum.rubinated_nether.content.entity.living;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.BronzeTarnishingStep;
-import corundum.rubinated_nether.content.RNEntities;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
@@ -14,8 +14,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
@@ -25,13 +23,10 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.Tags;
 
 /**
  * Abstract class that represents all the Bronze-type entities.
@@ -130,7 +125,7 @@ public sealed abstract class AbstractBronzeEntity extends Monster permits Bronze
                 case CORRODED -> new CorrodedEntity(this.level());
                 case null, default -> this;
             };
-            executeEntityReplacement(bronzeEntity);
+            replaceWith(bronzeEntity);
             heldItem.setDamageValue(heldItem.getDamageValue() - 1);
             return InteractionResult.SUCCESS;
         }
@@ -158,13 +153,13 @@ public sealed abstract class AbstractBronzeEntity extends Monster permits Bronze
             case TARNISHED -> new TarnishedEntity(this.level());
             case null, default -> this;
         };
-        executeEntityReplacement(bronzeEntity);
+        replaceWith(bronzeEntity);
     }
 
     private void getCrystallized() {
         if(this.getTarnishingLevel() == BronzeTarnishingStep.CRYSTALLIZED) return;
         CrystallizedEntity crystallized = new CrystallizedEntity(this.level());
-        executeEntityReplacement(crystallized);
+        replaceWith(crystallized);
     }
 
     //TODO: Implement Bronze Sounds
@@ -211,7 +206,8 @@ public sealed abstract class AbstractBronzeEntity extends Monster permits Bronze
         this.isWaxed = waxed;
     }
 
-    private AbstractBronzeEntity copyEntityForTarnishing(AbstractBronzeEntity entity1, AbstractBronzeEntity entity2) {
+    private AbstractBronzeEntity copyStateTo(AbstractBronzeEntity entity1, AbstractBronzeEntity entity2) {
+        //entity2.setUUID(entity1.getUUID());
         entity2.setHealth(entity1.getHealth());
         for(var effect : entity1.getActiveEffects()) entity2.addEffect(effect);
         entity2.setPos(entity1.getX(), entity1.getY(), entity1.getZ());
@@ -225,21 +221,32 @@ public sealed abstract class AbstractBronzeEntity extends Monster permits Bronze
         entity2.setCustomNameVisible(entity1.isCustomNameVisible());
         entity2.setDeltaMovement(entity1.getDeltaMovement());
         entity2.setNoAi(entity1.isNoAi());
-
+        entity2.setTarget(entity1.getTarget());
+        AbstractBronzeEntity.copyPersistentData(entity1, entity2);
         return entity2;
     }
 
-    private void executeEntityReplacement(AbstractBronzeEntity bronzeEntity) {
+    private void replaceWith(AbstractBronzeEntity bronzeEntity) {
         // If they're the same, it means there's no changes to be applied
-        if(this.equals(bronzeEntity)) return;
+        if (this.getTarnishingLevel() == bronzeEntity.getTarnishingLevel()) return;
+
+        RubinatedNether.LOGGER.debug("Transforming {} into {}", this.getTarnishingLevel(), bronzeEntity.getTarnishingLevel());
 
         try {
-            this.copyEntityForTarnishing(this, bronzeEntity);
+            this.copyStateTo(this, bronzeEntity);
             this.level().addFreshEntity(bronzeEntity);
-            var originalEntity = this.level().getEntity(this.getId());
-            originalEntity.remove(RemovalReason.DISCARDED);
+            this.discard();
         } catch (Exception e) {
-            RubinatedNether.LOGGER.error("Something went wrong during Tarnishing.");
+            RubinatedNether.LOGGER.error("Something went wrong during Entity Tarnishing.");
+        }
+    }
+
+    private static void copyPersistentData(AbstractBronzeEntity entity1, AbstractBronzeEntity entity2){
+        CompoundTag fromTag = entity1.getPersistentData();
+        CompoundTag toTag = entity2.getPersistentData();
+
+        for (String key : fromTag.getAllKeys()) {
+            toTag.put(key, fromTag.get(key).copy());
         }
     }
 
