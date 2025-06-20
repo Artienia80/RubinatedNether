@@ -2,15 +2,14 @@ package corundum.rubinated_nether.content.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import corundum.rubinated_nether.content.entity.living.AbstractBronzeEntity;
-import corundum.rubinated_nether.content.entity.living.BronzeEntity;
+import corundum.rubinated_nether.content.entity.living.BronzeTypeEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class BronzeModel<T extends AbstractBronzeEntity> extends HierarchicalModel<T> {
+public class BronzeModel<T extends BronzeTypeEntity> extends HierarchicalModel<T> {
 
     private final ModelPart root;
 
@@ -57,7 +56,7 @@ public class BronzeModel<T extends AbstractBronzeEntity> extends HierarchicalMod
     }
 
     @Override
-    public void setupAnim(AbstractBronzeEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(BronzeTypeEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
         this.applyHeadRotation(netHeadYaw,headPitch);
 

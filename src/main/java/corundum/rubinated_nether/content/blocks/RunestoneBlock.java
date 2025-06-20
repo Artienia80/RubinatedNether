@@ -5,8 +5,6 @@ import corundum.rubinated_nether.content.RNBlockStateProperties;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
-import corundum.rubinated_nether.content.entity.living.BronzeEntity;
-import corundum.rubinated_nether.content.entity.living.CorrodedEntity;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneItem;
 import corundum.rubinated_nether.mixin.accessors.DoublePlantBlockAccessor;

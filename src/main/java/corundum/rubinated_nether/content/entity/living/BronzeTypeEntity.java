@@ -1,11 +1,13 @@
 package corundum.rubinated_nether.content.entity.living;
 
-import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.BronzeTarnishingStep;
+import corundum.rubinated_nether.content.TarnishingBronzeStep;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
@@ -28,45 +30,30 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 
-/**
- * Abstract class that represents all the Bronze-type entities.
- * <br/>
- * For information, this can't be instantiated and is just used as
- * a replacement for the concrete implementations.
- * <br/>
- * Permitted classes are: <br/>
- *  - {@code BronzeEntity} <br/>
- *  - {@code DiscoloredEntity} <br/>
- *  - {@code CorrodedEntity} <br/>
- *  - {@code TarnishedEntity} <br/>
- *  - {@code CrystallizedEntity} <br/>
- * <br/>
- * Why sealed? Because I fucking wanted to.
- */
-public sealed abstract class AbstractBronzeEntity extends Monster permits BronzeEntity, DiscoloredEntity, CorrodedEntity, TarnishedEntity, CrystallizedEntity {
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.ListIterator;
+
+public class BronzeTypeEntity extends Monster {
 
     //TODO: Overall cleanup and well-defined base structure
 
-    protected int idleAnimationTimeout = 0;
-    protected final AnimationState idleAnimationState = new AnimationState();
-    protected final AnimationState walkAnimationState = new AnimationState();
-    protected boolean isWaxed;
+    private int idleAnimationTimeout = 0;
+    private final AnimationState idleAnimationState = new AnimationState();
+    private final AnimationState walkAnimationState = new AnimationState();
+    public boolean isWaxed;
+    private static final EntityDataAccessor<Integer> DATA_ID_TARN_STEP = SynchedEntityData.defineId(BronzeTypeEntity.class, EntityDataSerializers.INT);
 
-    protected AbstractBronzeEntity(EntityType<? extends AbstractBronzeEntity> entityType, Level level) {
+    public BronzeTypeEntity(EntityType<? extends BronzeTypeEntity> entityType, Level level) {
         super(entityType, level);
         this.isWaxed = false;
     }
 
-    /**
-     * Needs to be overridden to be able to set up SpawnPlacements in an
-     * organized way.
-     */
     public static void init() {
     }
 
     @Override
     protected void registerGoals() {
-        super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0, 0.0F));
@@ -82,6 +69,24 @@ public sealed abstract class AbstractBronzeEntity extends Monster permits Bronze
         } else {
             --this.idleAnimationTimeout;
         }
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_ID_TARN_STEP, 0);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putInt("bronzeStep", getStepIndex());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        this.entityData.set(DATA_ID_TARN_STEP, compound.getInt("bronzeStep"));
     }
 
     @Override
@@ -113,19 +118,13 @@ public sealed abstract class AbstractBronzeEntity extends Monster permits Bronze
             heldItem.consume(1, player);
             return InteractionResult.SUCCESS;
 
-        } else if (heldItem.getItem() == RNItems.BRONZE_POWDER.get() && this.getNextTarnishingLevel() != null) {
+        } else if (heldItem.getItem() == RNItems.BRONZE_POWDER.get() && this.getNextTarnishingLevel() != this.getTarnishingLevel()) {
             this.changeOverTime();
             heldItem.consume(1, player);
             return InteractionResult.SUCCESS;
 
-        } else if (heldItem.getItem() instanceof AxeItem && this.getPreviousTarnishingLevel() != null) {
-            var bronzeEntity = switch(this.getPreviousTarnishingLevel()) {
-                case BRONZE -> new BronzeEntity(this.level());
-                case DISCOLORED -> new DiscoloredEntity(this.level());
-                case CORRODED -> new CorrodedEntity(this.level());
-                case null, default -> this;
-            };
-            replaceWith(bronzeEntity);
+        } else if (heldItem.getItem() instanceof AxeItem && this.getPreviousTarnishingLevel() != this.getTarnishingLevel()) {
+            updateTarnishingLevel(getPreviousTarnishingLevel().ordinal());
             heldItem.setDamageValue(heldItem.getDamageValue() - 1);
             return InteractionResult.SUCCESS;
         }
@@ -141,25 +140,18 @@ public sealed abstract class AbstractBronzeEntity extends Monster permits Bronze
                 .anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
 
         if(hasCatalystNearby)
-            this.getCrystallized();
+            this.crystallize();
         else
             this.changeOverTime();
     }
 
     private void changeOverTime() {
-        var bronzeEntity = switch(this.getNextTarnishingLevel()) {
-            case DISCOLORED -> new DiscoloredEntity(this.level());
-            case CORRODED -> new CorrodedEntity(this.level());
-            case TARNISHED -> new TarnishedEntity(this.level());
-            case null, default -> this;
-        };
-        replaceWith(bronzeEntity);
+        updateTarnishingLevel(this.getNextTarnishingLevel().ordinal());
     }
 
-    private void getCrystallized() {
-        if(this.getTarnishingLevel() == BronzeTarnishingStep.CRYSTALLIZED) return;
-        CrystallizedEntity crystallized = new CrystallizedEntity(this.level());
-        replaceWith(crystallized);
+    private void crystallize() {
+        if(this.getTarnishingLevel() == TarnishingBronzeStep.CRYSTALLIZED) return;
+        updateTarnishingLevel(4);
     }
 
     //TODO: Implement Bronze Sounds
@@ -206,53 +198,27 @@ public sealed abstract class AbstractBronzeEntity extends Monster permits Bronze
         this.isWaxed = waxed;
     }
 
-    private AbstractBronzeEntity copyStateTo(AbstractBronzeEntity entity1, AbstractBronzeEntity entity2) {
-        //entity2.setUUID(entity1.getUUID());
-        entity2.setHealth(entity1.getHealth());
-        for(var effect : entity1.getActiveEffects()) entity2.addEffect(effect);
-        entity2.setPos(entity1.getX(), entity1.getY(), entity1.getZ());
-        entity2.setLeashData(entity1.getLeashData());
-        entity2.setAggressive(entity1.isAggressive());
-        entity2.setAirSupply(entity1.getAirSupply());
-        entity2.setRot(entity1.yRotO, entity1.xRotO);
-        entity2.setYBodyRot(entity1.yBodyRot);
-        entity2.setYHeadRot(entity1.yHeadRot);
-        entity2.setCustomName(entity1.getCustomName());
-        entity2.setCustomNameVisible(entity1.isCustomNameVisible());
-        entity2.setDeltaMovement(entity1.getDeltaMovement());
-        entity2.setNoAi(entity1.isNoAi());
-        entity2.setTarget(entity1.getTarget());
-        AbstractBronzeEntity.copyPersistentData(entity1, entity2);
-        return entity2;
+    public TarnishingBronzeStep getTarnishingLevel() {
+        return TarnishingBronzeStep.byIndex(getStepIndex());
     }
 
-    private void replaceWith(AbstractBronzeEntity bronzeEntity) {
-        // If they're the same, it means there's no changes to be applied
-        if (this.getTarnishingLevel() == bronzeEntity.getTarnishingLevel()) return;
-
-        RubinatedNether.LOGGER.debug("Transforming {} into {}", this.getTarnishingLevel(), bronzeEntity.getTarnishingLevel());
-
-        try {
-            this.copyStateTo(this, bronzeEntity);
-            this.level().addFreshEntity(bronzeEntity);
-            this.discard();
-        } catch (Exception e) {
-            RubinatedNether.LOGGER.error("Something went wrong during Entity Tarnishing.");
-        }
+    private int getStepIndex() {
+        return this.entityData.get(DATA_ID_TARN_STEP);
     }
 
-    private static void copyPersistentData(AbstractBronzeEntity entity1, AbstractBronzeEntity entity2){
-        CompoundTag fromTag = entity1.getPersistentData();
-        CompoundTag toTag = entity2.getPersistentData();
+    public void updateTarnishingLevel(int step) {
+        this.entityData.set(DATA_ID_TARN_STEP, step);
+    }
 
-        for (String key : fromTag.getAllKeys()) {
-            toTag.put(key, fromTag.get(key).copy());
-        }
+    public TarnishingBronzeStep getNextTarnishingLevel() {
+        int step = this.getStepIndex();
+        return TarnishingBronzeStep.byIndex(step < 3 ? step + 1 : step);
+    }
+
+    public TarnishingBronzeStep getPreviousTarnishingLevel() {
+        int step = this.getStepIndex();
+        return TarnishingBronzeStep.byIndex(step > 0 ? step - 1 : step);
     }
 
     //TODO: Analyze and elaborate more specific behaviours and methods
-
-    public abstract BronzeTarnishingStep getTarnishingLevel();
-    public abstract BronzeTarnishingStep getNextTarnishingLevel();
-    public abstract BronzeTarnishingStep getPreviousTarnishingLevel();
 }

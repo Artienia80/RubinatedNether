@@ -1,16 +1,11 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.entity.living.AbstractBronzeEntity;
-import corundum.rubinated_nether.content.entity.living.BronzeEntity;
 import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
 import corundum.rubinated_nether.content.entity.client.BronzeModel;
 import corundum.rubinated_nether.content.entity.client.BronzeRenderer;
 import corundum.rubinated_nether.content.entity.layer.RNModelLayers;
-import corundum.rubinated_nether.content.entity.living.CorrodedEntity;
-import corundum.rubinated_nether.content.entity.living.CrystallizedEntity;
-import corundum.rubinated_nether.content.entity.living.DiscoloredEntity;
-import corundum.rubinated_nether.content.entity.living.TarnishedEntity;
+import corundum.rubinated_nether.content.entity.living.BronzeTypeEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -37,34 +32,10 @@ public class RNEntities {
 					.sized(0.5F, 0.5F)
 	);
 
-	public static final Supplier<EntityType<BronzeEntity>> BRONZE_ENTITY =
+	public static final Supplier<EntityType<BronzeTypeEntity>> BRONZE_ENTITY =
 			registerEntity(
 			"bronze",
-			EntityType.Builder.<BronzeEntity>of(BronzeEntity::new, MobCategory.MONSTER)
-					.sized(0.7F, 1.4F)
-	);
-	public static final Supplier<EntityType<DiscoloredEntity>> DISCOLORED_ENTITY =
-			registerEntity(
-			"discolored",
-			EntityType.Builder.<DiscoloredEntity>of(DiscoloredEntity::new, MobCategory.MONSTER)
-					.sized(0.7F, 1.4F)
-	);
-	public static final Supplier<EntityType<CorrodedEntity>> CORRODED_ENTITY =
-			registerEntity(
-			"corroded",
-			EntityType.Builder.<CorrodedEntity>of(CorrodedEntity::new, MobCategory.MONSTER)
-					.sized(0.7F, 1.4F)
-	);
-	public static final Supplier<EntityType<TarnishedEntity>> TARNISHED_ENTITY =
-			registerEntity(
-			"tarnished",
-			EntityType.Builder.<TarnishedEntity>of(TarnishedEntity::new, MobCategory.MONSTER)
-					.sized(0.7F, 1.4F)
-	);
-	public static final Supplier<EntityType<CrystallizedEntity>> CRYSTALLIZED_ENTITY =
-			registerEntity(
-			"crystallized",
-			EntityType.Builder.<CrystallizedEntity>of(CrystallizedEntity::new, MobCategory.MONSTER)
+			EntityType.Builder.of(BronzeTypeEntity::new, MobCategory.MONSTER)
 					.sized(0.7F, 1.4F)
 	);
 
@@ -79,22 +50,12 @@ public class RNEntities {
 
 	@SubscribeEvent
 	public static void registerAttributes(EntityAttributeCreationEvent event) {
-		event.put(RNEntities.BRONZE_ENTITY.get(), BronzeEntity.createAttributes().build());
-		event.put(RNEntities.DISCOLORED_ENTITY.get(), DiscoloredEntity.createAttributes().build());
-		event.put(RNEntities.CORRODED_ENTITY.get(), CorrodedEntity.createAttributes().build());
-		event.put(RNEntities.TARNISHED_ENTITY.get(), TarnishedEntity.createAttributes().build());
-		event.put(RNEntities.CRYSTALLIZED_ENTITY.get(), CrystallizedEntity.createAttributes().build());
+		event.put(RNEntities.BRONZE_ENTITY.get(), BronzeTypeEntity.createMonsterAttributes().build());
 	}
 
 	@SubscribeEvent
 	public static void init(FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> {
-			BronzeEntity.init();
-			DiscoloredEntity.init();
-			CorrodedEntity.init();
-			TarnishedEntity.init();
-			CrystallizedEntity.init();
-		});
+		event.enqueueWork(BronzeTypeEntity::init);
 	}
 
 	// RENDERERS
@@ -103,10 +64,6 @@ public class RNEntities {
 	public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event)
 	{
 		event.registerEntityRenderer(RNEntities.BRONZE_ENTITY.get(), BronzeRenderer::new);
-		event.registerEntityRenderer(RNEntities.DISCOLORED_ENTITY.get(), BronzeRenderer::new);
-		event.registerEntityRenderer(RNEntities.CORRODED_ENTITY.get(), BronzeRenderer::new);
-		event.registerEntityRenderer(RNEntities.TARNISHED_ENTITY.get(), BronzeRenderer::new);
-		event.registerEntityRenderer(RNEntities.CRYSTALLIZED_ENTITY.get(), BronzeRenderer::new);
 	}
 
 	// LAYERS

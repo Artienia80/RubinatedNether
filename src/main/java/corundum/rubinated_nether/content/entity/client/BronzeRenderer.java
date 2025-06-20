@@ -1,15 +1,13 @@
 package corundum.rubinated_nether.content.entity.client;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.BronzeTarnishingStep;
-import corundum.rubinated_nether.content.entity.living.AbstractBronzeEntity;
-import corundum.rubinated_nether.content.entity.living.BronzeEntity;
+import corundum.rubinated_nether.content.entity.living.BronzeTypeEntity;
 import corundum.rubinated_nether.content.entity.layer.RNModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class BronzeRenderer extends MobRenderer<AbstractBronzeEntity, BronzeModel<AbstractBronzeEntity>> {
+public class BronzeRenderer extends MobRenderer<BronzeTypeEntity, BronzeModel<BronzeTypeEntity>> {
     private static final ResourceLocation BRONZE_LOCATION =
             RubinatedNether.id("textures/entity/bronze/bronze.png");
     private static final ResourceLocation DISCOLORED_LOCATION =
@@ -26,7 +24,7 @@ public class BronzeRenderer extends MobRenderer<AbstractBronzeEntity, BronzeMode
     }
 
     @Override
-    public ResourceLocation getTextureLocation(AbstractBronzeEntity bronzeEntity) {
+    public ResourceLocation getTextureLocation(BronzeTypeEntity bronzeEntity) {
         return switch (bronzeEntity.getTarnishingLevel()) {
             case BRONZE -> BRONZE_LOCATION;
             case DISCOLORED -> DISCOLORED_LOCATION;
