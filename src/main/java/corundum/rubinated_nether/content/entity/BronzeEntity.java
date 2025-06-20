@@ -1,6 +1,8 @@
 package corundum.rubinated_nether.content.entity;
 
+import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -20,7 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import org.jetbrains.annotations.Nullable;
 
-public class BronzeEntity extends Monster {
+public class BronzeEntity extends TarnishingEntity {
     public int idleAnimationTimeout = 0;
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState walkAnimationState = new AnimationState();
@@ -75,7 +77,7 @@ public class BronzeEntity extends Monster {
 
     private void setupAnimationStates() {
         if (this.idleAnimationTimeout <= 0) {
-            this.idleAnimationTimeout = 120;
+            this.idleAnimationTimeout = 80;
             this.idleAnimationState.start(this.tickCount);
         } else {
             --this.idleAnimationTimeout;
@@ -83,23 +85,19 @@ public class BronzeEntity extends Monster {
     }
     @Override
     public void tick() {
-        if (this.level().isClientSide()) {
-            this.setupAnimationStates();
-        }
         super.tick();
 
-        if (this.level() == null || this.level().isClientSide) {
-            return;
-        }
-
-        if (isMoving()) {
-            walkAnimationState.startIfStopped(tickCount);
-            idleAnimationState.stop();
-        } else {
-            idleAnimationState.startIfStopped(tickCount);
-            walkAnimationState.stop();
+        if (!level().isClientSide()) {
+            if (isMoving()) {
+                walkAnimationState.startIfStopped(tickCount);
+                idleAnimationState.stop();
+            } else {
+                idleAnimationState.startIfStopped(tickCount);
+                walkAnimationState.stop();
+            }
         }
     }
+
 
     @Override
     public float getWalkTargetValue(BlockPos pos, LevelReader level) {
