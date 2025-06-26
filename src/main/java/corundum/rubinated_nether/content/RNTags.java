@@ -29,6 +29,8 @@ public final class RNTags {
 
 		public static final TagKey<Block> LIT_SOUL_BLOCKS = createTag(Registries.BLOCK, "lit_soul_blocks");
 
+		public static final TagKey<Block> CRYSTALLIZED_BLOCKS = createTag(Registries.BLOCK, "crystallized_blocks");
+
 		public static final TagKey<Block> CRYSTALLIZATION_CATALYST = createTag(Registries.BLOCK, "crystallization_catalyst");
 
 		public static final TagKey<Block> RAINBOW_LASER = createTag(Registries.BLOCK, "rainbow_laser");
