@@ -15,7 +15,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:corroded_bronze_bulb"
+          "name": "rubinated_nether:waxed_corroded_bronze_bulb"
         }
       ],
       "rolls": 1.0
@@ -37,7 +37,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:waxed_corroded_bronze_bulb"
+          "name": "rubinated_nether:corroded_bronze_bulb"
         }
       ],
       "rolls": 1.0

@@ -15,7 +15,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:discolored_bronze_block"
+          "name": "rubinated_nether:waxed_discolored_bronze_block"
         }
       ],
       "rolls": 1.0
@@ -37,7 +37,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:waxed_discolored_bronze_block"
+          "name": "rubinated_nether:discolored_bronze_block"
         }
       ],
       "rolls": 1.0

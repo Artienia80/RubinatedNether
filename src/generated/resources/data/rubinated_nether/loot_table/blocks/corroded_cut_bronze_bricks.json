@@ -15,7 +15,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:corroded_cut_bronze_bricks"
+          "name": "rubinated_nether:waxed_corroded_cut_bronze_bricks"
         }
       ],
       "rolls": 1.0
@@ -37,7 +37,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:waxed_corroded_cut_bronze_bricks"
+          "name": "rubinated_nether:corroded_cut_bronze_bricks"
         }
       ],
       "rolls": 1.0

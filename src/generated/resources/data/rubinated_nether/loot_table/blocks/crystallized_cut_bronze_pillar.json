@@ -15,7 +15,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:crystallized_cut_bronze_pillar"
+          "name": "rubinated_nether:waxed_crystallized_cut_bronze_pillar"
         }
       ],
       "rolls": 1.0
@@ -37,7 +37,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:waxed_crystallized_cut_bronze_pillar"
+          "name": "rubinated_nether:crystallized_cut_bronze_pillar"
         }
       ],
       "rolls": 1.0

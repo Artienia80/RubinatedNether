@@ -215,33 +215,33 @@ public class RNBlockLoot extends BlockLootSubProvider {
 	}
 
 	private void waxableDrop(DeferredBlock<?> block) {
-		var condition = LootItemBlockStatePropertyCondition
-			.hasBlockStateProperties(block.get())
-			.setProperties(
-				StatePropertiesPredicate.Builder
-					.properties()
-					.hasProperty(TarnishingBronze.WAXED, true)
-			);
+		var waxedCondition = LootItemBlockStatePropertyCondition
+				.hasBlockStateProperties(block.get())
+				.setProperties(
+						StatePropertiesPredicate.Builder
+								.properties()
+								.hasProperty(TarnishingBronze.WAXED, true)
+				);
 
 		var waxedItem = BuiltInRegistries.ITEM.get(
-			RubinatedNether.id(WaxableBlockItem.getWaxableItem(block))
+				RubinatedNether.id(WaxableBlockItem.getWaxableItem(block))
 		);
 
 		var fn = LootTable.lootTable()
-			.withPool(
-				LootPool.lootPool()
-					.when(condition)
-					.add(LootItem.lootTableItem(block))
-			)
-			.withPool(
-				LootPool.lootPool()
-					.when(condition.invert())	
-					.add(LootItem.lootTableItem(waxedItem))
-			);
+				.withPool(
+						LootPool.lootPool()
+								.when(waxedCondition)
+								.add(LootItem.lootTableItem(waxedItem))
+				)
+				.withPool(
+						LootPool.lootPool()
+								.when(waxedCondition.invert())
+								.add(LootItem.lootTableItem(block))
+				);
 
 		add(
-			block.get(), 
-			fn
+				block.get(),
+				fn
 		);
 	}
 }
