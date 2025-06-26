@@ -24,7 +24,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -100,6 +102,7 @@ public class BronzeEntity extends TarnishingEntity {
         this.goalSelector.addGoal(4, new AvoidEntityGoal(this, Player.class, 15.0F, 2.2, 2.2){
             public boolean canUse() { return BronzeEntity.this.getTarnishLevel() == 4 && super.canUse(); }
         });
+        this.goalSelector.addGoal(2, new CrystallizeNearbyBronzeGoal(this));
     }
 
     private void setupAnimationStates() {
@@ -136,12 +139,12 @@ public class BronzeEntity extends TarnishingEntity {
             }
         }
         if (!this.level().isClientSide()) {
-            List<BronzeEntity> bronzes = this.level().getEntitiesOfClass(BronzeEntity.class, this.getBoundingBox().inflate(10.0D));
+            List<BronzeEntity> bronzes = this.level().getEntitiesOfClass(BronzeEntity.class, this.getBoundingBox().inflate(25.0D));
 
             long crystallizedBronze = bronzes.stream().filter(BronzeEntity::isCrystallized).count();
             int cozinessLevel = (int) Math.min(crystallizedBronze - 1, 4);
 
-            List<Player> nearbyPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(10.0D));
+            List<Player> nearbyPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(25.0D));
 
             for (Player player : nearbyPlayers) {
                 if (crystallizedBronze > 0) {
@@ -303,5 +306,49 @@ public class BronzeEntity extends TarnishingEntity {
             super.stop();
         }
     }
+
+
+    public class CrystallizeNearbyBronzeGoal extends Goal {
+        private final BronzeEntity entity;
+        private int cooldown;
+
+        public CrystallizeNearbyBronzeGoal(BronzeEntity entity) {
+            this.entity = entity;
+        }
+
+        @Override
+        public boolean canUse() {
+            return entity.getTarnishLevel() == 4;
+        }
+
+        @Override
+        public void tick() {
+            if (--cooldown > 0) return;
+            cooldown = 20 + entity.getRandom().nextInt(200);
+
+            BlockPos origin = entity.blockPosition();
+            Level level = entity.level();
+
+            for (BlockPos pos : BlockPos.betweenClosed(origin.offset(-3, -3, -3), origin.offset(3, 3, 3))) {
+                BlockState state = level.getBlockState(pos);
+                Block block = state.getBlock();
+
+                if (block instanceof TarnishingBronze tarnishing) {
+                    if (state.hasProperty(TarnishingBronze.WAXED) && state.getValue(TarnishingBronze.WAXED)) {
+                        BlockState unwaxed = state.setValue(TarnishingBronze.WAXED, false);
+                        level.setBlock(pos, unwaxed, 3);
+                        return;
+                    }
+
+                    if (!state.getValue(TarnishingBronze.WAXED) && TarnishingBronze.canCrystallize(block)) {
+                        tarnishing.getCrystallized(state).ifPresent(newState -> level.setBlockAndUpdate(pos, newState));
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+
 
 }

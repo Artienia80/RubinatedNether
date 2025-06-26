@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.effect;
 
 import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.UUID;
 
@@ -21,10 +23,8 @@ public class BronzeDiseasedEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-        BlockPos feet = entity.blockPosition();
-        Block blockUnder = entity.level().getBlockState(feet.below()).getBlock();
-
-        boolean onCrystallized = blockUnder == RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get();
+        BlockState belowState = entity.level().getBlockState(entity.blockPosition().below());
+        boolean onCrystallized = belowState.is(RNTags.Blocks.CRYSTALLIZED_BLOCKS);
 
         if (onCrystallized) {
             entity.hurt(entity.damageSources().magic(), 1.0F);
