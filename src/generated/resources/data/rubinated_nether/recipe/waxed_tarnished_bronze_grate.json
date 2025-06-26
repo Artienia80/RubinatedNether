@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "rubinated_nether:waxed_tarnished_bronze_grate",
+  "key": {
+    "I": {
+      "item": "rubinated_nether:waxed_tarnished_bronze_block"
+    }
+  },
+  "pattern": [
+    " I ",
+    "I I",
+    " I "
+  ],
+  "result": {
+    "count": 4,
+    "id": "rubinated_nether:waxed_tarnished_bronze_grate"
+  }
+}

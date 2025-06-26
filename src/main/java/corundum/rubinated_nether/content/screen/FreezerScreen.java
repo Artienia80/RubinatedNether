@@ -15,6 +15,7 @@ public class FreezerScreen extends AbstractRecipeBookScreen<SingleRecipeInput, F
 
 	public FreezerScreen(FreezerMenu menu, Inventory inventory, Component title) {
 		super(menu, new FreezerRecipeBookComponent(), inventory, title);
+		this.inventoryLabelY = this.inventoryLabelY - 1;
 	}
 
 	@Override
@@ -22,6 +23,8 @@ public class FreezerScreen extends AbstractRecipeBookScreen<SingleRecipeInput, F
 		super.init();
 		this.initScreen(20);
 	}
+
+
 
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {

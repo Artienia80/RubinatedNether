@@ -409,6 +409,13 @@ public class RNRecipeProvider extends RecipeProvider {
 			9
 		);
 
+		twoByTwo(
+				recipeOutput,
+				RNItems.BRONZE_POWDER,
+				RNBlocks.BRONZE_BLOCK,
+				1
+		);
+
 		stairsAndSlab(
 				recipeOutput,
 				RNBlocks.CUT_BRONZE_BRICKS,
@@ -723,6 +730,76 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.ORNATE_RUBY_GLASS_PANE
 		);
 
+		grate(
+				recipeOutput,
+				RNBlocks.BRONZE_BLOCK,
+				RNBlocks.BRONZE_GRATE,
+				4
+		);
+
+		grate(
+				recipeOutput,
+				RNBlocks.DISCOLORED_BRONZE_BLOCK,
+				RNBlocks.DISCOLORED_BRONZE_GRATE,
+				4
+		);
+
+		grate(
+				recipeOutput,
+				RNBlocks.CORRODED_BRONZE_BLOCK,
+				RNBlocks.CORRODED_BRONZE_GRATE,
+				4
+		);
+
+		grate(
+				recipeOutput,
+				RNBlocks.TARNISHED_BRONZE_BLOCK,
+				RNBlocks.TARNISHED_BRONZE_GRATE,
+				4
+		);
+
+		grate(
+				recipeOutput,
+				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
+				RNBlocks.CRYSTALLIZED_BRONZE_GRATE,
+				4
+		);
+
+		grate(
+				recipeOutput,
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK))),
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_GRATE))),
+				4
+		);
+
+		grate(
+				recipeOutput,
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK))),
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_GRATE))),
+				4
+		);
+
+		grate(
+				recipeOutput,
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK))),
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_GRATE))),
+				4
+		);
+
+		grate(
+				recipeOutput,
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK))),
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_GRATE))),
+				4
+		);
+
+		grate(
+				recipeOutput,
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))),
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_GRATE))),
+				4
+		);
+
 		generateAllWaxingRecipes(recipeOutput);
 
 		waxRecipes(recipeOutput, FeatureFlagSet.of(FeatureFlags.VANILLA));
@@ -1033,16 +1110,6 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRONZE_BLOCK, 1)
-				.define('X', Items.COPPER_INGOT)
-				.define('O', RNItems.BRONZE_POWDER)
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(RNBlocks.BRONZE_BLOCK), has(RNBlocks.BRONZE_BLOCK))
-				.unlockedBy(getHasName(RNItems.BRONZE_POWDER), has(RNItems.BRONZE_POWDER))
-				.save(recipeOutput);
-
 	}
 
 	private void twoByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
@@ -1089,8 +1156,8 @@ public class RNRecipeProvider extends RecipeProvider {
 	private void stairsAndSlab(RecipeOutput recipeOutput, ItemLike input, ItemLike stairs, ItemLike slab) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4)
 			.define('S', input)
-			.pattern("  S")
-			.pattern(" SS")
+			.pattern("S  ")
+			.pattern("SS ")
 			.pattern("SSS")
 			.unlockedBy(getHasName(input), has(input))
 			.save(recipeOutput);
@@ -1119,22 +1186,27 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 	}
 
+	private void grate(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
+				.group(output.toString())
+				.define('I', input)
+				.pattern(" I ")
+				.pattern("I I")
+				.pattern(" I ")
+				.unlockedBy(getHasName(input), has(input))
+				.save(recipeOutput);
+	}
+
 	private void stonecutterList(RecipeOutput recipeOutput, ItemLike input, ItemLike... outputs) {
 		for (ItemLike output : outputs) {
 			var count = 1;
 
 			if (output.asItem().toString().contains("slab")) {
-				count++;
+				count = 2;
 			}
 
-			// Special case: any bronze block variant to chiseled bronze should yield 4
-			if ((input.asItem().toString().contains("bronze_block") ||
-					input.asItem().toString().contains("discolored_bronze") ||
-					input.asItem().toString().contains("corroded_bronze") ||
-					input.asItem().toString().contains("tarnished_bronze") ||
-					input.asItem().toString().contains("crystallized_bronze")) &&
-					output.asItem().toString().contains("chiseled")) {
-				count = 4;
+			if (isBronzeBlock(input)) {
+				count *= 4;
 			}
 
 			stonecutterResultFromBase(
@@ -1145,6 +1217,15 @@ public class RNRecipeProvider extends RecipeProvider {
 					count
 			);
 		}
+	}
+
+	private boolean isBronzeBlock(ItemLike input) {
+		String inputName = input.asItem().toString();
+		return inputName.contains("bronze_block") ||
+				inputName.contains("discolored_bronze_block") ||
+				inputName.contains("corroded_bronze_block") ||
+				inputName.contains("tarnished_bronze_block") ||
+				inputName.contains("crystallized_bronze_block");
 	}
 
 	private void wax(RecipeOutput recipeOutput, Supplier<? extends Block> block) {
