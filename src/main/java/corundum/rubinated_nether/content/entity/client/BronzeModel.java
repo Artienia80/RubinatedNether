@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
+import corundum.rubinated_nether.content.entity.animation.BronzeAnimations;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -14,43 +15,56 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
     private final ModelPart root;
 
     public BronzeModel(ModelPart root) {
-        this.root = root.getChild("bronze");
+        this.root = root.getChild("root");
     }
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition bronze = partdefinition.addOrReplaceChild("bronze", CubeListBuilder.create(), PartPose.offset(4.0F, 24.0F, -4.0F));
+        PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        PartDefinition head = bronze.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 12).addBox(-9.0F, -10.0F, -1.0F, 10.0F, 10.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -12.0F, 0.0F));
+        PartDefinition bronze = root.addOrReplaceChild("bronze", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition windup = head.addOrReplaceChild("windup", CubeListBuilder.create().texOffs(39, 14).mirror().addBox(-9.0F, -16.0F, 4.0F, 10.0F, 4.0F, 0.0F, new CubeDeformation(0.0F)).mirror(false)
-                .texOffs(49, 24).addBox(-5.0F, -15.0F, 3.0F, 2.0F, 5.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition head = bronze.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 12).addBox(-5.0F, -10.0F, -5.0F, 10.0F, 10.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -12.0F, 0.0F));
 
-        PartDefinition rod1 = bronze.addOrReplaceChild("rod1", CubeListBuilder.create(), PartPose.offset(-4.0F, -1.0F, 4.0F));
+        PartDefinition windup = head.addOrReplaceChild("windup", CubeListBuilder.create().texOffs(39, 14).mirror().addBox(-5.0F, -6.0F, 0.0F, 10.0F, 4.0F, 0.0F, new CubeDeformation(0.0F)).mirror(false)
+                .texOffs(49, 24).addBox(-1.0F, -5.0F, -1.0F, 2.0F, 5.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -10.0F, 0.0F));
+
+        PartDefinition rods = bronze.addOrReplaceChild("rods", CubeListBuilder.create(), PartPose.offset(0.0F, -1.0F, 0.0F));
+
+        PartDefinition rod1 = rods.addOrReplaceChild("rod1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition cube_r1 = rod1.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(12, 38).addBox(1.7189F, -12.2678F, -1.0F, 2.0F, 11.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
 
-        PartDefinition rod2 = bronze.addOrReplaceChild("rod2", CubeListBuilder.create(), PartPose.offsetAndRotation(-4.0F, -1.0F, 4.0F, 0.0F, -2.0944F, 0.0F));
+        PartDefinition rod2 = rods.addOrReplaceChild("rod2", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -2.0944F, 0.0F));
 
-        PartDefinition cube_r2 = rod2.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(12, 38).addBox(1.7189F, -12.2678F, -1.0F, 2.0F, 11.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
+        PartDefinition rod_2 = rod2.addOrReplaceChild("rod_2", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition rod3 = bronze.addOrReplaceChild("rod3", CubeListBuilder.create(), PartPose.offsetAndRotation(-4.0F, -1.0F, 4.0F, 0.0F, 3.1416F, 0.0F));
+        PartDefinition cube_r2 = rod_2.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(12, 38).addBox(1.7189F, -12.2678F, -1.0F, 2.0F, 11.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
+
+        PartDefinition rod3 = rods.addOrReplaceChild("rod3", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 3.1416F, 0.0F));
 
         PartDefinition cube_r3 = rod3.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(12, 38).addBox(1.7189F, -12.2678F, -1.0F, 2.0F, 11.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
 
-        PartDefinition rod4 = bronze.addOrReplaceChild("rod4", CubeListBuilder.create(), PartPose.offsetAndRotation(-4.0F, -1.0F, 4.0F, 0.0F, 1.0472F, 0.0F));
+        PartDefinition rod4 = rods.addOrReplaceChild("rod4", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 1.0472F, 0.0F));
 
-        PartDefinition cube_r4 = rod4.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(12, 38).addBox(1.7189F, -12.2678F, -1.0F, 2.0F, 11.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
+        PartDefinition rod_4 = rod4.addOrReplaceChild("rod_4", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition rod5 = bronze.addOrReplaceChild("rod5", CubeListBuilder.create(), PartPose.offsetAndRotation(-4.0F, -1.0F, 4.0F, 0.0F, -1.0472F, 0.0F));
+        PartDefinition cube_r4 = rod_4.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(12, 38).addBox(1.7189F, -12.2678F, -1.0F, 2.0F, 11.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
 
-        PartDefinition cube_r5 = rod5.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(12, 38).addBox(1.7189F, -12.2678F, -1.0F, 2.0F, 11.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
+        PartDefinition rod5 = rods.addOrReplaceChild("rod5", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -1.0472F, 0.0F));
 
-        PartDefinition rod6 = bronze.addOrReplaceChild("rod6", CubeListBuilder.create(), PartPose.offsetAndRotation(-4.0F, -1.0F, 4.0F, 0.0F, 2.0944F, 0.0F));
+        PartDefinition rod_5 = rod5.addOrReplaceChild("rod_5", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition cube_r6 = rod6.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(12, 38).addBox(1.7189F, -12.2678F, -1.0F, 2.0F, 11.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
+        PartDefinition cube_r5 = rod_5.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(12, 38).addBox(1.7189F, -12.2678F, -1.0F, 2.0F, 11.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(12, 38).addBox(1.7189F, -12.2678F, -1.0F, 2.0F, 11.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
+
+        PartDefinition rod6 = rods.addOrReplaceChild("rod6", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 2.0944F, 0.0F));
+
+        PartDefinition rod_6 = rod6.addOrReplaceChild("rod_6", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition cube_r6 = rod_6.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(12, 38).addBox(1.7189F, -12.2678F, -1.0F, 2.0F, 11.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
@@ -61,9 +75,9 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
         this.applyHeadRotation(netHeadYaw,headPitch);
 
 
-        //this.animateWalk(MosquitoAnimations.ANIM_VAMPIRE_WALK, limbSwing, limbSwingAmount, 4f, 54);
-        //this.animate(entity.idleAnimationState,MosquitoAnimations.ANIM_VAMPIRE_IDLE,ageInTicks, 1f);
-        //this.animate(entity.attackAnimationState,MosquitoAnimations.ANIM_VAMPIRE_ATTACK,ageInTicks, 1f);
+        this.animateWalk(BronzeAnimations.MOVE, limbSwing, limbSwingAmount, 4f, 54);
+        this.animate(entity.idleAnimationState,BronzeAnimations.IDLE,ageInTicks, 1f);
+        this.animate(entity.unaffectedAttackAnimationState,BronzeAnimations.BASH,ageInTicks, 1f);
         //this.animate(entity.dieAnimationState,MosquitoAnimations.ANIM_VAMPIRE_PERISH,ageInTicks, 1f);
 
     }

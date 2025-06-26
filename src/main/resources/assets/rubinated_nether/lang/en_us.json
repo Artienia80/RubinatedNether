@@ -255,6 +255,9 @@
 
   "rubinated_nether.midnightconfig.category.brazier": "Brazier",
   "rubinated_nether.midnightconfig.category.chandelier": "Chandelier",
-  "rubinated_nether.midnightconfig.category.client": "Client"
+  "rubinated_nether.midnightconfig.category.client": "Client",
 
+  "entity.rubinated_nether.bronze": "Bronze",
+
+  "effect.rubinated_nether.bronze_diseased": "Bronze Diseased"
 }

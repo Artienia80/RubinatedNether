@@ -62,6 +62,7 @@ public class RubinatedNether {
 		modEventBus.addListener(Datagen::datagen);
 		modEventBus.addListener(DatapackRegistry::datapackRegistry);
 		RNEnchantmentEffects.register(modEventBus);
+		RNEffects.register(modEventBus);
 
 
 		for (var registry : REGISTRIES)

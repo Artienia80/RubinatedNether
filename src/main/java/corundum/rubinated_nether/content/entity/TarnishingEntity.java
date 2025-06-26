@@ -162,7 +162,7 @@ public class TarnishingEntity extends Monster {
             return InteractionResult.sidedSuccess(level().isClientSide());
         }
 
-        return super.interact(player, hand);
+        return super.mobInteract(player, hand);
     }
 
     @Override
