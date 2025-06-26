@@ -17,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.*;
@@ -114,5 +115,38 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
         }
 
         return false;
+    }
+
+    // Add these methods to your BronzeGrateBlock class
+
+    @Override
+    public int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) {
+        return 0; // Allows full light through
+    }
+
+    @Override
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
+        return true; // Allows skylight to pass through
+    }
+
+    @Override
+    public float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
+        return 1.0F; // No shadow/shade reduction
+    }
+
+    @Override
+    public boolean useShapeForLightOcclusion(BlockState state) {
+        return true; // Use the block's shape for light occlusion calculations
+    }
+
+    @Override
+    public VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return Shapes.empty(); // No visual obstruction for rendering
+    }
+
+    @Override
+    public boolean skipRendering(BlockState state, BlockState adjacentState, Direction direction) {
+        // Don't skip rendering when adjacent to another grate of the same type
+        return adjacentState.is(this) ? true : super.skipRendering(state, adjacentState, direction);
     }
 }

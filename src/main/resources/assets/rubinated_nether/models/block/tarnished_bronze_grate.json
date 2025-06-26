@@ -1,6 +1,23 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
   "textures": {
-    "all": "rubinated_nether:block/bronze/bronze_grate/tarnished_bronze_grate"
-  }
+    "texture": "rubinated_nether:block/bronze/bronze_grate/tarnished_bronze_grate",
+    "particle": "rubinated_nether:block/bronze/bronze_grate/tarnished_bronze_grate"
+
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": { "texture": "#texture" },
+        "east":  { "texture": "#texture" },
+        "south": { "texture": "#texture" },
+        "west":  { "texture": "#texture" },
+        "up":    { "texture": "#texture" },
+        "down":  { "texture": "#texture" }
+      }
+    }
+  ]
 }

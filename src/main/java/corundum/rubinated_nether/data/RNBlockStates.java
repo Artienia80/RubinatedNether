@@ -181,15 +181,6 @@ public class RNBlockStates extends BlockStateProvider {
 			RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS
 		);
 
-		subfolder(
-				"bronze/bronze_grate/",
-				RNBlocks.BRONZE_GRATE,
-				RNBlocks.DISCOLORED_BRONZE_GRATE,
-				RNBlocks.CORRODED_BRONZE_GRATE,
-				RNBlocks.TARNISHED_BRONZE_GRATE,
-				RNBlocks.CRYSTALLIZED_BRONZE_GRATE
-		);
-
 		this.slabBlock(
 			RNBlocks.CUT_BRONZE_BRICKS_SLAB.get(),
 			modLoc("block/cut_bronze_bricks"),

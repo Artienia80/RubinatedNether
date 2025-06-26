@@ -737,8 +737,11 @@ public class RNBlocks {
 							.mapColor(MapColor.GOLD)
 							.requiresCorrectToolForDrops()
 							.strength(4.0F, 110.0F)
-							.sound(SoundType.COPPER)
+							.sound(SoundType.COPPER_GRATE)
 							.randomTicks()
+							.noOcclusion()
+							.isViewBlocking(RNBlocks::never)
+							.isSuffocating(RNBlocks::never)
 			)
 	);
 
@@ -749,9 +752,12 @@ public class RNBlocks {
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
 							.requiresCorrectToolForDrops()
-							.strength(4.0F, 110.0F)
-							.sound(SoundType.COPPER)
+							.strength(8.0F, 220.0F)
+							.sound(SoundType.COPPER_GRATE)
 							.randomTicks()
+							.noOcclusion()
+							.isViewBlocking(RNBlocks::never)
+							.isSuffocating(RNBlocks::never)
 			)
 	);
 
@@ -762,22 +768,12 @@ public class RNBlocks {
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
 							.requiresCorrectToolForDrops()
-							.strength(4.0F, 110.0F)
-							.sound(SoundType.COPPER)
+							.strength(16.0F, 440.0F)
+							.sound(SoundType.COPPER_GRATE)
 							.randomTicks()
-			)
-	);
-
-	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_GRATE = registerWaxableBlock(
-			"crystallized_bronze_grate",
-			() -> new BronzeGrateBlock(
-					TarnishingBronze.TarnishState.CRYSTALLIZED,
-					BlockBehaviour.Properties.of()
-							.mapColor(MapColor.GOLD)
-							.requiresCorrectToolForDrops()
-							.strength(4.0F, 110.0F)
-							.sound(SoundType.COPPER)
-							.randomTicks()
+							.noOcclusion()
+							.isViewBlocking(RNBlocks::never)
+							.isSuffocating(RNBlocks::never)
 			)
 	);
 
@@ -788,14 +784,34 @@ public class RNBlocks {
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
 							.requiresCorrectToolForDrops()
-							.strength(4.0F, 110.0F)
-							.sound(SoundType.COPPER)
+							.strength(32.0F, 880.0F)
+							.sound(SoundType.COPPER_GRATE)
 							.randomTicks()
+							.noOcclusion()
+							.isViewBlocking(RNBlocks::never)
+							.isSuffocating(RNBlocks::never)
+
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_GRATE = registerWaxableBlock(
+			"crystallized_bronze_grate",
+			() -> new BronzeGrateBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.requiresCorrectToolForDrops()
+							.strength(1.0F, 6.0F)
+							.sound(SoundType.COPPER_GRATE)
+							.randomTicks()
+							.noOcclusion()
+							.isViewBlocking(RNBlocks::never)
+							.isSuffocating(RNBlocks::never)
+
 			)
 	);
 
 
-	/// Registers a block and an item 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);
 
@@ -807,7 +823,6 @@ public class RNBlocks {
 		return register;
 	}
 
-	/// Registers a block and two items - a waxed and an unwaxed version
 	public static <T extends Block> DeferredBlock<T> registerWaxableBlock(String name, Supplier<T> block) {
 		var register = registerBlockAndItem(name, block);
 
