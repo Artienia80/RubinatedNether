@@ -16,9 +16,9 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class RNBlockTags extends BlockTagsProvider {
 	public RNBlockTags(
-		PackOutput output, 
-		CompletableFuture<HolderLookup.Provider> lookupProvider, 
-		ExistingFileHelper existingFileHelper
+			PackOutput output,
+			CompletableFuture<HolderLookup.Provider> lookupProvider,
+			ExistingFileHelper existingFileHelper
 	) {
 		super(output, lookupProvider, RubinatedNether.MODID, existingFileHelper);
 	}
@@ -28,29 +28,29 @@ public class RNBlockTags extends BlockTagsProvider {
 	protected void addTags(Provider provider) {
 		// Mining tags 
 		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
-			RNBlocks.NETHER_RUBY_ORE.get(),
-			RNBlocks.MOLTEN_RUBY_ORE.get(),
-			RNBlocks.RUBINATED_BLACKSTONE.get(),
+				RNBlocks.NETHER_RUBY_ORE.get(),
+				RNBlocks.MOLTEN_RUBY_ORE.get(),
+				RNBlocks.RUBINATED_BLACKSTONE.get(),
 
-			RNBlocks.RUBY_BLOCK.get(),
-			RNBlocks.MOLTEN_RUBY_BLOCK.get(),
-			RNBlocks.BLEEDING_OBSIDIAN.get(),
+				RNBlocks.RUBY_BLOCK.get(),
+				RNBlocks.MOLTEN_RUBY_BLOCK.get(),
+				RNBlocks.BLEEDING_OBSIDIAN.get(),
 
-			RNBlocks.RUBY_LANTERN.get(),
-			RNBlocks.CHANDELIER.get(),
-			RNBlocks.LAVA_LAMP.get(),
-			RNBlocks.DRY_ICE.get(),
-			RNBlocks.SOAKSTONE.get(),
+				RNBlocks.RUBY_LANTERN.get(),
+				RNBlocks.CHANDELIER.get(),
+				RNBlocks.LAVA_LAMP.get(),
+				RNBlocks.DRY_ICE.get(),
+				RNBlocks.SOAKSTONE.get(),
 
-			RNBlocks.RUBY_GLASS.get(),
-			RNBlocks.RUBY_GLASS_PANE.get(),
-			RNBlocks.ORNATE_RUBY_GLASS.get(),
-			RNBlocks.ORNATE_RUBY_GLASS_PANE.get(),
-			RNBlocks.MOLTEN_RUBY_GLASS.get(),
-			RNBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
+				RNBlocks.RUBY_GLASS.get(),
+				RNBlocks.RUBY_GLASS_PANE.get(),
+				RNBlocks.ORNATE_RUBY_GLASS.get(),
+				RNBlocks.ORNATE_RUBY_GLASS_PANE.get(),
+				RNBlocks.MOLTEN_RUBY_GLASS.get(),
+				RNBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
 
-			RNBlocks.FREEZER.get(),
-			RNBlocks.BRAZIER.get(),
+				RNBlocks.FREEZER.get(),
+				RNBlocks.BRAZIER.get(),
 
 				RNBlocks.SHRINE_STONE.get(),
 
@@ -125,26 +125,26 @@ public class RNBlockTags extends BlockTagsProvider {
 		);
 
 		this.tag(BlockTags.NEEDS_STONE_TOOL).add(
-			RNBlocks.RUBY_GLASS.get(),
-			RNBlocks.RUBY_GLASS_PANE.get(),
-			RNBlocks.ORNATE_RUBY_GLASS.get(),
-			RNBlocks.ORNATE_RUBY_GLASS_PANE.get(),
-			RNBlocks.MOLTEN_RUBY_GLASS.get(),
-			RNBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
+				RNBlocks.RUBY_GLASS.get(),
+				RNBlocks.RUBY_GLASS_PANE.get(),
+				RNBlocks.ORNATE_RUBY_GLASS.get(),
+				RNBlocks.ORNATE_RUBY_GLASS_PANE.get(),
+				RNBlocks.MOLTEN_RUBY_GLASS.get(),
+				RNBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
 
-			RNBlocks.CHANDELIER.get()
+				RNBlocks.CHANDELIER.get()
 		);
 
 		this.tag(BlockTags.NEEDS_DIAMOND_TOOL).add(
-			RNBlocks.NETHER_RUBY_ORE.get(),
-			RNBlocks.MOLTEN_RUBY_ORE.get(),
-			RNBlocks.RUBINATED_BLACKSTONE.get(),
+				RNBlocks.NETHER_RUBY_ORE.get(),
+				RNBlocks.MOLTEN_RUBY_ORE.get(),
+				RNBlocks.RUBINATED_BLACKSTONE.get(),
 
-			RNBlocks.RUBY_BLOCK.get(),
-			RNBlocks.MOLTEN_RUBY_BLOCK.get(),
-			RNBlocks.BLEEDING_OBSIDIAN.get(),
+				RNBlocks.RUBY_BLOCK.get(),
+				RNBlocks.MOLTEN_RUBY_BLOCK.get(),
+				RNBlocks.BLEEDING_OBSIDIAN.get(),
 
-			RNBlocks.FREEZER.get(),
+				RNBlocks.FREEZER.get(),
 
 				RNBlocks.SHRINE_STONE.get(),
 
@@ -218,8 +218,8 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get()
 		);
 
-				this.tag(RNTags.Blocks.COLDEST_ICE).add(
-			Blocks.BLUE_ICE	
+		this.tag(RNTags.Blocks.COLDEST_ICE).add(
+				Blocks.BLUE_ICE
 		);
 
 		this.tag(RNTags.Blocks.LIT_SOUL_BLOCKS).add(
@@ -228,7 +228,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				Blocks.SOUL_LANTERN,
 				Blocks.SOUL_TORCH,
 				Blocks.SOUL_WALL_TORCH
-				);
+		);
 
 		this.tag(RNTags.Blocks.CRYSTALLIZED_BLOCKS).add(
 				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get(),
@@ -238,7 +238,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_BULB.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get()
-				);
+		);
 
 		this.tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).addTag(RNTags.Blocks.CRYSTALLIZED_BLOCKS);
 
@@ -275,9 +275,146 @@ public class RNBlockTags extends BlockTagsProvider {
 		);
 
 		this.tag(BlockTags.WALLS).add(
-			RNBlocks.SHRINE_STONE_TILES_WALL.get(),
-			RNBlocks.SHRINE_STONE_BRICKS_WALL.get(),
-			RNBlocks.POLISHED_SHRINE_STONE_WALL.get()
+				RNBlocks.SHRINE_STONE_TILES_WALL.get(),
+				RNBlocks.SHRINE_STONE_BRICKS_WALL.get(),
+				RNBlocks.POLISHED_SHRINE_STONE_WALL.get()
+		);
+
+		this.tag(RNTags.Blocks.GROWABLE_SURFACE).add(
+				RNBlocks.SHRINE_STONE.get(),
+				RNBlocks.POLISHED_SHRINE_STONE.get(),
+				RNBlocks.SHRINE_STONE_TILES.get(),
+				RNBlocks.SHRINE_STONE_PILLAR.get(),
+				RNBlocks.SHRINE_STONE_BRICKS.get(),
+				RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
+				RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
+				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get()
+		);
+
+
+		this.tag(RNTags.Blocks.SHRINE_STONE_CANDIDATE).add(
+				Blocks.STONE,
+				Blocks.DEEPSLATE,
+				Blocks.BLACKSTONE,
+				Blocks.ANDESITE,
+				Blocks.DIORITE,
+				Blocks.GRANITE,
+				Blocks.TUFF
+		);
+
+		this.tag(RNTags.Blocks.POLISHED_SHRINE_STONE_CANDIDATE).add(
+				Blocks.SMOOTH_STONE,
+				Blocks.POLISHED_DEEPSLATE,
+				Blocks.POLISHED_BLACKSTONE,
+				Blocks.POLISHED_ANDESITE,
+				Blocks.POLISHED_DIORITE,
+				Blocks.POLISHED_GRANITE,
+				Blocks.POLISHED_TUFF
+		);
+
+		this.tag(RNTags.Blocks.POLISHED_SHRINE_STONE_STAIRS_CANDIDATE).add(
+				Blocks.POLISHED_DEEPSLATE_STAIRS,
+				Blocks.POLISHED_BLACKSTONE_STAIRS,
+				Blocks.POLISHED_ANDESITE_STAIRS,
+				Blocks.POLISHED_DIORITE_STAIRS,
+				Blocks.POLISHED_GRANITE_STAIRS,
+				Blocks.POLISHED_TUFF_STAIRS
+		);
+
+		this.tag(RNTags.Blocks.POLISHED_SHRINE_STONE_SLAB_CANDIDATE).add(
+				Blocks.SMOOTH_STONE_SLAB,
+				Blocks.POLISHED_DEEPSLATE_SLAB,
+				Blocks.POLISHED_BLACKSTONE_SLAB,
+				Blocks.POLISHED_ANDESITE_SLAB,
+				Blocks.POLISHED_DIORITE_SLAB,
+				Blocks.POLISHED_GRANITE_SLAB,
+				Blocks.POLISHED_TUFF_SLAB
+		);
+
+		this.tag(RNTags.Blocks.POLISHED_SHRINE_STONE_WALL_CANDIDATE).add(
+				Blocks.POLISHED_DEEPSLATE_WALL,
+				Blocks.POLISHED_BLACKSTONE_WALL,
+				Blocks.ANDESITE_WALL,
+				Blocks.DIORITE_WALL,
+				Blocks.GRANITE_WALL,
+				Blocks.POLISHED_TUFF_WALL
+		);
+
+		// No vanilla blocks, this is for modcompat
+		this.tag(RNTags.Blocks.SHRINE_STONE_PILLAR_CANDIDATE);
+
+		this.tag(RNTags.Blocks.CHISELED_SHRINE_STONE_BRICKS_CANDIDATE).add(
+				Blocks.CHISELED_STONE_BRICKS,
+				Blocks.CHISELED_DEEPSLATE,
+				Blocks.CHISELED_POLISHED_BLACKSTONE,
+				Blocks.CHISELED_TUFF,
+				Blocks.CHISELED_TUFF_BRICKS
+		);
+
+		this.tag(RNTags.Blocks.SHRINE_STONE_BRICKS_CANDIDATE).add(
+				Blocks.STONE_BRICKS,
+				Blocks.MOSSY_STONE_BRICKS,
+				Blocks.CRACKED_STONE_BRICKS,
+				Blocks.DEEPSLATE_BRICKS,
+				Blocks.CRACKED_DEEPSLATE_BRICKS,
+				Blocks.POLISHED_BLACKSTONE_BRICKS,
+				Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS,
+				Blocks.TUFF_BRICKS
+		);
+
+		this.tag(RNTags.Blocks.SHRINE_STONE_BRICKS_STAIRS_CANDIDATE).add(
+				Blocks.STONE_BRICK_STAIRS,
+				Blocks.MOSSY_STONE_BRICK_STAIRS,
+				Blocks.DEEPSLATE_BRICK_STAIRS,
+				Blocks.POLISHED_BLACKSTONE_BRICK_STAIRS,
+				Blocks.TUFF_BRICK_STAIRS
+		);
+
+		this.tag(RNTags.Blocks.SHRINE_STONE_BRICKS_SLAB_CANDIDATE).add(
+				Blocks.STONE_BRICK_SLAB,
+				Blocks.MOSSY_STONE_BRICK_SLAB,
+				Blocks.DEEPSLATE_BRICK_SLAB,
+				Blocks.POLISHED_BLACKSTONE_BRICK_SLAB,
+				Blocks.TUFF_BRICK_SLAB
+		);
+
+		this.tag(RNTags.Blocks.SHRINE_STONE_BRICKS_WALL_CANDIDATE).add(
+				Blocks.STONE_BRICK_WALL,
+				Blocks.MOSSY_STONE_BRICK_WALL,
+				Blocks.DEEPSLATE_BRICK_WALL,
+				Blocks.POLISHED_BLACKSTONE_BRICK_WALL,
+				Blocks.TUFF_BRICK_WALL
+		);
+
+		this.tag(RNTags.Blocks.SHRINE_STONE_TILES_CANDIDATE).add(
+				Blocks.DEEPSLATE_TILES,
+				Blocks.CRACKED_DEEPSLATE_TILES
+		);
+
+		this.tag(RNTags.Blocks.SHRINE_STONE_TILES_STAIRS_CANDIDATE).add(
+				Blocks.DEEPSLATE_TILE_STAIRS
+		);
+
+		this.tag(RNTags.Blocks.SHRINE_STONE_TILES_SLAB_CANDIDATE).add(
+				Blocks.DEEPSLATE_TILE_SLAB
+		);
+
+		this.tag(RNTags.Blocks.SHRINE_STONE_TILES_WALL_CANDIDATE).add(
+				Blocks.DEEPSLATE_TILE_WALL
+		);
+
+		this.tag(RNTags.Blocks.SHRINE_STONE_BLOCKS).addTag(RNTags.Blocks.GROWABLE_SURFACE);
+		this.tag(RNTags.Blocks.SHRINE_STONE_BLOCKS).add(
+				RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
+				RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(),
+				RNBlocks.POLISHED_SHRINE_STONE_WALL.get(),
+				RNBlocks.SHRINE_STONE_TILES_SLAB.get(),
+				RNBlocks.SHRINE_STONE_TILES_STAIRS.get(),
+				RNBlocks.SHRINE_STONE_TILES_WALL.get(),
+				RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get(),
+				RNBlocks.SHRINE_STONE_BRICKS_WALL.get(),
+				RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(),
+				RNBlocks.RUNESTONE.get()
 		);
 	}
 }

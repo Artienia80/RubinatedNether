@@ -2,10 +2,13 @@ package corundum.rubinated_nether.content;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -15,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiPredicate;
+
 
 public class RNRubinateEverywhere {
 
@@ -42,6 +46,7 @@ public class RNRubinateEverywhere {
             this(inputBlock, outputBlock, radius, attempts, null);
         }
 
+
         public Block getInputBlock() {
             return inputBlock;
         }
@@ -64,6 +69,17 @@ public class RNRubinateEverywhere {
     }
 
     public static class Conditions {
+
+        public static final BiPredicate<Level, BlockPos> HAS_GROWABLE_BLOCK_NEIGHBOR = (level, pos) -> {
+            for (Direction direction : Direction.values()) {
+                BlockPos neighborPos = pos.relative(direction);
+                BlockState neighborState = level.getBlockState(neighborPos);
+                if (neighborState.is(RNTags.Blocks.GROWABLE_SURFACE)) {
+                    return true;
+                }
+            }
+            return false;
+        };
 
         public static final BiPredicate<Level, BlockPos> HAS_SOLID_NEIGHBOR_NOT_RUNESTONE_SIDE = (level, pos) -> {
             for (Direction direction : Direction.values()) {
@@ -149,6 +165,13 @@ public class RNRubinateEverywhere {
         }
     }
 
+    public static void addTagConversionRule(List<ConversionRule> rules, TagKey<Block> inputTag, Block outputBlock, double chance, int priority) {
+        Registry<Block> blockRegistry = BuiltInRegistries.BLOCK;
+        blockRegistry.getTagOrEmpty(inputTag).forEach(blockHolder -> {
+            rules.add(new ConversionRule(blockHolder.value(), outputBlock, chance, priority));
+        });
+    }
+
     private static BlockPos generateRandomPositionInSphere(BlockPos center, double radius, RandomSource random) {
         double x, y, z;
         do {
@@ -165,6 +188,7 @@ public class RNRubinateEverywhere {
 
         ServerLevel serverLevel = (ServerLevel) level;
 
+        // Play sound at the target position
         serverLevel.playSound(
                 null,
                 targetPos,
@@ -174,28 +198,28 @@ public class RNRubinateEverywhere {
                 0.8F + random.nextFloat() * 0.4F
         );
 
-        double deltaX = targetPos.getX() - altarPos.getX();
-        double deltaY = targetPos.getY() - altarPos.getY();
-        double deltaZ = targetPos.getZ() - altarPos.getZ();
+        // Spawn particles at the target block and send them upwards like a beam of light
+        double spawnX = targetPos.getX() + 0.5;
+        double spawnY = targetPos.getY() + 1.0; // Slightly above the block
+        double spawnZ = targetPos.getZ() + 0.5;
 
-        double startX = altarPos.getX() + 0.5;
-        double startY = altarPos.getY() + 2.0;
-        double startZ = altarPos.getZ() + 0.5;
+        // Create upward beam particles
+        for (int i = 0; i < 8 + random.nextInt(5); i++) {
+            // Tighter spawn position around the target block
+            double particleX = spawnX + (random.nextFloat() - 0.5) * 0.4;
+            double particleY = spawnY + random.nextFloat() * 0.2;
+            double particleZ = spawnZ + (random.nextFloat() - 0.5) * 0.4;
 
-        for (int i = 0; i < 5 + random.nextInt(3); i++) {
-            double particleStartX = startX + (random.nextDouble() - 0.5) * 0.3;
-            double particleStartY = startY + (random.nextDouble() - 0.5) * 0.3;
-            double particleStartZ = startZ + (random.nextDouble() - 0.5) * 0.3;
-
-            double velocityX = deltaX * 0.1 + (random.nextDouble() - 0.5) * 0.02;
-            double velocityY = Math.max(0.05, deltaY * 0.1 + 0.15 + random.nextDouble() * 0.1); // Always upward with arc
-            double velocityZ = deltaZ * 0.1 + (random.nextDouble() - 0.5) * 0.02;
+            // Upward velocity with minimal horizontal drift (tighter beam)
+            double velocityX = (random.nextFloat() - 0.5) * 0.05; // Less horizontal drift
+            double velocityY = 0.4 + random.nextFloat() * 0.3; // Strong upward motion
+            double velocityZ = (random.nextFloat() - 0.5) * 0.05; // Less horizontal drift
 
             serverLevel.sendParticles(
                     RNParticleTypes.RUBINATE.get(),
-                    particleStartX,
-                    particleStartY,
-                    particleStartZ,
+                    particleX,
+                    particleY,
+                    particleZ,
                     1,
                     velocityX, velocityY, velocityZ,
                     0.1
@@ -203,8 +227,18 @@ public class RNRubinateEverywhere {
         }
     }
 
+
+
     public static void RubinateArea(Level level, BlockPos altarPos) {
         List<ConversionRule> rules = new ArrayList<>();
+
+
+        // RUBY FARM - ORE
+        rules.add(new ConversionRule(
+                Blocks.MAGMA_BLOCK,
+                RNBlocks.MOLTEN_RUBY_ORE.get(),
+                6.0,
+                15));
 
         rules.add(new ConversionRule(
                 Blocks.NETHERRACK,
@@ -218,6 +252,7 @@ public class RNRubinateEverywhere {
                 10.0,
                 50));
 
+        // RUBY FARM - SHRINE STONE
         rules.add(new ConversionRule(
                 RNBlocks.SHRINE_STONE_BRICKS.get(),
                 RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
@@ -232,13 +267,39 @@ public class RNRubinateEverywhere {
                 200
         ));
 
+        // RUBY FARM - CRYSTALS
         rules.add(new ConversionRule(
                 Blocks.AIR,
                 Blocks.SMALL_AMETHYST_BUD,
                 15.0,
                 300,
-                Conditions.HAS_SOLID_NEIGHBOR_NOT_RUNESTONE_SIDE
+                Conditions.HAS_GROWABLE_BLOCK_NEIGHBOR
         ));
+
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_CANDIDATE, RNBlocks.SHRINE_STONE.get(), 20.0, 1000);
+
+        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE.get(), 20.0, 1000);
+        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_STAIRS_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(), 20.0, 1000);
+        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_SLAB_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(), 20.0, 1000);
+        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_WALL_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE_WALL.get(), 20.0, 1000);
+
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_PILLAR_CANDIDATE, RNBlocks.SHRINE_STONE_PILLAR.get(), 20.0, 1000);
+
+        addTagConversionRule(rules, RNTags.Blocks.CHISELED_SHRINE_STONE_BRICKS_CANDIDATE, RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(), 20.0, 1000);
+
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS.get(), 20.0, 1000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_STAIRS_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get(), 20.0, 1000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_SLAB_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(), 20.0, 1000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_WALL_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_WALL.get(), 20.0, 1000);
+
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_CANDIDATE, RNBlocks.SHRINE_STONE_TILES.get(), 20.0, 1000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_STAIRS_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_STAIRS.get(), 20.0, 1000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_SLAB_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_SLAB.get(), 20.0, 1000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_WALL_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_WALL.get(), 20.0, 1000);
+
+
+
+
 
         applyConversions(level, altarPos, rules);
     }

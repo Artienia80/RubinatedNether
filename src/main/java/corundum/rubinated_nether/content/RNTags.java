@@ -36,6 +36,33 @@ public final class RNTags {
 		public static final TagKey<Block> RAINBOW_LASER = createTag(Registries.BLOCK, "rainbow_laser");
 
 		public static final TagKey<Block> MINEABLE_WITH_DRILL = createTag(Registries.BLOCK, "mineable_with_drill");
+
+		public static final TagKey<Block> GROWABLE_SURFACE = createTag(Registries.BLOCK, "growable_surface");
+
+
+		public static final TagKey<Block> SHRINE_STONE_BLOCKS = createTag(Registries.BLOCK, "shrine_stone_blocks");
+
+		public static final TagKey<Block> SHRINE_STONE_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_candidate");
+
+		public static final TagKey<Block> POLISHED_SHRINE_STONE_CANDIDATE = createTag(Registries.BLOCK, "polished_shrine_stone_candidate");
+		public static final TagKey<Block> POLISHED_SHRINE_STONE_STAIRS_CANDIDATE = createTag(Registries.BLOCK, "polished_shrine_stone_stairs_candidate");
+		public static final TagKey<Block> POLISHED_SHRINE_STONE_SLAB_CANDIDATE = createTag(Registries.BLOCK, "polished_shrine_stone_slab_candidate");
+		public static final TagKey<Block> POLISHED_SHRINE_STONE_WALL_CANDIDATE = createTag(Registries.BLOCK, "polished_shrine_stone_wall_candidate");
+
+		public static final TagKey<Block> SHRINE_STONE_PILLAR_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_pillar_candidate");
+
+		public static final TagKey<Block> CHISELED_SHRINE_STONE_BRICKS_CANDIDATE = createTag(Registries.BLOCK, "chiseled_shrine_stone_bricks_candidate");
+
+		public static final TagKey<Block> SHRINE_STONE_BRICKS_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_bricks_candidate");
+		public static final TagKey<Block> SHRINE_STONE_BRICKS_STAIRS_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_bricks_stairs_candidate");
+		public static final TagKey<Block> SHRINE_STONE_BRICKS_SLAB_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_bricks_slab_candidate");
+		public static final TagKey<Block> SHRINE_STONE_BRICKS_WALL_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_bricks_wall_candidate");
+
+		public static final TagKey<Block> SHRINE_STONE_TILES_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_tiles_candidate");
+		public static final TagKey<Block> SHRINE_STONE_TILES_STAIRS_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_tiles_stairs_candidate");
+		public static final TagKey<Block> SHRINE_STONE_TILES_SLAB_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_tiles_slab_candidate");
+		public static final TagKey<Block> SHRINE_STONE_TILES_WALL_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_tiles_wall_candidate");
+
 	}
 
 	public static final class Items {

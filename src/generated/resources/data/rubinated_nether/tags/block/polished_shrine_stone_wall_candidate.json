@@ -1,0 +1,10 @@
+{
+  "values": [
+    "minecraft:polished_deepslate_wall",
+    "minecraft:polished_blackstone_wall",
+    "minecraft:andesite_wall",
+    "minecraft:diorite_wall",
+    "minecraft:granite_wall",
+    "minecraft:polished_tuff_wall"
+  ]
+}
