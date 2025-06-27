@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNRubinateEverywhere;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.RubinationAltarBlock;
 import corundum.rubinated_nether.content.items.Rubination;
@@ -128,6 +129,10 @@ public class RubinationMenu extends AbstractContainerMenu {
 								1.0F,
 								level.random.nextFloat() * 0.1F + 0.9F
 						);
+
+						// Convert netherrack to nether ruby ore after successful rubination
+						// Using the new RNRubinateEverywhere system
+						RNRubinateEverywhere.convertNetherrackToRubyOre(level, blockPos, RNBlocks.NETHER_RUBY_ORE.get());
 					}
 
 				});
