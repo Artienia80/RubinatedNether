@@ -129,10 +129,7 @@ public class RubinationMenu extends AbstractContainerMenu {
 								1.0F,
 								level.random.nextFloat() * 0.1F + 0.9F
 						);
-
-						// Convert netherrack to nether ruby ore after successful rubination
-						// Using the new RNRubinateEverywhere system
-						RNRubinateEverywhere.convertNetherrackToRubyOre(level, blockPos, RNBlocks.NETHER_RUBY_ORE.get());
+						RNRubinateEverywhere.RubinateArea(level, blockPos);
 					}
 
 				});

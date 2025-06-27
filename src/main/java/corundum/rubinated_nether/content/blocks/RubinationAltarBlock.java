@@ -67,7 +67,6 @@ public class RubinationAltarBlock extends BaseEntityBlock {
 		for (BlockPos blockPos : RUNESTONE_OFFSETS) {
 			if (random.nextInt(2) == 0) {
 				BlockPos stonePos = pos.offset(blockPos);
-				// Only generate particles if runestone exists and has empty rune slot
 				if (isValidCatalyst(level, pos, blockPos) &&
 						level.getBlockState(stonePos).getValue(RNBlockStateProperties.HAS_RUNE) != Rubination.EMPTY) {
 					level.addParticle(

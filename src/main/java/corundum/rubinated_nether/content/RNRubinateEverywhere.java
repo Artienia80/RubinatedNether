@@ -1,7 +1,9 @@
 package corundum.rubinated_nether.content;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -12,29 +14,32 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiPredicate;
 
 public class RNRubinateEverywhere {
 
-    private static final double DEFAULT_RADIUS = 8.0;
-    private static final int DEFAULT_ATTEMPTS = 50; // How many random positions to try
-    private static final double MIN_REPLACEMENT_CHANCE = 0.0; // 0% at max radius
-    private static final double MAX_REPLACEMENT_CHANCE = 1.0; // 100% at center
-    
+
+    private static final double MIN_REPLACEMENT_CHANCE = 0.0;
+    private static final double MAX_REPLACEMENT_CHANCE = 1.0;
+
     public static class ConversionRule {
         private final Block inputBlock;
         private final Block outputBlock;
         private final double radius;
         private final int attempts;
+        private final BiPredicate<Level, BlockPos> condition;
 
-        public ConversionRule(Block inputBlock, Block outputBlock, double radius, int attempts) {
+        public ConversionRule(Block inputBlock, Block outputBlock, double radius, int attempts,
+                              BiPredicate<Level, BlockPos> condition) {
             this.inputBlock = inputBlock;
             this.outputBlock = outputBlock;
             this.radius = radius;
             this.attempts = attempts;
+            this.condition = condition;
         }
 
-        public ConversionRule(Block inputBlock, Block outputBlock) {
-            this(inputBlock, outputBlock, DEFAULT_RADIUS, DEFAULT_ATTEMPTS);
+        public ConversionRule(Block inputBlock, Block outputBlock, double radius, int attempts) {
+            this(inputBlock, outputBlock, radius, attempts, null);
         }
 
         public Block getInputBlock() {
@@ -52,13 +57,59 @@ public class RNRubinateEverywhere {
         public int getAttempts() {
             return attempts;
         }
+
+        public boolean checkCondition(Level level, BlockPos pos) {
+            return condition == null || condition.test(level, pos);
+        }
     }
 
-    /**
-     * Applies block conversions based on the provided rules
-     */
+    public static class Conditions {
+
+        public static final BiPredicate<Level, BlockPos> HAS_SOLID_NEIGHBOR_NOT_RUNESTONE_SIDE = (level, pos) -> {
+            for (Direction direction : Direction.values()) {
+                if (direction == Direction.UP) continue;
+                BlockPos neighborPos = pos.relative(direction);
+                BlockState neighborState = level.getBlockState(neighborPos);
+                if (!neighborState.isAir() && neighborState.isSolidRender(level, neighborPos)) {
+                    if (!neighborState.is(RNBlocks.RUNESTONE.get())) {
+                        return true;
+                    }
+                }
+            }
+            BlockPos abovePos = pos.above();
+            BlockState aboveState = level.getBlockState(abovePos);
+            return !aboveState.isAir() && aboveState.isSolidRender(level, abovePos);
+        };
+
+        public static BiPredicate<Level, BlockPos> withinYRange(int minY, int maxY) {
+            return (level, pos) -> pos.getY() >= minY && pos.getY() <= maxY;
+        }
+
+        public static BiPredicate<Level, BlockPos> and(BiPredicate<Level, BlockPos>... conditions) {
+            return (level, pos) -> {
+                for (BiPredicate<Level, BlockPos> condition : conditions) {
+                    if (!condition.test(level, pos)) {
+                        return false;
+                    }
+                }
+                return true;
+            };
+        }
+
+        public static BiPredicate<Level, BlockPos> or(BiPredicate<Level, BlockPos>... conditions) {
+            return (level, pos) -> {
+                for (BiPredicate<Level, BlockPos> condition : conditions) {
+                    if (condition.test(level, pos)) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+        }
+    }
+
     public static void applyConversions(Level level, BlockPos centerPos, List<ConversionRule> rules) {
-        if (level.isClientSide) return; // Only run on server side
+        if (level.isClientSide) return;
 
         RandomSource random = level.getRandom();
 
@@ -67,55 +118,38 @@ public class RNRubinateEverywhere {
         }
     }
 
-    /**
-     * Applies a single conversion rule
-     */
     private static void applyConversion(Level level, BlockPos centerPos, ConversionRule rule, RandomSource random) {
         int successfulConversions = 0;
 
         for (int attempt = 0; attempt < rule.getAttempts(); attempt++) {
-            // Generate random position within sphere
             BlockPos targetPos = generateRandomPositionInSphere(centerPos, rule.getRadius(), random);
 
-            // Check if the block at this position matches our input block
             BlockState currentState = level.getBlockState(targetPos);
             if (!currentState.is(rule.getInputBlock())) {
-                continue; // Skip if not the target block
+                continue;
             }
 
-            // Calculate distance-based replacement chance
+            if (!rule.checkCondition(level, targetPos)) {
+                continue;
+            }
+
             double distance = centerPos.distSqr(targetPos);
             double maxDistanceSquared = rule.getRadius() * rule.getRadius();
 
-            // Calculate replacement chance (100% at center, 0% at max radius)
             double normalizedDistance = Math.sqrt(distance) / rule.getRadius();
             double replacementChance = MAX_REPLACEMENT_CHANCE - (normalizedDistance * (MAX_REPLACEMENT_CHANCE - MIN_REPLACEMENT_CHANCE));
 
-            // Clamp the chance between 0 and 1
             replacementChance = Math.max(0.0, Math.min(1.0, replacementChance));
 
-            // Roll for replacement
             if (random.nextDouble() < replacementChance) {
-                // Perform the replacement
                 level.setBlockAndUpdate(targetPos, rule.getOutputBlock().defaultBlockState());
-
-                // Play effects
-                playEffects(level, targetPos, random);
+                playEffects(level, centerPos, targetPos, random);
                 successfulConversions++;
             }
         }
-
-        // Optional: Log the number of successful conversions for debugging
-        // System.out.println("Successfully converted " + successfulConversions + " blocks from " +
-        //                   rule.getInputBlock().getName().getString() + " to " +
-        //                   rule.getOutputBlock().getName().getString());
     }
 
-    /**
-     * Generates a random position within a sphere
-     */
     private static BlockPos generateRandomPositionInSphere(BlockPos center, double radius, RandomSource random) {
-        // Generate random point in sphere using rejection sampling
         double x, y, z;
         do {
             x = (random.nextDouble() * 2.0 - 1.0) * radius;
@@ -126,83 +160,87 @@ public class RNRubinateEverywhere {
         return center.offset((int) Math.round(x), (int) Math.round(y), (int) Math.round(z));
     }
 
-    /**
-     * Plays sound and particle effects at the conversion location
-     */
-    private static void playEffects(Level level, BlockPos pos, RandomSource random) {
-        // Play amethyst-like sound
-        level.playSound(
+    private static void playEffects(Level level, BlockPos altarPos, BlockPos targetPos, RandomSource random) {
+        if (level.isClientSide) return;
+
+        ServerLevel serverLevel = (ServerLevel) level;
+
+        serverLevel.playSound(
                 null,
-                pos,
+                targetPos,
                 SoundEvents.AMETHYST_BLOCK_CHIME,
                 SoundSource.BLOCKS,
-                0.5F + random.nextFloat() * 0.3F, // Volume: 0.5-0.8
-                0.8F + random.nextFloat() * 0.4F  // Pitch: 0.8-1.2
+                0.5F + random.nextFloat() * 0.3F,
+                0.8F + random.nextFloat() * 0.4F
         );
 
-        // Spawn particles
-        double particleX = pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 0.8;
-        double particleY = pos.getY() + 0.5 + (random.nextDouble() - 0.5) * 0.8;
-        double particleZ = pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 0.8;
+        double deltaX = targetPos.getX() - altarPos.getX();
+        double deltaY = targetPos.getY() - altarPos.getY();
+        double deltaZ = targetPos.getZ() - altarPos.getZ();
 
-        // Spawn multiple particles for better effect
-        for (int i = 0; i < 3 + random.nextInt(3); i++) {
-            level.addParticle(
-                    ParticleTypes.END_ROD, // Nice glowing particle
-                    particleX + (random.nextDouble() - 0.5) * 0.5,
-                    particleY + (random.nextDouble() - 0.5) * 0.5,
-                    particleZ + (random.nextDouble() - 0.5) * 0.5,
-                    (random.nextDouble() - 0.5) * 0.1, // Velocity X
-                    random.nextDouble() * 0.1,         // Velocity Y (upward)
-                    (random.nextDouble() - 0.5) * 0.1  // Velocity Z
+        double startX = altarPos.getX() + 0.5;
+        double startY = altarPos.getY() + 2.0;
+        double startZ = altarPos.getZ() + 0.5;
+
+        for (int i = 0; i < 5 + random.nextInt(3); i++) {
+            double particleStartX = startX + (random.nextDouble() - 0.5) * 0.3;
+            double particleStartY = startY + (random.nextDouble() - 0.5) * 0.3;
+            double particleStartZ = startZ + (random.nextDouble() - 0.5) * 0.3;
+
+            double velocityX = deltaX * 0.1 + (random.nextDouble() - 0.5) * 0.02;
+            double velocityY = Math.max(0.05, deltaY * 0.1 + 0.15 + random.nextDouble() * 0.1); // Always upward with arc
+            double velocityZ = deltaZ * 0.1 + (random.nextDouble() - 0.5) * 0.02;
+
+            serverLevel.sendParticles(
+                    RNParticleTypes.RUBINATE.get(),
+                    particleStartX,
+                    particleStartY,
+                    particleStartZ,
+                    1,
+                    velocityX, velocityY, velocityZ,
+                    0.1
             );
         }
-
-        // Add some amethyst-colored particles if available
-        level.addParticle(
-                ParticleTypes.PORTAL,
-                particleX,
-                particleY,
-                particleZ,
-                (random.nextDouble() - 0.5) * 0.2,
-                random.nextDouble() * 0.2,
-                (random.nextDouble() - 0.5) * 0.2
-        );
     }
 
-    /**
-     * Convenience method for the default netherrack to ruby ore conversion
-     * You can call this from your RubinationMenu
-     */
-    public static void convertNetherrackToRubyOre(Level level, BlockPos altarPos, Block rubyOreBlock) {
+    public static void RubinateArea(Level level, BlockPos altarPos) {
         List<ConversionRule> rules = new ArrayList<>();
-        rules.add(new ConversionRule(Blocks.NETHERRACK, rubyOreBlock));
+
+        rules.add(new ConversionRule(
+                Blocks.NETHERRACK,
+                RNBlocks.NETHER_RUBY_ORE.get(),
+                8.0,
+                25));
+
+        rules.add(new ConversionRule(
+                Blocks.BLACKSTONE,
+                RNBlocks.RUBINATED_BLACKSTONE.get(),
+                10.0,
+                50));
+
+        rules.add(new ConversionRule(
+                RNBlocks.SHRINE_STONE_BRICKS.get(),
+                RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
+                10.0,
+                200
+        ));
+
+        rules.add(new ConversionRule(
+                RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
+                RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
+                10.0,
+                200
+        ));
+
+        rules.add(new ConversionRule(
+                Blocks.AIR,
+                Blocks.SMALL_AMETHYST_BUD,
+                15.0,
+                300,
+                Conditions.HAS_SOLID_NEIGHBOR_NOT_RUNESTONE_SIDE
+        ));
+
         applyConversions(level, altarPos, rules);
     }
 
-    /**
-     * More configurable version for custom conversions
-     */
-    public static void convertNetherrackToRubyOre(Level level, BlockPos altarPos, Block rubyOreBlock,
-                                                  double radius, int attempts) {
-        List<ConversionRule> rules = new ArrayList<>();
-        rules.add(new ConversionRule(Blocks.NETHERRACK, rubyOreBlock, radius, attempts));
-        applyConversions(level, altarPos, rules);
-    }
-
-    /**
-     * Example of how you could set up multiple conversion rules
-     */
-    public static void applyAllRubinationConversions(Level level, BlockPos altarPos, Block rubyOreBlock) {
-        List<ConversionRule> rules = new ArrayList<>();
-
-        // Primary conversion: Netherrack to Ruby Ore
-        rules.add(new ConversionRule(Blocks.NETHERRACK, rubyOreBlock, 8.0, 50));
-
-        // You could add more rules here, for example:
-        // rules.add(new ConversionRule(Blocks.STONE, Blocks.IRON_ORE, 5.0, 20));
-        // rules.add(new ConversionRule(Blocks.DEEPSLATE, Blocks.DEEPSLATE_DIAMOND_ORE, 3.0, 10));
-
-        applyConversions(level, altarPos, rules);
-    }
 }
