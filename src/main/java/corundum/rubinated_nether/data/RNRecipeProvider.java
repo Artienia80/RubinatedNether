@@ -804,38 +804,6 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		waxRecipes(recipeOutput, FeatureFlagSet.of(FeatureFlags.VANILLA));
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBINATION_ALTAR, 1)
-				.define('X', Blocks.OBSIDIAN)
-				.define('O', RNItems.RUBY_ITEM)
-				.define('E', Blocks.ENCHANTING_TABLE)
-				.pattern("XOX")
-				.pattern("XEX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(RNItems.RUBY_ITEM), has(RNItems.RUBY_ITEM))
-				.unlockedBy(getHasName(Blocks.OBSIDIAN), has(Blocks.OBSIDIAN))
-				.unlockedBy(getHasName(Blocks.ENCHANTING_TABLE), has(Blocks.ENCHANTING_TABLE))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUNESTONE, 1)
-				.define('X', Blocks.OBSIDIAN)
-				.define('O', RNBlocks.RUBY_BLOCK)
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(Blocks.OBSIDIAN), has(Blocks.OBSIDIAN))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.SHRINE_STONE, 9)
-				.define('X', Blocks.BASALT)
-				.define('O', Blocks.OBSIDIAN)
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(Blocks.BASALT), has(Blocks.BASALT))
-				.unlockedBy(getHasName(Blocks.OBSIDIAN), has(Blocks.OBSIDIAN))
-				.save(recipeOutput);
-
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBY_GLASS, 8)
 				.define('X', Blocks.GLASS)
 				.define('O', RNItems.RUBY_ITEM)
@@ -856,45 +824,8 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS, 8)
-			.define('X', RNBlocks.CHISELED_SHRINE_STONE_BRICKS)
-			.define('O', RNItems.RUBY_ITEM)
-			.pattern("XXX")
-			.pattern("XOX")
-			.pattern("XXX")
-			.unlockedBy(getHasName(RNBlocks.CHISELED_SHRINE_STONE_BRICKS), has(RNBlocks.CHISELED_SHRINE_STONE_BRICKS))
-			.unlockedBy(getHasName(RNItems.RUBY_ITEM), has(RNItems.RUBY_ITEM))
-			.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBINATED_SHRINE_STONE_BRICKS, 8)
-				.define('X', RNBlocks.SHRINE_STONE_BRICKS)
-				.define('O', RNItems.RUBY_ITEM)
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(RNBlocks.SHRINE_STONE_BRICKS), has(RNBlocks.SHRINE_STONE_BRICKS))
-				.unlockedBy(getHasName(RNItems.RUBY_ITEM), has(RNItems.RUBY_ITEM))
-				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BLEEDING_OBSIDIAN, 8)
-			.define('X', Blocks.CRYING_OBSIDIAN)
-			.define('O', RNItems.RUBY_ITEM)
-			.pattern("XXX")
-			.pattern("XOX")
-			.pattern("XXX")
-			.unlockedBy(getHasName(Blocks.CRYING_OBSIDIAN), has(Blocks.CRYING_OBSIDIAN))
-			.unlockedBy(getHasName(RNItems.RUBY_ITEM), has(RNItems.RUBY_ITEM))
-			.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.MUSIC_DISC_SHIMMER, 1)
-			.define('X', RNItems.RUBY_SHARD_ITEM)
-			.define('O', Items.MUSIC_DISC_PIGSTEP)
-			.pattern("XXX")
-			.pattern("XOX")
-			.pattern("XXX")
-			.unlockedBy(getHasName(RNItems.RUBY_SHARD_ITEM), has(RNItems.RUBY_SHARD_ITEM))
-			.unlockedBy(getHasName(Items.MUSIC_DISC_PIGSTEP), has(Items.MUSIC_DISC_PIGSTEP))
-			.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNBlocks.FREEZER, 1)
 				.define('X', Blocks.COPPER_BLOCK)

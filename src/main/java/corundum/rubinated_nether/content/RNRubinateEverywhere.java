@@ -9,10 +9,13 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.AmethystClusterBlock;
+import net.minecraft.world.level.block.JukeboxBlock;
+import net.minecraft.world.level.block.entity.JukeboxBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
@@ -310,12 +313,96 @@ public class RNRubinateEverywhere {
         }
     }
 
+    private static void replaceJukeboxDiscs(Level level, BlockPos altarPos) {
+        if (level.isClientSide) return;
 
+        final double JUKEBOX_SEARCH_RADIUS = 10.0;
+        boolean discReplaced = false;
+
+        int radius = (int) Math.ceil(JUKEBOX_SEARCH_RADIUS);
+
+        for (int x = -radius; x <= radius && !discReplaced; x++) {
+            for (int y = -radius; y <= radius && !discReplaced; y++) {
+                for (int z = -radius; z <= radius && !discReplaced; z++) {
+                    BlockPos checkPos = altarPos.offset(x, y, z);
+
+                    if (altarPos.distSqr(checkPos) > JUKEBOX_SEARCH_RADIUS * JUKEBOX_SEARCH_RADIUS) {
+                        continue;
+                    }
+
+                    BlockState blockState = level.getBlockState(checkPos);
+                    if (blockState.is(Blocks.JUKEBOX)) {
+                        if (blockState.getValue(JukeboxBlock.HAS_RECORD)) {
+                            if (level.getBlockEntity(checkPos) instanceof JukeboxBlockEntity jukeboxEntity) {
+                                ItemStack currentRecord = jukeboxEntity.getTheItem();
+                                if (!currentRecord.isEmpty()) {
+                                    jukeboxEntity.setTheItem(new ItemStack(RNItems.MUSIC_DISC_SHIMMER.get()));
+
+
+                                    playJukeboxReplacementEffects(level, altarPos, checkPos);
+
+                                    discReplaced = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Plays special effects when a jukebox disc is replaced
+     */
+    private static void playJukeboxReplacementEffects(Level level, BlockPos altarPos, BlockPos jukeboxPos) {
+        if (level.isClientSide) return;
+
+        ServerLevel serverLevel = (ServerLevel) level;
+        RandomSource random = level.getRandom();
+
+        // Play a special sound for disc replacement
+        serverLevel.playSound(
+                null,
+                jukeboxPos,
+                SoundEvents.AMETHYST_BLOCK_RESONATE,
+                SoundSource.BLOCKS,
+                1.0F,
+                1.2F + random.nextFloat() * 0.2F
+        );
+
+        // Create shimmer particles around the jukebox
+        double spawnX = jukeboxPos.getX() + 0.5;
+        double spawnY = jukeboxPos.getY() + 1.2;
+        double spawnZ = jukeboxPos.getZ() + 0.5;
+
+        for (int i = 0; i < 15 + random.nextInt(10); i++) {
+            double particleX = spawnX + (random.nextFloat() - 0.5) * 1.0;
+            double particleY = spawnY + random.nextFloat() * 0.5;
+            double particleZ = spawnZ + (random.nextFloat() - 0.5) * 1.0;
+
+            double velocityX = (random.nextFloat() - 0.5) * 0.08;
+            double velocityY = 0.6 + random.nextFloat() * 0.4;
+            double velocityZ = (random.nextFloat() - 0.5) * 0.08;
+
+            serverLevel.sendParticles(
+                    RNParticleTypes.RUBINATE.get(),
+                    particleX,
+                    particleY,
+                    particleZ,
+                    1,
+                    velocityX, velocityY, velocityZ,
+                    0.15
+            );
+        }
+    }
 
     public static void RubinateArea(Level level, BlockPos altarPos) {
         List<ConversionRule> rules = new ArrayList<>();
 
+        // First, handle jukebox disc replacement
+        replaceJukeboxDiscs(level, altarPos);
 
+        // Then proceed with normal block conversions
         rules.add(new ConversionRule(
                 Blocks.MAGMA_BLOCK,
                 RNBlocks.MOLTEN_RUBY_ORE.get(),
@@ -355,7 +442,6 @@ public class RNRubinateEverywhere {
                 RNBlocks.BLEEDING_OBSIDIAN.get(),
                 20.0,
                 200));
-
 
         rules.add(new ConversionRule(
                 Blocks.AIR,
