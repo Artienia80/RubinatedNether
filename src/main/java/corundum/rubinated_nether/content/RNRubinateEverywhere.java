@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -191,11 +192,45 @@ public class RNRubinateEverywhere {
             }
 
             if (random.nextDouble() < replacementChance) {
-                level.setBlockAndUpdate(targetPos, rule.getOutputBlock().defaultBlockState());
+                // Create new block state with transferred properties
+                BlockState newState = transferProperties(currentState, rule.getOutputBlock().defaultBlockState());
+                level.setBlockAndUpdate(targetPos, newState);
                 playEffects(level, centerPos, targetPos, random);
                 successfulConversions++;
             }
         }
+    }
+
+    /**
+     * Transfers all compatible properties from the source block state to the target block state
+     */
+    private static BlockState transferProperties(BlockState sourceState, BlockState targetState) {
+        BlockState resultState = targetState;
+
+        // Iterate through all properties of the source block
+        for (Property<?> property : sourceState.getProperties()) {
+            // Check if the target block also has this property
+            if (targetState.hasProperty(property)) {
+                try {
+                    // Use helper method to transfer property with proper typing
+                    resultState = transferProperty(sourceState, resultState, property);
+                } catch (Exception e) {
+                    // If there's any issue with transferring a property, skip it
+                    // This could happen if the property values are incompatible
+                }
+            }
+        }
+
+        return resultState;
+    }
+
+    /**
+     * Helper method to transfer a single property with proper generic typing
+     */
+    @SuppressWarnings("unchecked")
+    private static <T extends Comparable<T>> BlockState transferProperty(BlockState sourceState, BlockState targetState, Property<T> property) {
+        T value = sourceState.getValue(property);
+        return targetState.setValue(property, value);
     }
 
     public static void addTagConversionRule(List<ConversionRule> rules, TagKey<Block> inputTag, Block outputBlock, double radius, int attempts) {
