@@ -32,20 +32,30 @@ public class RNRubinateEverywhere {
         private final double radius;
         private final int attempts;
         private final BiPredicate<Level, BlockPos> condition;
+        private final boolean isShrineStoneBased;
 
         public ConversionRule(Block inputBlock, Block outputBlock, double radius, int attempts,
-                              BiPredicate<Level, BlockPos> condition) {
+                              BiPredicate<Level, BlockPos> condition, boolean isShrineStoneBased) {
             this.inputBlock = inputBlock;
             this.outputBlock = outputBlock;
             this.radius = radius;
             this.attempts = attempts;
             this.condition = condition;
+            this.isShrineStoneBased = isShrineStoneBased;
+        }
+
+        public ConversionRule(Block inputBlock, Block outputBlock, double radius, int attempts,
+                              BiPredicate<Level, BlockPos> condition) {
+            this(inputBlock, outputBlock, radius, attempts, condition, false);
         }
 
         public ConversionRule(Block inputBlock, Block outputBlock, double radius, int attempts) {
-            this(inputBlock, outputBlock, radius, attempts, null);
+            this(inputBlock, outputBlock, radius, attempts, null, false);
         }
 
+        public ConversionRule(Block inputBlock, Block outputBlock, double radius, int attempts, boolean isShrineStoneBased) {
+            this(inputBlock, outputBlock, radius, attempts, null, isShrineStoneBased);
+        }
 
         public Block getInputBlock() {
             return inputBlock;
@@ -61,6 +71,10 @@ public class RNRubinateEverywhere {
 
         public int getAttempts() {
             return attempts;
+        }
+
+        public boolean isShrineStoneBased() {
+            return isShrineStoneBased;
         }
 
         public boolean checkCondition(Level level, BlockPos pos) {
@@ -95,6 +109,17 @@ public class RNRubinateEverywhere {
             BlockPos abovePos = pos.above();
             BlockState aboveState = level.getBlockState(abovePos);
             return !aboveState.isAir() && aboveState.isSolidRender(level, abovePos);
+        };
+
+        public static final BiPredicate<Level, BlockPos> HAS_SHRINE_STONE_NEIGHBOR = (level, pos) -> {
+            for (Direction direction : Direction.values()) {
+                BlockPos neighborPos = pos.relative(direction);
+                BlockState neighborState = level.getBlockState(neighborPos);
+                if (neighborState.is(RNTags.Blocks.SHRINE_STONE_BLOCKS)) {
+                    return true;
+                }
+            }
+            return false;
         };
 
         public static BiPredicate<Level, BlockPos> withinYRange(int minY, int maxY) {
@@ -157,6 +182,14 @@ public class RNRubinateEverywhere {
 
             replacementChance = Math.max(0.0, Math.min(1.0, replacementChance));
 
+            // Special handling for shrine stone based conversions
+            if (rule.isShrineStoneBased()) {
+                boolean hasShrineStoneBased = Conditions.HAS_SHRINE_STONE_NEIGHBOR.test(level, targetPos);
+                if (hasShrineStoneBased) {
+                    replacementChance = 1.0; // 100% chance if neighboring a shrine stone block
+                }
+            }
+
             if (random.nextDouble() < replacementChance) {
                 level.setBlockAndUpdate(targetPos, rule.getOutputBlock().defaultBlockState());
                 playEffects(level, centerPos, targetPos, random);
@@ -165,10 +198,10 @@ public class RNRubinateEverywhere {
         }
     }
 
-    public static void addTagConversionRule(List<ConversionRule> rules, TagKey<Block> inputTag, Block outputBlock, double chance, int priority) {
+    public static void addTagConversionRule(List<ConversionRule> rules, TagKey<Block> inputTag, Block outputBlock, double chance, int attempts) {
         Registry<Block> blockRegistry = BuiltInRegistries.BLOCK;
         blockRegistry.getTagOrEmpty(inputTag).forEach(blockHolder -> {
-            rules.add(new ConversionRule(blockHolder.value(), outputBlock, chance, priority));
+            rules.add(new ConversionRule(blockHolder.value(), outputBlock, chance, attempts, true));
         });
     }
 
@@ -257,14 +290,16 @@ public class RNRubinateEverywhere {
                 RNBlocks.SHRINE_STONE_BRICKS.get(),
                 RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
                 10.0,
-                200
+                200,
+                true
         ));
 
         rules.add(new ConversionRule(
                 RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
                 RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
                 10.0,
-                200
+                200,
+                true
         ));
 
         // RUBY FARM - CRYSTALS
@@ -276,30 +311,27 @@ public class RNRubinateEverywhere {
                 Conditions.HAS_GROWABLE_BLOCK_NEIGHBOR
         ));
 
-        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_CANDIDATE, RNBlocks.SHRINE_STONE.get(), 20.0, 1000);
+        // All tag-based conversions are shrine stone based
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_CANDIDATE, RNBlocks.SHRINE_STONE.get(), 20.0, 5000);
 
-        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE.get(), 20.0, 1000);
-        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_STAIRS_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(), 20.0, 1000);
-        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_SLAB_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(), 20.0, 1000);
-        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_WALL_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE_WALL.get(), 20.0, 1000);
+        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE.get(), 20.0, 5000);
+        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_STAIRS_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(), 20.0, 5000);
+        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_SLAB_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(), 20.0, 5000);
+        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_WALL_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE_WALL.get(), 20.0, 5000);
 
-        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_PILLAR_CANDIDATE, RNBlocks.SHRINE_STONE_PILLAR.get(), 20.0, 1000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_PILLAR_CANDIDATE, RNBlocks.SHRINE_STONE_PILLAR.get(), 20.0, 5000);
 
-        addTagConversionRule(rules, RNTags.Blocks.CHISELED_SHRINE_STONE_BRICKS_CANDIDATE, RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(), 20.0, 1000);
+        addTagConversionRule(rules, RNTags.Blocks.CHISELED_SHRINE_STONE_BRICKS_CANDIDATE, RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(), 20.0, 5000);
 
-        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS.get(), 20.0, 1000);
-        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_STAIRS_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get(), 20.0, 1000);
-        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_SLAB_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(), 20.0, 1000);
-        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_WALL_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_WALL.get(), 20.0, 1000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS.get(), 20.0, 5000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_STAIRS_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get(), 20.0, 5000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_SLAB_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(), 20.0, 5000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_WALL_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_WALL.get(), 20.0, 5000);
 
-        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_CANDIDATE, RNBlocks.SHRINE_STONE_TILES.get(), 20.0, 1000);
-        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_STAIRS_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_STAIRS.get(), 20.0, 1000);
-        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_SLAB_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_SLAB.get(), 20.0, 1000);
-        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_WALL_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_WALL.get(), 20.0, 1000);
-
-
-
-
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_CANDIDATE, RNBlocks.SHRINE_STONE_TILES.get(), 20.0, 55000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_STAIRS_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_STAIRS.get(), 20.0, 5000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_SLAB_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_SLAB.get(), 20.0, 5000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_WALL_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_WALL.get(), 20.0, 5000);
 
         applyConversions(level, altarPos, rules);
     }

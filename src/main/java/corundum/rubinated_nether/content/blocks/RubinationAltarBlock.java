@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNParticleTypes;
-import corundum.rubinated_nether.content.RNBlockStateProperties; // Added import
+import corundum.rubinated_nether.content.RNBlockStateProperties;
 import corundum.rubinated_nether.content.blocks.entities.RubinationAltarBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
 import corundum.rubinated_nether.content.items.Rubination;
@@ -85,7 +85,6 @@ public class RubinationAltarBlock extends BaseEntityBlock {
 		return new RubinationAltarBlockEntity(pos, state);
 	}
 
-	//TODO: Create custom Menu
 	@Override
 	public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
 		return createTicker(level, blockEntityType, RNBlockEntities.RUBINATION_ALTAR.get());
@@ -97,25 +96,30 @@ public class RubinationAltarBlock extends BaseEntityBlock {
 
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-		return use(state, level, pos, player);
+		return use(state, level, pos, player, InteractionHand.MAIN_HAND);
 	}
 
 	@Override
 	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-		return switch(use(state, level, pos, player)) {
+		return switch(use(state, level, pos, player, hand)) {
 			case InteractionResult.SUCCESS -> ItemInteractionResult.SUCCESS;
 			case InteractionResult.CONSUME -> ItemInteractionResult.CONSUME;
 			default -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 		};
 	}
 
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand) {
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
-		} else {
-			player.openMenu(state.getMenuProvider(level, pos));
-			return InteractionResult.CONSUME;
 		}
+
+		InteractionResult ritualResult = RubinationMenu.handleRitualOffering(level, pos, player, hand);
+		if (ritualResult != InteractionResult.PASS) {
+			return ritualResult;
+		}
+
+		player.openMenu(state.getMenuProvider(level, pos));
+		return InteractionResult.CONSUME;
 	}
 
 	@Nullable
