@@ -3,7 +3,6 @@ package corundum.rubinated_nether.content;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -13,6 +12,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
@@ -86,6 +86,17 @@ public class RNRubinateEverywhere {
     public static class Conditions {
 
         public static final BiPredicate<Level, BlockPos> HAS_GROWABLE_BLOCK_NEIGHBOR = (level, pos) -> {
+            for (Direction direction : Direction.values()) {
+                BlockPos neighborPos = pos.relative(direction);
+                BlockState neighborState = level.getBlockState(neighborPos);
+                if (neighborState.is(RNTags.Blocks.GROWABLE_SURFACE)) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        public static final BiPredicate<Level, BlockPos> HAS_GROWABLE_BLOCK_NEIGHBOR_FOR_CRYSTAL = (level, pos) -> {
             for (Direction direction : Direction.values()) {
                 BlockPos neighborPos = pos.relative(direction);
                 BlockState neighborState = level.getBlockState(neighborPos);
@@ -183,17 +194,20 @@ public class RNRubinateEverywhere {
 
             replacementChance = Math.max(0.0, Math.min(1.0, replacementChance));
 
-            // Special handling for shrine stone based conversions
             if (rule.isShrineStoneBased()) {
                 boolean hasShrineStoneBased = Conditions.HAS_SHRINE_STONE_NEIGHBOR.test(level, targetPos);
                 if (hasShrineStoneBased) {
-                    replacementChance = 1.0; // 100% chance if neighboring a shrine stone block
+                    replacementChance = 1.0;
                 }
             }
 
             if (random.nextDouble() < replacementChance) {
-                // Create new block state with transferred properties
-                BlockState newState = transferProperties(currentState, rule.getOutputBlock().defaultBlockState());
+                BlockState newState;
+                if (rule.getOutputBlock() == Blocks.SMALL_AMETHYST_BUD) {
+                    newState = createCrystalWithCorrectFacing(level, targetPos, rule.getOutputBlock());
+                } else {
+                    newState = transferProperties(currentState, rule.getOutputBlock().defaultBlockState());
+                }
                 level.setBlockAndUpdate(targetPos, newState);
                 playEffects(level, centerPos, targetPos, random);
                 successfulConversions++;
@@ -201,22 +215,31 @@ public class RNRubinateEverywhere {
         }
     }
 
-    /**
-     * Transfers all compatible properties from the source block state to the target block state
-     */
+    private static BlockState createCrystalWithCorrectFacing(Level level, BlockPos pos, Block crystalBlock) {
+        BlockState crystalState = crystalBlock.defaultBlockState();
+
+        for (Direction direction : Direction.values()) {
+            BlockPos neighborPos = pos.relative(direction);
+            BlockState neighborState = level.getBlockState(neighborPos);
+            if (neighborState.is(RNTags.Blocks.GROWABLE_SURFACE)) {
+                if (crystalState.hasProperty(AmethystClusterBlock.FACING)) {
+                    return crystalState.setValue(AmethystClusterBlock.FACING, direction.getOpposite());
+                }
+                break;
+            }
+        }
+
+        return crystalState;
+    }
+
     private static BlockState transferProperties(BlockState sourceState, BlockState targetState) {
         BlockState resultState = targetState;
 
-        // Iterate through all properties of the source block
         for (Property<?> property : sourceState.getProperties()) {
-            // Check if the target block also has this property
             if (targetState.hasProperty(property)) {
                 try {
-                    // Use helper method to transfer property with proper typing
                     resultState = transferProperty(sourceState, resultState, property);
                 } catch (Exception e) {
-                    // If there's any issue with transferring a property, skip it
-                    // This could happen if the property values are incompatible
                 }
             }
         }
@@ -224,9 +247,6 @@ public class RNRubinateEverywhere {
         return resultState;
     }
 
-    /**
-     * Helper method to transfer a single property with proper generic typing
-     */
     @SuppressWarnings("unchecked")
     private static <T extends Comparable<T>> BlockState transferProperty(BlockState sourceState, BlockState targetState, Property<T> property) {
         T value = sourceState.getValue(property);
@@ -256,7 +276,6 @@ public class RNRubinateEverywhere {
 
         ServerLevel serverLevel = (ServerLevel) level;
 
-        // Play sound at the target position
         serverLevel.playSound(
                 null,
                 targetPos,
@@ -266,22 +285,18 @@ public class RNRubinateEverywhere {
                 0.8F + random.nextFloat() * 0.4F
         );
 
-        // Spawn particles at the target block and send them upwards like a beam of light
         double spawnX = targetPos.getX() + 0.5;
-        double spawnY = targetPos.getY() + 1.0; // Slightly above the block
+        double spawnY = targetPos.getY() + 1.0;
         double spawnZ = targetPos.getZ() + 0.5;
 
-        // Create upward beam particles
         for (int i = 0; i < 8 + random.nextInt(5); i++) {
-            // Tighter spawn position around the target block
             double particleX = spawnX + (random.nextFloat() - 0.5) * 0.4;
             double particleY = spawnY + random.nextFloat() * 0.2;
             double particleZ = spawnZ + (random.nextFloat() - 0.5) * 0.4;
 
-            // Upward velocity with minimal horizontal drift (tighter beam)
-            double velocityX = (random.nextFloat() - 0.5) * 0.05; // Less horizontal drift
-            double velocityY = 0.4 + random.nextFloat() * 0.3; // Strong upward motion
-            double velocityZ = (random.nextFloat() - 0.5) * 0.05; // Less horizontal drift
+            double velocityX = (random.nextFloat() - 0.5) * 0.05;
+            double velocityY = 0.4 + random.nextFloat() * 0.3;
+            double velocityZ = (random.nextFloat() - 0.5) * 0.05;
 
             serverLevel.sendParticles(
                     RNParticleTypes.RUBINATE.get(),
@@ -301,7 +316,6 @@ public class RNRubinateEverywhere {
         List<ConversionRule> rules = new ArrayList<>();
 
 
-        // RUBY FARM - ORE
         rules.add(new ConversionRule(
                 Blocks.MAGMA_BLOCK,
                 RNBlocks.MOLTEN_RUBY_ORE.get(),
@@ -320,7 +334,6 @@ public class RNRubinateEverywhere {
                 10.0,
                 50));
 
-        // RUBY FARM - OTHERS
         rules.add(new ConversionRule(
                 RNBlocks.SHRINE_STONE_BRICKS.get(),
                 RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
@@ -344,16 +357,14 @@ public class RNRubinateEverywhere {
                 200));
 
 
-        // RUBY FARM - CRYSTALS
         rules.add(new ConversionRule(
                 Blocks.AIR,
                 Blocks.SMALL_AMETHYST_BUD,
                 15.0,
                 300,
-                Conditions.HAS_GROWABLE_BLOCK_NEIGHBOR
+                Conditions.HAS_GROWABLE_BLOCK_NEIGHBOR_FOR_CRYSTAL
         ));
 
-        // All tag-based conversions are shrine stone based
         addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_CANDIDATE, RNBlocks.SHRINE_STONE.get(), 20.0, 5000);
 
         addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE.get(), 20.0, 5000);
