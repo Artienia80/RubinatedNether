@@ -13,8 +13,8 @@ import corundum.rubinated_nether.content.RNItems;
 public class DrillItem extends PickShovelItem {
 	public CompoundTag data;
 
-	public static int MAX_USE_TICKS = 800;
-	public static int MAX_MULTIPLIER_BOOST = 90;
+	public static int MAX_USE_TICKS = 600;
+	public static int MAX_MULTIPLIER_BOOST = 100;
 
 	public DrillItem(Properties properties) {
 		super(RNTiers.BRONZE, properties);
