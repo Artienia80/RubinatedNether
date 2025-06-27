@@ -39,6 +39,8 @@ public class PickShovelItem extends DiggerItem {
 
 		RUBINATION_REMOVABLES.put(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(), RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
 		RUBINATION_REMOVABLES.put(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(), RNBlocks.SHRINE_STONE_BRICKS.get());
+		RUBINATION_REMOVABLES.put(RNBlocks.BLEEDING_OBSIDIAN.get(), Blocks.OBSIDIAN);
+
 	}
 
 	public PickShovelItem(Tier tier, Properties properties) {

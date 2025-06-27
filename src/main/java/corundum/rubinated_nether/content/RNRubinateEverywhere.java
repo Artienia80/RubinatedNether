@@ -198,10 +198,10 @@ public class RNRubinateEverywhere {
         }
     }
 
-    public static void addTagConversionRule(List<ConversionRule> rules, TagKey<Block> inputTag, Block outputBlock, double chance, int attempts) {
+    public static void addTagConversionRule(List<ConversionRule> rules, TagKey<Block> inputTag, Block outputBlock, double radius, int attempts) {
         Registry<Block> blockRegistry = BuiltInRegistries.BLOCK;
         blockRegistry.getTagOrEmpty(inputTag).forEach(blockHolder -> {
-            rules.add(new ConversionRule(blockHolder.value(), outputBlock, chance, attempts, true));
+            rules.add(new ConversionRule(blockHolder.value(), outputBlock, radius, attempts, true));
         });
     }
 
@@ -285,11 +285,11 @@ public class RNRubinateEverywhere {
                 10.0,
                 50));
 
-        // RUBY FARM - SHRINE STONE
+        // RUBY FARM - OTHERS
         rules.add(new ConversionRule(
                 RNBlocks.SHRINE_STONE_BRICKS.get(),
                 RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
-                10.0,
+                20.0,
                 200,
                 true
         ));
@@ -297,10 +297,17 @@ public class RNRubinateEverywhere {
         rules.add(new ConversionRule(
                 RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
                 RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
-                10.0,
+                20.0,
                 200,
                 true
         ));
+
+        rules.add(new ConversionRule(
+                Blocks.CRYING_OBSIDIAN,
+                RNBlocks.BLEEDING_OBSIDIAN.get(),
+                20.0,
+                200));
+
 
         // RUBY FARM - CRYSTALS
         rules.add(new ConversionRule(
