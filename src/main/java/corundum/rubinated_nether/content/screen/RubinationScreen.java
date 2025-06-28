@@ -37,7 +37,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	public RubinationScreen(RubinationMenu menu, Inventory playerInventory, Component title) {
 		super(menu, playerInventory, title);
 		this.imageHeight = 208;
-		this.inventoryLabelY = this.imageHeight - 109;
+		this.inventoryLabelY = this.imageHeight - 107;
 	}
 
 	protected void init() {
