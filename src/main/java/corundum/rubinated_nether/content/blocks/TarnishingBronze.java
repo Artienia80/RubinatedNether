@@ -81,10 +81,10 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 				map.put(RNBlocks.CORRODED_BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
 				map.put(RNBlocks.TARNISHED_BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
 
-				map.put(RNBlocks.BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_CHISELED_BRONZE.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_CHISELED_BRONZE.get());
-				map.put(RNBlocks.CORRODED_BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_CHISELED_BRONZE.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_CHISELED_BRONZE.get());
+				map.put(RNBlocks.CHISELED_BRONZE.get(), RNBlocks.CRYSTALLIZED_CHISELED_BRONZE.get());
+				map.put(RNBlocks.DISCOLORED_CHISELED_BRONZE.get(), RNBlocks.CRYSTALLIZED_CHISELED_BRONZE.get());
+				map.put(RNBlocks.CORRODED_CHISELED_BRONZE.get(), RNBlocks.CRYSTALLIZED_CHISELED_BRONZE.get());
+				map.put(RNBlocks.TARNISHED_CHISELED_BRONZE.get(), RNBlocks.CRYSTALLIZED_CHISELED_BRONZE.get());
 
 				map.put(RNBlocks.CUT_BRONZE_PILLAR.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
 				map.put(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());

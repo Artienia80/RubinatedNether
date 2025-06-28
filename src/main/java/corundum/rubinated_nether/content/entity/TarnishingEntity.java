@@ -126,41 +126,16 @@ public class TarnishingEntity extends Monster {
         }
 
         if (stack.is(RNItems.BRONZE_POWDER.get())) {
-            if(!isWaxed()){
-                if(level < 3){
+            if (!isWaxed() && level < 3) {
+                if (level().random.nextFloat() < 0.10f) {
                     setTarnishLevel(level + 1);
-                    if (!player.isCreative()) stack.shrink(1);
                     level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 0.8F);
+                    if (!player.isCreative()) stack.shrink(1);
+                    return InteractionResult.sidedSuccess(level().isClientSide());
                 }
             }
-            return InteractionResult.sidedSuccess(level().isClientSide());
         }
 
-        if (stack.is(ItemTags.AXES)) {
-            if (isWaxed()) {
-                setWaxed(false);
-                level().playSound(null, blockPosition(), SoundEvents.AXE_WAX_OFF, SoundSource.PLAYERS, 1.0F, 1.0F);
-                stack.use(player.level(), player, hand);
-            } else {
-                if (level > 0) {
-                    if (level == CRYSTALLIZED) {
-                        setTarnishLevel(0);
-                    } else {
-                        setTarnishLevel(level - 1);
-                    }
-
-                    level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 1.0F);
-
-                    if (!level().isClientSide() && level().random.nextFloat() < 0.5f) {
-                        ItemEntity powder = new ItemEntity(level(), getX(), getY() + 1, getZ(),
-                                new ItemStack(RNItems.BRONZE_POWDER.get()));
-                        level().addFreshEntity(powder);
-                    }
-                    stack.use(player.level(), player, hand);
-                }
-            }
-            return InteractionResult.sidedSuccess(level().isClientSide());
-        }
 
         return super.mobInteract(player, hand);
     }
@@ -178,4 +153,35 @@ public class TarnishingEntity extends Monster {
         setTarnishLevel(tag.getInt("TarnishState"));
         setWaxed(tag.getBoolean("Waxed"));
     }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (!level().isClientSide() && source.getEntity() instanceof Player player) {
+            ItemStack weapon = player.getMainHandItem();
+            int level = getTarnishLevel();
+
+            if (!isWaxed() && weapon.is(ItemTags.AXES)) {
+                if (level > 0 && level < CRYSTALLIZED) {
+                    if (random.nextFloat() < 0.05f) {
+                        setTarnishLevel(level - 1);
+                        level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 1.0F);
+
+                        if (level().random.nextFloat() < 0.5f) {
+                            ItemEntity powder = new ItemEntity(level(), getX(), getY() + 1, getZ(),
+                                    new ItemStack(RNItems.BRONZE_POWDER.get()));
+                            level().addFreshEntity(powder);
+                        }
+                    }
+                } else if (level == CRYSTALLIZED) {
+                    if (random.nextFloat() < 0.05f) {
+                        setTarnishLevel(0);
+                        level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    }
+                }
+            }
+        }
+
+        return super.hurt(source, amount);
+    }
+
 }

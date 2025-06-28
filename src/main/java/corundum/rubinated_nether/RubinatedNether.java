@@ -6,6 +6,7 @@ import corundum.rubinated_nether.content.enchantment.RNEnchantmentEffects;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
+import corundum.rubinated_nether.events.RNModBusEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import org.slf4j.Logger;
@@ -63,6 +64,7 @@ public class RubinatedNether {
 		modEventBus.addListener(DatapackRegistry::datapackRegistry);
 		RNEnchantmentEffects.register(modEventBus);
 		RNEffects.register(modEventBus);
+		RNModBusEvents.register();
 
 
 		for (var registry : REGISTRIES)
