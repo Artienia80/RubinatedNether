@@ -118,6 +118,7 @@ public class BronzeEntity extends TarnishingEntity {
         this.goalSelector.addGoal(4, new AvoidEntityGoal(this, Player.class, 15.0F, 2.2, 2.2){
             public boolean canUse() { return BronzeEntity.this.getTarnishLevel() == 4 && super.canUse(); }
         });
+        this.goalSelector.addGoal(1, new ConstantUnwaxGoal(this));
         this.goalSelector.addGoal(1, new CrystallizeNearbyBronzeGoal(this));
     }
 
@@ -366,10 +367,44 @@ public class BronzeEntity extends TarnishingEntity {
         }
     }
 
+    public class ConstantUnwaxGoal extends Goal {
+        private final BronzeEntity entity;
+
+        public ConstantUnwaxGoal(BronzeEntity entity) {
+            this.entity = entity;
+        }
+
+        @Override
+        public boolean canUse() {
+            return entity.getTarnishLevel() == 4;
+        }
+
+        @Override
+        public void tick() {
+            BlockPos origin = entity.blockPosition();
+            Level level = entity.level();
+
+            for (int x = -1; x <= 1; x++) {
+                for (int z = -1; z <= 1; z++) {
+                    for (int y = -1; y <= 2; y++) {
+                        BlockPos pos = origin.offset(x, y, z);
+                        BlockState state = level.getBlockState(pos);
+                        Block block = state.getBlock();
+
+                        if (block instanceof TarnishingBronze) {
+                            if (state.hasProperty(TarnishingBronze.WAXED) && state.getValue(TarnishingBronze.WAXED)) {
+                                BlockState unwaxed = state.setValue(TarnishingBronze.WAXED, false);
+                                level.setBlock(pos, unwaxed, 3);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public class CrystallizeNearbyBronzeGoal extends Goal {
         private final BronzeEntity entity;
-        private int cooldown;
 
         public CrystallizeNearbyBronzeGoal(BronzeEntity entity) {
             this.entity = entity;
@@ -382,26 +417,17 @@ public class BronzeEntity extends TarnishingEntity {
 
         @Override
         public void tick() {
-            if (--cooldown > 0) return;
-            cooldown = 20 + entity.getRandom().nextInt(200);
-
             BlockPos origin = entity.blockPosition();
             Level level = entity.level();
 
-            for (BlockPos pos : BlockPos.betweenClosed(origin.offset(-3, -3, -3), origin.offset(3, 3, 3))) {
-                BlockState state = level.getBlockState(pos);
-                Block block = state.getBlock();
+            BlockPos pos = origin.below();
+            BlockState state = level.getBlockState(pos);
+            Block block = state.getBlock();
 
-                if (block instanceof TarnishingBronze tarnishing) {
-                    if (state.hasProperty(TarnishingBronze.WAXED) && state.getValue(TarnishingBronze.WAXED)) {
-                        BlockState unwaxed = state.setValue(TarnishingBronze.WAXED, false);
-                        level.setBlock(pos, unwaxed, 3);
-                        return;
-                    }
-
-                    if (!state.getValue(TarnishingBronze.WAXED) && TarnishingBronze.canCrystallize(block)) {
+            if (block instanceof TarnishingBronze tarnishing) {
+                if (!state.getValue(TarnishingBronze.WAXED) && TarnishingBronze.canCrystallize(block)) {
+                    if (level.random.nextFloat() < 0.10f) {
                         tarnishing.getCrystallized(state).ifPresent(newState -> level.setBlockAndUpdate(pos, newState));
-                        return;
                     }
                 }
             }
