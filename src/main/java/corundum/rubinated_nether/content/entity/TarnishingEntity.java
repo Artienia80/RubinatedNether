@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.entity;
 
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -105,8 +106,7 @@ public class TarnishingEntity extends Monster {
     private boolean isNearSoulFire() {
         BlockPos pos = blockPosition();
         for (BlockPos nearby : BlockPos.betweenClosed(pos.offset(-5, -5, -5), pos.offset(5, 5, 5))) {
-            Block block = level().getBlockState(nearby).getBlock();
-            if (block == Blocks.SOUL_FIRE || block == Blocks.SOUL_TORCH || block == Blocks.SOUL_WALL_TORCH || block == Blocks.SOUL_LANTERN) {
+            if (level().getBlockState(nearby).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST)) {
                 return true;
             }
         }
@@ -127,12 +127,23 @@ public class TarnishingEntity extends Monster {
 
         if (stack.is(RNItems.BRONZE_POWDER.get())) {
             if (!isWaxed() && level < 3) {
+                if (!player.isCreative()) stack.shrink(1);
                 if (level().random.nextFloat() < 0.10f) {
                     setTarnishLevel(level + 1);
                     level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 0.8F);
-                    if (!player.isCreative()) stack.shrink(1);
-                    return InteractionResult.sidedSuccess(level().isClientSide());
                 }
+                return InteractionResult.sidedSuccess(level().isClientSide());
+            }
+        }
+
+        if (stack.is(Items.SOUL_TORCH)) {
+            if (!isWaxed() && level < CRYSTALLIZED) {
+                if (!player.isCreative()) stack.shrink(1);
+                if (level().random.nextFloat() < 0.25f) {
+                    setTarnishLevel(CRYSTALLIZED);
+                    level().playSound(null, blockPosition(), SoundEvents.FIRE_EXTINGUISH, SoundSource.PLAYERS, 1.0F, 1.0F);
+                }
+                return InteractionResult.sidedSuccess(level().isClientSide());
             }
         }
 
@@ -162,7 +173,7 @@ public class TarnishingEntity extends Monster {
 
             if (!isWaxed() && weapon.is(ItemTags.AXES)) {
                 if (level > 0 && level < CRYSTALLIZED) {
-                    if (random.nextFloat() < 0.05f) {
+                    if (random.nextFloat() < 0.1f) {
                         setTarnishLevel(level - 1);
                         level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 1.0F);
 
@@ -171,11 +182,6 @@ public class TarnishingEntity extends Monster {
                                     new ItemStack(RNItems.BRONZE_POWDER.get()));
                             level().addFreshEntity(powder);
                         }
-                    }
-                } else if (level == CRYSTALLIZED) {
-                    if (random.nextFloat() < 0.05f) {
-                        setTarnishLevel(0);
-                        level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 1.0F);
                     }
                 }
             }
