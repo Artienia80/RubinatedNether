@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.events;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNEffects;
@@ -8,6 +9,7 @@ import corundum.rubinated_nether.content.effect.renderer.BronzeDiseasedEffectOve
 import corundum.rubinated_nether.content.items.DrillItem;
 import corundum.rubinated_nether.misc.DatapackRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -133,11 +136,35 @@ public class RNGameBusEvents {
 	}
 
 	@SubscribeEvent
-	public static void onRenderGuiOverlay(RenderGuiLayerEvent.Post event) {
+	public static void onRenderWorldOverlay(RenderLevelStageEvent event) {
+		if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_SKY) return;
+
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
-		if (player != null && player.hasEffect(RNEffects.BRONZE_DISEASED)) {
-			BronzeDiseasedEffectOverlay.renderTextureOverlay(event.getGuiGraphics(), BronzeDiseasedEffectOverlay.PARANOIA_OVERLAY, 0.5F);
-		}
+		if (player == null || !player.hasEffect(RNEffects.BRONZE_DISEASED)) return;
+
+		RenderSystem.enableBlend();
+		RenderSystem.disableDepthTest();
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 0.5F);
+		RenderSystem.setShaderTexture(0, BronzeDiseasedEffectOverlay.PARANOIA_OVERLAY);
+
+		blitFullScreen();
+
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.enableDepthTest();
+		RenderSystem.disableBlend();
 	}
+
+	private static void blitFullScreen() {
+		Minecraft mc = Minecraft.getInstance();
+		GuiGraphics guiGraphics = new GuiGraphics(mc, mc.renderBuffers().bufferSource());
+
+		int screenWidth = mc.getWindow().getGuiScaledWidth();
+		int screenHeight = mc.getWindow().getGuiScaledHeight();
+
+		guiGraphics.blit(BronzeDiseasedEffectOverlay.PARANOIA_OVERLAY, 0, 0, 0, 0.0F, 0.0F, screenWidth, screenHeight, screenWidth, screenHeight);
+
+		guiGraphics.flush();
+	}
+
 }

@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.entity;
 import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -10,7 +11,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -34,6 +39,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumSet;
 import java.util.List;
 
 public class BronzeEntity extends TarnishingEntity {
@@ -50,6 +56,7 @@ public class BronzeEntity extends TarnishingEntity {
 
     private int shockwaveCooldownTicks = 0;
 
+    private int ramCooldownTicks = 0;
 
 
     public BronzeEntity(EntityType<? extends Monster> entityType, Level level) {
@@ -107,6 +114,7 @@ public class BronzeEntity extends TarnishingEntity {
         });
 
         //discolored
+        this.targetSelector.addGoal(1, new DiscoloredRamGoal(this));
 
         //corroded
 
@@ -175,6 +183,9 @@ public class BronzeEntity extends TarnishingEntity {
         if (shockwaveCooldownTicks > 0) {
             shockwaveCooldownTicks--;
         }
+        if (ramCooldownTicks > 0) {
+            ramCooldownTicks--;
+        }
 
         if (!this.level().isClientSide()) {
             List<BronzeEntity> bronzes = this.level().getEntitiesOfClass(BronzeEntity.class, this.getBoundingBox().inflate(25.0D));
@@ -209,6 +220,15 @@ public class BronzeEntity extends TarnishingEntity {
 
         System.out.println(shockwaveCooldownTicks);
     }
+
+    public int getRamCooldown() {
+        return ramCooldownTicks;
+    }
+
+    public void setRamCooldown(int ticks) {
+        this.ramCooldownTicks = ticks;
+    }
+
 
     @Override
     public float getWalkTargetValue(BlockPos pos, LevelReader level) {
@@ -332,40 +352,6 @@ public class BronzeEntity extends TarnishingEntity {
         }
         else super.handleEntityEvent(state);
     }
-
-
-    public class DiscoloredAttackGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
-        private final TarnishingEntity entity;
-
-        public DiscoloredAttackGoal(TarnishingEntity entity, Class<T> targetType) {
-            super(entity, targetType, true);
-            this.entity = entity;
-        }
-
-        @Override
-        public boolean canUse() {
-            return entity.getTarnishLevel() == 1 && super.canUse();
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return entity.getTarnishLevel() == 1 && super.canContinueToUse();
-        }
-
-        @Override
-        public void start() {
-            super.start();
-        }
-
-        @Override
-        public void tick(){
-        }
-        @Override
-        public void stop() {
-            super.stop();
-        }
-    }
-
 
     public class CrystallizeNearbyBronzeGoal extends Goal {
         private final BronzeEntity entity;
@@ -577,6 +563,92 @@ public class BronzeEntity extends TarnishingEntity {
             return;
         }
         super.knockback(strength, x, z);
+    }
+
+
+    public class DiscoloredRamGoal extends Goal {
+        private final BronzeEntity entity;
+        private Player target;
+
+        private int phase = 0;
+        private int phaseTicks = 0;
+        private Vec3 dashDirection = Vec3.ZERO;
+        private static final int CHARGE_TIME = 20;
+        private static final int DASH_TIME = 10;
+        private static final int COOLDOWN = 80;
+        private static final double RAM_SPEED = 1.5;
+
+        public DiscoloredRamGoal(BronzeEntity entity) {
+            this.entity = entity;
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        }
+
+        @Override
+        public boolean canUse() {
+            if (entity.getTarnishLevel() != 1) return false;
+            if (entity.getRamCooldown() > 0) return false;
+
+            Player player = entity.level().getNearestPlayer(entity, 15);
+            if (player != null && entity.hasLineOfSight(player) && !player.isCreative()) {
+                target = player;
+                return true;
+            }
+
+            return false;
+        }
+
+        @Override
+        public void start() {
+            phase = 1;
+            phaseTicks = 0;
+            entity.getNavigation().stop();
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return target != null && target.isAlive() && phase > 0;
+        }
+
+        @Override
+        public void tick() {
+            if (target == null) return;
+
+            switch (phase) {
+                case 1:
+                    entity.lookAt(EntityAnchorArgument.Anchor.EYES, target.position());
+                    phaseTicks++;
+                    if (phaseTicks >= CHARGE_TIME) {
+                        dashDirection = target.position().subtract(entity.position()).normalize();
+                        phase = 2;
+                        phaseTicks = 0;
+                    }
+
+                    break;
+
+                case 2:
+                    entity.setDeltaMovement(dashDirection.scale(RAM_SPEED));
+                    entity.setYRot((float) (Mth.atan2(dashDirection.z, dashDirection.x) * (180F / Math.PI)) - 90F);
+                    entity.yBodyRot = entity.getYRot();
+
+                    if (entity.distanceTo(target) < 1.5) {
+                        target.hurt(entity.damageSources().mobAttack(entity), 6.0F);
+                        stop();
+                    }
+
+                    phaseTicks++;
+                    if (phaseTicks >= DASH_TIME) {
+                        stop();
+                    }
+                    break;
+            }
+        }
+        @Override
+        public void stop() {
+            entity.setRamCooldown(COOLDOWN);
+            entity.setDeltaMovement(Vec3.ZERO);
+            phase = 0;
+            target = null;
+        }
     }
 
 
