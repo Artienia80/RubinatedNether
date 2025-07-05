@@ -58,13 +58,32 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
         if (level.isClientSide) return;
         if (entity instanceof ItemEntity) return;
 
-        if (getAgeFromBlock(state) != TarnishState.CRYSTALLIZED) return;
-
         if (hasImmediateRedstoneSignal(level, pos)) return;
 
-        if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
-            level.scheduleTick(pos, this, 5);
+        TarnishState tarnishState = getAgeFromBlock(state);
+
+        // Handle all tarnish states, not just crystallized
+        int delay;
+        if (tarnishState == TarnishState.CRYSTALLIZED) {
+            delay = 5; // Fast fall for crystallized (cascade behavior)
+        } else {
+            delay = getDelayForTarnishState(tarnishState); // Normal delays for other states
         }
+
+        if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
+            level.scheduleTick(pos, this, delay);
+        }
+    }
+
+    // Add this method back from the original code
+    private int getDelayForTarnishState(TarnishState state) {
+        return switch (state) {
+            case CRYSTALLIZED -> 5; // 0.25 second
+            case UNAFFECTED   -> 20; // 1 second
+            case DISCOLORED   -> 40; // 2 seconds
+            case CORRODED     -> 60; // 3 seconds
+            case TARNISHED    -> 80; // 4 seconds
+        };
     }
 
     @Override
