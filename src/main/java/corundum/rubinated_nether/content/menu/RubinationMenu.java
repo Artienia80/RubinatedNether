@@ -22,6 +22,8 @@ import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -29,6 +31,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.util.ConcatenatedListView;
 
 import java.util.*;
 
@@ -117,6 +120,8 @@ public class RubinationMenu extends AbstractContainerMenu {
                 1.0F,
                 level.random.nextFloat() * 0.1F + 0.9F
         );
+
+        BlessPlayer(player, 6000);
 
         RubinationConverter.RubinateArea(level, blockPos);
 
@@ -346,5 +351,16 @@ public class RubinationMenu extends AbstractContainerMenu {
         }
 
         return itemstack;
+    }
+
+    public static void BlessPlayer(Player player, int durationTicks) {
+        MobEffectInstance currentLuck = player.getEffect(MobEffects.LUCK);
+
+        if (currentLuck != null) {
+            int newDuration = currentLuck.getDuration() + durationTicks;
+            player.addEffect(new MobEffectInstance(MobEffects.LUCK, newDuration, 0, false, true, true));
+        } else {
+            player.addEffect(new MobEffectInstance(MobEffects.LUCK, durationTicks, 0, false, true, true));
+        }
     }
 }
