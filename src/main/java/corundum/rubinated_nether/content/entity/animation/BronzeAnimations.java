@@ -6,7 +6,6 @@ import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
 
 public class BronzeAnimations {
-
     public static final AnimationDefinition IDLE = AnimationDefinition.Builder.withLength(2.04167f).looping()
             .addAnimation("bronze",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
