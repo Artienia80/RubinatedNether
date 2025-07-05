@@ -144,7 +144,7 @@ public abstract class TarnishingEntity extends Monster {
         }
 
         if (stack.getItem() instanceof AxeItem) {
-            if (level > 0 && level != 4) {
+            if (!isWaxed() && level > 0 && level != 4) {
                 setTarnishLevel(level - 1);
                 handleEffects(player);
                 if (!player.isCreative()) stack.setDamageValue(stack.getDamageValue() - 1);
