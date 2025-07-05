@@ -24,8 +24,7 @@ import java.util.List;
 import java.util.function.BiPredicate;
 
 
-public class RNRubinateEverywhere {
-
+public class RubinationConverter {
 
     private static final double MIN_REPLACEMENT_CHANCE = 0.0;
     private static final double MAX_REPLACEMENT_CHANCE = 1.0;

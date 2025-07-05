@@ -4,7 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.RNRubinateEverywhere;
+import corundum.rubinated_nether.content.RubinationConverter;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.RubinationAltarBlock;
 import corundum.rubinated_nether.content.items.Rubination;
@@ -118,7 +118,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                 level.random.nextFloat() * 0.1F + 0.9F
         );
 
-        RNRubinateEverywhere.RubinateArea(level, blockPos);
+        RubinationConverter.RubinateArea(level, blockPos);
 
         return InteractionResult.CONSUME;
     }
@@ -166,7 +166,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                                 1.0F,
                                 level.random.nextFloat() * 0.1F + 0.9F
                         );
-                        RNRubinateEverywhere.RubinateArea(level, blockPos);
+                        RubinationConverter.RubinateArea(level, blockPos);
                     }
 
                 });
