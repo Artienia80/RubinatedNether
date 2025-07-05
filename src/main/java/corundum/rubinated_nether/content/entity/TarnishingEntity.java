@@ -69,11 +69,11 @@ public abstract class TarnishingEntity extends Monster {
     }
 
     public void increaseTarnishLevel() {
-        this.setTarnishLevel(Mth.clamp(this.getTarnishLevel() + 1, 0, 3));
+        this.setTarnishLevel(Math.min(this.getTarnishLevel() + 1, 3));
     }
 
     public void decreaseTarnishLevel() {
-        this.setTarnishLevel(Mth.clamp(this.getTarnishLevel() - 1, 0, 3));
+        this.setTarnishLevel(Math.max(this.getTarnishLevel() - 1, 0));
     }
 
     public boolean isWaxed() {
