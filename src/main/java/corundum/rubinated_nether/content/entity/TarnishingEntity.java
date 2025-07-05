@@ -68,6 +68,14 @@ public abstract class TarnishingEntity extends Monster {
         entityData.set(TARNISH_STATE, Mth.clamp(level, 0, MAX_TARNISH));
     }
 
+    public void increaseTarnishLevel() {
+        this.setTarnishLevel(Mth.clamp(this.getTarnishLevel() + 1, 0, 3));
+    }
+
+    public void decreaseTarnishLevel() {
+        this.setTarnishLevel(Mth.clamp(this.getTarnishLevel() - 1, 0, 3));
+    }
+
     public boolean isWaxed() {
         return entityData.get(WAXED);
     }
@@ -130,7 +138,7 @@ public abstract class TarnishingEntity extends Monster {
         if (stack.getItem() instanceof AxeItem) {
             if (!isWaxed() && this.getTarnishLevel() > 0 && this.getTarnishLevel() != 4) {
                 if (level().random.nextFloat() < 0.05f) {
-                    this.setTarnishLevel(this.getTarnishLevel() - 1);
+                    this.decreaseTarnishLevel();
                     handleEffects(player);
                 }
             }
@@ -152,7 +160,7 @@ public abstract class TarnishingEntity extends Monster {
         if (stack.is(RNItems.BRONZE_POWDER.get())) {
             if (!isWaxed() && level < 3) {
                 if (this.level().random.nextFloat() < 0.10f) {
-                    setTarnishLevel(level + 1);
+                    this.increaseTarnishLevel();
                 }
                 if (!player.isCreative())
                     stack.shrink(1);
