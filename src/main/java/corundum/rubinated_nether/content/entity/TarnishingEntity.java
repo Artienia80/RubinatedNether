@@ -127,10 +127,12 @@ public class TarnishingEntity extends Monster {
 
         if (stack.is(RNItems.BRONZE_POWDER.get())) {
             if (!isWaxed() && level < 3) {
-                setTarnishLevel(level + 1);
-                level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 0.8F);
-                if (!player.isCreative()) stack.shrink(1);
-                return InteractionResult.sidedSuccess(level().isClientSide());
+                if (level().random.nextFloat() < 0.10f) {
+                    setTarnishLevel(level + 1);
+                    level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 0.8F);
+                    if (!player.isCreative()) stack.shrink(1);
+                    return InteractionResult.sidedSuccess(level().isClientSide());
+                }
             }
         }
 
