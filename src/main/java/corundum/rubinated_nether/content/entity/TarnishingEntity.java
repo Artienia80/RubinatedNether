@@ -121,6 +121,23 @@ public abstract class TarnishingEntity extends Monster {
     }
 
     @Override
+    public void handleDamageEvent(DamageSource damageSource) {
+        super.handleDamageEvent(damageSource);
+        if (!(damageSource.getEntity() instanceof Player player)) return;
+
+        var stack = damageSource.getWeaponItem();
+
+        if (stack.getItem() instanceof AxeItem) {
+            if (!isWaxed() && this.getTarnishLevel() > 0 && this.getTarnishLevel() != 4) {
+                if (level().random.nextFloat() < 0.05f) {
+                    this.setTarnishLevel(this.getTarnishLevel() - 1);
+                    handleEffects(player);
+                }
+            }
+        }
+    }
+
+    @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         int level = getTarnishLevel();
@@ -134,24 +151,14 @@ public abstract class TarnishingEntity extends Monster {
 
         if (stack.is(RNItems.BRONZE_POWDER.get())) {
             if (!isWaxed() && level < 3) {
-                if (level().random.nextFloat() < 0.10f) {
+                if (this.level().random.nextFloat() < 0.10f) {
                     setTarnishLevel(level + 1);
-                    handleEffects(player);
-                    if (!player.isCreative()) stack.shrink(1);
-                    return InteractionResult.sidedSuccess(level().isClientSide());
                 }
-            }
-        }
+                if (!player.isCreative())
+                    stack.shrink(1);
 
-        if (stack.getItem() instanceof AxeItem) {
-            if (!isWaxed() && level > 0 && level != 4) {
-                if (level().random.nextFloat() < 0.10f) {
-                    setTarnishLevel(level - 1);
-                    handleEffects(player);
-                    if (!player.isCreative())
-                        stack.setDamageValue(stack.getDamageValue() - 1);
-                    return InteractionResult.sidedSuccess(level().isClientSide());
-                }
+                handleEffects(player);
+                return InteractionResult.sidedSuccess(level().isClientSide());
             }
         }
 
