@@ -145,10 +145,13 @@ public abstract class TarnishingEntity extends Monster {
 
         if (stack.getItem() instanceof AxeItem) {
             if (!isWaxed() && level > 0 && level != 4) {
-                setTarnishLevel(level - 1);
-                handleEffects(player);
-                if (!player.isCreative()) stack.setDamageValue(stack.getDamageValue() - 1);
-                return InteractionResult.sidedSuccess(level().isClientSide());
+                if (level().random.nextFloat() < 0.10f) {
+                    setTarnishLevel(level - 1);
+                    handleEffects(player);
+                    if (!player.isCreative())
+                        stack.setDamageValue(stack.getDamageValue() - 1);
+                    return InteractionResult.sidedSuccess(level().isClientSide());
+                }
             }
         }
 
