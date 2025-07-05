@@ -98,6 +98,7 @@ public class BronzeEntity extends TarnishingEntity {
     protected boolean isSunSensitive() {
         return false;
     }
+
     @Override
     protected void registerGoals() {
         // base
@@ -110,24 +111,37 @@ public class BronzeEntity extends TarnishingEntity {
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 
-        //unaffected
+        this.registerUnaffectedGoals();
+        this.registerDiscoloredGoals();
+        this.registerCorrodedGoals();
+        this.registerTarnishedGoals();
+        this.registerCrystallizedGoals();
+    }
+
+    private void registerUnaffectedGoals() {
         this.targetSelector.addGoal(1, new UnaffectedAttackGoal<>(this, Player.class));
-        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.2, false){
-            public boolean canUse() { return (BronzeEntity.this.getTarnishLevel() == 0) && super.canUse(); }
+        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.2, false) {
+            public boolean canUse() {
+                return (BronzeEntity.this.getTarnishLevel() == 0) && super.canUse();
+            }
         });
+    }
 
-        //discolored
+    private void registerDiscoloredGoals() {
         this.targetSelector.addGoal(1, new DiscoloredRamGoal(this));
+    }
 
-        //corroded
+    private void registerCorrodedGoals() {
         this.targetSelector.addGoal(1, new CorrodedHideAndAmbushGoal(this));
+    }
 
-        //tarnished
+    private void registerTarnishedGoals() {
         this.shockwaveGoal = new TarnishedShockwaveGoal(this);
         this.targetSelector.addGoal(1, shockwaveGoal);
+    }
 
-        //crystallized
-        this.goalSelector.addGoal(4, new AvoidEntityGoal(this, Player.class, 15.0F, 2.2, 2.2){
+    private void registerCrystallizedGoals() {
+        this.goalSelector.addGoal(4, new AvoidEntityGoal<Player>(this, Player.class, 15.0F, 2.2, 2.2){
             public boolean canUse() { return BronzeEntity.this.getTarnishLevel() == 4 && super.canUse(); }
         });
         this.goalSelector.addGoal(1, new CrystallizeNearbyBronzeGoal(this));
@@ -143,7 +157,7 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     public int getShockwaveCooldown() {
-        return shockwaveCooldownTicks;
+        return this.shockwaveCooldownTicks;
     }
 
     public void setShockwaveCooldown(int ticks) {
@@ -473,7 +487,7 @@ public class BronzeEntity extends TarnishingEntity {
 
         @Override
         public boolean canContinueToUse() {
-            return isDefending || isStunned;
+            return (isDefending || isStunned) && entity.getTarnishLevel() == 3;
         }
 
         public boolean isDefending() {
@@ -650,7 +664,7 @@ public class BronzeEntity extends TarnishingEntity {
 
         @Override
         public boolean canContinueToUse() {
-            return target != null && target.isAlive() && phase > 0;
+            return target != null && target.isAlive() && entity.getTarnishLevel() == 1 && phase > 0;
         }
 
         @Override
@@ -727,7 +741,7 @@ public class BronzeEntity extends TarnishingEntity {
 
         @Override
         public boolean canContinueToUse() {
-            return state != 0 && target != null && target.isAlive();
+            return state != 0 && entity.getTarnishLevel() == 2 && target != null && !entity.isInWater() && target.isAlive();
         }
 
         @Override
