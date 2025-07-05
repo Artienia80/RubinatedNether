@@ -3,11 +3,10 @@
     "rubinated_nether:crystallized_bronze_block",
     "rubinated_nether:crystallized_chiseled_bronze",
     "rubinated_nether:crystallized_cut_bronze_bricks",
-    "rubinated_nether:crystallized_cut_bronze_bricks_slab",
     "rubinated_nether:crystallized_cut_bronze_bricks_stairs",
     "rubinated_nether:crystallized_cut_bronze_pillar",
     "rubinated_nether:crystallized_bronze_bulb",
     "rubinated_nether:crystallized_bronze_grate",
-    "rubinated_nether:crystallized_chiseled_bronze"
+    "rubinated_nether:crystallized_cut_bronze_bricks_slab"
   ]
 }
