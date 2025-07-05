@@ -1,7 +1,11 @@
 package corundum.rubinated_nether.content.entity;
 
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.utils.RNParticleUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -11,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.ParticleUtils;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -29,8 +34,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.Tags;
 
-public class TarnishingEntity extends Monster {
+public abstract class TarnishingEntity extends Monster {
     public static final int MAX_TARNISH = 4;
     public static final int TARNISHED = 3;
     public static final int CRYSTALLIZED = 4;
@@ -59,6 +66,14 @@ public class TarnishingEntity extends Monster {
 
     public void setTarnishLevel(int level) {
         entityData.set(TARNISH_STATE, Mth.clamp(level, 0, MAX_TARNISH));
+    }
+
+    public void increaseTarnishLevel() {
+        this.setTarnishLevel(Math.min(this.getTarnishLevel() + 1, 3));
+    }
+
+    public void decreaseTarnishLevel() {
+        this.setTarnishLevel(Math.max(this.getTarnishLevel() - 1, 0));
     }
 
     public boolean isWaxed() {
@@ -114,6 +129,23 @@ public class TarnishingEntity extends Monster {
     }
 
     @Override
+    public void handleDamageEvent(DamageSource damageSource) {
+        super.handleDamageEvent(damageSource);
+        if (!(damageSource.getEntity() instanceof Player player)) return;
+
+        var stack = damageSource.getWeaponItem();
+
+        if (stack.getItem() instanceof AxeItem) {
+            if (!isWaxed() && this.getTarnishLevel() > 0 && this.getTarnishLevel() != 4) {
+                if (level().random.nextFloat() < 0.05f) {
+                    this.decreaseTarnishLevel();
+                    handleEffects(player);
+                }
+            }
+        }
+    }
+
+    @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         int level = getTarnishLevel();
@@ -121,21 +153,29 @@ public class TarnishingEntity extends Monster {
         if (stack.is(Items.HONEYCOMB) && !isWaxed()) {
             setWaxed(true);
             if (!player.isCreative()) stack.shrink(1);
-            level().playSound(null, blockPosition(), SoundEvents.HONEYCOMB_WAX_ON, SoundSource.PLAYERS, 1.0F, 1.0F);
+            handleEffects(player);
             return InteractionResult.sidedSuccess(level().isClientSide());
         }
 
         if (stack.is(RNItems.BRONZE_POWDER.get())) {
             if (!isWaxed() && level < 3) {
-                setTarnishLevel(level + 1);
-                level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 0.8F);
-                if (!player.isCreative()) stack.shrink(1);
+                if (this.level().random.nextFloat() < 0.10f) {
+                    this.increaseTarnishLevel();
+                }
+                if (!player.isCreative())
+                    stack.shrink(1);
+
+                handleEffects(player);
                 return InteractionResult.sidedSuccess(level().isClientSide());
             }
         }
 
-
         return super.mobInteract(player, hand);
+    }
+
+    private void handleEffects(Player player) {
+        this.level().playSound(player, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 0.8F);
+        RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 15, 0.5F, 1.75F, ParticleTypes.HAPPY_VILLAGER);
     }
 
     @Override
