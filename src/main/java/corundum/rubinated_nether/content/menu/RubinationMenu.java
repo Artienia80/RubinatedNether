@@ -2,10 +2,7 @@ package corundum.rubinated_nether.content.menu;
 
 import com.mojang.datafixers.util.Pair;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.RubinationConverter;
-import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.RubinationAltarBlock;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneItem;
@@ -31,7 +28,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.CommonHooks;
-import net.neoforged.neoforge.common.util.ConcatenatedListView;
 
 import java.util.*;
 
@@ -155,6 +151,8 @@ public class RubinationMenu extends AbstractContainerMenu {
                                 this.rubinationSlots.setItem(1, ItemStack.EMPTY);
                             }
                         }
+
+                        BlessPlayer(player, 24000);
 
                         player.awardStat(Stats.ENCHANT_ITEM);
                         if (player instanceof ServerPlayer) {
@@ -354,13 +352,13 @@ public class RubinationMenu extends AbstractContainerMenu {
     }
 
     public static void BlessPlayer(Player player, int durationTicks) {
-        MobEffectInstance currentLuck = player.getEffect(MobEffects.LUCK);
+        MobEffectInstance currentBlessing = player.getEffect(RNEffects.BLESSED);
 
-        if (currentLuck != null) {
-            int newDuration = currentLuck.getDuration() + durationTicks;
-            player.addEffect(new MobEffectInstance(MobEffects.LUCK, newDuration, 0, false, true, true));
+        if (currentBlessing != null) {
+            int newDuration = currentBlessing.getDuration() + durationTicks;
+            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, newDuration, 0, false, true, true));
         } else {
-            player.addEffect(new MobEffectInstance(MobEffects.LUCK, durationTicks, 0, false, true, true));
+            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, durationTicks, 0, false, true, true));
         }
     }
 }
