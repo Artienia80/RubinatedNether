@@ -249,7 +249,6 @@
 
   "gui.rubinated_nether.rubination_altar": "Rubination Altar",
 
-
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
 
   "death.attack.fallingBlock": "%1$s was embraced by a falling chandelier",
@@ -261,5 +260,7 @@
 
   "entity.rubinated_nether.bronze": "Bronze",
 
-  "effect.rubinated_nether.bronze_diseased": "Bronze Diseased"
+  "effect.rubinated_nether.bronze_diseased": "Bronze Diseased",
+  "effect.rubinated_nether.blessed": "Blessed"
+
 }
