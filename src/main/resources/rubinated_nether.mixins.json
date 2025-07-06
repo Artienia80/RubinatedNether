@@ -10,6 +10,7 @@
 		"MultishotSpreadMixin",
 		"CrookedShotCrossbowMixin",
 		"RavagingCurseMixin",
+		"BlessedMixin",
 		"accessors.AbstractFurnaceBlockEntityAccessor",
 		"accessors.EntityRenderDispatcherAccessor",
 		"accessors.DoublePlantBlockAccessor",
