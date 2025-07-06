@@ -2,10 +2,7 @@ package corundum.rubinated_nether.content.menu;
 
 import com.mojang.datafixers.util.Pair;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.RubinationConverter;
-import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.RubinationAltarBlock;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneItem;
@@ -22,6 +19,8 @@ import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -65,7 +64,7 @@ public class RubinationMenu extends AbstractContainerMenu {
         });
         this.addSlot(new Slot(this.rubinationSlots, 1, 90, 84) {
             public boolean mayPlace(ItemStack itemStack) {
-                return itemStack.is(RNItems.GRAND_RITUAL_OFFERING.get());
+                return itemStack.is(RNItems.WINDING_KEY.get());
             }
 
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
@@ -118,6 +117,8 @@ public class RubinationMenu extends AbstractContainerMenu {
                 level.random.nextFloat() * 0.1F + 0.9F
         );
 
+        BlessPlayer(player, 6000);
+
         RubinationConverter.RubinateArea(level, blockPos);
 
         return InteractionResult.CONSUME;
@@ -150,6 +151,8 @@ public class RubinationMenu extends AbstractContainerMenu {
                                 this.rubinationSlots.setItem(1, ItemStack.EMPTY);
                             }
                         }
+
+                        BlessPlayer(player, 24000);
 
                         player.awardStat(Stats.ENCHANT_ITEM);
                         if (player instanceof ServerPlayer) {
@@ -318,7 +321,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                 if (!this.moveItemStackTo(itemstack1, 2, 38, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (itemstack1.is(RNItems.GRAND_RITUAL_OFFERING.get())) {
+            } else if (itemstack1.is(RNItems.WINDING_KEY.get())) {
                 if (!this.moveItemStackTo(itemstack1, 1, 2, true)) {
                     return ItemStack.EMPTY;
                 }
@@ -346,5 +349,16 @@ public class RubinationMenu extends AbstractContainerMenu {
         }
 
         return itemstack;
+    }
+
+    public static void BlessPlayer(Player player, int durationTicks) {
+        MobEffectInstance currentBlessing = player.getEffect(RNEffects.BLESSED);
+
+        if (currentBlessing != null) {
+            int newDuration = currentBlessing.getDuration() + durationTicks;
+            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, newDuration, 0, false, true, true));
+        } else {
+            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, durationTicks, 0, false, true, true));
+        }
     }
 }

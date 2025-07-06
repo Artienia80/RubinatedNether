@@ -145,7 +145,7 @@ public class RNLanguage extends RNLanguageProvider {
 		addItem(RNItems.NIMIS_RUNE, "Rune of Nimis");
 
 		addItem(RNItems.RITUAL_OFFERING, "Ritual Offering");
-		addItem(RNItems.GRAND_RITUAL_OFFERING, "Grand Ritual Offering");
+		addItem(RNItems.WINDING_KEY, "Winding Key");
 
 		add(RNCreativeTabs.RN_TAB.get().getDisplayName().getString(), "Rubinated Nether");
 

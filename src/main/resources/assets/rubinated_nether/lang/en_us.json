@@ -206,7 +206,9 @@
   "enchantment.rubinated_nether.crooked_shot_curse": "Curse of Crooked Shot",
 
   "item.rubinated_nether.ritual_offering": "Ritual Offering",
-  "item.rubinated_nether.grand_ritual_offering": "Grand Ritual Offering",
+  "item.rubinated_nether.winding_key": "Winding Key",
+
+  "item.rubinated_nether.bronze_spawn_egg": "Bronze Spawn Egg",
 
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Obtain Bleeding Obsidian",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Blood For The Blood God!",
@@ -247,7 +249,6 @@
 
   "gui.rubinated_nether.rubination_altar": "Rubination Altar",
 
-
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
 
   "death.attack.fallingBlock": "%1$s was embraced by a falling chandelier",
@@ -259,5 +260,7 @@
 
   "entity.rubinated_nether.bronze": "Bronze",
 
-  "effect.rubinated_nether.bronze_diseased": "Bronze Diseased"
+  "effect.rubinated_nether.bronze_diseased": "Bronze Diseased",
+  "effect.rubinated_nether.blessed": "Blessed"
+
 }
