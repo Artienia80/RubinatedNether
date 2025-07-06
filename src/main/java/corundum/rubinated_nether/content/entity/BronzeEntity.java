@@ -1,10 +1,13 @@
 package corundum.rubinated_nether.content.entity;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -31,11 +34,13 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -55,6 +60,7 @@ public class BronzeEntity extends TarnishingEntity {
 
     private int lastTarnishLevel = -1;
     private TarnishedShockwaveGoal shockwaveGoal;
+    private DiscoloredRamGoal dashGoal;
     private int shockwaveCooldownTicks = 0;
     private int ramCooldownTicks = 0;
     private int ambushCooldownTicks = 0;
@@ -128,7 +134,11 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     private void registerDiscoloredGoals() {
-        this.targetSelector.addGoal(1, new DiscoloredRamGoal(this));
+        this.dashGoal = new DiscoloredRamGoal(this);
+        this.goalSelector.addGoal(2, this.dashGoal);
+        this.goalSelector.addGoal(3, new AvoidEntityGoal<Player>(this, Player.class, 10.0F, 1.2, 1.2){
+            public boolean canUse() { return BronzeEntity.this.getTarnishLevel() == 1 && super.canUse(); }
+        });
     }
 
     private void registerCorrodedGoals() {
@@ -181,6 +191,10 @@ public class BronzeEntity extends TarnishingEntity {
         }
     }
 
+    public boolean isDashing() {
+        return this.dashGoal != null && this.dashGoal.isDashing();
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -209,6 +223,7 @@ public class BronzeEntity extends TarnishingEntity {
         }
         if (ambushCooldownTicks > 0) {
             ambushCooldownTicks--;
+            this.setDeltaMovement(0, this.getDeltaMovement().y, 0);
         }
 
 
@@ -406,6 +421,8 @@ public class BronzeEntity extends TarnishingEntity {
         }
         if (state == 87){
             this.ambushAnimationState.stop();
+            this.undergroundWalkAnimationState.stop();
+            this.drillAnimationState.stop();
         }
         else super.handleEntityEvent(state);
     }
@@ -588,7 +605,6 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
 
-
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if(this.isBurrowed()){
@@ -634,7 +650,11 @@ public class BronzeEntity extends TarnishingEntity {
         private static final int CHARGE_TIME = 20;
         private static final int DASH_TIME = 10;
         private static final int COOLDOWN = 80;
-        private static final double RAM_SPEED = 1.5;
+        private static final double RAM_SPEED = 1.2;
+        private boolean isStunned = false;
+        private int stunTicks = 0;
+        private static final int STUN_DURATION = 60;
+
 
         public DiscoloredRamGoal(BronzeEntity entity) {
             this.entity = entity;
@@ -664,11 +684,25 @@ public class BronzeEntity extends TarnishingEntity {
 
         @Override
         public boolean canContinueToUse() {
-            return target != null && target.isAlive() && entity.getTarnishLevel() == 1 && phase > 0;
+            return (phase > 0 || isStunned) && target != null && target.isAlive() && entity.getTarnishLevel() == 1;
         }
 
         @Override
         public void tick() {
+            if (isStunned) {
+                stunTicks--;
+                entity.setDeltaMovement(0, entity.getDeltaMovement().y, 0);
+                if (stunTicks <= 0) {
+                    isStunned = false;
+                    entity.setRamCooldown(COOLDOWN);
+                    if (!level().isClientSide) {
+                        entity.level().broadcastEntityEvent(entity, (byte) 73);
+                    }
+                    stop();
+                }
+                return;
+            }
+
             if (target == null) return;
 
             switch (phase) {
@@ -680,7 +714,6 @@ public class BronzeEntity extends TarnishingEntity {
                         phase = 2;
                         phaseTicks = 0;
                     }
-
                     break;
 
                 case 2:
@@ -689,9 +722,22 @@ public class BronzeEntity extends TarnishingEntity {
                     entity.yBodyRot = entity.getYRot();
 
                     if (entity.distanceTo(target) < 1.5) {
+                        boolean hasShield = target.isBlocking();
+                        if (hasShield) {
+                            Vec3 attackDir = entity.position().subtract(target.position()).normalize();
+                            Vec3 lookVec = target.getLookAngle().normalize();
+                            double dot = attackDir.dot(lookVec);
+
+                            if (dot > 0.3) {
+                                triggerStun();
+                                return;
+                            }
+                        }
+
                         target.hurt(entity.damageSources().mobAttack(entity), 6.0F);
                         stop();
                     }
+
 
                     phaseTicks++;
                     if (phaseTicks >= DASH_TIME) {
@@ -699,10 +745,26 @@ public class BronzeEntity extends TarnishingEntity {
                     }
                     break;
             }
+
         }
+
+        public boolean isDashing() {
+            return phase == 2;
+        }
+
+        private void triggerStun() {
+            isStunned = true;
+            stunTicks = STUN_DURATION;
+            entity.setDeltaMovement(Vec3.ZERO);
+            entity.level().broadcastEntityEvent(entity, (byte) 71);
+            phase = 0;
+        }
+
         @Override
         public void stop() {
-            entity.setRamCooldown(COOLDOWN);
+            if (!isStunned) {
+                entity.setRamCooldown(COOLDOWN);
+            }
             entity.setDeltaMovement(Vec3.ZERO);
             phase = 0;
             target = null;
@@ -768,7 +830,11 @@ public class BronzeEntity extends TarnishingEntity {
                         stateTicks = 0;
 
                         if (entity.level() instanceof ServerLevel server) {
-                            server.sendParticles(ParticleTypes.CLOUD, entity.getX(), entity.getY() + 0.1, entity.getZ(), 10, 0.3, 0.1, 0.3, 0.01);
+                            BlockPos below = entity.blockPosition().below();
+                            BlockState blockstate = entity.level().getBlockState(below);
+                            ParticleOptions dust = new BlockParticleOption(ParticleTypes.BLOCK, blockstate);
+
+                            server.sendParticles(dust, entity.getX(), entity.getY() + 0.1, entity.getZ(), 4, 0.2, 0.05, 0.2, 0.02);
                         }
 
                         if (!level().isClientSide) {
@@ -781,10 +847,14 @@ public class BronzeEntity extends TarnishingEntity {
                     Vec3 direction = ambushTargetPos.subtract(entity.position()).normalize();
                     entity.setDeltaMovement(direction.scale(MOVE_SPEED));
                     if (entity.level() instanceof ServerLevel server) {
-                        server.sendParticles(ParticleTypes.CLOUD, entity.getX(), entity.getY() + 0.1, entity.getZ(), 10, 0.3, 0.1, 0.3, 0.01);
+                        BlockPos below = entity.blockPosition().below();
+                        BlockState blockstate = entity.level().getBlockState(below);
+                        ParticleOptions dust = new BlockParticleOption(ParticleTypes.BLOCK, blockstate);
+
+                        server.sendParticles(dust, entity.getX(), entity.getY() + 0.1, entity.getZ(), 4, 0.2, 0.05, 0.2, 0.02);
                     }
 
-                    if (entity.distanceToSqr(ambushTargetPos) < 1.5) {
+                    if (entity.distanceToSqr(ambushTargetPos) < 1.1) {
                         entity.setDeltaMovement(Vec3.ZERO);
                         state = 3;
                         stateTicks = 0;
@@ -793,7 +863,11 @@ public class BronzeEntity extends TarnishingEntity {
                             entity.level().broadcastEntityEvent(entity, (byte) 81);
                         }
                         if (entity.level() instanceof ServerLevel server) {
-                            server.sendParticles(ParticleTypes.CLOUD, entity.getX(), entity.getY() + 0.1, entity.getZ(), 10, 0.3, 0.1, 0.3, 0.01);
+                            BlockPos below = entity.blockPosition().below();
+                            BlockState blockstate = entity.level().getBlockState(below);
+                            ParticleOptions dust = new BlockParticleOption(ParticleTypes.BLOCK, blockstate);
+
+                            server.sendParticles(dust, entity.getX(), entity.getY() + 0.1, entity.getZ(), 4, 0.2, 0.05, 0.2, 0.02);
                         }
                     }
                 }
@@ -835,7 +909,7 @@ public class BronzeEntity extends TarnishingEntity {
             stateTicks = 0;
             target = null;
             entity.setBurrowed(false);
-            entity.setAmbushCooldown(40);
+            entity.setAmbushCooldown(30);
             hasAttacked = false;
             entity.setNoCollision(false);
 
@@ -854,6 +928,5 @@ public class BronzeEntity extends TarnishingEntity {
     public boolean canBeCollidedWith() {
         return !noCollision && super.canBeCollidedWith();
     }
-
 
 }
