@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "rubinated_nether:item/grand_ritual_offering"
+    "layer0": "rubinated_nether:item/winding_key"
   }
 }

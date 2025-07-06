@@ -68,7 +68,7 @@ public class RubinationMenu extends AbstractContainerMenu {
         });
         this.addSlot(new Slot(this.rubinationSlots, 1, 90, 84) {
             public boolean mayPlace(ItemStack itemStack) {
-                return itemStack.is(RNItems.GRAND_RITUAL_OFFERING.get());
+                return itemStack.is(RNItems.WINDING_KEY.get());
             }
 
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
@@ -323,7 +323,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                 if (!this.moveItemStackTo(itemstack1, 2, 38, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (itemstack1.is(RNItems.GRAND_RITUAL_OFFERING.get())) {
+            } else if (itemstack1.is(RNItems.WINDING_KEY.get())) {
                 if (!this.moveItemStackTo(itemstack1, 1, 2, true)) {
                     return ItemStack.EMPTY;
                 }

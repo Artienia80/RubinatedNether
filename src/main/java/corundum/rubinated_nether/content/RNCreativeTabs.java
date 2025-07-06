@@ -93,7 +93,7 @@ public class RNCreativeTabs {
 					RNItems.BRONZE_DRILL,
 
 					RNItems.RITUAL_OFFERING,
-					RNItems.GRAND_RITUAL_OFFERING
+					RNItems.WINDING_KEY
 
 				);
 

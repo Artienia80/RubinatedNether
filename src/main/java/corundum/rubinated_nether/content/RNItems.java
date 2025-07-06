@@ -73,7 +73,7 @@ public class RNItems {
 	public static final DeferredItem<Item> BRONZE_POWDER = basicItem("bronze_powder");
 
 	public static final DeferredItem<Item> RITUAL_OFFERING = basicItem("ritual_offering");
-	public static final DeferredItem<Item> GRAND_RITUAL_OFFERING = basicItem("grand_ritual_offering");
+	public static final DeferredItem<Item> WINDING_KEY = basicItem("winding_key");
 
 
 
