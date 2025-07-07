@@ -73,6 +73,8 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
 		this.dropSelf(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get());
 		this.dropSelf(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get());
+		this.dropSelf(RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get());
+		this.dropSelf(RNBlocks.RUBINATED_SHRINE_STONE_TILES.get());
 		this.add(RNBlocks.RUNESTONE.get(), this.createDoorTable(RNBlocks.RUNESTONE.get()));
 
 		this.dropWhenSilkTouch(RNBlocks.RUBY_GLASS.get());

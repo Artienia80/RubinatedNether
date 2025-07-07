@@ -73,6 +73,8 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
 				RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
 				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
+				RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(),
+				RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(),
 				RNBlocks.RUNESTONE.get(),
 				RNBlocks.BRAZIER.get(),
 				RNBlocks.RUBINATION_ALTAR.get(),
@@ -167,6 +169,8 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
 				RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
 				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
+				RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(),
+				RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(),
 				RNBlocks.RUNESTONE.get(),
 				RNBlocks.BRAZIER.get(),
 				RNBlocks.RUBINATION_ALTAR.get(),
@@ -289,7 +293,9 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.SHRINE_STONE_BRICKS.get(),
 				RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
 				RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
-				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get()
+				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
+				RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(),
+				RNBlocks.RUBINATED_SHRINE_STONE_TILES.get()
 		);
 
 
