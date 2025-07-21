@@ -56,7 +56,7 @@ public class RNLanguageHU extends RNLanguageProvider {
 
 		this.addBlock(RNBlocks.CHISELED_SHRINE_STONE_BRICKS, "Vésett templomkőtégla");
 		this.addBlock(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS, "Rubinozott Vésett Templomkőtégla");
-		this.addBlock(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS, "binozott templomkőtégla");
+		this.addBlock(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS, "Rubinozott templomkőtégla");
 
 		this.addBlock(RNBlocks.RUBY_LASER, "Rubinlézer");
 		this.addItem(RNItems.RUBY_LENS, "Rubinlencse");

@@ -16,8 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntity.class)
 public abstract class RavagingCurseMixin {
 
-    protected abstract void dropAllDeathLoot(DamageSource damageSource);
-
     private boolean suppressDrops = false;
 
     @Inject(method = "die", at = @At("HEAD"))
@@ -43,7 +41,6 @@ public abstract class RavagingCurseMixin {
                         }
                     }
                 } catch (Exception e) {
-                    // Enchantment not found, continue normally
                 }
             }
         }

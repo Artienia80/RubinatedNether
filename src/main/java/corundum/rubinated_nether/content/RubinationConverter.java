@@ -429,6 +429,22 @@ public class RubinationConverter {
         ));
 
         rules.add(new ConversionRule(
+                RNBlocks.SHRINE_STONE_PILLAR.get(),
+                RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(),
+                20.0,
+                200,
+                true
+        ));
+
+        rules.add(new ConversionRule(
+                RNBlocks.SHRINE_STONE_TILES.get(),
+                RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(),
+                20.0,
+                200,
+                true
+        ));
+
+        rules.add(new ConversionRule(
                 RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
                 RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
                 20.0,

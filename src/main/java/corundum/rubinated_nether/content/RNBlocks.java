@@ -270,6 +270,20 @@ public class RNBlocks {
 		)
 	);
 
+	public static final DeferredBlock<Block> RUBINATED_SHRINE_STONE_TILES = registerBlockAndItem(
+			"rubinated_shrine_stone_tiles",
+			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
+					.lightLevel($ -> 7)
+			)
+	);
+
+	public static final DeferredBlock<RotatedPillarBlock> RUBINATED_SHRINE_STONE_PILLAR = registerBlockAndItem(
+			"rubinated_shrine_stone_pillar",
+			() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
+					.lightLevel($ -> 7)
+			)
+	);
+
 	public static final DeferredBlock<Block> FREEZER = registerBlockAndItem(
 		"freezer", 
 		() -> new FreezerBlock(

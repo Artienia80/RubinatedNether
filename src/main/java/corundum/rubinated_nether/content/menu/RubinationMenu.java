@@ -32,7 +32,7 @@ import net.neoforged.neoforge.common.CommonHooks;
 import java.util.*;
 
 public class RubinationMenu extends AbstractContainerMenu {
-    static final ResourceLocation EMPTY_SLOT_RUBIES = RubinatedNether.id("item/empty_slot_ruby");
+    static final ResourceLocation EMPTY_SLOT_KEY = RubinatedNether.id("item/empty_slot_key");
     private final Container rubinationSlots;
     private final ContainerLevelAccess access;
     public final int[][] rubinationClue;
@@ -68,7 +68,7 @@ public class RubinationMenu extends AbstractContainerMenu {
             }
 
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-                return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_RUBIES);
+                return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_KEY);
             }
         });
 
