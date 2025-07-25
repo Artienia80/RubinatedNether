@@ -19,6 +19,7 @@ public class RNItems {
 	public static final DeferredItem<Item> MOLTEN_RUBY_NUGGET_ITEM = basicItem("molten_ruby_nugget");
 
 	// Runes
+	public static final DeferredItem<Item> UNINSCRIBED_RUNE = basicItem("uninscribed_rune");
 	public static final DeferredItem<RuneItem> GREED_RUNE = makeRune(Rubination.GREED);
 	public static final DeferredItem<RuneItem> WRATH_RUNE = makeRune(Rubination.WRATH);
 	public static final DeferredItem<RuneItem> SLOTH_RUNE = makeRune(Rubination.SLOTH);

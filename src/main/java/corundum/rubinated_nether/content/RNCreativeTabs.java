@@ -96,7 +96,9 @@ public class RNCreativeTabs {
 					RNItems.BRONZE_DRILL,
 
 					RNItems.RITUAL_OFFERING,
-					RNItems.WINDING_KEY
+					RNItems.WINDING_KEY,
+
+					RNItems.BRONZE_SPAWN_EGG
 
 				);
 
@@ -150,6 +152,8 @@ public class RNCreativeTabs {
 
 				addItems(
 						output,
+						RNItems.UNINSCRIBED_RUNE,
+
 						RNItems.SLOTH_RUNE,
 						RNItems.GLUTTONY_RUNE,
 						RNItems.GREED_RUNE,

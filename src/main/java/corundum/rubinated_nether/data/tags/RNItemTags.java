@@ -27,6 +27,7 @@ public class RNItemTags extends ItemTagsProvider {
 	@Override
 	public void addTags(Provider provider) {
 		this.tag(RNTags.Items.RUNES).add(
+			RNItems.UNINSCRIBED_RUNE.asItem(),
 			RNItems.GREED_RUNE.asItem(),
 			RNItems.WRATH_RUNE.asItem(),
 			RNItems.SLOTH_RUNE.asItem(),
