@@ -9,8 +9,10 @@ import java.util.function.ToIntFunction;
 import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -255,33 +257,37 @@ public class RNBlocks {
 		() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
 
-	public static final DeferredBlock<SixWayPillarBlock> RUBINATED_CHISELED_SHRINE_STONE_BRICKS = registerBlockAndItem(
-		"rubinated_chiseled_shrine_stone_bricks",
-		() -> new SixWayPillarBlock(
-			Block.Properties.ofFullCopy(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get())
-				.lightLevel($ -> 7)
-		)
+	public static final DeferredBlock<SixWayPillarBlock> RUBINATED_CHISELED_SHRINE_STONE_BRICKS = registerBlockAndItemWithRarity(
+			"rubinated_chiseled_shrine_stone_bricks",
+			() -> new SixWayPillarBlock(
+					Block.Properties.ofFullCopy(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get())
+							.lightLevel($ -> 7)
+			),
+			RNRarity.RUBINATED_NETHER_RUBY.get()
 	);
-	public static final DeferredBlock<Block> RUBINATED_SHRINE_STONE_BRICKS = registerBlockAndItem(
-		"rubinated_shrine_stone_bricks",
-		() -> new Block(
-			Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_BRICKS.get())
-				.lightLevel($ -> 7)
-		)
+	public static final DeferredBlock<Block> RUBINATED_SHRINE_STONE_BRICKS = registerBlockAndItemWithRarity(
+			"rubinated_shrine_stone_bricks",
+			() -> new Block(
+					Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_BRICKS.get())
+							.lightLevel($ -> 7)
+			),
+			RNRarity.RUBINATED_NETHER_RUBY.get()
 	);
 
-	public static final DeferredBlock<Block> RUBINATED_SHRINE_STONE_TILES = registerBlockAndItem(
+	public static final DeferredBlock<Block> RUBINATED_SHRINE_STONE_TILES = registerBlockAndItemWithRarity(
 			"rubinated_shrine_stone_tiles",
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
 					.lightLevel($ -> 7)
-			)
+			),
+			RNRarity.RUBINATED_NETHER_RUBY.get()
 	);
 
-	public static final DeferredBlock<RotatedPillarBlock> RUBINATED_SHRINE_STONE_PILLAR = registerBlockAndItem(
+	public static final DeferredBlock<RotatedPillarBlock> RUBINATED_SHRINE_STONE_PILLAR = registerBlockAndItemWithRarity(
 			"rubinated_shrine_stone_pillar",
 			() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
 					.lightLevel($ -> 7)
-			)
+			),
+			RNRarity.RUBINATED_NETHER_RUBY.get()
 	);
 
 	public static final DeferredBlock<Block> FREEZER = registerBlockAndItem(
@@ -857,5 +863,16 @@ public class RNBlocks {
 
 	private static ToIntFunction<BlockState> litBlockEmission(int lightValue) {
 		return blockState -> blockState.getValue(BlockStateProperties.LIT) ? lightValue : 0;
+	}
+
+	public static <T extends Block> DeferredBlock<T> registerBlockAndItemWithRarity(String name, Supplier<T> block, Rarity rarity) {
+		var register = BLOCKS.register(name, block);
+
+		RNItems.ITEMS.register(
+				name,
+				() -> new BlockItem(register.get(), new Item.Properties().rarity(rarity))
+		);
+
+		return register;
 	}
 }

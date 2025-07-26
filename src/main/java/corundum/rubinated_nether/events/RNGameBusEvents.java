@@ -80,7 +80,6 @@ public class RNGameBusEvents {
 				var ticksUsed = tag.getInt("ticksUsed");
 				var multiplier = 1.0f + ((float) ticksUsed / DrillItem.MAX_USE_TICKS) *
 						(DrillItem.MAX_MULTIPLIER_BOOST - 1.0f);
-				player.sendSystemMessage(Component.literal("Current Drill Speed Multiplier: " + multiplier));
 				lastLoggedTick.put(playerId, currentTick);
 			}
 

@@ -102,12 +102,19 @@ public class RubinationMenu extends AbstractContainerMenu {
             }
 
             public int getMaxStackSize() {
-                return 1;
+                // Only restrict runes to stack size 1, allow normal stacking for winding keys
+                ItemStack currentItem = this.getItem();
+                if (!currentItem.isEmpty() && currentItem.is(RNItems.RUNE.get())) {
+                    return 1;
+                }
+                return super.getMaxStackSize();
             }
 
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-                ItemStack itemInFirstSlot = RubinationMenu.this.rubinationSlots.getItem(0);
-                if (!itemInFirstSlot.isEmpty() && isInscriptionMode()) {
+                long currentTime = System.currentTimeMillis();
+                boolean showRune = (currentTime / 5000) % 2 == 1;
+
+                if (showRune) {
                     return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_RUNE);
                 }
                 return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_KEY);

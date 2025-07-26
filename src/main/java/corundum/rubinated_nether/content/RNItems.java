@@ -57,6 +57,7 @@ public class RNItems {
 		new Item.Properties()
 			.stacksTo(1)
 			.rarity(Rarity.RARE)
+			.rarity(RNRarity.RUBINATED_NETHER_RUBY.get())
 			.jukeboxPlayable(RNJukeboxSongs.SHIMMER)
 	);
 
