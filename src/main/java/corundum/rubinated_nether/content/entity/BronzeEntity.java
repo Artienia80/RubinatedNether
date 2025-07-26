@@ -53,6 +53,7 @@ public class BronzeEntity extends TarnishingEntity {
     public final AnimationState walkAnimationState = new AnimationState();
     public final AnimationState unaffectedAttackAnimationState = new AnimationState();
     public final AnimationState defendAnimationState = new AnimationState();
+    public final AnimationState shockwaveAnimationState = new AnimationState();
     public final AnimationState stunAnimationState = new AnimationState();
     public final AnimationState drillAnimationState = new AnimationState();
     public final AnimationState undergroundWalkAnimationState = new AnimationState();
@@ -392,10 +393,20 @@ public class BronzeEntity extends TarnishingEntity {
         if (state == 69){
             this.defendAnimationState.stop();
         }
+        if (state == 89){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.defendAnimationState.stop();
+            this.shockwaveAnimationState.startIfStopped(10);
+        }
+        if (state == 92){
+            this.shockwaveAnimationState.stop();
+        }
         if (state == 71){
             this.idleAnimationState.stop();
             this.walkAnimationState.stop();
             this.defendAnimationState.stop();
+            this.shockwaveAnimationState.stop();
             this.stunAnimationState.startIfStopped(this.tickCount);
         }
         if (state == 73){
@@ -526,6 +537,9 @@ public class BronzeEntity extends TarnishingEntity {
                     }
 
                     if (hitCount < MAX_HITS_ALLOWED) {
+                        if (!level().isClientSide) {
+                            entity.level().broadcastEntityEvent(entity, (byte) 89);
+                        }
                         spawnShockwaveParticles();
                         buffNearbyBronzes();
                         entity.setShockwaveCooldown(COOLDOWN_DURATION);

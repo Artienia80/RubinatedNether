@@ -83,6 +83,7 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
         this.animate(entity.drillAnimationState,BronzeAnimations.DRILL_DOWN, ageInTicks, 1f);
         this.animate(entity.undergroundWalkAnimationState,BronzeAnimations.MOVE_UNDERGROUND,ageInTicks, 1f);
         this.animate(entity.ambushAnimationState,BronzeAnimations.DRILL_UP,ageInTicks, 1f);
+        this.animate(entity.shockwaveAnimationState,BronzeAnimations.SHOCKWAVE,ageInTicks, 1f);
     }
 
     private void applyHeadRotation(float headYaw, float headPitch) {
