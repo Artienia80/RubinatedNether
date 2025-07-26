@@ -152,7 +152,7 @@ public class RNCreativeTabs {
 
 				addItems(
 						output,
-						RNItems.UNINSCRIBED_RUNE,
+						RNItems.RUNE,
 
 						RNItems.SLOTH_RUNE,
 						RNItems.GLUTTONY_RUNE,

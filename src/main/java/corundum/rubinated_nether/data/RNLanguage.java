@@ -124,7 +124,7 @@ public class RNLanguage extends RNLanguageProvider {
 		addItem(RNItems.BRONZE_SHOT, "Bronze Shot");
 		addItem(RNItems.BRONZE_DRILL, "Bronze Drill");
 
-		addItem(RNItems.UNINSCRIBED_RUNE, "Uninscribed Rune");
+		addItem(RNItems.RUNE, "Rune");
 
 		addItem(RNItems.GREED_RUNE, "Rune of Greed");
 		addItem(RNItems.SLOTH_RUNE, "Rune of Sloth");

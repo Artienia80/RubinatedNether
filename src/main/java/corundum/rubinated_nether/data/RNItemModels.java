@@ -150,7 +150,7 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.BRONZE_SHOT,
 				RNItems.RITUAL_OFFERING,
 				RNItems.WINDING_KEY,
-				RNItems.UNINSCRIBED_RUNE
+				RNItems.RUNE
 		);
 
 		// Runes
