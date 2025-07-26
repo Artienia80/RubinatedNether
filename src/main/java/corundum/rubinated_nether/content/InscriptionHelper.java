@@ -15,9 +15,6 @@ public class InscriptionHelper {
             RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(), RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get()
     );
 
-    private static long lastDebugTime = 0;
-    private static final long DEBUG_INTERVAL = 1000; // 1 second in milliseconds
-
     public static int countRubinatedBlocks(Level level, BlockPos centerPos, int radius) {
         int count = 0;
         for (int x = -radius; x <= radius; x++) {
@@ -40,15 +37,5 @@ public class InscriptionHelper {
 
     public static boolean hasEnoughBlocksForInscription(Level level, BlockPos centerPos) {
         return hasEnoughBlocksForInscription(level, centerPos, 20);
-    }
-
-
-    public static void debugLogRubinatedBlocks(Level level, BlockPos centerPos, String source) {
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastDebugTime >= DEBUG_INTERVAL) {
-            lastDebugTime = currentTime;
-            int blockCount = countRubinatedBlocks(level, centerPos, 20);
-            System.out.println(source + ": Blocks (" + blockCount + ")");
-        }
     }
 }

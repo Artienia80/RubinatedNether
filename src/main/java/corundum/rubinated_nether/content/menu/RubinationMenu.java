@@ -256,8 +256,6 @@ public class RubinationMenu extends AbstractContainerMenu {
         }
 
         this.access.execute((level, blockPos) -> {
-            InscriptionHelper.debugLogRubinatedBlocks(level, blockPos, "Menu");
-
             if (!InscriptionHelper.hasEnoughBlocksForInscription(level, blockPos)) {
                 return;
             }

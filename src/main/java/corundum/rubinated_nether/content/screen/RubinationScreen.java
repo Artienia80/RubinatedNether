@@ -50,7 +50,6 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 		if (this.minecraft.player != null && this.minecraft.level != null) {
 			BlockPos playerPos = this.minecraft.player.blockPosition();
 			hasEnoughRubinatedBlocks = InscriptionHelper.hasEnoughBlocksForInscription(this.minecraft.level, playerPos);
-			InscriptionHelper.debugLogRubinatedBlocks(this.minecraft.level, playerPos, "Screen");
 		}
 	}
 
@@ -63,7 +62,6 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 		super.init();
 		updateRubinatedBlockStatus();
 	}
-
 
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
 		var i = (this.width - this.imageWidth) / 2;
