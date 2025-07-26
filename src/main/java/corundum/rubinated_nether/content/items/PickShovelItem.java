@@ -1,9 +1,9 @@
 package corundum.rubinated_nether.content.items;
 
-import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItemAbilities;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.RubinationConverter;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -11,7 +11,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
@@ -27,7 +26,6 @@ import java.util.Map;
 
 public class PickShovelItem extends DiggerItem {
 	private static final Map<Block, Block> CRACKABLES = new HashMap<>();
-	private static final Map<Block, Block> RUBINATION_REMOVABLES = new HashMap<>();
 
 	static {
 		CRACKABLES.put(Blocks.STONE_BRICKS, Blocks.CRACKED_STONE_BRICKS);
@@ -36,13 +34,6 @@ public class PickShovelItem extends DiggerItem {
 		CRACKABLES.put(Blocks.DEEPSLATE_TILES, Blocks.CRACKED_DEEPSLATE_TILES);
 		CRACKABLES.put(Blocks.POLISHED_BLACKSTONE_BRICKS, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS);
 		CRACKABLES.put(Blocks.INFESTED_STONE_BRICKS, Blocks.INFESTED_CRACKED_STONE_BRICKS);
-
-		RUBINATION_REMOVABLES.put(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(), RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
-		RUBINATION_REMOVABLES.put(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(), RNBlocks.SHRINE_STONE_BRICKS.get());
-		RUBINATION_REMOVABLES.put(RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(), RNBlocks.SHRINE_STONE_PILLAR.get());
-		RUBINATION_REMOVABLES.put(RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(), RNBlocks.SHRINE_STONE_TILES.get());
-		RUBINATION_REMOVABLES.put(RNBlocks.BLEEDING_OBSIDIAN.get(), Blocks.OBSIDIAN);
-
 	}
 
 	public PickShovelItem(Tier tier, Properties properties) {
@@ -66,7 +57,7 @@ public class PickShovelItem extends DiggerItem {
 
 		var player = context.getPlayer();
 
-		var derubinatedState = getDerubinatedVersion(blockstate);
+		var derubinatedState = RubinationConverter.getDerubinatedVersion(blockstate);
 		if (derubinatedState != null && level.getBlockState(blockpos.above()).isAir()) {
 			if (!level.isClientSide) {
 				level.setBlock(blockpos, derubinatedState, 11);
@@ -98,11 +89,5 @@ public class PickShovelItem extends DiggerItem {
 	private BlockState getCrackedVersion(BlockState state) {
 		var crackedBlock = CRACKABLES.get(state.getBlock());
 		return crackedBlock != null ? crackedBlock.defaultBlockState() : null;
-	}
-
-	@Nullable
-	private BlockState getDerubinatedVersion(BlockState state) {
-		var derubinatedBlock = RUBINATION_REMOVABLES.get(state.getBlock());
-		return derubinatedBlock != null ? derubinatedBlock.defaultBlockState() : null;
 	}
 }

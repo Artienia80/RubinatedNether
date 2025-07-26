@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.JukeboxBlock;
 import net.minecraft.world.level.block.entity.JukeboxBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,12 +33,13 @@ public class RubinationConverter {
     private static final double MIN_REPLACEMENT_CHANCE = 0.0;
     private static final double MAX_REPLACEMENT_CHANCE = 1.0;
 
-    // Folded InscriptionHelper functionality - rubinated to normal mapping for derubination
+    // Folded InscriptionHelper functionality + PickShovelItem - rubinated to normal mapping for derubination
     private static final Map<Block, Block> RUBINATED_TO_NORMAL_MAP = Map.of(
             RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(), RNBlocks.SHRINE_STONE_TILES.get(),
             RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(), RNBlocks.SHRINE_STONE_PILLAR.get(),
             RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(), RNBlocks.SHRINE_STONE_BRICKS.get(),
-            RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(), RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get()
+            RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(), RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
+            RNBlocks.BLEEDING_OBSIDIAN.get(), Blocks.CRYING_OBSIDIAN
     );
 
     public static class ConversionRule {
@@ -199,6 +201,25 @@ public class RubinationConverter {
         return hasEnoughBlocksForInscription(level, centerPos, 20);
     }
 
+    /**
+     * Gets the derubinated version of a block state with property transfer
+     * Folded from PickShovelItem and modified to use property transfer logic
+     */
+    @Nullable
+    public static BlockState getDerubinatedVersion(BlockState state) {
+        var derubinatedBlock = RUBINATED_TO_NORMAL_MAP.get(state.getBlock());
+        if (derubinatedBlock != null) {
+            return transferProperties(state, derubinatedBlock.defaultBlockState());
+        }
+        return null;
+    }
+
+    /**
+     * Checks if a block can be derubinated
+     */
+    public static boolean canDerubinate(BlockState state) {
+        return RUBINATED_TO_NORMAL_MAP.containsKey(state.getBlock());
+    }
     /**
      * Derubinates blocks in a radius around the center position, with property transfer
      * Folded from RubinationMenu and modified to use property transfer logic
@@ -553,7 +574,7 @@ public class RubinationConverter {
                 100));
 
         rules.add(new ConversionRule(
-                Blocks.CRYING_OBSIDIAN,
+                Blocks.OBSIDIAN,
                 RNBlocks.BLEEDING_OBSIDIAN.get(),
                 20.0,
                 100));
