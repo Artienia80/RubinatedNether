@@ -49,7 +49,13 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	private void updateRubinatedBlockStatus() {
 		if (this.minecraft.player != null && this.minecraft.level != null) {
 			BlockPos playerPos = this.minecraft.player.blockPosition();
-			hasEnoughRubinatedBlocks = InscriptionHelper.hasEnoughBlocksForInscription(this.minecraft.level, playerPos);
+			// In creative mode, always allow inscription (no block requirement)
+			if (this.minecraft.player.getAbilities().instabuild) {
+				hasEnoughRubinatedBlocks = true;
+			} else {
+				// In survival mode, require 100 blocks
+				hasEnoughRubinatedBlocks = InscriptionHelper.hasEnoughBlocksForInscription(this.minecraft.level, playerPos);
+			}
 		}
 	}
 
@@ -62,6 +68,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 		super.init();
 		updateRubinatedBlockStatus();
 	}
+
 
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
 		var i = (this.width - this.imageWidth) / 2;

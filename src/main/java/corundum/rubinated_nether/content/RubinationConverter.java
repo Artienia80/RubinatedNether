@@ -337,7 +337,6 @@ public class RubinationConverter {
                                 if (!currentRecord.isEmpty()) {
                                     jukeboxEntity.setTheItem(new ItemStack(RNItems.MUSIC_DISC_SHIMMER.get()));
 
-
                                     playJukeboxReplacementEffects(level, altarPos, checkPos);
 
                                     discReplaced = true;
@@ -395,36 +394,104 @@ public class RubinationConverter {
         }
     }
 
-    public static void RubinateArea(Level level, BlockPos altarPos) {
+    public static void RubinateAreaOffering(Level level, BlockPos altarPos) {
         List<ConversionRule> rules = new ArrayList<>();
 
-        // First, handle jukebox disc replacement
+        // Rubinated shrine stone blocks - radius 10, attempts 150
+        rules.add(new ConversionRule(
+                RNBlocks.SHRINE_STONE_BRICKS.get(),
+                RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
+                10.0,
+                150,
+                true
+        ));
+
+        rules.add(new ConversionRule(
+                RNBlocks.SHRINE_STONE_PILLAR.get(),
+                RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(),
+                10.0,
+                150,
+                true
+        ));
+
+        rules.add(new ConversionRule(
+                RNBlocks.SHRINE_STONE_TILES.get(),
+                RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(),
+                10.0,
+                150,
+                true
+        ));
+
+        rules.add(new ConversionRule(
+                RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
+                RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
+                10.0,
+                150,
+                true
+        ));
+
+        // Shrine stone conversions - radius 10, attempts 2500
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_CANDIDATE, RNBlocks.SHRINE_STONE.get(), 10.0, 2500);
+
+        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE.get(), 10.0, 2500);
+        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_STAIRS_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(), 10.0, 2500);
+        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_SLAB_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(), 10.0, 2500);
+        addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_WALL_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE_WALL.get(), 10.0, 2500);
+
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_PILLAR_CANDIDATE, RNBlocks.SHRINE_STONE_PILLAR.get(), 10.0, 2500);
+
+        addTagConversionRule(rules, RNTags.Blocks.CHISELED_SHRINE_STONE_BRICKS_CANDIDATE, RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(), 10.0, 2500);
+
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS.get(), 10.0, 2500);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_STAIRS_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get(), 10.0, 2500);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_SLAB_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(), 10.0, 2500);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_WALL_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_WALL.get(), 10.0, 2500);
+
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_CANDIDATE, RNBlocks.SHRINE_STONE_TILES.get(), 10.0, 2500);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_STAIRS_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_STAIRS.get(), 10.0, 2500);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_SLAB_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_SLAB.get(), 10.0, 2500);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_WALL_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_WALL.get(), 10.0, 2500);
+
+        applyConversions(level, altarPos, rules);
+    }
+
+    public static void RubinateAreaKey(Level level, BlockPos altarPos) {
+        List<ConversionRule> rules = new ArrayList<>();
+
+        // Handle jukebox disc replacement
         replaceJukeboxDiscs(level, altarPos);
 
-        // Then proceed with normal block conversions
+        // Nether/Overworld block conversions - radius 20, attempts 100
         rules.add(new ConversionRule(
                 Blocks.MAGMA_BLOCK,
                 RNBlocks.MOLTEN_RUBY_ORE.get(),
-                6.0,
-                15));
+                20.0,
+                100));
 
         rules.add(new ConversionRule(
                 Blocks.NETHERRACK,
                 RNBlocks.NETHER_RUBY_ORE.get(),
-                8.0,
-                25));
+                20.0,
+                100));
 
         rules.add(new ConversionRule(
                 Blocks.BLACKSTONE,
                 RNBlocks.RUBINATED_BLACKSTONE.get(),
-                10.0,
-                50));
+                20.0,
+                100));
 
+        rules.add(new ConversionRule(
+                Blocks.CRYING_OBSIDIAN,
+                RNBlocks.BLEEDING_OBSIDIAN.get(),
+                20.0,
+                100));
+
+        // Rubinated shrine stone blocks - radius 20, attempts 300
         rules.add(new ConversionRule(
                 RNBlocks.SHRINE_STONE_BRICKS.get(),
                 RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
                 20.0,
-                200,
+                300,
                 true
         ));
 
@@ -432,7 +499,7 @@ public class RubinationConverter {
                 RNBlocks.SHRINE_STONE_PILLAR.get(),
                 RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(),
                 20.0,
-                200,
+                300,
                 true
         ));
 
@@ -440,7 +507,7 @@ public class RubinationConverter {
                 RNBlocks.SHRINE_STONE_TILES.get(),
                 RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(),
                 20.0,
-                200,
+                300,
                 true
         ));
 
@@ -448,24 +515,11 @@ public class RubinationConverter {
                 RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
                 RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
                 20.0,
-                200,
+                300,
                 true
         ));
 
-        rules.add(new ConversionRule(
-                Blocks.CRYING_OBSIDIAN,
-                RNBlocks.BLEEDING_OBSIDIAN.get(),
-                20.0,
-                200));
-
-        rules.add(new ConversionRule(
-                Blocks.AIR,
-                Blocks.SMALL_AMETHYST_BUD,
-                15.0,
-                300,
-                Conditions.HAS_GROWABLE_BLOCK_NEIGHBOR_FOR_CRYSTAL
-        ));
-
+        // Shrine stone conversions - radius 20, attempts 5000
         addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_CANDIDATE, RNBlocks.SHRINE_STONE.get(), 20.0, 5000);
 
         addTagConversionRule(rules, RNTags.Blocks.POLISHED_SHRINE_STONE_CANDIDATE, RNBlocks.POLISHED_SHRINE_STONE.get(), 20.0, 5000);
@@ -482,7 +536,7 @@ public class RubinationConverter {
         addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_SLAB_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(), 20.0, 5000);
         addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_BRICKS_WALL_CANDIDATE, RNBlocks.SHRINE_STONE_BRICKS_WALL.get(), 20.0, 5000);
 
-        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_CANDIDATE, RNBlocks.SHRINE_STONE_TILES.get(), 20.0, 55000);
+        addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_CANDIDATE, RNBlocks.SHRINE_STONE_TILES.get(), 20.0, 5000);
         addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_STAIRS_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_STAIRS.get(), 20.0, 5000);
         addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_SLAB_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_SLAB.get(), 20.0, 5000);
         addTagConversionRule(rules, RNTags.Blocks.SHRINE_STONE_TILES_WALL_CANDIDATE, RNBlocks.SHRINE_STONE_TILES_WALL.get(), 20.0, 5000);

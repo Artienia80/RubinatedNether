@@ -179,7 +179,7 @@ public class RubinationMenu extends AbstractContainerMenu {
 
         BlessPlayer(player, 6000);
 
-        RubinationConverter.RubinateArea(level, blockPos);
+        RubinationConverter.RubinateAreaOffering(level, blockPos);
 
         return InteractionResult.CONSUME;
     }
@@ -255,8 +255,10 @@ public class RubinationMenu extends AbstractContainerMenu {
             return false;
         }
 
+        boolean isCreative = player.getAbilities().instabuild;
+
         this.access.execute((level, blockPos) -> {
-            if (!InscriptionHelper.hasEnoughBlocksForInscription(level, blockPos)) {
+            if (!isCreative && !InscriptionHelper.hasEnoughBlocksForInscription(level, blockPos)) {
                 return;
             }
 
@@ -271,7 +273,10 @@ public class RubinationMenu extends AbstractContainerMenu {
 
             this.rubinationSlots.setItem(1, inscribedRune);
 
-            derubinateBlocks(level, blockPos, 20, 100);
+            // Only consume blocks in survival mode
+            if (!isCreative) {
+                derubinateBlocks(level, blockPos, 20, 100);
+            }
 
             level.playSound(
                     null,
@@ -331,7 +336,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                             1.0F,
                             level.random.nextFloat() * 0.1F + 0.9F
                     );
-                    RubinationConverter.RubinateArea(level, blockPos);
+                    RubinationConverter.RubinateAreaKey(level, blockPos);
                 }
             });
             return true;
@@ -466,6 +471,8 @@ public class RubinationMenu extends AbstractContainerMenu {
             // Check if we're in inscription mode and update rubinated block count
             if (isInscriptionMode()) {
                 this.access.execute((level, blockPos) -> {
+                    // Need to check if current player is in creative mode
+                    // Since we don't have direct access to player here, we'll handle this in the screen
                     hasEnoughRubinatedBlocks = InscriptionHelper.hasEnoughBlocksForInscription(level, blockPos);
                 });
             } else {
