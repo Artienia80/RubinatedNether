@@ -201,25 +201,9 @@ public class RubinationMenu extends AbstractContainerMenu {
     public int countRubinatedBlocks() {
         final int[] count = {0}; // Use array to allow modification in lambda
         this.access.execute((level, blockPos) -> {
-            count[0] = countRubinatedBlocks(level, blockPos, 20);
+            count[0] = InscriptionHelper.countRubinatedBlocks(level, blockPos, 20);
         });
         return count[0];
-    }
-
-    private int countRubinatedBlocks(Level level, BlockPos centerPos, int radius) {
-        int count = 0;
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
-                for (int z = -radius; z <= radius; z++) {
-                    BlockPos pos = centerPos.offset(x, y, z);
-                    Block block = level.getBlockState(pos).getBlock();
-                    if (RUBINATED_TO_NORMAL_MAP.containsKey(block)) {
-                        count++;
-                    }
-                }
-            }
-        }
-        return count;
     }
 
     private void derubinateBlocks(Level level, BlockPos centerPos, int radius, int amountToRemove) {
@@ -272,8 +256,9 @@ public class RubinationMenu extends AbstractContainerMenu {
         }
 
         this.access.execute((level, blockPos) -> {
-            int rubinatedCount = countRubinatedBlocks(level, blockPos, 20);
-            if (rubinatedCount < 100) {
+            InscriptionHelper.debugLogRubinatedBlocks(level, blockPos, "Menu");
+
+            if (!InscriptionHelper.hasEnoughBlocksForInscription(level, blockPos)) {
                 return;
             }
 
@@ -483,8 +468,7 @@ public class RubinationMenu extends AbstractContainerMenu {
             // Check if we're in inscription mode and update rubinated block count
             if (isInscriptionMode()) {
                 this.access.execute((level, blockPos) -> {
-                    int rubinatedCount = countRubinatedBlocks(level, blockPos, 20);
-                    hasEnoughRubinatedBlocks = rubinatedCount >= 100;
+                    hasEnoughRubinatedBlocks = InscriptionHelper.hasEnoughBlocksForInscription(level, blockPos);
                 });
             } else {
                 hasEnoughRubinatedBlocks = false; // Reset when not in inscription mode

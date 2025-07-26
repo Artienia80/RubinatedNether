@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.InscriptionHelper;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.menu.RubinationMenu;
@@ -9,6 +10,7 @@ import corundum.rubinated_nether.utils.RubinationNames;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
@@ -36,24 +38,32 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	private static final ResourceLocation DISABLED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/disabled_rune.png");
 	private static final ResourceLocation RUBINATION_ALTAR_LOCATION = RubinatedNether.id("textures/gui/rubination_altar.png");
 
+	private boolean hasEnoughRubinatedBlocks = false;
+
 	public RubinationScreen(RubinationMenu menu, Inventory playerInventory, Component title) {
 		super(menu, playerInventory, title);
 		this.imageHeight = 208;
 		this.inventoryLabelY = this.imageHeight - 107;
 	}
 
-	protected void init() {
-		super.init();
-	}
-
-	public void containerTick() {
-		super.containerTick();
+	private void updateRubinatedBlockStatus() {
+		if (this.minecraft.player != null && this.minecraft.level != null) {
+			BlockPos playerPos = this.minecraft.player.blockPosition();
+			hasEnoughRubinatedBlocks = InscriptionHelper.hasEnoughBlocksForInscription(this.minecraft.level, playerPos);
+			InscriptionHelper.debugLogRubinatedBlocks(this.minecraft.level, playerPos, "Screen");
+		}
 	}
 
 	private boolean isInscriptionMode() {
 		ItemStack keySlotItem = this.menu.getSlot(1).getItem();
 		return keySlotItem.getItem().toString().contains("rune") && !keySlotItem.getItem().toString().contains("_rune");
 	}
+
+	protected void init() {
+		super.init();
+		updateRubinatedBlockStatus();
+	}
+
 
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
 		var i = (this.width - this.imageWidth) / 2;
@@ -72,8 +82,6 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
-
-	boolean hasBlocks = this.menu.data.get(0) != 0;
 
 	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
 		var i = (this.width - this.imageWidth) / 2;
@@ -102,8 +110,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 					i2 = 16777088;
 				} else {
 					if (inscriptionMode) {
-						// Check if we have enough rubinated blocks for inscription
-						if (hasBlocks) {
+						if (hasEnoughRubinatedBlocks) {
 							guiGraphics.blitSprite(RUBINATION_SLOT_INSCRIPTION_SPRITE, i1, j1, 21, 59);
 						} else {
 							guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_INSCRIPTION_SPRITE, i1, j1, 21, 59);
@@ -128,8 +135,6 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				boolean hasItemButNoRubination = hasRubinatable && !hasRubinationOptions;
 
 				if (inscriptionMode) {
-					// Always show disabled inscription sprite when we can't show options in inscription mode
-					// This covers both cases: not enough rubinated blocks AND no blessing/keys
 					guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_INSCRIPTION_SPRITE, i1, j1, 21, 59);
 					guiGraphics.blit(DISABLED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
 				} else {
@@ -154,7 +159,6 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 			}
 		}
 	}
-
 
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
 		var flag = this.minecraft.player.getAbilities().instabuild;
@@ -188,6 +192,15 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				guiGraphics.renderComponentTooltip(this.font, list, mouseX, mouseY);
 				break;
 			}
+		}
+	}
+
+	@Override
+	public void containerTick() {
+		super.containerTick();
+		// Update on container tick to catch slot changes
+		if (isInscriptionMode()) {
+			updateRubinatedBlockStatus();
 		}
 	}
 
