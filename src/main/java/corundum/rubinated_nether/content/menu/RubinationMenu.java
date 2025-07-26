@@ -25,14 +25,19 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.CommonHooks;
 
 import java.util.*;
+import java.util.Random;
 
 public class RubinationMenu extends AbstractContainerMenu {
     static final ResourceLocation EMPTY_SLOT_KEY = RubinatedNether.id("item/empty_slot_key");
+    static final ResourceLocation EMPTY_SLOT_RUNE = RubinatedNether.id("item/empty_slot_rune");
     private final Container rubinationSlots;
     private final ContainerLevelAccess access;
     public final int[][] rubinationClue;
@@ -40,6 +45,31 @@ public class RubinationMenu extends AbstractContainerMenu {
 
     private int axeCycle = 0;
     private boolean hadAxeInSlot = false;
+
+    private static final Map<Block, Block> RUBINATED_TO_NORMAL_MAP = Map.of(
+            RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(), RNBlocks.SHRINE_STONE_TILES.get(),
+            RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(), RNBlocks.SHRINE_STONE_PILLAR.get(),
+            RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(), RNBlocks.SHRINE_STONE_BRICKS.get(),
+            RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(), RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get()
+    );
+
+    private static final List<RuneItem> ALL_RUNES = List.of(
+            (RuneItem) RNItems.GREED_RUNE.get(),
+            (RuneItem) RNItems.WRATH_RUNE.get(),
+            (RuneItem) RNItems.SLOTH_RUNE.get(),
+            (RuneItem) RNItems.GLUTTONY_RUNE.get(),
+            (RuneItem) RNItems.ENVY_RUNE.get(),
+            (RuneItem) RNItems.VAINGLORY_RUNE.get(),
+            (RuneItem) RNItems.PRIDE_RUNE.get(),
+            (RuneItem) RNItems.ACEDIA_RUNE.get(),
+            (RuneItem) RNItems.LUXURIA_RUNE.get(),
+            (RuneItem) RNItems.INSIDIAE_RUNE.get(),
+            (RuneItem) RNItems.SUPERBIA_RUNE.get(),
+            (RuneItem) RNItems.TRISTIA_RUNE.get(),
+            (RuneItem) RNItems.STUDIOSE_RUNE.get(),
+            (RuneItem) RNItems.ARDENTER_RUNE.get(),
+            (RuneItem) RNItems.NIMIS_RUNE.get()
+    );
 
     public RubinationMenu(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, ContainerLevelAccess.NULL);
@@ -64,10 +94,18 @@ public class RubinationMenu extends AbstractContainerMenu {
         });
         this.addSlot(new Slot(this.rubinationSlots, 1, 90, 84) {
             public boolean mayPlace(ItemStack itemStack) {
-                return itemStack.is(RNItems.WINDING_KEY.get());
+                return itemStack.is(RNItems.WINDING_KEY.get()) || itemStack.is(RNItems.RUNE.get());
+            }
+
+            public int getMaxStackSize() {
+                return 1;
             }
 
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                ItemStack itemInFirstSlot = RubinationMenu.this.rubinationSlots.getItem(0);
+                if (!itemInFirstSlot.isEmpty() && isInscriptionMode()) {
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_RUNE);
+                }
                 return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_KEY);
             }
         });
@@ -124,64 +162,197 @@ public class RubinationMenu extends AbstractContainerMenu {
         return InteractionResult.CONSUME;
     }
 
+    private boolean isInscriptionMode() {
+        ItemStack keySlotItem = this.rubinationSlots.getItem(1);
+        return keySlotItem.is(RNItems.RUNE.get());
+    }
+
+    private boolean isRubinationMode() {
+        ItemStack keySlotItem = this.rubinationSlots.getItem(1);
+        return keySlotItem.is(RNItems.WINDING_KEY.get());
+    }
+
+    private int countRubinatedBlocks(Level level, BlockPos centerPos, int radius) {
+        int count = 0;
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius; y <= radius; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    BlockPos pos = centerPos.offset(x, y, z);
+                    Block block = level.getBlockState(pos).getBlock();
+                    if (RUBINATED_TO_NORMAL_MAP.containsKey(block)) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
+    private void derubinateBlocks(Level level, BlockPos centerPos, int radius, int amountToRemove) {
+        List<BlockPos> rubinatedPositions = new ArrayList<>();
+
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius; y <= radius; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    BlockPos pos = centerPos.offset(x, y, z);
+                    Block block = level.getBlockState(pos).getBlock();
+                    if (RUBINATED_TO_NORMAL_MAP.containsKey(block)) {
+                        rubinatedPositions.add(pos);
+                    }
+                }
+            }
+        }
+
+        Collections.shuffle(rubinatedPositions, new Random(level.random.nextLong()));
+        for (int i = 0; i < Math.min(amountToRemove, rubinatedPositions.size()); i++) {
+            BlockPos pos = rubinatedPositions.get(i);
+            Block currentBlock = level.getBlockState(pos).getBlock();
+            Block normalBlock = RUBINATED_TO_NORMAL_MAP.get(currentBlock);
+            if (normalBlock != null) {
+                level.setBlock(pos, normalBlock.defaultBlockState(), 3);
+            }
+        }
+    }
+
     public boolean clickMenuButton(Player player, int id) {
         if (id >= 0) {
             var itemstack = this.rubinationSlots.getItem(0);
-            var itemstack1 = this.rubinationSlots.getItem(1);
-            var itemCost = 1;
+            var keySlotItem = this.rubinationSlots.getItem(1);
 
-            boolean isCreative = player.getAbilities().instabuild;
-            boolean hasEnoughRubies = isCreative || (!itemstack1.isEmpty() && itemstack1.getCount() >= itemCost);
-
-            if (!hasEnoughRubies) {
-                return false;
-            } else if (!itemstack.isEmpty()) {
-                this.access.execute((level, blockPos) -> {
-                    var arrayList = this.getRubinationMap(itemstack, runes);
-                    var selectedEnchantments = this.getSelectedEnchants(level.registryAccess(), arrayList, id);
-
-                    if (!arrayList.isEmpty() && selectedEnchantments != null) {
-                        var itemstack2 = itemstack.getItem().applyEnchantments(itemstack, selectedEnchantments);
-                        this.rubinationSlots.setItem(0, itemstack2);
-                        CommonHooks.onPlayerEnchantItem(player, itemstack2, selectedEnchantments);
-
-                        if (!isCreative) {
-                            itemstack1.consume(itemCost, player);
-                            if (itemstack1.isEmpty()) {
-                                this.rubinationSlots.setItem(1, ItemStack.EMPTY);
-                            }
-                        }
-
-                        BlessPlayer(player, 24000);
-
-                        player.awardStat(Stats.ENCHANT_ITEM);
-                        if (player instanceof ServerPlayer) {
-                            CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer) player, itemstack2, itemCost);
-                        }
-
-                        this.rubinationSlots.setChanged();
-                        this.slotsChanged(this.rubinationSlots);
-                        level.playSound(
-                                null,
-                                blockPos,
-                                SoundEvents.ENCHANTMENT_TABLE_USE,
-                                SoundSource.BLOCKS,
-                                1.0F,
-                                level.random.nextFloat() * 0.1F + 0.9F
-                        );
-                        RubinationConverter.RubinateArea(level, blockPos);
-                    }
-
-                });
-                return true;
-            } else {
-                return false;
+            if (isInscriptionMode()) {
+                return handleInscription(player, id, itemstack, keySlotItem);
+            } else if (isRubinationMode()) {
+                return handleRubination(player, id, itemstack, keySlotItem);
             }
         } else {
             var var10000 = String.valueOf(player.getName());
             Util.logAndPauseIfInIde(var10000 + " pressed invalid button id: " + id);
             return false;
         }
+        return false;
+    }
+
+    private boolean handleInscription(Player player, int id, ItemStack itemstack, ItemStack runeItem) {
+        if (!runeItem.is(RNItems.RUNE.get())) {
+            return false;
+        }
+
+        this.access.execute((level, blockPos) -> {
+            int rubinatedCount = countRubinatedBlocks(level, blockPos, 20);
+            if (rubinatedCount < 100) {
+                return;
+            }
+
+            var arrayList = this.getRubinationMapForInscription(itemstack);
+            if (arrayList.isEmpty() || id >= arrayList.size()) {
+                return;
+            }
+
+            var selectedRubination = arrayList.get(id);
+
+            ItemStack inscribedRune = getRuneItemFromRubination(selectedRubination);
+
+            this.rubinationSlots.setItem(1, inscribedRune);
+
+            derubinateBlocks(level, blockPos, 20, 100);
+
+            level.playSound(
+                    null,
+                    blockPos,
+                    SoundEvents.ENCHANTMENT_TABLE_USE,
+                    SoundSource.BLOCKS,
+                    1.0F,
+                    level.random.nextFloat() * 0.1F + 0.9F
+            );
+
+            BlessPlayer(player, 12000);
+
+            this.rubinationSlots.setChanged();
+            this.slotsChanged(this.rubinationSlots);
+        });
+
+        return true;
+    }
+
+    private boolean handleRubination(Player player, int id, ItemStack itemstack, ItemStack keyItem) {
+        var itemCost = 1;
+
+        boolean isCreative = player.getAbilities().instabuild;
+        boolean hasEnoughKeys = isCreative || (!keyItem.isEmpty() && keyItem.getCount() >= itemCost);
+
+        if (!hasEnoughKeys) {
+            return false;
+        } else if (!itemstack.isEmpty()) {
+            this.access.execute((level, blockPos) -> {
+                var arrayList = this.getRubinationMap(itemstack, runes);
+                var selectedEnchantments = this.getSelectedEnchants(level.registryAccess(), arrayList, id);
+
+                if (!arrayList.isEmpty() && selectedEnchantments != null) {
+                    var itemstack2 = itemstack.getItem().applyEnchantments(itemstack, selectedEnchantments);
+                    this.rubinationSlots.setItem(0, itemstack2);
+                    CommonHooks.onPlayerEnchantItem(player, itemstack2, selectedEnchantments);
+
+                    if (!isCreative) {
+                        keyItem.consume(itemCost, player);
+                        if (keyItem.isEmpty()) {
+                            this.rubinationSlots.setItem(1, ItemStack.EMPTY);
+                        }
+                    }
+
+                    BlessPlayer(player, 24000);
+
+                    player.awardStat(Stats.ENCHANT_ITEM);
+                    if (player instanceof ServerPlayer) {
+                        CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer) player, itemstack2, itemCost);
+                    }
+
+                    this.rubinationSlots.setChanged();
+                    this.slotsChanged(this.rubinationSlots);
+                    level.playSound(
+                            null,
+                            blockPos,
+                            SoundEvents.ENCHANTMENT_TABLE_USE,
+                            SoundSource.BLOCKS,
+                            1.0F,
+                            level.random.nextFloat() * 0.1F + 0.9F
+                    );
+                    RubinationConverter.RubinateArea(level, blockPos);
+                }
+            });
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private List<Rubination> getRubinationMapForInscription(ItemStack stack) {
+        var arrayList = new ArrayList<Rubination>();
+
+        if (stack.isEmpty()) {
+            return arrayList;
+        }
+
+        for (RuneItem rune : ALL_RUNES) {
+            Rubination rubination = rune.getRubination();
+            if (stack.is(rubination.getItemTag())) {
+                arrayList.add(rubination);
+            }
+        }
+
+        return arrayList;
+    }
+
+    private Set<RuneItem> getAllAvailableRunes() {
+        return runes;
+    }
+
+    private ItemStack getRuneItemFromRubination(Rubination rubination) {
+        for (RuneItem rune : ALL_RUNES) {
+            if (rune.getRubination().equals(rubination)) {
+                return new ItemStack(rune);
+            }
+        }
+        return new ItemStack(RNItems.RUNE.get());
     }
 
     private List<Rubination> getRubinationMap(ItemStack stack, Set<RuneItem> runes) {
@@ -236,14 +407,18 @@ public class RubinationMenu extends AbstractContainerMenu {
                 hadAxeInSlot = false;
             }
 
-            if (!itemstack.isEmpty() && itemstack.isEnchantable()) {
+            if (!itemstack.isEmpty() && (itemstack.isEnchantable() || isInscriptionMode())) {
                 this.access.execute((level, blockPos) -> {
                     var idmap = level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).asHolderIdMap();
 
-                    for(var blockpos : RubinationAltarBlock.RUNESTONE_OFFSETS) {
-                        if (RubinationAltarBlock.isValidCatalyst(level, blockPos, blockpos))
-                            if(RubinationAltarBlock.getRuneFromCatalyst(level, blockPos, blockpos) instanceof RuneItem runeItem)
-                                runes.add(runeItem);
+                    runes.clear();
+
+                    if (isRubinationMode()) {
+                        for(var blockpos : RubinationAltarBlock.RUNESTONE_OFFSETS) {
+                            if (RubinationAltarBlock.isValidCatalyst(level, blockPos, blockpos))
+                                if(RubinationAltarBlock.getRuneFromCatalyst(level, blockPos, blockpos) instanceof RuneItem runeItem)
+                                    runes.add(runeItem);
+                        }
                     }
 
                     for(int k = 0; k < 3; ++k) {
@@ -252,7 +427,13 @@ public class RubinationMenu extends AbstractContainerMenu {
                         }
                     }
 
-                    var arrayList = this.getRubinationMap(itemstack, runes);
+                    List<Rubination> arrayList;
+                    if (isInscriptionMode()) {
+                        arrayList = this.getRubinationMapForInscription(itemstack);
+                    } else {
+                        arrayList = this.getRubinationMap(itemstack, runes);
+                    }
+
                     for(int l = 0; l < 3; l++) {
                         for(int c = 0; c < 3; c++) {
                             if (arrayList != null && !arrayList.isEmpty()) {
@@ -321,7 +502,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                 if (!this.moveItemStackTo(itemstack1, 2, 38, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (itemstack1.is(RNItems.WINDING_KEY.get())) {
+            } else if (itemstack1.is(RNItems.WINDING_KEY.get()) || itemstack1.is(RNItems.RUNE.get())) {
                 if (!this.moveItemStackTo(itemstack1, 1, 2, true)) {
                     return ItemStack.EMPTY;
                 }
