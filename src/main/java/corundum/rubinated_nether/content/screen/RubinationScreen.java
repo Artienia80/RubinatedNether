@@ -30,6 +30,8 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	private static final ResourceLocation RUBINATION_SLOT_HIGHLIGHTED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_highlighted");
 	private static final ResourceLocation RUBINATION_SLOT_UNDISCOVERED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_undiscovered");
 	private static final ResourceLocation RUBINATION_SLOT_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot");
+	private static final ResourceLocation RUBINATION_SLOT_DISABLED_INSCRIPTION_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_disabled_inscription");
+	private static final ResourceLocation RUBINATION_SLOT_INSCRIPTION_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_inscription");
 	private static final ResourceLocation UNDISCOVERED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/undiscovered_rune.png");
 	private static final ResourceLocation DISABLED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/disabled_rune.png");
 	private static final ResourceLocation RUBINATION_ALTAR_LOCATION = RubinatedNether.id("textures/gui/rubination_altar.png");
@@ -46,6 +48,11 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 
 	public void containerTick() {
 		super.containerTick();
+	}
+
+	private boolean isInscriptionMode() {
+		ItemStack keySlotItem = this.menu.getSlot(1).getItem();
+		return keySlotItem.getItem().toString().contains("rune") && !keySlotItem.getItem().toString().contains("_rune");
 	}
 
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
@@ -70,6 +77,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 		var i = (this.width - this.imageWidth) / 2;
 		var j = (this.height - this.imageHeight) / 2;
 		var k = this.menu.getItemCount();
+		boolean inscriptionMode = isInscriptionMode();
 
 		guiGraphics.blit(RUBINATION_ALTAR_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
@@ -79,7 +87,11 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 
 			var formattedtext = RubinationNames.getInstance().getRandomName(this.font, 20);
 			var i2 = 6839882;
-			if ((k >= 1 || this.minecraft.player.getAbilities().instabuild) && this.menu.rubinationClue[l][l] != -1) {
+
+			// Check if we can show options (either has enough keys/blessing OR creative mode)
+			boolean canShowOptions = (k >= 1 || this.minecraft.player.getAbilities().instabuild) && this.menu.rubinationClue[l][l] != -1;
+
+			if (canShowOptions) {
 				var j2 = mouseX - i1;
 				var k2 = mouseY - j1;
 				RenderSystem.enableBlend();
@@ -87,7 +99,16 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 					guiGraphics.blitSprite(RUBINATION_SLOT_HIGHLIGHTED_SPRITE, i1, j1, 21, 59);
 					i2 = 16777088;
 				} else {
-					guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 21, 59);
+					if (inscriptionMode) {
+						// Check if we have enough rubinated blocks for inscription
+						if (this.menu.hasEnoughRubinatedBlocks()) {
+							guiGraphics.blitSprite(RUBINATION_SLOT_INSCRIPTION_SPRITE, i1, j1, 21, 59);
+						} else {
+							guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_INSCRIPTION_SPRITE, i1, j1, 21, 59);
+						}
+					} else {
+						guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 21, 59);
+					}
 				}
 
 				var result = Rubination.parseRubinationFromEnchantList(getRegistryAccess(), getEnchantReferences(l));
@@ -104,12 +125,19 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				boolean hasRubinatable = currentItem != ItemStack.EMPTY && currentItem.is(RNTags.Items.RUBINATABLE);
 				boolean hasItemButNoRubination = hasRubinatable && !hasRubinationOptions;
 
-				if (hasItemButNoRubination) {
-					guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 21, 59);
-					guiGraphics.blit(UNDISCOVERED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
-				} else {
-					guiGraphics.blitSprite(RUBINATION_SLOT_UNDISCOVERED_SPRITE, i1, j1, 21, 59);
+				if (inscriptionMode) {
+					// Always show disabled inscription sprite when we can't show options in inscription mode
+					// This covers both cases: not enough rubinated blocks AND no blessing/keys
+					guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_INSCRIPTION_SPRITE, i1, j1, 21, 59);
 					guiGraphics.blit(DISABLED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+				} else {
+					if (hasItemButNoRubination) {
+						guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 21, 59);
+						guiGraphics.blit(UNDISCOVERED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+					} else {
+						guiGraphics.blitSprite(RUBINATION_SLOT_UNDISCOVERED_SPRITE, i1, j1, 21, 59);
+						guiGraphics.blit(DISABLED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+					}
 				}
 
 				RenderSystem.disableBlend();
@@ -119,7 +147,6 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 					textColor = (i2 & 16711422) >> 1;
 				} else {
 					textColor = 0x494949;
-
 				}
 				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 8, j1 + 20, 1, textColor);
 			}

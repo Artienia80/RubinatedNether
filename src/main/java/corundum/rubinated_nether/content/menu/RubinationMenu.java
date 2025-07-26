@@ -42,9 +42,11 @@ public class RubinationMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess access;
     public final int[][] rubinationClue;
     public final Set<RuneItem> runes = new HashSet<>();
+    private final List<Rubination> currentInscriptionOptions = new ArrayList<>();
 
     private int axeCycle = 0;
     private boolean hadAxeInSlot = false;
+    private boolean hasEnoughRubinatedBlocks = false;
 
     private static final Map<Block, Block> RUBINATED_TO_NORMAL_MAP = Map.of(
             RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(), RNBlocks.SHRINE_STONE_TILES.get(),
@@ -172,6 +174,18 @@ public class RubinationMenu extends AbstractContainerMenu {
         return keySlotItem.is(RNItems.WINDING_KEY.get());
     }
 
+    public boolean hasEnoughRubinatedBlocks() {
+        return hasEnoughRubinatedBlocks;
+    }
+
+    public int countRubinatedBlocks() {
+        final int[] count = {0}; // Use array to allow modification in lambda
+        this.access.execute((level, blockPos) -> {
+            count[0] = countRubinatedBlocks(level, blockPos, 20);
+        });
+        return count[0];
+    }
+
     private int countRubinatedBlocks(Level level, BlockPos centerPos, int radius) {
         int count = 0;
         for (int x = -radius; x <= radius; x++) {
@@ -243,7 +257,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                 return;
             }
 
-            var arrayList = this.getRubinationMapForInscription(itemstack);
+            var arrayList = this.currentInscriptionOptions;
             if (arrayList.isEmpty() || id >= arrayList.size()) {
                 return;
             }
@@ -264,8 +278,6 @@ public class RubinationMenu extends AbstractContainerMenu {
                     1.0F,
                     level.random.nextFloat() * 0.1F + 0.9F
             );
-
-            BlessPlayer(player, 12000);
 
             this.rubinationSlots.setChanged();
             this.slotsChanged(this.rubinationSlots);
@@ -328,10 +340,22 @@ public class RubinationMenu extends AbstractContainerMenu {
     private List<Rubination> getRubinationMapForInscription(ItemStack stack) {
         var arrayList = new ArrayList<Rubination>();
 
+        // If no item is present, show 3 random runes
         if (stack.isEmpty()) {
+            List<RuneItem> shuffledRunes = new ArrayList<>(ALL_RUNES);
+            Collections.shuffle(shuffledRunes);
+
+            for (int i = 0; i < Math.min(3, shuffledRunes.size()); i++) {
+                arrayList.add(shuffledRunes.get(i).getRubination());
+            }
+
+            // Store the current options for consistent selection
+            currentInscriptionOptions.clear();
+            currentInscriptionOptions.addAll(arrayList);
             return arrayList;
         }
 
+        // If item is present, show runes that match the item
         for (RuneItem rune : ALL_RUNES) {
             Rubination rubination = rune.getRubination();
             if (stack.is(rubination.getItemTag())) {
@@ -339,6 +363,9 @@ public class RubinationMenu extends AbstractContainerMenu {
             }
         }
 
+        // Store the current options for consistent selection
+        currentInscriptionOptions.clear();
+        currentInscriptionOptions.addAll(arrayList);
         return arrayList;
     }
 
@@ -407,7 +434,17 @@ public class RubinationMenu extends AbstractContainerMenu {
                 hadAxeInSlot = false;
             }
 
-            if (!itemstack.isEmpty() && (itemstack.isEnchantable() || isInscriptionMode())) {
+            // Check if we're in inscription mode and update rubinated block count
+            if (isInscriptionMode()) {
+                this.access.execute((level, blockPos) -> {
+                    int rubinatedCount = countRubinatedBlocks(level, blockPos, 20);
+                    hasEnoughRubinatedBlocks = rubinatedCount >= 100;
+                });
+            } else {
+                hasEnoughRubinatedBlocks = false; // Reset when not in inscription mode
+            }
+
+            if (isInscriptionMode() || (!itemstack.isEmpty() && itemstack.isEnchantable())) {
                 this.access.execute((level, blockPos) -> {
                     var idmap = level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).asHolderIdMap();
 
