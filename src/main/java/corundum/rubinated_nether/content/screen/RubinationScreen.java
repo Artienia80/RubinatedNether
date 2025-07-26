@@ -2,8 +2,8 @@ package corundum.rubinated_nether.content.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.InscriptionHelper;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.RubinationConverter;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.menu.RubinationMenu;
 import corundum.rubinated_nether.utils.RubinationNames;
@@ -54,7 +54,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				hasEnoughRubinatedBlocks = true;
 			} else {
 				// In survival mode, require 100 blocks
-				hasEnoughRubinatedBlocks = InscriptionHelper.hasEnoughBlocksForInscription(this.minecraft.level, playerPos);
+				hasEnoughRubinatedBlocks = RubinationConverter.hasEnoughBlocksForInscription(this.minecraft.level, playerPos);
 			}
 		}
 	}

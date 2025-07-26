@@ -201,7 +201,7 @@ public class RubinationMenu extends AbstractContainerMenu {
     public int countRubinatedBlocks() {
         final int[] count = {0}; // Use array to allow modification in lambda
         this.access.execute((level, blockPos) -> {
-            count[0] = InscriptionHelper.countRubinatedBlocks(level, blockPos, 20);
+            count[0] = RubinationConverter.countRubinatedBlocks(level, blockPos, 20);
         });
         return count[0];
     }
@@ -258,7 +258,7 @@ public class RubinationMenu extends AbstractContainerMenu {
         boolean isCreative = player.getAbilities().instabuild;
 
         this.access.execute((level, blockPos) -> {
-            if (!isCreative && !InscriptionHelper.hasEnoughBlocksForInscription(level, blockPos)) {
+            if (!isCreative && !RubinationConverter.hasEnoughBlocksForInscription(level, blockPos)) {
                 return;
             }
 
@@ -473,7 +473,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                 this.access.execute((level, blockPos) -> {
                     // Need to check if current player is in creative mode
                     // Since we don't have direct access to player here, we'll handle this in the screen
-                    hasEnoughRubinatedBlocks = InscriptionHelper.hasEnoughBlocksForInscription(level, blockPos);
+                    hasEnoughRubinatedBlocks = RubinationConverter.hasEnoughBlocksForInscription(level, blockPos);
                 });
             } else {
                 hasEnoughRubinatedBlocks = false; // Reset when not in inscription mode
