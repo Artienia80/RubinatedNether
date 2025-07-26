@@ -20,8 +20,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.function.BiPredicate;
 
 
@@ -195,6 +197,42 @@ public class RubinationConverter {
 
     public static boolean hasEnoughBlocksForInscription(Level level, BlockPos centerPos) {
         return hasEnoughBlocksForInscription(level, centerPos, 20);
+    }
+
+    /**
+     * Derubinates blocks in a radius around the center position, with property transfer
+     * Folded from RubinationMenu and modified to use property transfer logic
+     */
+    public static void derubinateBlocks(Level level, BlockPos centerPos, int radius, int amountToRemove) {
+        if (level.isClientSide) return;
+
+        List<BlockPos> rubinatedPositions = new ArrayList<>();
+
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius; y <= radius; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    BlockPos pos = centerPos.offset(x, y, z);
+                    Block block = level.getBlockState(pos).getBlock();
+                    if (RUBINATED_TO_NORMAL_MAP.containsKey(block)) {
+                        rubinatedPositions.add(pos);
+                    }
+                }
+            }
+        }
+
+        Collections.shuffle(rubinatedPositions, new Random(level.random.nextLong()));
+        for (int i = 0; i < Math.min(amountToRemove, rubinatedPositions.size()); i++) {
+            BlockPos pos = rubinatedPositions.get(i);
+            BlockState currentState = level.getBlockState(pos);
+            Block currentBlock = currentState.getBlock();
+            Block normalBlock = RUBINATED_TO_NORMAL_MAP.get(currentBlock);
+
+            if (normalBlock != null) {
+                // Use property transfer logic like the rest of the converter
+                BlockState newState = transferProperties(currentState, normalBlock.defaultBlockState());
+                level.setBlock(pos, newState, 3);
+            }
+        }
     }
 
     public static void applyConversions(Level level, BlockPos centerPos, List<ConversionRule> rules) {

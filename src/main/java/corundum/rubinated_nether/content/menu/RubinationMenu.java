@@ -206,32 +206,6 @@ public class RubinationMenu extends AbstractContainerMenu {
         return count[0];
     }
 
-    private void derubinateBlocks(Level level, BlockPos centerPos, int radius, int amountToRemove) {
-        List<BlockPos> rubinatedPositions = new ArrayList<>();
-
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
-                for (int z = -radius; z <= radius; z++) {
-                    BlockPos pos = centerPos.offset(x, y, z);
-                    Block block = level.getBlockState(pos).getBlock();
-                    if (RUBINATED_TO_NORMAL_MAP.containsKey(block)) {
-                        rubinatedPositions.add(pos);
-                    }
-                }
-            }
-        }
-
-        Collections.shuffle(rubinatedPositions, new Random(level.random.nextLong()));
-        for (int i = 0; i < Math.min(amountToRemove, rubinatedPositions.size()); i++) {
-            BlockPos pos = rubinatedPositions.get(i);
-            Block currentBlock = level.getBlockState(pos).getBlock();
-            Block normalBlock = RUBINATED_TO_NORMAL_MAP.get(currentBlock);
-            if (normalBlock != null) {
-                level.setBlock(pos, normalBlock.defaultBlockState(), 3);
-            }
-        }
-    }
-
     public boolean clickMenuButton(Player player, int id) {
         if (id >= 0) {
             var itemstack = this.rubinationSlots.getItem(0);
@@ -275,7 +249,8 @@ public class RubinationMenu extends AbstractContainerMenu {
 
             // Only consume blocks in survival mode
             if (!isCreative) {
-                derubinateBlocks(level, blockPos, 20, 100);
+                RubinationConverter.derubinateBlocks(level, blockPos, 20, 100);
+                ;
             }
 
             level.playSound(
