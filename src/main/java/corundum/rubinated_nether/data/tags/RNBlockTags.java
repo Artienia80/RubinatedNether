@@ -285,19 +285,6 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.get()
 		);
 
-		this.tag(RNTags.Blocks.GROWABLE_SURFACE).add(
-				RNBlocks.SHRINE_STONE.get(),
-				RNBlocks.POLISHED_SHRINE_STONE.get(),
-				RNBlocks.SHRINE_STONE_TILES.get(),
-				RNBlocks.SHRINE_STONE_PILLAR.get(),
-				RNBlocks.SHRINE_STONE_BRICKS.get(),
-				RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
-				RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
-				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
-				RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(),
-				RNBlocks.RUBINATED_SHRINE_STONE_TILES.get()
-		);
-
 
 		this.tag(RNTags.Blocks.SHRINE_STONE_CANDIDATE).add(
 				Blocks.STONE,
@@ -410,8 +397,17 @@ public class RNBlockTags extends BlockTagsProvider {
 				Blocks.DEEPSLATE_TILE_WALL
 		);
 
-		this.tag(RNTags.Blocks.SHRINE_STONE_BLOCKS).addTag(RNTags.Blocks.GROWABLE_SURFACE);
 		this.tag(RNTags.Blocks.SHRINE_STONE_BLOCKS).add(
+				RNBlocks.SHRINE_STONE.get(),
+				RNBlocks.POLISHED_SHRINE_STONE.get(),
+				RNBlocks.SHRINE_STONE_TILES.get(),
+				RNBlocks.SHRINE_STONE_PILLAR.get(),
+				RNBlocks.SHRINE_STONE_BRICKS.get(),
+				RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
+				RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(),
+				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
+				RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(),
+				RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.get(),

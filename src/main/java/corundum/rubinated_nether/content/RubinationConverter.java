@@ -100,44 +100,6 @@ public class RubinationConverter {
 
     public static class Conditions {
 
-        public static final BiPredicate<Level, BlockPos> HAS_GROWABLE_BLOCK_NEIGHBOR = (level, pos) -> {
-            for (Direction direction : Direction.values()) {
-                BlockPos neighborPos = pos.relative(direction);
-                BlockState neighborState = level.getBlockState(neighborPos);
-                if (neighborState.is(RNTags.Blocks.GROWABLE_SURFACE)) {
-                    return true;
-                }
-            }
-            return false;
-        };
-
-        public static final BiPredicate<Level, BlockPos> HAS_GROWABLE_BLOCK_NEIGHBOR_FOR_CRYSTAL = (level, pos) -> {
-            for (Direction direction : Direction.values()) {
-                BlockPos neighborPos = pos.relative(direction);
-                BlockState neighborState = level.getBlockState(neighborPos);
-                if (neighborState.is(RNTags.Blocks.GROWABLE_SURFACE)) {
-                    return true;
-                }
-            }
-            return false;
-        };
-
-        public static final BiPredicate<Level, BlockPos> HAS_SOLID_NEIGHBOR_NOT_RUNESTONE_SIDE = (level, pos) -> {
-            for (Direction direction : Direction.values()) {
-                if (direction == Direction.UP) continue;
-                BlockPos neighborPos = pos.relative(direction);
-                BlockState neighborState = level.getBlockState(neighborPos);
-                if (!neighborState.isAir() && neighborState.isSolidRender(level, neighborPos)) {
-                    if (!neighborState.is(RNBlocks.RUNESTONE.get())) {
-                        return true;
-                    }
-                }
-            }
-            BlockPos abovePos = pos.above();
-            BlockState aboveState = level.getBlockState(abovePos);
-            return !aboveState.isAir() && aboveState.isSolidRender(level, abovePos);
-        };
-
         public static final BiPredicate<Level, BlockPos> HAS_SHRINE_STONE_NEIGHBOR = (level, pos) -> {
             for (Direction direction : Direction.values()) {
                 BlockPos neighborPos = pos.relative(direction);
@@ -201,10 +163,7 @@ public class RubinationConverter {
         return hasEnoughBlocksForInscription(level, centerPos, 20);
     }
 
-    /**
-     * Gets the derubinated version of a block state with property transfer
-     * Folded from PickShovelItem and modified to use property transfer logic
-     */
+
     @Nullable
     public static BlockState getDerubinatedVersion(BlockState state) {
         var derubinatedBlock = RUBINATED_TO_NORMAL_MAP.get(state.getBlock());
@@ -214,16 +173,10 @@ public class RubinationConverter {
         return null;
     }
 
-    /**
-     * Checks if a block can be derubinated
-     */
     public static boolean canDerubinate(BlockState state) {
         return RUBINATED_TO_NORMAL_MAP.containsKey(state.getBlock());
     }
-    /**
-     * Derubinates blocks in a radius around the center position, with property transfer
-     * Folded from RubinationMenu and modified to use property transfer logic
-     */
+
     public static void derubinateBlocks(Level level, BlockPos centerPos, int radius, int amountToRemove) {
         if (level.isClientSide) return;
 
@@ -298,33 +251,12 @@ public class RubinationConverter {
 
             if (random.nextDouble() < replacementChance) {
                 BlockState newState;
-                if (rule.getOutputBlock() == Blocks.SMALL_AMETHYST_BUD) {
-                    newState = createCrystalWithCorrectFacing(level, targetPos, rule.getOutputBlock());
-                } else {
                     newState = transferProperties(currentState, rule.getOutputBlock().defaultBlockState());
-                }
                 level.setBlockAndUpdate(targetPos, newState);
                 playEffects(level, centerPos, targetPos, random);
                 successfulConversions++;
             }
         }
-    }
-
-    private static BlockState createCrystalWithCorrectFacing(Level level, BlockPos pos, Block crystalBlock) {
-        BlockState crystalState = crystalBlock.defaultBlockState();
-
-        for (Direction direction : Direction.values()) {
-            BlockPos neighborPos = pos.relative(direction);
-            BlockState neighborState = level.getBlockState(neighborPos);
-            if (neighborState.is(RNTags.Blocks.GROWABLE_SURFACE)) {
-                if (crystalState.hasProperty(AmethystClusterBlock.FACING)) {
-                    return crystalState.setValue(AmethystClusterBlock.FACING, direction.getOpposite());
-                }
-                break;
-            }
-        }
-
-        return crystalState;
     }
 
     private static BlockState transferProperties(BlockState sourceState, BlockState targetState) {

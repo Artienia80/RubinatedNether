@@ -839,7 +839,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(Items.BREEZE_ROD), has(Items.BREEZE_ROD))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.BRONZE_SHOT, 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.BRONZE_SHOT, 16)
 				.define('X', RNItems.BRONZE_POWDER)
 				.define('O', Items.COPPER_INGOT)
 				.pattern(" X ")
@@ -858,7 +858,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNItems.RUBY_ITEM), has(RNItems.RUBY_ITEM))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBY_LANTERN, 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBY_LANTERN, 8)
 				.define('X', Items.COPPER_INGOT)
 				.define('O', RNItems.MOLTEN_RUBY_ITEM)
 				.pattern("XXX")

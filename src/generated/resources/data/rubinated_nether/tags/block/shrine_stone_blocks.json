@@ -1,6 +1,15 @@
 {
   "values": [
-    "#rubinated_nether:growable_surface",
+    "rubinated_nether:shrine_stone",
+    "rubinated_nether:polished_shrine_stone",
+    "rubinated_nether:shrine_stone_tiles",
+    "rubinated_nether:shrine_stone_pillar",
+    "rubinated_nether:shrine_stone_bricks",
+    "rubinated_nether:chiseled_shrine_stone_bricks",
+    "rubinated_nether:rubinated_chiseled_shrine_stone_bricks",
+    "rubinated_nether:rubinated_shrine_stone_bricks",
+    "rubinated_nether:rubinated_shrine_stone_pillar",
+    "rubinated_nether:rubinated_shrine_stone_tiles",
     "rubinated_nether:polished_shrine_stone_stairs",
     "rubinated_nether:polished_shrine_stone_slab",
     "rubinated_nether:polished_shrine_stone_wall",
