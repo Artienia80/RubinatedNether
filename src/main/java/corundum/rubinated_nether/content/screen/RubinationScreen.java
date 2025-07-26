@@ -73,6 +73,8 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
 
+	boolean hasBlocks = this.menu.data.get(0) != 0;
+
 	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
 		var i = (this.width - this.imageWidth) / 2;
 		var j = (this.height - this.imageHeight) / 2;
@@ -101,7 +103,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				} else {
 					if (inscriptionMode) {
 						// Check if we have enough rubinated blocks for inscription
-						if (this.menu.hasEnoughRubinatedBlocks()) {
+						if (hasBlocks) {
 							guiGraphics.blitSprite(RUBINATION_SLOT_INSCRIPTION_SPRITE, i1, j1, 21, 59);
 						} else {
 							guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_INSCRIPTION_SPRITE, i1, j1, 21, 59);

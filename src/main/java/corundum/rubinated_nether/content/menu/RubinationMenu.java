@@ -48,6 +48,8 @@ public class RubinationMenu extends AbstractContainerMenu {
     private boolean hadAxeInSlot = false;
     private boolean hasEnoughRubinatedBlocks = false;
 
+    public final ContainerData data;
+
     private static final Map<Block, Block> RUBINATED_TO_NORMAL_MAP = Map.of(
             RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(), RNBlocks.SHRINE_STONE_TILES.get(),
             RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(), RNBlocks.SHRINE_STONE_PILLAR.get(),
@@ -121,6 +123,24 @@ public class RubinationMenu extends AbstractContainerMenu {
         for(int k = 0; k < 9; ++k) {
             this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 171));
         }
+
+        this.data = new ContainerData() {
+            @Override
+            public int get(int index) {
+                if (index == 0) return hasEnoughRubinatedBlocks ? 1 : 0;
+                return 0;
+            }
+
+            @Override
+            public void set(int index, int value) {
+                if (index == 0) hasEnoughRubinatedBlocks = value != 0;
+            }
+
+            @Override
+            public int getCount() {
+                return 1;
+            }
+        };
 
         this.addDataSlot(DataSlot.shared(this.rubinationClue[0], 0));
         this.addDataSlot(DataSlot.shared(this.rubinationClue[1], 0));
