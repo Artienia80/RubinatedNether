@@ -164,7 +164,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 			var optionalList = getEnchantReferences(j);
 			var result = Rubination.parseRubinationFromEnchantList(getRegistryAccess(), optionalList);
 
-			if (this.isHovering(42 + (36 * j), 16, 21, 59, mouseX, mouseY) && this.menu.getItemInSlot() != ItemStack.EMPTY) {
+			if (this.isHovering(42 + (36 * j), 16, 21, 59, mouseX, mouseY) && (this.menu.getItemInSlot() != ItemStack.EMPTY || isInscriptionMode())) {
 				var list = new ArrayList<Component>();
 
 				if (optionalList.getFirst().isEmpty()) {
