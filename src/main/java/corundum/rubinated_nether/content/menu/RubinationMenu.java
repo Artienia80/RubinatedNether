@@ -355,11 +355,37 @@ public class RubinationMenu extends AbstractContainerMenu {
             return arrayList;
         }
 
-        // If item is present, show runes that match the item
-        for (RuneItem rune : ALL_RUNES) {
-            Rubination rubination = rune.getRubination();
-            if (stack.is(rubination.getItemTag())) {
-                arrayList.add(rubination);
+        // If item is present and is an axe, apply axe cycling
+        if (stack.is(RNTags.Items.AXES)) {
+            var toolRubinations = new ArrayList<Rubination>();
+            var weaponRubinations = new ArrayList<Rubination>();
+
+            for (RuneItem rune : ALL_RUNES) {
+                Rubination rubination = rune.getRubination();
+
+                if (stack.is(rubination.getItemTag())) {
+                    if (rubination.getItemTag().equals(RNTags.Items.RUBINATION_TOOL)) {
+                        toolRubinations.add(rubination);
+                    } else if (rubination.getItemTag().equals(RNTags.Items.RUBINATION_WEAPON)) {
+                        weaponRubinations.add(rubination);
+                    }
+                }
+            }
+
+            boolean showToolsOnly = (axeCycle % 2 == 0);
+
+            if (showToolsOnly) {
+                arrayList.addAll(toolRubinations);
+            } else {
+                arrayList.addAll(weaponRubinations);
+            }
+        } else {
+            // If item is present and not an axe, show runes that match the item
+            for (RuneItem rune : ALL_RUNES) {
+                Rubination rubination = rune.getRubination();
+                if (stack.is(rubination.getItemTag())) {
+                    arrayList.add(rubination);
+                }
             }
         }
 
