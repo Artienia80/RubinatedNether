@@ -291,6 +291,11 @@ public class RubinationMenu extends AbstractContainerMenu {
 
                 if (!arrayList.isEmpty() && selectedEnchantments != null) {
                     var itemstack2 = itemstack.getItem().applyEnchantments(itemstack, selectedEnchantments);
+
+                    // Apply custom rarity to rubinated items
+                    itemstack2 = itemstack2.copy();
+                    itemstack2.set(net.minecraft.core.component.DataComponents.RARITY, RNRarity.RUBINATED_NETHER_RUBY.get());
+
                     this.rubinationSlots.setItem(0, itemstack2);
                     CommonHooks.onPlayerEnchantItem(player, itemstack2, selectedEnchantments);
 
