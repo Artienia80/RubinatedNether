@@ -52,4 +52,12 @@ public class RNBlockEntities {
 					RNBlocks.RUBINATION_ALTAR.get()
 			).build(null)
 	);
+
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CofferBlockEntity>> COFFER = BLOCK_ENTITY_TYPES.register(
+			"coffer",
+			() -> BlockEntityType.Builder.of(
+					CofferBlockEntity::new,
+					RNBlocks.SHRINE_STONE_COFFER.get()
+			).build(null)
+	);
 }

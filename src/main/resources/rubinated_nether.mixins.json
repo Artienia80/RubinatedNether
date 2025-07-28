@@ -12,6 +12,7 @@
 		"RavagingCurseMixin",
 		"BlessedLootingMixin",
 		"BlessedFortuneMixin",
+		"CofferSlotMixin",
 		"accessors.AbstractFurnaceBlockEntityAccessor",
 		"accessors.EntityRenderDispatcherAccessor",
 		"accessors.DoublePlantBlockAccessor",

@@ -27,5 +27,13 @@ public class RNMenuTypes {
 					RubinationMenu::new,
 					FeatureFlags.VANILLA_SET
 			)
-																										);
+	);
+
+	public static final DeferredHolder<MenuType<?>, MenuType<CofferMenu>> COFFER_MENU = MENUS.register(
+			"coffer_menu",
+			() -> new MenuType<>(
+					CofferMenu::new,
+					FeatureFlags.VANILLA_SET
+			)
+	);
 }

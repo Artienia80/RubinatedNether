@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -828,6 +829,17 @@ public class RNBlocks {
 							.isViewBlocking(RNBlocks::never)
 							.isSuffocating(RNBlocks::never)
 
+			)
+	);
+
+
+	public static final DeferredBlock<Block> SHRINE_STONE_COFFER = registerBlockAndItem(
+			"shrine_stone_coffer",
+			() -> new CofferBlock(
+					BlockBehaviour.Properties
+							.ofFullCopy(Blocks.OBSIDIAN)
+							.mapColor(MapColor.NETHER),
+					RNBlockEntities.COFFER::get
 			)
 	);
 

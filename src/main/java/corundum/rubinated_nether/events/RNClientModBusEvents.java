@@ -8,6 +8,7 @@ import corundum.rubinated_nether.content.entity.client.BronzeChargeProjectileMod
 import corundum.rubinated_nether.content.entity.client.BronzeChargeProjectileRenderer;
 import corundum.rubinated_nether.content.gui.RubyLensOverlay;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
+import corundum.rubinated_nether.content.screen.CofferScreen;
 import corundum.rubinated_nether.content.screen.FreezerScreen;
 import corundum.rubinated_nether.content.screen.RubinationScreen;
 import net.minecraft.client.Minecraft;
@@ -47,6 +48,7 @@ public class RNClientModBusEvents {
 	public static void registerMenuScreens(RegisterMenuScreensEvent event) {
 		event.register(RNMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
 		event.register(RNMenuTypes.RUBINATION_MENU.get(), RubinationScreen::new);
+		event.register(RNMenuTypes.COFFER_MENU.get(), CofferScreen::new);
 	}
 
 
