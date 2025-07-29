@@ -80,5 +80,7 @@ public class CofferBlockEntity extends RandomizableContainerBlockEntity implemen
     public float getOpenNess(float v) {
         return 0;
     }
+
+
 }
 

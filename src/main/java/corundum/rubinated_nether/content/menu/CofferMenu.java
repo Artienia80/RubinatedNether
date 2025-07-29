@@ -25,29 +25,36 @@ public class CofferMenu extends AbstractContainerMenu {
         super(RNMenuTypes.COFFER_MENU.get(), id);
         this.container = container;
 
-        // Coffer slots (8 slots)
-        for (int i = 0; i < 8; i++) {
-            this.addSlot(new CofferSlot(container, i, 20 + i * 18, 20) {
-                @Override
-                public int getMaxStackSize() {
-                    return 256;
-                }
+        // Coffer slots (4x2 grid, centered)
+        // Calculate center position: (176 - (4 * 18 + 3 * spacing)) / 2
+        // With standard 18px slot size and no extra spacing between slots: (176 - 72) / 2 = 52
+        int startX = 53;
+        int startY = 20;
 
-                @Override
-                public void onTake(Player player, ItemStack stack) {
-                    if (!(this.container instanceof CofferBlockEntity)) {
-                        if (stack.getCount() > 64) {
-                            stack.setCount(64);
-                        }
+        for (int row = 0; row < 2; row++) {
+            for (int col = 0; col < 4; col++) {
+                int slotIndex = row * 4 + col;
+                this.addSlot(new CofferSlot(container, slotIndex, startX + col * 18, startY + row * 18) {
+                    @Override
+                    public int getMaxStackSize() {
+                        return 256;
                     }
-                    super.onTake(player, stack);
-                }
-            });
 
-
+                    @Override
+                    public void onTake(Player player, ItemStack stack) {
+                        if (!(this.container instanceof CofferBlockEntity)) {
+                            if (stack.getCount() > 64) {
+                                stack.setCount(64);
+                            }
+                        }
+                        super.onTake(player, stack);
+                    }
+                });
+            }
         }
 
-        int offsetY = 50 + 36;
+        // Move inventory up by 19 pixels
+        int offsetY = 50 + 36 - 19;
 
         // Player inventory (3 rows x 9 columns)
         for (int row = 0; row < 3; row++) {
@@ -56,12 +63,11 @@ public class CofferMenu extends AbstractContainerMenu {
             }
         }
 
-        // Hotbar (1 row)
+        // Hotbar (1 row) - moved down 4 pixels
         for (int col = 0; col < 9; col++) {
-            this.addSlot(new Slot(playerInv, col, 8 + col * 18, offsetY + 3 * 18));
+            this.addSlot(new Slot(playerInv, col, 8 + col * 18, offsetY + 3 * 18 + 4));
         }
     }
-
 
     @Override
     public boolean stillValid(Player player) {
@@ -71,84 +77,73 @@ public class CofferMenu extends AbstractContainerMenu {
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
         Slot slot = this.slots.get(index);
-        if (!slot.hasItem()) return ItemStack.EMPTY;
+        if (slot != null && slot.hasItem()) {
+            ItemStack stack = slot.getItem();
+            ItemStack copy = stack.copy();
 
-        ItemStack sourceStack = slot.getItem();
-        ItemStack copy = sourceStack.copy();
-
-        boolean fromCoffer = index < 8;
-        if (fromCoffer) {
-            if (!this.moveItemStackTo(sourceStack, 8, this.slots.size(), true)) {
-                return ItemStack.EMPTY;
+            if (index < 8) {
+                if (!this.moveItemStackTo(stack, 8, this.slots.size(), true)) return ItemStack.EMPTY;
+            } else {
+                if (!this.moveItemStackTo(stack, 0, 8, false)) return ItemStack.EMPTY;
             }
-        } else {
-            if (!this.moveItemStackTo(sourceStack, 0, 8, false)) {
-                return ItemStack.EMPTY;
+
+            if (stack.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
             }
-        }
 
-        if (sourceStack.isEmpty()) {
-            slot.set(ItemStack.EMPTY);
-        } else {
-            slot.setChanged();
+            return copy;
         }
-
-        return copy;
+        return ItemStack.EMPTY;
     }
 
-    @Override
-    protected boolean moveItemStackTo(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection) {
-        boolean moved = false;
+    public boolean moveItemStackTo(ItemStack stack, int startIndex, int endIndex, boolean reverse) {
+        boolean flag = false;
+        int i = startIndex;
 
-        int index = reverseDirection ? endIndex - 1 : startIndex;
+        if (reverse) i = endIndex - 1;
 
-        while (!stack.isEmpty()) {
-            if (reverseDirection ? index < startIndex : index >= endIndex) break;
+        while (!stack.isEmpty() && (reverse ? i >= startIndex : i < endIndex)) {
+            Slot slot = this.slots.get(i);
+            ItemStack existing = slot.getItem();
 
-            Slot slot = this.slots.get(index);
-            ItemStack slotStack = slot.getItem();
-
-            if (!slotStack.isEmpty() && ItemStack.isSameItem(stack, slotStack)) {
-                int maxSize = (slot instanceof CofferSlot) ? 256 : slot.getMaxStackSize();
-
-                int newCount = slotStack.getCount() + stack.getCount();
-                if (newCount <= maxSize) {
+            if (!existing.isEmpty() && ItemStack.isSameItemSameComponents(stack, existing)) {
+                int maxStack = 256;
+                int newCount = existing.getCount() + stack.getCount();
+                if (newCount <= maxStack) {
                     stack.setCount(0);
-                    slotStack.setCount(newCount);
+                    existing.setCount(newCount);
                     slot.setChanged();
-                    moved = true;
-                } else if (slotStack.getCount() < maxSize) {
-                    int diff = maxSize - slotStack.getCount();
-                    stack.shrink(diff);
-                    slotStack.grow(diff);
+                    flag = true;
+                } else if (existing.getCount() < maxStack) {
+                    stack.shrink(maxStack - existing.getCount());
+                    existing.setCount(maxStack);
                     slot.setChanged();
-                    moved = true;
+                    flag = true;
                 }
             }
 
-            index += reverseDirection ? -1 : 1;
+            if (reverse) --i;
+            else ++i;
         }
 
-        index = reverseDirection ? endIndex - 1 : startIndex;
-        while (!stack.isEmpty()) {
-            if (reverseDirection ? index < startIndex : index >= endIndex) break;
-
-            Slot slot = this.slots.get(index);
-            if (slot.getItem().isEmpty() && slot.mayPlace(stack)) {
-                int maxSize = (slot instanceof CofferSlot) ? 256 : slot.getMaxStackSize();
-                ItemStack copy = stack.copy();
-                copy.setCount(Math.min(stack.getCount(), maxSize));
-                slot.set(copy);
-                slot.setChanged();
-                stack.shrink(copy.getCount());
-                moved = true;
+        i = reverse ? endIndex - 1 : startIndex;
+        while (!stack.isEmpty() && (reverse ? i >= startIndex : i < endIndex)) {
+            Slot slot = this.slots.get(i);
+            if (!slot.hasItem() && slot.mayPlace(stack)) {
+                ItemStack placed = stack.copy();
+                placed.setCount(Math.min(stack.getCount(), 256));
+                slot.set(placed);
+                stack.shrink(placed.getCount());
+                flag = true;
+                break;
             }
 
-            index += reverseDirection ? -1 : 1;
+            if (reverse) --i;
+            else ++i;
         }
 
-        return moved;
+        return flag;
     }
-
-
 }

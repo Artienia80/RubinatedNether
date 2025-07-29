@@ -9,12 +9,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class CofferScreen extends AbstractContainerScreen<CofferMenu> {
-    private static final ResourceLocation BG = ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/gui/shrine_stone_coffer.png");
+    private static final ResourceLocation BG = ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/gui/coffer_gui.png");
 
     public CofferScreen(CofferMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
         this.imageWidth = 176;
-        this.imageHeight = 166;
+        this.imageHeight = 149;
+        // Adjust inventory label position for the shorter GUI
+        this.inventoryLabelY = this.imageHeight - 94;
     }
 
     @Override

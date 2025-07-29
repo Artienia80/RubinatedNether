@@ -65,6 +65,8 @@ public class RNCreativeTabs {
 					RNBlocks.RUBINATED_SHRINE_STONE_PILLAR,
 					RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS,
 
+					RNBlocks.SHRINE_STONE_COFFER,
+
 					RNBlocks.SOAKSTONE,
 
 					RNBlocks.RUBY_GLASS,
