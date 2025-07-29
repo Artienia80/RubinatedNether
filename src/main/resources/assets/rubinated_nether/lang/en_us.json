@@ -58,6 +58,8 @@
   "block.rubinated_nether.chiseled_shrine_stone_bricks": "Chiseled Shrine Stone Bricks",
   "block.rubinated_nether.rubinated_chiseled_shrine_stone_bricks": "Rubinated Chiseled Shrine Stone Bricks",
 
+  "block.rubinated_nether.shrine_stone_coffer": "Shrine Stone Coffer",
+
   "block.rubinated_nether.ruby_laser": "Ruby Laser",
   "item.rubinated_nether.ruby_lens": "Ruby Lens",
 
@@ -197,6 +199,8 @@
   "container.studiose.clue": "Studiose",
   "container.ardenter.clue": "Ardenter",
   "container.nimis.clue": "Nimis",
+
+  "container.shrine_stone_coffer": "Coffer",
 
   "enchantment.rubinated_nether.deficiency_curse": "Curse of Deficiency",
   "enchantment.rubinated_nether.misfortune_curse": "Curse of Misfortune",
