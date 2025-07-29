@@ -62,4 +62,6 @@ public class CofferContainer implements Container {
     public int getMaxStackSize() {
         return 256;
     }
+
+
 }
