@@ -71,84 +71,75 @@ public class CofferMenu extends AbstractContainerMenu {
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
         Slot slot = this.slots.get(index);
-        if (!slot.hasItem()) return ItemStack.EMPTY;
+        if (slot != null && slot.hasItem()) {
+            ItemStack stack = slot.getItem();
+            ItemStack copy = stack.copy();
 
-        ItemStack sourceStack = slot.getItem();
-        ItemStack copy = sourceStack.copy();
-
-        boolean fromCoffer = index < 8;
-        if (fromCoffer) {
-            if (!this.moveItemStackTo(sourceStack, 8, this.slots.size(), true)) {
-                return ItemStack.EMPTY;
+            if (index < 8) {
+                if (!this.moveItemStackTo(stack, 8, this.slots.size(), true)) return ItemStack.EMPTY;
+            } else {
+                if (!this.moveItemStackTo(stack, 0, 8, false)) return ItemStack.EMPTY;
             }
-        } else {
-            if (!this.moveItemStackTo(sourceStack, 0, 8, false)) {
-                return ItemStack.EMPTY;
+
+            if (stack.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
             }
-        }
 
-        if (sourceStack.isEmpty()) {
-            slot.set(ItemStack.EMPTY);
-        } else {
-            slot.setChanged();
+            return copy;
         }
-
-        return copy;
+        return ItemStack.EMPTY;
     }
 
-    @Override
-    protected boolean moveItemStackTo(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection) {
-        boolean moved = false;
 
-        int index = reverseDirection ? endIndex - 1 : startIndex;
+    public boolean moveItemStackTo(ItemStack stack, int startIndex, int endIndex, boolean reverse) {
+        boolean flag = false;
+        int i = startIndex;
 
-        while (!stack.isEmpty()) {
-            if (reverseDirection ? index < startIndex : index >= endIndex) break;
+        if (reverse) i = endIndex - 1;
 
-            Slot slot = this.slots.get(index);
-            ItemStack slotStack = slot.getItem();
+        while (!stack.isEmpty() && (reverse ? i >= startIndex : i < endIndex)) {
+            Slot slot = this.slots.get(i);
+            ItemStack existing = slot.getItem();
 
-            if (!slotStack.isEmpty() && ItemStack.isSameItem(stack, slotStack)) {
-                int maxSize = (slot instanceof CofferSlot) ? 256 : slot.getMaxStackSize();
-
-                int newCount = slotStack.getCount() + stack.getCount();
-                if (newCount <= maxSize) {
+            if (!existing.isEmpty() && ItemStack.isSameItemSameComponents(stack, existing)) {
+                int maxStack = 256;
+                int newCount = existing.getCount() + stack.getCount();
+                if (newCount <= maxStack) {
                     stack.setCount(0);
-                    slotStack.setCount(newCount);
+                    existing.setCount(newCount);
                     slot.setChanged();
-                    moved = true;
-                } else if (slotStack.getCount() < maxSize) {
-                    int diff = maxSize - slotStack.getCount();
-                    stack.shrink(diff);
-                    slotStack.grow(diff);
+                    flag = true;
+                } else if (existing.getCount() < maxStack) {
+                    stack.shrink(maxStack - existing.getCount());
+                    existing.setCount(maxStack);
                     slot.setChanged();
-                    moved = true;
+                    flag = true;
                 }
             }
 
-            index += reverseDirection ? -1 : 1;
+            if (reverse) --i;
+            else ++i;
         }
 
-        index = reverseDirection ? endIndex - 1 : startIndex;
-        while (!stack.isEmpty()) {
-            if (reverseDirection ? index < startIndex : index >= endIndex) break;
-
-            Slot slot = this.slots.get(index);
-            if (slot.getItem().isEmpty() && slot.mayPlace(stack)) {
-                int maxSize = (slot instanceof CofferSlot) ? 256 : slot.getMaxStackSize();
-                ItemStack copy = stack.copy();
-                copy.setCount(Math.min(stack.getCount(), maxSize));
-                slot.set(copy);
-                slot.setChanged();
-                stack.shrink(copy.getCount());
-                moved = true;
+        i = reverse ? endIndex - 1 : startIndex;
+        while (!stack.isEmpty() && (reverse ? i >= startIndex : i < endIndex)) {
+            Slot slot = this.slots.get(i);
+            if (!slot.hasItem() && slot.mayPlace(stack)) {
+                ItemStack placed = stack.copy();
+                placed.setCount(Math.min(stack.getCount(), 256));
+                slot.set(placed);
+                stack.shrink(placed.getCount());
+                flag = true;
+                break;
             }
 
-            index += reverseDirection ? -1 : 1;
+            if (reverse) --i;
+            else ++i;
         }
 
-        return moved;
+        return flag;
     }
-
 
 }
