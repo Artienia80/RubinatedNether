@@ -45,10 +45,8 @@
   "block.rubinated_nether.shrine_stone_tiles_wall": "Shrine Stone Tile Wall",
   "block.rubinated_nether.rubinated_shrine_stone_tiles": "Rubinated Shrine Stone Tiles",
 
-
   "block.rubinated_nether.shrine_stone_pillar": "Shrine Stone Pillar",
   "block.rubinated_nether.rubinated_shrine_stone_pillar": "Rubinated Shrine Stone Pillar",
-
 
   "block.rubinated_nether.shrine_stone_bricks": "Shrine Stone Bricks",
   "block.rubinated_nether.shrine_stone_bricks_slab": "Shrine Stone Brick Slab",
@@ -57,6 +55,8 @@
   "block.rubinated_nether.rubinated_shrine_stone_bricks": "Rubinated Shrine Stone Bricks",
   "block.rubinated_nether.chiseled_shrine_stone_bricks": "Chiseled Shrine Stone Bricks",
   "block.rubinated_nether.rubinated_chiseled_shrine_stone_bricks": "Rubinated Chiseled Shrine Stone Bricks",
+
+  "block.rubinated_nether.shrine_stone_coffer": "Coffer",
 
   "block.rubinated_nether.ruby_laser": "Ruby Laser",
   "item.rubinated_nether.ruby_lens": "Ruby Lens",
@@ -253,6 +253,8 @@
   "gui.rubinated_nether.recipebook.toggleRecipes.freezable": "Showing Freezable",
 
   "gui.rubinated_nether.rubination_altar": "Rubination Altar",
+
+  "container.shrine_stone_coffer": "Coffer",
 
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
 

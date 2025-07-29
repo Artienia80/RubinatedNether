@@ -25,29 +25,36 @@ public class CofferMenu extends AbstractContainerMenu {
         super(RNMenuTypes.COFFER_MENU.get(), id);
         this.container = container;
 
-        // Coffer slots (8 slots)
-        for (int i = 0; i < 8; i++) {
-            this.addSlot(new CofferSlot(container, i, 20 + i * 18, 20) {
-                @Override
-                public int getMaxStackSize() {
-                    return 256;
-                }
+        // Coffer slots (4x2 grid, centered)
+        // Calculate center position: (176 - (4 * 18 + 3 * spacing)) / 2
+        // With standard 18px slot size and no extra spacing between slots: (176 - 72) / 2 = 52
+        int startX = 53;
+        int startY = 20;
 
-                @Override
-                public void onTake(Player player, ItemStack stack) {
-                    if (!(this.container instanceof CofferBlockEntity)) {
-                        if (stack.getCount() > 64) {
-                            stack.setCount(64);
-                        }
+        for (int row = 0; row < 2; row++) {
+            for (int col = 0; col < 4; col++) {
+                int slotIndex = row * 4 + col;
+                this.addSlot(new CofferSlot(container, slotIndex, startX + col * 18, startY + row * 18) {
+                    @Override
+                    public int getMaxStackSize() {
+                        return 256;
                     }
-                    super.onTake(player, stack);
-                }
-            });
 
-
+                    @Override
+                    public void onTake(Player player, ItemStack stack) {
+                        if (!(this.container instanceof CofferBlockEntity)) {
+                            if (stack.getCount() > 64) {
+                                stack.setCount(64);
+                            }
+                        }
+                        super.onTake(player, stack);
+                    }
+                });
+            }
         }
 
-        int offsetY = 50 + 36;
+        // Move inventory up by 19 pixels
+        int offsetY = 50 + 36 - 19;
 
         // Player inventory (3 rows x 9 columns)
         for (int row = 0; row < 3; row++) {
@@ -56,12 +63,11 @@ public class CofferMenu extends AbstractContainerMenu {
             }
         }
 
-        // Hotbar (1 row)
+        // Hotbar (1 row) - moved down 4 pixels
         for (int col = 0; col < 9; col++) {
-            this.addSlot(new Slot(playerInv, col, 8 + col * 18, offsetY + 3 * 18));
+            this.addSlot(new Slot(playerInv, col, 8 + col * 18, offsetY + 3 * 18 + 4));
         }
     }
-
 
     @Override
     public boolean stillValid(Player player) {
@@ -91,7 +97,6 @@ public class CofferMenu extends AbstractContainerMenu {
         }
         return ItemStack.EMPTY;
     }
-
 
     public boolean moveItemStackTo(ItemStack stack, int startIndex, int endIndex, boolean reverse) {
         boolean flag = false;
@@ -141,5 +146,4 @@ public class CofferMenu extends AbstractContainerMenu {
 
         return flag;
     }
-
 }
