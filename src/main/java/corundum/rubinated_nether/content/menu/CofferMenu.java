@@ -1,27 +1,28 @@
 package corundum.rubinated_nether.content.menu;
 
-import corundum.rubinated_nether.content.blocks.CofferContainer;
-import corundum.rubinated_nether.content.blocks.CofferSlot;
 import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
-import net.minecraft.network.FriendlyByteBuf;
+import fuzs.limitlesscontainers.api.limitlesscontainers.v1.LimitlessContainerMenu;
+import fuzs.limitlesscontainers.api.limitlesscontainers.v1.MultipliedContainer;
+import fuzs.limitlesscontainers.api.limitlesscontainers.v1.MultipliedSimpleContainer;
+import fuzs.limitlesscontainers.api.limitlesscontainers.v1.MultipliedSlot;
 import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class CofferMenu extends AbstractContainerMenu {
-    private final Container container;
+public class CofferMenu extends LimitlessContainerMenu {
+    private final MultipliedContainer container;
 
-    public CofferMenu(int i, Inventory inventory) {
-        this(i, inventory, new CofferContainer());
+    public CofferMenu(int containerId, Inventory inventory) {
+        this(containerId, inventory,
+                new MultipliedSimpleContainer(4,
+                        CofferBlockEntity.COINTAINER_SIZE
+                )
+        );
     }
 
-    public CofferMenu(int id, Inventory playerInv, Container container) {
+    public CofferMenu(int id, Inventory playerInv, MultipliedContainer container) {
         super(RNMenuTypes.COFFER_MENU.get(), id);
         this.container = container;
 
@@ -34,22 +35,7 @@ public class CofferMenu extends AbstractContainerMenu {
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 4; col++) {
                 int slotIndex = row * 4 + col;
-                this.addSlot(new CofferSlot(container, slotIndex, startX + col * 18, startY + row * 18) {
-                    @Override
-                    public int getMaxStackSize() {
-                        return 256;
-                    }
-
-                    @Override
-                    public void onTake(Player player, ItemStack stack) {
-                        if (!(this.container instanceof CofferBlockEntity)) {
-                            if (stack.getCount() > 64) {
-                                stack.setCount(64);
-                            }
-                        }
-                        super.onTake(player, stack);
-                    }
-                });
+                this.addSlot(new MultipliedSlot(this.container, slotIndex, startX + col * 18, startY + row * 18));
             }
         }
 
@@ -70,80 +56,42 @@ public class CofferMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player player) {
-        return true;
-    }
-
-    @Override
     public ItemStack quickMoveStack(Player player, int index) {
+        ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
-            ItemStack stack = slot.getItem();
-            ItemStack copy = stack.copy();
-
+        if (slot.hasItem()) {
+            ItemStack itemStack2 = slot.getItem();
+            itemStack = itemStack2.copy();
             if (index < 8) {
-                if (!this.moveItemStackTo(stack, 8, this.slots.size(), true)) return ItemStack.EMPTY;
-            } else {
-                if (!this.moveItemStackTo(stack, 0, 8, false)) return ItemStack.EMPTY;
+                if (!this.moveItemStackTo(itemStack2, 8, this.slots.size(), true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.moveItemStackTo(itemStack2, 0, 8, false)) {
+                return ItemStack.EMPTY;
             }
 
-            if (stack.isEmpty()) {
+            if (itemStack2.isEmpty()) {
                 slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
-
-            return copy;
         }
-        return ItemStack.EMPTY;
+
+        return itemStack;
     }
 
-    public boolean moveItemStackTo(ItemStack stack, int startIndex, int endIndex, boolean reverse) {
-        boolean flag = false;
-        int i = startIndex;
+    @Override
+    public boolean stillValid(Player player) {
+        return this.container.stillValid(player);
+    }
 
-        if (reverse) i = endIndex - 1;
+    @Override
+    public void removed(Player player) {
+        super.removed(player);
+        this.container.stopOpen(player);
+    }
 
-        while (!stack.isEmpty() && (reverse ? i >= startIndex : i < endIndex)) {
-            Slot slot = this.slots.get(i);
-            ItemStack existing = slot.getItem();
-
-            if (!existing.isEmpty() && ItemStack.isSameItemSameComponents(stack, existing)) {
-                int maxStack = 256;
-                int newCount = existing.getCount() + stack.getCount();
-                if (newCount <= maxStack) {
-                    stack.setCount(0);
-                    existing.setCount(newCount);
-                    slot.setChanged();
-                    flag = true;
-                } else if (existing.getCount() < maxStack) {
-                    stack.shrink(maxStack - existing.getCount());
-                    existing.setCount(maxStack);
-                    slot.setChanged();
-                    flag = true;
-                }
-            }
-
-            if (reverse) --i;
-            else ++i;
-        }
-
-        i = reverse ? endIndex - 1 : startIndex;
-        while (!stack.isEmpty() && (reverse ? i >= startIndex : i < endIndex)) {
-            Slot slot = this.slots.get(i);
-            if (!slot.hasItem() && slot.mayPlace(stack)) {
-                ItemStack placed = stack.copy();
-                placed.setCount(Math.min(stack.getCount(), 256));
-                slot.set(placed);
-                stack.shrink(placed.getCount());
-                flag = true;
-                break;
-            }
-
-            if (reverse) --i;
-            else ++i;
-        }
-
-        return flag;
+    public boolean is(Container container) {
+        return this.container == container;
     }
 }

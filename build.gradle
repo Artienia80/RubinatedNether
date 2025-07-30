@@ -21,6 +21,10 @@ repositories {
 	maven {
 		url = "https://modmaven.dev"
 	}
+	maven {
+		name = "Fuzs Mod Resources"
+		url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+	}
 }
 
 base {
@@ -90,7 +94,9 @@ dependencies {
 	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
 	implementation "maven.modrinth:midnightlib:${project.midnightlib_version}" 
-	jarJar ("maven.modrinth:midnightlib:${project.midnightlib_version}")  
+	jarJar ("maven.modrinth:midnightlib:${project.midnightlib_version}")
+
+	api "fuzs.limitlesscontainers:limitlesscontainers-neoforge:21.1.0"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

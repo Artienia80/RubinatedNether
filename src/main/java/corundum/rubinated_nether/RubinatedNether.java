@@ -9,6 +9,8 @@ import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
 import corundum.rubinated_nether.events.RNModBusEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
 import com.google.common.collect.ImmutableList;
 import com.mojang.logging.LogUtils;
@@ -77,7 +79,6 @@ public class RubinatedNether {
 			modEventBus.addListener(RNRecipeCategories::registerRecipeCategories);
 		}
 	}
-
 
 	public static ResourceLocation id(String s) {
 		return ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, s);

@@ -1,27 +1,26 @@
 {
-	"required": true,
-	"package": "corundum.rubinated_nether.mixin",
-	"compatibilityLevel": "JAVA_17",
-	"minVersion": "0.8",
-	"mixins": [
-		"LevelMixin",
-		"PlayerDigSpeedMixin",
-		"ExposureCurseMixin",
-		"MultishotSpreadMixin",
-		"CrookedShotCrossbowMixin",
-		"RavagingCurseMixin",
-		"BlessedLootingMixin",
-		"BlessedFortuneMixin",
-		"CofferSlotMixin",
-		"accessors.AbstractFurnaceBlockEntityAccessor",
-		"accessors.EntityRenderDispatcherAccessor",
-		"accessors.DoublePlantBlockAccessor",
-		"accessors.LevelAccessor"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"client": [
-		"accessors.GuiAccessor"
+  "required": true,
+  "package": "corundum.rubinated_nether.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "mixins": [
+    "BlessedFortuneMixin",
+    "BlessedLootingMixin",
+    "CrookedShotCrossbowMixin",
+    "ExposureCurseMixin",
+    "LevelMixin",
+    "MultishotSpreadMixin",
+    "PlayerDigSpeedMixin",
+    "RavagingCurseMixin",
+    "accessors.AbstractFurnaceBlockEntityAccessor",
+    "accessors.DoublePlantBlockAccessor",
+    "accessors.EntityRenderDispatcherAccessor",
+    "accessors.LevelAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "accessors.GuiAccessor"
 	]
 }
