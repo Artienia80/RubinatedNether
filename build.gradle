@@ -96,7 +96,11 @@ dependencies {
 	implementation "maven.modrinth:midnightlib:${project.midnightlib_version}" 
 	jarJar ("maven.modrinth:midnightlib:${project.midnightlib_version}")
 
+	api "fuzs.puzzleslib:puzzleslib-neoforge:21.1.36"
+	jarJar "fuzs.puzzleslib:puzzleslib-neoforge:21.1.36"
+
 	api "fuzs.limitlesscontainers:limitlesscontainers-neoforge:21.1.0"
+	jarJar "fuzs.limitlesscontainers:limitlesscontainers-neoforge:21.1.0"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

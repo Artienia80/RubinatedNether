@@ -4,9 +4,13 @@ import com.mojang.serialization.Decoder;
 import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
+import fuzs.limitlesscontainers.api.limitlesscontainers.v1.LimitlessContainerSynchronizer;
+import fuzs.limitlesscontainers.api.limitlesscontainers.v1.LimitlessContainerUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -40,17 +44,23 @@ public class CofferBlock extends AbstractChestBlock<CofferBlockEntity> implement
     }
 
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        Containers.dropContentsOnDestroy(state, newState, level, pos);
-        super.onRemove(state, level, pos, newState, isMoving);
+        if (!state.is(newState.getBlock())) {
+            if (level.getBlockEntity(pos) instanceof CofferBlockEntity blockEntity) {
+                LimitlessContainerUtils.dropContents(level, pos, blockEntity.getContainer());
+            }
+            super.onRemove(state, level, pos, newState, isMoving);
+        }
     }
 
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
-            MenuProvider menuprovider = this.getMenuProvider(state, level, pos);
-            if (menuprovider != null) {
-                player.openMenu(menuprovider);
+            MenuProvider menuProvider = this.getMenuProvider(state, level, pos);
+            if (menuProvider != null) {
+                LimitlessContainerSynchronizer.setSynchronizerFor((ServerPlayer) player,
+                        player.openMenu(menuProvider).orElse(-1)
+                );
                 PiglinAi.angerNearbyPiglins(player, true);
             }
 

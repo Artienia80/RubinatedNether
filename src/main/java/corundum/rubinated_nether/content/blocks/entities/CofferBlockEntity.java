@@ -51,7 +51,7 @@ public class CofferBlockEntity extends RandomizableContainerBlockEntity implemen
 
     @Override
     protected AbstractContainerMenu createMenu(int i, Inventory inventory) {
-        return new CofferMenu(i, inventory, container);
+        return new CofferMenu(i, inventory, this.container);
     }
 
     @Override
