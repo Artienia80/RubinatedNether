@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.menu;
 
 import corundum.rubinated_nether.content.RNRecipes;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
+import corundum.rubinated_nether.content.menu.freezer.FreezerFuelSlot;
 import corundum.rubinated_nether.content.recipe.FreezerServerPlaceRecipe;
 import corundum.rubinated_nether.content.recipe.FreezingRecipe;
 import corundum.rubinated_nether.content.recipe.RNRecipeBookTypes;

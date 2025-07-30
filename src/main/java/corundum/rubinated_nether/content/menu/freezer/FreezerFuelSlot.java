@@ -1,5 +1,6 @@
-package corundum.rubinated_nether.content.menu;
+package corundum.rubinated_nether.content.menu.freezer;
 
+import corundum.rubinated_nether.content.menu.FreezerMenu;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;

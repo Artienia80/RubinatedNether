@@ -1,6 +1,7 @@
-package corundum.rubinated_nether.content.menu;
+package corundum.rubinated_nether.content.menu.coffer;
 
 import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
+import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import fuzs.limitlesscontainers.api.limitlesscontainers.v1.LimitlessContainerMenu;
 import fuzs.limitlesscontainers.api.limitlesscontainers.v1.MultipliedContainer;
 import fuzs.limitlesscontainers.api.limitlesscontainers.v1.MultipliedSimpleContainer;

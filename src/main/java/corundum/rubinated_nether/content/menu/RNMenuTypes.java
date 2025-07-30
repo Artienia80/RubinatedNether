@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.menu;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.menu.coffer.CofferMenu;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;

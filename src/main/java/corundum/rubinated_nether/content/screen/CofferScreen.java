@@ -1,7 +1,7 @@
 package corundum.rubinated_nether.content.screen;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.menu.CofferMenu;
+import corundum.rubinated_nether.content.menu.coffer.CofferMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;

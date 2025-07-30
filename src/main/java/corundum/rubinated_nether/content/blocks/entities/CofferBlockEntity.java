@@ -1,7 +1,7 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.content.RNBlockEntities;
-import corundum.rubinated_nether.content.menu.CofferMenu;
+import corundum.rubinated_nether.content.menu.coffer.CofferMenu;
 import fuzs.limitlesscontainers.api.limitlesscontainers.v1.MultipliedContainer;
 import fuzs.puzzleslib.api.container.v1.ContainerMenuHelper;
 import fuzs.puzzleslib.api.container.v1.ListBackedContainer;
