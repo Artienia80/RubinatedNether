@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:blackstone_wall",
+    "minecraft:andesite_wall",
+    "minecraft:diorite_wall",
+    "minecraft:granite_wall",
+    "minecraft:tuff_wall"
+  ]
+}

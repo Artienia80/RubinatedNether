@@ -35,6 +35,8 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.ORNATE_RUBY_GLASS,
 				RNBlocks.MOLTEN_RUBY_GLASS,
 				RNBlocks.SHRINE_STONE,
+				RNBlocks.SHRINE_STONE_STAIRS,
+				RNBlocks.SHRINE_STONE_SLAB,
 				RNBlocks.POLISHED_SHRINE_STONE,
 				RNBlocks.POLISHED_SHRINE_STONE_STAIRS,
 				RNBlocks.POLISHED_SHRINE_STONE_SLAB,
@@ -113,6 +115,10 @@ public class RNItemModels extends ItemModelProvider {
 				"block/molten_ruby_glass"
 				);
 
+		wallInventory(
+				RNBlocks.SHRINE_STONE_WALL.getId().toString(),
+				modLoc("block/shrine_stone")
+		);
 		wallInventory(
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.getId().toString(),
 				modLoc("block/polished_shrine_stone")

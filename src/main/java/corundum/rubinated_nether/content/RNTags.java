@@ -40,6 +40,9 @@ public final class RNTags {
 		public static final TagKey<Block> SHRINE_STONE_BLOCKS = createTag(Registries.BLOCK, "shrine_stone_blocks");
 
 		public static final TagKey<Block> SHRINE_STONE_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_candidate");
+		public static final TagKey<Block> SHRINE_STONE_STAIRS_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_stairs_candidate");
+		public static final TagKey<Block> SHRINE_STONE_SLAB_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_slab_candidate");
+		public static final TagKey<Block> SHRINE_STONE_WALL_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_wall_candidate");
 
 		public static final TagKey<Block> POLISHED_SHRINE_STONE_CANDIDATE = createTag(Registries.BLOCK, "polished_shrine_stone_candidate");
 		public static final TagKey<Block> POLISHED_SHRINE_STONE_STAIRS_CANDIDATE = createTag(Registries.BLOCK, "polished_shrine_stone_stairs_candidate");

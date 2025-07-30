@@ -177,6 +177,25 @@ public class RNBlocks {
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.DEEPSLATE))
 	);
 
+	public static final DeferredBlock<SlabBlock> SHRINE_STONE_SLAB = registerBlockAndItem(
+			"shrine_stone_slab",
+			() -> new SlabBlock(SlabBlock.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
+			)
+	);
+	public static final DeferredBlock<StairBlock> SHRINE_STONE_STAIRS = registerBlockAndItem(
+			"shrine_stone_stairs",
+			() -> new StairBlock(
+					SHRINE_STONE.get().defaultBlockState(),
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
+			)
+	);
+	public static final DeferredBlock<WallBlock> SHRINE_STONE_WALL = registerBlockAndItem(
+			"shrine_stone_wall",
+			() -> new WallBlock(
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
+			)
+	);
+
 	public static final DeferredBlock<Block> POLISHED_SHRINE_STONE = registerBlockAndItem(
 			"polished_shrine_stone",
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))

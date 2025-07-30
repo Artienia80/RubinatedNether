@@ -42,6 +42,10 @@ public class RNCreativeTabs {
 					RNBlocks.RUNESTONE,
 
 					RNBlocks.SHRINE_STONE,
+					RNBlocks.SHRINE_STONE_STAIRS,
+					RNBlocks.SHRINE_STONE_SLAB,
+					RNBlocks.SHRINE_STONE_WALL,
+
 					RNBlocks.POLISHED_SHRINE_STONE,
 					RNBlocks.POLISHED_SHRINE_STONE_STAIRS,
 					RNBlocks.POLISHED_SHRINE_STONE_SLAB,
