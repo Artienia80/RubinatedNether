@@ -1,12 +1,14 @@
 package corundum.rubinated_nether.mixin;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.*;
@@ -91,6 +93,9 @@ public class ThornsShockwaveMixin {
 
         int selectedEnchantLevel = EnchantmentHelper.getItemEnchantmentLevel(thornsHolder, selectedPiece);
 
+        // Spawn shockwave particles based on enchantment level
+        spawnShockwaveParticles(level, victim, selectedEnchantLevel);
+
         // Find nearby entities to knockback
         Vec3 victimPos = victim.position();
         AABB searchArea = new AABB(
@@ -108,11 +113,9 @@ public class ThornsShockwaveMixin {
 
             double distance = target.distanceTo(victim);
             if (distance <= SHOCKWAVE_RADIUS && distance > 0) {
-                // Calculate knockback strength: (enchantmentLevel / 1.5) - (distance / 2)
-                double knockbackStrength = (selectedEnchantLevel / 1.5) - (distance / 2.0);
+                double knockbackStrength = ((selectedEnchantLevel / 1.5) - (distance / 2.0)) * 0.6666;
 
                 if (knockbackStrength > 0) {
-                    // Calculate direction vector from victim to target
                     Vec3 targetPos = target.position();
                     double deltaX = targetPos.x - victimPos.x;
                     double deltaZ = targetPos.z - victimPos.z;
@@ -123,11 +126,61 @@ public class ThornsShockwaveMixin {
                         deltaX /= magnitude;
                         deltaZ /= magnitude;
 
-                        // Apply knockback
-                        target.knockback(knockbackStrength, deltaX, deltaZ);
+                        // Apply knockback in the opposite direction (away from player)
+                        target.knockback(knockbackStrength, -deltaX, -deltaZ);
                     }
                 }
             }
+        }
+    }
+
+    @Unique
+    private void spawnShockwaveParticles(ServerLevel level, LivingEntity victim, int enchantmentLevel) {
+        Vec3 pos = victim.position();
+        double feetY = pos.y + 0.1; // Just above the ground at player's feet
+
+        // Calculate particle count based on enchantment level (3 particles per level)
+        int baseParticleCount = enchantmentLevel * 3;
+
+
+        // Create radial shockwave particles
+        for (int ring = 0; ring < 3; ring++) {
+            double radius = 1.0 + (ring * 1.5); // Expanding rings
+            int particleCount = (baseParticleCount / 3) + (ring * 2); // Distribute particles across rings
+
+            for (int i = 0; i < particleCount; i++) {
+                double angle = (i / (double) particleCount) * 2 * Math.PI;
+
+                // Starting position at player's feet
+                double startX = pos.x;
+                double startZ = pos.z;
+
+                // End position (radially outward)
+                double endX = pos.x + Math.cos(angle) * radius;
+                double endZ = pos.z + Math.sin(angle) * radius;
+
+                // Direction vector for particle velocity
+                double velocityX = (endX - startX) * 0.3;
+                double velocityZ = (endZ - startZ) * 0.3;
+
+                // Spawn particles that move outwards
+                level.sendParticles(ParticleTypes.SWEEP_ATTACK,
+                        startX, feetY, startZ,
+                        1, velocityX, 0.05, velocityZ, 0.5);
+            }
+        }
+
+        // Add some dust clouds for extra effect (also scaled with enchantment level)
+        int cloudCount = Math.min(15, enchantmentLevel * 2);
+        for (int i = 0; i < cloudCount; i++) {
+            double angle = (i / (double) cloudCount) * 2 * Math.PI;
+            double radius = 1.5 + random.nextDouble();
+            double x = pos.x + Math.cos(angle) * radius;
+            double z = pos.z + Math.sin(angle) * radius;
+
+            level.sendParticles(ParticleTypes.CLOUD,
+                    x, feetY, z,
+                    1, Math.cos(angle) * 0.2, 0.1, Math.sin(angle) * 0.2, 0.1);
         }
     }
 
@@ -174,7 +227,7 @@ public class ThornsShockwaveMixin {
 
                 if (enchantLevel > 0) {
                     thornsArmorCount++;
-                    if (enchantLevel >= 5) {
+                    if (enchantLevel >= 5) { // V or above for mod compatibility
                         thornsVCount++;
                     }
                 }
