@@ -95,6 +95,8 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.BRAZIER.get());
 		this.dropSelf(RNBlocks.RUBINATION_ALTAR.get());
 
+		this.dropSelf(RNBlocks.SHRINE_STONE_COFFER.get());
+
 		this.waxableDrop(RNBlocks.BRONZE_BLOCK);
 		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_BLOCK);
 		this.waxableDrop(RNBlocks.CORRODED_BRONZE_BLOCK);

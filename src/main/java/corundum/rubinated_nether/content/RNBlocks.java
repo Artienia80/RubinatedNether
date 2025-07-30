@@ -856,7 +856,7 @@ public class RNBlocks {
 			"shrine_stone_coffer",
 			() -> new CofferBlock(
 					BlockBehaviour.Properties
-							.ofFullCopy(Blocks.OBSIDIAN)
+							.ofFullCopy(RNBlocks.SHRINE_STONE.get())
 							.mapColor(MapColor.NETHER),
 					RNBlockEntities.COFFER::get
 			)
