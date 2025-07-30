@@ -126,6 +126,10 @@ public class RNBlockStates extends BlockStateProvider {
 			RNBlocks.SHRINE_STONE_TILES_WALL.get(),
 			modLoc("block/shrine_stone_tiles")
 		);
+		this.wallBlock(
+				RNBlocks.SHRINE_STONE_WALL.get(),
+				modLoc("block/shrine_stone")
+		);
 
 		this.axisBlock(RNBlocks.SHRINE_STONE_PILLAR.get());
 		this.axisBlock(RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get());
