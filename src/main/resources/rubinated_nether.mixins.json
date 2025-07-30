@@ -12,6 +12,7 @@
     "MultishotSpreadMixin",
     "PlayerDigSpeedMixin",
     "RavagingCurseMixin",
+    "ThornsShockwaveMixin",
     "accessors.AbstractFurnaceBlockEntityAccessor",
     "accessors.DoublePlantBlockAccessor",
     "accessors.EntityRenderDispatcherAccessor",
