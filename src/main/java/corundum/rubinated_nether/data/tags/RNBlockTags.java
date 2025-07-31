@@ -290,6 +290,7 @@ public class RNBlockTags extends BlockTagsProvider {
 		);
 
 		this.tag(BlockTags.WALLS).add(
+				RNBlocks.SHRINE_STONE_WALL.get(),
 				RNBlocks.SHRINE_STONE_TILES_WALL.get(),
 				RNBlocks.SHRINE_STONE_BRICKS_WALL.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.get()
@@ -441,6 +442,9 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
 				RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(),
 				RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(),
+				RNBlocks.SHRINE_STONE_STAIRS.get(),
+				RNBlocks.SHRINE_STONE_SLAB.get(),
+				RNBlocks.SHRINE_STONE_WALL.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.get(),

@@ -220,7 +220,7 @@ public class RNItemModels extends ItemModelProvider {
 		for (var rune : runes)
 			withExistingParent(
 					rune.getId().toString(),
-					modLoc("item/" + type + "_rune")
+					modLoc("item/" + "rune_" + type)
 			);
 	}
 
