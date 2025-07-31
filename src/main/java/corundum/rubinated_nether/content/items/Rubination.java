@@ -105,14 +105,4 @@ public enum Rubination implements StringRepresentable {
 		return EMPTY;
 	}
 
-
-
-//			if (this.minecraft != null && this.minecraft.player != null) {
-//		return this.minecraft.player.connection.getAdvancements()
-//				.getAdvancements()
-//				.stream()
-//				.anyMatch(advancement ->
-//						advancement.getId().equals(new ResourceLocation("rubinated_nether", "rubinous_ritual")));
-//	}
-
 }
