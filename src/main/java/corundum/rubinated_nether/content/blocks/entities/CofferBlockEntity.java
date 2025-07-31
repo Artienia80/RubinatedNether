@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.menu.coffer.CofferMenu;
+import fuzs.limitlesscontainers.api.limitlesscontainers.v1.LimitlessContainerUtils;
 import fuzs.limitlesscontainers.api.limitlesscontainers.v1.MultipliedContainer;
 import fuzs.puzzleslib.api.container.v1.ContainerMenuHelper;
 import fuzs.puzzleslib.api.container.v1.ListBackedContainer;
@@ -55,22 +56,17 @@ public class CofferBlockEntity extends RandomizableContainerBlockEntity implemen
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        if (!this.tryLoadLootTable(tag)) {
-            ContainerHelper.loadAllItems(tag, this.items, registries);
-        }
+        this.items.clear();
+        LimitlessContainerUtils.loadAllItems(tag, this.items, registries);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        if (!this.trySaveLootTable(tag)) {
-            ContainerHelper.saveAllItems(tag, this.items, registries);
-        }
+        LimitlessContainerUtils.saveAllItems(tag, this.items, true, registries);
     }
-
 
     @Override
     public int getContainerSize() {

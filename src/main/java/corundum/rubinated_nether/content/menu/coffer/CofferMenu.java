@@ -27,6 +27,10 @@ public class CofferMenu extends LimitlessContainerMenu {
         super(RNMenuTypes.COFFER_MENU.get(), id);
         this.container = container;
 
+        container.startOpen(playerInv.player);
+
+        checkContainerSize(container, 8);
+
         // Coffer slots (4x2 grid, centered)
         // Calculate center position: (176 - (4 * 18 + 3 * spacing)) / 2
         // With standard 18px slot size and no extra spacing between slots: (176 - 72) / 2 = 52
