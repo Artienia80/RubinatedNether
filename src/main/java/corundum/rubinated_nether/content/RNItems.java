@@ -35,6 +35,12 @@ public class RNItems {
 	public static final DeferredItem<RuneItem> STUDIOSE_RUNE = makeRune(Rubination.STUDIOSE);
 	public static final DeferredItem<RuneItem> ARDENTER_RUNE = makeRune(Rubination.ARDENTER);
 	public static final DeferredItem<RuneItem> NIMIS_RUNE = makeRune(Rubination.NIMIS);
+	public static final DeferredItem<RuneItem> IRA_RUNE = makeRune(Rubination.IRA);
+	public static final DeferredItem<RuneItem> INVIDIA_RUNE = makeRune(Rubination.INVIDIA);
+	public static final DeferredItem<RuneItem> GULA_RUNE = makeRune(Rubination.GULA);
+	public static final DeferredItem<RuneItem> IGNAVIA_RUNE = makeRune(Rubination.IGNAVIA);
+	public static final DeferredItem<RuneItem> KENODOXIA_RUNE = makeRune(Rubination.KENODOXIA);
+	public static final DeferredItem<RuneItem> PHILARGYRIA_RUNE = makeRune(Rubination.PHILARGYRIA);
 
 
 	public static final DeferredItem<Item> BRONZE_DRILL = ITEMS.register(

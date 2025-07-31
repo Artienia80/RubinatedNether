@@ -51,12 +51,14 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.SOAKSTONE.get());
 
 		this.dropSelf(RNBlocks.SHRINE_STONE.get());
+		this.dropSelf(RNBlocks.SHRINE_STONE_STAIRS.get());
+		this.dropSelf(RNBlocks.SHRINE_STONE_SLAB.get());
+		this.dropSelf(RNBlocks.SHRINE_STONE_WALL.get());
 
 		this.dropSelf(RNBlocks.POLISHED_SHRINE_STONE.get());
 		this.dropSelf(RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get());
 		this.dropSelf(RNBlocks.POLISHED_SHRINE_STONE_SLAB.get());
 		this.dropSelf(RNBlocks.POLISHED_SHRINE_STONE_WALL.get());
-
 
 		this.dropSelf(RNBlocks.SHRINE_STONE_TILES.get());
 		this.dropSelf(RNBlocks.SHRINE_STONE_TILES_SLAB.get());
@@ -75,7 +77,9 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get());
 		this.dropSelf(RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get());
 		this.dropSelf(RNBlocks.RUBINATED_SHRINE_STONE_TILES.get());
+
 		this.add(RNBlocks.RUNESTONE.get(), this.createDoorTable(RNBlocks.RUNESTONE.get()));
+		this.dropSelf(RNBlocks.SHRINE_STONE_COFFER.get());
 
 		this.dropWhenSilkTouch(RNBlocks.RUBY_GLASS.get());
 		this.dropWhenSilkTouch(RNBlocks.RUBY_GLASS_PANE.get());
@@ -90,6 +94,8 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.RUBY_LASER.get());
 		this.dropSelf(RNBlocks.BRAZIER.get());
 		this.dropSelf(RNBlocks.RUBINATION_ALTAR.get());
+
+		this.dropSelf(RNBlocks.SHRINE_STONE_COFFER.get());
 
 		this.waxableDrop(RNBlocks.BRONZE_BLOCK);
 		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_BLOCK);

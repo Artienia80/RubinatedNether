@@ -7,6 +7,8 @@
     "minecraft:density",
     "minecraft:breach",
     "minecraft:mending",
-    "rubinated_nether:bluntness_curse"
+    "rubinated_nether:bluntness_curse",
+    "rubinated_nether:buoyancy_curse"
+
   ]
 }

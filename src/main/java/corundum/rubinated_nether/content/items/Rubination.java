@@ -37,6 +37,12 @@ public enum Rubination implements StringRepresentable {
 	STUDIOSE("studiose", Map.of("minecraft:unbreaking", 5, "minecraft:multishot", 2, "rubinated_nether:slow_charge_curse", 1), RNTags.Items.RUBINATION_CROSSBOW),
 	ARDENTER("ardenter", Map.of("minecraft:quick_charge", 5, "minecraft:unbreaking", 4, "rubinated_nether:crooked_shot_curse", 1), RNTags.Items.RUBINATION_CROSSBOW),
 	NIMIS("nimis", Map.of("minecraft:multishot", 3, "minecraft:quick_charge", 4, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_CROSSBOW),
+	IRA("ira", Map.of("minecraft:unbreaking", 5, "minecraft:riptide", 4, "rubinated_nether:bluntness_curse", 1), RNTags.Items.RUBINATION_TRIDENT),
+	INVIDIA("invidia", Map.of("minecraft:impaling", 7, "minecraft:unbreaking", 4, "minecraft:vanishing_curse", 1), RNTags.Items.RUBINATION_TRIDENT), //Recoil
+	GULA("gula", Map.of("minecraft:riptide", 5, "minecraft:impaling", 6, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_TRIDENT),
+	IGNAVIA("ignavia", Map.of("minecraft:unbreaking", 5, "minecraft:wind_burst", 4, "rubinated_nether:buoyancy_curse", 1), RNTags.Items.RUBINATION_MACE),
+	KENODOXIA("kenodoxia", Map.of("minecraft:density", 7, "minecraft:unbreaking", 4, "minecraft:vanishing_curse", 1), RNTags.Items.RUBINATION_MACE), //Sinking
+	PHILARGYRIA("philargyria", Map.of("minecraft:wind_burst", 5, "minecraft:density", 6, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_MACE),
 
 	EMPTY("empty", Map.of(), Tags.Items.BRICKS),;
 
@@ -80,7 +86,7 @@ public enum Rubination implements StringRepresentable {
 	public TagKey<Item> getItemTag() {
 		return this.itemKey;
 	}
-	
+
 	public static String parseRubinationTextureName(Rubination rubination){
 		if(rubination.getItemTag() == RNTags.Items.RUBINATION_TOOL)
 			return "tool";
@@ -92,6 +98,10 @@ public enum Rubination implements StringRepresentable {
 			return "bow";
 		else if(rubination.getItemTag() == RNTags.Items.RUBINATION_CROSSBOW)
 			return "crossbow";
+		else if(rubination.getItemTag() == RNTags.Items.RUBINATION_TRIDENT)
+			return "trident";
+		else if(rubination.getItemTag() == RNTags.Items.RUBINATION_MACE)
+			return "mace";
 		return "tool";
 	}
 
@@ -104,15 +114,5 @@ public enum Rubination implements StringRepresentable {
 		}
 		return EMPTY;
 	}
-
-
-
-//			if (this.minecraft != null && this.minecraft.player != null) {
-//		return this.minecraft.player.connection.getAdvancements()
-//				.getAdvancements()
-//				.stream()
-//				.anyMatch(advancement ->
-//						advancement.getId().equals(new ResourceLocation("rubinated_nether", "rubinous_ritual")));
-//	}
 
 }

@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.enchantment;
 
 import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.enchantment.custom.BuoyancyCurseEffect;
 import corundum.rubinated_nether.content.enchantment.custom.HookingCurseEffect;
 import corundum.rubinated_nether.content.enchantment.custom.LeechingCurseEffect;
 import corundum.rubinated_nether.content.enchantment.custom.MisfortuneCurseEffect;
@@ -62,6 +63,9 @@ public class RNEnchantments {
 
 	public static final ResourceKey<Enchantment> MISFORTUNE_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "misfortune_curse"));
+
+	public static final ResourceKey<Enchantment> BUOYANCY_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
+			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "buoyancy_curse"));
 
 	public static void bootstrap(BootstrapContext<Enchantment> context) {
 		var enchantments = context.lookup(Registries.ENCHANTMENT);
@@ -201,6 +205,14 @@ public class RNEnchantments {
 				.withEffect(EnchantmentEffectComponents.BLOCK_EXPERIENCE,
 						new MisfortuneCurseEffect())
 				.exclusiveWith(enchantments.getOrThrow(EnchantmentTags.CURSE)));
+
+		register(context, BUOYANCY_CURSE, Enchantment.enchantment(
+						Enchantment.definition(holdergetter2.getOrThrow(ItemTags.MACE_ENCHANTABLE), 10, 1,
+								Enchantment.dynamicCost(1, 10), Enchantment.dynamicCost(51, 10), 1,
+								new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND}))
+				.withEffect(EnchantmentEffectComponents.SMASH_DAMAGE_PER_FALLEN_BLOCK,
+						new BuoyancyCurseEffect()));
+
 	}
 
 	private static void register(BootstrapContext<Enchantment> registry, ResourceKey<Enchantment> key,

@@ -1,0 +1,10 @@
+{
+  "values": [
+    "minecraft:stone_stairs",
+    "minecraft:blackstone_stairs",
+    "minecraft:andesite_stairs",
+    "minecraft:diorite_stairs",
+    "minecraft:granite_stairs",
+    "minecraft:tuff_stairs"
+  ]
+}

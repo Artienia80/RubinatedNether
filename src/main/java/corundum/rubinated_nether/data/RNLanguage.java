@@ -146,6 +146,14 @@ public class RNLanguage extends RNLanguageProvider {
 		addItem(RNItems.ARDENTER_RUNE, "Rune of Ardenter");
 		addItem(RNItems.NIMIS_RUNE, "Rune of Nimis");
 
+		addItem(RNItems.IRA_RUNE, "Rune of Ira");
+		addItem(RNItems.INVIDIA_RUNE, "Rune of Invidia");
+		addItem(RNItems.GULA_RUNE, "Rune of Gula");
+
+		addItem(RNItems.IGNAVIA_RUNE, "Rune of Ignavia");
+		addItem(RNItems.KENODOXIA_RUNE, "Rune of Kenodoxia");
+		addItem(RNItems.PHILARGYRIA_RUNE, "Rune of Philargyria");
+
 		addItem(RNItems.RITUAL_OFFERING, "Ritual Offering");
 		addItem(RNItems.WINDING_KEY, "Winding Key");
 

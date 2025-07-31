@@ -127,7 +127,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 
 				var result = Rubination.parseRubinationFromEnchantList(getRegistryAccess(), getEnchantReferences(l));
 
-				guiGraphics.blit(RubinatedNether.id("textures/item/" + Rubination.parseRubinationTextureName(result) + "_rune.png"), i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+				guiGraphics.blit(RubinatedNether.id("textures/item/rune_" + Rubination.parseRubinationTextureName(result) + ".png"), i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
 
 				RenderSystem.disableBlend();
 				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 8, j1 + 20, 1, i2);

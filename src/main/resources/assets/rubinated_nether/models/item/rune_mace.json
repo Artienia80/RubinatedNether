@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "rubinated_nether:item/armor_rune"
+    "layer0": "rubinated_nether:item/rune_mace"
   }
 }

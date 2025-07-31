@@ -35,6 +35,9 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.ORNATE_RUBY_GLASS,
 				RNBlocks.MOLTEN_RUBY_GLASS,
 				RNBlocks.SHRINE_STONE,
+				RNBlocks.SHRINE_STONE_STAIRS,
+				RNBlocks.SHRINE_STONE_SLAB,
+				RNBlocks.POLISHED_SHRINE_STONE_SLAB,
 				RNBlocks.POLISHED_SHRINE_STONE,
 				RNBlocks.POLISHED_SHRINE_STONE_STAIRS,
 				RNBlocks.POLISHED_SHRINE_STONE_SLAB,
@@ -49,7 +52,8 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS,
 				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS,
 				RNBlocks.RUBINATED_SHRINE_STONE_PILLAR,
-				RNBlocks.RUBINATED_SHRINE_STONE_TILES
+				RNBlocks.RUBINATED_SHRINE_STONE_TILES,
+				RNBlocks.SHRINE_STONE_COFFER
 						);
 
 		waxableBlockItems(
@@ -113,6 +117,10 @@ public class RNItemModels extends ItemModelProvider {
 				"block/molten_ruby_glass"
 				);
 
+		wallInventory(
+				RNBlocks.SHRINE_STONE_WALL.getId().toString(),
+				modLoc("block/shrine_stone")
+		);
 		wallInventory(
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.getId().toString(),
 				modLoc("block/polished_shrine_stone")
@@ -179,6 +187,18 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.ARDENTER_RUNE,
 				RNItems.NIMIS_RUNE
 		);
+
+		runeItem("trident",
+				RNItems.IRA_RUNE,
+				RNItems.INVIDIA_RUNE,
+				RNItems.GULA_RUNE
+		);
+
+		runeItem("mace",
+				RNItems.IGNAVIA_RUNE,
+				RNItems.KENODOXIA_RUNE,
+				RNItems.PHILARGYRIA_RUNE
+		);
 	}
 
 	private void paneItem(DeferredBlock<?> block, String texture) {
@@ -212,7 +232,7 @@ public class RNItemModels extends ItemModelProvider {
 		for (var rune : runes)
 			withExistingParent(
 					rune.getId().toString(),
-					modLoc("item/" + type + "_rune")
+					modLoc("item/" + "rune_" + type)
 			);
 	}
 

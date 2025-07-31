@@ -72,7 +72,13 @@ public class RubinationMenu extends AbstractContainerMenu {
             (RuneItem) RNItems.TRISTIA_RUNE.get(),
             (RuneItem) RNItems.STUDIOSE_RUNE.get(),
             (RuneItem) RNItems.ARDENTER_RUNE.get(),
-            (RuneItem) RNItems.NIMIS_RUNE.get()
+            (RuneItem) RNItems.NIMIS_RUNE.get(),
+            (RuneItem) RNItems.IRA_RUNE.get(),
+            (RuneItem) RNItems.INVIDIA_RUNE.get(),
+            (RuneItem) RNItems.GULA_RUNE.get(),
+            (RuneItem) RNItems.IGNAVIA_RUNE.get(),
+            (RuneItem) RNItems.KENODOXIA_RUNE.get(),
+            (RuneItem) RNItems.PHILARGYRIA_RUNE.get()
     );
 
     public RubinationMenu(int containerId, Inventory playerInventory) {

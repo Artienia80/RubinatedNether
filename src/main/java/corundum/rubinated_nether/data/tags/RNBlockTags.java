@@ -53,6 +53,9 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.BRAZIER.get(),
 
 				RNBlocks.SHRINE_STONE.get(),
+				RNBlocks.SHRINE_STONE_STAIRS.get(),
+				RNBlocks.SHRINE_STONE_SLAB.get(),
+				RNBlocks.SHRINE_STONE_WALL.get(),
 
 				RNBlocks.POLISHED_SHRINE_STONE.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
@@ -76,6 +79,8 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(),
 				RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(),
 				RNBlocks.RUNESTONE.get(),
+				RNBlocks.SHRINE_STONE_COFFER.get(),
+
 				RNBlocks.BRAZIER.get(),
 				RNBlocks.RUBINATION_ALTAR.get(),
 
@@ -149,6 +154,9 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.FREEZER.get(),
 
 				RNBlocks.SHRINE_STONE.get(),
+				RNBlocks.SHRINE_STONE_STAIRS.get(),
+				RNBlocks.SHRINE_STONE_SLAB.get(),
+				RNBlocks.SHRINE_STONE_WALL.get(),
 
 				RNBlocks.POLISHED_SHRINE_STONE.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
@@ -172,6 +180,8 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(),
 				RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(),
 				RNBlocks.RUNESTONE.get(),
+				RNBlocks.SHRINE_STONE_COFFER.get(),
+
 				RNBlocks.BRAZIER.get(),
 				RNBlocks.RUBINATION_ALTAR.get(),
 
@@ -280,6 +290,7 @@ public class RNBlockTags extends BlockTagsProvider {
 		);
 
 		this.tag(BlockTags.WALLS).add(
+				RNBlocks.SHRINE_STONE_WALL.get(),
 				RNBlocks.SHRINE_STONE_TILES_WALL.get(),
 				RNBlocks.SHRINE_STONE_BRICKS_WALL.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.get()
@@ -294,6 +305,32 @@ public class RNBlockTags extends BlockTagsProvider {
 				Blocks.DIORITE,
 				Blocks.GRANITE,
 				Blocks.TUFF
+		);
+
+		this.tag(RNTags.Blocks.SHRINE_STONE_STAIRS_CANDIDATE).add(
+				Blocks.STONE_STAIRS,
+				Blocks.BLACKSTONE_STAIRS,
+				Blocks.ANDESITE_STAIRS,
+				Blocks.DIORITE_STAIRS,
+				Blocks.GRANITE_STAIRS,
+				Blocks.TUFF_STAIRS
+		);
+
+		this.tag(RNTags.Blocks.SHRINE_STONE_SLAB_CANDIDATE).add(
+				Blocks.STONE_SLAB,
+				Blocks.BLACKSTONE_SLAB,
+				Blocks.ANDESITE_SLAB,
+				Blocks.DIORITE_SLAB,
+				Blocks.GRANITE_SLAB,
+				Blocks.TUFF_SLAB
+		);
+
+		this.tag(RNTags.Blocks.SHRINE_STONE_WALL_CANDIDATE).add(
+				Blocks.BLACKSTONE_WALL,
+				Blocks.ANDESITE_WALL,
+				Blocks.DIORITE_WALL,
+				Blocks.GRANITE_WALL,
+				Blocks.TUFF_WALL
 		);
 
 		this.tag(RNTags.Blocks.POLISHED_SHRINE_STONE_CANDIDATE).add(
@@ -328,9 +365,6 @@ public class RNBlockTags extends BlockTagsProvider {
 		this.tag(RNTags.Blocks.POLISHED_SHRINE_STONE_WALL_CANDIDATE).add(
 				Blocks.POLISHED_DEEPSLATE_WALL,
 				Blocks.POLISHED_BLACKSTONE_WALL,
-				Blocks.ANDESITE_WALL,
-				Blocks.DIORITE_WALL,
-				Blocks.GRANITE_WALL,
 				Blocks.POLISHED_TUFF_WALL
 		);
 
@@ -408,6 +442,9 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
 				RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(),
 				RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(),
+				RNBlocks.SHRINE_STONE_STAIRS.get(),
+				RNBlocks.SHRINE_STONE_SLAB.get(),
+				RNBlocks.SHRINE_STONE_WALL.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.get(),

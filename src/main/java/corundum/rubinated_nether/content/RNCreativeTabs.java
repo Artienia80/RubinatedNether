@@ -42,6 +42,10 @@ public class RNCreativeTabs {
 					RNBlocks.RUNESTONE,
 
 					RNBlocks.SHRINE_STONE,
+					RNBlocks.SHRINE_STONE_STAIRS,
+					RNBlocks.SHRINE_STONE_SLAB,
+					RNBlocks.SHRINE_STONE_WALL,
+
 					RNBlocks.POLISHED_SHRINE_STONE,
 					RNBlocks.POLISHED_SHRINE_STONE_STAIRS,
 					RNBlocks.POLISHED_SHRINE_STONE_SLAB,
@@ -174,7 +178,15 @@ public class RNCreativeTabs {
 
 						RNItems.STUDIOSE_RUNE,
 						RNItems.ARDENTER_RUNE,
-						RNItems.NIMIS_RUNE
+						RNItems.NIMIS_RUNE,
+
+						RNItems.IRA_RUNE,
+						RNItems.INVIDIA_RUNE,
+						RNItems.GULA_RUNE,
+
+						RNItems.IGNAVIA_RUNE,
+						RNItems.KENODOXIA_RUNE,
+						RNItems.PHILARGYRIA_RUNE
 
 				);
 

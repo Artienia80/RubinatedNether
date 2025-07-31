@@ -33,6 +33,10 @@ public class RNRecipeProvider extends RecipeProvider {
 			recipeOutput,
 			RNBlocks.SHRINE_STONE,
 
+			RNBlocks.SHRINE_STONE_SLAB,
+			RNBlocks.SHRINE_STONE_STAIRS,
+			RNBlocks.SHRINE_STONE_WALL,
+
 			RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
 
 			RNBlocks.SHRINE_STONE_BRICKS_SLAB,
@@ -286,6 +290,18 @@ public class RNRecipeProvider extends RecipeProvider {
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB)))
 		);
 
+		stairsAndSlab(
+				recipeOutput,
+				RNBlocks.SHRINE_STONE,
+				RNBlocks.SHRINE_STONE_STAIRS,
+				RNBlocks.SHRINE_STONE_SLAB
+		);
+
+		wall(
+				recipeOutput,
+				RNBlocks.SHRINE_STONE,
+				RNBlocks.SHRINE_STONE_WALL
+		);
 
 		stairsAndSlab(
 			recipeOutput,
