@@ -95,6 +95,43 @@
     },
     "half=upper,has_rune=nimis": {
       "model": "rubinated_nether:block/runestone_top_glow_crossbow"
+    },
+    "half=lower,has_rune=ira": {
+      "model": "rubinated_nether:block/runestone_bottom_glow_trident"
+    },
+    "half=upper,has_rune=ira": {
+      "model": "rubinated_nether:block/runestone_top_glow_trident"
+    },
+    "half=lower,has_rune=invidia": {
+      "model": "rubinated_nether:block/runestone_bottom_glow_trident"
+    },
+    "half=upper,has_rune=invidia": {
+      "model": "rubinated_nether:block/runestone_top_glow_trident"
+    },
+    "half=lower,has_rune=gula": {
+      "model": "rubinated_nether:block/runestone_bottom_glow_trident"
+    },
+    "half=upper,has_rune=gula": {
+      "model": "rubinated_nether:block/runestone_top_glow_trident"
+    },
+    "half=lower,has_rune=ignavia": {
+      "model": "rubinated_nether:block/runestone_bottom_glow_mace"
+    },
+    "half=upper,has_rune=ignavia": {
+      "model": "rubinated_nether:block/runestone_top_glow_mace"
+    },
+    "half=lower,has_rune=kenodoxia": {
+      "model": "rubinated_nether:block/runestone_bottom_glow_mace"
+    },
+    "half=upper,has_rune=kenodoxia": {
+      "model": "rubinated_nether:block/runestone_top_glow_mace"
+    },
+    "half=lower,has_rune=philargyria": {
+      "model": "rubinated_nether:block/runestone_bottom_glow_mace"
+    },
+    "half=upper,has_rune=philargyria": {
+      "model": "rubinated_nether:block/runestone_top_glow_mace"
     }
+
   }
 }
