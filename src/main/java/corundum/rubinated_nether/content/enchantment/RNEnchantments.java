@@ -2,10 +2,7 @@ package corundum.rubinated_nether.content.enchantment;
 
 import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.enchantment.custom.BuoyancyCurseEffect;
-import corundum.rubinated_nether.content.enchantment.custom.HookingCurseEffect;
-import corundum.rubinated_nether.content.enchantment.custom.LeechingCurseEffect;
-import corundum.rubinated_nether.content.enchantment.custom.MisfortuneCurseEffect;
+import corundum.rubinated_nether.content.enchantment.custom.*;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -66,6 +63,10 @@ public class RNEnchantments {
 
 	public static final ResourceKey<Enchantment> BUOYANCY_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "buoyancy_curse"));
+
+	public static final ResourceKey<Enchantment> SINKING_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
+			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "sinking_curse"));
+
 
 	public static void bootstrap(BootstrapContext<Enchantment> context) {
 		var enchantments = context.lookup(Registries.ENCHANTMENT);
@@ -213,6 +214,14 @@ public class RNEnchantments {
 				.withEffect(EnchantmentEffectComponents.SMASH_DAMAGE_PER_FALLEN_BLOCK,
 						new BuoyancyCurseEffect()));
 
+		register(context, SINKING_CURSE, Enchantment.enchantment(
+				Enchantment.definition(
+						holdergetter2.getOrThrow(ItemTags.MACE_ENCHANTABLE), // Applied to maces
+						5, 1, // rarity 5, max level 1
+						Enchantment.dynamicCost(25, 25),
+						Enchantment.dynamicCost(75, 25),
+						8, // anvil cost
+						new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND})));
 	}
 
 	private static void register(BootstrapContext<Enchantment> registry, ResourceKey<Enchantment> key,
