@@ -184,6 +184,13 @@
   "item.rubinated_nether.studiose_rune": "Rune of Studiose",
   "item.rubinated_nether.ardenter_rune": "Rune of Ardenter",
   "item.rubinated_nether.nimis_rune": "Rune of Nimis",
+  "item.rubinated_nether.ira_rune": "Rune of Ira",
+  "item.rubinated_nether.invidia_rune": "Rune of Invidia",
+  "item.rubinated_nether.gula_rune": "Rune of Gula",
+  "item.rubinated_nether.ignavia_rune": "Rune of Ignavia",
+  "item.rubinated_nether.kenodoxia_rune": "Rune of Kenodoxia",
+  "item.rubinated_nether.philargyria_rune": "Rune of Philargyria",
+
 
   "container.sloth.clue": "Sloth",
   "container.gluttony.clue": "Gluttony",
@@ -200,6 +207,13 @@
   "container.studiose.clue": "Studiose",
   "container.ardenter.clue": "Ardenter",
   "container.nimis.clue": "Nimis",
+  "container.ira.clue": "Ira",
+  "container.invidia.clue": "Invidia",
+  "container.gula.clue": "Gula",
+  "container.ignavia.clue": "Ignavia",
+  "container.kenodoxia.clue": "Kenodoxia",
+  "container.philargyria.clue": "Philargyria",
+
 
   "enchantment.rubinated_nether.deficiency_curse": "Curse of Deficiency",
   "enchantment.rubinated_nether.misfortune_curse": "Curse of Misfortune",
@@ -212,6 +226,9 @@
   "enchantment.rubinated_nether.hooking_curse": "Curse of Hooking",
   "enchantment.rubinated_nether.slow_charge_curse": "Curse of Slow Charge",
   "enchantment.rubinated_nether.crooked_shot_curse": "Curse of Crooked Shot",
+  "enchantment.rubinated_nether.recoil_curse": "Curse of Recoil",
+  "enchantment.rubinated_nether.buoyancy_curse": "Curse of Buoyancy",
+  "enchantment.rubinated_nether.sinking_curse": "Curse of Sinking",
 
   "item.rubinated_nether.ritual_offering": "Ritual Offering",
   "item.rubinated_nether.winding_key": "Winding Key",

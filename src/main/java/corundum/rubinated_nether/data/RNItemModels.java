@@ -187,6 +187,18 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.ARDENTER_RUNE,
 				RNItems.NIMIS_RUNE
 		);
+
+		runeItem("trident",
+				RNItems.IRA_RUNE,
+				RNItems.INVIDIA_RUNE,
+				RNItems.GULA_RUNE
+		);
+
+		runeItem("mace",
+				RNItems.IGNAVIA_RUNE,
+				RNItems.KENODOXIA_RUNE,
+				RNItems.PHILARGYRIA_RUNE
+		);
 	}
 
 	private void paneItem(DeferredBlock<?> block, String texture) {

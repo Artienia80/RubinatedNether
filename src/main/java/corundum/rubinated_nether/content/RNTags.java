@@ -84,6 +84,9 @@ public final class RNTags {
 		public static final TagKey<Item> RUBINATION_ARMOR = createTag(Registries.ITEM, "rubination_armor");
 		public static final TagKey<Item> RUBINATION_BOW = createTag(Registries.ITEM, "rubination_bow");
 		public static final TagKey<Item> RUBINATION_CROSSBOW = createTag(Registries.ITEM, "rubination_crossbow");
+		public static final TagKey<Item> RUBINATION_TRIDENT = createTag(Registries.ITEM, "rubination_trident");
+		public static final TagKey<Item> RUBINATION_MACE = createTag(Registries.ITEM, "rubination_mace");
+
 
 		public static final TagKey<Item> RUBINATABLE = createTag(Registries.ITEM, "rubinatable");
 

@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.enchantment;
 
 import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.enchantment.custom.BuoyancyCurseEffect;
 import corundum.rubinated_nether.content.enchantment.custom.HookingCurseEffect;
 import corundum.rubinated_nether.content.enchantment.custom.LeechingCurseEffect;
 import corundum.rubinated_nether.content.enchantment.custom.MisfortuneCurseEffect;
@@ -28,6 +29,9 @@ public class RNEnchantmentEffects {
 
 	public static final Supplier<MapCodec<? extends EnchantmentValueEffect>> MISFORTUNE_CURSE =
 			VALUE_ENCHANTMENT_EFFECTS.register("misfortune_curse", () -> MisfortuneCurseEffect.CODEC);
+
+	public static final Supplier<MapCodec<? extends EnchantmentValueEffect>> BUOYANCY_CURSE =
+			VALUE_ENCHANTMENT_EFFECTS.register("buoyancy_curse", () -> BuoyancyCurseEffect.CODEC);
 
 	public static void register(IEventBus eventBus) {
 		ENTITY_ENCHANTMENT_EFFECTS.register(eventBus);

@@ -178,7 +178,15 @@ public class RNCreativeTabs {
 
 						RNItems.STUDIOSE_RUNE,
 						RNItems.ARDENTER_RUNE,
-						RNItems.NIMIS_RUNE
+						RNItems.NIMIS_RUNE,
+
+						RNItems.IRA_RUNE,
+						RNItems.INVIDIA_RUNE,
+						RNItems.GULA_RUNE,
+
+						RNItems.IGNAVIA_RUNE,
+						RNItems.KENODOXIA_RUNE,
+						RNItems.PHILARGYRIA_RUNE
 
 				);
 
