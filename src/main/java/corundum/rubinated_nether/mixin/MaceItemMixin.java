@@ -18,9 +18,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 @Mixin(MaceItem.class)
 public class MaceItemMixin {
@@ -37,7 +37,6 @@ public class MaceItemMixin {
             if (enchantLevel > 0 && MaceItem.canSmashAttack(player)) {
                 Vec3 downwardMotion = new Vec3(motion.x, -1.5, motion.z);
                 player.setDeltaMovement(downwardMotion);
-                createProportionalSinkhole((ServerLevel) player.level(), player, player.fallDistance);
             } else {
                 player.setDeltaMovement(motion);
             }
@@ -58,61 +57,103 @@ public class MaceItemMixin {
 
                 if (enchantLevel > 0 && MaceItem.canSmashAttack(player)) {
                     ServerLevel serverLevel = (ServerLevel) player.level();
-                    serverLevel.getServer().execute(() -> {
-                        createSinkholeAtPosition(serverLevel, player.blockPosition(), player.fallDistance);
-                    });
+                    scheduleProgressiveSinkhole(serverLevel, player.blockPosition(), player.fallDistance);
                 }
             } catch (Exception e) {
             }
         }
     }
 
-    private void createProportionalSinkhole(ServerLevel level, LivingEntity attacker, float fallDistance) {
-        BlockPos attackerPos = attacker.blockPosition();
-        createSinkholeAtPosition(level, attackerPos, fallDistance);
-    }
-
-    private void createSinkholeAtPosition(ServerLevel level, BlockPos centerPos, float fallDistance) {
+    private void scheduleProgressiveSinkhole(ServerLevel level, BlockPos centerPos, float fallDistance) {
         BlockPos groundPos = findGroundLevel(level, centerPos);
         if (groundPos == null) return;
 
-        float radiusFloat = 1.5f + (float)Math.sqrt(fallDistance) * 0.15f;
-        int maxRadius = (int) Math.ceil(radiusFloat);
+        float strength = Math.max(1.0f, fallDistance / 4.0f);
+        float maxRadiusFloat = 1.5f + (float)Math.sqrt(fallDistance) * 0.15f;
+        int maxRadius = (int) Math.ceil(maxRadiusFloat);
 
-        Random random = new Random();
+        Map<BlockPos, Double> blocksToBreak = new HashMap<>();
 
         for (int x = -maxRadius; x <= maxRadius; x++) {
             for (int z = -maxRadius; z <= maxRadius; z++) {
                 for (int y = -maxRadius/2; y <= 1; y++) {
                     double distance = Math.sqrt(x*x + y*y + z*z);
 
-                    if (distance <= radiusFloat) {
+                    if (distance <= maxRadiusFloat) {
                         BlockPos targetPos = groundPos.offset(x, y, z);
                         BlockState currentState = level.getBlockState(targetPos);
 
-                        if (currentState.is(Blocks.BEDROCK) ||
-                                currentState.isAir() ||
-                                currentState.liquid() ||
-                                currentState.getDestroySpeed(level, targetPos) < 0) {
+                        if (shouldSkipBlock(level, targetPos, currentState, maxRadiusFloat, x, y, z)) {
                             continue;
                         }
 
-                        BlockPos abovePos = targetPos.above();
-                        BlockState aboveState = level.getBlockState(abovePos);
-                        double aboveDistance = Math.sqrt(x*x + (y+1)*(y+1) + z*z);
-                        if (!aboveState.isAir() && aboveState.isSolid() && aboveDistance > radiusFloat) {
-                            continue;
-                        }
+                        float blockHardness = currentState.getDestroySpeed(level, targetPos);
 
-                        if (random.nextFloat() < 0.05f && distance > radiusFloat * 0.85) {
-                            continue;
-                        }
 
-                        level.destroyBlock(targetPos, true);
+                        double scaledHardness = Math.pow(blockHardness, 0.7);
+
+                        double breakThreshold = distance * scaledHardness * 7.0;
+
+                        if (strength > breakThreshold) {
+                            blocksToBreak.put(targetPos, distance);
+                        }
                     }
                 }
             }
         }
+
+        // Sort positions by distance to break from center outward
+        List<BlockPos> sortedPositions = new ArrayList<>(blocksToBreak.keySet());
+        sortedPositions.sort(Comparator.comparingDouble(blocksToBreak::get));
+
+        // Break blocks progressively with delays
+        breakBlocksProgressively(level, sortedPositions, 0);
+    }
+
+    private void breakBlocksProgressively(ServerLevel level, List<BlockPos> blocksToBreak, int index) {
+        if (index >= blocksToBreak.size()) return;
+
+        int batchSize = Math.min(8, blocksToBreak.size() - index); // Break 8 blocks at a time
+        Random random = new Random();
+
+        for (int i = 0; i < batchSize && (index + i) < blocksToBreak.size(); i++) {
+            BlockPos pos = blocksToBreak.get(index + i);
+
+            if (random.nextFloat() < 0.05f) {
+                continue;
+            }
+
+            BlockState state = level.getBlockState(pos);
+            if (!state.isAir()) {
+                boolean shouldDrop = random.nextFloat() < 0.5f;
+                level.destroyBlock(pos, shouldDrop);
+            }
+        }
+
+        if (index + batchSize < blocksToBreak.size()) {
+            level.getServer().execute(() -> {
+                try {
+                    Thread.sleep(50); // 50ms delay between batches
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                breakBlocksProgressively(level, blocksToBreak, index + batchSize);
+            });
+        }
+    }
+
+    private boolean shouldSkipBlock(ServerLevel level, BlockPos targetPos, BlockState currentState,
+                                    float maxRadius, int x, int y, int z) {
+        // Skip bedrock, air, liquids, and unbreakable blocks
+        if (currentState.isAir() || currentState.liquid() || currentState.getDestroySpeed(level, targetPos) < 0) {
+            return true;
+        }
+
+        BlockPos abovePos = targetPos.above();
+        BlockState aboveState = level.getBlockState(abovePos);
+        double aboveDistance = Math.sqrt(x*x + (y+1)*(y+1) + z*z);
+
+        return !aboveState.isAir() && aboveState.isSolid() && aboveDistance > maxRadius;
     }
 
     private BlockPos findGroundLevel(ServerLevel level, BlockPos startPos) {
