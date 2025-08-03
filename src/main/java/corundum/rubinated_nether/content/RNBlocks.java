@@ -119,8 +119,7 @@ public class RNBlocks {
 			DyeColor.RED,
 			Block.Properties
 				.ofFullCopy(Blocks.RED_STAINED_GLASS)
-				.explosionResistance(1000)
-				.strength(5.0F, 6.0F)
+				.strength(5.0F, 1000.0F)
 				.isViewBlocking(RNBlocks::never)
 		)
 	);
