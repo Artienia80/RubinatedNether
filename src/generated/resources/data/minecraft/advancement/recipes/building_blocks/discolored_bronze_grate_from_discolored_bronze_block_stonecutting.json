@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_polished_shrine_stone_slab": {
+    "has_discolored_bronze_block": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:polished_shrine_stone_slab"
+            "items": "rubinated_nether:discolored_bronze_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:shrine_stone_pillar_via_onebytwo"
+        "recipe": "minecraft:discolored_bronze_grate_from_discolored_bronze_block_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_polished_shrine_stone_slab"
+      "has_discolored_bronze_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:shrine_stone_pillar_via_onebytwo"
+      "minecraft:discolored_bronze_grate_from_discolored_bronze_block_stonecutting"
     ]
   }
 }

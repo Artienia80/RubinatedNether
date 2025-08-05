@@ -4,7 +4,7 @@
   "group": "DeferredHolder{ResourceKey[minecraft:block / rubinated_nether:shrine_stone_pillar]}",
   "key": {
     "I": {
-      "item": "rubinated_nether:shrine_stone"
+      "item": "rubinated_nether:polished_shrine_stone_slab"
     }
   },
   "pattern": [
@@ -12,7 +12,7 @@
     "I"
   ],
   "result": {
-    "count": 2,
+    "count": 1,
     "id": "rubinated_nether:shrine_stone_pillar"
   }
 }

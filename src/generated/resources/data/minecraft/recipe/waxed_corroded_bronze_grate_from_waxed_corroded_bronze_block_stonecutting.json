@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "rubinated_nether:waxed_corroded_bronze_block"
+  },
+  "result": {
+    "count": 4,
+    "id": "rubinated_nether:waxed_corroded_bronze_grate"
+  }
+}

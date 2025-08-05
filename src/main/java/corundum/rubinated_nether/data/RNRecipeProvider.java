@@ -73,7 +73,11 @@ public class RNRecipeProvider extends RecipeProvider {
 
 			RNBlocks.POLISHED_SHRINE_STONE_SLAB,
 			RNBlocks.POLISHED_SHRINE_STONE_STAIRS,
-			RNBlocks.POLISHED_SHRINE_STONE_WALL
+			RNBlocks.POLISHED_SHRINE_STONE_WALL,
+
+			RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
+			RNBlocks.SHRINE_STONE_PILLAR
+
 		);
 
 		stonecutterList(
@@ -83,11 +87,21 @@ public class RNRecipeProvider extends RecipeProvider {
 			RNBlocks.SHRINE_STONE_BRICKS_SLAB,
 			RNBlocks.SHRINE_STONE_BRICKS_STAIRS,
 			RNBlocks.SHRINE_STONE_BRICKS_WALL,
-			RNBlocks.SHRINE_STONE_BRICKS,
 
 			RNBlocks.SHRINE_STONE_TILES_SLAB,
 			RNBlocks.SHRINE_STONE_TILES_STAIRS,
-			RNBlocks.SHRINE_STONE_TILES_WALL
+			RNBlocks.SHRINE_STONE_TILES_WALL,
+			RNBlocks.SHRINE_STONE_TILES,
+			RNBlocks.CHISELED_SHRINE_STONE_BRICKS
+		);
+
+		stonecutterList(
+				recipeOutput,
+				RNBlocks.SHRINE_STONE_TILES,
+
+				RNBlocks.SHRINE_STONE_TILES_SLAB,
+				RNBlocks.SHRINE_STONE_TILES_STAIRS,
+				RNBlocks.SHRINE_STONE_TILES_WALL
 		);
 
 		stonecutterList(
@@ -98,7 +112,9 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.CUT_BRONZE_BRICKS,
 				RNBlocks.CUT_BRONZE_BRICKS_STAIRS,
 				RNBlocks.CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.CUT_BRONZE_PILLAR
+				RNBlocks.CUT_BRONZE_PILLAR,
+				RNBlocks.BRONZE_GRATE
+
 		);
 
 		stonecutterList(
@@ -118,7 +134,8 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
 				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS,
 				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR
+				RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
+				RNBlocks.DISCOLORED_BRONZE_GRATE
 		);
 
 		stonecutterList(
@@ -138,7 +155,8 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.CORRODED_CUT_BRONZE_BRICKS,
 				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS,
 				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.CORRODED_CUT_BRONZE_PILLAR
+				RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
+				RNBlocks.CORRODED_BRONZE_GRATE
 		);
 
 		stonecutterList(
@@ -158,7 +176,8 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS,
 				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS,
 				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.TARNISHED_CUT_BRONZE_PILLAR
+				RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
+				RNBlocks.TARNISHED_BRONZE_GRATE
 		);
 
 		stonecutterList(
@@ -178,7 +197,8 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS,
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS,
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR,
+				RNBlocks.CRYSTALLIZED_BRONZE_GRATE
 		);
 
 		stonecutterList(
@@ -198,7 +218,9 @@ public class RNRecipeProvider extends RecipeProvider {
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS))),
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS_STAIRS))),
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_PILLAR)))
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_PILLAR))),
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_GRATE)))
+
 		);
 
 		stonecutterList(
@@ -218,7 +240,9 @@ public class RNRecipeProvider extends RecipeProvider {
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS))),
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS))),
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR)))
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR))),
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_GRATE)))
+
 		);
 
 		stonecutterList(
@@ -238,7 +262,9 @@ public class RNRecipeProvider extends RecipeProvider {
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS))),
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS))),
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_PILLAR)))
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_PILLAR))),
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_GRATE)))
+
 		);
 
 		stonecutterList(
@@ -258,7 +284,9 @@ public class RNRecipeProvider extends RecipeProvider {
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS))),
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS))),
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR)))
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR))),
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_GRATE)))
+
 		);
 
 		stonecutterList(
@@ -278,7 +306,9 @@ public class RNRecipeProvider extends RecipeProvider {
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS))),
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS))),
 				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR)))
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR))),
+				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_GRATE)))
+
 		);
 
 		stonecutterList(
@@ -354,6 +384,12 @@ public class RNRecipeProvider extends RecipeProvider {
 			RNBlocks.SHRINE_STONE_BRICKS,
 			4
 		);
+		twoByTwo(
+				recipeOutput,
+				RNBlocks.SHRINE_STONE_BRICKS,
+				RNBlocks.SHRINE_STONE_TILES,
+				4
+		);
 
 		oneByTwo(
 			recipeOutput,
@@ -364,9 +400,9 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		oneByTwo(
 			recipeOutput,
-			RNBlocks.SHRINE_STONE,
+			RNBlocks.POLISHED_SHRINE_STONE_SLAB,
 			RNBlocks.SHRINE_STONE_PILLAR,
-			2
+			1
 		);
 
 		threeByThree(

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_polished_shrine_stone_slab": {
+    "has_shrine_stone_tiles": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:polished_shrine_stone_slab"
+            "items": "rubinated_nether:shrine_stone_tiles"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:shrine_stone_pillar_via_onebytwo"
+        "recipe": "minecraft:shrine_stone_tiles_stairs_from_shrine_stone_tiles_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_polished_shrine_stone_slab"
+      "has_shrine_stone_tiles"
     ]
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:shrine_stone_pillar_via_onebytwo"
+      "minecraft:shrine_stone_tiles_stairs_from_shrine_stone_tiles_stonecutting"
     ]
   }
 }
