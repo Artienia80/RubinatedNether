@@ -33,11 +33,13 @@ public final class RNTags {
 
 		public static final TagKey<Block> CRYSTALLIZATION_CATALYST = createTag(Registries.BLOCK, "crystallization_catalyst");
 
-		public static final TagKey<Block> RAINBOW_LASER = createTag(Registries.BLOCK, "rainbow_laser");
+		public static final TagKey<Block> SILLY_LASER = createTag(Registries.BLOCK, "silly_laser");
 
 		public static final TagKey<Block> MINEABLE_WITH_DRILL = createTag(Registries.BLOCK, "mineable_with_drill");
 
 		public static final TagKey<Block> SHRINE_STONE_BLOCKS = createTag(Registries.BLOCK, "shrine_stone_blocks");
+
+		public static final TagKey<Block> GRATES = createTag(Registries.BLOCK, "grates");
 
 		public static final TagKey<Block> SHRINE_STONE_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_candidate");
 		public static final TagKey<Block> SHRINE_STONE_STAIRS_CANDIDATE = createTag(Registries.BLOCK, "shrine_stone_stairs_candidate");

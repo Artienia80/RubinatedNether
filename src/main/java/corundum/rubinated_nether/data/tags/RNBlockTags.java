@@ -260,12 +260,7 @@ public class RNBlockTags extends BlockTagsProvider {
 		this.tag(RNTags.Blocks.CRYSTALLIZATION_CATALYST).addTag(RNTags.Blocks.LIT_SOUL_BLOCKS);
 		this.tag(RNTags.Blocks.CRYSTALLIZATION_CATALYST).addTag(RNTags.Blocks.CRYSTALLIZED_BLOCKS);
 
-		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).addTag(Tags.Blocks.GLASS_BLOCKS_CHEAP);
-		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).add(
-				RNBlocks.RUBY_GLASS.get(),
-				RNBlocks.MOLTEN_RUBY_GLASS.get(),
-				RNBlocks.ORNATE_RUBY_GLASS.get()
-		);
+
 
 		this.tag(RNTags.Blocks.RUBY_LASER_NO_SIGNAL).add(
 				Blocks.TINTED_GLASS
@@ -282,7 +277,36 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.ORNATE_RUBY_GLASS_PANE.get()
 		);
 
-		this.tag(RNTags.Blocks.RAINBOW_LASER).addTag(RNTags.Blocks.RUBY_GLASS);
+		this.tag(RNTags.Blocks.GRATES).add(
+				Blocks.COPPER_GRATE,
+				Blocks.EXPOSED_COPPER_GRATE,
+				Blocks.WEATHERED_COPPER_GRATE,
+				Blocks.OXIDIZED_COPPER_GRATE,
+				Blocks.WAXED_COPPER_GRATE,
+				Blocks.WAXED_EXPOSED_COPPER_GRATE,
+				Blocks.WAXED_WEATHERED_COPPER_GRATE,
+				Blocks.WAXED_OXIDIZED_COPPER_GRATE,
+
+				RNBlocks.BRONZE_GRATE.get(),
+				RNBlocks.DISCOLORED_BRONZE_GRATE.get(),
+				RNBlocks.CORRODED_BRONZE_GRATE.get(),
+				RNBlocks.TARNISHED_BRONZE_GRATE.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get()
+				);
+
+
+		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).addTag(Tags.Blocks.GLASS_BLOCKS_CHEAP);
+		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).addTag(Tags.Blocks.GLASS_PANES);
+		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).addTag(RNTags.Blocks.RUBY_GLASS);
+		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).addTag(RNTags.Blocks.RUBY_GLASS_PANES);
+		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).addTag(RNTags.Blocks.GRATES);
+
+		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).add(
+				Blocks.IRON_BARS
+		);
+
+		this.tag(RNTags.Blocks.SILLY_LASER).addTag(RNTags.Blocks.RUBY_GLASS);
+		this.tag(RNTags.Blocks.SILLY_LASER).addTag(RNTags.Blocks.RUBY_GLASS_PANES);
 
 		this.tag(RNTags.Blocks.MINEABLE_WITH_DRILL).addTags(
 				BlockTags.MINEABLE_WITH_PICKAXE,

@@ -126,8 +126,8 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		// Ignore what IDEA says its stupid
 		//
 		BlockState state = level.getBlockState(worldPosition.relative(facing));
-		silly = state.is(RNTags.Blocks.RAINBOW_LASER);
-		visible = silly || state.is(Tags.Blocks.GLASS_BLOCKS);
+		silly = state.is(RNTags.Blocks.SILLY_LASER);
+		visible = silly || state.is(Tags.Blocks.GLASS_BLOCKS) || state.is(Tags.Blocks.GLASS_PANES);
 
 		if (visible && !silly && state.getBlock() instanceof BeaconBeamBlock) {
 			DyeColor dye = ((BeaconBeamBlock) state.getBlock()).getColor();

@@ -1,0 +1,17 @@
+{
+  "values": [
+    "minecraft:copper_grate",
+    "minecraft:exposed_copper_grate",
+    "minecraft:weathered_copper_grate",
+    "minecraft:oxidized_copper_grate",
+    "minecraft:waxed_copper_grate",
+    "minecraft:waxed_exposed_copper_grate",
+    "minecraft:waxed_weathered_copper_grate",
+    "minecraft:waxed_oxidized_copper_grate",
+    "rubinated_nether:bronze_grate",
+    "rubinated_nether:discolored_bronze_grate",
+    "rubinated_nether:corroded_bronze_grate",
+    "rubinated_nether:tarnished_bronze_grate",
+    "rubinated_nether:crystallized_bronze_grate"
+  ]
+}
