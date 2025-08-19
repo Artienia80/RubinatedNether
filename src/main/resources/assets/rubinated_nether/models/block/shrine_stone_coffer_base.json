@@ -1,7 +1,8 @@
 {
-	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
+	"parent": "block/block",
+	"render_type": "minecraft:cutout",
 	"textures": {
 		"0": "rubinated_nether:block/shrine_stone_coffer",
 		"particle": "rubinated_nether:block/shrine_stone_coffer"

@@ -79,7 +79,7 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
         this.animate(entity.idleAnimationState,BronzeAnimations.IDLE,ageInTicks, 1f);
         this.animate(entity.unaffectedAttackAnimationState,BronzeAnimations.BASH,ageInTicks, 1f);
         this.animate(entity.defendAnimationState,BronzeAnimations.DEFEND, ageInTicks, 1f);
-        this.animate(entity.stunAnimationState,BronzeAnimations.STUN, ageInTicks, 1f);
+        this.animate(entity.stunAnimationState,BronzeAnimations.STUNNED, ageInTicks, 1f);
         this.animate(entity.drillAnimationState,BronzeAnimations.DRILL_DOWN, ageInTicks, 1f);
         this.animate(entity.undergroundWalkAnimationState,BronzeAnimations.MOVE_UNDERGROUND,ageInTicks, 1f);
         this.animate(entity.ambushAnimationState,BronzeAnimations.DRILL_UP,ageInTicks, 1f);

@@ -58,6 +58,7 @@ public class BronzeEntity extends TarnishingEntity {
     public final AnimationState drillAnimationState = new AnimationState();
     public final AnimationState undergroundWalkAnimationState = new AnimationState();
     public final AnimationState ambushAnimationState = new AnimationState();
+    public final AnimationState ramAnimationState = new AnimationState();
 
     private int lastTarnishLevel = -1;
     private TarnishedShockwaveGoal shockwaveGoal;
@@ -215,6 +216,7 @@ public class BronzeEntity extends TarnishingEntity {
                 lastTarnishLevel = currentLevel;
                 updateAttributesForTarnish(currentLevel);
             }
+            updateAttributesForTarnish(currentLevel);
         }
         if (shockwaveCooldownTicks > 0) {
             shockwaveCooldownTicks--;
@@ -434,6 +436,14 @@ public class BronzeEntity extends TarnishingEntity {
             this.ambushAnimationState.stop();
             this.undergroundWalkAnimationState.stop();
             this.drillAnimationState.stop();
+        }
+        if (state == 97){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.ramAnimationState.startIfStopped(this.tickCount);
+        }
+        if (state == 93){
+            this.ramAnimationState.stop();
         }
         else super.handleEntityEvent(state);
     }
@@ -731,6 +741,9 @@ public class BronzeEntity extends TarnishingEntity {
                     break;
 
                 case 2:
+                    if (!level().isClientSide) {
+                        entity.level().broadcastEntityEvent(entity, (byte) 97);
+                    }
                     entity.setDeltaMovement(dashDirection.scale(RAM_SPEED));
                     entity.setYRot((float) (Mth.atan2(dashDirection.z, dashDirection.x) * (180F / Math.PI)) - 90F);
                     entity.yBodyRot = entity.getYRot();
@@ -755,6 +768,9 @@ public class BronzeEntity extends TarnishingEntity {
 
                     phaseTicks++;
                     if (phaseTicks >= DASH_TIME) {
+                        if (!level().isClientSide) {
+                            entity.level().broadcastEntityEvent(entity, (byte) 93);
+                        }
                         stop();
                     }
                     break;

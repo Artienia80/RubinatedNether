@@ -32,7 +32,7 @@ public class BronzeDiseasedEffect extends MobEffect {
         this.addAttributeModifier(
                 Attributes.ATTACK_DAMAGE,
                 ResourceLocation.withDefaultNamespace("effect.weakness"),
-                -0.2,
+                -0.4,
                 AttributeModifier.Operation.ADD_VALUE
         );
 

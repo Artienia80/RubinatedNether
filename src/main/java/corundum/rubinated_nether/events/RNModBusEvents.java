@@ -19,7 +19,7 @@ public class RNModBusEvents {
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer player = mc.player;
         if (player != null && player.hasEffect(RNEffects.BRONZE_DISEASED)) {
-            BronzeDiseasedEffectOverlay.renderTextureOverlay(event.getGuiGraphics(), BronzeDiseasedEffectOverlay.PARANOIA_OVERLAY, 0.5F);
+            BronzeDiseasedEffectOverlay.renderTextureOverlay(event.getGuiGraphics(), BronzeDiseasedEffectOverlay.PARANOIA_OVERLAY, 1F);
         }
     }
 

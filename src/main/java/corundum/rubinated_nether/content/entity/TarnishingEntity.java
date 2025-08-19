@@ -66,14 +66,17 @@ public abstract class TarnishingEntity extends Monster {
 
     public void setTarnishLevel(int level) {
         entityData.set(TARNISH_STATE, Mth.clamp(level, 0, MAX_TARNISH));
+        this.setTarget(null);
     }
 
     public void increaseTarnishLevel() {
         this.setTarnishLevel(Math.min(this.getTarnishLevel() + 1, 3));
+        this.setTarget(null);
     }
 
     public void decreaseTarnishLevel() {
         this.setTarnishLevel(Math.max(this.getTarnishLevel() - 1, 0));
+        this.setTarget(null);
     }
 
     public boolean isWaxed() {
@@ -131,7 +134,7 @@ public abstract class TarnishingEntity extends Monster {
     @Override
     public void handleDamageEvent(DamageSource damageSource) {
         super.handleDamageEvent(damageSource);
-        if (!(damageSource.getEntity() instanceof Player player)) return;
+        if (!(damageSource.getDirectEntity() instanceof Player player)) return;
 
         var stack = damageSource.getWeaponItem();
 
@@ -153,8 +156,14 @@ public abstract class TarnishingEntity extends Monster {
         if (stack.is(Items.HONEYCOMB) && !isWaxed()) {
             setWaxed(true);
             if (!player.isCreative()) stack.shrink(1);
-            handleEffects(player);
+            this.level().playSound(player, blockPosition(), SoundEvents.HONEYCOMB_WAX_ON, SoundSource.PLAYERS, 1.0F, 0.8F);
+            RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 15, 0.5F, 1.75F, ParticleTypes.HAPPY_VILLAGER);
             return InteractionResult.sidedSuccess(level().isClientSide());
+        }
+
+        if(stack.is(ItemTags.AXES) && isWaxed()){
+            setWaxed(false);
+            handleScrapeEffects(player);
         }
 
         if (stack.is(RNItems.BRONZE_POWDER.get())) {
@@ -176,6 +185,11 @@ public abstract class TarnishingEntity extends Monster {
     private void handleEffects(Player player) {
         this.level().playSound(player, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 0.8F);
         RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 15, 0.5F, 1.75F, ParticleTypes.HAPPY_VILLAGER);
+    }
+
+    private void handleScrapeEffects(Player player) {
+        this.level().playSound(player, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 0.8F);
+        RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 15, 0.5F, 1.75F, ParticleTypes.WAX_OFF);
     }
 
     @Override
