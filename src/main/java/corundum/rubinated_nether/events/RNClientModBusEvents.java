@@ -13,16 +13,14 @@ import corundum.rubinated_nether.content.screen.FreezerScreen;
 import corundum.rubinated_nether.content.screen.RubinationScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 @EventBusSubscriber(modid = RubinatedNether.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
@@ -57,9 +55,14 @@ public class RNClientModBusEvents {
 		Minecraft minecraft = Minecraft.getInstance();
 
 		event.registerAbove(
-			VanillaGuiLayers.DEMO_OVERLAY, 
+			VanillaGuiLayers.DEMO_OVERLAY,
 			RubinatedNether.id("ruby_lens_overlay"),
 			(guiGraphics, deltaTracker) -> RubyLensOverlay.renderHud(new Gui(minecraft), guiGraphics)
 		);
+		event.registerBelowAll(
+				RubinatedNether.id("bronze_overlay"),
+				(guiGraphics, deltaTracker)  -> BronzeDiseasedEffectOverlay.renderHud(new Gui(minecraft), guiGraphics)
+		);
 	}
+
 }

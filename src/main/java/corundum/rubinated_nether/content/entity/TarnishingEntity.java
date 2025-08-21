@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,6 +21,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
@@ -37,12 +40,14 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 
+import java.util.UUID;
+
 public abstract class TarnishingEntity extends Monster {
     public static final int MAX_TARNISH = 4;
     public static final int TARNISHED = 3;
     public static final int CRYSTALLIZED = 4;
 
-    private static final EntityDataAccessor<Integer> TARNISH_STATE =
+    static final EntityDataAccessor<Integer> TARNISH_STATE =
             SynchedEntityData.defineId(TarnishingEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> WAXED =
             SynchedEntityData.defineId(TarnishingEntity.class, EntityDataSerializers.BOOLEAN);
@@ -65,17 +70,19 @@ public abstract class TarnishingEntity extends Monster {
     }
 
     public void setTarnishLevel(int level) {
-        entityData.set(TARNISH_STATE, Mth.clamp(level, 0, MAX_TARNISH));
+        int oldLevel = getTarnishLevel();
+        entityData.set(TARNISH_STATE, level);
         this.setTarget(null);
     }
 
+
     public void increaseTarnishLevel() {
-        this.setTarnishLevel(Math.min(this.getTarnishLevel() + 1, 3));
+        this.setTarnishLevel(this.getTarnishLevel() + 1);
         this.setTarget(null);
     }
 
     public void decreaseTarnishLevel() {
-        this.setTarnishLevel(Math.max(this.getTarnishLevel() - 1, 0));
+        this.setTarnishLevel(this.getTarnishLevel() - 1);
         this.setTarget(null);
     }
 
@@ -168,16 +175,20 @@ public abstract class TarnishingEntity extends Monster {
 
         if (stack.is(RNItems.BRONZE_POWDER.get())) {
             if (!isWaxed() && level < 3) {
-                if (this.level().random.nextFloat() < 0.10f) {
-                    this.increaseTarnishLevel();
-                }
-                if (!player.isCreative())
+                if (!player.isCreative()) {
                     stack.shrink(1);
+                }
 
+                if (level().random.nextFloat() < 0.1F) {
+                    setTarnishLevel(getTarnishLevel() + 1);
+                    return InteractionResult.sidedSuccess(level().isClientSide());
+                }
                 handleEffects(player);
+
                 return InteractionResult.sidedSuccess(level().isClientSide());
             }
         }
+
 
         return super.mobInteract(player, hand);
     }

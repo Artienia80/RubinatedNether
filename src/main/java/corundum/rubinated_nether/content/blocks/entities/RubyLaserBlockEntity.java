@@ -8,6 +8,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -127,7 +128,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		//
 		BlockState state = level.getBlockState(worldPosition.relative(facing));
 		silly = state.is(RNTags.Blocks.SILLY_LASER);
-		visible = silly || state.is(Tags.Blocks.GLASS_BLOCKS) || state.is(Tags.Blocks.GLASS_PANES);
+		visible = silly || state.is(Tags.Blocks.GLASS_BLOCKS) || state.is(Tags.Blocks.GLASS_BLOCKS_TINTED) || state.is(Tags.Blocks.GLASS_PANES) || state.is(Blocks.IRON_BARS) || state.is(Blocks.IRON_BARS)  || state.is(Blocks.COPPER_GRATE)  || state.is(RNTags.Blocks.GRATES);
 
 		if (visible && !silly && state.getBlock() instanceof BeaconBeamBlock) {
 			DyeColor dye = ((BeaconBeamBlock) state.getBlock()).getColor();

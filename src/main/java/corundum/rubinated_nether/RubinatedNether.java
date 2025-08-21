@@ -2,21 +2,13 @@ package corundum.rubinated_nether;
 
 import corundum.rubinated_nether.client.RubinatedNetherClient;
 import corundum.rubinated_nether.content.*;
-import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
 import corundum.rubinated_nether.content.enchantment.RNEnchantmentEffects;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
-import corundum.rubinated_nether.events.RNModBusEvents;
-import fuzs.limitlesscontainers.neoforge.api.limitlesscontainers.v1.LimitlessInvWrapper;
-import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.Event;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
 import com.google.common.collect.ImmutableList;
 import com.mojang.logging.LogUtils;
@@ -74,7 +66,6 @@ public class RubinatedNether {
 		modEventBus.addListener(DatapackRegistry::datapackRegistry);
 		RNEnchantmentEffects.register(modEventBus);
 		RNEffects.register(modEventBus);
-		RNModBusEvents.register();
 
 
 		for (var registry : REGISTRIES)

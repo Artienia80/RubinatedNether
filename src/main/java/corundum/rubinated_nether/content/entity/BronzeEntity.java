@@ -11,6 +11,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
@@ -294,9 +295,10 @@ public class BronzeEntity extends TarnishingEntity {
     private void updateAttributesForTarnish(int level) {
         AttributeInstance speed = this.getAttribute(Attributes.MOVEMENT_SPEED);
         AttributeInstance health = this.getAttribute(Attributes.MAX_HEALTH);
+        AttributeInstance defense = this.getAttribute(Attributes.ARMOR);
         AttributeInstance attack = this.getAttribute(Attributes.ATTACK_DAMAGE);
 
-        if (speed != null && health != null && attack != null) {
+        if (speed != null && health != null && defense != null && attack != null) {
             float oldMaxHealth = (float) health.getBaseValue();
 
             switch (level) {
@@ -307,17 +309,17 @@ public class BronzeEntity extends TarnishingEntity {
                 }
                 case 1 -> {
                     speed.setBaseValue(0.2D);
-                    health.setBaseValue(30F);
+                    health.setBaseValue(20F);
                     attack.setBaseValue(10F);
                 }
                 case 2 -> {
                     speed.setBaseValue(0.15D);
-                    health.setBaseValue(40F);
+                    health.setBaseValue(20F);
                     attack.setBaseValue(15F);
                 }
                 case 3 -> {
                     speed.setBaseValue(0.1D);
-                    health.setBaseValue(60F);
+                    health.setBaseValue(20F);
                     attack.setBaseValue(10F);
                 }
                 case 4 -> {
@@ -327,13 +329,25 @@ public class BronzeEntity extends TarnishingEntity {
                 }
             }
 
-            float newMaxHealth = (float) health.getBaseValue();
-            if (this.getHealth() == oldMaxHealth) {
-                this.setHealth(newMaxHealth);
+            float oldDefense = (float) defense.getBaseValue();
+            double newDefense = switch (level) {
+                case 0 -> 0F;
+                case 1 -> 8F;
+                case 2 -> 16F;
+                case 3 -> 20F;
+                case 4 -> 0F;
+                default -> defense.getBaseValue();
+            };
+
+            if (defense.getBaseValue() == oldDefense && newDefense > oldDefense) {
+                defense.setBaseValue(newDefense);
             }
+            else if (defense.getBaseValue() > newDefense) {
+                defense.setBaseValue(newDefense);
+            }
+
         }
     }
-
 
     public class UnaffectedAttackGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
         private final TarnishingEntity entity;
@@ -959,4 +973,12 @@ public class BronzeEntity extends TarnishingEntity {
         return !noCollision && super.canBeCollidedWith();
     }
 
+
+    public void setTarnishLevel(int level) {
+        int oldLevel = getTarnishLevel();
+        entityData.set(this.TARNISH_STATE, level);
+        this.setTarget(null);
+
+        updateAttributesForTarnish(oldLevel + 1);
+    }
 }
