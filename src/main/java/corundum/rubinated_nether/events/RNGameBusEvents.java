@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNEffects;
+import corundum.rubinated_nether.content.blocks.LavaSpongeBlock;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.effect.renderer.BronzeDiseasedEffectOverlay;
 import corundum.rubinated_nether.content.items.DrillItem;
@@ -11,14 +12,19 @@ import corundum.rubinated_nether.misc.DatapackRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -164,6 +170,19 @@ public class RNGameBusEvents {
 		guiGraphics.blit(BronzeDiseasedEffectOverlay.PARANOIA_OVERLAY, 0, 0, 0, 0.0F, 0.0F, screenWidth, screenHeight, screenWidth, screenHeight);
 
 		guiGraphics.flush();
+	}
+
+	@SubscribeEvent
+	public static void onFall(LivingFallEvent event) {
+		LivingEntity entity = event.getEntity();
+
+		if (!(entity.level() instanceof ServerLevel server)) return;
+
+		BlockPos landedOn = entity.blockPosition().below();
+
+		if (server.getBlockState(landedOn).getBlock() instanceof LavaSpongeBlock) {
+			server.destroyBlock(landedOn, false);
+		}
 	}
 
 }

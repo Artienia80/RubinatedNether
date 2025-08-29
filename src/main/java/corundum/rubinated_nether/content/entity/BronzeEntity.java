@@ -342,7 +342,7 @@ public class BronzeEntity extends TarnishingEntity {
             if (defense.getBaseValue() == oldDefense && newDefense > oldDefense) {
                 defense.setBaseValue(newDefense);
             }
-            else if (defense.getBaseValue() > newDefense) {
+            else if (defense.getBaseValue() != newDefense) {
                 defense.setBaseValue(newDefense);
             }
 
@@ -380,6 +380,8 @@ public class BronzeEntity extends TarnishingEntity {
             if(!level().isClientSide){
                 entity.level().broadcastEntityEvent(entity, (byte) 61);
             }
+
+            if(entity.getTarnishLevel() != 0) stop();
         }
         @Override
         public void stop() {
@@ -477,6 +479,7 @@ public class BronzeEntity extends TarnishingEntity {
 
         @Override
         public void tick() {
+            if(entity.getTarnishLevel() != 4   ) stop();
             if (--cooldown > 0) return;
             cooldown = 20 + entity.getRandom().nextInt(200);
 
@@ -548,6 +551,7 @@ public class BronzeEntity extends TarnishingEntity {
 
         @Override
         public void tick() {
+            if(entity.getTarnishLevel() != 3) stop();
             if (isDefending) {
                 if (!level().isClientSide) {
                     entity.level().broadcastEntityEvent(entity, (byte) 68);
@@ -742,6 +746,7 @@ public class BronzeEntity extends TarnishingEntity {
             }
 
             if (target == null) return;
+            if(entity.getTarnishLevel() != 1) stop();
 
             switch (phase) {
                 case 1:
@@ -865,6 +870,7 @@ public class BronzeEntity extends TarnishingEntity {
 
         @Override
         public void tick() {
+            if(entity.getTarnishLevel() != 2) stop();
             ambushTargetPos = target.position();
             switch (state) {
                 case 1 -> {
