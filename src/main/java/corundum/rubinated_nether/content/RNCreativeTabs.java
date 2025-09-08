@@ -82,6 +82,10 @@ public class RNCreativeTabs {
 
 					RNBlocks.RUBY_LANTERN,
 					RNBlocks.CHANDELIER,
+                        RNBlocks.DISCOLORED_CHANDELIER,
+                        RNBlocks.CORRODED_CHANDELIER,
+                        RNBlocks.TARNISHED_CHANDELIER,
+                        RNBlocks.CRYSTALLIZED_CHANDELIER,
 					RNBlocks.LAVA_LAMP,
 					RNBlocks.BRAZIER,
 					RNBlocks.RUBINATION_ALTAR,

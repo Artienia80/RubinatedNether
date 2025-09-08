@@ -47,6 +47,10 @@ public class RNBlockLoot extends BlockLootSubProvider {
 
 		this.dropSelf(RNBlocks.RUBY_LANTERN.get());
 		this.dropSelf(RNBlocks.CHANDELIER.get());
+        this.dropSelf(RNBlocks.DISCOLORED_CHANDELIER.get());
+        this.dropSelf(RNBlocks.CORRODED_CHANDELIER.get());
+        this.dropSelf(RNBlocks.TARNISHED_CHANDELIER.get());
+        this.dropSelf(RNBlocks.CRYSTALLIZED_CHANDELIER.get());
 		this.dropSelf(RNBlocks.LAVA_LAMP.get());
 		this.dropSelf(RNBlocks.SOAKSTONE.get());
 

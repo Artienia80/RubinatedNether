@@ -51,6 +51,26 @@ public class RNBlockStates extends BlockStateProvider {
 			this.models()
 				.withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
 		);
+        this.simpleBlock(
+                RNBlocks.DISCOLORED_CHANDELIER.get(),
+                this.models()
+                        .withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
+        );
+        this.simpleBlock(
+                RNBlocks.CORRODED_CHANDELIER.get(),
+                this.models()
+                        .withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
+        );
+        this.simpleBlock(
+                RNBlocks.TARNISHED_CHANDELIER.get(),
+                this.models()
+                        .withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
+        );
+        this.simpleBlock(
+                RNBlocks.CRYSTALLIZED_CHANDELIER.get(),
+                this.models()
+                        .withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
+        );
 		this.axisBlock(
 			RNBlocks.LAVA_LAMP.get(),
 			this.models()

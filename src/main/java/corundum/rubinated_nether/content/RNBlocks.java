@@ -82,19 +82,64 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CHANDELIER = registerBlockAndItem(
 		"ruby_chandelier",
 		() -> new ChandelierBlock(
-			Block.Properties
-				.ofFullCopy(Blocks.COPPER_BLOCK)
-				.noOcclusion()
-				.lightLevel($ -> 15)
+                TarnishingBronze.TarnishState.UNAFFECTED,
+                Block.Properties
+                    .ofFullCopy(Blocks.COPPER_BLOCK)
+                    .noOcclusion()
+                    .lightLevel($ -> 15)
 		)
 	);
+
+    public static final DeferredBlock<Block> DISCOLORED_CHANDELIER = registerBlockAndItem(
+            "discolored_ruby_chandelier",
+            () -> new ChandelierBlock(
+                    TarnishingBronze.TarnishState.DISCOLORED,
+                    Block.Properties
+                            .ofFullCopy(Blocks.COPPER_BLOCK)
+                            .noOcclusion()
+                            .lightLevel($ -> 15)
+            )
+    );
+
+    public static final DeferredBlock<Block> CORRODED_CHANDELIER = registerBlockAndItem(
+            "corroded_ruby_chandelier",
+            () -> new ChandelierBlock(
+                    TarnishingBronze.TarnishState.CORRODED,
+                    Block.Properties
+                            .ofFullCopy(Blocks.COPPER_BLOCK)
+                            .noOcclusion()
+                            .lightLevel($ -> 15)
+            )
+    );
+
+    public static final DeferredBlock<Block> TARNISHED_CHANDELIER = registerBlockAndItem(
+            "tarnished_ruby_chandelier",
+            () -> new ChandelierBlock(
+                    TarnishingBronze.TarnishState.TARNISHED,
+                    Block.Properties
+                            .ofFullCopy(Blocks.COPPER_BLOCK)
+                            .noOcclusion()
+                            .lightLevel($ -> 15)
+            )
+    );
+
+    public static final DeferredBlock<Block> CRYSTALLIZED_CHANDELIER = registerBlockAndItem(
+            "crystallized_ruby_chandelier",
+            () -> new ChandelierBlock(
+                    TarnishingBronze.TarnishState.CRYSTALLIZED,
+                    Block.Properties
+                            .ofFullCopy(Blocks.COPPER_BLOCK)
+                            .noOcclusion()
+                            .lightLevel($ -> 15)
+            )
+    );
 
 	public static final DeferredBlock<RotatedPillarBlock> LAVA_LAMP = registerBlockAndItem(
 		"lava_lamp",
 		() -> new LavaLampBlock(
-			Block.Properties
-				.ofFullCopy(Blocks.COPPER_BLOCK)
-				.lightLevel($ -> 15)
+                Block.Properties
+                    .ofFullCopy(Blocks.COPPER_BLOCK)
+                    .lightLevel($ -> 15)
 		)
 	);
 

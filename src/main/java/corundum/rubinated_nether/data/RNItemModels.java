@@ -4,12 +4,18 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
+
+import java.util.Objects;
 
 public class RNItemModels extends ItemModelProvider {
 	public RNItemModels(PackOutput output, ExistingFileHelper fileHelper) {
@@ -146,6 +152,10 @@ public class RNItemModels extends ItemModelProvider {
 		basicItems(
 				RNBlocks.RUBY_LANTERN,
 				RNBlocks.CHANDELIER,
+//                RNBlocks.DISCOLORED_CHANDELIER,
+//                RNBlocks.CORRODED_CHANDELIER,
+//                RNBlocks.TARNISHED_CHANDELIER,
+//                RNBlocks.CRYSTALLIZED_CHANDELIER,
 				RNBlocks.RUNESTONE,
 				RNItems.RUBY_LENS,
 				RNItems.RUBY_ITEM,
