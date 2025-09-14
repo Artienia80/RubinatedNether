@@ -11,18 +11,18 @@ public class RNConfig extends MidnightConfig {
 
 	@Entry(
 		category = CHANDELIER,
-		name = "Chandelier Max Damage"
+		name = "Chandelier Default Damage Value"
 	)
-	public static int chandelierMaxDamage = 500;
+	public static int chandelierDefaultDamage = 400;
 
 	@Entry(
 		category = CHANDELIER, 
-		name = "Chandelier Damage Multiplier",
+		name = "Chandelier Damage Multiplier Increase",
 		isSlider = true, 
-		min = 0, 
-		max = 1
+		min = 0.25,
+		max = 0.5
 	)
-	public static float chandelierMultiplier = .22F;
+	public static float chandelierStateMultiplierIncrease = .25F;
 
 	/* -- Brazier -- */
 

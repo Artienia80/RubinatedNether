@@ -6,6 +6,10 @@
     "rubinated_nether:ornate_ruby_glass_pane",
     "rubinated_nether:molten_ruby_glass",
     "rubinated_nether:molten_ruby_glass_pane",
-    "rubinated_nether:ruby_chandelier"
+    "rubinated_nether:ruby_chandelier",
+    "rubinated_nether:discolored_ruby_chandelier",
+    "rubinated_nether:corroded_ruby_chandelier",
+    "rubinated_nether:tarnished_ruby_chandelier",
+    "rubinated_nether:crystallized_ruby_chandelier"
   ]
 }

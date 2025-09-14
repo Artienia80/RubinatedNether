@@ -1,3 +1,6 @@
 {
-  "parent": "rubinated_nether:block/shrine_stone_coffer_base"
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "rubinated_nether:block/shrine_stone_coffer"
+  }
 }

@@ -38,7 +38,11 @@ public class RNBlockTags extends BlockTagsProvider {
 
 				RNBlocks.RUBY_LANTERN.get(),
 				RNBlocks.CHANDELIER.get(),
-				RNBlocks.LAVA_LAMP.get(),
+                RNBlocks.DISCOLORED_CHANDELIER.get(),
+                RNBlocks.CORRODED_CHANDELIER.get(),
+                RNBlocks.TARNISHED_CHANDELIER.get(),
+                RNBlocks.CRYSTALLIZED_CHANDELIER.get(),
+                RNBlocks.LAVA_LAMP.get(),
 				RNBlocks.DRY_ICE.get(),
 				RNBlocks.SOAKSTONE.get(),
 
@@ -139,7 +143,11 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.MOLTEN_RUBY_GLASS.get(),
 				RNBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
 
-				RNBlocks.CHANDELIER.get()
+                RNBlocks.CHANDELIER.get(),
+                RNBlocks.DISCOLORED_CHANDELIER.get(),
+                RNBlocks.CORRODED_CHANDELIER.get(),
+                RNBlocks.TARNISHED_CHANDELIER.get(),
+                RNBlocks.CRYSTALLIZED_CHANDELIER.get()
 		);
 
 		this.tag(BlockTags.NEEDS_DIAMOND_TOOL).add(
