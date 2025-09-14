@@ -33,6 +33,9 @@
   "block.rubinated_nether.ornate_ruby_glass_pane": "华丽红宝石玻璃板",
 
   "block.rubinated_nether.shrine_stone": "神殿石",
+  "block.rubinated_nether.shrine_stone_slab": "神殿石台阶",
+  "block.rubinated_nether.shrine_stone_stairs": "神殿石楼梯",
+  "block.rubinated_nether.shrine_stone_wall": "神殿石墙",
 
   "block.rubinated_nether.polished_shrine_stone": "磨制神殿石",
   "block.rubinated_nether.polished_shrine_stone_slab": "磨制神殿石台阶",
@@ -43,8 +46,10 @@
   "block.rubinated_nether.shrine_stone_tiles_slab": "神殿石瓦台阶",
   "block.rubinated_nether.shrine_stone_tiles_stairs": "神殿石瓦楼梯",
   "block.rubinated_nether.shrine_stone_tiles_wall": "神殿石瓦墙",
+  "block.rubinated_nether.rubinated_shrine_stone_tiles": "镶红宝石神殿石瓦",
 
   "block.rubinated_nether.shrine_stone_pillar": "神殿石柱",
+  "block.rubinated_nether.rubinated_shrine_stone_pillar": "镶红宝石神殿石柱",
 
   "block.rubinated_nether.shrine_stone_bricks": "神殿石砖",
   "block.rubinated_nether.shrine_stone_bricks_slab": "神殿石砖台阶",
@@ -53,6 +58,8 @@
   "block.rubinated_nether.rubinated_shrine_stone_bricks": "镶红宝石神殿石砖",
   "block.rubinated_nether.chiseled_shrine_stone_bricks": "雕纹神殿石砖",
   "block.rubinated_nether.rubinated_chiseled_shrine_stone_bricks": "镶红宝石雕纹神殿石砖",
+
+  "block.rubinated_nether.shrine_stone_coffer": "储物盒",
 
   "block.rubinated_nether.ruby_laser": "红宝石激光器",
   "item.rubinated_nether.ruby_lens": "红宝石眼镜",
@@ -67,7 +74,7 @@
   "block.rubinated_nether.discolored_bronze_block": "脱色的青铜块",
   "block.rubinated_nether.corroded_bronze_block": "腐蚀的青铜块",
   "block.rubinated_nether.tarnished_bronze_block": "褪色的青铜块",
-  "block.rubinated_nether.crystallized_bronze_block": "晶化青铜块",
+  "block.rubinated_nether.crystallized_bronze_block": "晶化的青铜块",
 
   "item.rubinated_nether.waxed_bronze_block": "涂蜡的青铜块",
   "item.rubinated_nether.waxed_discolored_bronze_block": "涂蜡的脱色青铜块",
@@ -75,11 +82,23 @@
   "item.rubinated_nether.waxed_tarnished_bronze_block": "涂蜡的褪色青铜块",
   "item.rubinated_nether.waxed_crystallized_bronze_block": "涂蜡的晶化青铜块",
 
+  "block.rubinated_nether.chiseled_bronze": "雕纹青铜块",
+  "block.rubinated_nether.discolored_chiseled_bronze": "脱色的雕纹青铜块",
+  "block.rubinated_nether.corroded_chiseled_bronze": "腐蚀的雕纹青铜块",
+  "block.rubinated_nether.tarnished_chiseled_bronze": "褪色的雕纹青铜块",
+  "block.rubinated_nether.crystallized_chiseled_bronze": "晶化的雕纹青铜块",
+
+  "item.rubinated_nether.waxed_chiseled_bronze": "涂蜡的雕纹青铜块",
+  "item.rubinated_nether.waxed_discolored_chiseled_bronze": "涂蜡的脱色雕纹青铜块",
+  "item.rubinated_nether.waxed_corroded_chiseled_bronze": "涂蜡的腐蚀雕纹青铜块",
+  "item.rubinated_nether.waxed_tarnished_chiseled_bronze": "涂蜡的褪色雕纹青铜块",
+  "item.rubinated_nether.waxed_crystallized_chiseled_bronze": "涂蜡的晶化雕纹青铜块",
+
   "block.rubinated_nether.cut_bronze_pillar": "切制青铜柱",
   "block.rubinated_nether.discolored_cut_bronze_pillar": "脱色的切制青铜柱",
   "block.rubinated_nether.corroded_cut_bronze_pillar": "腐蚀的切制青铜柱",
   "block.rubinated_nether.tarnished_cut_bronze_pillar": "褪色的切制青铜柱",
-  "block.rubinated_nether.crystallized_cut_bronze_pillar": "晶化切制青铜柱",
+  "block.rubinated_nether.crystallized_cut_bronze_pillar": "晶化的切制青铜柱",
 
   "item.rubinated_nether.waxed_cut_bronze_pillar": "涂蜡的切制青铜柱",
   "item.rubinated_nether.waxed_discolored_cut_bronze_pillar": "涂蜡的脱色切制青铜柱",
@@ -99,9 +118,9 @@
   "block.rubinated_nether.tarnished_cut_bronze_bricks": "褪色的切制青铜砖",
   "block.rubinated_nether.tarnished_cut_bronze_bricks_slab": "褪色的切制青铜砖台阶",
   "block.rubinated_nether.tarnished_cut_bronze_bricks_stairs": "褪色的切制青铜砖楼梯",
-  "block.rubinated_nether.crystallized_cut_bronze_bricks": "晶化切制青铜砖",
-  "block.rubinated_nether.crystallized_cut_bronze_bricks_slab": "晶化切制青铜砖台阶",
-  "block.rubinated_nether.crystallized_cut_bronze_bricks_stairs": "晶化切制青铜砖楼梯",
+  "block.rubinated_nether.crystallized_cut_bronze_bricks": "晶化的切制青铜砖",
+  "block.rubinated_nether.crystallized_cut_bronze_bricks_slab": "晶化的切制青铜砖台阶",
+  "block.rubinated_nether.crystallized_cut_bronze_bricks_stairs": "晶化的切制青铜砖楼梯",
 
   "item.rubinated_nether.waxed_cut_bronze_bricks": "涂蜡的切制青铜砖",
   "item.rubinated_nether.waxed_cut_bronze_bricks_slab": "涂蜡的切制青铜砖台阶",
@@ -123,7 +142,7 @@
   "block.rubinated_nether.discolored_bronze_bulb": "脱色的青铜灯",
   "block.rubinated_nether.corroded_bronze_bulb": "腐蚀的青铜灯",
   "block.rubinated_nether.tarnished_bronze_bulb": "褪色的青铜灯",
-  "block.rubinated_nether.crystallized_bronze_bulb": "晶化青铜灯",
+  "block.rubinated_nether.crystallized_bronze_bulb": "晶化的青铜灯",
 
   "item.rubinated_nether.waxed_bronze_bulb": "涂蜡的青铜灯",
   "item.rubinated_nether.waxed_discolored_bronze_bulb": "涂蜡的脱色青铜灯",
@@ -131,12 +150,25 @@
   "item.rubinated_nether.waxed_tarnished_bronze_bulb": "涂蜡的褪色青铜灯",
   "item.rubinated_nether.waxed_crystallized_bronze_bulb": "涂蜡的晶化青铜灯",
 
+  "block.rubinated_nether.bronze_grate": "青铜格栅",
+  "block.rubinated_nether.discolored_bronze_grate": "脱色的青铜格栅",
+  "block.rubinated_nether.corroded_bronze_grate": "腐蚀的青铜格栅",
+  "block.rubinated_nether.tarnished_bronze_grate": "褪色的青铜格栅",
+  "block.rubinated_nether.crystallized_bronze_grate": "晶化的青铜格栅",
+
+  "item.rubinated_nether.waxed_bronze_grate": "涂蜡的青铜格栅",
+  "item.rubinated_nether.waxed_discolored_bronze_grate": "涂蜡的脱色青铜格栅",
+  "item.rubinated_nether.waxed_corroded_bronze_grate": "涂蜡的腐蚀青铜格栅",
+  "item.rubinated_nether.waxed_tarnished_bronze_grate": "涂蜡的褪色青铜格栅",
+  "item.rubinated_nether.waxed_crystallized_bronze_grate": "涂蜡的晶化青铜格栅",
+
   "item.rubinated_nether.bronze_rod": "青铜棒",
   "item.rubinated_nether.bronze_powder": "青铜粉",
   "item.rubinated_nether.bronze_shot": "青铜掷弹",
 
   "item.rubinated_nether.bronze_drill": "青铜手钻",
 
+  "item.rubinated_nether.rune": "符文",
   "item.rubinated_nether.sloth_rune": "懒惰符文",
   "item.rubinated_nether.gluttony_rune": "暴食符文",
   "item.rubinated_nether.greed_rune": "贪婪符文",
@@ -152,6 +184,12 @@
   "item.rubinated_nether.studiose_rune": "做作符文",
   "item.rubinated_nether.ardenter_rune": "贪食符文",
   "item.rubinated_nether.nimis_rune": "过食符文",
+  "item.rubinated_nether.ira_rune": "愤怒符文",
+  "item.rubinated_nether.invidia_rune": "妒忌符文",
+  "item.rubinated_nether.gula_rune": "贪餐符文",
+  "item.rubinated_nether.ignavia_rune": "怠惰符文",
+  "item.rubinated_nether.kenodoxia_rune": "吹嘘符文",
+  "item.rubinated_nether.philargyria_rune": "拜金符文",
 
   "container.sloth.clue": "懒惰",
   "container.gluttony.clue": "暴食",
@@ -168,6 +206,12 @@
   "container.studiose.clue": "做作",
   "container.ardenter.clue": "贪食",
   "container.nimis.clue": "过食",
+  "container.ira.clue": "愤怒",
+  "container.invidia.clue": "妒忌",
+  "container.gula.clue": "贪餐",
+  "container.ignavia.clue": "怠惰",
+  "container.kenodoxia.clue": "吹嘘",
+  "container.philargyria.clue": "拜金",
 
   "enchantment.rubinated_nether.deficiency_curse": "低效诅咒",
   "enchantment.rubinated_nether.misfortune_curse": "厄运诅咒",
@@ -180,9 +224,14 @@
   "enchantment.rubinated_nether.hooking_curse": "钩拽诅咒",
   "enchantment.rubinated_nether.slow_charge_curse": "缓慢装填诅咒",
   "enchantment.rubinated_nether.crooked_shot_curse": "射击失准诅咒",
+  "enchantment.rubinated_nether.recoil_curse": "反冲诅咒",
+  "enchantment.rubinated_nether.buoyancy_curse": "轻飘诅咒",
+  "enchantment.rubinated_nether.sinking_curse": "沉壤诅咒",
 
   "item.rubinated_nether.ritual_offering": "仪式祭品",
-  "item.rubinated_nether.grand_ritual_offering": "高阶仪式祭品",
+  "item.rubinated_nether.winding_key": "发条钥匙",
+
+  "item.rubinated_nether.bronze_spawn_egg": "青铜人刷怪蛋",
 
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "获得流血的黑曜石",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "血祭血神！",
@@ -223,6 +272,7 @@
 
   "gui.rubinated_nether.rubination_altar": "耀红祭坛",
 
+  "container.shrine_stone_coffer": "储物盒",
 
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
 
@@ -231,6 +281,11 @@
 
   "rubinated_nether.midnightconfig.category.brazier": "火盆",
   "rubinated_nether.midnightconfig.category.chandelier": "吊灯",
-  "rubinated_nether.midnightconfig.category.client": "客户端"
+  "rubinated_nether.midnightconfig.category.client": "客户端",
+
+  "entity.rubinated_nether.bronze": "青铜人",
+
+  "effect.rubinated_nether.bronze_diseased": "青铜疫染",
+  "effect.rubinated_nether.blessed": "福佑"
 
 }
