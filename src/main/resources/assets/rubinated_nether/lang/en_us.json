@@ -230,6 +230,21 @@
   "enchantment.rubinated_nether.buoyancy_curse": "Curse of Buoyancy",
   "enchantment.rubinated_nether.sinking_curse": "Curse of Sinking",
 
+  "enchantment.rubinated_nether.deficiency_curse.desc": "Decreases mining speed of the tool.",
+  "enchantment.rubinated_nether.misfortune_curse.desc": "Blocks may not drop items when broken",
+  "enchantment.rubinated_nether.fragility_curse.desc": "Causes the tool to lose durability at a faster rate.",
+  "enchantment.rubinated_nether.bluntness_curse.desc": "Decreases the damage of the item",
+  "enchantment.rubinated_nether.ravaging_curse.desc": "Mobs may not drop loot when killed.",
+  "enchantment.rubinated_nether.leeching_curse.desc": "Heals enemies when they attack you.",
+  "enchantment.rubinated_nether.exposure_curse.desc": "Reduces armor value of the item.",
+  "enchantment.rubinated_nether.dullness_curse.desc": "Decreases the damage of arrows fired from the bow.",
+  "enchantment.rubinated_nether.hooking_curse.desc": "Knockback of arrows fired by the bow pulls the target towards the player",
+  "enchantment.rubinated_nether.slow_charge_curse.desc": "Decreases the reload speed of crossbows.",
+  "enchantment.rubinated_nether.crooked_shot_curse.desc": "Decreases the inaccuracy of crossbows",
+  "enchantment.rubinated_nether.recoil_curse.desc": "Recoils the player backwards when the trident is thrown",
+  "enchantment.rubinated_nether.buoyancy_curse.desc": "Decreases the damage of the item",
+  "enchantment.rubinated_nether.sinking_curse.desc": "Destroys blocks around the player when used to smash from above",
+
   "item.rubinated_nether.ritual_offering": "Ritual Offering",
   "item.rubinated_nether.winding_key": "Winding Key",
 
