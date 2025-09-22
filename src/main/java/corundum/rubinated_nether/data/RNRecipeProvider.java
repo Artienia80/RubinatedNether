@@ -463,7 +463,14 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		twoByTwo(
 				recipeOutput,
-				RNItems.BRONZE_POWDER,
+				RNItems.BRONZE_SCRAP,
+				RNItems.BRONZE_SHOT,
+				8
+		);
+
+		threeByThree(
+				recipeOutput,
+				RNItems.BRONZE_SCRAP,
 				RNBlocks.BRONZE_BLOCK,
 				1
 		);
@@ -543,7 +550,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				recipeOutput,
 				RNItems.BRONZE_ROD,
 				RNItems.BRONZE_POWDER,
-				16
+				9
 		);
 
 		twoByTwo(
@@ -891,15 +898,17 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(Items.BREEZE_ROD), has(Items.BREEZE_ROD))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.BRONZE_SHOT, 16)
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.BRONZE_SCRAP, 1)
 				.define('X', RNItems.BRONZE_POWDER)
 				.define('O', Items.COPPER_INGOT)
-				.pattern(" X ")
-				.pattern("XOX")
-				.pattern(" X ")
-				.unlockedBy(getHasName(RNItems.BRONZE_SHOT), has(RNItems.BRONZE_SHOT))
+				.pattern(" O ")
+				.pattern("OXO")
+				.pattern(" O ")
+				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
 				.unlockedBy(getHasName(RNItems.BRONZE_POWDER), has(RNItems.BRONZE_POWDER))
 				.save(recipeOutput);
+
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.RITUAL_OFFERING, 1)
 				.define('X', RNItems.BRONZE_ROD)

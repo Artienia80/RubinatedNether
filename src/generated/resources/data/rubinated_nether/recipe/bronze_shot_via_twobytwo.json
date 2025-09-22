@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "DeferredHolder{ResourceKey[minecraft:item / rubinated_nether:bronze_shot]}",
+  "key": {
+    "I": {
+      "item": "rubinated_nether:bronze_scrap"
+    }
+  },
+  "pattern": [
+    "II",
+    "II"
+  ],
+  "result": {
+    "count": 8,
+    "id": "rubinated_nether:bronze_shot"
+  }
+}

@@ -11,11 +11,11 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_bronze_shot": {
+    "has_bronze_scrap": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:bronze_shot"
+            "items": "rubinated_nether:bronze_scrap"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:bronze_shot"
+        "recipe": "rubinated_nether:bronze_scrap"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -31,13 +31,13 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_bronze_shot",
+      "has_bronze_scrap",
       "has_bronze_powder"
     ]
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:bronze_shot"
+      "rubinated_nether:bronze_scrap"
     ]
   }
 }

@@ -102,6 +102,7 @@ public class RNCreativeTabs {
 
 					RNItems.BRONZE_ROD,
 					RNItems.BRONZE_POWDER,
+					RNItems.BRONZE_SCRAP,
 					RNItems.BRONZE_SHOT,
 					RNItems.BRONZE_DRILL,
 

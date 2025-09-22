@@ -10,12 +10,12 @@
     }
   },
   "pattern": [
-    " X ",
-    "XOX",
-    " X "
+    " O ",
+    "OXO",
+    " O "
   ],
   "result": {
-    "count": 16,
-    "id": "rubinated_nether:bronze_shot"
+    "count": 1,
+    "id": "rubinated_nether:bronze_scrap"
   }
 }

@@ -4,12 +4,13 @@
   "group": "DeferredHolder{ResourceKey[minecraft:block / rubinated_nether:bronze_block]}",
   "key": {
     "I": {
-      "item": "rubinated_nether:bronze_powder"
+      "item": "rubinated_nether:bronze_scrap"
     }
   },
   "pattern": [
-    "II",
-    "II"
+    "III",
+    "III",
+    "III"
   ],
   "result": {
     "count": 1,
