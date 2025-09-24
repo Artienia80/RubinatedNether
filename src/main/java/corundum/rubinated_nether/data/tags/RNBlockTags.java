@@ -48,11 +48,11 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.TARNISHED_BRONZE_CHAIN.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get(),
 
-				RNBlocks.CHANDELIER.get(),
-                RNBlocks.DISCOLORED_CHANDELIER.get(),
-                RNBlocks.CORRODED_CHANDELIER.get(),
-                RNBlocks.TARNISHED_CHANDELIER.get(),
-                RNBlocks.CRYSTALLIZED_CHANDELIER.get(),
+				RNBlocks.BRONZE_CHANDELIER.get(),
+                RNBlocks.DISCOLORED_BRONZE_CHANDELIER.get(),
+                RNBlocks.CORRODED_BRONZE_CHANDELIER.get(),
+                RNBlocks.TARNISHED_BRONZE_CHANDELIER.get(),
+                RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get(),
                 RNBlocks.LAVA_LAMP.get(),
 				RNBlocks.DRY_ICE.get(),
 				RNBlocks.SOAKSTONE.get(),
@@ -257,11 +257,11 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.TARNISHED_BRONZE_CHAIN.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get(),
 
-				RNBlocks.CHANDELIER.get(),
-				RNBlocks.DISCOLORED_CHANDELIER.get(),
-				RNBlocks.CORRODED_CHANDELIER.get(),
-				RNBlocks.TARNISHED_CHANDELIER.get(),
-				RNBlocks.CRYSTALLIZED_CHANDELIER.get()
+				RNBlocks.BRONZE_CHANDELIER.get(),
+				RNBlocks.DISCOLORED_BRONZE_CHANDELIER.get(),
+				RNBlocks.CORRODED_BRONZE_CHANDELIER.get(),
+				RNBlocks.TARNISHED_BRONZE_CHANDELIER.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get()
 		);
 
 		this.tag(RNTags.Blocks.COLDEST_ICE).add(
@@ -285,7 +285,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_BULB.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get(),
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get(),
-				RNBlocks.CRYSTALLIZED_CHANDELIER.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get()
 		);

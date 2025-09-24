@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:tarnished_ruby_chandelier"
+          "name": "rubinated_nether:tarnished_chandelier"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "rubinated_nether:blocks/tarnished_ruby_chandelier"
+  "random_sequence": "rubinated_nether:blocks/tarnished_chandelier"
 }

@@ -3,10 +3,10 @@
   "category": "building",
   "key": {
     "O": {
-      "item": "rubinated_nether:waxed_corroded_bronze_grate"
+      "item": "rubinated_nether:corroded_bronze_grate"
     },
     "X": {
-      "item": "rubinated_nether:waxed_corroded_bronze_lantern"
+      "item": "rubinated_nether:corroded_bronze_lantern"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "rubinated_nether:waxed_corroded_ruby_chandelier"
+    "id": "rubinated_nether:corroded_chandelier"
   }
 }

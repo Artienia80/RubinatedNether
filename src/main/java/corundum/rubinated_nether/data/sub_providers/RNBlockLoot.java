@@ -7,7 +7,6 @@ import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -22,7 +21,6 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
@@ -57,11 +55,11 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_CHAIN);
 		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_CHAIN);
 
-		this.dropSelf(RNBlocks.CHANDELIER.get());
-        this.dropSelf(RNBlocks.DISCOLORED_CHANDELIER.get());
-        this.dropSelf(RNBlocks.CORRODED_CHANDELIER.get());
-        this.dropSelf(RNBlocks.TARNISHED_CHANDELIER.get());
-        this.dropSelf(RNBlocks.CRYSTALLIZED_CHANDELIER.get());
+		this.dropSelf(RNBlocks.BRONZE_CHANDELIER.get());
+        this.dropSelf(RNBlocks.DISCOLORED_BRONZE_CHANDELIER.get());
+        this.dropSelf(RNBlocks.CORRODED_BRONZE_CHANDELIER.get());
+        this.dropSelf(RNBlocks.TARNISHED_BRONZE_CHANDELIER.get());
+        this.dropSelf(RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get());
 
 		this.dropSelf(RNBlocks.LAVA_LAMP.get());
 		this.dropSelf(RNBlocks.SOAKSTONE.get());

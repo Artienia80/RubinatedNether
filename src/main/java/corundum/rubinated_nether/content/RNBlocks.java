@@ -15,7 +15,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -74,8 +73,8 @@ public class RNBlocks {
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.CRYING_OBSIDIAN))
 	);
 
-	public static final DeferredBlock<Block> CHANDELIER = registerWaxableBlock(
-			"ruby_chandelier",
+	public static final DeferredBlock<Block> BRONZE_CHANDELIER = registerWaxableBlock(
+			"bronze_chandelier",
 			() -> new ChandelierBlock(
 					TarnishingBronze.TarnishState.UNAFFECTED,
 					Block.Properties
@@ -85,8 +84,8 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> DISCOLORED_CHANDELIER = registerWaxableBlock(
-			"discolored_ruby_chandelier",
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_CHANDELIER = registerWaxableBlock(
+			"discolored_bronze_chandelier",
 			() -> new ChandelierBlock(
 					TarnishingBronze.TarnishState.DISCOLORED,
 					Block.Properties
@@ -96,8 +95,8 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> CORRODED_CHANDELIER = registerWaxableBlock(
-			"corroded_ruby_chandelier",
+	public static final DeferredBlock<Block> CORRODED_BRONZE_CHANDELIER = registerWaxableBlock(
+			"corroded_bronze_chandelier",
 			() -> new ChandelierBlock(
 					TarnishingBronze.TarnishState.CORRODED,
 					Block.Properties
@@ -107,8 +106,8 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> TARNISHED_CHANDELIER = registerWaxableBlock(
-			"tarnished_ruby_chandelier",
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_CHANDELIER = registerWaxableBlock(
+			"tarnished_bronze_chandelier",
 			() -> new ChandelierBlock(
 					TarnishingBronze.TarnishState.TARNISHED,
 					Block.Properties
@@ -118,8 +117,8 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> CRYSTALLIZED_CHANDELIER = registerWaxableBlock(
-			"crystallized_ruby_chandelier",
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_CHANDELIER = registerWaxableBlock(
+			"crystallized_bronze_chandelier",
 			() -> new ChandelierBlock(
 					TarnishingBronze.TarnishState.CRYSTALLIZED,
 					Block.Properties
@@ -128,7 +127,6 @@ public class RNBlocks {
 							.lightLevel($ -> 15)
 			)
 	);
-
 
 	public static final DeferredBlock<RotatedPillarBlock> LAVA_LAMP = registerBlockAndItem(
 		"lava_lamp",

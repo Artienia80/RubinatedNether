@@ -1,21 +1,21 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bronze_grate": {
+    "has_tarnished_bronze_grate": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:bronze_grate"
+            "items": "rubinated_nether:tarnished_bronze_grate"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_bronze_lantern": {
+    "has_tarnished_bronze_lantern": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:bronze_lantern"
+            "items": "rubinated_nether:tarnished_bronze_lantern"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:ruby_chandelier"
+        "recipe": "rubinated_nether:tarnished_chandelier"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -31,13 +31,13 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_bronze_lantern",
-      "has_bronze_grate"
+      "has_tarnished_bronze_lantern",
+      "has_tarnished_bronze_grate"
     ]
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:ruby_chandelier"
+      "rubinated_nether:tarnished_chandelier"
     ]
   }
 }

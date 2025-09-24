@@ -4,18 +4,12 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
-
-import java.util.Objects;
 
 public class RNItemModels extends ItemModelProvider {
 	public RNItemModels(PackOutput output, ExistingFileHelper fileHelper) {
@@ -162,11 +156,11 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.TARNISHED_BRONZE_CHAIN,
 				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN,
 
-				RNBlocks.CHANDELIER,
-                RNBlocks.DISCOLORED_CHANDELIER,
-                RNBlocks.CORRODED_CHANDELIER,
-                RNBlocks.TARNISHED_CHANDELIER,
-                RNBlocks.CRYSTALLIZED_CHANDELIER,
+				RNBlocks.BRONZE_CHANDELIER,
+                RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
+                RNBlocks.CORRODED_BRONZE_CHANDELIER,
+                RNBlocks.TARNISHED_BRONZE_CHANDELIER,
+                RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER,
 
 				RNBlocks.RUNESTONE,
 				RNItems.RUBY_LENS,

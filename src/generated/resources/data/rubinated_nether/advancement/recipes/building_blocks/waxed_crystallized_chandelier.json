@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:waxed_crystallized_ruby_chandelier"
+        "recipe": "rubinated_nether:waxed_crystallized_chandelier"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -37,7 +37,7 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:waxed_crystallized_ruby_chandelier"
+      "rubinated_nether:waxed_crystallized_chandelier"
     ]
   }
 }

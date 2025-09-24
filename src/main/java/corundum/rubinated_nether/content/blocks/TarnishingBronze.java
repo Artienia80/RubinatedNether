@@ -76,9 +76,9 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 					.put(RNBlocks.DISCOLORED_BRONZE_LANTERN.get(), RNBlocks.CORRODED_BRONZE_LANTERN.get())
 					.put(RNBlocks.CORRODED_BRONZE_LANTERN.get(), RNBlocks.TARNISHED_BRONZE_LANTERN.get())
 
-					.put(RNBlocks.CHANDELIER.get(), RNBlocks.DISCOLORED_CHANDELIER.get())
-					.put(RNBlocks.DISCOLORED_CHANDELIER.get(), RNBlocks.CORRODED_CHANDELIER.get())
-					.put(RNBlocks.CORRODED_CHANDELIER.get(), RNBlocks.TARNISHED_CHANDELIER.get())
+					.put(RNBlocks.BRONZE_CHANDELIER.get(), RNBlocks.DISCOLORED_BRONZE_CHANDELIER.get())
+					.put(RNBlocks.DISCOLORED_BRONZE_CHANDELIER.get(), RNBlocks.CORRODED_BRONZE_CHANDELIER.get())
+					.put(RNBlocks.CORRODED_BRONZE_CHANDELIER.get(), RNBlocks.TARNISHED_BRONZE_CHANDELIER.get())
 
 
 					.build()
@@ -139,10 +139,10 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 				map.put(RNBlocks.CORRODED_BRONZE_LANTERN.get(), RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get());
 				map.put(RNBlocks.TARNISHED_BRONZE_LANTERN.get(), RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get());
 
-				map.put(RNBlocks.CHANDELIER.get(), RNBlocks.CRYSTALLIZED_CHANDELIER.get());
-				map.put(RNBlocks.DISCOLORED_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_CHANDELIER.get());
-				map.put(RNBlocks.CORRODED_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_CHANDELIER.get());
-				map.put(RNBlocks.TARNISHED_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_CHANDELIER.get());
+				map.put(RNBlocks.BRONZE_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get());
+				map.put(RNBlocks.DISCOLORED_BRONZE_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get());
+				map.put(RNBlocks.CORRODED_BRONZE_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get());
+				map.put(RNBlocks.TARNISHED_BRONZE_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get());
 
 				return Collections.unmodifiableMap(map);
 			}

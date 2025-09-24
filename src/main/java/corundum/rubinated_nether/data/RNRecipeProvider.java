@@ -3,11 +3,9 @@ package corundum.rubinated_nether.data;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
-import com.electronwill.nightconfig.core.CommentedConfig;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.datamaps.WaxableBronze;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -939,7 +937,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CHANDELIER, 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRONZE_CHANDELIER, 1)
 				.define('X', RNBlocks.BRONZE_LANTERN)
 				.define('O', RNBlocks.BRONZE_GRATE)
 				.pattern("XXX")
@@ -949,7 +947,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNBlocks.BRONZE_GRATE), has(RNBlocks.BRONZE_GRATE))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.DISCOLORED_CHANDELIER, 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.DISCOLORED_BRONZE_CHANDELIER, 1)
 				.define('X', RNBlocks.DISCOLORED_BRONZE_LANTERN)
 				.define('O', RNBlocks.DISCOLORED_BRONZE_GRATE)
 				.pattern("XXX")
@@ -959,7 +957,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNBlocks.DISCOLORED_BRONZE_GRATE), has(RNBlocks.DISCOLORED_BRONZE_GRATE))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CORRODED_CHANDELIER, 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CORRODED_BRONZE_CHANDELIER, 1)
 				.define('X', RNBlocks.CORRODED_BRONZE_LANTERN)
 				.define('O', RNBlocks.CORRODED_BRONZE_GRATE)
 				.pattern("XXX")
@@ -969,7 +967,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNBlocks.CORRODED_BRONZE_GRATE), has(RNBlocks.CORRODED_BRONZE_GRATE))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.TARNISHED_CHANDELIER, 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.TARNISHED_BRONZE_CHANDELIER, 1)
 				.define('X', RNBlocks.TARNISHED_BRONZE_LANTERN)
 				.define('O', RNBlocks.TARNISHED_BRONZE_GRATE)
 				.pattern("XXX")
@@ -979,7 +977,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNBlocks.TARNISHED_BRONZE_GRATE), has(RNBlocks.TARNISHED_BRONZE_GRATE))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CRYSTALLIZED_CHANDELIER, 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER, 1)
 				.define('X', RNBlocks.CRYSTALLIZED_BRONZE_LANTERN)
 				.define('O', RNBlocks.CRYSTALLIZED_BRONZE_GRATE)
 				.pattern("XXX")
@@ -989,7 +987,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_GRATE), has(RNBlocks.CRYSTALLIZED_BRONZE_GRATE))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CHANDELIER))), 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_CHANDELIER))), 1)
 				.define('X', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_LANTERN))))
 				.define('O', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_GRATE))))
 				.pattern("XXX")
@@ -999,7 +997,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_GRATE)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_GRATE)))))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CHANDELIER))), 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_CHANDELIER))), 1)
 				.define('X', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_LANTERN))))
 				.define('O', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_GRATE))))
 				.pattern("XXX")
@@ -1009,7 +1007,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_GRATE)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_GRATE)))))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CHANDELIER))), 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_CHANDELIER))), 1)
 				.define('X', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_LANTERN))))
 				.define('O', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_GRATE))))
 				.pattern("XXX")
@@ -1019,7 +1017,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_GRATE)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_GRATE)))))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CHANDELIER))), 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_CHANDELIER))), 1)
 				.define('X', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_LANTERN))))
 				.define('O', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_GRATE))))
 				.pattern("XXX")
@@ -1029,7 +1027,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_GRATE)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_GRATE)))))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CHANDELIER))), 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER))), 1)
 				.define('X', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_LANTERN))))
 				.define('O', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_GRATE))))
 				.pattern("XXX")

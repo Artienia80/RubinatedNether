@@ -3,25 +3,25 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:waxed_ruby_chandelier"
+        "recipe": "rubinated_nether:waxed_corroded_chandelier"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_waxed_bronze_grate": {
+    "has_waxed_corroded_bronze_grate": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:waxed_bronze_grate"
+            "items": "rubinated_nether:waxed_corroded_bronze_grate"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_waxed_bronze_lantern": {
+    "has_waxed_corroded_bronze_lantern": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:waxed_bronze_lantern"
+            "items": "rubinated_nether:waxed_corroded_bronze_lantern"
           }
         ]
       },
@@ -31,13 +31,13 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_waxed_bronze_lantern",
-      "has_waxed_bronze_grate"
+      "has_waxed_corroded_bronze_lantern",
+      "has_waxed_corroded_bronze_grate"
     ]
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:waxed_ruby_chandelier"
+      "rubinated_nether:waxed_corroded_chandelier"
     ]
   }
 }
