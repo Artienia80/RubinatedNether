@@ -68,6 +68,19 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 					.put(RNBlocks.DISCOLORED_BRONZE_GRATE.get(), RNBlocks.CORRODED_BRONZE_GRATE.get())
 					.put(RNBlocks.CORRODED_BRONZE_GRATE.get(), RNBlocks.TARNISHED_BRONZE_GRATE.get())
 
+					.put(RNBlocks.BRONZE_CHAIN.get(), RNBlocks.DISCOLORED_BRONZE_CHAIN.get())
+					.put(RNBlocks.DISCOLORED_BRONZE_CHAIN.get(), RNBlocks.CORRODED_BRONZE_CHAIN.get())
+					.put(RNBlocks.CORRODED_BRONZE_CHAIN.get(), RNBlocks.TARNISHED_BRONZE_CHAIN.get())
+
+					.put(RNBlocks.BRONZE_LANTERN.get(), RNBlocks.DISCOLORED_BRONZE_LANTERN.get())
+					.put(RNBlocks.DISCOLORED_BRONZE_LANTERN.get(), RNBlocks.CORRODED_BRONZE_LANTERN.get())
+					.put(RNBlocks.CORRODED_BRONZE_LANTERN.get(), RNBlocks.TARNISHED_BRONZE_LANTERN.get())
+
+					.put(RNBlocks.CHANDELIER.get(), RNBlocks.DISCOLORED_CHANDELIER.get())
+					.put(RNBlocks.DISCOLORED_CHANDELIER.get(), RNBlocks.CORRODED_CHANDELIER.get())
+					.put(RNBlocks.CORRODED_CHANDELIER.get(), RNBlocks.TARNISHED_CHANDELIER.get())
+
+
 					.build()
 	);
 
@@ -115,6 +128,21 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 				map.put(RNBlocks.DISCOLORED_BRONZE_GRATE.get(), RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get());
 				map.put(RNBlocks.CORRODED_BRONZE_GRATE.get(), RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get());
 				map.put(RNBlocks.TARNISHED_BRONZE_GRATE.get(), RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get());
+
+				map.put(RNBlocks.BRONZE_CHAIN.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get());
+				map.put(RNBlocks.DISCOLORED_BRONZE_CHAIN.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get());
+				map.put(RNBlocks.CORRODED_BRONZE_CHAIN.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get());
+				map.put(RNBlocks.TARNISHED_BRONZE_CHAIN.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get());
+
+				map.put(RNBlocks.BRONZE_LANTERN.get(), RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get());
+				map.put(RNBlocks.DISCOLORED_BRONZE_LANTERN.get(), RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get());
+				map.put(RNBlocks.CORRODED_BRONZE_LANTERN.get(), RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get());
+				map.put(RNBlocks.TARNISHED_BRONZE_LANTERN.get(), RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get());
+
+				map.put(RNBlocks.CHANDELIER.get(), RNBlocks.CRYSTALLIZED_CHANDELIER.get());
+				map.put(RNBlocks.DISCOLORED_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_CHANDELIER.get());
+				map.put(RNBlocks.CORRODED_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_CHANDELIER.get());
+				map.put(RNBlocks.TARNISHED_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_CHANDELIER.get());
 
 				return Collections.unmodifiableMap(map);
 			}
@@ -232,15 +260,12 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 			level.playSound(player, pos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1F, 1F);
 
 			if (waxed) {
-				// Remove wax - no bronze powder drop
 				level.setBlock(pos, state.setValue(WAXED, false), 2);
 				level.levelEvent(player, 3004, pos, 0);
 			} else {
-				// Scrape to previous tarnish state - drop bronze powder
 				level.setBlock(pos, getPrevious(state).get(), 2);
 				level.levelEvent(player, 3005, pos, 0);
 
-				// Drop bronze powder only when scraping (not when removing wax)
 				if (!level.isClientSide() && level.random.nextFloat() < 0.50f) {
 					ItemEntity bronzeDrop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
 							new ItemStack(RNItems.BRONZE_POWDER.get()));
@@ -252,7 +277,6 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 			return true;
 		}
 
-		// Bronze powder advances tarnish state
 		if (stack.is(RNItems.BRONZE_POWDER.get())) {
 			var nextState = getNext(state);
 			if (nextState.isPresent()) {
@@ -268,7 +292,7 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 
 				return true;
 			}
-			return false; // Already at max tarnish state
+			return false;
 		}
 
 		if (stack.is(Items.HONEYCOMB) && !waxed) {
