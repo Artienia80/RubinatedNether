@@ -128,13 +128,54 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<RotatedPillarBlock> LAVA_LAMP = registerBlockAndItem(
-		"lava_lamp",
-		() -> new LavaLampBlock(
-                Block.Properties
-                    .ofFullCopy(Blocks.COPPER_BLOCK)
-                    .lightLevel($ -> 15)
-		)
+	public static final DeferredBlock<RotatedPillarBlock> BRONZE_LAMP = registerWaxableBlock(
+			"bronze_lamp",
+			() -> new TarnishingBronzeLampBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.lightLevel($ -> 15)
+			)
+	);
+
+	public static final DeferredBlock<RotatedPillarBlock> DISCOLORED_BRONZE_LAMP = registerWaxableBlock(
+			"discolored_bronze_lamp",
+			() -> new TarnishingBronzeLampBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.lightLevel($ -> 15)
+			)
+	);
+
+	public static final DeferredBlock<RotatedPillarBlock> CORRODED_BRONZE_LAMP = registerWaxableBlock(
+			"corroded_bronze_lamp",
+			() -> new TarnishingBronzeLampBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.lightLevel($ -> 15)
+			)
+	);
+
+	public static final DeferredBlock<RotatedPillarBlock> TARNISHED_BRONZE_LAMP = registerWaxableBlock(
+			"tarnished_bronze_lamp",
+			() -> new TarnishingBronzeLampBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.lightLevel($ -> 15)
+			)
+	);
+
+	public static final DeferredBlock<RotatedPillarBlock> CRYSTALLIZED_BRONZE_LAMP = registerWaxableBlock(
+			"crystallized_bronze_lamp",
+			() -> new TarnishingBronzeLampBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.lightLevel($ -> 15)
+			)
 	);
 
 	public static final DeferredBlock<Block> DRY_ICE = registerBlockAndItem(

@@ -61,7 +61,6 @@ public class RNBlockLoot extends BlockLootSubProvider {
         this.dropSelf(RNBlocks.TARNISHED_BRONZE_CHANDELIER.get());
         this.dropSelf(RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get());
 
-		this.dropSelf(RNBlocks.LAVA_LAMP.get());
 		this.dropSelf(RNBlocks.SOAKSTONE.get());
 
 		this.dropSelf(RNBlocks.SHRINE_STONE.get());
@@ -156,6 +155,12 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.waxableDrop(RNBlocks.CORRODED_BRONZE_GRATE);
 		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_GRATE);
 		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_GRATE);
+
+		this.waxableDrop(RNBlocks.BRONZE_LAMP);
+		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_LAMP);
+		this.waxableDrop(RNBlocks.CORRODED_BRONZE_LAMP);
+		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_LAMP);
+		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_LAMP);
 
 
 

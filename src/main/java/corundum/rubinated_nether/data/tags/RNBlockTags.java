@@ -53,7 +53,7 @@ public class RNBlockTags extends BlockTagsProvider {
                 RNBlocks.CORRODED_BRONZE_CHANDELIER.get(),
                 RNBlocks.TARNISHED_BRONZE_CHANDELIER.get(),
                 RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get(),
-                RNBlocks.LAVA_LAMP.get(),
+                RNBlocks.BRONZE_LAMP.get(),
 				RNBlocks.DRY_ICE.get(),
 				RNBlocks.SOAKSTONE.get(),
 

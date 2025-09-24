@@ -80,7 +80,7 @@ public class RNCreativeTabs {
 					RNBlocks.ORNATE_RUBY_GLASS,
 					RNBlocks.ORNATE_RUBY_GLASS_PANE,
 
-					RNBlocks.LAVA_LAMP,
+					RNBlocks.BRONZE_LAMP,
 					RNBlocks.BRAZIER,
 					RNBlocks.RUBINATION_ALTAR,
 

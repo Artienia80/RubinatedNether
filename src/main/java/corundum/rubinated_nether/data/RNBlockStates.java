@@ -72,11 +72,39 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 
 		this.axisBlock(
-			RNBlocks.LAVA_LAMP.get(),
-			this.models()
-				.withExistingParent("lava_lamp", this.modLoc("block/lava_lamp_side_base")),
-			this.models()
-				.withExistingParent("lava_lamp", this.modLoc("block/lava_lamp_base"))
+				(RotatedPillarBlock) RNBlocks.BRONZE_LAMP.get(),
+				this.models()
+						.withExistingParent("bronze_lamp_side", this.modLoc("block/bronze_lamp_side_base")),
+				this.models()
+						.withExistingParent("bronze_lamp", this.modLoc("block/bronze_lamp_base"))
+		);
+		this.axisBlock(
+				(RotatedPillarBlock) RNBlocks.DISCOLORED_BRONZE_LAMP.get(),
+				this.models()
+						.withExistingParent("discolored_bronze_lamp_side", this.modLoc("block/discolored_bronze_lamp_side_base")),
+				this.models()
+						.withExistingParent("discolored_bronze_lamp", this.modLoc("block/discolored_bronze_lamp_base"))
+		);
+		this.axisBlock(
+				(RotatedPillarBlock) RNBlocks.CORRODED_BRONZE_LAMP.get(),
+				this.models()
+						.withExistingParent("corroded_bronze_lamp_side", this.modLoc("block/corroded_bronze_lamp_side_base")),
+				this.models()
+						.withExistingParent("corroded_bronze_lamp", this.modLoc("block/corroded_bronze_lamp_base"))
+		);
+		this.axisBlock(
+				(RotatedPillarBlock) RNBlocks.TARNISHED_BRONZE_LAMP.get(),
+				this.models()
+						.withExistingParent("tarnished_bronze_lamp_side", this.modLoc("block/tarnished_bronze_lamp_side_base")),
+				this.models()
+						.withExistingParent("tarnished_bronze_lamp", this.modLoc("block/tarnished_bronze_lamp_base"))
+		);
+		this.axisBlock(
+				(RotatedPillarBlock) RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get(),
+				this.models()
+						.withExistingParent("crystallized_bronze_lamp_side", this.modLoc("block/crystallized_bronze_lamp_side_base")),
+				this.models()
+						.withExistingParent("crystallized_bronze_lamp", this.modLoc("block/crystallized_bronze_lamp_base"))
 		);
 		this.simpleBlock(
 			RNBlocks.DRY_ICE.get(),

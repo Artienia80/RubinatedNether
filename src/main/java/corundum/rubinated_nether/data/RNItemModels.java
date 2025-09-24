@@ -26,7 +26,7 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.RUBY_BLOCK,
 				RNBlocks.MOLTEN_RUBY_BLOCK,
 				RNBlocks.BLEEDING_OBSIDIAN,
-				RNBlocks.LAVA_LAMP,
+				RNBlocks.BRONZE_LAMP,
 				RNBlocks.DRY_ICE,
 				RNBlocks.SOAKSTONE,
 				RNBlocks.BRAZIER,

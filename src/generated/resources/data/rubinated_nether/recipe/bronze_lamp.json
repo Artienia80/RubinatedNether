@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "rubinated_nether:ruby_glass_pane"
+    },
+    "O": {
+      "item": "rubinated_nether:molten_ruby"
+    },
+    "X": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "IOI",
+    "XXX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:bronze_lamp"
+  }
+}

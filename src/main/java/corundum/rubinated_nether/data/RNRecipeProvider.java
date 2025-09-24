@@ -1037,7 +1037,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_GRATE)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_GRATE)))))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.LAVA_LAMP, 1)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRONZE_LAMP, 1)
 				.define('X', Items.COPPER_INGOT)
 				.define('O', RNItems.MOLTEN_RUBY_ITEM)
 				.define('I', RNBlocks.RUBY_GLASS_PANE)
