@@ -172,6 +172,30 @@
   "item.rubinated_nether.waxed_tarnished_bronze_chandelier": "Waxed Tarnished Bronze Chandelier",
   "item.rubinated_nether.waxed_crystallized_bronze_chandelier": "Waxed Crystallized Bronze Chandelier",
 
+  "block.rubinated_nether.bronze_chain": "Bronze Chain",
+  "block.rubinated_nether.discolored_bronze_chain": "Discolored Bronze Chain",
+  "block.rubinated_nether.corroded_bronze_chain": "Corroded Bronze Chain",
+  "block.rubinated_nether.tarnished_bronze_chain": "Tarnished Bronze Chain",
+  "block.rubinated_nether.crystallized_bronze_chain": "Crystallized Bronze Chain",
+
+  "item.rubinated_nether.waxed_bronze_chain": "Waxed Bronze Chain",
+  "item.rubinated_nether.waxed_discolored_bronze_chain": "Waxed Discolored Bronze Chain",
+  "item.rubinated_nether.waxed_corroded_bronze_chain": "Waxed Corroded Bronze Chain",
+  "item.rubinated_nether.waxed_tarnished_bronze_chain": "Waxed Tarnished Bronze Chain",
+  "item.rubinated_nether.waxed_crystallized_bronze_chain": "Waxed Crystallized Bronze Chain",
+
+  "block.rubinated_nether.bronze_lamp": "Bronze Lamp",
+  "block.rubinated_nether.discolored_bronze_lamp": "Discolored Bronze Lamp",
+  "block.rubinated_nether.corroded_bronze_lamp": "Corroded Bronze Lamp",
+  "block.rubinated_nether.tarnished_bronze_lamp": "Tarnished Bronze Lamp",
+  "block.rubinated_nether.crystallized_bronze_lamp": "Crystallized Bronze Lamp",
+
+  "item.rubinated_nether.waxed_bronze_lamp": "Waxed Bronze Lamp",
+  "item.rubinated_nether.waxed_discolored_bronze_lamp": "Waxed Discolored Bronze Lamp",
+  "item.rubinated_nether.waxed_corroded_bronze_lamp": "Waxed Corroded Bronze Lamp",
+  "item.rubinated_nether.waxed_tarnished_bronze_lamp": "Waxed Tarnished Bronze Lamp",
+  "item.rubinated_nether.waxed_crystallized_bronze_lamp": "Waxed Crystallized Bronze Lamp",
+
   "item.rubinated_nether.bronze_rod": "Bronze Rod",
   "item.rubinated_nether.bronze_powder": "Bronze Powder",
   "item.rubinated_nether.bronze_scrap": "Bronze Scrap",

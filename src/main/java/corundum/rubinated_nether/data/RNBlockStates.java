@@ -71,41 +71,23 @@ public class RNBlockStates extends BlockStateProvider {
 						.withExistingParent("crystallized_chandelier", this.modLoc("block/ruby_chandelier_base"))
 		);
 
-		this.axisBlock(
-				(RotatedPillarBlock) RNBlocks.BRONZE_LAMP.get(),
-				this.models()
-						.withExistingParent("bronze_lamp_side", this.modLoc("block/bronze_lamp_side_base")),
-				this.models()
-						.withExistingParent("bronze_lamp", this.modLoc("block/bronze_lamp_base"))
+		subfolder("bronze/bronze_lamp/",
+				(rloc, name, block) -> {
+					this.axisBlock(
+							(RotatedPillarBlock) block.get(),
+							this.models()
+									.withExistingParent(name + "_side", this.modLoc(rloc + "_side_base")),
+							this.models()
+									.withExistingParent(name, this.modLoc(rloc + "_base"))
+					);
+				},
+				RNBlocks.BRONZE_LAMP,
+				RNBlocks.DISCOLORED_BRONZE_LAMP,
+				RNBlocks.CORRODED_BRONZE_LAMP,
+				RNBlocks.TARNISHED_BRONZE_LAMP,
+				RNBlocks.CRYSTALLIZED_BRONZE_LAMP
 		);
-		this.axisBlock(
-				(RotatedPillarBlock) RNBlocks.DISCOLORED_BRONZE_LAMP.get(),
-				this.models()
-						.withExistingParent("discolored_bronze_lamp_side", this.modLoc("block/discolored_bronze_lamp_side_base")),
-				this.models()
-						.withExistingParent("discolored_bronze_lamp", this.modLoc("block/discolored_bronze_lamp_base"))
-		);
-		this.axisBlock(
-				(RotatedPillarBlock) RNBlocks.CORRODED_BRONZE_LAMP.get(),
-				this.models()
-						.withExistingParent("corroded_bronze_lamp_side", this.modLoc("block/corroded_bronze_lamp_side_base")),
-				this.models()
-						.withExistingParent("corroded_bronze_lamp", this.modLoc("block/corroded_bronze_lamp_base"))
-		);
-		this.axisBlock(
-				(RotatedPillarBlock) RNBlocks.TARNISHED_BRONZE_LAMP.get(),
-				this.models()
-						.withExistingParent("tarnished_bronze_lamp_side", this.modLoc("block/tarnished_bronze_lamp_side_base")),
-				this.models()
-						.withExistingParent("tarnished_bronze_lamp", this.modLoc("block/tarnished_bronze_lamp_base"))
-		);
-		this.axisBlock(
-				(RotatedPillarBlock) RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get(),
-				this.models()
-						.withExistingParent("crystallized_bronze_lamp_side", this.modLoc("block/crystallized_bronze_lamp_side_base")),
-				this.models()
-						.withExistingParent("crystallized_bronze_lamp", this.modLoc("block/crystallized_bronze_lamp_base"))
-		);
+
 		this.simpleBlock(
 			RNBlocks.DRY_ICE.get(),
 			this.models()

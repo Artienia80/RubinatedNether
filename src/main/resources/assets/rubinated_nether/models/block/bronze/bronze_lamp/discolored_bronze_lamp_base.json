@@ -2,9 +2,9 @@
 	"parent": "block/block",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "rubinated_nether:block/crystallized_bronze_lamp",
-		"1": "rubinated_nether:block/crystallized_bronze_lamp_top",
-		"particle": "rubinated_nether:block/crystallized_bronze_lamp"
+		"0": "rubinated_nether:block/bronze/bronze_lamp/discolored_bronze_lamp",
+		"1": "rubinated_nether:block/bronze/bronze_lamp/discolored_bronze_lamp_top",
+		"particle": "rubinated_nether:block/bronze/bronze_lamp/discolored_bronze_lamp"
 	},
 	"elements": [
 		{
