@@ -1038,7 +1038,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRONZE_LAMP, 1)
-				.define('X', Items.COPPER_INGOT)
+				.define('X', RNItems.BRONZE_SCRAP)
 				.define('O', RNItems.MOLTEN_RUBY_ITEM)
 				.define('I', RNBlocks.RUBY_GLASS_PANE)
 				.pattern("XXX")
@@ -1046,7 +1046,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern("XXX")
 				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
 				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
-				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNItems.RUBY_LENS, 1)

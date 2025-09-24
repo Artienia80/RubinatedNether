@@ -21,7 +21,6 @@
     "rubinated_nether:corroded_bronze_chandelier",
     "rubinated_nether:tarnished_bronze_chandelier",
     "rubinated_nether:crystallized_bronze_chandelier",
-    "rubinated_nether:bronze_lamp",
     "rubinated_nether:dry_ice",
     "rubinated_nether:soakstone",
     "rubinated_nether:ruby_glass",
@@ -97,6 +96,11 @@
     "rubinated_nether:discolored_bronze_grate",
     "rubinated_nether:corroded_bronze_grate",
     "rubinated_nether:tarnished_bronze_grate",
-    "rubinated_nether:crystallized_bronze_grate"
+    "rubinated_nether:crystallized_bronze_grate",
+    "rubinated_nether:bronze_lamp",
+    "rubinated_nether:discolored_bronze_lamp",
+    "rubinated_nether:corroded_bronze_lamp",
+    "rubinated_nether:tarnished_bronze_lamp",
+    "rubinated_nether:crystallized_bronze_lamp"
   ]
 }

@@ -26,7 +26,6 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.RUBY_BLOCK,
 				RNBlocks.MOLTEN_RUBY_BLOCK,
 				RNBlocks.BLEEDING_OBSIDIAN,
-				RNBlocks.BRONZE_LAMP,
 				RNBlocks.DRY_ICE,
 				RNBlocks.SOAKSTONE,
 				RNBlocks.BRAZIER,
@@ -101,7 +100,13 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.DISCOLORED_BRONZE_GRATE,
 				RNBlocks.CORRODED_BRONZE_GRATE,
 				RNBlocks.TARNISHED_BRONZE_GRATE,
-				RNBlocks.CRYSTALLIZED_BRONZE_GRATE
+				RNBlocks.CRYSTALLIZED_BRONZE_GRATE,
+
+				RNBlocks.BRONZE_LAMP,
+				RNBlocks.DISCOLORED_BRONZE_LAMP,
+				RNBlocks.CORRODED_BRONZE_LAMP,
+				RNBlocks.TARNISHED_BRONZE_LAMP,
+				RNBlocks.CRYSTALLIZED_BRONZE_LAMP
 						 );
 
 		paneItem(
