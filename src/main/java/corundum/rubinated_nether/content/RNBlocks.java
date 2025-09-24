@@ -74,11 +74,6 @@ public class RNBlocks {
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.CRYING_OBSIDIAN))
 	);
 
-	public static final DeferredBlock<Block> RUBY_LANTERN = registerBlockAndItem(
-		"ruby_lantern",
-		() -> new LanternBlock(Block.Properties.ofFullCopy(Blocks.LANTERN))
-	);
-
 	public static final DeferredBlock<Block> CHANDELIER = registerBlockAndItem(
 		"ruby_chandelier",
 		() -> new ChandelierBlock(
@@ -892,6 +887,125 @@ public class RNBlocks {
 							.isViewBlocking(RNBlocks::never)
 							.isSuffocating(RNBlocks::never)
 
+			)
+	);
+
+// BRONZE LANTERNS
+
+	public static final DeferredBlock<Block> BRONZE_LANTERN = registerWaxableBlock(
+			"bronze_lantern",
+			() -> new TarnishingBronzeLanternBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					Block.Properties
+							.ofFullCopy(Blocks.LANTERN)
+							.mapColor(MapColor.GOLD)
+							.strength(5.0F, 20.0F)
+							.lightLevel($ -> 15)
+			)
+	);
+
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_LANTERN = registerWaxableBlock(
+			"discolored_bronze_lantern",
+			() -> new TarnishingBronzeLanternBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					Block.Properties
+							.ofFullCopy(Blocks.LANTERN)
+							.mapColor(MapColor.TERRACOTTA_PINK)
+							.strength(5.0F, 40.0F)
+							.lightLevel($ -> 12)
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_BRONZE_LANTERN = registerWaxableBlock(
+			"corroded_bronze_lantern",
+			() -> new TarnishingBronzeLanternBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					Block.Properties
+							.ofFullCopy(Blocks.LANTERN)
+							.mapColor(MapColor.CRIMSON_STEM)
+							.strength(5.0F, 80.0F)
+							.lightLevel($ -> 8)
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_LANTERN = registerWaxableBlock(
+			"tarnished_bronze_lantern",
+			() -> new TarnishingBronzeLanternBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					Block.Properties
+							.ofFullCopy(Blocks.LANTERN)
+							.mapColor(MapColor.TERRACOTTA_BLACK)
+							.strength(5.0F, 160.0F)
+							.lightLevel($ -> 4)
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_LANTERN = registerWaxableBlock(
+			"crystallized_bronze_lantern",
+			() -> new TarnishingBronzeLanternBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					Block.Properties
+							.ofFullCopy(Blocks.LANTERN)
+							.mapColor(MapColor.TERRACOTTA_WHITE)
+							.strength(1.0F, 3.5F)
+							.lightLevel($ -> 15)
+			)
+	);
+
+// BRONZE CHAINS
+
+	public static final DeferredBlock<Block> BRONZE_CHAIN = registerWaxableBlock(
+			"bronze_chain",
+			() -> new TarnishingBronzeChainBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					Block.Properties
+							.ofFullCopy(Blocks.CHAIN)
+							.mapColor(MapColor.GOLD)
+							.strength(5.0F, 50.0F)
+			)
+	);
+
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_CHAIN = registerWaxableBlock(
+			"discolored_bronze_chain",
+			() -> new TarnishingBronzeChainBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					Block.Properties
+							.ofFullCopy(Blocks.CHAIN)
+							.mapColor(MapColor.TERRACOTTA_PINK)
+							.strength(5.0F, 100.0F)
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_BRONZE_CHAIN = registerWaxableBlock(
+			"corroded_bronze_chain",
+			() -> new TarnishingBronzeChainBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					Block.Properties
+							.ofFullCopy(Blocks.CHAIN)
+							.mapColor(MapColor.CRIMSON_STEM)
+							.strength(5.0F, 200.0F)
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_CHAIN = registerWaxableBlock(
+			"tarnished_bronze_chain",
+			() -> new TarnishingBronzeChainBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					Block.Properties
+							.ofFullCopy(Blocks.CHAIN)
+							.mapColor(MapColor.TERRACOTTA_BLACK)
+							.strength(5.0F, 400.0F)
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_CHAIN = registerWaxableBlock(
+			"crystallized_bronze_chain",
+			() -> new TarnishingBronzeChainBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					Block.Properties
+							.ofFullCopy(Blocks.CHAIN)
+							.mapColor(MapColor.TERRACOTTA_WHITE)
+							.strength(1.0F, 6.0F)
 			)
 	);
 
