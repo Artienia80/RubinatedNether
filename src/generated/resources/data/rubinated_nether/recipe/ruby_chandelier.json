@@ -3,10 +3,10 @@
   "category": "building",
   "key": {
     "O": {
-      "item": "minecraft:copper_ingot"
+      "item": "rubinated_nether:bronze_grate"
     },
     "X": {
-      "item": "rubinated_nether:ruby_lantern"
+      "item": "rubinated_nether:bronze_lantern"
     }
   },
   "pattern": [

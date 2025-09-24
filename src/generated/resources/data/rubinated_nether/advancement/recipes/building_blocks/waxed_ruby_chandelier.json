@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "rubinated_nether:waxed_ruby_chandelier"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_waxed_bronze_grate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:waxed_bronze_grate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_waxed_bronze_lantern": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:waxed_bronze_lantern"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_waxed_bronze_lantern",
+      "has_waxed_bronze_grate"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "rubinated_nether:waxed_ruby_chandelier"
+    ]
+  }
+}

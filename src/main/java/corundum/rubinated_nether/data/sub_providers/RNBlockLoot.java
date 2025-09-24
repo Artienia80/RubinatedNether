@@ -45,12 +45,24 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.MOLTEN_RUBY_BLOCK.get());
 		this.dropSelf(RNBlocks.BLEEDING_OBSIDIAN.get());
 
-		this.dropSelf(RNBlocks.RUBY_LANTERN.get());
+		this.waxableDrop(RNBlocks.BRONZE_LANTERN);
+		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_LANTERN);
+		this.waxableDrop(RNBlocks.CORRODED_BRONZE_LANTERN);
+		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_LANTERN);
+		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_LANTERN);
+
+		this.waxableDrop(RNBlocks.BRONZE_CHAIN);
+		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_CHAIN);
+		this.waxableDrop(RNBlocks.CORRODED_BRONZE_CHAIN);
+		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_CHAIN);
+		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_CHAIN);
+
 		this.dropSelf(RNBlocks.CHANDELIER.get());
         this.dropSelf(RNBlocks.DISCOLORED_CHANDELIER.get());
         this.dropSelf(RNBlocks.CORRODED_CHANDELIER.get());
         this.dropSelf(RNBlocks.TARNISHED_CHANDELIER.get());
         this.dropSelf(RNBlocks.CRYSTALLIZED_CHANDELIER.get());
+
 		this.dropSelf(RNBlocks.LAVA_LAMP.get());
 		this.dropSelf(RNBlocks.SOAKSTONE.get());
 

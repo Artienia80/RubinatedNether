@@ -150,12 +150,24 @@ public class RNItemModels extends ItemModelProvider {
 
 		// Basic items
 		basicItems(
-				RNBlocks.RUBY_LANTERN,
+				RNBlocks.BRONZE_LANTERN,
+				RNBlocks.DISCOLORED_BRONZE_LANTERN,
+				RNBlocks.CORRODED_BRONZE_LANTERN,
+				RNBlocks.TARNISHED_BRONZE_LANTERN,
+				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN,
+
+				RNBlocks.BRONZE_CHAIN,
+				RNBlocks.DISCOLORED_BRONZE_CHAIN,
+				RNBlocks.CORRODED_BRONZE_CHAIN,
+				RNBlocks.TARNISHED_BRONZE_CHAIN,
+				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN,
+
 				RNBlocks.CHANDELIER,
-//                RNBlocks.DISCOLORED_CHANDELIER,
-//                RNBlocks.CORRODED_CHANDELIER,
-//                RNBlocks.TARNISHED_CHANDELIER,
-//                RNBlocks.CRYSTALLIZED_CHANDELIER,
+                RNBlocks.DISCOLORED_CHANDELIER,
+                RNBlocks.CORRODED_CHANDELIER,
+                RNBlocks.TARNISHED_CHANDELIER,
+                RNBlocks.CRYSTALLIZED_CHANDELIER,
+
 				RNBlocks.RUNESTONE,
 				RNItems.RUBY_LENS,
 				RNItems.RUBY_ITEM,

@@ -1,21 +1,21 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_copper_ingot": {
+    "has_bronze_grate": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:copper_ingot"
+            "items": "rubinated_nether:bronze_grate"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_ruby_lantern": {
+    "has_bronze_lantern": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:ruby_lantern"
+            "items": "rubinated_nether:bronze_lantern"
           }
         ]
       },
@@ -31,8 +31,8 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ruby_lantern",
-      "has_copper_ingot"
+      "has_bronze_lantern",
+      "has_bronze_grate"
     ]
   ],
   "rewards": {

@@ -1,5 +1,7 @@
 package corundum.rubinated_nether.data;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import org.apache.commons.lang3.function.TriConsumer;
 
 import corundum.rubinated_nether.RubinatedNether;
@@ -42,35 +44,33 @@ public class RNBlockStates extends BlockStateProvider {
 						.withExistingParent("rubination_altar", this.modLoc("block/rubination_altar_base"))
 		);
 
-		lantern(
-			RNBlocks.RUBY_LANTERN.get(),
-			"ruby_lantern"
+
+		this.simpleBlock(
+				RNBlocks.CHANDELIER.get(),
+				this.models()
+						.withExistingParent("chandelier", this.modLoc("block/ruby_chandelier_base"))
 		);
 		this.simpleBlock(
-			RNBlocks.CHANDELIER.get(),
-			this.models()
-				.withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
+				RNBlocks.DISCOLORED_CHANDELIER.get(),
+				this.models()
+						.withExistingParent("discolored_chandelier", this.modLoc("block/ruby_chandelier_base"))
 		);
-        this.simpleBlock(
-                RNBlocks.DISCOLORED_CHANDELIER.get(),
-                this.models()
-                        .withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
-        );
-        this.simpleBlock(
-                RNBlocks.CORRODED_CHANDELIER.get(),
-                this.models()
-                        .withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
-        );
-        this.simpleBlock(
-                RNBlocks.TARNISHED_CHANDELIER.get(),
-                this.models()
-                        .withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
-        );
-        this.simpleBlock(
-                RNBlocks.CRYSTALLIZED_CHANDELIER.get(),
-                this.models()
-                        .withExistingParent("ruby_chandelier", this.modLoc("block/ruby_chandelier_base"))
-        );
+		this.simpleBlock(
+				RNBlocks.CORRODED_CHANDELIER.get(),
+				this.models()
+						.withExistingParent("corroded_chandelier", this.modLoc("block/ruby_chandelier_base"))
+		);
+		this.simpleBlock(
+				RNBlocks.TARNISHED_CHANDELIER.get(),
+				this.models()
+						.withExistingParent("tarnished_chandelier", this.modLoc("block/ruby_chandelier_base"))
+		);
+		this.simpleBlock(
+				RNBlocks.CRYSTALLIZED_CHANDELIER.get(),
+				this.models()
+						.withExistingParent("crystallized_chandelier", this.modLoc("block/ruby_chandelier_base"))
+		);
+
 		this.axisBlock(
 			RNBlocks.LAVA_LAMP.get(),
 			this.models()
@@ -265,6 +265,29 @@ public class RNBlockStates extends BlockStateProvider {
 			modLoc("block/bronze/cut_bronze_bricks/crystallized_cut_bronze_bricks")
 		);
 
+		subfolder("bronze/bronze_lantern/",
+				(rloc, name, block) -> {
+					String texturePath = rloc.substring("block/".length());
+					lantern(block.get(), texturePath);
+				},
+				RNBlocks.BRONZE_LANTERN,
+				RNBlocks.DISCOLORED_BRONZE_LANTERN,
+				RNBlocks.CORRODED_BRONZE_LANTERN,
+				RNBlocks.TARNISHED_BRONZE_LANTERN,
+				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN
+		);
+
+		subfolder("bronze/bronze_chain/",
+				(rloc, name, block) -> {
+					chain(block.get(), rloc);
+				},
+				RNBlocks.BRONZE_CHAIN,
+				RNBlocks.DISCOLORED_BRONZE_CHAIN,
+				RNBlocks.CORRODED_BRONZE_CHAIN,
+				RNBlocks.TARNISHED_BRONZE_CHAIN,
+				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN
+		);
+
 	}
 
 	private void glassWithPane(Block glass, IronBarsBlock pane, String name, ResourceLocation edge) {
@@ -325,6 +348,30 @@ public class RNBlockStates extends BlockStateProvider {
 		this.getVariantBuilder(lamp).forAllStates((state) -> ConfiguredModel.builder()
 			.modelFile(state.getValue(LanternBlock.HANGING) ? hangingLantern : lantern)
 			.build()
+		);
+	}
+
+	public void chain(Block chain, String texturePath) {
+		var name = BuiltInRegistries.BLOCK.getKey(chain).getPath();
+
+		var chainModel = models()
+				.withExistingParent(name, mcLoc("block/chain"))
+				.texture("all", modLoc(texturePath))
+				.texture("particle", modLoc(texturePath));
+
+		this.getVariantBuilder(chain).forAllStates((state) -> ConfiguredModel.builder()
+				.modelFile(chainModel)
+				.rotationX(switch(state.getValue(RotatedPillarBlock.AXIS)) {
+					case Y -> 0;
+					case Z -> 90;
+					case X -> 90;
+				})
+				.rotationY(switch(state.getValue(RotatedPillarBlock.AXIS)) {
+					case Y -> 0;
+					case Z -> 0;
+					case X -> 90;
+				})
+				.build()
 		);
 	}
 

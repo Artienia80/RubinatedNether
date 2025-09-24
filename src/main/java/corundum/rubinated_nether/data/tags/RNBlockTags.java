@@ -36,7 +36,18 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.MOLTEN_RUBY_BLOCK.get(),
 				RNBlocks.BLEEDING_OBSIDIAN.get(),
 
-				RNBlocks.RUBY_LANTERN.get(),
+				RNBlocks.BRONZE_LANTERN.get(),
+				RNBlocks.DISCOLORED_BRONZE_LANTERN.get(),
+				RNBlocks.CORRODED_BRONZE_LANTERN.get(),
+				RNBlocks.TARNISHED_BRONZE_LANTERN.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get(),
+
+				RNBlocks.BRONZE_CHAIN.get(),
+				RNBlocks.DISCOLORED_BRONZE_CHAIN.get(),
+				RNBlocks.CORRODED_BRONZE_CHAIN.get(),
+				RNBlocks.TARNISHED_BRONZE_CHAIN.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get(),
+
 				RNBlocks.CHANDELIER.get(),
                 RNBlocks.DISCOLORED_CHANDELIER.get(),
                 RNBlocks.CORRODED_CHANDELIER.get(),
@@ -141,13 +152,8 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.ORNATE_RUBY_GLASS.get(),
 				RNBlocks.ORNATE_RUBY_GLASS_PANE.get(),
 				RNBlocks.MOLTEN_RUBY_GLASS.get(),
-				RNBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
+				RNBlocks.MOLTEN_RUBY_GLASS_PANE.get()
 
-                RNBlocks.CHANDELIER.get(),
-                RNBlocks.DISCOLORED_CHANDELIER.get(),
-                RNBlocks.CORRODED_CHANDELIER.get(),
-                RNBlocks.TARNISHED_CHANDELIER.get(),
-                RNBlocks.CRYSTALLIZED_CHANDELIER.get()
 		);
 
 		this.tag(BlockTags.NEEDS_DIAMOND_TOOL).add(
@@ -237,7 +243,25 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.DISCOLORED_BRONZE_GRATE.get(),
 				RNBlocks.CORRODED_BRONZE_GRATE.get(),
 				RNBlocks.TARNISHED_BRONZE_GRATE.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get()
+				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get(),
+
+				RNBlocks.BRONZE_LANTERN.get(),
+				RNBlocks.DISCOLORED_BRONZE_LANTERN.get(),
+				RNBlocks.CORRODED_BRONZE_LANTERN.get(),
+				RNBlocks.TARNISHED_BRONZE_LANTERN.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get(),
+
+				RNBlocks.BRONZE_CHAIN.get(),
+				RNBlocks.DISCOLORED_BRONZE_CHAIN.get(),
+				RNBlocks.CORRODED_BRONZE_CHAIN.get(),
+				RNBlocks.TARNISHED_BRONZE_CHAIN.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get(),
+
+				RNBlocks.CHANDELIER.get(),
+				RNBlocks.DISCOLORED_CHANDELIER.get(),
+				RNBlocks.CORRODED_CHANDELIER.get(),
+				RNBlocks.TARNISHED_CHANDELIER.get(),
+				RNBlocks.CRYSTALLIZED_CHANDELIER.get()
 		);
 
 		this.tag(RNTags.Blocks.COLDEST_ICE).add(
@@ -260,7 +284,10 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_BULB.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get(),
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get()
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get(),
+				RNBlocks.CRYSTALLIZED_CHANDELIER.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get()
 		);
 
 		this.tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).addTag(RNTags.Blocks.CRYSTALLIZED_BLOCKS);
