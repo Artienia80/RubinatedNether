@@ -398,9 +398,9 @@ public class RNBlocks {
 		)
 	);
 
-	public static final DeferredBlock<Block> BRONZE_LASER = registerBlockAndItem(
+	public static final DeferredBlock<Block> BRONZE_LASER = registerWaxableBlock(
 		"bronze_laser",
-		() -> new RubyLaserBlock(
+		() -> new BronzeLaserBlock(
 			BlockBehaviour.Properties
 				.ofFullCopy(Blocks.COPPER_BLOCK)
 				.noOcclusion()

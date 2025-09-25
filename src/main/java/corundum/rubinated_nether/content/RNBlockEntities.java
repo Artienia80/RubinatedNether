@@ -29,10 +29,10 @@ public class RNBlockEntities {
 		).build(null)
 	);
 
-	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RubyLaserBlockEntity>> BRONZE_LASER = BLOCK_ENTITY_TYPES.register(
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BronzeLaserBlockEntity>> BRONZE_LASER = BLOCK_ENTITY_TYPES.register(
 		"bronze_laser",
 		() -> BlockEntityType.Builder.of(
-			RubyLaserBlockEntity::new, 
+			BronzeLaserBlockEntity::new, 
 			RNBlocks.BRONZE_LASER.get()
 		).build(null)
 	);

@@ -34,12 +34,12 @@ public class RNRenderTypes extends RenderType {
 
 	public static final RenderType LASER_BEAM = createRenderType(
 		"laser_beam", 
-		RubyLaserRenderer.LASER_TEXTURE
+		BronzeLaserRenderer.LASER_TEXTURE
 	);
 
 	public static final RenderType LASER_BEAM_GRAYSCALE = createRenderType(
 		"laser_beam_grayscale", 
-		RubyLaserRenderer.LASER_TEXTURE_GREYSCALE
+		BronzeLaserRenderer.LASER_TEXTURE_GREYSCALE
 	);
 
 	private static RenderType createRenderType(String name, ResourceLocation texture) {

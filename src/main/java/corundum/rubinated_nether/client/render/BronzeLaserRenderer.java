@@ -7,8 +7,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.blocks.RubyLaserBlock;
-import corundum.rubinated_nether.content.blocks.entities.RubyLaserBlockEntity;
+import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
+import corundum.rubinated_nether.content.blocks.entities.BronzeLaserBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -23,7 +23,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.phys.AABB;
 
-public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEntity> {
+public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlockEntity> {
 	public static final ResourceLocation LASER_TEXTURE = RubinatedNether.id("textures/misc/laser_beam.png");
 	public static final ResourceLocation LASER_TEXTURE_GREYSCALE = RubinatedNether.id("textures/misc/laser_beam_greyscale.png");
 
@@ -33,11 +33,11 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 
 	private final Quaternionf tempQuat = new Quaternionf();
 
-	public RubyLaserRenderer(BlockEntityRendererProvider.Context context) {}
+	public BronzeLaserRenderer(BlockEntityRendererProvider.Context context) {}
 
 	@Override
 	public void render(
-			RubyLaserBlockEntity blockEntity,
+			BronzeLaserBlockEntity blockEntity,
 			float partialTick,
 			PoseStack poseStack,
 			MultiBufferSource buffer,
@@ -53,7 +53,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 			poseStack.translate(0.5f, 0.5f, 0.5f);
 
 			// laser facing
-			Direction facing = blockEntity.getBlockState().getValue(RubyLaserBlock.FACING);
+			Direction facing = blockEntity.getBlockState().getValue(BronzeLaserBlock.FACING);
 			var xRot = (facing == Direction.UP) ? 0 : (Direction.Plane.VERTICAL.test(facing) ? 180f : 90f);
 			var zRot = (Math.max(facing.get2DDataValue(), 0) & 3) * 90f;
 
@@ -77,7 +77,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 				int col = Mth.hsvToRgb(hue, .8f, 1f);
 				color = FastColor.ARGB32.color(255, col);
 			} else {
-				RubyLaserBlock.LaserMode mode = blockEntity.getBlockState().getValue(RubyLaserBlock.MODE);
+				BronzeLaserBlock.LaserMode mode = blockEntity.getBlockState().getValue(BronzeLaserBlock.MODE);
 				color = FastColor.ARGB32.color(255, switch(mode) {
 					case SPECTRUM -> BASE_COLOR;
 					case ULTRAVIOLET -> TINTED_COLOR;
@@ -149,8 +149,8 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 				.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 	}
 
-	public AABB getRenderBoundingBox(RubyLaserBlockEntity blockEntity) {
-		var facing = blockEntity.getBlockState().getValue(RubyLaserBlock.FACING);
+	public AABB getRenderBoundingBox(BronzeLaserBlockEntity blockEntity) {
+		var facing = blockEntity.getBlockState().getValue(BronzeLaserBlock.FACING);
 		var end = facing.getNormal().multiply(blockEntity.getCurrentRange() + 1);
 		return new AABB(blockEntity.getBlockPos()).expandTowards(end.getX(), end.getY(), end.getZ());
 	}

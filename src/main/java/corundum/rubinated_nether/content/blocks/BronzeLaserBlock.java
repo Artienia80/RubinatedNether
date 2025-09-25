@@ -28,15 +28,15 @@ import org.jetbrains.annotations.Nullable;
 import com.mojang.serialization.MapCodec;
 
 import corundum.rubinated_nether.content.RNBlockEntities;
-import corundum.rubinated_nether.content.blocks.entities.RubyLaserBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.BronzeLaserBlockEntity;
 import corundum.rubinated_nether.utils.BEBlock;
 import corundum.rubinated_nether.utils.ShapeUtils;
 
 import java.util.Map;
 
-public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLaserBlockEntity> {
+public class BronzeLaserBlock extends DirectionalBlock implements BEBlock<BronzeLaserBlockEntity> {
 
-	public static final MapCodec<RubyLaserBlock> CODEC = simpleCodec(RubyLaserBlock::new);
+	public static final MapCodec<BronzeLaserBlock> CODEC = simpleCodec(BronzeLaserBlock::new);
 
 	public static final Map<Direction, VoxelShape> SHAPES = ShapeUtils.allDirections(Shapes.or(
 			box(0, 0, 0, 16, 6, 16),
@@ -79,7 +79,7 @@ public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLase
 		}
 	}
 
-	public RubyLaserBlock(Properties properties) {
+	public BronzeLaserBlock(Properties properties) {
 		super(properties);
 		this.registerDefaultState(this.defaultBlockState()
 				.setValue(FACING, Direction.NORTH)
@@ -94,13 +94,13 @@ public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLase
 	}
 
 	@Override
-	public BlockEntityType<? extends RubyLaserBlockEntity> getBlockEntityType() {
+	public BlockEntityType<? extends BronzeLaserBlockEntity> getBlockEntityType() {
 		return RNBlockEntities.BRONZE_LASER.get();
 	}
 
 	@Override
-	public Class<? extends RubyLaserBlockEntity> getBlockEntityClass() {
-		return RubyLaserBlockEntity.class;
+	public Class<? extends BronzeLaserBlockEntity> getBlockEntityClass() {
+		return BronzeLaserBlockEntity.class;
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLase
 	@Override
 	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		BlockEntity be = level.getBlockEntity(pos);
-		if(!(be instanceof RubyLaserBlockEntity laser)) return;
+		if(!(be instanceof BronzeLaserBlockEntity laser)) return;
 		level.setBlockAndUpdate(pos, state.setValue(POWER, laser.getPowerLevel()));
 
 		Direction direction = state.getValue(FACING);

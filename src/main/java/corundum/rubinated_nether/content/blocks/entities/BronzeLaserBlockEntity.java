@@ -23,7 +23,7 @@ import org.apache.commons.lang3.mutable.MutableDouble;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNTags;
-import corundum.rubinated_nether.content.blocks.RubyLaserBlock;
+import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
 import corundum.rubinated_nether.utils.BlockUpdateListener;
 import corundum.rubinated_nether.utils.ShapeUtils;
 import corundum.rubinated_nether.utils.TickableBlockEntity;
@@ -34,7 +34,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateListener, TickableBlockEntity {
+public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateListener, TickableBlockEntity {
 
 	// Shapes representing a 1 block long beam segment
 	private static final Map<Direction, VoxelShape> BEAM_SEGMENT_SHAPES = ShapeUtils.allDirections(
@@ -50,7 +50,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 	private Optional<Integer> color;
 	private boolean silly = false;
 
-	public RubyLaserBlockEntity(BlockPos pos, BlockState blockState) {
+	public BronzeLaserBlockEntity(BlockPos pos, BlockState blockState) {
 		super(RNBlockEntities.BRONZE_LASER.get(), pos, blockState);
 	}
 
@@ -69,22 +69,22 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 	public void tick() {
 		handleBlockUpdate(level, worldPosition, getBlockState());
 
-		RubyLaserBlock.LaserMode mode = getBlockState().getValue(RubyLaserBlock.MODE);
+		BronzeLaserBlock.LaserMode mode = getBlockState().getValue(BronzeLaserBlock.MODE);
 
 		// If mode doesn't detect entities, skip entity detection
 		if (!mode.detectsEntities()) {
 			// For ULTRAVIOLET mode, power is based only on block range
-			if (mode == RubyLaserBlock.LaserMode.ULTRAVIOLET) {
+			if (mode == BronzeLaserBlock.LaserMode.ULTRAVIOLET) {
 				powerLevel = Mth.clamp(currentRange - blockRange, 0, LASER_RANGE);
 			}
 
-			if (powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
+			if (powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
 				level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
 			}
 			return;
 		}
 
-		Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
+		Direction facing = getBlockState().getValue(BronzeLaserBlock.FACING);
 
 		AABB range = getLaserRangeAABB(worldPosition, facing);
 
@@ -101,7 +101,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		int blockDistance = Mth.clamp(Mth.floor(lastDistance.getValue()), 0, this.currentRange);
 
 		// Calculate power based on mode
-		if (mode == RubyLaserBlock.LaserMode.INFRARED) {
+		if (mode == BronzeLaserBlock.LaserMode.INFRARED) {
 			// For INFRARED mode, only consider entity distance
 			powerLevel = LASER_RANGE - blockDistance + i.get();
 		} else {
@@ -109,7 +109,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 			powerLevel = this.currentRange - blockDistance + i.get();
 		}
 
-		if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
+		if(powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
 			level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
 		}
 	}
@@ -118,8 +118,8 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 	@Override
 	public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
 		this.currentRange = LASER_RANGE;
-		Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
-		RubyLaserBlock.LaserMode mode = getBlockState().getValue(RubyLaserBlock.MODE);
+		Direction facing = getBlockState().getValue(BronzeLaserBlock.FACING);
+		BronzeLaserBlock.LaserMode mode = getBlockState().getValue(BronzeLaserBlock.MODE);
 
 		// BlockPos that is being checked
 		BlockPos.MutableBlockPos mutableBlockPos = worldPosition.mutable();
@@ -166,9 +166,9 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		}
 
 		// Final power calculation for ULTRAVIOLET mode
-		if(mode == RubyLaserBlock.LaserMode.ULTRAVIOLET) {
+		if(mode == BronzeLaserBlock.LaserMode.ULTRAVIOLET) {
 			powerLevel = Mth.clamp(currentRange - blockRange, 0, LASER_RANGE);
-			if (powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
+			if (powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
 				level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
 			}
 		}
@@ -181,13 +181,13 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
 	@Override
 	public Stream<BlockPos> getListenedPositions() {
-		Vec3i offset = getBlockState().getValue(RubyLaserBlock.FACING).getNormal().multiply(LASER_RANGE);
+		Vec3i offset = getBlockState().getValue(BronzeLaserBlock.FACING).getNormal().multiply(LASER_RANGE);
 		return BlockPos.betweenClosedStream(worldPosition, worldPosition.offset(offset));
 	}
 
 	// This overrides a forge thing
 	public AABB getRenderBoundingBox() {
-		Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
+		Direction facing = getBlockState().getValue(BronzeLaserBlock.FACING);
 		Vec3i end = facing.getNormal().multiply(currentRange + 1);
 		return new AABB(worldPosition).expandTowards(end.getX(), end.getY(), end.getZ());
 	}
