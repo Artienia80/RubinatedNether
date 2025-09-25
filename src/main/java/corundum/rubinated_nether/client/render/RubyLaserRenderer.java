@@ -29,7 +29,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 
 	private static final int BASE_COLOR = 0xFF0000;
 	private static final int TINTED_COLOR = 0x990000;
-	private static final int INFRARED_COLOR = 0xAA0000;
+	private static final int INFRARED_COLOR = 0xFF3333;
 
 	private final Quaternionf tempQuat = new Quaternionf();
 

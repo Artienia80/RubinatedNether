@@ -6,7 +6,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=0": {
-      "model": "rubinated_nether:block/ruby_laser_tinted",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet",
       "x": 180,
       "y": 0
     },
@@ -21,7 +21,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=1": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -36,7 +36,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=2": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -51,7 +51,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=3": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -66,7 +66,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=4": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -81,7 +81,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=5": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -96,7 +96,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=6": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -111,7 +111,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=7": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -126,7 +126,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=8": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -141,7 +141,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=9": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -156,7 +156,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=10": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -171,7 +171,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=11": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -186,7 +186,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=12": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -201,7 +201,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=13": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -216,7 +216,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=14": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -231,7 +231,7 @@
       "y": 0
     },
     "facing=down,mode=ultraviolet,power=15": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 180,
       "y": 0
     },
@@ -246,7 +246,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=0": {
-      "model": "rubinated_nether:block/ruby_laser_tinted",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet",
       "x": 90,
       "y": 90
     },
@@ -261,7 +261,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=1": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -276,7 +276,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=2": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -291,7 +291,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=3": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -306,7 +306,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=4": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -321,7 +321,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=5": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -336,7 +336,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=6": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -351,7 +351,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=7": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -366,7 +366,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=8": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -381,7 +381,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=9": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -396,7 +396,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=10": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -411,7 +411,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=11": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -426,7 +426,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=12": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -441,7 +441,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=13": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -456,7 +456,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=14": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -471,7 +471,7 @@
       "y": 90
     },
     "facing=east,mode=ultraviolet,power=15": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 90
     },
@@ -486,7 +486,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=0": {
-      "model": "rubinated_nether:block/ruby_laser_tinted",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet",
       "x": 90,
       "y": 0
     },
@@ -501,7 +501,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=1": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -516,7 +516,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=2": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -531,7 +531,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=3": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -546,7 +546,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=4": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -561,7 +561,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=5": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -576,7 +576,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=6": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -591,7 +591,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=7": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -606,7 +606,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=8": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -621,7 +621,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=9": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -636,7 +636,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=10": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -651,7 +651,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=11": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -666,7 +666,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=12": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -681,7 +681,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=13": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -696,7 +696,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=14": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -711,7 +711,7 @@
       "y": 0
     },
     "facing=north,mode=ultraviolet,power=15": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 0
     },
@@ -726,7 +726,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=0": {
-      "model": "rubinated_nether:block/ruby_laser_tinted",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet",
       "x": 90,
       "y": 180
     },
@@ -741,7 +741,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=1": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -756,7 +756,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=2": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -771,7 +771,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=3": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -786,7 +786,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=4": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -801,7 +801,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=5": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -816,7 +816,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=6": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -831,7 +831,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=7": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -846,7 +846,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=8": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -861,7 +861,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=9": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -876,7 +876,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=10": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -891,7 +891,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=11": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -906,7 +906,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=12": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -921,7 +921,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=13": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -936,7 +936,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=14": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -951,7 +951,7 @@
       "y": 180
     },
     "facing=south,mode=ultraviolet,power=15": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 180
     },
@@ -966,7 +966,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=0": {
-      "model": "rubinated_nether:block/ruby_laser_tinted",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet",
       "x": 0,
       "y": 0
     },
@@ -981,7 +981,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=1": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -996,7 +996,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=2": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1011,7 +1011,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=3": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1026,7 +1026,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=4": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1041,7 +1041,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=5": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1056,7 +1056,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=6": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1071,7 +1071,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=7": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1086,7 +1086,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=8": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1101,7 +1101,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=9": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1116,7 +1116,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=10": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1131,7 +1131,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=11": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1146,7 +1146,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=12": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1161,7 +1161,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=13": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1176,7 +1176,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=14": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1191,7 +1191,7 @@
       "y": 0
     },
     "facing=up,mode=ultraviolet,power=15": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 0,
       "y": 0
     },
@@ -1206,7 +1206,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=0": {
-      "model": "rubinated_nether:block/ruby_laser_tinted",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet",
       "x": 90,
       "y": 270
     },
@@ -1221,7 +1221,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=1": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1236,7 +1236,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=2": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1251,7 +1251,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=3": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1266,7 +1266,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=4": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1281,7 +1281,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=5": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1296,7 +1296,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=6": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1311,7 +1311,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=7": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1326,7 +1326,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=8": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1341,7 +1341,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=9": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1356,7 +1356,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=10": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1371,7 +1371,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=11": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1386,7 +1386,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=12": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1401,7 +1401,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=13": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1416,7 +1416,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=14": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
@@ -1431,7 +1431,7 @@
       "y": 270
     },
     "facing=west,mode=ultraviolet,power=15": {
-      "model": "rubinated_nether:block/ruby_laser_tinted_on",
+      "model": "rubinated_nether:block/ruby_laser_ultraviolet_on",
       "x": 90,
       "y": 270
     },
