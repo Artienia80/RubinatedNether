@@ -21,9 +21,9 @@ public final class RNTags {
 
 		public static final TagKey<Block> RUBY_GLASS_PANES = createTag(Registries.BLOCK, "ruby_glass_panes");
 
-		public static final TagKey<Block> RUBY_LASER_TRANSPARENT = createTag(Registries.BLOCK, "ruby_laser_transparent");
+		public static final TagKey<Block> LASER_TRANSPARENT = createTag(Registries.BLOCK, "laser_transparent");
 
-		public static final TagKey<Block> RUBY_LASER_NO_SIGNAL = createTag(Registries.BLOCK, "ruby_laser_no_signal");
+		public static final TagKey<Block> LASER_NO_SIGNAL = createTag(Registries.BLOCK, "laser_no_signal");
 
 		public static final TagKey<Block> COLDEST_ICE = createTag(Registries.BLOCK, "coldest_ice");
 

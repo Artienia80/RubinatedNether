@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:ruby_laser"
+          "name": "rubinated_nether:bronze_laser"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "rubinated_nether:blocks/ruby_laser"
+  "random_sequence": "rubinated_nether:blocks/bronze_laser"
 }

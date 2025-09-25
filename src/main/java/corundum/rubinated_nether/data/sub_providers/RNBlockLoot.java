@@ -104,7 +104,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropWhenSilkTouch(RNBlocks.DRY_ICE.get());
 
 		this.dropSelf(RNBlocks.FREEZER.get());
-		this.dropSelf(RNBlocks.RUBY_LASER.get());
+		this.dropSelf(RNBlocks.BRONZE_LASER.get());
 		this.dropSelf(RNBlocks.BRAZIER.get());
 		this.dropSelf(RNBlocks.RUBINATION_ALTAR.get());
 

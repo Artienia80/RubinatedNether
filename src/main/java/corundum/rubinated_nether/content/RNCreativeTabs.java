@@ -88,7 +88,7 @@ public class RNCreativeTabs {
 					RNItems.FROSTED_ICE,
 					RNBlocks.DRY_ICE,
 
-					RNBlocks.RUBY_LASER,
+					RNBlocks.BRONZE_LASER,
 					RNItems.RUBY_LENS,
 
 					RNItems.MUSIC_DISC_SHIMMER,

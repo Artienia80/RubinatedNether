@@ -3,7 +3,6 @@ package corundum.rubinated_nether.data;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.BlockPos;
@@ -114,16 +113,16 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("ornate_ruby_glass_pane", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.ORNATE_RUBY_GLASS_PANE.get()))
 					.save(consumer, RubinatedNether.id( "obtain_ruby_glass"), existingFileHelper);
 
-			AdvancementHolder rubyLaser = Advancement.Builder.advancement()
-					.parent(rubyGlass)
-					.display(RNBlocks.RUBY_LASER.get(),
-							Component.translatable("advancements.rubinated_nether.obtain_ruby_laser.title"),
-							Component.translatable("advancements.rubinated_nether.obtain_ruby_laser.description"),
-							null,
-							AdvancementType.TASK, true, true, false)
-					.requirements(AdvancementRequirements.Strategy.OR)
-					.addCriterion("ruby_laser", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.RUBY_LASER.get()))
-					.save(consumer, RubinatedNether.id( "obtain_ruby_laser"), existingFileHelper);
+//			AdvancementHolder rubyLaser = Advancement.Builder.advancement()
+//					.parent(rubyGlass)
+//					.display(RNBlocks.BRONZE_LASER.get(),
+//							Component.translatable("advancements.rubinated_nether.obtain_ruby_laser.title"),
+//							Component.translatable("advancements.rubinated_nether.obtain_ruby_laser.description"),
+//							null,
+//							AdvancementType.TASK, true, true, false)
+//					.requirements(AdvancementRequirements.Strategy.OR)
+//					.addCriterion("ruby_laser", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.BRONZE_LASER.get()))
+//					.save(consumer, RubinatedNether.id( "obtain_ruby_laser"), existingFileHelper);
 
 //			AdvancementHolder rubyLights = Advancement.Builder.advancement()
 //					.parent(moltenRuby)

@@ -311,7 +311,7 @@ public class RNBlockTags extends BlockTagsProvider {
 
 
 
-		this.tag(RNTags.Blocks.RUBY_LASER_NO_SIGNAL).add(
+		this.tag(RNTags.Blocks.LASER_NO_SIGNAL).add(
 				Blocks.TINTED_GLASS
 		);
 
@@ -344,13 +344,13 @@ public class RNBlockTags extends BlockTagsProvider {
 				);
 
 
-		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).addTag(Tags.Blocks.GLASS_BLOCKS_CHEAP);
-		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).addTag(Tags.Blocks.GLASS_PANES);
-		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).addTag(RNTags.Blocks.RUBY_GLASS);
-		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).addTag(RNTags.Blocks.RUBY_GLASS_PANES);
-		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).addTag(RNTags.Blocks.GRATES);
+		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(Tags.Blocks.GLASS_BLOCKS_CHEAP);
+		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(Tags.Blocks.GLASS_PANES);
+		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(RNTags.Blocks.RUBY_GLASS);
+		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(RNTags.Blocks.RUBY_GLASS_PANES);
+		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(RNTags.Blocks.GRATES);
 
-		this.tag(RNTags.Blocks.RUBY_LASER_TRANSPARENT).add(
+		this.tag(RNTags.Blocks.LASER_TRANSPARENT).add(
 				Blocks.IRON_BARS
 		);
 

@@ -24,8 +24,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.phys.AABB;
 
 public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEntity> {
-	public static final ResourceLocation LASER_TEXTURE = RubinatedNether.id("textures/misc/ruby_laser_beam.png");
-	public static final ResourceLocation LASER_TEXTURE_GREYSCALE = RubinatedNether.id("textures/misc/ruby_laser_beam_greyscale.png");
+	public static final ResourceLocation LASER_TEXTURE = RubinatedNether.id("textures/misc/laser_beam.png");
+	public static final ResourceLocation LASER_TEXTURE_GREYSCALE = RubinatedNether.id("textures/misc/laser_beam_greyscale.png");
 
 	private static final int BASE_COLOR = 0xFF0000;
 	private static final int TINTED_COLOR = 0x990000;

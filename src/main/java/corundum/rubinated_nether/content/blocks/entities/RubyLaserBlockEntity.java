@@ -51,7 +51,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 	private boolean silly = false;
 
 	public RubyLaserBlockEntity(BlockPos pos, BlockState blockState) {
-		super(RNBlockEntities.RUBY_LASER.get(), pos, blockState);
+		super(RNBlockEntities.BRONZE_LASER.get(), pos, blockState);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 			}
 
 			if (powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
-				level.scheduleTick(getBlockPos(), RNBlocks.RUBY_LASER.get(), 2);
+				level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
 			}
 			return;
 		}
@@ -110,7 +110,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		}
 
 		if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
-			level.scheduleTick(getBlockPos(), RNBlocks.RUBY_LASER.get(), 2);
+			level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
 		}
 	}
 
@@ -133,8 +133,8 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
 				BlockState state = level.getBlockState(mutableBlockPos);
 
-				boolean blockCheck = state.is(RNTags.Blocks.RUBY_LASER_NO_SIGNAL);
-				if (!blockCheck && state.is(RNTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
+				boolean blockCheck = state.is(RNTags.Blocks.LASER_NO_SIGNAL);
+				if (!blockCheck && state.is(RNTags.Blocks.LASER_TRANSPARENT)) continue;
 
 				VoxelShape shape = Shapes.join(state.getCollisionShape(level, mutableBlockPos), BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND);
 
@@ -169,7 +169,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		if(mode == RubyLaserBlock.LaserMode.ULTRAVIOLET) {
 			powerLevel = Mth.clamp(currentRange - blockRange, 0, LASER_RANGE);
 			if (powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
-				level.scheduleTick(getBlockPos(), RNBlocks.RUBY_LASER.get(), 2);
+				level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
 			}
 		}
 	}
@@ -233,6 +233,6 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
 	@Override
 	public BlockEntityType<?> getType() {
-		return RNBlockEntities.RUBY_LASER.get();
+		return RNBlockEntities.BRONZE_LASER.get();
 	}
 }

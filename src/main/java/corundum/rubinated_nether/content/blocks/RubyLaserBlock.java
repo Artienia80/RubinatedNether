@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
@@ -49,8 +48,8 @@ public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLase
 
 	public enum LaserMode implements StringRepresentable {
 		SPECTRUM("spectrum"),     // Blocks + Entities (default)
-		ULTRAVIOLET("ultraviolet"), // Blocks Only
-		INFRARED("infrared");       // Entities Only
+		ULTRAVIOLET("uv"), // Blocks Only
+		INFRARED("ir");       // Entities Only
 
 		private final String name;
 
@@ -96,7 +95,7 @@ public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLase
 
 	@Override
 	public BlockEntityType<? extends RubyLaserBlockEntity> getBlockEntityType() {
-		return RNBlockEntities.RUBY_LASER.get();
+		return RNBlockEntities.BRONZE_LASER.get();
 	}
 
 	@Override

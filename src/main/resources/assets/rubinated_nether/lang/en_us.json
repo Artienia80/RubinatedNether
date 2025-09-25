@@ -59,7 +59,6 @@
 
   "block.rubinated_nether.shrine_stone_coffer": "Coffer",
 
-  "block.rubinated_nether.ruby_laser": "Ruby Laser",
   "item.rubinated_nether.ruby_lens": "Ruby Lens",
 
   "block.rubinated_nether.runestone": "Runestone",
@@ -207,6 +206,8 @@
   "item.rubinated_nether.waxed_corroded_bronze_lamp": "Waxed Corroded Bronze Lamp",
   "item.rubinated_nether.waxed_tarnished_bronze_lamp": "Waxed Tarnished Bronze Lamp",
   "item.rubinated_nether.waxed_crystallized_bronze_lamp": "Waxed Crystallized Bronze Lamp",
+
+  "block.rubinated_nether.bronze_laser": "Bronze Laser",
 
   "item.rubinated_nether.bronze_rod": "Bronze Rod",
   "item.rubinated_nether.bronze_powder": "Bronze Powder",

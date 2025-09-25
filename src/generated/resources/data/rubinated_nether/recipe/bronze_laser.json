@@ -3,10 +3,10 @@
   "category": "building",
   "key": {
     "A": {
-      "item": "minecraft:copper_block"
+      "item": "rubinated_nether:bronze_block"
     },
     "B": {
-      "item": "minecraft:copper_ingot"
+      "item": "rubinated_nether:bronze_scrap"
     },
     "C": {
       "item": "minecraft:redstone"
@@ -25,6 +25,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "rubinated_nether:ruby_laser"
+    "id": "rubinated_nether:bronze_laser"
   }
 }
