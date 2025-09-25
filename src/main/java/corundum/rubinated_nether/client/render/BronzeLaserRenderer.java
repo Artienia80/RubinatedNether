@@ -28,8 +28,8 @@ public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlock
 	public static final ResourceLocation LASER_TEXTURE_GREYSCALE = RubinatedNether.id("textures/misc/laser_beam_greyscale.png");
 
 	private static final int BASE_COLOR = 0xFF0000;
-	private static final int TINTED_COLOR = 0x990000;
-	private static final int INFRARED_COLOR = 0xFF3333;
+	private static final int ULTRAVIOLET_COLOR = 0x330033;  // Very dark purple
+	private static final int INFRARED_COLOR = 0x330000;     // Very dark crimson
 
 	private final Quaternionf tempQuat = new Quaternionf();
 
@@ -70,6 +70,7 @@ public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlock
 			var maxY = (float) (blockEntity.getRenderRange() + 1f);
 
 			int color;
+			boolean useGrayscale = false;
 			if (blockEntity.isColored()) {
 				color = blockEntity.getColor().orElse(BASE_COLOR);
 			} else if(blockEntity.isSilly()) {
@@ -78,15 +79,19 @@ public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlock
 				color = FastColor.ARGB32.color(255, col);
 			} else {
 				BronzeLaserBlock.LaserMode mode = blockEntity.getBlockState().getValue(BronzeLaserBlock.MODE);
-				color = FastColor.ARGB32.color(255, switch(mode) {
-					case SPECTRUM -> BASE_COLOR;
-					case ULTRAVIOLET -> TINTED_COLOR;
-					case INFRARED -> INFRARED_COLOR;
-				});
+				if (mode == BronzeLaserBlock.LaserMode.SPECTRUM) {
+					color = FastColor.ARGB32.color(255, BASE_COLOR);
+				} else if (mode == BronzeLaserBlock.LaserMode.ULTRAVIOLET) {
+					color = FastColor.ARGB32.color(255, ULTRAVIOLET_COLOR);
+					useGrayscale = true;
+				} else { // INFRARED
+					color = FastColor.ARGB32.color(255, INFRARED_COLOR);
+					useGrayscale = true;
+				}
 			}
 
 			// Use fallback render type if shaders in use because beacon beam broken
-			var consumer = buffer.getBuffer(getRenderType(blockEntity.isColored() || blockEntity.isSilly()));
+			var consumer = buffer.getBuffer(getRenderType(blockEntity.isColored() || blockEntity.isSilly() || useGrayscale));
 
 			renderFace(poseStack, consumer, .4f, 1, .6f, .6f, maxY, .6f, color, lerpedTime, Direction.NORTH);
 			renderFace(poseStack, consumer, .6f, 1, .4f, .4f, maxY, .4f, color, lerpedTime, Direction.SOUTH);
@@ -116,29 +121,31 @@ public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlock
 		var v1 = v0 + (maxV * 0.4f);
 
 		var endColor = FastColor.ARGB32.color(
-				-((int)(maxY) - 16) * 15,
-				color
+				Math.max(0, 255 - ((int)(maxY) - 16) * 15),
+				FastColor.ARGB32.red(color),
+				FastColor.ARGB32.green(color),
+				FastColor.ARGB32.blue(color)
 		);
 
 		buffer.addVertex(pose.pose(), minX, minY, minZ)
 				.setColor(color)
 				.setUv(0, v0)
 				.setOverlay(OverlayTexture.NO_OVERLAY)
-				.setUv2(LightTexture.FULL_BRIGHT, 1)
+				.setUv2(LightTexture.FULL_BRIGHT,1)
 				.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 
 		buffer.addVertex(pose.pose(), maxX, minY, maxZ)
 				.setColor(color)
 				.setUv(1, v0)
 				.setOverlay(OverlayTexture.NO_OVERLAY)
-				.setUv2(LightTexture.FULL_BRIGHT, 1)
+				.setUv2(LightTexture.FULL_BRIGHT,1)
 				.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 
 		buffer.addVertex(pose.pose(), maxX, maxY, maxZ)
 				.setColor(endColor)
 				.setUv(1, v1)
 				.setOverlay(OverlayTexture.NO_OVERLAY)
-				.setUv2(LightTexture.FULL_BRIGHT, 200)
+				.setUv2(LightTexture.FULL_BRIGHT,200)
 				.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 
 		buffer.addVertex(pose.pose(), minX, maxY, minZ)
