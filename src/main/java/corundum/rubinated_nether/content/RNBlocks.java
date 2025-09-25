@@ -398,14 +398,6 @@ public class RNBlocks {
 		)
 	);
 
-	public static final DeferredBlock<Block> BRONZE_LASER = registerWaxableBlock(
-		"bronze_laser",
-		() -> new BronzeLaserBlock(
-			BlockBehaviour.Properties
-				.ofFullCopy(Blocks.COPPER_BLOCK)
-				.noOcclusion()
-		)
-	);
 
 	public static final DeferredBlock<Block> BRAZIER = registerBlockAndItem(
 		"ruby_brazier", 
@@ -1059,6 +1051,47 @@ public class RNBlocks {
 					RNBlockEntities.COFFER::get
 			)
 	);
+
+	public static final DeferredBlock<Block> BRONZE_LASER = registerWaxableBlock(
+			"bronze_laser",
+			() -> new BronzeLaserBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_LASER = registerWaxableBlock(
+			"discolored_bronze_laser",
+			() -> new BronzeLaserBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_PINK).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_BRONZE_LASER = registerWaxableBlock(
+			"corroded_bronze_laser",
+			() -> new BronzeLaserBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).mapColor(MapColor.CRIMSON_STEM).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_LASER = registerWaxableBlock(
+			"tarnished_bronze_laser",
+			() -> new BronzeLaserBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_BLACK).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_LASER = registerWaxableBlock(
+			"crystallized_bronze_laser",
+			() -> new BronzeLaserBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_WHITE).noOcclusion()
+			)
+	);
+
 
 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {

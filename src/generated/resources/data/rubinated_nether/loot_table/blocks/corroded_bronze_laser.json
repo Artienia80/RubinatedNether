@@ -5,7 +5,7 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "block": "rubinated_nether:bronze_laser",
+          "block": "rubinated_nether:corroded_bronze_laser",
           "condition": "minecraft:block_state_property",
           "properties": {
             "waxed": "true"
@@ -15,7 +15,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:waxed_bronze_laser"
+          "name": "rubinated_nether:waxed_corroded_bronze_laser"
         }
       ],
       "rolls": 1.0
@@ -26,7 +26,7 @@
         {
           "condition": "minecraft:inverted",
           "term": {
-            "block": "rubinated_nether:bronze_laser",
+            "block": "rubinated_nether:corroded_bronze_laser",
             "condition": "minecraft:block_state_property",
             "properties": {
               "waxed": "true"
@@ -37,11 +37,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "rubinated_nether:bronze_laser"
+          "name": "rubinated_nether:corroded_bronze_laser"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "rubinated_nether:blocks/bronze_laser"
+  "random_sequence": "rubinated_nether:blocks/corroded_bronze_laser"
 }

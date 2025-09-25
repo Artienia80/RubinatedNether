@@ -104,7 +104,6 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropWhenSilkTouch(RNBlocks.DRY_ICE.get());
 
 		this.dropSelf(RNBlocks.FREEZER.get());
-		this.dropSelf(RNBlocks.BRONZE_LASER.get());
 		this.dropSelf(RNBlocks.BRAZIER.get());
 		this.dropSelf(RNBlocks.RUBINATION_ALTAR.get());
 
@@ -162,7 +161,11 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_LAMP);
 		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_LAMP);
 
-
+		this.waxableDrop(RNBlocks.BRONZE_LASER);
+		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_LASER);
+		this.waxableDrop(RNBlocks.CORRODED_BRONZE_LASER);
+		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_LASER);
+		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_LASER);
 
 		this.add(
 				RNBlocks.MOLTEN_RUBY_ORE.get(),

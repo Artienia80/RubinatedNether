@@ -29,13 +29,18 @@ public class RNBlockEntities {
 		).build(null)
 	);
 
-	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BronzeLaserBlockEntity>> BRONZE_LASER = BLOCK_ENTITY_TYPES.register(
-		"bronze_laser",
-		() -> BlockEntityType.Builder.of(
-			BronzeLaserBlockEntity::new, 
-			RNBlocks.BRONZE_LASER.get()
-		).build(null)
-	);
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BronzeLaserBlockEntity>> BRONZE_LASER =
+			BLOCK_ENTITY_TYPES.register(
+					"bronze_laser",
+					() -> BlockEntityType.Builder.of(
+							BronzeLaserBlockEntity::new,
+							RNBlocks.BRONZE_LASER.get(),
+							RNBlocks.DISCOLORED_BRONZE_LASER.get(),
+							RNBlocks.CORRODED_BRONZE_LASER.get(),
+							RNBlocks.TARNISHED_BRONZE_LASER.get(),
+							RNBlocks.CRYSTALLIZED_BRONZE_LASER.get()
+					).build(null)
+			);
 
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RunestoneBlockEntity>> RUNESTONE = BLOCK_ENTITY_TYPES.register(
 			"runestone",

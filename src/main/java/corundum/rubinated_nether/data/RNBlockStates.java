@@ -1,7 +1,10 @@
 package corundum.rubinated_nether.data;
 
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.neoforged.neoforge.client.model.generators.ModelBuilder;
 import org.apache.commons.lang3.function.TriConsumer;
 
 import corundum.rubinated_nether.RubinatedNether;
@@ -298,6 +301,8 @@ public class RNBlockStates extends BlockStateProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN
 		);
 
+		generateLaserModels(blockName(RNBlocks.BRONZE_LASER));
+
 	}
 
 	private void glassWithPane(Block glass, IronBarsBlock pane, String name, ResourceLocation edge) {
@@ -411,6 +416,80 @@ public class RNBlockStates extends BlockStateProvider {
 			);
 		}
 	}
+
+	private void generateLaserModels(String blockName) {
+		// Define all variants with their texture patterns
+		var variants = new Object[][] {
+				{"", "laser_lens", blockName + "_front", blockName + "_front"}, // base variant
+				{"_ir", "laser_lens_ir", blockName + "_front", blockName + "_front"},
+				{"_ir_on", "laser_lens_ir_on", blockName + "_front_on", blockName + "_front"},
+				{"_on", "laser_lens_on", blockName + "_front_on", blockName + "_front"},
+				{"_uv", "laser_lens_uv", blockName + "_front", blockName + "_front"},
+				{"_uv_on", "laser_lens_uv_on", blockName + "_front_on", blockName + "_front"}
+		};
+
+		// Generate each variant
+		for (var variant : variants) {
+			String suffix = (String) variant[0];
+			String lensTexture = (String) variant[1];
+			String frontTexture = (String) variant[2];
+			String particleTexture = (String) variant[3];
+
+			createLaserModel(blockName + suffix, lensTexture, frontTexture, blockName + "_side", particleTexture);
+		}
+	}
+
+	private void createLaserModel(String modelName, String lensTexture, String frontTexture, String sideTexture, String particleTexture) {
+		models().getBuilder(modelName)
+				.parent(models().getExistingFile(mcLoc("block/block")))
+				.guiLight(BlockModel.GuiLight.SIDE)
+				.texture("0", modLoc("block/laser/mode/" + lensTexture))
+				.texture("2", modLoc("block/laser/material/" + frontTexture))
+				.texture("3", modLoc("block/laser/material/" + sideTexture))
+				.texture("particle", modLoc("block/laser/material/" + particleTexture))
+				.renderType("cutout")
+				// Element 1: Base
+				.element()
+				.from(0, 0, 0).to(16, 6, 16)
+				.rotation().angle(0).axis(Direction.Axis.Y).origin(8, 8, 8).end()
+				.face(Direction.NORTH).uvs(0, 0, 6, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#3").end()
+				.face(Direction.EAST).uvs(0, 0, 6, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#3").end()
+				.face(Direction.SOUTH).uvs(0, 0, 6, 16).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#3").end()
+				.face(Direction.WEST).uvs(0, 0, 6, 16).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#3").end()
+				.face(Direction.UP).uvs(0, 0, 16, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#2").end()
+				.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#2").end()
+				.end()
+				// Element 2: Inner ring
+				.element()
+				.from(2, 7, 2).to(14, 14, 14)
+				.rotation().angle(0).axis(Direction.Axis.Y).origin(8, 8, 8).end()
+				.face(Direction.NORTH).uvs(7, 2, 14, 14).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#3").end()
+				.face(Direction.EAST).uvs(7, 2, 14, 14).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#3").end()
+				.face(Direction.SOUTH).uvs(7, 2, 14, 14).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#3").end()
+				.face(Direction.WEST).uvs(7, 2, 14, 14).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#3").end()
+				.end()
+				// Element 3: Crossed element (note the inverted from/to coordinates)
+				.element()
+				.from(14, 7, 2).to(2, 14, 14)
+				.rotation().angle(0).axis(Direction.Axis.Y).origin(20, 8, 31).end()
+				.face(Direction.NORTH).uvs(7, 2, 14, 14).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#3").end()
+				.face(Direction.EAST).uvs(7, 2, 14, 14).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#3").end()
+				.face(Direction.SOUTH).uvs(7, 2, 14, 14).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#3").end()
+				.face(Direction.WEST).uvs(7, 2, 14, 14).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#3").end()
+				.end()
+				// Element 4: Lens/crystal top
+				.element()
+				.from(3, 6, 3).to(13, 16, 13)
+				.rotation().angle(0).axis(Direction.Axis.Y).origin(8, 8, 8).end()
+				.face(Direction.NORTH).uvs(3, 3, 13, 13).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).texture("#0").end()
+				.face(Direction.EAST).uvs(3, 3, 13, 13).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#0").end()
+				.face(Direction.SOUTH).uvs(3, 3, 13, 13).texture("#0").end()
+				.face(Direction.WEST).uvs(3, 3, 13, 13).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#0").end()
+				.face(Direction.UP).uvs(3, 3, 13, 13).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).texture("#0").end()
+				.face(Direction.DOWN).uvs(3, 3, 13, 13).texture("#0").end()
+				.end();
+	}
+
 
 	private String blockName(DeferredBlock<?> block) {
 		return block.getId().toString().split(":")[1];

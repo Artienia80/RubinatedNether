@@ -88,7 +88,6 @@ public class RNCreativeTabs {
 					RNItems.FROSTED_ICE,
 					RNBlocks.DRY_ICE,
 
-					RNBlocks.BRONZE_LASER,
 					RNItems.RUBY_LENS,
 
 					RNItems.MUSIC_DISC_SHIMMER,
@@ -108,6 +107,13 @@ public class RNCreativeTabs {
 
 				addWaxableItems(
 					output,
+
+						RNBlocks.BRONZE_LASER,
+						RNBlocks.DISCOLORED_BRONZE_LASER,
+						RNBlocks.CORRODED_BRONZE_LASER,
+						RNBlocks.TARNISHED_BRONZE_LASER,
+						RNBlocks.CRYSTALLIZED_BRONZE_LASER,
+
 					RNBlocks.BRONZE_BLOCK,
 					RNBlocks.CHISELED_BRONZE,
 					RNBlocks.CUT_BRONZE_PILLAR,
