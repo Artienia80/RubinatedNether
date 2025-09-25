@@ -38,7 +38,7 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 
 	// Shapes representing a 1 block long beam segment
 	private static final Map<Direction, VoxelShape> BEAM_SEGMENT_SHAPES = ShapeUtils.allDirections(
-		Shapes.box(.4, 0, .4, .6, 1, .6)
+			Shapes.box(.4, 0, .4, .6, 1, .6)
 	);
 
 	private static final int LASER_RANGE = 15;
@@ -69,7 +69,20 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 	public void tick() {
 		handleBlockUpdate(level, worldPosition, getBlockState());
 
-		if(getBlockState().getValue(RubyLaserBlock.TINTED)) return;
+		RubyLaserBlock.LaserMode mode = getBlockState().getValue(RubyLaserBlock.MODE);
+
+		// If mode doesn't detect entities, skip entity detection
+		if (!mode.detectsEntities()) {
+			// For ULTRAVIOLET mode, power is based only on block range
+			if (mode == RubyLaserBlock.LaserMode.ULTRAVIOLET) {
+				powerLevel = Mth.clamp(currentRange - blockRange, 0, LASER_RANGE);
+			}
+
+			if (powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
+				level.scheduleTick(getBlockPos(), RNBlocks.RUBY_LASER.get(), 2);
+			}
+			return;
+		}
 
 		Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
 
@@ -86,7 +99,15 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		});
 
 		int blockDistance = Mth.clamp(Mth.floor(lastDistance.getValue()), 0, this.currentRange);
-		powerLevel = this.currentRange - blockDistance + i.get();
+
+		// Calculate power based on mode
+		if (mode == RubyLaserBlock.LaserMode.INFRARED) {
+			// For INFRARED mode, only consider entity distance
+			powerLevel = LASER_RANGE - blockDistance + i.get();
+		} else {
+			// For SPECTRUM mode, consider both blocks and entities
+			powerLevel = this.currentRange - blockDistance + i.get();
+		}
 
 		if(powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
 			level.scheduleTick(getBlockPos(), RNBlocks.RUBY_LASER.get(), 2);
@@ -98,34 +119,41 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 	public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
 		this.currentRange = LASER_RANGE;
 		Direction facing = getBlockState().getValue(RubyLaserBlock.FACING);
+		RubyLaserBlock.LaserMode mode = getBlockState().getValue(RubyLaserBlock.MODE);
+
 		// BlockPos that is being checked
 		BlockPos.MutableBlockPos mutableBlockPos = worldPosition.mutable();
 
-		// Iterating the range of the Laser to check each position
-		for (int i = 0; i <= LASER_RANGE; i++) {
-			mutableBlockPos.move(facing);
-			blockRange = i;
+		// Only check blocks if mode detects blocks
+		if (mode.detectsBlocks()) {
+			// Iterating the range of the Laser to check each position
+			for (int i = 0; i <= LASER_RANGE; i++) {
+				mutableBlockPos.move(facing);
+				blockRange = i;
 
-			BlockState state = level.getBlockState(mutableBlockPos);
+				BlockState state = level.getBlockState(mutableBlockPos);
 
-			boolean blockCheck = state.is(RNTags.Blocks.RUBY_LASER_NO_SIGNAL);
-			if (!blockCheck && state.is(RNTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
+				boolean blockCheck = state.is(RNTags.Blocks.RUBY_LASER_NO_SIGNAL);
+				if (!blockCheck && state.is(RNTags.Blocks.RUBY_LASER_TRANSPARENT)) continue;
 
-			VoxelShape shape = Shapes.join(state.getCollisionShape(level, mutableBlockPos), BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND);
+				VoxelShape shape = Shapes.join(state.getCollisionShape(level, mutableBlockPos), BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND);
 
-			if(!shape.isEmpty()) {
-				if(level.isClientSide) {
-					Direction.Axis axis = facing.getAxis();
-					rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.max(axis);
+				if(!shape.isEmpty()) {
+					if(level.isClientSide) {
+						Direction.Axis axis = facing.getAxis();
+						rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.max(axis);
+					}
+					// In case of block obstruction, the laser range is shortened
+					if(blockCheck) this.currentRange = blockRange;
+					break;
 				}
-				// In case of Tinted Glass the laser range is shortened
-				if(blockCheck) this.currentRange = blockRange;
-				break;
 			}
+		} else {
+			// For INFRARED mode, blocks don't stop the laser
+			blockRange = LASER_RANGE;
 		}
 
-		// Ignore what IDEA says its stupid
-		//
+		// Visual properties
 		BlockState state = level.getBlockState(worldPosition.relative(facing));
 		silly = state.is(RNTags.Blocks.SILLY_LASER);
 		visible = silly || state.is(Tags.Blocks.GLASS_BLOCKS) || state.is(Tags.Blocks.GLASS_BLOCKS_TINTED) || state.is(Tags.Blocks.GLASS_PANES) || state.is(Blocks.IRON_BARS) || state.is(Blocks.IRON_BARS)  || state.is(Blocks.COPPER_GRATE)  || state.is(RNTags.Blocks.GRATES);
@@ -137,7 +165,8 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 			color = Optional.empty();
 		}
 
-		if(getBlockState().getValue(RubyLaserBlock.TINTED)) {
+		// Final power calculation for ULTRAVIOLET mode
+		if(mode == RubyLaserBlock.LaserMode.ULTRAVIOLET) {
 			powerLevel = Mth.clamp(currentRange - blockRange, 0, LASER_RANGE);
 			if (powerLevel != getBlockState().getValue(RubyLaserBlock.POWER)) {
 				level.scheduleTick(getBlockPos(), RNBlocks.RUBY_LASER.get(), 2);
@@ -162,8 +191,6 @@ public class RubyLaserBlockEntity extends BlockEntity implements BlockUpdateList
 		Vec3i end = facing.getNormal().multiply(currentRange + 1);
 		return new AABB(worldPosition).expandTowards(end.getX(), end.getY(), end.getZ());
 	}
-
-
 
 	private AABB getLaserRangeAABB(BlockPos worldPosition, Direction facing) {
 		Vec3i rangeVec = facing.getNormal().multiply(blockRange);

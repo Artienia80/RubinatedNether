@@ -29,6 +29,7 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 
 	private static final int BASE_COLOR = 0xFF0000;
 	private static final int TINTED_COLOR = 0x990000;
+	private static final int INFRARED_COLOR = 0xAA0000;
 
 	private final Quaternionf tempQuat = new Quaternionf();
 
@@ -36,12 +37,12 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 
 	@Override
 	public void render(
-		RubyLaserBlockEntity blockEntity, 
-		float partialTick, 
-		PoseStack poseStack, 
-		MultiBufferSource buffer, 
-		int packedLight, 
-		int packedOverlay
+			RubyLaserBlockEntity blockEntity,
+			float partialTick,
+			PoseStack poseStack,
+			MultiBufferSource buffer,
+			int packedLight,
+			int packedOverlay
 	) {
 		var player = Minecraft.getInstance().player;
 		var level = Minecraft.getInstance().level;
@@ -76,7 +77,12 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 				int col = Mth.hsvToRgb(hue, .8f, 1f);
 				color = FastColor.ARGB32.color(255, col);
 			} else {
-				color = FastColor.ARGB32.color(255, blockEntity.getBlockState().getValue(RubyLaserBlock.TINTED) ? TINTED_COLOR : BASE_COLOR);
+				RubyLaserBlock.LaserMode mode = blockEntity.getBlockState().getValue(RubyLaserBlock.MODE);
+				color = FastColor.ARGB32.color(255, switch(mode) {
+					case SPECTRUM -> BASE_COLOR;
+					case ULTRAVIOLET -> TINTED_COLOR;
+					case INFRARED -> INFRARED_COLOR;
+				});
 			}
 
 			// Use fallback render type if shaders in use because beacon beam broken
@@ -91,17 +97,17 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 	}
 
 	private void renderFace(
-		PoseStack matrices, 
-		VertexConsumer buffer, 
-		float minX, 
-		float minY, 
-		float minZ, 
-		float maxX, 
-		float maxY, 
-		float maxZ, 
-		int color, 
-		float ticks, 
-		Direction face
+			PoseStack matrices,
+			VertexConsumer buffer,
+			float minX,
+			float minY,
+			float minZ,
+			float maxX,
+			float maxY,
+			float maxZ,
+			int color,
+			float ticks,
+			Direction face
 	) {
 		PoseStack.Pose pose = matrices.last();
 		var maxV = (maxY - 1f) / 15f;
@@ -110,37 +116,37 @@ public class RubyLaserRenderer implements BlockEntityRenderer<RubyLaserBlockEnti
 		var v1 = v0 + (maxV * 0.4f);
 
 		var endColor = FastColor.ARGB32.color(
-			-((int)(maxY) - 16) * 15,
-			color
+				-((int)(maxY) - 16) * 15,
+				color
 		);
 
 		buffer.addVertex(pose.pose(), minX, minY, minZ)
-			.setColor(color)
-			.setUv(0, v0)
-			.setOverlay(OverlayTexture.NO_OVERLAY)
-			.setUv2(LightTexture.FULL_BRIGHT, 1)
-			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
+				.setColor(color)
+				.setUv(0, v0)
+				.setOverlay(OverlayTexture.NO_OVERLAY)
+				.setUv2(LightTexture.FULL_BRIGHT, 1)
+				.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 
 		buffer.addVertex(pose.pose(), maxX, minY, maxZ)
-			.setColor(color)
-			.setUv(1, v0)
-			.setOverlay(OverlayTexture.NO_OVERLAY)
-			.setUv2(LightTexture.FULL_BRIGHT, 1)
-			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
+				.setColor(color)
+				.setUv(1, v0)
+				.setOverlay(OverlayTexture.NO_OVERLAY)
+				.setUv2(LightTexture.FULL_BRIGHT, 1)
+				.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 
 		buffer.addVertex(pose.pose(), maxX, maxY, maxZ)
-			.setColor(endColor)
-			.setUv(1, v1)
-			.setOverlay(OverlayTexture.NO_OVERLAY)
-			.setUv2(LightTexture.FULL_BRIGHT, 200)
-			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
+				.setColor(endColor)
+				.setUv(1, v1)
+				.setOverlay(OverlayTexture.NO_OVERLAY)
+				.setUv2(LightTexture.FULL_BRIGHT, 200)
+				.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 
 		buffer.addVertex(pose.pose(), minX, maxY, minZ)
-			.setColor(endColor)
-			.setUv(0, v1)
-			.setOverlay(OverlayTexture.NO_OVERLAY)
-			.setUv2(LightTexture.FULL_BRIGHT, 200)
-			.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
+				.setColor(endColor)
+				.setUv(0, v1)
+				.setOverlay(OverlayTexture.NO_OVERLAY)
+				.setUv2(LightTexture.FULL_BRIGHT, 200)
+				.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 	}
 
 	public AABB getRenderBoundingBox(RubyLaserBlockEntity blockEntity) {
