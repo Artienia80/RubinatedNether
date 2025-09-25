@@ -1,10 +1,13 @@
 package corundum.rubinated_nether.data;
 
+import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.ModelBuilder;
+import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder;
 import org.apache.commons.lang3.function.TriConsumer;
 
 import corundum.rubinated_nether.RubinatedNether;
@@ -301,7 +304,8 @@ public class RNBlockStates extends BlockStateProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN
 		);
 
-		generateLaserModels(blockName(RNBlocks.BRONZE_LASER));
+		generateLaserFamily("laser");
+
 
 	}
 
@@ -417,6 +421,35 @@ public class RNBlockStates extends BlockStateProvider {
 		}
 	}
 
+	private static final String[] LASER_STATES = {
+			"bronze",
+			"discolored_bronze",
+			"corroded_bronze",
+			"tarnished_bronze",
+			"crystallized_bronze"
+	};
+
+	private void generateLaserFamily(String baseName) {
+		for (String state : LASER_STATES) {
+			// Build the full block name, e.g. "bronze_laser", "discolored_bronze_laser"
+			String blockName = state + "_" + baseName.toLowerCase();
+
+			// Look up the corresponding DeferredBlock field from RNBlocks
+			try {
+				var field = RNBlocks.class.getField(blockName.toUpperCase());
+				DeferredBlock<?> block = (DeferredBlock<?>) field.get(null);
+
+				// Generate models + blockstates
+				generateLaserModels(blockName);
+				generateLaserBlockStates(block);
+
+			} catch (NoSuchFieldException | IllegalAccessException e) {
+				throw new RuntimeException("Could not find RNBlocks." + blockName.toUpperCase(), e);
+			}
+		}
+	}
+
+
 	private void generateLaserModels(String blockName) {
 		// Define all variants with their texture patterns
 		var variants = new Object[][] {
@@ -489,6 +522,60 @@ public class RNBlockStates extends BlockStateProvider {
 				.face(Direction.DOWN).uvs(3, 3, 13, 13).texture("#0").end()
 				.end();
 	}
+
+	private void generateLaserBlockStates(DeferredBlock<?> laserBlock) {
+		String blockName = blockName(laserBlock);
+
+		// Generate models first
+		generateLaserModels(blockName);
+
+		// Generate blockstates with specific ordering
+		VariantBlockStateBuilder builder = getVariantBuilder(laserBlock.get());
+
+		// Order: Power (0-15) -> Mode (spectrum, uv, ir) -> Facing (down, east, north, south, up, west)
+		for (int power = 0; power <= 15; power++) {
+			for (BronzeLaserBlock.LaserMode mode : BronzeLaserBlock.LaserMode.values()) {
+				for (Direction facing : Direction.values()) {
+					String modeStr = mode.getSerializedName();
+
+					// Determine model suffix based on mode and power
+					String modelSuffix = "";
+					if (!modeStr.equals("spectrum")) {
+						modelSuffix += "_" + modeStr;
+					}
+					if (power > 0) {
+						modelSuffix += "_on";
+					}
+
+					// Determine rotations based on facing direction
+					int rotationX = switch(facing) {
+						case UP -> 0;
+						case DOWN -> 180;
+						default -> 90;
+					};
+
+					int rotationY = switch(facing) {
+						case NORTH -> 0;
+						case SOUTH -> 180;
+						case EAST -> 90;
+						case WEST -> 270;
+						default -> 0;
+					};
+
+					builder.partialState()
+							.with(BlockStateProperties.FACING, facing)
+							.with(BronzeLaserBlock.MODE, mode)
+							.with(BronzeLaserBlock.POWER, power)
+							.modelForState()
+							.modelFile(models().getExistingFile(modLoc("block/" + blockName + modelSuffix)))
+							.rotationX(rotationX)
+							.rotationY(rotationY)
+							.addModel();
+				}
+			}
+		}
+	}
+
 
 
 	private String blockName(DeferredBlock<?> block) {

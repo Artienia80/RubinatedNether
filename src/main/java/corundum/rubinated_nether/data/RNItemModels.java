@@ -106,8 +106,15 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.DISCOLORED_BRONZE_LAMP,
 				RNBlocks.CORRODED_BRONZE_LAMP,
 				RNBlocks.TARNISHED_BRONZE_LAMP,
-				RNBlocks.CRYSTALLIZED_BRONZE_LAMP
-						 );
+				RNBlocks.CRYSTALLIZED_BRONZE_LAMP,
+
+				RNBlocks.BRONZE_LASER,
+				RNBlocks.DISCOLORED_BRONZE_LASER,
+				RNBlocks.CORRODED_BRONZE_LASER,
+				RNBlocks.TARNISHED_BRONZE_LASER,
+				RNBlocks.CRYSTALLIZED_BRONZE_LASER
+
+				);
 
 		paneItem(
 				RNBlocks.RUBY_GLASS_PANE,

@@ -84,6 +84,10 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 					.put(RNBlocks.DISCOLORED_BRONZE_LAMP.get(), RNBlocks.CORRODED_BRONZE_LAMP.get())
 					.put(RNBlocks.CORRODED_BRONZE_LAMP.get(), RNBlocks.TARNISHED_BRONZE_LAMP.get())
 
+					.put(RNBlocks.BRONZE_LASER.get(), RNBlocks.DISCOLORED_BRONZE_LASER.get())
+					.put(RNBlocks.DISCOLORED_BRONZE_LASER.get(), RNBlocks.CORRODED_BRONZE_LASER.get())
+					.put(RNBlocks.CORRODED_BRONZE_LASER.get(), RNBlocks.TARNISHED_BRONZE_LASER.get())
+
 					.build()
 	);
 
@@ -151,6 +155,11 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 				map.put(RNBlocks.DISCOLORED_BRONZE_LAMP.get(), RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get());
 				map.put(RNBlocks.CORRODED_BRONZE_LAMP.get(), RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get());
 				map.put(RNBlocks.TARNISHED_BRONZE_LAMP.get(), RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get());
+
+				map.put(RNBlocks.BRONZE_LASER.get(), RNBlocks.CRYSTALLIZED_BRONZE_LASER.get());
+				map.put(RNBlocks.DISCOLORED_BRONZE_LASER.get(), RNBlocks.CRYSTALLIZED_BRONZE_LASER.get());
+				map.put(RNBlocks.CORRODED_BRONZE_LASER.get(), RNBlocks.CRYSTALLIZED_BRONZE_LASER.get());
+				map.put(RNBlocks.TARNISHED_BRONZE_LASER.get(), RNBlocks.CRYSTALLIZED_BRONZE_LASER.get());
 
 				return Collections.unmodifiableMap(map);
 			}

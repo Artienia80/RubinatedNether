@@ -208,6 +208,16 @@
   "item.rubinated_nether.waxed_crystallized_bronze_lamp": "Waxed Crystallized Bronze Lamp",
 
   "block.rubinated_nether.bronze_laser": "Bronze Laser",
+  "block.rubinated_nether.discolored_bronze_laser": "Discolored Bronze Laser",
+  "block.rubinated_nether.corroded_bronze_laser": "Corroded Bronze Laser",
+  "block.rubinated_nether.tarnished_bronze_laser": "Tarnished Bronze Laser",
+  "block.rubinated_nether.crystallized_bronze_laser": "Crystallized Bronze Laser",
+
+  "item.rubinated_nether.waxed_bronze_laser": "Waxed Bronze Laser",
+  "item.rubinated_nether.waxed_discolored_bronze_laser": "Waxed Discolored Bronze Laser",
+  "item.rubinated_nether.waxed_corroded_bronze_laser": "Waxed Corroded Bronze Laser",
+  "item.rubinated_nether.waxed_tarnished_bronze_laser": "Waxed Tarnished Bronze Laser",
+  "item.rubinated_nether.waxed_crystallized_bronze_laser": "Waxed Crystallized Bronze Laser",
 
   "item.rubinated_nether.bronze_rod": "Bronze Rod",
   "item.rubinated_nether.bronze_powder": "Bronze Powder",
