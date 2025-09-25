@@ -35,6 +35,7 @@ import java.util.Map;
 
 public class RubyLaserBlock extends DirectionalBlock implements BEBlock<RubyLaserBlockEntity> {
 
+	//this is a test
 	public static final MapCodec<RubyLaserBlock> CODEC = simpleCodec(RubyLaserBlock::new);
 
 	public static final Map<Direction, VoxelShape> SHAPES = ShapeUtils.allDirections(Shapes.or(
