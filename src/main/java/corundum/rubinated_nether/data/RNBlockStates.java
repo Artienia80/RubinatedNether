@@ -76,7 +76,7 @@ public class RNBlockStates extends BlockStateProvider {
 					this.axisBlock(
 							(RotatedPillarBlock) block.get(),
 							this.models()
-									.withExistingParent(name + "_side", this.modLoc(rloc + "_side_base")),
+									.withExistingParent(name, this.modLoc(rloc + "_side_base")), // Remove "_side"
 							this.models()
 									.withExistingParent(name, this.modLoc(rloc + "_base"))
 					);
