@@ -47,7 +47,7 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 	private int currentRange;
 	private double rangeRemnant;
 	private boolean visible = false;
-	private Optional<Integer> color;
+	private Optional<Integer> color = Optional.empty();
 	private boolean silly = false;
 
 	public BronzeLaserBlockEntity(BlockPos pos, BlockState blockState) {
@@ -95,7 +95,7 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 			AABB range = getLaserRangeAABB(worldPosition, facing);
 
 			AtomicInteger entityPower = new AtomicInteger(0);
-			MutableDouble lastDistance = new MutableDouble(blockRange == -1 ? currentRange + 1 : blockRange);
+			MutableDouble lastDistance = new MutableDouble(blockRange == -1 ? Double.MAX_VALUE : blockRange);
 			((LevelAccessor) level).invokeGetEntities().get(range, entity -> {
 				// Calculate distance in blocks from laser position to entity
 				// Use the laser's facing direction to get the correct axis distance
@@ -148,7 +148,10 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		powerLevel = Mth.clamp(powerLevel, 0, 15);
 
 		if(powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
-			level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
+			if (level != null && !level.isClientSide) {
+				System.out.println("POWER CHANGED: " + getBlockState().getValue(BronzeLaserBlock.POWER) + " -> " + powerLevel + ", SCHEDULING TICK");
+			}
+			level.scheduleTick(getBlockPos(), getBlockState().getBlock(), 2);
 		}
 	}
 
@@ -225,7 +228,10 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 			// Ensure power level is within valid range
 			powerLevel = Mth.clamp(powerLevel, 0, 15);
 			if (powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
-				level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
+				if (level != null && !level.isClientSide) {
+					System.out.println("UV POWER CHANGED: " + getBlockState().getValue(BronzeLaserBlock.POWER) + " -> " + powerLevel + ", SCHEDULING TICK");
+				}
+				level.scheduleTick(getBlockPos(), getBlockState().getBlock(), 2);
 			}
 		}
 		// INFRARED and SPECTRUM modes are handled in tick() due to entity detection
@@ -250,7 +256,7 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 	}
 
 	private AABB getLaserRangeAABB(BlockPos worldPosition, Direction facing) {
-		int effectiveRange = (blockRange == -1) ? currentRange : blockRange;
+		int effectiveRange = (blockRange == -1) ? currentRange : Math.min(blockRange, currentRange);
 		Vec3i rangeVec = facing.getNormal().multiply(effectiveRange);
 		return new AABB(0, 0, 0, 1, 1, 1)
 				.expandTowards(rangeVec.getX(), rangeVec.getY(), rangeVec.getZ())
@@ -289,9 +295,6 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 
 		// No obstruction found - power level 0 (when beyond max range or no obstruction)
 		if (distance > maxRange) {
-			if (!level.isClientSide) {
-				System.out.println("DISTANCE: " + distance + ", NO OBSTRUCTION OR BEYOND MAX RANGE, OUTPUT: 0");
-			}
 			return 0;
 		}
 
@@ -301,14 +304,13 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		int power = 15 - (int)(formula);
 		power = Mth.clamp(power, 0, 15);
 
-		if (!level.isClientSide) {
-			System.out.println("DISTANCE: " + distance + ", FORMULA: 15 - (int)((" + distance + " - 1) / " + blocksPerPowerLevel + ") = 15 - " + (int)formula + " = " + power);
-		}
-
 		return power;
 	}
 
 	public int getPowerLevel() {
+		if (level != null && !level.isClientSide) {
+			System.out.println("GET POWER LEVEL CALLED: returning " + powerLevel);
+		}
 		return powerLevel;
 	}
 
