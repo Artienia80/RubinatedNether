@@ -225,10 +225,10 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		int maxRange = calculateMaxRange(tarnishState);
 		int blocksPerPowerLevel = getBlocksPerPowerLevel(tarnishState);
 
-		// No obstruction found - power level 0
-		if (distance >= maxRange) {
+		// No obstruction found - power level 0 (when no block was hit within max range)
+		if (blockRange == -1 || distance > maxRange) {
 			if (!level.isClientSide) {
-				System.out.println("DISTANCE: " + distance + ", NO OBSTRUCTION, OUTPUT: 0");
+				System.out.println("DISTANCE: " + distance + ", NO OBSTRUCTION OR BEYOND MAX RANGE, OUTPUT: 0");
 			}
 			return 0;
 		}
