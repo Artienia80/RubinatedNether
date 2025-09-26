@@ -79,33 +79,40 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		} else if (mode.detectsEntities()) {
 			// SPECTRUM and INFRARED modes - include entity detection
 			Direction facing = getBlockState().getValue(BronzeLaserBlock.FACING);
-			AABB range = getLaserRangeAABB(worldPosition, facing);
 
-			AtomicInteger entityHitPowerBonus = new AtomicInteger();
-			MutableDouble lastDistance = new MutableDouble(blockRange == -1 ? currentRange + 1 : blockRange);
-			((LevelAccessor) level).invokeGetEntities().get(range, entity -> {
-				// Calculate distance in blocks from laser position to entity
-				// Use the laser's facing direction to get the correct axis distance
-				double axisDistance;
-				switch (facing.getAxis()) {
-					case X -> axisDistance = Math.abs(entity.getX() - (worldPosition.getX() + 0.5));
-					case Y -> axisDistance = Math.abs(entity.getY() - (worldPosition.getY() + 0.5));
-					case Z -> axisDistance = Math.abs(entity.getZ() - (worldPosition.getZ() + 0.5));
-					default -> axisDistance = 0;
-				}
+			// For INFRARED mode, if blocked by a solid block, power is 0 regardless of entities
+			if (mode == BronzeLaserBlock.LaserMode.INFRARED && blockRange != -1) {
+				powerLevel = 0;
+			} else {
+				// Entity detection for SPECTRUM mode, or INFRARED mode with no block obstruction
+				AABB range = getLaserRangeAABB(worldPosition, facing);
 
-				// Convert to block distance (round up to next block boundary)
-				double blockDistance = Math.ceil(axisDistance);
+				AtomicInteger entityHitPowerBonus = new AtomicInteger();
+				MutableDouble lastDistance = new MutableDouble(blockRange == -1 ? currentRange + 1 : blockRange);
+				((LevelAccessor) level).invokeGetEntities().get(range, entity -> {
+					// Calculate distance in blocks from laser position to entity
+					// Use the laser's facing direction to get the correct axis distance
+					double axisDistance;
+					switch (facing.getAxis()) {
+						case X -> axisDistance = Math.abs(entity.getX() - (worldPosition.getX() + 0.5));
+						case Y -> axisDistance = Math.abs(entity.getY() - (worldPosition.getY() + 0.5));
+						case Z -> axisDistance = Math.abs(entity.getZ() - (worldPosition.getZ() + 0.5));
+						default -> axisDistance = 0;
+					}
 
-				if(blockDistance < lastDistance.getValue()) {
-					lastDistance.setValue(blockDistance);
-					entityHitPowerBonus.set(calculateMaxRange(getTarnishState()) - this.currentRange);
-				}
-			});
+					// Convert to block distance (round up to next block boundary)
+					double blockDistance = Math.ceil(axisDistance);
 
-			// Calculate final power level
-			double effectiveDistance = Math.min(lastDistance.getValue(), currentRange + 1);
-			powerLevel = calculatePowerLevel(effectiveDistance) + entityHitPowerBonus.get();
+					if(blockDistance < lastDistance.getValue()) {
+						lastDistance.setValue(blockDistance);
+						entityHitPowerBonus.set(calculateMaxRange(getTarnishState()) - this.currentRange);
+					}
+				});
+
+				// Calculate final power level
+				double effectiveDistance = Math.min(lastDistance.getValue(), currentRange + 1);
+				powerLevel = calculatePowerLevel(effectiveDistance) + entityHitPowerBonus.get();
+			}
 		}
 
 		if(powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
@@ -128,33 +135,30 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		// Reset block range
 		blockRange = -1;
 
-		// Block detection based on mode
-		if (mode.detectsBlocks()) {
-			// Iterating the range of the Laser to check each position
-			for (int i = 0; i < currentRange; i++) {
-				mutableBlockPos.move(facing);
-				int currentDistance = i + 1; // We're now at distance i+1 from laser
+		// Block detection - all modes detect blocks for obstruction/rendering
+		// Iterating the range of the Laser to check each position
+		for (int i = 0; i < currentRange; i++) {
+			mutableBlockPos.move(facing);
+			int currentDistance = i + 1; // We're now at distance i+1 from laser
 
-				BlockState state = level.getBlockState(mutableBlockPos);
+			BlockState state = level.getBlockState(mutableBlockPos);
 
-				boolean blockCheck = state.is(RNTags.Blocks.LASER_NO_SIGNAL);
-				if (!blockCheck && state.is(RNTags.Blocks.LASER_TRANSPARENT)) continue;
+			boolean blockCheck = state.is(RNTags.Blocks.LASER_NO_SIGNAL);
+			if (!blockCheck && state.is(RNTags.Blocks.LASER_TRANSPARENT)) continue;
 
-				VoxelShape shape = Shapes.join(state.getCollisionShape(level, mutableBlockPos), BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND);
+			VoxelShape shape = Shapes.join(state.getCollisionShape(level, mutableBlockPos), BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND);
 
-				if(!shape.isEmpty()) {
-					if(level.isClientSide) {
-						Direction.Axis axis = facing.getAxis();
-						rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.max(axis);
-					}
-					// In case of Tinted Glass the laser range is shortened
-					if(blockCheck) this.currentRange = currentDistance;
-					blockRange = currentDistance;
-					break;
+			if(!shape.isEmpty()) {
+				if(level.isClientSide) {
+					Direction.Axis axis = facing.getAxis();
+					rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.max(axis);
 				}
+				// In case of Tinted Glass the laser range is shortened
+				if(blockCheck) this.currentRange = currentDistance;
+				blockRange = currentDistance;
+				break;
 			}
 		}
-		// INFRARED mode - blocks don't stop the laser, keep blockRange as -1
 
 		// Visual properties check
 		BlockState state = level.getBlockState(worldPosition.relative(facing));
@@ -173,6 +177,19 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		if (currentMode == BronzeLaserBlock.LaserMode.ULTRAVIOLET) {
 			double effectiveDistance = (blockRange == -1) ? currentRange + 1 : blockRange;
 			powerLevel = calculatePowerLevel(effectiveDistance);
+			if (powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
+				level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
+			}
+		} else if (currentMode == BronzeLaserBlock.LaserMode.INFRARED) {
+			// INFRARED mode - blocks obstruct but don't give power, only entities do
+			// If blocked by a block, power is 0 regardless of entities
+			if (blockRange != -1) {
+				powerLevel = 0;
+			} else {
+				// No block obstruction, power is 0 (entities are handled in tick())
+				double effectiveDistance = currentRange + 1;
+				powerLevel = calculatePowerLevel(effectiveDistance);
+			}
 			if (powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
 				level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
 			}
