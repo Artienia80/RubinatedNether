@@ -74,14 +74,27 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 
 		// ULTRAVIOLET mode (equivalent to old TINTED) - blocks only, no entity detection
 		if (mode == BronzeLaserBlock.LaserMode.ULTRAVIOLET) {
-			double effectiveDistance = (blockRange == -1) ? currentRange + 1 : blockRange;
-			powerLevel = calculatePowerLevel(effectiveDistance);
+			// For ULTRAVIOLET mode, check if the obstruction is a "no signal" block (like tinted glass)
+			if (blockRange != -1) {
+				BlockPos obstructionPos = worldPosition.relative(getBlockState().getValue(BronzeLaserBlock.FACING), blockRange);
+				BlockState obstructionState = level.getBlockState(obstructionPos);
+				if (obstructionState.is(RNTags.Blocks.LASER_NO_SIGNAL)) {
+					// Tinted glass or similar - no power output
+					powerLevel = 0;
+				} else {
+					// Normal block obstruction - give power based on distance
+					powerLevel = calculatePowerLevel(blockRange);
+				}
+			} else {
+				// No obstruction - no power
+				powerLevel = 0;
+			}
 		} else if (mode.detectsEntities()) {
 			// SPECTRUM and INFRARED modes - include entity detection
 			Direction facing = getBlockState().getValue(BronzeLaserBlock.FACING);
 			AABB range = getLaserRangeAABB(worldPosition, facing);
 
-			AtomicInteger entityHitPowerBonus = new AtomicInteger();
+			AtomicInteger entityPower = new AtomicInteger(0);
 			MutableDouble lastDistance = new MutableDouble(blockRange == -1 ? currentRange + 1 : blockRange);
 			((LevelAccessor) level).invokeGetEntities().get(range, entity -> {
 				// Calculate distance in blocks from laser position to entity
@@ -99,9 +112,22 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 
 				if(blockDistance < lastDistance.getValue()) {
 					lastDistance.setValue(blockDistance);
-					entityHitPowerBonus.set(calculateMaxRange(getTarnishState()) - this.currentRange);
+					// Calculate entity power based on distance
+					entityPower.set(calculatePowerLevel(blockDistance));
 				}
 			});
+
+			// Calculate block power (if any) - but not for LASER_NO_SIGNAL blocks
+			int blockPower = 0;
+			if (blockRange != -1) {
+				BlockPos obstructionPos = worldPosition.relative(facing, blockRange);
+				BlockState obstructionState = level.getBlockState(obstructionPos);
+				if (!obstructionState.is(RNTags.Blocks.LASER_NO_SIGNAL)) {
+					// Normal block obstruction - gives power
+					blockPower = calculatePowerLevel(blockRange);
+				}
+				// LASER_NO_SIGNAL blocks (like tinted glass) give no power
+			}
 
 			// For INFRARED mode, only give power if entity is closer than block obstruction
 			if (mode == BronzeLaserBlock.LaserMode.INFRARED) {
@@ -110,15 +136,16 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 					powerLevel = 0;
 				} else {
 					// Either no block obstruction, or entity is closer than block obstruction
-					double effectiveDistance = Math.min(lastDistance.getValue(), currentRange + 1);
-					powerLevel = calculatePowerLevel(effectiveDistance) + entityHitPowerBonus.get();
+					powerLevel = entityPower.get();
 				}
 			} else {
-				// SPECTRUM mode - normal behavior
-				double effectiveDistance = Math.min(lastDistance.getValue(), currentRange + 1);
-				powerLevel = calculatePowerLevel(effectiveDistance) + entityHitPowerBonus.get();
+				// SPECTRUM mode - take the maximum of block power and entity power
+				powerLevel = Math.max(blockPower, entityPower.get());
 			}
 		}
+
+		// Ensure power level is always within valid range (0-15) to prevent crashes
+		powerLevel = Mth.clamp(powerLevel, 0, 15);
 
 		if(powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
 			level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
@@ -180,8 +207,23 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		// Calculate power level for ULTRAVIOLET mode (blocks only)
 		BronzeLaserBlock.LaserMode currentMode = getBlockState().getValue(BronzeLaserBlock.MODE);
 		if (currentMode == BronzeLaserBlock.LaserMode.ULTRAVIOLET) {
-			double effectiveDistance = (blockRange == -1) ? currentRange + 1 : blockRange;
-			powerLevel = calculatePowerLevel(effectiveDistance);
+			// For ULTRAVIOLET mode, check if the obstruction is a "no signal" block (like tinted glass)
+			if (blockRange != -1) {
+				BlockPos obstructionPos = worldPosition.relative(facing, blockRange);
+				BlockState obstructionState = level.getBlockState(obstructionPos);
+				if (obstructionState.is(RNTags.Blocks.LASER_NO_SIGNAL)) {
+					// Tinted glass or similar - no power output
+					powerLevel = 0;
+				} else {
+					// Normal block obstruction - give power based on distance
+					powerLevel = calculatePowerLevel(blockRange);
+				}
+			} else {
+				// No obstruction - no power
+				powerLevel = 0;
+			}
+			// Ensure power level is within valid range
+			powerLevel = Mth.clamp(powerLevel, 0, 15);
 			if (powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
 				level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
 			}
