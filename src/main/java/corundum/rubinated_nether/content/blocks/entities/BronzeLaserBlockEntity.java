@@ -74,7 +74,7 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 
 		// ULTRAVIOLET mode (equivalent to old TINTED) - blocks only, no entity detection
 		if (mode == BronzeLaserBlock.LaserMode.ULTRAVIOLET) {
-			double effectiveDistance = (blockRange == -1) ? currentRange : blockRange;
+			double effectiveDistance = (blockRange == -1) ? currentRange + 1 : blockRange;
 			powerLevel = calculatePowerLevel(effectiveDistance);
 		} else if (mode.detectsEntities()) {
 			// SPECTRUM and INFRARED modes - include entity detection
@@ -82,17 +82,29 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 			AABB range = getLaserRangeAABB(worldPosition, facing);
 
 			AtomicInteger entityHitPowerBonus = new AtomicInteger();
-			MutableDouble lastDistance = new MutableDouble(blockRange == -1 ? currentRange : blockRange);
+			MutableDouble lastDistance = new MutableDouble(blockRange == -1 ? currentRange + 1 : blockRange);
 			((LevelAccessor) level).invokeGetEntities().get(range, entity -> {
-				double distance = Math.sqrt(entity.distanceToSqr(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ())) - 1;
-				if(distance < lastDistance.getValue()) {
-					lastDistance.setValue(distance);
+				// Calculate distance in blocks from laser position to entity
+				// Use the laser's facing direction to get the correct axis distance
+				double axisDistance;
+				switch (facing.getAxis()) {
+					case X -> axisDistance = Math.abs(entity.getX() - (worldPosition.getX() + 0.5));
+					case Y -> axisDistance = Math.abs(entity.getY() - (worldPosition.getY() + 0.5));
+					case Z -> axisDistance = Math.abs(entity.getZ() - (worldPosition.getZ() + 0.5));
+					default -> axisDistance = 0;
+				}
+
+				// Convert to block distance (round up to next block boundary)
+				double blockDistance = Math.ceil(axisDistance);
+
+				if(blockDistance < lastDistance.getValue()) {
+					lastDistance.setValue(blockDistance);
 					entityHitPowerBonus.set(calculateMaxRange(getTarnishState()) - this.currentRange);
 				}
 			});
 
 			// Calculate final power level
-			double effectiveDistance = Math.min(lastDistance.getValue(), this.currentRange);
+			double effectiveDistance = Math.min(lastDistance.getValue(), currentRange + 1);
 			powerLevel = calculatePowerLevel(effectiveDistance) + entityHitPowerBonus.get();
 		}
 
@@ -141,10 +153,8 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 					break;
 				}
 			}
-		} else {
-			// INFRARED mode - blocks don't stop the laser
-			blockRange = currentRange;
 		}
+		// INFRARED mode - blocks don't stop the laser, keep blockRange as -1
 
 		// Visual properties check
 		BlockState state = level.getBlockState(worldPosition.relative(facing));
@@ -161,7 +171,7 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		// Calculate power level for ULTRAVIOLET mode (blocks only)
 		BronzeLaserBlock.LaserMode currentMode = getBlockState().getValue(BronzeLaserBlock.MODE);
 		if (currentMode == BronzeLaserBlock.LaserMode.ULTRAVIOLET) {
-			double effectiveDistance = (blockRange == -1) ? currentRange : blockRange;
+			double effectiveDistance = (blockRange == -1) ? currentRange + 1 : blockRange;
 			powerLevel = calculatePowerLevel(effectiveDistance);
 			if (powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
 				level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
@@ -225,8 +235,8 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		int maxRange = calculateMaxRange(tarnishState);
 		int blocksPerPowerLevel = getBlocksPerPowerLevel(tarnishState);
 
-		// No obstruction found - power level 0 (when no block was hit within max range)
-		if (blockRange == -1 || distance > maxRange) {
+		// No obstruction found - power level 0 (when beyond max range or no obstruction)
+		if (distance > maxRange) {
 			if (!level.isClientSide) {
 				System.out.println("DISTANCE: " + distance + ", NO OBSTRUCTION OR BEYOND MAX RANGE, OUTPUT: 0");
 			}
