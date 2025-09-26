@@ -24,6 +24,7 @@ import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
+import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.utils.BlockUpdateListener;
 import corundum.rubinated_nether.utils.ShapeUtils;
 import corundum.rubinated_nether.utils.TickableBlockEntity;
@@ -41,10 +42,10 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 			Shapes.box(.4, 0, .4, .6, 1, .6)
 	);
 
-	private static final int LASER_RANGE = 15;
+	private static final int BASE_LASER_RANGE = 15;
 	private int powerLevel;
 	private int blockRange = -1;
-	private int currentRange = LASER_RANGE;
+	private int currentRange = BASE_LASER_RANGE;
 	private double rangeRemnant;
 	private boolean visible = false;
 	private Optional<Integer> color;
@@ -75,7 +76,7 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		if (!mode.detectsEntities()) {
 			// For ULTRAVIOLET mode, power is based only on block range
 			if (mode == BronzeLaserBlock.LaserMode.ULTRAVIOLET) {
-				powerLevel = Mth.clamp(currentRange - blockRange, 0, LASER_RANGE);
+				powerLevel = calculatePowerLevel(blockRange);
 			}
 
 			if (powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
@@ -88,25 +89,26 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 
 		AABB range = getLaserRangeAABB(worldPosition, facing);
 
-		AtomicInteger i = new AtomicInteger();
+		AtomicInteger entityPowerBonus = new AtomicInteger(0);
 		MutableDouble lastDistance = new MutableDouble(blockRange);
 		((LevelAccessor) level).invokeGetEntities().get(range, entity -> {
 			double distance = Math.sqrt(entity.distanceToSqr(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ())) - 1;
 			if(distance < lastDistance.getValue()) {
 				lastDistance.setValue(distance);
-				i.set(LASER_RANGE - this.currentRange);
+				entityPowerBonus.set(BASE_LASER_RANGE - this.currentRange);
 			}
 		});
 
-		int blockDistance = Mth.clamp(Mth.floor(lastDistance.getValue()), 0, this.currentRange);
+		int closestEntityDistance = Mth.clamp(Mth.floor(lastDistance.getValue()), 0, this.currentRange);
 
 		// Calculate power based on mode
 		if (mode == BronzeLaserBlock.LaserMode.INFRARED) {
 			// For INFRARED mode, only consider entity distance
-			powerLevel = LASER_RANGE - blockDistance + i.get();
+			powerLevel = calculatePowerLevel(closestEntityDistance) + entityPowerBonus.get();
 		} else {
-			// For SPECTRUM mode, consider both blocks and entities
-			powerLevel = this.currentRange - blockDistance + i.get();
+			// For SPECTRUM mode, consider both blocks and entities (use whichever is closer)
+			int closestDistance = Math.min(blockRange, closestEntityDistance);
+			powerLevel = calculatePowerLevel(closestDistance) + entityPowerBonus.get();
 		}
 
 		if(powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
@@ -114,10 +116,73 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		}
 	}
 
+	/**
+	 * Calculate power level based on distance and tarnish state accuracy grouping
+	 * @param distance The distance to the obstruction (0 = maximum power)
+	 * @return Power level from 0-15
+	 */
+	private int calculatePowerLevel(int distance) {
+		// Get the tarnish state from the block
+		TarnishingBronze.TarnishState tarnishState = getTarnishState();
+
+		// Calculate accuracy (blocks per power level)
+		int blocksPerPowerLevel = getBlocksPerPowerLevel(tarnishState);
+
+		// Calculate the accuracy group (0-based)
+		// For normal accuracy: distance 0 = group 0, distance 1 = group 1, etc.
+		// For other accuracies: distances 0-(blocksPerPowerLevel-1) = group 0, etc.
+		int accuracyGroup = distance / blocksPerPowerLevel;
+
+		// Power starts at 15 and decreases by 1 for each accuracy group
+		int power = BASE_LASER_RANGE - accuracyGroup;
+
+		// Clamp to valid redstone power range
+		return Mth.clamp(power, 0, BASE_LASER_RANGE);
+	}
+
+	/**
+	 * Get the maximum range for this tarnish state
+	 */
+	private int calculateMaxRange(TarnishingBronze.TarnishState tarnishState) {
+		return switch (tarnishState) {
+			case UNAFFECTED -> 15;
+			case DISCOLORED -> 30;
+			case CORRODED -> 45;
+			case TARNISHED -> 60;
+			case CRYSTALLIZED -> 15;
+		};
+	}
+
+	/**
+	 * Get the blocks per power level (accuracy) for this tarnish state
+	 */
+	private int getBlocksPerPowerLevel(TarnishingBronze.TarnishState tarnishState) {
+		return switch (tarnishState) {
+			case UNAFFECTED -> 1;    // Normal accuracy
+			case DISCOLORED -> 2;    // Half accuracy
+			case CORRODED -> 3;      // Third accuracy
+			case TARNISHED -> 4;     // Quarter accuracy
+			case CRYSTALLIZED -> 1;  // Normal accuracy
+		};
+	}
+
+	/**
+	 * Get the tarnish state from the current block
+	 */
+	private TarnishingBronze.TarnishState getTarnishState() {
+		if (getBlockState().getBlock() instanceof BronzeLaserBlock laserBlock) {
+			return laserBlock.getAge();
+		}
+		// Fallback to UNAFFECTED if we can't determine the state
+		return TarnishingBronze.TarnishState.UNAFFECTED;
+	}
+
 	@SuppressWarnings({"DataFlowIssue"})
 	@Override
 	public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
-		this.currentRange = LASER_RANGE;
+		TarnishingBronze.TarnishState tarnishState = getTarnishState();
+		this.currentRange = calculateMaxRange(tarnishState);
+
 		Direction facing = getBlockState().getValue(BronzeLaserBlock.FACING);
 		BronzeLaserBlock.LaserMode mode = getBlockState().getValue(BronzeLaserBlock.MODE);
 
@@ -127,7 +192,7 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		// Only check blocks if mode detects blocks
 		if (mode.detectsBlocks()) {
 			// Iterating the range of the Laser to check each position
-			for (int i = 0; i <= LASER_RANGE; i++) {
+			for (int i = 0; i <= currentRange; i++) {
 				mutableBlockPos.move(facing);
 				blockRange = i;
 
@@ -150,7 +215,7 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 			}
 		} else {
 			// For INFRARED mode, blocks don't stop the laser
-			blockRange = LASER_RANGE;
+			blockRange = currentRange;
 		}
 
 		// Visual properties
@@ -167,7 +232,7 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 
 		// Final power calculation for ULTRAVIOLET mode
 		if(mode == BronzeLaserBlock.LaserMode.ULTRAVIOLET) {
-			powerLevel = Mth.clamp(currentRange - blockRange, 0, LASER_RANGE);
+			powerLevel = calculatePowerLevel(blockRange);
 			if (powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
 				level.scheduleTick(getBlockPos(), RNBlocks.BRONZE_LASER.get(), 2);
 			}
@@ -181,7 +246,9 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 
 	@Override
 	public Stream<BlockPos> getListenedPositions() {
-		Vec3i offset = getBlockState().getValue(BronzeLaserBlock.FACING).getNormal().multiply(LASER_RANGE);
+		TarnishingBronze.TarnishState tarnishState = getTarnishState();
+		int maxRange = calculateMaxRange(tarnishState);
+		Vec3i offset = getBlockState().getValue(BronzeLaserBlock.FACING).getNormal().multiply(maxRange);
 		return BlockPos.betweenClosedStream(worldPosition, worldPosition.offset(offset));
 	}
 
