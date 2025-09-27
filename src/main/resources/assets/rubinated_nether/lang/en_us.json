@@ -1,5 +1,7 @@
 {
   "itemGroup.examplemod": "Rubinated Nether",
+  "itemGroup.rubinated_nether_general": "Rubinated Nether - General",
+  "itemGroup.rubinated_nether_bronze": "Rubinated Nether - Bronze",
 
   "block.rubinated_nether.nether_ruby_ore": "Nether Ruby Ore",
   "block.rubinated_nether.molten_ruby_ore": "Molten Ruby Ore",
@@ -218,6 +220,15 @@
   "item.rubinated_nether.waxed_corroded_bronze_laser": "Waxed Corroded Bronze Laser",
   "item.rubinated_nether.waxed_tarnished_bronze_laser": "Waxed Tarnished Bronze Laser",
   "item.rubinated_nether.waxed_crystallized_bronze_laser": "Waxed Crystallized Bronze Laser",
+
+  "block.rubinated_nether.copper_laser": "Copper Laser",
+  "block.rubinated_nether.exposed_copper_laser": "Exposed Copper Laser",
+  "block.rubinated_nether.weathered_copper_laser": "Weathered Copper Laser",
+  "block.rubinated_nether.oxidized_copper_laser": "Oxidized Copper Laser",
+  "block.rubinated_nether.waxed_copper_laser": "Waxed Copper Laser",
+  "block.rubinated_nether.waxed_exposed_copper_laser": "Waxed Exposed Copper Laser",
+  "block.rubinated_nether.waxed_weathered_copper_laser": "Waxed Weathered Copper Laser",
+  "block.rubinated_nether.waxed_oxidized_copper_laser": "Waxed Oxidized Copper Laser",
 
   "item.rubinated_nether.bronze_rod": "Bronze Rod",
   "item.rubinated_nether.bronze_powder": "Bronze Powder",

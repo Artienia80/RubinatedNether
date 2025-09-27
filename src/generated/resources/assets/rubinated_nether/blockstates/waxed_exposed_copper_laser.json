@@ -1,0 +1,1252 @@
+{
+  "variants": {
+    "facing=down,mode=ir,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=ir,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=spectrum,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=down,mode=uv,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 180
+    },
+    "facing=east,mode=ir,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=ir,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=spectrum,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,mode=uv,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,mode=ir,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=ir,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=spectrum,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=north,mode=uv,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90
+    },
+    "facing=south,mode=ir,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=ir,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=spectrum,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,mode=uv,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,mode=ir,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir"
+    },
+    "facing=up,mode=ir,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=ir,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on"
+    },
+    "facing=up,mode=spectrum,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser"
+    },
+    "facing=up,mode=spectrum,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=spectrum,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on"
+    },
+    "facing=up,mode=uv,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv"
+    },
+    "facing=up,mode=uv,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=up,mode=uv,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on"
+    },
+    "facing=west,mode=ir,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=ir,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_ir_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=spectrum,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=0": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=1": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=10": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=11": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=12": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=13": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=14": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=15": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=2": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=3": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=4": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=5": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=6": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=7": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=8": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=uv,power=9": {
+      "model": "rubinated_nether:block/exposed_copper_laser_uv_on",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

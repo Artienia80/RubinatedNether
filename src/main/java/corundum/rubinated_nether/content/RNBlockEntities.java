@@ -42,6 +42,22 @@ public class RNBlockEntities {
 					).build(null)
 			);
 
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CopperLaserBlockEntity>> COPPER_LASER =
+			BLOCK_ENTITY_TYPES.register(
+					"copper_laser",
+					() -> BlockEntityType.Builder.of(
+							CopperLaserBlockEntity::new,
+							RNBlocks.COPPER_LASER.get(),
+							RNBlocks.EXPOSED_COPPER_LASER.get(),
+							RNBlocks.WEATHERED_COPPER_LASER.get(),
+							RNBlocks.OXIDIZED_COPPER_LASER.get(),
+							RNBlocks.WAXED_COPPER_LASER.get(),
+							RNBlocks.WAXED_EXPOSED_COPPER_LASER.get(),
+							RNBlocks.WAXED_WEATHERED_COPPER_LASER.get(),
+							RNBlocks.WAXED_OXIDIZED_COPPER_LASER.get()
+					).build(null)
+			);
+
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RunestoneBlockEntity>> RUNESTONE = BLOCK_ENTITY_TYPES.register(
 			"runestone",
 			() -> BlockEntityType.Builder.of(

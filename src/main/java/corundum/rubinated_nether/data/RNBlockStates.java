@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
+import corundum.rubinated_nether.content.blocks.CopperLaserBlock;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -39,9 +40,9 @@ public class RNBlockStates extends BlockStateProvider {
 		this.simpleBlock(RNBlocks.BLEEDING_OBSIDIAN.get());
 
 		this.simpleBlock(
-			RNBlocks.BRAZIER.get(),
-			this.models()
-				.withExistingParent("ruby_brazier", this.modLoc("block/ruby_brazier_base"))
+				RNBlocks.BRAZIER.get(),
+				this.models()
+						.withExistingParent("ruby_brazier", this.modLoc("block/ruby_brazier_base"))
 		);
 
 		this.simpleBlock(
@@ -95,49 +96,49 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 
 		this.simpleBlock(
-			RNBlocks.DRY_ICE.get(),
-			this.models()
-				.withExistingParent("dry_ice", this.modLoc("block/dry_ice_base"))
+				RNBlocks.DRY_ICE.get(),
+				this.models()
+						.withExistingParent("dry_ice", this.modLoc("block/dry_ice_base"))
 		);
 		this.simpleBlock(RNBlocks.SOAKSTONE.get());
 
 		glassWithPane(
-			RNBlocks.RUBY_GLASS.get(),
-			RNBlocks.RUBY_GLASS_PANE.get(),
-			"ruby_glass", 
-			modLoc("block/ruby_glass_pane_top")
+				RNBlocks.RUBY_GLASS.get(),
+				RNBlocks.RUBY_GLASS_PANE.get(),
+				"ruby_glass",
+				modLoc("block/ruby_glass_pane_top")
 		);
 		glassWithPane(
-			RNBlocks.ORNATE_RUBY_GLASS.get(),
-			RNBlocks.ORNATE_RUBY_GLASS_PANE.get(),
-			"ornate_ruby_glass", 
-			modLoc("block/ornate_ruby_glass_pane_top")
+				RNBlocks.ORNATE_RUBY_GLASS.get(),
+				RNBlocks.ORNATE_RUBY_GLASS_PANE.get(),
+				"ornate_ruby_glass",
+				modLoc("block/ornate_ruby_glass_pane_top")
 		);
 		glassWithPane(
-			RNBlocks.MOLTEN_RUBY_GLASS.get(),
-			RNBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
-			"molten_ruby_glass", 
-			modLoc("block/molten_ruby_glass_pane_top")
+				RNBlocks.MOLTEN_RUBY_GLASS.get(),
+				RNBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
+				"molten_ruby_glass",
+				modLoc("block/molten_ruby_glass_pane_top")
 		);
 
 		this.simpleBlock(RNBlocks.SHRINE_STONE.get());
 		this.simpleBlock(RNBlocks.POLISHED_SHRINE_STONE.get());
 		this.slabBlock(
-			RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(),
-			modLoc("block/polished_shrine_stone"),
-			modLoc("block/polished_shrine_stone")
+				RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(),
+				modLoc("block/polished_shrine_stone"),
+				modLoc("block/polished_shrine_stone")
 		);
 		this.stairsBlock(
-			RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
-			modLoc("block/polished_shrine_stone")
+				RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
+				modLoc("block/polished_shrine_stone")
 		);
 		this.stairsBlock(
 				RNBlocks.SHRINE_STONE_STAIRS.get(),
 				modLoc("block/shrine_stone")
 		);
 		this.wallBlock(
-			RNBlocks.POLISHED_SHRINE_STONE_WALL.get(),
-			modLoc("block/polished_shrine_stone")
+				RNBlocks.POLISHED_SHRINE_STONE_WALL.get(),
+				modLoc("block/polished_shrine_stone")
 		);
 
 		this.simpleBlock(RNBlocks.SHRINE_STONE_TILES.get());
@@ -145,9 +146,9 @@ public class RNBlockStates extends BlockStateProvider {
 		this.simpleBlock(RNBlocks.SHRINE_STONE_COFFER.get());
 
 		this.slabBlock(
-			RNBlocks.SHRINE_STONE_TILES_SLAB.get(),
-			modLoc("block/shrine_stone_tiles"),
-			modLoc("block/shrine_stone_tiles")
+				RNBlocks.SHRINE_STONE_TILES_SLAB.get(),
+				modLoc("block/shrine_stone_tiles"),
+				modLoc("block/shrine_stone_tiles")
 		);
 		this.slabBlock(
 				RNBlocks.SHRINE_STONE_SLAB.get(),
@@ -155,12 +156,12 @@ public class RNBlockStates extends BlockStateProvider {
 				modLoc("block/shrine_stone")
 		);
 		this.stairsBlock(
-			RNBlocks.SHRINE_STONE_TILES_STAIRS.get(),
-			modLoc("block/shrine_stone_tiles")
+				RNBlocks.SHRINE_STONE_TILES_STAIRS.get(),
+				modLoc("block/shrine_stone_tiles")
 		);
 		this.wallBlock(
-			RNBlocks.SHRINE_STONE_TILES_WALL.get(),
-			modLoc("block/shrine_stone_tiles")
+				RNBlocks.SHRINE_STONE_TILES_WALL.get(),
+				modLoc("block/shrine_stone_tiles")
 		);
 		this.wallBlock(
 				RNBlocks.SHRINE_STONE_WALL.get(),
@@ -172,35 +173,35 @@ public class RNBlockStates extends BlockStateProvider {
 
 		this.simpleBlock(RNBlocks.SHRINE_STONE_BRICKS.get());
 		this.slabBlock(
-			RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(),
-			modLoc("block/shrine_stone_bricks"),
-			modLoc("block/shrine_stone_bricks")
+				RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(),
+				modLoc("block/shrine_stone_bricks"),
+				modLoc("block/shrine_stone_bricks")
 		);
 		this.stairsBlock(
-			RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get(),
-			modLoc("block/shrine_stone_bricks")
+				RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get(),
+				modLoc("block/shrine_stone_bricks")
 		);
 		this.wallBlock(
-			RNBlocks.SHRINE_STONE_BRICKS_WALL.get(),
-			modLoc("block/shrine_stone_bricks")
+				RNBlocks.SHRINE_STONE_BRICKS_WALL.get(),
+				modLoc("block/shrine_stone_bricks")
 		);
 
 		this.simpleBlock(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
 		this.simpleBlock(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get());
 		sixWayPillar(
-			RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS, 
-			modLoc("block/" + blockName(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS) + "_side"), 
-			modLoc("block/" + blockName(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS) + "_end")
+				RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS,
+				modLoc("block/" + blockName(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS) + "_side"),
+				modLoc("block/" + blockName(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS) + "_end")
 		);
 
 
 		subfolder(
-			"bronze/bronze_block/",
-			RNBlocks.BRONZE_BLOCK,
-			RNBlocks.DISCOLORED_BRONZE_BLOCK,
-			RNBlocks.CORRODED_BRONZE_BLOCK,
-			RNBlocks.TARNISHED_BRONZE_BLOCK,
-			RNBlocks.CRYSTALLIZED_BRONZE_BLOCK
+				"bronze/bronze_block/",
+				RNBlocks.BRONZE_BLOCK,
+				RNBlocks.DISCOLORED_BRONZE_BLOCK,
+				RNBlocks.CORRODED_BRONZE_BLOCK,
+				RNBlocks.TARNISHED_BRONZE_BLOCK,
+				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK
 		);
 
 		subfolder(
@@ -213,72 +214,72 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 
 		subfolder("bronze/cut_bronze_pillar/",
-			(rloc, name, block) -> {
-				sixWayPillar(
-					block, 
-					modLoc(rloc + "_side"), 
-					modLoc(rloc + "_end")
-				);
-			},
-			RNBlocks.CUT_BRONZE_PILLAR,
-			RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
-			RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
-			RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
-			RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR
+				(rloc, name, block) -> {
+					sixWayPillar(
+							block,
+							modLoc(rloc + "_side"),
+							modLoc(rloc + "_end")
+					);
+				},
+				RNBlocks.CUT_BRONZE_PILLAR,
+				RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
+				RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
+				RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR
 		);
 
 		subfolder("bronze/cut_bronze_bricks/",
-			RNBlocks.CUT_BRONZE_BRICKS,
-			RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
-			RNBlocks.CORRODED_CUT_BRONZE_BRICKS,
-			RNBlocks.TARNISHED_CUT_BRONZE_BRICKS,
-			RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS
+				RNBlocks.CUT_BRONZE_BRICKS,
+				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
+				RNBlocks.CORRODED_CUT_BRONZE_BRICKS,
+				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS,
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS
 		);
 
 		this.slabBlock(
-			RNBlocks.CUT_BRONZE_BRICKS_SLAB.get(),
-			modLoc("block/cut_bronze_bricks"),
-			modLoc("block/bronze/cut_bronze_bricks/cut_bronze_bricks")
+				RNBlocks.CUT_BRONZE_BRICKS_SLAB.get(),
+				modLoc("block/cut_bronze_bricks"),
+				modLoc("block/bronze/cut_bronze_bricks/cut_bronze_bricks")
 		);
 		this.stairsBlock(
-			RNBlocks.CUT_BRONZE_BRICKS_STAIRS.get(),
-			modLoc("block/bronze/cut_bronze_bricks/cut_bronze_bricks")
+				RNBlocks.CUT_BRONZE_BRICKS_STAIRS.get(),
+				modLoc("block/bronze/cut_bronze_bricks/cut_bronze_bricks")
 		);
 		this.slabBlock(
-			RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get(),
-			modLoc("block/discolored_cut_bronze_bricks"),
-			modLoc("block/bronze/cut_bronze_bricks/discolored_cut_bronze_bricks")
+				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get(),
+				modLoc("block/discolored_cut_bronze_bricks"),
+				modLoc("block/bronze/cut_bronze_bricks/discolored_cut_bronze_bricks")
 		);
 		this.stairsBlock(
-			RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS.get(),
-			modLoc("block/bronze/cut_bronze_bricks/discolored_cut_bronze_bricks")
+				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				modLoc("block/bronze/cut_bronze_bricks/discolored_cut_bronze_bricks")
 		);
 		this.slabBlock(
-			RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get(),
-			modLoc("block/corroded_cut_bronze_bricks"),
-			modLoc("block/bronze/cut_bronze_bricks/corroded_cut_bronze_bricks")
+				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get(),
+				modLoc("block/corroded_cut_bronze_bricks"),
+				modLoc("block/bronze/cut_bronze_bricks/corroded_cut_bronze_bricks")
 		);
 		this.stairsBlock(
-			RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS.get(),
-			modLoc("block/bronze/cut_bronze_bricks/corroded_cut_bronze_bricks")
+				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				modLoc("block/bronze/cut_bronze_bricks/corroded_cut_bronze_bricks")
 		);
 		this.slabBlock(
-			RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get(),
-			modLoc("block/tarnished_cut_bronze_bricks"),
-			modLoc("block/bronze/cut_bronze_bricks/tarnished_cut_bronze_bricks")
+				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get(),
+				modLoc("block/tarnished_cut_bronze_bricks"),
+				modLoc("block/bronze/cut_bronze_bricks/tarnished_cut_bronze_bricks")
 		);
 		this.stairsBlock(
-			RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS.get(),
-			modLoc("block/bronze/cut_bronze_bricks/tarnished_cut_bronze_bricks")
+				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				modLoc("block/bronze/cut_bronze_bricks/tarnished_cut_bronze_bricks")
 		);
 		this.slabBlock(
-			RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get(),
-			modLoc("block/crystallized_cut_bronze_bricks"),
-			modLoc("block/bronze/cut_bronze_bricks/crystallized_cut_bronze_bricks")
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get(),
+				modLoc("block/crystallized_cut_bronze_bricks"),
+				modLoc("block/bronze/cut_bronze_bricks/crystallized_cut_bronze_bricks")
 		);
 		this.stairsBlock(
-			RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get(),
-			modLoc("block/bronze/cut_bronze_bricks/crystallized_cut_bronze_bricks")
+				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get(),
+				modLoc("block/bronze/cut_bronze_bricks/crystallized_cut_bronze_bricks")
 		);
 
 		subfolder("bronze/bronze_lantern/",
@@ -305,68 +306,67 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 
 		generateLaserFamily("laser");
-
-
+		generateCopperLaserFamily("laser");
 	}
 
 	private void glassWithPane(Block glass, IronBarsBlock pane, String name, ResourceLocation edge) {
 		this.simpleBlock(
-			glass, 
-			this.models()
-				.cubeAll(name, this.modLoc("block/" + name))
-				.renderType(mcLoc("translucent"))
+				glass,
+				this.models()
+						.cubeAll(name, this.modLoc("block/" + name))
+						.renderType(mcLoc("translucent"))
 		);
 		this.paneBlockWithRenderType(
-			pane, 
-			this.modLoc("block/" + name), 
-			edge,
-			mcLoc("translucent")
+				pane,
+				this.modLoc("block/" + name),
+				edge,
+				mcLoc("translucent")
 		);
 	}
 
 	public void sixWayPillar(DeferredBlock<?> block, ResourceLocation side, ResourceLocation end) {
 		getVariantBuilder(block.get()).forAllStates((state) -> ConfiguredModel.builder()
-			.modelFile(
-				models().withExistingParent(
-					blockName(block), 
-					mcLoc("block/cube_column")
+				.modelFile(
+						models().withExistingParent(
+										blockName(block),
+										mcLoc("block/cube_column")
+								)
+								.texture("side", side)
+								.texture("end", end)
 				)
-				.texture("side", side)
-				.texture("end", end)
-			)
-			.rotationX(switch(state.getValue(SixWayPillarBlock.FACING)) {
-				case UP -> 0;
-				case DOWN -> 180;
-				default -> 90;
-			})
-			.rotationY(switch(state.getValue(SixWayPillarBlock.FACING)) {
-				case NORTH -> 0;
-				case SOUTH -> 180;
-				case EAST -> 90;
-				case WEST -> 270;
-				default -> 0;
-			})
-			.build()
+				.rotationX(switch(state.getValue(SixWayPillarBlock.FACING)) {
+					case UP -> 0;
+					case DOWN -> 180;
+					default -> 90;
+				})
+				.rotationY(switch(state.getValue(SixWayPillarBlock.FACING)) {
+					case NORTH -> 0;
+					case SOUTH -> 180;
+					case EAST -> 90;
+					case WEST -> 270;
+					default -> 0;
+				})
+				.build()
 		);
 	}
 
 
 	public void lantern(Block lamp, String name) {
 		var location = "block/" + name;
-		
+
 		var lantern = models()
-			.withExistingParent(name, mcLoc("template_lantern"))
-			.texture("lantern", modLoc(location))
-			.renderType(mcLoc("cutout"));
+				.withExistingParent(name, mcLoc("template_lantern"))
+				.texture("lantern", modLoc(location))
+				.renderType(mcLoc("cutout"));
 
 		var hangingLantern = models()
-			.withExistingParent("hanging_" + name, mcLoc("template_hanging_lantern"))
-			.texture("lantern", modLoc(location))
-			.renderType(mcLoc("cutout"));
-		
+				.withExistingParent("hanging_" + name, mcLoc("template_hanging_lantern"))
+				.texture("lantern", modLoc(location))
+				.renderType(mcLoc("cutout"));
+
 		this.getVariantBuilder(lamp).forAllStates((state) -> ConfiguredModel.builder()
-			.modelFile(state.getValue(LanternBlock.HANGING) ? hangingLantern : lantern)
-			.build()
+				.modelFile(state.getValue(LanternBlock.HANGING) ? hangingLantern : lantern)
+				.build()
 		);
 	}
 
@@ -399,24 +399,24 @@ public class RNBlockStates extends BlockStateProvider {
 			var name = blockName(block);
 
 			this.simpleBlock(
-				block.get(), 
-				this.models()
-					.cubeAll(name, modLoc("block/" + folder + name))
+					block.get(),
+					this.models()
+							.cubeAll(name, modLoc("block/" + folder + name))
 			);
 		}
 	}
 
 	public void subfolder(
-		String folder, 
-		TriConsumer<String, String, DeferredBlock<?>> fn, 
-		DeferredBlock<?>... blocks
+			String folder,
+			TriConsumer<String, String, DeferredBlock<?>> fn,
+			DeferredBlock<?>... blocks
 	) {
 		for (var block : blocks) {
 			var name = blockName(block);
 			fn.accept(
-				"block/" + folder + name,
-				name, 
-				block
+					"block/" + folder + name,
+					name,
+					block
 			);
 		}
 	}
@@ -427,6 +427,17 @@ public class RNBlockStates extends BlockStateProvider {
 			"corroded_bronze",
 			"tarnished_bronze",
 			"crystallized_bronze"
+	};
+
+	private static final String[] COPPER_LASER_STATES = {
+			"copper",
+			"exposed_copper",
+			"weathered_copper",
+			"oxidized_copper",
+			"waxed_copper",
+			"waxed_exposed_copper",
+			"waxed_weathered_copper",
+			"waxed_oxidized_copper"
 	};
 
 	private void generateLaserFamily(String baseName) {
@@ -449,6 +460,31 @@ public class RNBlockStates extends BlockStateProvider {
 		}
 	}
 
+	private void generateCopperLaserFamily(String baseName) {
+		for (String state : COPPER_LASER_STATES) {
+			// Build the full block name, e.g. "copper_laser", "exposed_copper_laser"
+			String blockName = state + "_" + baseName.toLowerCase();
+
+			// Look up the corresponding DeferredBlock field from RNBlocks
+			try {
+				var field = RNBlocks.class.getField(blockName.toUpperCase());
+				DeferredBlock<?> block = (DeferredBlock<?>) field.get(null);
+
+				// Remove waxed_ prefix for texture paths since waxed blocks use unwaxed textures
+				String textureBlockName = blockName;
+				if (state.startsWith("waxed_")) {
+					textureBlockName = blockName.replace("waxed_", "");
+				}
+
+				// Generate models + blockstates (reuse the same method, just different texture names)
+				generateLaserModels(textureBlockName);
+				generateCopperLaserBlockStates(block);
+
+			} catch (NoSuchFieldException | IllegalAccessException e) {
+				throw new RuntimeException("Could not find RNBlocks." + blockName.toUpperCase(), e);
+			}
+		}
+	}
 
 	private void generateLaserModels(String blockName) {
 		// Define all variants with their texture patterns
@@ -576,7 +612,61 @@ public class RNBlockStates extends BlockStateProvider {
 		}
 	}
 
+	private void generateCopperLaserBlockStates(DeferredBlock<?> laserBlock) {
+		String blockName = blockName(laserBlock);
 
+		// Remove waxed_ prefix for texture/model names
+		String modelBaseName = blockName;
+		if (blockName.startsWith("waxed_")) {
+			modelBaseName = blockName.replace("waxed_", "");
+		}
+
+		// Generate blockstates with specific ordering (reuse bronze laser logic but with CopperLaserBlock)
+		VariantBlockStateBuilder builder = getVariantBuilder(laserBlock.get());
+
+		// Order: Power (0-15) -> Mode (spectrum, uv, ir) -> Facing (down, east, north, south, up, west)
+		for (int power = 0; power <= 15; power++) {
+			for (CopperLaserBlock.LaserMode mode : CopperLaserBlock.LaserMode.values()) {
+				for (Direction facing : Direction.values()) {
+					String modeStr = mode.getSerializedName();
+
+					// Determine model suffix based on mode and power
+					String modelSuffix = "";
+					if (!modeStr.equals("spectrum")) {
+						modelSuffix += "_" + modeStr;
+					}
+					if (power > 0) {
+						modelSuffix += "_on";
+					}
+
+					// Determine rotations based on facing direction
+					int rotationX = switch(facing) {
+						case UP -> 0;
+						case DOWN -> 180;
+						default -> 90;
+					};
+
+					int rotationY = switch(facing) {
+						case NORTH -> 0;
+						case SOUTH -> 180;
+						case EAST -> 90;
+						case WEST -> 270;
+						default -> 0;
+					};
+
+					builder.partialState()
+							.with(BlockStateProperties.FACING, facing)
+							.with(CopperLaserBlock.MODE, mode)
+							.with(CopperLaserBlock.POWER, power)
+							.modelForState()
+							.modelFile(models().getExistingFile(modLoc("block/" + modelBaseName + modelSuffix)))
+							.rotationX(rotationX)
+							.rotationY(rotationY)
+							.addModel();
+				}
+			}
+		}
+	}
 
 	private String blockName(DeferredBlock<?> block) {
 		return block.getId().toString().split(":")[1];
