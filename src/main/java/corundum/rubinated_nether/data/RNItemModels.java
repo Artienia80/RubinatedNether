@@ -62,7 +62,7 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.WAXED_EXPOSED_COPPER_LASER,
 				RNBlocks.WAXED_WEATHERED_COPPER_LASER,
 				RNBlocks.WAXED_OXIDIZED_COPPER_LASER
-						);
+		);
 
 		waxableBlockItems(
 				RNBlocks.BRONZE_BLOCK,
@@ -117,44 +117,52 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.TARNISHED_BRONZE_LAMP,
 				RNBlocks.CRYSTALLIZED_BRONZE_LAMP,
 
-				RNBlocks.BRONZE_LANTERN,
-				RNBlocks.DISCOLORED_BRONZE_LANTERN,
-				RNBlocks.CORRODED_BRONZE_LANTERN,
-				RNBlocks.TARNISHED_BRONZE_LANTERN,
-				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN,
-
-				RNBlocks.BRONZE_CHAIN,
-				RNBlocks.DISCOLORED_BRONZE_CHAIN,
-				RNBlocks.CORRODED_BRONZE_CHAIN,
-				RNBlocks.TARNISHED_BRONZE_CHAIN,
-				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN,
-
-				RNBlocks.BRONZE_CHANDELIER,
-				RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
-				RNBlocks.CORRODED_BRONZE_CHANDELIER,
-				RNBlocks.TARNISHED_BRONZE_CHANDELIER,
-				RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER,
-
 				RNBlocks.BRONZE_LASER,
 				RNBlocks.DISCOLORED_BRONZE_LASER,
 				RNBlocks.CORRODED_BRONZE_LASER,
 				RNBlocks.TARNISHED_BRONZE_LASER,
 				RNBlocks.CRYSTALLIZED_BRONZE_LASER
+		);
 
-				);
+		// Custom item textures for chandeliers
+		customItemTextures("item/bronze/bronze_chandelier",
+				RNBlocks.BRONZE_CHANDELIER,
+				RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
+				RNBlocks.CORRODED_BRONZE_CHANDELIER,
+				RNBlocks.TARNISHED_BRONZE_CHANDELIER,
+				RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER
+		);
+
+		// Custom item textures for lanterns
+		customItemTextures("item/bronze/bronze_lantern",
+				RNBlocks.BRONZE_LANTERN,
+				RNBlocks.DISCOLORED_BRONZE_LANTERN,
+				RNBlocks.CORRODED_BRONZE_LANTERN,
+				RNBlocks.TARNISHED_BRONZE_LANTERN,
+				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN
+		);
+
+		// Custom item textures for chains
+		customItemTextures("item/bronze/bronze_chain",
+				RNBlocks.BRONZE_CHAIN,
+				RNBlocks.DISCOLORED_BRONZE_CHAIN,
+				RNBlocks.CORRODED_BRONZE_CHAIN,
+				RNBlocks.TARNISHED_BRONZE_CHAIN,
+				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN
+		);
 
 		paneItem(
 				RNBlocks.RUBY_GLASS_PANE,
 				"block/ruby_glass"
-				);
+		);
 		paneItem(
 				RNBlocks.ORNATE_RUBY_GLASS_PANE,
 				"block/ornate_ruby_glass"
-				);
+		);
 		paneItem(
 				RNBlocks.MOLTEN_RUBY_GLASS_PANE,
 				"block/molten_ruby_glass"
-				);
+		);
 
 		wallInventory(
 				RNBlocks.SHRINE_STONE_WALL.getId().toString(),
@@ -163,20 +171,20 @@ public class RNItemModels extends ItemModelProvider {
 		wallInventory(
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.getId().toString(),
 				modLoc("block/polished_shrine_stone")
-					 );
+		);
 		wallInventory(
 				RNBlocks.SHRINE_STONE_TILES_WALL.getId().toString(),
 				modLoc("block/shrine_stone_tiles")
-					 );
+		);
 		wallInventory(
 				RNBlocks.SHRINE_STONE_BRICKS_WALL.getId().toString(),
 				modLoc("block/shrine_stone_bricks")
-					 );
+		);
 
 		paneItem(
 				RNBlocks.MOLTEN_RUBY_GLASS_PANE,
 				"block/molten_ruby_glass"
-				);
+		);
 
 		// Handheld items
 		handheldItem(RNItems.BRONZE_DRILL, "item/bronze_drill");
@@ -240,6 +248,33 @@ public class RNItemModels extends ItemModelProvider {
 		);
 	}
 
+	private void customItemTextures(String baseTexture, DeferredBlock<?>... blocks) {
+		for (var block : blocks) {
+			String blockName = block.getId().getPath();
+
+			var model = withExistingParent(
+					block.getId().toString(),
+					mcLoc("item/generated")
+			).texture("layer0", modLoc(baseTexture + "/" + blockName));
+
+			// Add cutout render type for chains
+			if (baseTexture.contains("chain")) {
+				model.renderType(mcLoc("cutout"));
+			}
+
+			// Also generate waxable variant if using WaxableBlockItem
+			var waxableModel = withExistingParent(
+					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
+					mcLoc("item/generated")
+			).texture("layer0", modLoc(baseTexture + "/" + blockName));
+
+			// Add cutout render type for waxable chains too
+			if (baseTexture.contains("chain")) {
+				waxableModel.renderType(mcLoc("cutout"));
+			}
+		}
+	}
+
 	private void paneItem(DeferredBlock<?> block, String texture) {
 		withExistingParent(
 				block.getId().toString(),
@@ -281,7 +316,7 @@ public class RNItemModels extends ItemModelProvider {
 			withExistingParent(
 					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
 					block.getId()
-							  );
+			);
 		}
 	}
 }

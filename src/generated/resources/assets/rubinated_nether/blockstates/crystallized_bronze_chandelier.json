@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "rubinated_nether:block/crystallized_chandelier"
+      "model": "rubinated_nether:block/crystallized_bronze_chandelier"
     }
   }
 }

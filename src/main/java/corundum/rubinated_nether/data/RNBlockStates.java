@@ -52,30 +52,19 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 
 
-		this.simpleBlock(
-				RNBlocks.BRONZE_CHANDELIER.get(),
-				this.models()
-						.withExistingParent("chandelier", this.modLoc("block/ruby_chandelier_base"))
-		);
-		this.simpleBlock(
-				RNBlocks.DISCOLORED_BRONZE_CHANDELIER.get(),
-				this.models()
-						.withExistingParent("discolored_chandelier", this.modLoc("block/ruby_chandelier_base"))
-		);
-		this.simpleBlock(
-				RNBlocks.CORRODED_BRONZE_CHANDELIER.get(),
-				this.models()
-						.withExistingParent("corroded_chandelier", this.modLoc("block/ruby_chandelier_base"))
-		);
-		this.simpleBlock(
-				RNBlocks.TARNISHED_BRONZE_CHANDELIER.get(),
-				this.models()
-						.withExistingParent("tarnished_chandelier", this.modLoc("block/ruby_chandelier_base"))
-		);
-		this.simpleBlock(
-				RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get(),
-				this.models()
-						.withExistingParent("crystallized_chandelier", this.modLoc("block/ruby_chandelier_base"))
+		subfolder("bronze/bronze_chandelier/",
+				(rloc, name, block) -> {
+					this.simpleBlock(
+							block.get(),
+							this.models()
+									.withExistingParent(name, this.modLoc("block/ruby_chandelier_base"))
+					);
+				},
+				RNBlocks.BRONZE_CHANDELIER,
+				RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
+				RNBlocks.CORRODED_BRONZE_CHANDELIER,
+				RNBlocks.TARNISHED_BRONZE_CHANDELIER,
+				RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER
 		);
 
 		subfolder("bronze/bronze_lamp/",
@@ -305,7 +294,7 @@ public class RNBlockStates extends BlockStateProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN
 		);
 
-		generateLaserFamily("laser");
+		generateBronzeLaserFamily("laser");
 		generateCopperLaserFamily("laser");
 	}
 
@@ -354,13 +343,16 @@ public class RNBlockStates extends BlockStateProvider {
 	public void lantern(Block lamp, String name) {
 		var location = "block/" + name;
 
+		// Extract just the lantern name from the full path for model naming
+		String modelName = name.substring(name.lastIndexOf('/') + 1);
+
 		var lantern = models()
-				.withExistingParent(name, mcLoc("template_lantern"))
+				.withExistingParent(modelName, mcLoc("template_lantern"))
 				.texture("lantern", modLoc(location))
 				.renderType(mcLoc("cutout"));
 
 		var hangingLantern = models()
-				.withExistingParent("hanging_" + name, mcLoc("template_hanging_lantern"))
+				.withExistingParent("hanging_" + modelName, mcLoc("template_hanging_lantern"))
 				.texture("lantern", modLoc(location))
 				.renderType(mcLoc("cutout"));
 
@@ -421,7 +413,8 @@ public class RNBlockStates extends BlockStateProvider {
 		}
 	}
 
-	private static final String[] LASER_STATES = {
+	// Constants for laser families
+	private static final String[] BRONZE_LASER_STATES = {
 			"bronze",
 			"discolored_bronze",
 			"corroded_bronze",
@@ -433,26 +426,27 @@ public class RNBlockStates extends BlockStateProvider {
 			"copper",
 			"exposed_copper",
 			"weathered_copper",
-			"oxidized_copper",
+			"oxidized_copper"
+	};
+
+	private static final String[] WAXED_COPPER_LASER_STATES = {
 			"waxed_copper",
 			"waxed_exposed_copper",
 			"waxed_weathered_copper",
 			"waxed_oxidized_copper"
 	};
 
-	private void generateLaserFamily(String baseName) {
-		for (String state : LASER_STATES) {
-			// Build the full block name, e.g. "bronze_laser", "discolored_bronze_laser"
+	// ===== BRONZE LASER METHODS =====
+	private void generateBronzeLaserFamily(String baseName) {
+		for (String state : BRONZE_LASER_STATES) {
 			String blockName = state + "_" + baseName.toLowerCase();
 
-			// Look up the corresponding DeferredBlock field from RNBlocks
 			try {
 				var field = RNBlocks.class.getField(blockName.toUpperCase());
 				DeferredBlock<?> block = (DeferredBlock<?>) field.get(null);
 
-				// Generate models + blockstates
-				generateLaserModels(blockName);
-				generateLaserBlockStates(block);
+				generateLaserModels(blockName, blockName); // Same name for both model and texture
+				generateBronzeLaserBlockStates(block);
 
 			} catch (NoSuchFieldException | IllegalAccessException e) {
 				throw new RuntimeException("Could not find RNBlocks." + blockName.toUpperCase(), e);
@@ -460,24 +454,82 @@ public class RNBlockStates extends BlockStateProvider {
 		}
 	}
 
+	private void generateBronzeLaserBlockStates(DeferredBlock<?> laserBlock) {
+		String blockName = blockName(laserBlock);
+		VariantBlockStateBuilder builder = getVariantBuilder(laserBlock.get());
+
+		// Order: Power (0-15) -> Mode (spectrum, uv, ir) -> Facing (down, east, north, south, up, west)
+		for (int power = 0; power <= 15; power++) {
+			for (BronzeLaserBlock.LaserMode mode : BronzeLaserBlock.LaserMode.values()) {
+				for (Direction facing : Direction.values()) {
+					String modeStr = mode.getSerializedName();
+
+					// Determine model suffix based on mode and power
+					String modelSuffix = "";
+					if (!modeStr.equals("spectrum")) {
+						modelSuffix += "_" + modeStr;
+					}
+					if (power > 0) {
+						modelSuffix += "_on";
+					}
+
+					// Determine rotations based on facing direction
+					int rotationX = switch(facing) {
+						case UP -> 0;
+						case DOWN -> 180;
+						default -> 90;
+					};
+
+					int rotationY = switch(facing) {
+						case NORTH -> 0;
+						case SOUTH -> 180;
+						case EAST -> 90;
+						case WEST -> 270;
+						default -> 0;
+					};
+
+					builder.partialState()
+							.with(BlockStateProperties.FACING, facing)
+							.with(BronzeLaserBlock.MODE, mode)
+							.with(BronzeLaserBlock.POWER, power)
+							.modelForState()
+							.modelFile(models().getExistingFile(modLoc("block/" + blockName + modelSuffix)))
+							.rotationX(rotationX)
+							.rotationY(rotationY)
+							.addModel();
+				}
+			}
+		}
+	}
+
+	// ===== COPPER LASER METHODS =====
 	private void generateCopperLaserFamily(String baseName) {
+		// Generate unwaxed copper lasers
 		for (String state : COPPER_LASER_STATES) {
-			// Build the full block name, e.g. "copper_laser", "exposed_copper_laser"
 			String blockName = state + "_" + baseName.toLowerCase();
 
-			// Look up the corresponding DeferredBlock field from RNBlocks
 			try {
 				var field = RNBlocks.class.getField(blockName.toUpperCase());
 				DeferredBlock<?> block = (DeferredBlock<?>) field.get(null);
 
-				// Remove waxed_ prefix for texture paths since waxed blocks use unwaxed textures
-				String textureBlockName = blockName;
-				if (state.startsWith("waxed_")) {
-					textureBlockName = blockName.replace("waxed_", "");
-				}
+				generateLaserModels(blockName, blockName); // Same name for both model and texture
+				generateCopperLaserBlockStates(block);
 
-				// Generate models + blockstates (reuse the same method, just different texture names)
-				generateLaserModels(textureBlockName);
+			} catch (NoSuchFieldException | IllegalAccessException e) {
+				throw new RuntimeException("Could not find RNBlocks." + blockName.toUpperCase(), e);
+			}
+		}
+
+		// Generate waxed copper lasers (separate models, unwaxed textures)
+		for (String state : WAXED_COPPER_LASER_STATES) {
+			String blockName = state + "_" + baseName.toLowerCase();
+			String textureBlockName = blockName.replace("waxed_", ""); // Use unwaxed textures
+
+			try {
+				var field = RNBlocks.class.getField(blockName.toUpperCase());
+				DeferredBlock<?> block = (DeferredBlock<?>) field.get(null);
+
+				generateLaserModels(blockName, textureBlockName); // Different model name, unwaxed texture name
 				generateCopperLaserBlockStates(block);
 
 			} catch (NoSuchFieldException | IllegalAccessException e) {
@@ -486,15 +538,64 @@ public class RNBlockStates extends BlockStateProvider {
 		}
 	}
 
-	private void generateLaserModels(String blockName) {
+	private void generateCopperLaserBlockStates(DeferredBlock<?> laserBlock) {
+		String blockName = blockName(laserBlock);
+		VariantBlockStateBuilder builder = getVariantBuilder(laserBlock.get());
+
+		// Order: Power (0-15) -> Mode (spectrum, uv, ir) -> Facing (down, east, north, south, up, west)
+		for (int power = 0; power <= 15; power++) {
+			for (CopperLaserBlock.LaserMode mode : CopperLaserBlock.LaserMode.values()) {
+				for (Direction facing : Direction.values()) {
+					String modeStr = mode.getSerializedName();
+
+					// Determine model suffix based on mode and power
+					String modelSuffix = "";
+					if (!modeStr.equals("spectrum")) {
+						modelSuffix += "_" + modeStr;
+					}
+					if (power > 0) {
+						modelSuffix += "_on";
+					}
+
+					// Determine rotations based on facing direction
+					int rotationX = switch(facing) {
+						case UP -> 0;
+						case DOWN -> 180;
+						default -> 90;
+					};
+
+					int rotationY = switch(facing) {
+						case NORTH -> 0;
+						case SOUTH -> 180;
+						case EAST -> 90;
+						case WEST -> 270;
+						default -> 0;
+					};
+
+					builder.partialState()
+							.with(BlockStateProperties.FACING, facing)
+							.with(CopperLaserBlock.MODE, mode)
+							.with(CopperLaserBlock.POWER, power)
+							.modelForState()
+							.modelFile(models().getExistingFile(modLoc("block/" + blockName + modelSuffix)))
+							.rotationX(rotationX)
+							.rotationY(rotationY)
+							.addModel();
+				}
+			}
+		}
+	}
+
+	// ===== SHARED LASER MODEL METHODS =====
+	private void generateLaserModels(String modelBlockName, String textureBlockName) {
 		// Define all variants with their texture patterns
 		var variants = new Object[][] {
-				{"", "laser_lens", blockName + "_front", blockName + "_front"}, // base variant
-				{"_ir", "laser_lens_ir", blockName + "_front", blockName + "_front"},
-				{"_ir_on", "laser_lens_ir_on", blockName + "_front_on", blockName + "_front"},
-				{"_on", "laser_lens_on", blockName + "_front_on", blockName + "_front"},
-				{"_uv", "laser_lens_uv", blockName + "_front", blockName + "_front"},
-				{"_uv_on", "laser_lens_uv_on", blockName + "_front_on", blockName + "_front"}
+				{"", "laser_lens", textureBlockName + "_front", textureBlockName + "_front"}, // base variant
+				{"_ir", "laser_lens_ir", textureBlockName + "_front", textureBlockName + "_front"},
+				{"_ir_on", "laser_lens_ir_on", textureBlockName + "_front_on", textureBlockName + "_front"},
+				{"_on", "laser_lens_on", textureBlockName + "_front_on", textureBlockName + "_front"},
+				{"_uv", "laser_lens_uv", textureBlockName + "_front", textureBlockName + "_front"},
+				{"_uv_on", "laser_lens_uv_on", textureBlockName + "_front_on", textureBlockName + "_front"}
 		};
 
 		// Generate each variant
@@ -504,7 +605,7 @@ public class RNBlockStates extends BlockStateProvider {
 			String frontTexture = (String) variant[2];
 			String particleTexture = (String) variant[3];
 
-			createLaserModel(blockName + suffix, lensTexture, frontTexture, blockName + "_side", particleTexture);
+			createLaserModel(modelBlockName + suffix, lensTexture, frontTexture, textureBlockName + "_side", particleTexture);
 		}
 	}
 
@@ -557,115 +658,6 @@ public class RNBlockStates extends BlockStateProvider {
 				.face(Direction.UP).uvs(3, 3, 13, 13).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).texture("#0").end()
 				.face(Direction.DOWN).uvs(3, 3, 13, 13).texture("#0").end()
 				.end();
-	}
-
-	private void generateLaserBlockStates(DeferredBlock<?> laserBlock) {
-		String blockName = blockName(laserBlock);
-
-		// Generate models first
-		generateLaserModels(blockName);
-
-		// Generate blockstates with specific ordering
-		VariantBlockStateBuilder builder = getVariantBuilder(laserBlock.get());
-
-		// Order: Power (0-15) -> Mode (spectrum, uv, ir) -> Facing (down, east, north, south, up, west)
-		for (int power = 0; power <= 15; power++) {
-			for (BronzeLaserBlock.LaserMode mode : BronzeLaserBlock.LaserMode.values()) {
-				for (Direction facing : Direction.values()) {
-					String modeStr = mode.getSerializedName();
-
-					// Determine model suffix based on mode and power
-					String modelSuffix = "";
-					if (!modeStr.equals("spectrum")) {
-						modelSuffix += "_" + modeStr;
-					}
-					if (power > 0) {
-						modelSuffix += "_on";
-					}
-
-					// Determine rotations based on facing direction
-					int rotationX = switch(facing) {
-						case UP -> 0;
-						case DOWN -> 180;
-						default -> 90;
-					};
-
-					int rotationY = switch(facing) {
-						case NORTH -> 0;
-						case SOUTH -> 180;
-						case EAST -> 90;
-						case WEST -> 270;
-						default -> 0;
-					};
-
-					builder.partialState()
-							.with(BlockStateProperties.FACING, facing)
-							.with(BronzeLaserBlock.MODE, mode)
-							.with(BronzeLaserBlock.POWER, power)
-							.modelForState()
-							.modelFile(models().getExistingFile(modLoc("block/" + blockName + modelSuffix)))
-							.rotationX(rotationX)
-							.rotationY(rotationY)
-							.addModel();
-				}
-			}
-		}
-	}
-
-	private void generateCopperLaserBlockStates(DeferredBlock<?> laserBlock) {
-		String blockName = blockName(laserBlock);
-
-		// Remove waxed_ prefix for texture/model names
-		String modelBaseName = blockName;
-		if (blockName.startsWith("waxed_")) {
-			modelBaseName = blockName.replace("waxed_", "");
-		}
-
-		// Generate blockstates with specific ordering (reuse bronze laser logic but with CopperLaserBlock)
-		VariantBlockStateBuilder builder = getVariantBuilder(laserBlock.get());
-
-		// Order: Power (0-15) -> Mode (spectrum, uv, ir) -> Facing (down, east, north, south, up, west)
-		for (int power = 0; power <= 15; power++) {
-			for (CopperLaserBlock.LaserMode mode : CopperLaserBlock.LaserMode.values()) {
-				for (Direction facing : Direction.values()) {
-					String modeStr = mode.getSerializedName();
-
-					// Determine model suffix based on mode and power
-					String modelSuffix = "";
-					if (!modeStr.equals("spectrum")) {
-						modelSuffix += "_" + modeStr;
-					}
-					if (power > 0) {
-						modelSuffix += "_on";
-					}
-
-					// Determine rotations based on facing direction
-					int rotationX = switch(facing) {
-						case UP -> 0;
-						case DOWN -> 180;
-						default -> 90;
-					};
-
-					int rotationY = switch(facing) {
-						case NORTH -> 0;
-						case SOUTH -> 180;
-						case EAST -> 90;
-						case WEST -> 270;
-						default -> 0;
-					};
-
-					builder.partialState()
-							.with(BlockStateProperties.FACING, facing)
-							.with(CopperLaserBlock.MODE, mode)
-							.with(CopperLaserBlock.POWER, power)
-							.modelForState()
-							.modelFile(models().getExistingFile(modLoc("block/" + modelBaseName + modelSuffix)))
-							.rotationX(rotationX)
-							.rotationY(rotationY)
-							.addModel();
-				}
-			}
-		}
 	}
 
 	private String blockName(DeferredBlock<?> block) {
