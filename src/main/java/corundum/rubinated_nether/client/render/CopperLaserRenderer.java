@@ -66,13 +66,13 @@ public class CopperLaserRenderer implements BlockEntityRenderer<CopperLaserBlock
 			CopperLaserBlock.LaserMode mode = blockEntity.getBlockState().getValue(CopperLaserBlock.MODE);
 			if (mode == CopperLaserBlock.LaserMode.ULTRAVIOLET) {
 				// UV spins twice as fast
-				angle = (lerpedTime * 6) % 360f;
+				angle = -(lerpedTime * 6) % 360f;
 			} else if (mode == CopperLaserBlock.LaserMode.INFRARED) {
 				// IR spins half as fast
-				angle = (lerpedTime * 1.5f) % 360f;
+				angle = -(lerpedTime * 1.5f) % 360f;
 			} else {
 				// Normal speed for spectrum and other modes
-				angle = (lerpedTime * 3) % 360f;
+				angle = -(lerpedTime * 3) % 360f;
 			}
 
 			tempQuat.rotateY(angle * Mth.DEG_TO_RAD);
