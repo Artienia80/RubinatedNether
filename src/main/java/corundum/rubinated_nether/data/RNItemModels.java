@@ -257,21 +257,12 @@ public class RNItemModels extends ItemModelProvider {
 					mcLoc("item/generated")
 			).texture("layer0", modLoc(baseTexture + "/" + blockName));
 
-			// Add cutout render type for chains
-			if (baseTexture.contains("chain")) {
-				model.renderType(mcLoc("cutout"));
-			}
 
-			// Also generate waxable variant if using WaxableBlockItem
 			var waxableModel = withExistingParent(
 					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
 					mcLoc("item/generated")
 			).texture("layer0", modLoc(baseTexture + "/" + blockName));
 
-			// Add cutout render type for waxable chains too
-			if (baseTexture.contains("chain")) {
-				waxableModel.renderType(mcLoc("cutout"));
-			}
 		}
 	}
 

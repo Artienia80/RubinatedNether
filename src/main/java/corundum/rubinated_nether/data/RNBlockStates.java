@@ -368,7 +368,8 @@ public class RNBlockStates extends BlockStateProvider {
 		var chainModel = models()
 				.withExistingParent(name, mcLoc("block/chain"))
 				.texture("all", modLoc(texturePath))
-				.texture("particle", modLoc(texturePath));
+				.texture("particle", modLoc(texturePath))
+				.renderType(mcLoc("cutout")); // Add this line for transparency
 
 		this.getVariantBuilder(chain).forAllStates((state) -> ConfiguredModel.builder()
 				.modelFile(chainModel)
