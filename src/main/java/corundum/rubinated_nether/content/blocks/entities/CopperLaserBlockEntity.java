@@ -256,12 +256,9 @@ public class CopperLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 	}
 
 	private int calculateMaxRange(WeatheringCopper.WeatherState weatherState) {
-		return switch (weatherState) {
-			case UNAFFECTED -> 15;
-			case EXPOSED -> 30;
-			case WEATHERED -> 45;
-			case OXIDIZED -> 60;
-		};
+		// Fixed: Copper lasers should have consistent range regardless of oxidation
+		// Only bronze lasers should have variable range based on weathering
+		return 15;
 	}
 
 	private int getSecondsPerPowerLevel(WeatheringCopper.WeatherState weatherState) {

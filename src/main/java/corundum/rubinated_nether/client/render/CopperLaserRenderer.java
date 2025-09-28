@@ -27,7 +27,7 @@ public class CopperLaserRenderer implements BlockEntityRenderer<CopperLaserBlock
 	public static final ResourceLocation LASER_TEXTURE = RubinatedNether.id("textures/misc/laser_beam.png");
 	public static final ResourceLocation LASER_TEXTURE_GREYSCALE = RubinatedNether.id("textures/misc/laser_beam_greyscale.png");
 
-	private static final int BASE_COLOR = 0x00FF00;     // Green for copper laser
+	private static final int BASE_COLOR = 0x00FF00;
 	private static final int ULTRAVIOLET_COLOR = 0x330033;
 	private static final int INFRARED_COLOR = 0x330000;
 
