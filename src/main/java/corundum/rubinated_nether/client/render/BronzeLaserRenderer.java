@@ -24,7 +24,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.phys.AABB;
 
 public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlockEntity> {
-	public static final ResourceLocation LASER_TEXTURE = RubinatedNether.id("textures/misc/laser_beam.png");
+	public static final ResourceLocation LASER_TEXTURE = RubinatedNether.id("textures/misc/bronze_laser_beam.png");
 	public static final ResourceLocation LASER_TEXTURE_GREYSCALE = RubinatedNether.id("textures/misc/laser_beam_greyscale.png");
 
 	private static final int BASE_COLOR = 0xFF0000;
@@ -80,7 +80,7 @@ public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlock
 			} else {
 				BronzeLaserBlock.LaserMode mode = blockEntity.getBlockState().getValue(BronzeLaserBlock.MODE);
 				if (mode == BronzeLaserBlock.LaserMode.SPECTRUM) {
-					color = FastColor.ARGB32.color(255, BASE_COLOR);
+					color = FastColor.ARGB32.color(255, 255, 255, 255); // White - no tinting
 				} else if (mode == BronzeLaserBlock.LaserMode.ULTRAVIOLET) {
 					color = FastColor.ARGB32.color(255, ULTRAVIOLET_COLOR);
 					useGrayscale = true;
@@ -93,10 +93,10 @@ public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlock
 			// Use fallback render type if shaders in use because beacon beam broken
 			var consumer = buffer.getBuffer(getRenderType(blockEntity.isColored() || blockEntity.isSilly() || useGrayscale));
 
-			renderFace(poseStack, consumer, .4f, 1, .6f, .6f, maxY, .6f, color, lerpedTime, Direction.NORTH);
-			renderFace(poseStack, consumer, .6f, 1, .4f, .4f, maxY, .4f, color, lerpedTime, Direction.SOUTH);
-			renderFace(poseStack, consumer, .4f, 1, .4f, .4f, maxY, .6f, color, lerpedTime, Direction.EAST);
-			renderFace(poseStack, consumer, .6f, 1, .6f, .6f, maxY, .4f, color, lerpedTime, Direction.WEST);
+			renderFace(poseStack, consumer, .4f, 1, .6f, .6f, maxY, .6f, color, lerpedTime, Direction.NORTH, blockEntity);
+			renderFace(poseStack, consumer, .6f, 1, .4f, .4f, maxY, .4f, color, lerpedTime, Direction.SOUTH, blockEntity);
+			renderFace(poseStack, consumer, .4f, 1, .4f, .4f, maxY, .6f, color, lerpedTime, Direction.EAST, blockEntity);
+			renderFace(poseStack, consumer, .6f, 1, .6f, .6f, maxY, .4f, color, lerpedTime, Direction.WEST, blockEntity);
 			poseStack.popPose();
 		}
 	}
@@ -112,7 +112,8 @@ public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlock
 			float maxZ,
 			int color,
 			float ticks,
-			Direction face
+			Direction face,
+			BronzeLaserBlockEntity blockEntity
 	) {
 		PoseStack.Pose pose = matrices.last();
 		var maxV = (maxY - 1f) / 15f;
@@ -120,8 +121,16 @@ public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlock
 		var v0 = 1 - (ticks % 150f) / 150f;
 		var v1 = v0 + (maxV * 0.4f);
 
+		// Get the maximum range for this laser type to calculate proper fade
+		var maxRange = (float) blockEntity.getCurrentRange();
+
+		// Fade from 100% opacity at distance 0 to 0% opacity at max range
+		var distance = Math.min(maxRange, maxY - 1f); // Clamp to 0-maxRange
+		var alphaMultiplier = Math.max(0f, 1f - (distance / maxRange)); // 1.0 at distance 0, 0.0 at maxRange
+		var endAlpha = (int)(255 * alphaMultiplier);
+
 		var endColor = FastColor.ARGB32.color(
-				Math.max(0, 255 - ((int)(maxY) - 16) * 15),
+				endAlpha,
 				FastColor.ARGB32.red(color),
 				FastColor.ARGB32.green(color),
 				FastColor.ARGB32.blue(color)
