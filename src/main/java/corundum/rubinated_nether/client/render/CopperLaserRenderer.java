@@ -28,8 +28,8 @@ public class CopperLaserRenderer implements BlockEntityRenderer<CopperLaserBlock
 	public static final ResourceLocation LASER_TEXTURE_GREYSCALE = RubinatedNether.id("textures/misc/laser_beam_greyscale.png");
 
 	private static final int BASE_COLOR = 0x00FF00;
-	private static final int ULTRAVIOLET_COLOR = 0x330033;
-	private static final int INFRARED_COLOR = 0x330000;
+	private static final int ULTRAVIOLET_COLOR = 0x6600AA;  // Lighter purple (was 0x330033)
+	private static final int INFRARED_COLOR = 0x990033;     // Lighter crimson (was 0x330000)
 
 	private final Quaternionf tempQuat = new Quaternionf();
 
@@ -59,9 +59,22 @@ public class CopperLaserRenderer implements BlockEntityRenderer<CopperLaserBlock
 
 			tempQuat.rotationXYZ(xRot * Mth.DEG_TO_RAD, 0, zRot * Mth.DEG_TO_RAD);
 
-			// rotating animation
+			// rotating animation with different speeds for UV/IR
 			var lerpedTime = Mth.lerp(partialTick, level.getGameTime(), level.getGameTime() + 1);
-			var angle = (lerpedTime * 3) % 360f;
+			float angle;
+
+			CopperLaserBlock.LaserMode mode = blockEntity.getBlockState().getValue(CopperLaserBlock.MODE);
+			if (mode == CopperLaserBlock.LaserMode.ULTRAVIOLET) {
+				// UV spins twice as fast
+				angle = (lerpedTime * 6) % 360f;
+			} else if (mode == CopperLaserBlock.LaserMode.INFRARED) {
+				// IR spins half as fast
+				angle = (lerpedTime * 1.5f) % 360f;
+			} else {
+				// Normal speed for spectrum and other modes
+				angle = (lerpedTime * 3) % 360f;
+			}
+
 			tempQuat.rotateY(angle * Mth.DEG_TO_RAD);
 
 			poseStack.mulPose(tempQuat);
@@ -78,7 +91,6 @@ public class CopperLaserRenderer implements BlockEntityRenderer<CopperLaserBlock
 				int col = Mth.hsvToRgb(hue, .8f, 1f);
 				color = FastColor.ARGB32.color(255, col);
 			} else {
-				CopperLaserBlock.LaserMode mode = blockEntity.getBlockState().getValue(CopperLaserBlock.MODE);
 				if (mode == CopperLaserBlock.LaserMode.SPECTRUM) {
 					color = FastColor.ARGB32.color(255, 255, 255, 255); // White - no tinting
 				} else if (mode == CopperLaserBlock.LaserMode.ULTRAVIOLET) {
@@ -124,10 +136,32 @@ public class CopperLaserRenderer implements BlockEntityRenderer<CopperLaserBlock
 		// Copper laser always has 15 block range
 		var maxRange = 15f;
 
-		// Fade from 100% opacity at distance 0 to 0% opacity at max range
+		// Check if we're in UV or IR mode for special transparency handling
+		CopperLaserBlock.LaserMode mode = blockEntity.getBlockState().getValue(CopperLaserBlock.MODE);
+		boolean isUVorIR = (mode == CopperLaserBlock.LaserMode.ULTRAVIOLET || mode == CopperLaserBlock.LaserMode.INFRARED);
+
+		// Calculate transparency
 		var distance = Math.min(maxRange, maxY - 1f); // Clamp to 0-maxRange
-		var alphaMultiplier = Math.max(0f, 1f - (distance / maxRange)); // 1.0 at distance 0, 0.0 at maxRange
+		float alphaMultiplier;
+
+		if (isUVorIR) {
+			// For UV/IR: Start from 50% (0.5) and end at 0%
+			alphaMultiplier = Math.max(0f, 0.5f * (1f - (distance / maxRange)));
+		} else {
+			// For other modes: Start from 100% and end at 0%
+			alphaMultiplier = Math.max(0f, 1f - (distance / maxRange));
+		}
+
+		var startAlpha = isUVorIR ? (int)(255 * 0.5f) : 255; // 50% for UV/IR, 100% for others
 		var endAlpha = (int)(255 * alphaMultiplier);
+
+		// Apply alpha to start color for UV/IR modes
+		var startColor = isUVorIR ? FastColor.ARGB32.color(
+				startAlpha,
+				FastColor.ARGB32.red(color),
+				FastColor.ARGB32.green(color),
+				FastColor.ARGB32.blue(color)
+		) : color;
 
 		var endColor = FastColor.ARGB32.color(
 				endAlpha,
@@ -137,14 +171,14 @@ public class CopperLaserRenderer implements BlockEntityRenderer<CopperLaserBlock
 		);
 
 		buffer.addVertex(pose.pose(), minX, minY, minZ)
-				.setColor(color)
+				.setColor(startColor)
 				.setUv(0, v0)
 				.setOverlay(OverlayTexture.NO_OVERLAY)
 				.setUv2(LightTexture.FULL_BRIGHT,1)
 				.setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
 
 		buffer.addVertex(pose.pose(), maxX, minY, maxZ)
-				.setColor(color)
+				.setColor(startColor)
 				.setUv(1, v0)
 				.setOverlay(OverlayTexture.NO_OVERLAY)
 				.setUv2(LightTexture.FULL_BRIGHT,1)
