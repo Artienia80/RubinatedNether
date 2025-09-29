@@ -54,10 +54,11 @@ public class RNBlockStates extends BlockStateProvider {
 
 		subfolder("bronze/bronze_chandelier/",
 				(rloc, name, block) -> {
+					generateChandelierModel(name);
+
 					this.simpleBlock(
 							block.get(),
-							this.models()
-									.withExistingParent(name, this.modLoc("block/ruby_chandelier_base"))
+							this.models().getExistingFile(this.modLoc("block/" + name))
 					);
 				},
 				RNBlocks.BRONZE_CHANDELIER,
@@ -659,6 +660,172 @@ public class RNBlockStates extends BlockStateProvider {
 				.face(Direction.UP).uvs(3, 3, 13, 13).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).texture("#0").end()
 				.face(Direction.DOWN).uvs(3, 3, 13, 13).texture("#0").end()
 				.end();
+	}
+
+	private void generateChandelierModel(String variantName) {
+		// Extract the bronze state prefix (e.g., "bronze", "discolored_bronze", etc.)
+		String bronzeState = variantName.replace("_chandelier", "");
+
+		models().getBuilder(variantName)
+        .parent(models().getExistingFile(mcLoc("block/block")))
+        .renderType("cutout")
+        .texture("0", modLoc("block/bronze/bronze_chandelier/chandelier_light"))  // Constant light texture
+        .texture("1", modLoc("block/bronze/bronze_chandelier/" + variantName + "_frame"))  // Variant-specific frame
+        .texture("2", modLoc("block/bronze/bronze_chandelier/" + variantName + "_frame_top"))  // Variant-specific frame top
+        .texture("3", modLoc("block/bronze/bronze_chandelier/" + variantName + "_chain"))  // Variant-specific chain
+        .texture("particle", modLoc("block/bronze/bronze_chandelier/" + variantName + "_frame"))
+
+        // Frame NS1
+        .element()
+        .from(2, -2, -8).to(2, 14, 24)
+        .rotation().angle(0).axis(Direction.Axis.Y).origin(2, 0, -8).end()
+        .face(Direction.EAST).uvs(0, 0, 16, 16).texture("#1").end()
+        .face(Direction.WEST).uvs(0, 0, 16, 16).texture("#1").end()
+        .end()
+
+        // Frame NS2
+        .element()
+        .from(14, -2, -8).to(14, 14, 24)
+        .rotation().angle(0).axis(Direction.Axis.Y).origin(14, 0, -8).end()
+        .face(Direction.EAST).uvs(0, 0, 16, 16).texture("#1").end()
+        .face(Direction.WEST).uvs(0, 0, 16, 16).texture("#1").end()
+        .end()
+
+        // Frame EW1
+        .element()
+        .from(-8, -2, 2).to(24, 14, 2)
+        .rotation().angle(0).axis(Direction.Axis.Y).origin(-8, 0, 2).end()
+        .face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#1").end()
+        .face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#1").end()
+        .end()
+
+        // Frame EW2
+        .element()
+        .from(-8, -2, 14).to(24, 14, 14)
+        .rotation().angle(0).axis(Direction.Axis.Y).origin(-8, 0, 14).end()
+        .face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#1").end()
+        .face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#1").end()
+        .end()
+
+        // Light 1
+        .element()
+        .from(-9.1f, 10.9f, -0.1f).to(-4.9f, 17.1f, 4.1f)
+        .rotation().angle(0).axis(Direction.Axis.Y).origin(-9, 12, 0).end()
+        .face(Direction.NORTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.EAST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.SOUTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.WEST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.UP).uvs(6, 5, 10, 9).texture("#0").end()
+        .face(Direction.DOWN).uvs(6, 7, 10, 11).texture("#0").end()
+        .end()
+
+        // Light 2
+        .element()
+        .from(-9.1f, 10.9f, 11.9f).to(-4.9f, 17.1f, 16.1f)
+        .rotation().angle(0).axis(Direction.Axis.Y).origin(-9, 12, 12).end()
+        .face(Direction.NORTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.EAST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.SOUTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.WEST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.UP).uvs(6, 5, 10, 9).texture("#0").end()
+        .face(Direction.DOWN).uvs(6, 7, 10, 11).texture("#0").end()
+        .end()
+
+        // Light 3
+        .element()
+        .from(20.9f, 10.9f, -0.1f).to(25.1f, 17.1f, 4.1f)
+        .rotation().angle(0).axis(Direction.Axis.Y).origin(21, 12, 0).end()
+        .face(Direction.NORTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.EAST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.SOUTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.WEST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.UP).uvs(6, 5, 10, 9).texture("#0").end()
+        .face(Direction.DOWN).uvs(6, 7, 10, 11).texture("#0").end()
+        .end()
+
+        // Light 4
+        .element()
+        .from(20.9f, 10.9f, 11.9f).to(25.1f, 17.1f, 16.1f)
+        .rotation().angle(0).axis(Direction.Axis.Y).origin(21, 12, 12).end()
+        .face(Direction.NORTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.EAST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.SOUTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.WEST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.UP).uvs(6, 5, 10, 9).texture("#0").end()
+        .face(Direction.DOWN).uvs(6, 7, 10, 11).texture("#0").end()
+        .end()
+
+        // Light 5
+        .element()
+        .from(11.9f, 10.9f, -9.1f).to(16.1f, 17.1f, -4.9f)
+        .rotation().angle(0).axis(Direction.Axis.Y).origin(8, 12, 9).end()
+        .face(Direction.NORTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.EAST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.SOUTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.WEST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.UP).uvs(6, 5, 10, 9).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#0").end()
+        .face(Direction.DOWN).uvs(6, 7, 10, 11).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#0").end()
+        .end()
+
+        // Light 6
+        .element()
+        .from(-0.1f, 10.9f, -9.1f).to(4.1f, 17.1f, -4.9f)
+        .rotation().angle(0).axis(Direction.Axis.Y).origin(8, 12, 9).end()
+        .face(Direction.NORTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.EAST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.SOUTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.WEST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.UP).uvs(6, 7, 10, 11).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#0").end()
+        .face(Direction.DOWN).uvs(6, 7, 10, 11).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#0").end()
+        .end()
+
+        // Light 7
+        .element()
+        .from(11.9f, 10.9f, 20.9f).to(16.1f, 17.1f, 25.1f)
+        .rotation().angle(0).axis(Direction.Axis.Y).origin(8, 12, 7).end()
+        .face(Direction.NORTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.EAST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.SOUTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.WEST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.UP).uvs(6, 5, 10, 9).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#0").end()
+        .face(Direction.DOWN).uvs(6, 7, 10, 11).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#0").end()
+        .end()
+
+        // Light 8
+        .element()
+        .from(-0.1f, 10.9f, 20.9f).to(4.1f, 17.1f, 25.1f)
+        .rotation().angle(0).axis(Direction.Axis.Y).origin(8, 12, 7).end()
+        .face(Direction.NORTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.EAST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.SOUTH).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.WEST).uvs(6, 5, 10, 11).texture("#0").end()
+        .face(Direction.UP).uvs(6, 5, 10, 9).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#0").end()
+        .face(Direction.DOWN).uvs(6, 7, 10, 11).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#0").end()
+        .end()
+
+        // Frame center top/bottom
+        .element()
+        .from(2, -2, 2).to(14, 10, 14)
+        .rotation().angle(0).axis(Direction.Axis.Y).origin(2, 0, 2).end()
+        .face(Direction.UP).uvs(2, 2, 14, 14).texture("#2").end()
+        .face(Direction.DOWN).uvs(2, 2, 14, 14).texture("#2").end()
+        .end()
+
+        // Chain 1
+        .element()
+        .from(8, 10, 0).to(8, 16, 16)
+        .rotation().angle(45).axis(Direction.Axis.Y).origin(8, 10, 8).end()
+        .face(Direction.EAST).uvs(0, 5, 16, 11).texture("#3").end()
+        .face(Direction.WEST).uvs(0, 5, 16, 11).texture("#3").end()
+        .end()
+
+        // Chain 2
+        .element()
+        .from(8, 10, 0).to(8, 16, 16)
+        .rotation().angle(-45).axis(Direction.Axis.Y).origin(8, 10, 8).end()
+        .face(Direction.EAST).uvs(0, 5, 16, 11).texture("#3").end()
+        .face(Direction.WEST).uvs(0, 5, 16, 11).texture("#3").end()
+        .end();
 	}
 
 	private String blockName(DeferredBlock<?> block) {

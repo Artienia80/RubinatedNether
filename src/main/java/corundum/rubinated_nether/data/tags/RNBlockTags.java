@@ -300,7 +300,9 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get()
+				RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_LASER.get()
+
 
 		);
 
