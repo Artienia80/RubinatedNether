@@ -15,7 +15,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -74,73 +73,109 @@ public class RNBlocks {
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.CRYING_OBSIDIAN))
 	);
 
-	public static final DeferredBlock<Block> RUBY_LANTERN = registerBlockAndItem(
-		"ruby_lantern",
-		() -> new LanternBlock(Block.Properties.ofFullCopy(Blocks.LANTERN))
+	public static final DeferredBlock<Block> BRONZE_CHANDELIER = registerWaxableBlock(
+			"bronze_chandelier",
+			() -> new ChandelierBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.noOcclusion()
+							.lightLevel($ -> 15)
+			)
 	);
 
-	public static final DeferredBlock<Block> CHANDELIER = registerBlockAndItem(
-		"ruby_chandelier",
-		() -> new ChandelierBlock(
-                TarnishingBronze.TarnishState.UNAFFECTED,
-                Block.Properties
-                    .ofFullCopy(Blocks.COPPER_BLOCK)
-                    .noOcclusion()
-                    .lightLevel($ -> 15)
-		)
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_CHANDELIER = registerWaxableBlock(
+			"discolored_bronze_chandelier",
+			() -> new ChandelierBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.noOcclusion()
+							.lightLevel($ -> 15)
+			)
 	);
 
-    public static final DeferredBlock<Block> DISCOLORED_CHANDELIER = registerBlockAndItem(
-            "discolored_ruby_chandelier",
-            () -> new ChandelierBlock(
-                    TarnishingBronze.TarnishState.DISCOLORED,
-                    Block.Properties
-                            .ofFullCopy(Blocks.COPPER_BLOCK)
-                            .noOcclusion()
-                            .lightLevel($ -> 15)
-            )
-    );
+	public static final DeferredBlock<Block> CORRODED_BRONZE_CHANDELIER = registerWaxableBlock(
+			"corroded_bronze_chandelier",
+			() -> new ChandelierBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.noOcclusion()
+							.lightLevel($ -> 15)
+			)
+	);
 
-    public static final DeferredBlock<Block> CORRODED_CHANDELIER = registerBlockAndItem(
-            "corroded_ruby_chandelier",
-            () -> new ChandelierBlock(
-                    TarnishingBronze.TarnishState.CORRODED,
-                    Block.Properties
-                            .ofFullCopy(Blocks.COPPER_BLOCK)
-                            .noOcclusion()
-                            .lightLevel($ -> 15)
-            )
-    );
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_CHANDELIER = registerWaxableBlock(
+			"tarnished_bronze_chandelier",
+			() -> new ChandelierBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.noOcclusion()
+							.lightLevel($ -> 15)
+			)
+	);
 
-    public static final DeferredBlock<Block> TARNISHED_CHANDELIER = registerBlockAndItem(
-            "tarnished_ruby_chandelier",
-            () -> new ChandelierBlock(
-                    TarnishingBronze.TarnishState.TARNISHED,
-                    Block.Properties
-                            .ofFullCopy(Blocks.COPPER_BLOCK)
-                            .noOcclusion()
-                            .lightLevel($ -> 15)
-            )
-    );
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_CHANDELIER = registerWaxableBlock(
+			"crystallized_bronze_chandelier",
+			() -> new ChandelierBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.noOcclusion()
+							.lightLevel($ -> 15)
+			)
+	);
 
-    public static final DeferredBlock<Block> CRYSTALLIZED_CHANDELIER = registerBlockAndItem(
-            "crystallized_ruby_chandelier",
-            () -> new ChandelierBlock(
-                    TarnishingBronze.TarnishState.CRYSTALLIZED,
-                    Block.Properties
-                            .ofFullCopy(Blocks.COPPER_BLOCK)
-                            .noOcclusion()
-                            .lightLevel($ -> 15)
-            )
-    );
+	public static final DeferredBlock<RotatedPillarBlock> BRONZE_LAMP = registerWaxableBlock(
+			"bronze_lamp",
+			() -> new TarnishingBronzeLampBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.lightLevel($ -> 15)
+			)
+	);
 
-	public static final DeferredBlock<RotatedPillarBlock> LAVA_LAMP = registerBlockAndItem(
-		"lava_lamp",
-		() -> new LavaLampBlock(
-                Block.Properties
-                    .ofFullCopy(Blocks.COPPER_BLOCK)
-                    .lightLevel($ -> 15)
-		)
+	public static final DeferredBlock<RotatedPillarBlock> DISCOLORED_BRONZE_LAMP = registerWaxableBlock(
+			"discolored_bronze_lamp",
+			() -> new TarnishingBronzeLampBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.lightLevel($ -> 15)
+			)
+	);
+
+	public static final DeferredBlock<RotatedPillarBlock> CORRODED_BRONZE_LAMP = registerWaxableBlock(
+			"corroded_bronze_lamp",
+			() -> new TarnishingBronzeLampBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.lightLevel($ -> 15)
+			)
+	);
+
+	public static final DeferredBlock<RotatedPillarBlock> TARNISHED_BRONZE_LAMP = registerWaxableBlock(
+			"tarnished_bronze_lamp",
+			() -> new TarnishingBronzeLampBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.lightLevel($ -> 15)
+			)
+	);
+
+	public static final DeferredBlock<RotatedPillarBlock> CRYSTALLIZED_BRONZE_LAMP = registerWaxableBlock(
+			"crystallized_bronze_lamp",
+			() -> new TarnishingBronzeLampBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					Block.Properties
+							.ofFullCopy(Blocks.COPPER_BLOCK)
+							.lightLevel($ -> 15)
+			)
 	);
 
 	public static final DeferredBlock<Block> DRY_ICE = registerBlockAndItem(
@@ -363,14 +398,6 @@ public class RNBlocks {
 		)
 	);
 
-	public static final DeferredBlock<Block> RUBY_LASER = registerBlockAndItem(
-		"ruby_laser", 
-		() -> new RubyLaserBlock(
-			BlockBehaviour.Properties
-				.ofFullCopy(Blocks.COPPER_BLOCK)
-				.noOcclusion()
-		)
-	);
 
 	public static final DeferredBlock<Block> BRAZIER = registerBlockAndItem(
 		"ruby_brazier", 
@@ -895,6 +922,125 @@ public class RNBlocks {
 			)
 	);
 
+// BRONZE LANTERNS
+
+	public static final DeferredBlock<Block> BRONZE_LANTERN = registerWaxableBlock(
+			"bronze_lantern",
+			() -> new TarnishingBronzeLanternBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					Block.Properties
+							.ofFullCopy(Blocks.LANTERN)
+							.mapColor(MapColor.GOLD)
+							.strength(5.0F, 20.0F)
+							.lightLevel($ -> 15)
+			)
+	);
+
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_LANTERN = registerWaxableBlock(
+			"discolored_bronze_lantern",
+			() -> new TarnishingBronzeLanternBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					Block.Properties
+							.ofFullCopy(Blocks.LANTERN)
+							.mapColor(MapColor.TERRACOTTA_PINK)
+							.strength(5.0F, 40.0F)
+							.lightLevel($ -> 12)
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_BRONZE_LANTERN = registerWaxableBlock(
+			"corroded_bronze_lantern",
+			() -> new TarnishingBronzeLanternBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					Block.Properties
+							.ofFullCopy(Blocks.LANTERN)
+							.mapColor(MapColor.CRIMSON_STEM)
+							.strength(5.0F, 80.0F)
+							.lightLevel($ -> 8)
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_LANTERN = registerWaxableBlock(
+			"tarnished_bronze_lantern",
+			() -> new TarnishingBronzeLanternBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					Block.Properties
+							.ofFullCopy(Blocks.LANTERN)
+							.mapColor(MapColor.TERRACOTTA_BLACK)
+							.strength(5.0F, 160.0F)
+							.lightLevel($ -> 4)
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_LANTERN = registerWaxableBlock(
+			"crystallized_bronze_lantern",
+			() -> new TarnishingBronzeLanternBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					Block.Properties
+							.ofFullCopy(Blocks.LANTERN)
+							.mapColor(MapColor.TERRACOTTA_WHITE)
+							.strength(1.0F, 3.5F)
+							.lightLevel($ -> 15)
+			)
+	);
+
+// BRONZE CHAINS
+
+	public static final DeferredBlock<Block> BRONZE_CHAIN = registerWaxableBlock(
+			"bronze_chain",
+			() -> new TarnishingBronzeChainBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					Block.Properties
+							.ofFullCopy(Blocks.CHAIN)
+							.mapColor(MapColor.GOLD)
+							.strength(5.0F, 50.0F)
+			)
+	);
+
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_CHAIN = registerWaxableBlock(
+			"discolored_bronze_chain",
+			() -> new TarnishingBronzeChainBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					Block.Properties
+							.ofFullCopy(Blocks.CHAIN)
+							.mapColor(MapColor.TERRACOTTA_PINK)
+							.strength(5.0F, 100.0F)
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_BRONZE_CHAIN = registerWaxableBlock(
+			"corroded_bronze_chain",
+			() -> new TarnishingBronzeChainBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					Block.Properties
+							.ofFullCopy(Blocks.CHAIN)
+							.mapColor(MapColor.CRIMSON_STEM)
+							.strength(5.0F, 200.0F)
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_CHAIN = registerWaxableBlock(
+			"tarnished_bronze_chain",
+			() -> new TarnishingBronzeChainBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					Block.Properties
+							.ofFullCopy(Blocks.CHAIN)
+							.mapColor(MapColor.TERRACOTTA_BLACK)
+							.strength(5.0F, 400.0F)
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_CHAIN = registerWaxableBlock(
+			"crystallized_bronze_chain",
+			() -> new TarnishingBronzeChainBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					Block.Properties
+							.ofFullCopy(Blocks.CHAIN)
+							.mapColor(MapColor.TERRACOTTA_WHITE)
+							.strength(1.0F, 6.0F)
+			)
+	);
+
 
 	public static final DeferredBlock<Block> SHRINE_STONE_COFFER = registerBlockAndItem(
 			"shrine_stone_coffer",
@@ -905,6 +1051,112 @@ public class RNBlocks {
 					RNBlockEntities.COFFER::get
 			)
 	);
+
+	public static final DeferredBlock<Block> BRONZE_LASER = registerWaxableBlock(
+			"bronze_laser",
+			() -> new BronzeLaserBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_LASER = registerWaxableBlock(
+			"discolored_bronze_laser",
+			() -> new BronzeLaserBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_PINK).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_BRONZE_LASER = registerWaxableBlock(
+			"corroded_bronze_laser",
+			() -> new BronzeLaserBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).mapColor(MapColor.CRIMSON_STEM).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_LASER = registerWaxableBlock(
+			"tarnished_bronze_laser",
+			() -> new BronzeLaserBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_BLACK).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_LASER = registerWaxableBlock(
+			"crystallized_bronze_laser",
+			() -> new BronzeLaserBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_WHITE).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> COPPER_LASER = registerBlockAndItem(
+			"copper_laser",
+			() -> new CopperLaserBlock(
+					WeatheringCopper.WeatherState.UNAFFECTED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> EXPOSED_COPPER_LASER = registerBlockAndItem(
+			"exposed_copper_laser",
+			() -> new CopperLaserBlock(
+					WeatheringCopper.WeatherState.EXPOSED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.EXPOSED_COPPER).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> WEATHERED_COPPER_LASER = registerBlockAndItem(
+			"weathered_copper_laser",
+			() -> new CopperLaserBlock(
+					WeatheringCopper.WeatherState.WEATHERED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.WEATHERED_COPPER).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> OXIDIZED_COPPER_LASER = registerBlockAndItem(
+			"oxidized_copper_laser",
+			() -> new CopperLaserBlock(
+					WeatheringCopper.WeatherState.OXIDIZED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.OXIDIZED_COPPER).noOcclusion()
+			)
+	);
+
+	// Waxed versions
+	public static final DeferredBlock<Block> WAXED_COPPER_LASER = registerBlockAndItem(
+			"waxed_copper_laser",
+			() -> new CopperLaserBlock(
+					WeatheringCopper.WeatherState.UNAFFECTED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.WAXED_COPPER_BLOCK).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> WAXED_EXPOSED_COPPER_LASER = registerBlockAndItem(
+			"waxed_exposed_copper_laser",
+			() -> new CopperLaserBlock(
+					WeatheringCopper.WeatherState.EXPOSED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.WAXED_EXPOSED_COPPER).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> WAXED_WEATHERED_COPPER_LASER = registerBlockAndItem(
+			"waxed_weathered_copper_laser",
+			() -> new CopperLaserBlock(
+					WeatheringCopper.WeatherState.WEATHERED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.WAXED_WEATHERED_COPPER).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> WAXED_OXIDIZED_COPPER_LASER = registerBlockAndItem(
+			"waxed_oxidized_copper_laser",
+			() -> new CopperLaserBlock(
+					WeatheringCopper.WeatherState.OXIDIZED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.WAXED_OXIDIZED_COPPER).noOcclusion()
+			)
+	);
+
 
 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {

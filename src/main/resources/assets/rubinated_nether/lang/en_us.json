@@ -1,5 +1,7 @@
 {
   "itemGroup.examplemod": "Rubinated Nether",
+  "itemGroup.rubinated_nether_general": "Rubinated Nether - General",
+  "itemGroup.rubinated_nether_bronze": "Rubinated Nether - Bronze",
 
   "block.rubinated_nether.nether_ruby_ore": "Nether Ruby Ore",
   "block.rubinated_nether.molten_ruby_ore": "Molten Ruby Ore",
@@ -17,8 +19,6 @@
 
   "block.rubinated_nether.freezer": "Freezer",
 
-  "block.rubinated_nether.ruby_lantern": "Ruby Lantern",
-  "block.rubinated_nether.ruby_chandelier": "Ruby Chandelier",
   "block.rubinated_nether.lava_lamp": "Molten Ruby Lava Lamp",
   "block.rubinated_nether.ruby_brazier": "Brazier",
 
@@ -61,7 +61,6 @@
 
   "block.rubinated_nether.shrine_stone_coffer": "Coffer",
 
-  "block.rubinated_nether.ruby_laser": "Ruby Laser",
   "item.rubinated_nether.ruby_lens": "Ruby Lens",
 
   "block.rubinated_nether.runestone": "Runestone",
@@ -161,6 +160,75 @@
   "item.rubinated_nether.waxed_corroded_bronze_grate": "Waxed Corroded Bronze Grate",
   "item.rubinated_nether.waxed_tarnished_bronze_grate": "Waxed Tarnished Bronze Grate",
   "item.rubinated_nether.waxed_crystallized_bronze_grate": "Waxed Crystallized Bronze Grate",
+
+  "block.rubinated_nether.bronze_lantern": "Bronze Lantern",
+  "block.rubinated_nether.discolored_bronze_lantern": "Discolored Bronze Lantern",
+  "block.rubinated_nether.corroded_bronze_lantern": "Corroded Bronze Lantern",
+  "block.rubinated_nether.tarnished_bronze_lantern": "Tarnished Bronze Lantern",
+  "block.rubinated_nether.crystallized_bronze_lantern": "Crystallized Bronze Lantern",
+
+  "item.rubinated_nether.waxed_bronze_lantern": "Waxed Bronze Lantern",
+  "item.rubinated_nether.waxed_discolored_bronze_lantern": "Waxed Discolored Bronze Lantern",
+  "item.rubinated_nether.waxed_corroded_bronze_lantern": "Waxed Corroded Bronze Lantern",
+  "item.rubinated_nether.waxed_tarnished_bronze_lantern": "Waxed Tarnished Bronze Lantern",
+  "item.rubinated_nether.waxed_crystallized_bronze_lantern": "Waxed Crystallized Bronze Lantern",
+
+  "block.rubinated_nether.bronze_chandelier": "Bronze Chandelier",
+  "block.rubinated_nether.discolored_bronze_chandelier": "Discolored Bronze Chandelier",
+  "block.rubinated_nether.corroded_bronze_chandelier": "Corroded Bronze Chandelier",
+  "block.rubinated_nether.tarnished_bronze_chandelier": "Tarnished Bronze Chandelier",
+  "block.rubinated_nether.crystallized_bronze_chandelier": "Crystallized Bronze Chandelier",
+
+  "item.rubinated_nether.waxed_bronze_chandelier": "Waxed Bronze Chandelier",
+  "item.rubinated_nether.waxed_discolored_bronze_chandelier": "Waxed Discolored Bronze Chandelier",
+  "item.rubinated_nether.waxed_corroded_bronze_chandelier": "Waxed Corroded Bronze Chandelier",
+  "item.rubinated_nether.waxed_tarnished_bronze_chandelier": "Waxed Tarnished Bronze Chandelier",
+  "item.rubinated_nether.waxed_crystallized_bronze_chandelier": "Waxed Crystallized Bronze Chandelier",
+
+  "block.rubinated_nether.bronze_chain": "Bronze Chain",
+  "block.rubinated_nether.discolored_bronze_chain": "Discolored Bronze Chain",
+  "block.rubinated_nether.corroded_bronze_chain": "Corroded Bronze Chain",
+  "block.rubinated_nether.tarnished_bronze_chain": "Tarnished Bronze Chain",
+  "block.rubinated_nether.crystallized_bronze_chain": "Crystallized Bronze Chain",
+
+  "item.rubinated_nether.waxed_bronze_chain": "Waxed Bronze Chain",
+  "item.rubinated_nether.waxed_discolored_bronze_chain": "Waxed Discolored Bronze Chain",
+  "item.rubinated_nether.waxed_corroded_bronze_chain": "Waxed Corroded Bronze Chain",
+  "item.rubinated_nether.waxed_tarnished_bronze_chain": "Waxed Tarnished Bronze Chain",
+  "item.rubinated_nether.waxed_crystallized_bronze_chain": "Waxed Crystallized Bronze Chain",
+
+  "block.rubinated_nether.bronze_lamp": "Bronze Lamp",
+  "block.rubinated_nether.discolored_bronze_lamp": "Discolored Bronze Lamp",
+  "block.rubinated_nether.corroded_bronze_lamp": "Corroded Bronze Lamp",
+  "block.rubinated_nether.tarnished_bronze_lamp": "Tarnished Bronze Lamp",
+  "block.rubinated_nether.crystallized_bronze_lamp": "Crystallized Bronze Lamp",
+
+  "item.rubinated_nether.waxed_bronze_lamp": "Waxed Bronze Lamp",
+  "item.rubinated_nether.waxed_discolored_bronze_lamp": "Waxed Discolored Bronze Lamp",
+  "item.rubinated_nether.waxed_corroded_bronze_lamp": "Waxed Corroded Bronze Lamp",
+  "item.rubinated_nether.waxed_tarnished_bronze_lamp": "Waxed Tarnished Bronze Lamp",
+  "item.rubinated_nether.waxed_crystallized_bronze_lamp": "Waxed Crystallized Bronze Lamp",
+
+  "block.rubinated_nether.bronze_laser": "Bronze Laser",
+  "block.rubinated_nether.discolored_bronze_laser": "Discolored Bronze Laser",
+  "block.rubinated_nether.corroded_bronze_laser": "Corroded Bronze Laser",
+  "block.rubinated_nether.tarnished_bronze_laser": "Tarnished Bronze Laser",
+  "block.rubinated_nether.crystallized_bronze_laser": "Crystallized Bronze Laser",
+
+  "item.rubinated_nether.waxed_bronze_laser": "Waxed Bronze Laser",
+  "item.rubinated_nether.waxed_discolored_bronze_laser": "Waxed Discolored Bronze Laser",
+  "item.rubinated_nether.waxed_corroded_bronze_laser": "Waxed Corroded Bronze Laser",
+  "item.rubinated_nether.waxed_tarnished_bronze_laser": "Waxed Tarnished Bronze Laser",
+  "item.rubinated_nether.waxed_crystallized_bronze_laser": "Waxed Crystallized Bronze Laser",
+
+  "block.rubinated_nether.copper_laser": "Copper Laser",
+  "block.rubinated_nether.exposed_copper_laser": "Exposed Copper Laser",
+  "block.rubinated_nether.weathered_copper_laser": "Weathered Copper Laser",
+  "block.rubinated_nether.oxidized_copper_laser": "Oxidized Copper Laser",
+  "block.rubinated_nether.waxed_copper_laser": "Waxed Copper Laser",
+  "block.rubinated_nether.waxed_exposed_copper_laser": "Waxed Exposed Copper Laser",
+  "block.rubinated_nether.waxed_weathered_copper_laser": "Waxed Weathered Copper Laser",
+  "block.rubinated_nether.waxed_oxidized_copper_laser": "Waxed Oxidized Copper Laser",
 
   "item.rubinated_nether.bronze_rod": "Bronze Rod",
   "item.rubinated_nether.bronze_powder": "Bronze Powder",

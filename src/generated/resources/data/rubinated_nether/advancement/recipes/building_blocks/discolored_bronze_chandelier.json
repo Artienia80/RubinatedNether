@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_discolored_bronze_grate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:discolored_bronze_grate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_discolored_bronze_lantern": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:discolored_bronze_lantern"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "rubinated_nether:discolored_bronze_chandelier"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_discolored_bronze_lantern",
+      "has_discolored_bronze_grate"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "rubinated_nether:discolored_bronze_chandelier"
+    ]
+  }
+}

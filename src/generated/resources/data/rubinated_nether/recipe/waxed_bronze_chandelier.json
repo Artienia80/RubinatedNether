@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "O": {
+      "item": "rubinated_nether:waxed_bronze_grate"
+    },
+    "X": {
+      "item": "rubinated_nether:waxed_bronze_lantern"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XOX",
+    "XXX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:waxed_bronze_chandelier"
+  }
+}

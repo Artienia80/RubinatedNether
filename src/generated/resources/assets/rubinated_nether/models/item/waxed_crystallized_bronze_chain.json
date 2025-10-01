@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "rubinated_nether:item/bronze/bronze_chain/crystallized_bronze_chain"
+  }
+}

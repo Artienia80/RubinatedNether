@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "waxed_discolored_bronze_lamp",
+  "ingredients": [
+    {
+      "item": "rubinated_nether:discolored_bronze_lamp"
+    },
+    {
+      "item": "minecraft:honeycomb"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:waxed_discolored_bronze_lamp"
+  }
+}
