@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "A": {
-      "item": "rubinated_nether:bronze_block"
+      "item": "rubinated_nether:waxed_tarnished_bronze_block"
     },
     "I": {
       "item": "rubinated_nether:ruby_glass_pane"
@@ -22,6 +22,6 @@
   ],
   "result": {
     "count": 3,
-    "id": "rubinated_nether:bronze_lamp"
+    "id": "rubinated_nether:waxed_tarnished_bronze_lamp"
   }
 }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_discolored_bronze_laser": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:discolored_bronze_laser"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:waxed_discolored_bronze_laser_from_honeycomb"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_discolored_bronze_laser"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:waxed_discolored_bronze_laser_from_honeycomb"
+    ]
+  }
+}

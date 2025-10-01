@@ -1,16 +1,6 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bronze_block": {
-      "conditions": {
-        "items": [
-          {
-            "items": "rubinated_nether:bronze_block"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_bronze_scrap": {
       "conditions": {
         "items": [
@@ -41,9 +31,19 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "has_tarnished_bronze_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:tarnished_bronze_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:bronze_lamp"
+        "recipe": "rubinated_nether:tarnished_bronze_lamp"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -54,12 +54,12 @@
       "has_ruby_glass_pane",
       "has_molten_ruby",
       "has_bronze_scrap",
-      "has_bronze_block"
+      "has_tarnished_bronze_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:bronze_lamp"
+      "rubinated_nether:tarnished_bronze_lamp"
     ]
   }
 }
