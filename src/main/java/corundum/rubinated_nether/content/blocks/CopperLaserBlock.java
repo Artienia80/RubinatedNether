@@ -38,6 +38,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class CopperLaserBlock extends DirectionalBlock implements BEBlock<CopperLaserBlockEntity>, WeatheringCopper {
 
@@ -57,6 +58,7 @@ public class CopperLaserBlock extends DirectionalBlock implements BEBlock<Copper
 	public static final EnumProperty<LaserMode> MODE = EnumProperty.create("mode", LaserMode.class);
 
 	private final WeatherState weatherState;
+
 
 	public enum LaserMode implements StringRepresentable {
 		SPECTRUM("spectrum"), // Blocks + Entities
@@ -118,6 +120,16 @@ public class CopperLaserBlock extends DirectionalBlock implements BEBlock<Copper
 
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+		ItemStack heldItem = player.getMainHandItem();
+
+		// Check for honeycomb or axe - let Minecraft's default behavior handle both (highest priority)
+		if (heldItem.is(net.minecraft.world.item.Items.HONEYCOMB) || heldItem.is(net.minecraft.tags.ItemTags.AXES)) {
+			// PASS allows Minecraft's default copper interaction logic to run
+			// This handles waxing, unwaxing, and scraping in the correct order
+			return InteractionResult.PASS;
+		}
+
+		// Only do mode switching if no special items are held (lowest priority)
 		LaserMode nextMode = state.getValue(MODE).cycle();
 		float pitch = switch (nextMode) {
 			case SPECTRUM -> 0.6f;

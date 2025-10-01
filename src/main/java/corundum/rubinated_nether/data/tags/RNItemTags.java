@@ -62,16 +62,7 @@ public class RNItemTags extends ItemTagsProvider {
 		this.tag(RNTags.Items.RUBINATION_TRIDENT).add(Items.TRIDENT); //Added for trident
 		this.tag(RNTags.Items.RUBINATION_MACE).add(Items.MACE); //Added for mace
 
-		this.tag(RNTags.Items.AXES).add(
-				Items.WOODEN_AXE,
-				Items.STONE_AXE,
-				Items.GOLDEN_AXE,
-				Items.IRON_AXE,
-				Items.DIAMOND_AXE,
-				Items.NETHERITE_AXE
-		);
-
-		this.tag(RNTags.Items.RUBINATION_TOOL).addTags(RNTags.Items.AXES);
+		this.tag(RNTags.Items.RUBINATION_TOOL).addTags(net.minecraft.tags.ItemTags.AXES);
 		this.tag(RNTags.Items.RUBINATION_TOOL).add(
 				Items.WOODEN_SHOVEL,
 				Items.WOODEN_HOE,
@@ -92,7 +83,7 @@ public class RNItemTags extends ItemTagsProvider {
 				Items.NETHERITE_HOE
 		);
 
-		this.tag(RNTags.Items.RUBINATION_WEAPON).addTags(RNTags.Items.AXES);
+		this.tag(RNTags.Items.RUBINATION_WEAPON).addTags(net.minecraft.tags.ItemTags.AXES);
 		this.tag(RNTags.Items.RUBINATION_WEAPON).add(
 				Items.WOODEN_SWORD,
 				Items.STONE_SWORD,

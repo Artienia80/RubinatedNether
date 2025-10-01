@@ -357,7 +357,7 @@ public class RubinationMenu extends AbstractContainerMenu {
         }
 
         // If item is present and is an axe, apply axe cycling
-        if (stack.is(RNTags.Items.AXES)) {
+        if (stack.is(net.minecraft.tags.ItemTags.AXES)) {
             var toolRubinations = new ArrayList<Rubination>();
             var weaponRubinations = new ArrayList<Rubination>();
 
@@ -412,7 +412,7 @@ public class RubinationMenu extends AbstractContainerMenu {
     private List<Rubination> getRubinationMap(ItemStack stack, Set<RuneItem> runes) {
         var arrayList = new ArrayList<Rubination>(3);
 
-        if (stack.is(RNTags.Items.AXES)) {
+        if (stack.is(net.minecraft.tags.ItemTags.AXES)) {
             var toolRubinations = new ArrayList<Rubination>();
             var weaponRubinations = new ArrayList<Rubination>();
 
@@ -449,7 +449,7 @@ public class RubinationMenu extends AbstractContainerMenu {
         if (inventory == this.rubinationSlots) {
             var itemstack = inventory.getItem(0);
 
-            boolean currentlyHasAxe = !itemstack.isEmpty() && itemstack.is(RNTags.Items.AXES);
+            boolean currentlyHasAxe = !itemstack.isEmpty() && itemstack.is(net.minecraft.tags.ItemTags.AXES);
 
             if (currentlyHasAxe && !hadAxeInSlot) {
                 axeCycle++;
