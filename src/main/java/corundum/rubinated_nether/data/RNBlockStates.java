@@ -133,7 +133,6 @@ public class RNBlockStates extends BlockStateProvider {
 
 		this.simpleBlock(RNBlocks.SHRINE_STONE_TILES.get());
 		this.simpleBlock(RNBlocks.RUBINATED_SHRINE_STONE_TILES.get());
-		this.simpleBlock(RNBlocks.SHRINE_STONE_COFFER.get());
 
 		this.slabBlock(
 				RNBlocks.SHRINE_STONE_TILES_SLAB.get(),
