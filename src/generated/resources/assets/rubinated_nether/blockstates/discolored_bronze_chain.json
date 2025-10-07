@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "axis=x,waterlogged=false,waxed=false": {
+      "model": "rubinated_nether:block/discolored_bronze_chain",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,waterlogged=false,waxed=true": {
+      "model": "rubinated_nether:block/discolored_bronze_chain",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,waterlogged=true,waxed=false": {
+      "model": "rubinated_nether:block/discolored_bronze_chain",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,waterlogged=true,waxed=true": {
+      "model": "rubinated_nether:block/discolored_bronze_chain",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,waterlogged=false,waxed=false": {
+      "model": "rubinated_nether:block/discolored_bronze_chain"
+    },
+    "axis=y,waterlogged=false,waxed=true": {
+      "model": "rubinated_nether:block/discolored_bronze_chain"
+    },
+    "axis=y,waterlogged=true,waxed=false": {
+      "model": "rubinated_nether:block/discolored_bronze_chain"
+    },
+    "axis=y,waterlogged=true,waxed=true": {
+      "model": "rubinated_nether:block/discolored_bronze_chain"
+    },
+    "axis=z,waterlogged=false,waxed=false": {
+      "model": "rubinated_nether:block/discolored_bronze_chain",
+      "x": 90
+    },
+    "axis=z,waterlogged=false,waxed=true": {
+      "model": "rubinated_nether:block/discolored_bronze_chain",
+      "x": 90
+    },
+    "axis=z,waterlogged=true,waxed=false": {
+      "model": "rubinated_nether:block/discolored_bronze_chain",
+      "x": 90
+    },
+    "axis=z,waterlogged=true,waxed=true": {
+      "model": "rubinated_nether:block/discolored_bronze_chain",
+      "x": 90
+    }
+  }
+}

@@ -72,6 +72,26 @@
     "rubinated_nether:discolored_bronze_grate",
     "rubinated_nether:corroded_bronze_grate",
     "rubinated_nether:tarnished_bronze_grate",
-    "rubinated_nether:crystallized_bronze_grate"
+    "rubinated_nether:crystallized_bronze_grate",
+    "rubinated_nether:bronze_lantern",
+    "rubinated_nether:discolored_bronze_lantern",
+    "rubinated_nether:corroded_bronze_lantern",
+    "rubinated_nether:tarnished_bronze_lantern",
+    "rubinated_nether:crystallized_bronze_lantern",
+    "rubinated_nether:bronze_chain",
+    "rubinated_nether:discolored_bronze_chain",
+    "rubinated_nether:corroded_bronze_chain",
+    "rubinated_nether:tarnished_bronze_chain",
+    "rubinated_nether:crystallized_bronze_chain",
+    "rubinated_nether:bronze_chandelier",
+    "rubinated_nether:discolored_bronze_chandelier",
+    "rubinated_nether:corroded_bronze_chandelier",
+    "rubinated_nether:tarnished_bronze_chandelier",
+    "rubinated_nether:crystallized_bronze_chandelier",
+    "rubinated_nether:bronze_lamp",
+    "rubinated_nether:discolored_bronze_lamp",
+    "rubinated_nether:corroded_bronze_lamp",
+    "rubinated_nether:tarnished_bronze_lamp",
+    "rubinated_nether:crystallized_bronze_lamp"
   ]
 }

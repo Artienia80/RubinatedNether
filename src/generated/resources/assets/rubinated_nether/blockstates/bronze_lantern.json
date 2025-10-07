@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "hanging=false,waterlogged=false,waxed=false": {
+      "model": "rubinated_nether:block/bronze_lantern"
+    },
+    "hanging=false,waterlogged=false,waxed=true": {
+      "model": "rubinated_nether:block/bronze_lantern"
+    },
+    "hanging=false,waterlogged=true,waxed=false": {
+      "model": "rubinated_nether:block/bronze_lantern"
+    },
+    "hanging=false,waterlogged=true,waxed=true": {
+      "model": "rubinated_nether:block/bronze_lantern"
+    },
+    "hanging=true,waterlogged=false,waxed=false": {
+      "model": "rubinated_nether:block/hanging_bronze_lantern"
+    },
+    "hanging=true,waterlogged=false,waxed=true": {
+      "model": "rubinated_nether:block/hanging_bronze_lantern"
+    },
+    "hanging=true,waterlogged=true,waxed=false": {
+      "model": "rubinated_nether:block/hanging_bronze_lantern"
+    },
+    "hanging=true,waterlogged=true,waxed=true": {
+      "model": "rubinated_nether:block/hanging_bronze_lantern"
+    }
+  }
+}

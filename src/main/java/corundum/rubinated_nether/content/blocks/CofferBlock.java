@@ -27,14 +27,36 @@ import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class CofferBlock extends AbstractChestBlock<CofferBlockEntity> implements SimpleWaterloggedBlock {
     public static final MapCodec<CofferBlock> CODEC = simpleCodec(p_304364_ -> new CofferBlock(p_304364_, () -> RNBlockEntities.COFFER.get()));
+
+    protected static final VoxelShape SHAPE = Stream.of(
+            box(0, 0, 0, 16, 14, 16)
+    ).reduce(Shapes::or).get();
+
     public CofferBlock(BlockBehaviour.Properties properties, Supplier<BlockEntityType<? extends CofferBlockEntity>> blockEntityType) {
         super(properties, blockEntityType);
+    }
+
+    // This is mandatory to render a custom modeled block. It tells the game that it
+    // has to use the custom shape.
+    // REMEMBER: DO NOT USE DATA GENERATION FOR BLOCKS WITH CUSTOM MODELS
+    @Override
+    public RenderShape getRenderShape(BlockState pState) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 
     @Override

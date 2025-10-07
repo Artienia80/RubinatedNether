@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/chain",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "all": "rubinated_nether:block/bronze/bronze_chain/tarnished_bronze_chain",
+    "particle": "rubinated_nether:block/bronze/bronze_chain/tarnished_bronze_chain"
+  }
+}

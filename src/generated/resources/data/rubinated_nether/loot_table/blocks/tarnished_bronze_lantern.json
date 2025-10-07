@@ -1,0 +1,47 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "rubinated_nether:tarnished_bronze_lantern",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "waxed": "true"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "rubinated_nether:waxed_tarnished_bronze_lantern"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "block": "rubinated_nether:tarnished_bronze_lantern",
+            "condition": "minecraft:block_state_property",
+            "properties": {
+              "waxed": "true"
+            }
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "rubinated_nether:tarnished_bronze_lantern"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "rubinated_nether:blocks/tarnished_bronze_lantern"
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_corroded_bronze_chain": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:corroded_bronze_chain"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:waxed_corroded_bronze_chain_from_honeycomb"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_corroded_bronze_chain"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:waxed_corroded_bronze_chain_from_honeycomb"
+    ]
+  }
+}

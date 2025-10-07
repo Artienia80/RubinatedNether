@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bronze_scrap": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:bronze_scrap"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_glowstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:glowstone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_redstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:redstone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_ruby_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:ruby_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "rubinated_nether:waxed_bronze_laser"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_waxed_bronze_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:waxed_bronze_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ruby_block",
+      "has_bronze_scrap",
+      "has_redstone",
+      "has_glowstone",
+      "has_waxed_bronze_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "rubinated_nether:waxed_bronze_laser"
+    ]
+  }
+}

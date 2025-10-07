@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "item": "rubinated_nether:waxed_bronze_block"
+    },
+    "B": {
+      "item": "rubinated_nether:bronze_scrap"
+    },
+    "C": {
+      "item": "minecraft:redstone"
+    },
+    "D": {
+      "item": "minecraft:glowstone"
+    },
+    "E": {
+      "item": "rubinated_nether:ruby_block"
+    }
+  },
+  "pattern": [
+    " E ",
+    "BDB",
+    "ACA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:waxed_bronze_laser"
+  }
+}

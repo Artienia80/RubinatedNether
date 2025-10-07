@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "O": {
+      "item": "rubinated_nether:bronze_scrap"
+    },
+    "X": {
+      "item": "rubinated_nether:bronze_powder"
+    }
+  },
+  "pattern": [
+    " X ",
+    " O ",
+    " X "
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:bronze_chain"
+  }
+}

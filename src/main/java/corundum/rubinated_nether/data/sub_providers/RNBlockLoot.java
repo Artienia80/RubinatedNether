@@ -7,7 +7,6 @@ import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -22,7 +21,6 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
@@ -45,13 +43,24 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.MOLTEN_RUBY_BLOCK.get());
 		this.dropSelf(RNBlocks.BLEEDING_OBSIDIAN.get());
 
-		this.dropSelf(RNBlocks.RUBY_LANTERN.get());
-		this.dropSelf(RNBlocks.CHANDELIER.get());
-        this.dropSelf(RNBlocks.DISCOLORED_CHANDELIER.get());
-        this.dropSelf(RNBlocks.CORRODED_CHANDELIER.get());
-        this.dropSelf(RNBlocks.TARNISHED_CHANDELIER.get());
-        this.dropSelf(RNBlocks.CRYSTALLIZED_CHANDELIER.get());
-		this.dropSelf(RNBlocks.LAVA_LAMP.get());
+		this.waxableDrop(RNBlocks.BRONZE_LANTERN);
+		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_LANTERN);
+		this.waxableDrop(RNBlocks.CORRODED_BRONZE_LANTERN);
+		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_LANTERN);
+		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_LANTERN);
+
+		this.waxableDrop(RNBlocks.BRONZE_CHAIN);
+		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_CHAIN);
+		this.waxableDrop(RNBlocks.CORRODED_BRONZE_CHAIN);
+		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_CHAIN);
+		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_CHAIN);
+
+		this.dropSelf(RNBlocks.BRONZE_CHANDELIER.get());
+        this.dropSelf(RNBlocks.DISCOLORED_BRONZE_CHANDELIER.get());
+        this.dropSelf(RNBlocks.CORRODED_BRONZE_CHANDELIER.get());
+        this.dropSelf(RNBlocks.TARNISHED_BRONZE_CHANDELIER.get());
+        this.dropSelf(RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get());
+
 		this.dropSelf(RNBlocks.SOAKSTONE.get());
 
 		this.dropSelf(RNBlocks.SHRINE_STONE.get());
@@ -95,7 +104,6 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropWhenSilkTouch(RNBlocks.DRY_ICE.get());
 
 		this.dropSelf(RNBlocks.FREEZER.get());
-		this.dropSelf(RNBlocks.RUBY_LASER.get());
 		this.dropSelf(RNBlocks.BRAZIER.get());
 		this.dropSelf(RNBlocks.RUBINATION_ALTAR.get());
 
@@ -147,7 +155,26 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_GRATE);
 		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_GRATE);
 
+		this.waxableDrop(RNBlocks.BRONZE_LAMP);
+		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_LAMP);
+		this.waxableDrop(RNBlocks.CORRODED_BRONZE_LAMP);
+		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_LAMP);
+		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_LAMP);
 
+		this.waxableDrop(RNBlocks.BRONZE_LASER);
+		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_LASER);
+		this.waxableDrop(RNBlocks.CORRODED_BRONZE_LASER);
+		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_LASER);
+		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_LASER);
+
+		this.dropSelf(RNBlocks.COPPER_LASER.get());
+		this.dropSelf(RNBlocks.EXPOSED_COPPER_LASER.get());
+		this.dropSelf(RNBlocks.WEATHERED_COPPER_LASER.get());
+		this.dropSelf(RNBlocks.OXIDIZED_COPPER_LASER.get());
+		this.dropSelf(RNBlocks.WAXED_COPPER_LASER.get());
+		this.dropSelf(RNBlocks.WAXED_EXPOSED_COPPER_LASER.get());
+		this.dropSelf(RNBlocks.WAXED_WEATHERED_COPPER_LASER.get());
+		this.dropSelf(RNBlocks.WAXED_OXIDIZED_COPPER_LASER.get());
 
 		this.add(
 				RNBlocks.MOLTEN_RUBY_ORE.get(),

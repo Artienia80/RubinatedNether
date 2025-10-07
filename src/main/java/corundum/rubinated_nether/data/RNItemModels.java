@@ -4,18 +4,12 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
-
-import java.util.Objects;
 
 public class RNItemModels extends ItemModelProvider {
 	public RNItemModels(PackOutput output, ExistingFileHelper fileHelper) {
@@ -32,7 +26,6 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.RUBY_BLOCK,
 				RNBlocks.MOLTEN_RUBY_BLOCK,
 				RNBlocks.BLEEDING_OBSIDIAN,
-				RNBlocks.LAVA_LAMP,
 				RNBlocks.DRY_ICE,
 				RNBlocks.SOAKSTONE,
 				RNBlocks.BRAZIER,
@@ -59,8 +52,17 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS,
 				RNBlocks.RUBINATED_SHRINE_STONE_PILLAR,
 				RNBlocks.RUBINATED_SHRINE_STONE_TILES,
-				RNBlocks.SHRINE_STONE_COFFER
-						);
+				RNBlocks.SHRINE_STONE_COFFER,
+
+				RNBlocks.COPPER_LASER,
+				RNBlocks.EXPOSED_COPPER_LASER,
+				RNBlocks.WEATHERED_COPPER_LASER,
+				RNBlocks.OXIDIZED_COPPER_LASER,
+				RNBlocks.WAXED_COPPER_LASER,
+				RNBlocks.WAXED_EXPOSED_COPPER_LASER,
+				RNBlocks.WAXED_WEATHERED_COPPER_LASER,
+				RNBlocks.WAXED_OXIDIZED_COPPER_LASER
+		);
 
 		waxableBlockItems(
 				RNBlocks.BRONZE_BLOCK,
@@ -107,21 +109,60 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.DISCOLORED_BRONZE_GRATE,
 				RNBlocks.CORRODED_BRONZE_GRATE,
 				RNBlocks.TARNISHED_BRONZE_GRATE,
-				RNBlocks.CRYSTALLIZED_BRONZE_GRATE
-						 );
+				RNBlocks.CRYSTALLIZED_BRONZE_GRATE,
+
+				RNBlocks.BRONZE_LAMP,
+				RNBlocks.DISCOLORED_BRONZE_LAMP,
+				RNBlocks.CORRODED_BRONZE_LAMP,
+				RNBlocks.TARNISHED_BRONZE_LAMP,
+				RNBlocks.CRYSTALLIZED_BRONZE_LAMP,
+
+				RNBlocks.BRONZE_LASER,
+				RNBlocks.DISCOLORED_BRONZE_LASER,
+				RNBlocks.CORRODED_BRONZE_LASER,
+				RNBlocks.TARNISHED_BRONZE_LASER,
+				RNBlocks.CRYSTALLIZED_BRONZE_LASER
+		);
+
+		// Custom item textures for chandeliers
+		customItemTextures("item/bronze/bronze_chandelier",
+				RNBlocks.BRONZE_CHANDELIER,
+				RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
+				RNBlocks.CORRODED_BRONZE_CHANDELIER,
+				RNBlocks.TARNISHED_BRONZE_CHANDELIER,
+				RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER
+		);
+
+		// Custom item textures for lanterns
+		customItemTextures("item/bronze/bronze_lantern",
+				RNBlocks.BRONZE_LANTERN,
+				RNBlocks.DISCOLORED_BRONZE_LANTERN,
+				RNBlocks.CORRODED_BRONZE_LANTERN,
+				RNBlocks.TARNISHED_BRONZE_LANTERN,
+				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN
+		);
+
+		// Custom item textures for chains
+		customItemTextures("item/bronze/bronze_chain",
+				RNBlocks.BRONZE_CHAIN,
+				RNBlocks.DISCOLORED_BRONZE_CHAIN,
+				RNBlocks.CORRODED_BRONZE_CHAIN,
+				RNBlocks.TARNISHED_BRONZE_CHAIN,
+				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN
+		);
 
 		paneItem(
 				RNBlocks.RUBY_GLASS_PANE,
 				"block/ruby_glass"
-				);
+		);
 		paneItem(
 				RNBlocks.ORNATE_RUBY_GLASS_PANE,
 				"block/ornate_ruby_glass"
-				);
+		);
 		paneItem(
 				RNBlocks.MOLTEN_RUBY_GLASS_PANE,
 				"block/molten_ruby_glass"
-				);
+		);
 
 		wallInventory(
 				RNBlocks.SHRINE_STONE_WALL.getId().toString(),
@@ -130,32 +171,27 @@ public class RNItemModels extends ItemModelProvider {
 		wallInventory(
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.getId().toString(),
 				modLoc("block/polished_shrine_stone")
-					 );
+		);
 		wallInventory(
 				RNBlocks.SHRINE_STONE_TILES_WALL.getId().toString(),
 				modLoc("block/shrine_stone_tiles")
-					 );
+		);
 		wallInventory(
 				RNBlocks.SHRINE_STONE_BRICKS_WALL.getId().toString(),
 				modLoc("block/shrine_stone_bricks")
-					 );
+		);
 
 		paneItem(
 				RNBlocks.MOLTEN_RUBY_GLASS_PANE,
 				"block/molten_ruby_glass"
-				);
+		);
 
 		// Handheld items
 		handheldItem(RNItems.BRONZE_DRILL, "item/bronze_drill");
 
 		// Basic items
 		basicItems(
-				RNBlocks.RUBY_LANTERN,
-				RNBlocks.CHANDELIER,
-//                RNBlocks.DISCOLORED_CHANDELIER,
-//                RNBlocks.CORRODED_CHANDELIER,
-//                RNBlocks.TARNISHED_CHANDELIER,
-//                RNBlocks.CRYSTALLIZED_CHANDELIER,
+
 				RNBlocks.RUNESTONE,
 				RNItems.RUBY_LENS,
 				RNItems.RUBY_ITEM,
@@ -212,6 +248,24 @@ public class RNItemModels extends ItemModelProvider {
 		);
 	}
 
+	private void customItemTextures(String baseTexture, DeferredBlock<?>... blocks) {
+		for (var block : blocks) {
+			String blockName = block.getId().getPath();
+
+			var model = withExistingParent(
+					block.getId().toString(),
+					mcLoc("item/generated")
+			).texture("layer0", modLoc(baseTexture + "/" + blockName));
+
+
+			var waxableModel = withExistingParent(
+					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
+					mcLoc("item/generated")
+			).texture("layer0", modLoc(baseTexture + "/" + blockName));
+
+		}
+	}
+
 	private void paneItem(DeferredBlock<?> block, String texture) {
 		withExistingParent(
 				block.getId().toString(),
@@ -253,7 +307,7 @@ public class RNItemModels extends ItemModelProvider {
 			withExistingParent(
 					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
 					block.getId()
-							  );
+			);
 		}
 	}
 }

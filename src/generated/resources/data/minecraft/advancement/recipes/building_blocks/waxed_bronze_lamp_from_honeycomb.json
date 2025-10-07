@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bronze_lamp": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:bronze_lamp"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:waxed_bronze_lamp_from_honeycomb"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_bronze_lamp"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:waxed_bronze_lamp_from_honeycomb"
+    ]
+  }
+}

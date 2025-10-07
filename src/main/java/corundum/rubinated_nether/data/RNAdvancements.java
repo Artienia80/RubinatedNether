@@ -113,29 +113,29 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("ornate_ruby_glass_pane", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.ORNATE_RUBY_GLASS_PANE.get()))
 					.save(consumer, RubinatedNether.id( "obtain_ruby_glass"), existingFileHelper);
 
-			AdvancementHolder rubyLaser = Advancement.Builder.advancement()
-					.parent(rubyGlass)
-					.display(RNBlocks.RUBY_LASER.get(),
-							Component.translatable("advancements.rubinated_nether.obtain_ruby_laser.title"),
-							Component.translatable("advancements.rubinated_nether.obtain_ruby_laser.description"),
-							null,
-							AdvancementType.TASK, true, true, false)
-					.requirements(AdvancementRequirements.Strategy.OR)
-					.addCriterion("ruby_laser", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.RUBY_LASER.get()))
-					.save(consumer, RubinatedNether.id( "obtain_ruby_laser"), existingFileHelper);
+//			AdvancementHolder rubyLaser = Advancement.Builder.advancement()
+//					.parent(rubyGlass)
+//					.display(RNBlocks.BRONZE_LASER.get(),
+//							Component.translatable("advancements.rubinated_nether.obtain_ruby_laser.title"),
+//							Component.translatable("advancements.rubinated_nether.obtain_ruby_laser.description"),
+//							null,
+//							AdvancementType.TASK, true, true, false)
+//					.requirements(AdvancementRequirements.Strategy.OR)
+//					.addCriterion("ruby_laser", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.BRONZE_LASER.get()))
+//					.save(consumer, RubinatedNether.id( "obtain_ruby_laser"), existingFileHelper);
 
-			AdvancementHolder rubyLights = Advancement.Builder.advancement()
-					.parent(moltenRuby)
-					.display(RNBlocks.LAVA_LAMP.get(),
-							Component.translatable("advancements.rubinated_nether.obtain_ruby_lights.title"),
-							Component.translatable("advancements.rubinated_nether.obtain_ruby_lights.description"),
-							null,
-							AdvancementType.TASK, true, true, false)
-					.requirements(AdvancementRequirements.Strategy.AND)
-					.addCriterion("ruby_lantern", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.RUBY_LANTERN.get()))
-					.addCriterion("ruby_chandelier", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.CHANDELIER.get()))
-					.addCriterion("ruby_lamp", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.LAVA_LAMP.get()))
-					.save(consumer, RubinatedNether.id( "obtain_ruby_lights"), existingFileHelper);
+//			AdvancementHolder rubyLights = Advancement.Builder.advancement()
+//					.parent(moltenRuby)
+//					.display(RNBlocks.LAVA_LAMP.get(),
+//							Component.translatable("advancements.rubinated_nether.obtain_ruby_lights.title"),
+//							Component.translatable("advancements.rubinated_nether.obtain_ruby_lights.description"),
+//							null,
+//							AdvancementType.TASK, true, true, false)
+//					.requirements(AdvancementRequirements.Strategy.AND)
+//					.addCriterion("ruby_lantern", InventoryChangeTrigger.TriggerInstance.hasItems(RNTags.Blocks.RUBY_GLASS))
+//					.addCriterion("ruby_chandelier", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.CHANDELIER.get()))
+//					.addCriterion("ruby_lamp", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.LAVA_LAMP.get()))
+//					.save(consumer, RubinatedNether.id( "obtain_ruby_lights"), existingFileHelper);
 
 			AdvancementHolder brazier = Advancement.Builder.advancement()
 					.parent(moltenRuby)

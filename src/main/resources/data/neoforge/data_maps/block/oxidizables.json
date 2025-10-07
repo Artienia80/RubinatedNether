@@ -1,0 +1,22 @@
+{
+  "values": {
+    "rubinated_nether:copper_laser": {
+      "next_oxidation_stage": "rubinated_nether:exposed_copper_laser"
+    },
+    "rubinated_nether:exposed_copper_laser": {
+      "next_oxidation_stage": "rubinated_nether:weathered_copper_laser"
+    },
+    "rubinated_nether:weathered_copper_laser": {
+      "next_oxidation_stage": "rubinated_nether:oxidized_copper_laser"
+    },
+    "rubinated_nether:waxed_copper_laser": {
+      "next_oxidation_stage": "rubinated_nether:waxed_exposed_copper_laser"
+    },
+    "rubinated_nether:waxed_exposed_copper_laser": {
+      "next_oxidation_stage": "rubinated_nether:waxed_weathered_copper_laser"
+    },
+    "rubinated_nether:waxed_weathered_copper_laser": {
+      "next_oxidation_stage": "rubinated_nether:waxed_oxidized_copper_laser"
+    }
+  }
+}
