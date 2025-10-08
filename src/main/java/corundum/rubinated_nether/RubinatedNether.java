@@ -44,17 +44,18 @@ public class RubinatedNether {
 
 	private static net.neoforged.bus.api.IEventBus IEventBus;
 	private static final ImmutableList<DeferredRegister<?>> REGISTRIES = ImmutableList.of(
-		RNBlocks.BLOCKS,
-		RNItems.ITEMS,
-		RNArmorMaterials.ARMOR_MATERIALS,
-		RNEntityCreator.ENTITY_TYPES,
-		RNParticleTypes.PARTICLES,
-		RNSoundEvents.SOUNDS,
-		RNCreativeTabs.CREATIVE_MODE_TABS,
-		RNRecipes.RECIPE_TYPES,
-		RNRecipeSerializers.RECIPE_SERIALIZERS,
-		RNBlockEntities.BLOCK_ENTITY_TYPES,
-		RNMenuTypes.MENUS
+            RNBlocks.BLOCKS,
+            RNItems.ITEMS,
+            RNArmorMaterials.ARMOR_MATERIALS,
+            RNEntityCreator.ENTITY_TYPES,
+            RNParticleTypes.PARTICLES,
+            RNSoundEvents.SOUNDS,
+            RNCreativeTabs.CREATIVE_MODE_TABS,
+            RNRecipes.RECIPE_TYPES,
+            RNRecipeSerializers.RECIPE_SERIALIZERS,
+            RNBlockEntities.BLOCK_ENTITY_TYPES,
+            RNMenuTypes.MENUS,
+            RNDamageTypes.DAMAGE_TYPES
 	);
 
 	public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {

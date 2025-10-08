@@ -87,10 +87,7 @@ public class RNBlockEntities {
             "chandelier",
             () -> BlockEntityType.Builder.of(
                     ChandelierBlock.ChandelierBlockEntity::new,
-                    RNBlocks.CHANDELIER.get(),
-                    RNBlocks.CORRODED_CHANDELIER.get(),
-                    RNBlocks.TARNISHED_CHANDELIER.get(),
-                    RNBlocks.DISCOLORED_CHANDELIER.get()
+                    RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get()
             ).build(null)
     );
 }

@@ -1,6 +1,8 @@
 package corundum.rubinated_nether.content.blocks;
 
 import corundum.rubinated_nether.content.RNBlockEntities;
+import corundum.rubinated_nether.content.RNDamageTypes;
+import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.utils.BEBlock;
 import corundum.rubinated_nether.utils.InGameLogger;
 import corundum.rubinated_nether.utils.RNConfig;
@@ -9,14 +11,25 @@ import fuzs.puzzleslib.api.block.v1.entity.TickingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,7 +38,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<ChandelierBlock.ChandelierBlockEntity> {
+import java.util.function.Predicate;
+
+public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<ChandelierBlock.ChandelierBlockEntity>, Fallable {
 	protected static final VoxelShape SHAPE_BOTTOM = Block.box(2.0, -2.0, 2.0, 14.0, 5.0, 14.0);
 	protected static final VoxelShape SHAPE_TOP = Block.box(-8.0, 5.0, -8.0, 24.0, 10.0, 24.0);
 	protected static final VoxelShape SHAPE = Shapes.or(SHAPE_BOTTOM, SHAPE_TOP);
@@ -67,7 +82,7 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
         int i = Math.max(1 + pPos.getY() - blockpos$mutableblockpos.getY(), 6);
         float f = (RNConfig.chandelierStateMultiplierIncrease * (float) i) * tarnishingDamageMultiplier(chandelier.getAge());
         fallingblockentity.setHurtsEntities(f, RNConfig.chandelierDefaultDamage);
-	}
+    }
 
     private static float tarnishingDamageMultiplier(TarnishState tarnishState)  {
         var multiplier = RNConfig.chandelierStateMultiplierIncrease;
@@ -82,6 +97,15 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
     @Override
     public Class<? extends ChandelierBlockEntity> getBlockEntityClass() {
         return ChandelierBlockEntity.class;
+    }
+
+    @Override
+    public DamageSource getFallDamageSource(Entity entity) {
+        return new DamageSource(RNDamageTypes.CHANDELIER);
+    }
+
+    private static void inflictDisease(LivingEntity player) {
+        player.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 1000));
     }
 
     // The block entity is quite simple, so I'd limit it to an inner class
@@ -112,8 +136,9 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
                 blockCheck = true;
             }
 
-            if (!pState.getValue(WAXED) && playerCheck)
+            if (!pState.getValue(WAXED) && playerCheck) {
                 spawnFallingChandelier(pState, (ServerLevel) pLevel, pPos);
+            }
         }
     }
 }
