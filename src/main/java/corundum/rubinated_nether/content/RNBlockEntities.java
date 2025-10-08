@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.blocks.ChandelierBlock;
 import corundum.rubinated_nether.content.blocks.entities.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -60,4 +61,15 @@ public class RNBlockEntities {
 					RNBlocks.SHRINE_STONE_COFFER.get()
 			).build(null)
 	);
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ChandelierBlock.ChandelierBlockEntity>> CHANDELIER = BLOCK_ENTITY_TYPES.register(
+            "chandelier",
+            () -> BlockEntityType.Builder.of(
+                    ChandelierBlock.ChandelierBlockEntity::new,
+                    RNBlocks.CHANDELIER.get(),
+                    RNBlocks.CORRODED_CHANDELIER.get(),
+                    RNBlocks.TARNISHED_CHANDELIER.get(),
+                    RNBlocks.DISCOLORED_CHANDELIER.get()
+            ).build(null)
+    );
 }
