@@ -25,6 +25,10 @@ repositories {
 		name = "Fuzs Mod Resources"
 		url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
 	}
+    maven { url = "https://api.modrinth.com/maven" }
+    maven {
+        url "https://cursemaven.com"
+    }
 }
 
 base {
@@ -93,8 +97,12 @@ dependencies {
 	// at runtime, use the full JEI jar
 	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
-	implementation "maven.modrinth:midnightlib:${project.midnightlib_version}" 
-	jarJar ("maven.modrinth:midnightlib:${project.midnightlib_version}")
+    implementation "maven.modrinth:jade:${project.jade_version}"
+
+
+    //implementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
+    implementation "curse.maven:midnightlib-488090:6222973"
+    jarJar ("maven.modrinth:midnightlib:${project.midnightlib_version}")
 
 	api "fuzs.puzzleslib:puzzleslib-neoforge:21.1.36"
 	jarJar "fuzs.puzzleslib:puzzleslib-neoforge:21.1.36"
