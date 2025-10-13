@@ -81,6 +81,16 @@ public class CofferBlockEntity extends RandomizableContainerBlockEntity implemen
         return this.container;
     }
 
+    @Override
+    public int getMaxStackSize() {
+        return 256;
+    }
+
+    @Override
+    public int getMaxStackSize(ItemStack stack) {
+        return stack.getMaxStackSize() * 4;
+    }
+
     public class CofferContainer implements ListBackedContainer, MultipliedContainer {
 
         public CofferContainer() {
@@ -98,7 +108,7 @@ public class CofferBlockEntity extends RandomizableContainerBlockEntity implemen
 
         @Override
         public int getMaxStackSize() {
-            return 256;
+            return CofferBlockEntity.this.getMaxStackSize();
         }
 
         @Override
