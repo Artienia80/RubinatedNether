@@ -4,21 +4,15 @@ import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNDamageTypes;
 import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.utils.BEBlock;
-import corundum.rubinated_nether.utils.InGameLogger;
 import corundum.rubinated_nether.utils.RNConfig;
 import corundum.rubinated_nether.utils.TickableBlockEntity;
-import fuzs.puzzleslib.api.block.v1.entity.TickingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +20,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Fallable;
@@ -38,43 +31,41 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.function.Predicate;
-
 public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<ChandelierBlock.ChandelierBlockEntity>, Fallable {
-	protected static final VoxelShape SHAPE_BOTTOM = Block.box(2.0, -2.0, 2.0, 14.0, 5.0, 14.0);
-	protected static final VoxelShape SHAPE_TOP = Block.box(-8.0, 5.0, -8.0, 24.0, 10.0, 24.0);
-	protected static final VoxelShape SHAPE = Shapes.or(SHAPE_BOTTOM, SHAPE_TOP);
+    protected static final VoxelShape SHAPE_BOTTOM = Block.box(2.0, -2.0, 2.0, 14.0, 5.0, 14.0);
+    protected static final VoxelShape SHAPE_TOP = Block.box(-8.0, 5.0, -8.0, 24.0, 10.0, 24.0);
+    protected static final VoxelShape SHAPE = Shapes.or(SHAPE_BOTTOM, SHAPE_TOP);
 
-	public ChandelierBlock(TarnishState tarnishState, Properties properties) {
-		super(tarnishState, properties);
-	}
+    public ChandelierBlock(TarnishState tarnishState, Properties properties) {
+        super(tarnishState, properties);
+    }
 
-	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		return SHAPE;
-	}
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
+    }
 
-	@Override
-	public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
-		pLevel.scheduleTick(pCurrentPos, this, 2);
-		return pState;
-	}
+    @Override
+    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
+        pLevel.scheduleTick(pCurrentPos, this, 2);
+        return pState;
+    }
 
-	@Override
-	public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-		if (!this.canSurvive(pState, pLevel, pPos))
-			spawnFallingChandelier(pState, pLevel, pPos);
-	}
+    @Override
+    public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+        if (!this.canSurvive(pState, pLevel, pPos))
+            spawnFallingChandelier(pState, pLevel, pPos);
+    }
 
-	@Override
-	protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-		return Block.canSupportCenter(level, pos.above(), Direction.UP);
-	}
+    @Override
+    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        return Block.canSupportCenter(level, pos.above(), Direction.UP);
+    }
 
-	private static void spawnFallingChandelier(BlockState pState, ServerLevel pLevel, BlockPos pPos) {
-		BlockPos.MutableBlockPos blockpos$mutableblockpos = pPos.mutable();
-  
-		BlockState blockstate = pLevel.getBlockState(blockpos$mutableblockpos);
+    private static void spawnFallingChandelier(BlockState pState, ServerLevel pLevel, BlockPos pPos) {
+        BlockPos.MutableBlockPos blockpos$mutableblockpos = pPos.mutable();
+
+        BlockState blockstate = pLevel.getBlockState(blockpos$mutableblockpos);
         if(!(blockstate.getBlock() instanceof ChandelierBlock chandelier)) return;
 
         FallingBlockEntity fallingblockentity = FallingBlockEntity.fall(pLevel, blockpos$mutableblockpos, blockstate);
@@ -101,14 +92,18 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
 
     @Override
     public DamageSource getFallDamageSource(Entity entity) {
-        return new DamageSource(RNDamageTypes.CHANDELIER);
+        return entity.damageSources().generic();
     }
 
     private static void inflictDisease(LivingEntity player) {
         player.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 1000));
     }
 
-    // The block entity is quite simple, so I'd limit it to an inner class
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ChandelierBlockEntity(pos, state);
+    }
+
     public static class ChandelierBlockEntity extends BlockEntity implements TickableBlockEntity {
         public ChandelierBlockEntity(BlockPos pos, BlockState blockState) {
             super(RNBlockEntities.CHANDELIER.get(), pos, blockState);
@@ -120,6 +115,9 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
             var pState = this.getBlockState();
             var pPos = this.getBlockPos();
 
+            if (!(pState.getBlock() instanceof ChandelierBlock chandelier) || chandelier.getAge().ordinal() != 4) {
+                return;
+            }
 
             boolean blockCheck = false;
             boolean playerCheck = false;
@@ -127,9 +125,6 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
             while (!blockCheck && !playerCheck) {
                 if (pLevel.getBlockState(currentPos).getBlock() == Blocks.AIR) {
                     playerCheck = !pLevel.getEntitiesOfClass(Player.class, new AABB(currentPos)).isEmpty();
-
-                    InGameLogger.info(String.format("Player detected: %b, Block in pos: %d", playerCheck, currentPos.getY()));
-
                     currentPos = currentPos.below();
                     continue;
                 }
