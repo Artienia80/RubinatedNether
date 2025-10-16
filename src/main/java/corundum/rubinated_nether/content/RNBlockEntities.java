@@ -1,6 +1,9 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.client.render.BronzeLaserRenderer;
+import corundum.rubinated_nether.client.render.CofferRenderer;
+import corundum.rubinated_nether.client.render.CopperLaserRenderer;
 import corundum.rubinated_nether.content.blocks.ChandelierBlock;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.BronzeLaserBlockEntity;
@@ -9,8 +12,13 @@ import corundum.rubinated_nether.content.blocks.entities.CopperLaserBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RubinationAltarBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
+import corundum.rubinated_nether.content.entity.client.BronzeModel;
+import corundum.rubinated_nether.content.entity.client.BronzeRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterMaterialAtlasesEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -100,4 +108,26 @@ public class RNBlockEntities {
 					RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get()
 			).build(null)
 	);
+
+    @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event)
+    {
+        event.registerBlockEntityRenderer(RNBlockEntities.COFFER.get(), CofferRenderer::new);
+        event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_LASER.get(), BronzeLaserRenderer::new);
+        event.registerBlockEntityRenderer(RNBlockEntities.COPPER_LASER.get(), CopperLaserRenderer::new);
+    }
+
+    // LAYERS
+
+    @SubscribeEvent
+    public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event)
+    {
+        event.registerLayerDefinition(RNModelLayers.COFFER, CofferRenderer::createSingleBodyLayer);
+    }
+
+    @SubscribeEvent
+    public static void registerMaterials(RegisterMaterialAtlasesEvent event)
+    {
+        //event.register(CofferRenderer.COFFER_SHEET, RubinatedNether.id("entity/coffer"));
+    }
 }

@@ -1,8 +1,8 @@
 package corundum.rubinated_nether.content.entity.client;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.RNModelLayers;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
-import corundum.rubinated_nether.content.entity.layer.RNModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;

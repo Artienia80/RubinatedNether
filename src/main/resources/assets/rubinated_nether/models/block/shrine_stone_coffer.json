@@ -1,53 +1,5 @@
 {
-	"credit": "Made with Blockbench",
-	"texture_size": [64, 64],
-	"parent": "block/block",
-	"render_type": "minecraft:cutout",
-	"textures": {
-		"0": "rubinated_nether:block/shrine_stone_coffer",
-		"particle": "rubinated_nether:block/shrine_stone_coffer"
-	},
-	"elements": [
-		{
-			"name": "Fat fuck",
-			"from": [0, 0, 0],
-			"to": [16, 11, 16],
-			"faces": {
-				"north": {"uv": [4, 4, 8, 6.75], "texture": "#0"},
-				"east": {"uv": [0, 4, 4, 6.75], "texture": "#0"},
-				"south": {"uv": [12, 4, 16, 6.75], "texture": "#0"},
-				"west": {"uv": [8, 4, 12, 6.75], "texture": "#0"},
-				"up": {"uv": [8, 4, 4, 0], "texture": "#0"},
-				"down": {"uv": [12, 0, 8, 4], "texture": "#0"}
-			}
-		},
-		{
-			"name": "lid",
-			"from": [0, 11, 0],
-			"to": [16, 14, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 11, 8]},
-			"faces": {
-				"north": {"uv": [4, 10.75, 8, 11.5], "texture": "#0"},
-				"east": {"uv": [0, 10.75, 4, 11.5], "texture": "#0"},
-				"south": {"uv": [12, 10.75, 16, 11.5], "texture": "#0"},
-				"west": {"uv": [8, 10.75, 12, 11.5], "texture": "#0"},
-				"up": {"uv": [8, 10.75, 4, 6.75], "texture": "#0"},
-				"down": {"uv": [12, 6.75, 8, 10.75], "texture": "#0"}
-			}
-		}
-	],
-	"groups": [
-		{
-			"name": "box",
-			"origin": [0, 0, 0],
-			"color": 0,
-			"children": [0]
-		},
-		{
-			"name": "lid",
-			"origin": [8, 11, 8],
-			"color": 0,
-			"children": [1]
-		}
-	]
+  "textures": {
+    "particle": "rubinated_nether:block/runestone"
+  }
 }

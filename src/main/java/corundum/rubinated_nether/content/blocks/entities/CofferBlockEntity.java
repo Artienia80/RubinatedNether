@@ -21,14 +21,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.ChestLidController;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-public class CofferBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity, MenuProvider {
+public class CofferBlockEntity extends ChestBlockEntity implements LidBlockEntity, MenuProvider {
     public static final int CONTAINER_SIZE = 8;
 
     private final NonNullList<ItemStack> items;

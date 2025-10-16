@@ -5,7 +5,6 @@ import corundum.rubinated_nether.content.entity.BronzeEntity;
 import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
 import corundum.rubinated_nether.content.entity.client.BronzeModel;
 import corundum.rubinated_nether.content.entity.client.BronzeRenderer;
-import corundum.rubinated_nether.content.entity.layer.RNModelLayers;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

@@ -41,7 +41,6 @@ public class RubinatedNether {
 	public static final String MODID = "rubinated_nether";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
-	private static net.neoforged.bus.api.IEventBus IEventBus;
 	private static final ImmutableList<DeferredRegister<?>> REGISTRIES = ImmutableList.of(
             RNBlocks.BLOCKS,
             RNItems.ITEMS,
