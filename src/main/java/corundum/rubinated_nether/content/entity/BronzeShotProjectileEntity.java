@@ -1,7 +1,6 @@
 package corundum.rubinated_nether.content.entity;
 
 import com.google.common.collect.ImmutableList;
-
 import corundum.rubinated_nether.content.RNEntityCreator;
 import corundum.rubinated_nether.content.RNItems;
 import net.minecraft.core.BlockPos;

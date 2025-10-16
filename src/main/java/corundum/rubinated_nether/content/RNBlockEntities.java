@@ -2,7 +2,13 @@ package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.blocks.ChandelierBlock;
-import corundum.rubinated_nether.content.blocks.entities.*;
+import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.BronzeLaserBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.CopperLaserBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.RubinationAltarBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;

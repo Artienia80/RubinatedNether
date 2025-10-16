@@ -1,7 +1,5 @@
 package corundum.rubinated_nether.data.tags;
 
-import java.util.concurrent.CompletableFuture;
-
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNTags;
@@ -13,6 +11,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+
+import java.util.concurrent.CompletableFuture;
 
 public class RNBlockTags extends BlockTagsProvider {
 	public RNBlockTags(

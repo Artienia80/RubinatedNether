@@ -1,5 +1,7 @@
 package corundum.rubinated_nether.content.items;
 
+import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.RNItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -7,8 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.RNItems;
 
 public class DrillItem extends PickShovelItem {
 	public CompoundTag data;

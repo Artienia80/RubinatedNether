@@ -1,26 +1,25 @@
 package corundum.rubinated_nether;
 
+import com.google.common.collect.ImmutableList;
+import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.client.RubinatedNetherClient;
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.enchantment.RNEnchantmentEffects;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
-import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import org.slf4j.Logger;
-import com.google.common.collect.ImmutableList;
-import com.mojang.logging.LogUtils;
-
 import corundum.rubinated_nether.data.Datagen;
 import corundum.rubinated_nether.misc.DatapackRegistry;
 import corundum.rubinated_nether.utils.RNConfig;
 import eu.midnightdust.lib.config.MidnightConfig;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.slf4j.Logger;
 
 /**
  * A couple of guidelines for this codebase: <br>

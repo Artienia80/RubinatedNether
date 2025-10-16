@@ -1,5 +1,8 @@
 package corundum.rubinated_nether.content.blocks;
 
+import corundum.rubinated_nether.content.RNBlockEntities;
+import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
+import corundum.rubinated_nether.utils.BEBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -11,10 +14,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.stream.Stream;
-
-import corundum.rubinated_nether.content.RNBlockEntities;
-import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
-import corundum.rubinated_nether.utils.BEBlock;
 
 public class BrazierBlock extends Block implements BEBlock<BrazierBlockEntity> {
 

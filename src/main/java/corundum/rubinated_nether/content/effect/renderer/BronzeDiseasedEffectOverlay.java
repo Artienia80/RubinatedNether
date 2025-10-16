@@ -1,8 +1,6 @@
 package corundum.rubinated_nether.content.effect.renderer;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import corundum.rubinated_nether.content.RNEffects;
-import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.mixin.accessors.GuiAccessor;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.client.Minecraft;

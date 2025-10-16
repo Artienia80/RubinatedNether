@@ -1,7 +1,5 @@
 package corundum.rubinated_nether.content.items;
 
-import java.util.Map;
-
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import net.minecraft.world.item.BlockItem;
@@ -12,6 +10,8 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.registries.DeferredBlock;
+
+import java.util.Map;
 
 public class WaxableBlockItem extends BlockItem {
 	public WaxableBlockItem(DeferredBlock<?> block, Item.Properties properties) {

@@ -1,8 +1,5 @@
 package corundum.rubinated_nether.content;
 
-import java.util.EnumMap;
-import java.util.List;
-
 import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
@@ -12,6 +9,9 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.EnumMap;
+import java.util.List;
 
 public class RNArmorMaterials {
 	public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(

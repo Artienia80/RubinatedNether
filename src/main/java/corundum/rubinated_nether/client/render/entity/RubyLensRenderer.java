@@ -1,7 +1,6 @@
 package corundum.rubinated_nether.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import corundum.rubinated_nether.client.RubinatedNetherClient;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
 import net.minecraft.client.model.EntityModel;

@@ -1,12 +1,8 @@
 package corundum.rubinated_nether.content;
 
+import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.blocks.*;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
-
-import java.util.function.Supplier;
-import java.util.function.ToIntFunction;
-
-import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
@@ -21,6 +17,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
 
 public class RNBlocks {
 	public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(RubinatedNether.MODID);

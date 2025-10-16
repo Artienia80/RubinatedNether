@@ -1,6 +1,14 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
+import corundum.rubinated_nether.content.RNBlockEntities;
+import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
+import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.mixin.accessors.LevelAccessor;
+import corundum.rubinated_nether.utils.BlockUpdateListener;
+import corundum.rubinated_nether.utils.ShapeUtils;
+import corundum.rubinated_nether.utils.TickableBlockEntity;
+import corundum.rubinated_nether.utils.UpdateListenerHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -17,18 +25,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.Tags;
-
 import org.apache.commons.lang3.mutable.MutableDouble;
-
-import corundum.rubinated_nether.content.RNBlockEntities;
-import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.RNTags;
-import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
-import corundum.rubinated_nether.content.blocks.TarnishingBronze;
-import corundum.rubinated_nether.utils.BlockUpdateListener;
-import corundum.rubinated_nether.utils.ShapeUtils;
-import corundum.rubinated_nether.utils.TickableBlockEntity;
-import corundum.rubinated_nether.utils.UpdateListenerHolder;
 
 import java.util.Map;
 import java.util.Optional;

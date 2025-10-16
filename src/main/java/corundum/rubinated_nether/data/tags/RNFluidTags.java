@@ -1,7 +1,5 @@
 package corundum.rubinated_nether.data.tags;
 
-import java.util.concurrent.CompletableFuture;
-
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.HolderLookup;
@@ -10,6 +8,8 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.FluidTagsProvider;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+
+import java.util.concurrent.CompletableFuture;
 
 public class RNFluidTags extends FluidTagsProvider {
 	public RNFluidTags(

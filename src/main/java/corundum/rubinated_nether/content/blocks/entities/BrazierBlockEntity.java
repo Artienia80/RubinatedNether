@@ -1,5 +1,9 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
+import corundum.rubinated_nether.content.RNBlockEntities;
+import corundum.rubinated_nether.content.RNParticleTypes;
+import corundum.rubinated_nether.utils.RNConfig;
+import corundum.rubinated_nether.utils.TickableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -11,12 +15,8 @@ import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import java.util.function.Predicate;
 
-import corundum.rubinated_nether.content.RNBlockEntities;
-import corundum.rubinated_nether.content.RNParticleTypes;
-import corundum.rubinated_nether.utils.RNConfig;
-import corundum.rubinated_nether.utils.TickableBlockEntity;
+import java.util.function.Predicate;
 
 public class BrazierBlockEntity extends BlockEntity implements TickableBlockEntity {
 

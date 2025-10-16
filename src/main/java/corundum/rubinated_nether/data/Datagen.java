@@ -1,10 +1,5 @@
 package corundum.rubinated_nether.data;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.data.registries.RNBiomeModifiers;
 import corundum.rubinated_nether.data.registries.RNConfiguredFeatures;
@@ -27,6 +22,11 @@ import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 public class Datagen {
 	public static void datagen(final GatherDataEvent event) {

@@ -1,7 +1,6 @@
 package corundum.rubinated_nether.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.client.RubinatedNetherClient;
 import corundum.rubinated_nether.content.RNItems;

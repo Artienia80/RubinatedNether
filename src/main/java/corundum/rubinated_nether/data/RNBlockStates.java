@@ -1,28 +1,27 @@
 package corundum.rubinated_nether.data;
 
+import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
 import corundum.rubinated_nether.content.blocks.CopperLaserBlock;
+import corundum.rubinated_nether.content.blocks.SixWayPillarBlock;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.model.generators.ModelBuilder;
-import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder;
-import org.apache.commons.lang3.function.TriConsumer;
-
-import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.blocks.SixWayPillarBlock;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelBuilder;
+import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import org.apache.commons.lang3.function.TriConsumer;
 
 public class RNBlockStates extends BlockStateProvider {
 	public RNBlockStates(PackOutput output, ExistingFileHelper fileHelper) {

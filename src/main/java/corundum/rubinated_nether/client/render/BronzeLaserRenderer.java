@@ -1,10 +1,7 @@
 package corundum.rubinated_nether.client.render;
 
-import org.joml.Quaternionf;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
@@ -22,6 +19,7 @@ import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.phys.AABB;
+import org.joml.Quaternionf;
 
 public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlockEntity> {
 	public static final ResourceLocation LASER_TEXTURE = RubinatedNether.id("textures/misc/bronze_laser_beam.png");

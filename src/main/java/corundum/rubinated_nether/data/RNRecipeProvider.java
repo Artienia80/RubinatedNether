@@ -1,8 +1,5 @@
 package corundum.rubinated_nether.data;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Supplier;
-
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
@@ -10,13 +7,20 @@ import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.*;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.flag.FeatureFlagSet;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 
 public class RNRecipeProvider extends RecipeProvider {

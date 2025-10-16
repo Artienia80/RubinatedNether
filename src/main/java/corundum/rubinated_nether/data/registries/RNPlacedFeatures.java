@@ -1,9 +1,6 @@
 package corundum.rubinated_nether.data.registries;
 
-import java.util.List;
-
 import com.google.common.collect.ImmutableList;
-
 import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -18,6 +15,8 @@ import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+
+import java.util.List;
 
 public class RNPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> MOLTEN_RUBY_ORE = createKey("molten_ruby_ore");

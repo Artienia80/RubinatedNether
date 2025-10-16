@@ -1,7 +1,5 @@
 package corundum.rubinated_nether.misc;
 
-import java.util.Objects;
-
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNRecipes;
@@ -15,6 +13,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+
+import java.util.Objects;
 
 @JeiPlugin
 public class RNJeiPlugin implements IModPlugin {

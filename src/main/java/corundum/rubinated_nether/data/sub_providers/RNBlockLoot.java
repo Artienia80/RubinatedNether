@@ -1,7 +1,5 @@
 package corundum.rubinated_nether.data.sub_providers;
 
-import java.util.Set;
-
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
@@ -23,6 +21,8 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredBlock;
+
+import java.util.Set;
 
 public class RNBlockLoot extends BlockLootSubProvider {
 	public RNBlockLoot(HolderLookup.Provider lookupProvider) {

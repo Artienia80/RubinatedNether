@@ -2,13 +2,13 @@ package corundum.rubinated_nether.content.screen;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.menu.coffer.CofferMenu;
+import fuzs.limitlesscontainers.api.limitlesscontainers.v1.client.LimitlessContainerScreen;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class CofferScreen extends AbstractContainerScreen<CofferMenu> {
+public class CofferScreen extends LimitlessContainerScreen<CofferMenu> {
     private static final ResourceLocation BG = ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/gui/coffer_gui.png");
 
     public CofferScreen(CofferMenu menu, Inventory inv, Component title) {

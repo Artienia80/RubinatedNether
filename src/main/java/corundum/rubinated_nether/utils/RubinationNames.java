@@ -2,7 +2,9 @@ package corundum.rubinated_nether.utils;
 
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.neoforged.api.distmarker.Dist;

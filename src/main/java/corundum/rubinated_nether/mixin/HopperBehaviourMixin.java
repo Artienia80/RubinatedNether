@@ -10,12 +10,9 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-
-import javax.annotation.Nullable;
 
 @Mixin(HopperBlockEntity.class)
 public abstract class HopperBehaviourMixin {
@@ -29,7 +26,7 @@ public abstract class HopperBehaviourMixin {
             target = "Lnet/minecraft/world/item/ItemStack;getMaxStackSize()I", ordinal = 0))
     private static int getMaxContainerSize(ItemStack instance, Operation<Integer> original, @Local(index = 1) Container container) {
         if(container instanceof CofferBlockEntity || container instanceof CofferBlockEntity.CofferContainer)
-            return container.getMaxStackSize() - instance.getCount() + 1;
+            return container.getMaxStackSize(instance) - instance.getCount() + 1;
         else
             return original.call(instance);
     }
@@ -37,6 +34,6 @@ public abstract class HopperBehaviourMixin {
     @ModifyExpressionValue(method = "tryMoveInItem", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/world/level/block/entity/HopperBlockEntity;canMergeItems(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"))
     private static boolean containerSizeCheck(boolean original, @Local(index = 1) Container container, @Local(ordinal = 0) ItemStack stack, @Local(ordinal = 1) ItemStack itemStack ){
-        return stack.getCount() <= container.getMaxStackSize() && ItemStack.isSameItemSameComponents(stack, itemStack);
+        return stack.getCount() <= container.getMaxStackSize(stack) && ItemStack.isSameItemSameComponents(stack, itemStack);
     }
 }

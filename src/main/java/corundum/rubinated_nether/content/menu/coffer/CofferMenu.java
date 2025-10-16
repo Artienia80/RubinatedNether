@@ -18,7 +18,7 @@ public class CofferMenu extends LimitlessContainerMenu {
     public CofferMenu(int containerId, Inventory inventory) {
         this(containerId, inventory,
                 new MultipliedSimpleContainer(4,
-                        CofferBlockEntity.COINTAINER_SIZE
+                        CofferBlockEntity.CONTAINER_SIZE
                 )
         );
     }
@@ -26,7 +26,6 @@ public class CofferMenu extends LimitlessContainerMenu {
     public CofferMenu(int id, Inventory playerInv, MultipliedContainer container) {
         super(RNMenuTypes.COFFER_MENU.get(), id);
         this.container = container;
-
         container.startOpen(playerInv.player);
 
         checkContainerSize(container, 8);
@@ -47,6 +46,8 @@ public class CofferMenu extends LimitlessContainerMenu {
         // Move inventory up by 19 pixels
         int offsetY = 50 + 36 - 19;
 
+        //ContainerMenuHelper.addInventorySlots(this, playerInv, offsetY + 3 * 18);
+
         // Player inventory (3 rows x 9 columns)
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
@@ -60,6 +61,10 @@ public class CofferMenu extends LimitlessContainerMenu {
         }
     }
 
+    public Container getContainer() {
+        return this.container;
+    }
+
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
@@ -67,11 +72,11 @@ public class CofferMenu extends LimitlessContainerMenu {
         if (slot.hasItem()) {
             ItemStack itemStack2 = slot.getItem();
             itemStack = itemStack2.copy();
-            if (index < 8) {
-                if (!this.moveItemStackTo(itemStack2, 8, this.slots.size(), true)) {
+            if (index < CofferBlockEntity.CONTAINER_SIZE) {
+                if (!this.moveItemStackTo(itemStack2, CofferBlockEntity.CONTAINER_SIZE, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemStack2, 0, 8, false)) {
+            } else if (!this.moveItemStackTo(itemStack2, 0, CofferBlockEntity.CONTAINER_SIZE, false)) {
                 return ItemStack.EMPTY;
             }
 
@@ -84,6 +89,7 @@ public class CofferMenu extends LimitlessContainerMenu {
 
         return itemStack;
     }
+
 
     @Override
     public boolean stillValid(Player player) {
