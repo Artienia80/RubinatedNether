@@ -16,11 +16,10 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BrightnessCombiner;
-import net.minecraft.client.resources.model.Material;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractChestBlock;
@@ -29,6 +28,7 @@ import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.DoubleBlockCombiner;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -50,8 +50,8 @@ public class CofferRenderer implements BlockEntityRenderer<CofferBlockEntity> {
     public static LayerDefinition createSingleBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
-        partdefinition.addOrReplaceChild(BOTTOM, CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, 0.0F, 0.0F, 16.0F, 12.0F, 16.0F), PartPose.ZERO);
-        partdefinition.addOrReplaceChild(LID, CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, 0.0F, 0.0F, 16.0F, 2.0F, 16.0F), PartPose.offset(0.0F, 12.0F, 0.0F));
+        partdefinition.addOrReplaceChild(BOTTOM, CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, 0.0F, 0.0F, 16.0F, 11.0F, 16.0F), PartPose.ZERO);
+        partdefinition.addOrReplaceChild(LID, CubeListBuilder.create().texOffs(0, 27).addBox(0.0F, 0.0F, 0.0F, 16.0F, 3.0F, 16.0F), PartPose.offset(0.0F, 11.0F, 0.0F));
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
@@ -75,18 +75,23 @@ public class CofferRenderer implements BlockEntityRenderer<CofferBlockEntity> {
             float f1 = neighborcombineresult.apply(ChestBlock.opennessCombiner(blockEntity)).get(partialTick);
             f1 = 1.0F - f1;
             f1 = 1.0F - f1 * f1 * f1;
-            int i = ((Int2IntFunction)neighborcombineresult.apply(new BrightnessCombiner())).applyAsInt(packedLight);
+            int i = ((Int2IntFunction) neighborcombineresult.apply(new BrightnessCombiner())).applyAsInt(packedLight);
 
             this.render(poseStack, vertexconsumer, this.lid, this.bottom, f1, i, packedOverlay);
 
             poseStack.popPose();
         }
-
     }
 
     private void render(PoseStack poseStack, VertexConsumer consumer, ModelPart lidPart, ModelPart bottomPart, float lidAngle, int packedLight, int packedOverlay) {
-        lidPart.x = -(lidAngle * ((float)Math.PI / 2F));
+        lidPart.x = -(lidAngle * 2 * ((float) Math.PI / 2F));
         lidPart.render(poseStack, consumer, packedLight, packedOverlay);
         bottomPart.render(poseStack, consumer, packedLight, packedOverlay);
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(CofferBlockEntity blockEntity) {
+        BlockPos pos = blockEntity.getBlockPos();
+        return AABB.encapsulatingFullBlocks(pos.offset(-1, 0, -1), pos.offset(1, 1, 1));
     }
 }

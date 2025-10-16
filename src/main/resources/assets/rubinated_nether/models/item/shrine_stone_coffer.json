@@ -1,0 +1,67 @@
+{
+  "loader": "neoforge:elements",
+  "textures": {
+    "texture": "rubinated_nether:block/shrine_stone_coffer",
+    "particle": "block/obsidian"
+  },
+  "elements": [
+    {
+      "name": "bottom",
+      "from": [0, 0, 0],
+      "to": [16, 11, 16],
+      "faces": {
+        "north": {"uv": [4, 4, 8, 6.75], "texture": "#texture"},
+        "east": {"uv": [0, 4, 4, 6.75], "texture": "#texture"},
+        "south": {"uv": [12, 4, 16, 6.75], "texture": "#texture"},
+        "west": {"uv": [8, 4, 12, 6.75], "texture": "#texture"},
+        "up": {"uv": [8, 4, 4, 0], "texture": "#texture"},
+        "down": {"uv": [12, 0, 8, 4], "texture": "#texture"}
+      }
+    },
+    {
+      "name": "lid",
+      "from": [0, 11, 0],
+      "to": [16, 14, 16],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 11, 8]},
+      "faces": {
+        "north": {"uv": [4, 10.75, 8, 11.5], "texture": "#texture"},
+        "east": {"uv": [0, 10.75, 4, 11.5], "texture": "#texture"},
+        "south": {"uv": [12, 10.75, 16, 11.5], "texture": "#texture"},
+        "west": {"uv": [8, 10.75, 12, 11.5], "texture": "#texture"},
+        "up": {"uv": [8, 10.75, 4, 6.75], "texture": "#texture"},
+        "down": {"uv": [12, 6.75, 8, 10.75], "texture": "#texture"}
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [75, 45, 0],
+      "translation": [0, 2.5, 0],
+      "scale": [0.375, 0.375, 0.375]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [75, 45, 0],
+      "translation": [0, 2.5, 0],
+      "scale": [0.375, 0.375, 0.375]
+    },
+    "firstperson_righthand": {
+      "rotation": [0, 45, 0],
+      "scale": [0.4, 0.4, 0.4]
+    },
+    "firstperson_lefthand": {
+      "rotation": [0, 225, 0],
+      "scale": [0.4, 0.4, 0.4]
+    },
+    "ground": {
+      "translation": [0, 3, 0],
+      "scale": [0.25, 0.25, 0.25]
+    },
+    "gui": {
+      "rotation": [30, 225, 0],
+      "scale": [0.625, 0.625, 0.625]
+    },
+    "fixed": {
+      "scale": [0.5, 0.5, 0.5]
+    }
+  }
+}
