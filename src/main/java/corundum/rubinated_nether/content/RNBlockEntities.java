@@ -16,24 +16,24 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class RNBlockEntities {
 	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(
-		BuiltInRegistries.BLOCK_ENTITY_TYPE,
-		RubinatedNether.MODID
+			BuiltInRegistries.BLOCK_ENTITY_TYPE,
+			RubinatedNether.MODID
 	);
 
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FreezerBlockEntity>> FREEZER = BLOCK_ENTITY_TYPES.register(
-		"freezer", 
-		() -> BlockEntityType.Builder.of(
-			FreezerBlockEntity::new, 
-			RNBlocks.FREEZER.get()
-		).build(null)
+			"freezer",
+			() -> BlockEntityType.Builder.of(
+					FreezerBlockEntity::new,
+					RNBlocks.FREEZER.get()
+			).build(null)
 	);
 
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BrazierBlockEntity>> BRAZIER = BLOCK_ENTITY_TYPES.register(
-		"brazier", 
-		() -> BlockEntityType.Builder.of(
-			BrazierBlockEntity::new, 
-			RNBlocks.BRAZIER.get()
-		).build(null)
+			"brazier",
+			() -> BlockEntityType.Builder.of(
+					BrazierBlockEntity::new,
+					RNBlocks.BRAZIER.get()
+			).build(null)
 	);
 
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BronzeLaserBlockEntity>> BRONZE_LASER =
@@ -89,11 +89,15 @@ public class RNBlockEntities {
 			).build(null)
 	);
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ChandelierBlock.ChandelierBlockEntity>> CHANDELIER = BLOCK_ENTITY_TYPES.register(
-            "chandelier",
-            () -> BlockEntityType.Builder.of(
-                    ChandelierBlock.ChandelierBlockEntity::new,
-                    RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get()
-            ).build(null)
-    );
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ChandelierBlock.ChandelierBlockEntity>> CHANDELIER = BLOCK_ENTITY_TYPES.register(
+			"chandelier",
+			() -> BlockEntityType.Builder.of(
+					ChandelierBlock.ChandelierBlockEntity::new,
+					RNBlocks.BRONZE_CHANDELIER.get(),
+					RNBlocks.DISCOLORED_BRONZE_CHANDELIER.get(),
+					RNBlocks.CORRODED_BRONZE_CHANDELIER.get(),
+					RNBlocks.TARNISHED_BRONZE_CHANDELIER.get(),
+					RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get()
+			).build(null)
+	);
 }

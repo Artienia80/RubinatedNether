@@ -361,9 +361,6 @@
 
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
 
-  "death.attack.fallingBlock": "%1$s was embraced by a falling chandelier",
-  "death.attack.fallingBlock.player": "%1$s was embraced by a falling chandelier whilst fighting %2$s",
-
   "rubinated_nether.midnightconfig.category.brazier": "Brazier",
   "rubinated_nether.midnightconfig.category.chandelier": "Chandelier",
   "rubinated_nether.midnightconfig.category.client": "Client",
@@ -371,6 +368,10 @@
   "entity.rubinated_nether.bronze": "Bronze",
 
   "effect.rubinated_nether.bronze_diseased": "Bronze Diseased",
-  "effect.rubinated_nether.blessed": "Blessed"
+  "effect.rubinated_nether.blessed": "Blessed",
+
+  "death.attack.chandelier": "%1$s was embraced by a falling chandelier",
+  "death.attack.chandelier.player": "%1$s was embraced by a falling chandelier whilst fighting %2$s"
+
 
 }
