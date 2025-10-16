@@ -34,7 +34,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class CofferRenderer implements BlockEntityRenderer<CofferBlockEntity> {
-    public static final ResourceLocation COFFER_TEXTURE = RubinatedNether.id("textures/entity/coffer/shrine_stone_coffer.png.png");
+    public static final ResourceLocation COFFER_TEXTURE = RubinatedNether.id("textures/entity/coffer/shrine_stone_coffer.png");
 
     private static final String BOTTOM = "bottom";
     private static final String LID = "lid";
@@ -50,8 +50,8 @@ public class CofferRenderer implements BlockEntityRenderer<CofferBlockEntity> {
     public static LayerDefinition createSingleBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
-        partdefinition.addOrReplaceChild(BOTTOM, CubeListBuilder.create().texOffs(0, 19).addBox(1.0F, 0.0F, 1.0F, 16.0F, 12.0F, 16.0F), PartPose.ZERO);
-        partdefinition.addOrReplaceChild(LID, CubeListBuilder.create().texOffs(0, 0).addBox(1.0F, 0.0F, 0.0F, 16.0F, 4.0F, 16.0F), PartPose.offset(0.0F, 9.0F, 1.0F));
+        partdefinition.addOrReplaceChild(BOTTOM, CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, 0.0F, 0.0F, 16.0F, 12.0F, 16.0F), PartPose.ZERO);
+        partdefinition.addOrReplaceChild(LID, CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, 0.0F, 0.0F, 16.0F, 2.0F, 16.0F), PartPose.offset(0.0F, 12.0F, 0.0F));
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 

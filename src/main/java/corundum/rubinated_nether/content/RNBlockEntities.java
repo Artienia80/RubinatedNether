@@ -108,26 +108,4 @@ public class RNBlockEntities {
 					RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get()
 			).build(null)
 	);
-
-    @SubscribeEvent
-    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event)
-    {
-        event.registerBlockEntityRenderer(RNBlockEntities.COFFER.get(), CofferRenderer::new);
-        event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_LASER.get(), BronzeLaserRenderer::new);
-        event.registerBlockEntityRenderer(RNBlockEntities.COPPER_LASER.get(), CopperLaserRenderer::new);
-    }
-
-    // LAYERS
-
-    @SubscribeEvent
-    public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event)
-    {
-        event.registerLayerDefinition(RNModelLayers.COFFER, CofferRenderer::createSingleBodyLayer);
-    }
-
-    @SubscribeEvent
-    public static void registerMaterials(RegisterMaterialAtlasesEvent event)
-    {
-        //event.register(CofferRenderer.COFFER_SHEET, RubinatedNether.id("entity/coffer"));
-    }
 }

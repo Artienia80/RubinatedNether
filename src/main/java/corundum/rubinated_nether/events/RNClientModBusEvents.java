@@ -1,7 +1,12 @@
 package corundum.rubinated_nether.events;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.client.render.BronzeLaserRenderer;
+import corundum.rubinated_nether.client.render.CofferRenderer;
+import corundum.rubinated_nether.client.render.CopperLaserRenderer;
+import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNEntityCreator;
+import corundum.rubinated_nether.content.RNModelLayers;
 import corundum.rubinated_nether.content.effect.renderer.BronzeDiseasedEffectOverlay;
 import corundum.rubinated_nether.content.entity.client.BronzeChargeProjectileModel;
 import corundum.rubinated_nether.content.entity.client.BronzeChargeProjectileRenderer;
@@ -19,6 +24,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.RegisterMaterialAtlasesEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
@@ -27,10 +33,6 @@ public class RNClientModBusEvents {
 
 	@SubscribeEvent
 	public static void onClientSetup(FMLClientSetupEvent event) {
-		EntityRenderers.register(
-			RNEntityCreator.BRONZE_SHOT.get(),
-			BronzeChargeProjectileRenderer::new
-		);
 	}
 
 	@SubscribeEvent
@@ -39,7 +41,10 @@ public class RNClientModBusEvents {
 			BronzeChargeProjectileModel.LAYER_LOCATION, 
 			BronzeChargeProjectileModel::createBodyLayer
 		);
-	}
+        event.registerLayerDefinition(RNModelLayers.COFFER,
+                CofferRenderer::createSingleBodyLayer
+        );
+    }
 
 	@SubscribeEvent
 	public static void registerMenuScreens(RegisterMenuScreensEvent event) {
@@ -48,6 +53,15 @@ public class RNClientModBusEvents {
 		event.register(RNMenuTypes.COFFER_MENU.get(), CofferScreen::new);
 	}
 
+    @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event)
+    {
+        event.registerBlockEntityRenderer(RNBlockEntities.COFFER.get(), CofferRenderer::new);
+        event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_LASER.get(), BronzeLaserRenderer::new);
+        event.registerBlockEntityRenderer(RNBlockEntities.COPPER_LASER.get(), CopperLaserRenderer::new);
+
+        event.registerEntityRenderer(RNEntityCreator.BRONZE_SHOT.get(), BronzeChargeProjectileRenderer::new);
+    }
 
 	@SubscribeEvent
 	public static void registerOverlays(RegisterGuiLayersEvent event) {
