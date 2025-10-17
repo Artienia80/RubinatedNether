@@ -14,8 +14,7 @@ public class CofferScreen extends LimitlessContainerScreen<CofferMenu> {
     public CofferScreen(CofferMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
         this.imageWidth = 176;
-        this.imageHeight = 149;
-        // Adjust inventory label position for the shorter GUI
+        this.imageHeight = 153;
         this.inventoryLabelY = this.imageHeight - 94;
     }
 
