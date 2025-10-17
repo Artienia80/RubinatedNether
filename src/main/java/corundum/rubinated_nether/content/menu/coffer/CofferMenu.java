@@ -30,23 +30,18 @@ public class CofferMenu extends LimitlessContainerMenu {
 
         checkContainerSize(container, 8);
 
-        // Coffer slots (4x2 grid, centered)
-        // Calculate center position: (176 - (4 * 18 + 3 * spacing)) / 2
-        // With standard 18px slot size and no extra spacing between slots: (176 - 72) / 2 = 52
-        int startX = 53;
-        int startY = 20;
+        int startX = 50;
+        int startY = 21;
 
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 4; col++) {
                 int slotIndex = row * 4 + col;
-                this.addSlot(new MultipliedSlot(this.container, slotIndex, startX + col * 18, startY + row * 18));
+                this.addSlot(new MultipliedSlot(this.container, slotIndex, startX + col * 20, startY + row * 20));
             }
         }
 
-        // Move inventory up by 19 pixels
-        int offsetY = 50 + 36 - 19;
-
-        //ContainerMenuHelper.addInventorySlots(this, playerInv, offsetY + 3 * 18);
+        // Player inventory offset
+        int offsetY = 71;
 
         // Player inventory (3 rows x 9 columns)
         for (int row = 0; row < 3; row++) {
@@ -55,7 +50,7 @@ public class CofferMenu extends LimitlessContainerMenu {
             }
         }
 
-        // Hotbar (1 row) - moved down 4 pixels
+        // Hotbar
         for (int col = 0; col < 9; col++) {
             this.addSlot(new Slot(playerInv, col, 8 + col * 18, offsetY + 3 * 18 + 4));
         }
