@@ -84,7 +84,7 @@ public class CofferRenderer implements BlockEntityRenderer<CofferBlockEntity> {
     }
 
     private void render(PoseStack poseStack, VertexConsumer consumer, ModelPart lidPart, ModelPart bottomPart, float lidAngle, int packedLight, int packedOverlay) {
-        lidPart.x = -(lidAngle * 2 * ((float) Math.PI / 2F));
+        lidPart.z = -(lidAngle * 3 * ((float) Math.PI / 2F));
         lidPart.render(poseStack, consumer, packedLight, packedOverlay);
         bottomPart.render(poseStack, consumer, packedLight, packedOverlay);
     }
