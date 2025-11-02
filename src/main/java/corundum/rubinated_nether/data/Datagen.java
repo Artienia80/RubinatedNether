@@ -6,10 +6,7 @@ import corundum.rubinated_nether.data.registries.RNConfiguredFeatures;
 import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
 import corundum.rubinated_nether.data.registries.RNPlacedFeatures;
 import corundum.rubinated_nether.data.sub_providers.RNBlockLoot;
-import corundum.rubinated_nether.data.tags.RNBlockTags;
-import corundum.rubinated_nether.data.tags.RNEntityTags;
-import corundum.rubinated_nether.data.tags.RNFluidTags;
-import corundum.rubinated_nether.data.tags.RNItemTags;
+import corundum.rubinated_nether.data.tags.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -59,6 +56,8 @@ public class Datagen {
 
 		datagen.addProvider(event.includeClient(), new RNFluidTags(output, lookupProvider, fileHelper));
 		datagen.addProvider(event.includeClient(), new RNEntityTags(output, lookupProvider, fileHelper));
+		datagen.addProvider(event.includeClient(), new RNEnchantmentTags(output, lookupProvider, fileHelper));
+
 
 		// Worldgen
 		datagen.addProvider(

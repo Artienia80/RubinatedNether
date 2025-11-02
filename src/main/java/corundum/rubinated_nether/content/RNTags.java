@@ -6,6 +6,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.material.Fluid;
@@ -92,6 +93,10 @@ public final class RNTags {
 
 		public static final TagKey<Item> RUBINATABLE = createTag(Registries.ITEM, "rubinatable");
 
+	}
+
+	public static final class Enchantments {
+		public static final TagKey<Enchantment> RUBINATED_CURSES = createTag(Registries.ENCHANTMENT, "rubinated_curses");
 	}
 
 	public static final class Dimensions {

@@ -10,6 +10,7 @@ import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
 import corundum.rubinated_nether.data.Datagen;
+import corundum.rubinated_nether.events.RNAnvilRepairHandler;
 import corundum.rubinated_nether.misc.DatapackRegistry;
 import corundum.rubinated_nether.utils.RNConfig;
 import eu.midnightdust.lib.config.MidnightConfig;
@@ -71,6 +72,9 @@ public class RubinatedNether {
 
 		// Register command
 		NeoForge.EVENT_BUS.addListener(this::registerCommands);
+
+		// Register ruby anvil repair handler
+		RNAnvilRepairHandler.register();
 
 		for (var registry : REGISTRIES)
 			registry.register(modEventBus);
