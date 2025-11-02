@@ -102,26 +102,42 @@ public class SoakStoneBlock extends Block{
 	}
 
 	@Override
+	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+		if (!level.isClientSide()) {
+			ItemStack tool = player.getMainHandItem();
+			int silkTouchLevel = EnchantmentHelper.getItemEnchantmentLevel(
+					level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(Enchantments.SILK_TOUCH),
+					tool
+			);
+
+			System.out.println("[SoakStone] playerWillDestroy at " + pos + " | tool=" + tool.getItem() + " | silkTouch=" + silkTouchLevel);
+
+			if (silkTouchLevel > 0) {
+				preventChainBreaks.add(pos.immutable());
+				System.out.println("[SoakStone] Added " + pos + " to prevent set (silk touch). Set size: " + preventChainBreaks.size());
+			}
+		}
+
+		standTime.remove(player.getUUID());
+		return super.playerWillDestroy(level, pos, state, player);
+	}
+
+	@Override
 	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
 		if (!level.isClientSide && !state.is(newState.getBlock())) {
 			if (level instanceof ServerLevel serverLevel) {
-				if (!preventChainBreaks.remove(pos)) {
+				boolean prevented = preventChainBreaks.remove(pos);
+				System.out.println("[SoakStone] onRemove at " + pos + " | prevented=" + prevented + " | preventSet size=" + preventChainBreaks.size());
+
+				if (!prevented) {
+					System.out.println("[SoakStone] Triggering chain destruction from " + pos);
 					triggerChainDestruction(serverLevel, pos);
+				} else {
+					System.out.println("[SoakStone] Chain destruction prevented for " + pos);
 				}
 			}
 		}
 		super.onRemove(state, level, pos, newState, movedByPiston);
-	}
-
-	@Override
-	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
-		super.playerDestroy(level, player, pos, state, blockEntity, tool);
-
-		if (level.isClientSide()) return;
-
-		if (EnchantmentHelper.getItemEnchantmentLevel(level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(Enchantments.SILK_TOUCH), tool) > 0) {
-			preventChainBreaks.add(pos.immutable());
-		}
 	}
 
 	private void triggerChainDestruction(ServerLevel level, BlockPos origin) {
@@ -151,6 +167,7 @@ public class SoakStoneBlock extends Block{
 
 	@Override
 	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		System.out.println("[SoakStone] tick at " + pos + " - breaking block");
 		Block.dropResources(state, level, pos);
 		level.destroyBlock(pos, false);
 	}
@@ -161,14 +178,18 @@ public class SoakStoneBlock extends Block{
 
 		if (entity instanceof Player player) {
 			double fallDistance = entity.fallDistance;
+			ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
+
+			System.out.println("[SoakStone] stepOn at " + pos + " | player=" + player.getName().getString() + " | fallDistance=" + fallDistance + " | boots=" + boots.getItem());
 
 			if (fallDistance > 0.5) {
-				ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
 				if (boots.is(Items.LEATHER_BOOTS)) {
+					System.out.println("[SoakStone] Player has leather boots - NO BREAK AT ALL");
 					return;
 				}
 
 				if (level instanceof ServerLevel serverLevel) {
+					System.out.println("[SoakStone] Triggering fall impact");
 					handleFallImpact(serverLevel, pos);
 				}
 			}
@@ -186,11 +207,19 @@ public class SoakStoneBlock extends Block{
 				BlockState checkState = level.getBlockState(checkPos);
 
 				if (checkState.is(this)) {
-					immediateBreaks.add(checkPos.immutable());
-					preventChainBreaks.add(checkPos.immutable());
+					BlockPos immutablePos = checkPos.immutable();
+					immediateBreaks.add(immutablePos);
 				}
 			}
 		}
+
+		System.out.println("[SoakStone] Fall impact - adding " + immediateBreaks.size() + " blocks to prevent set BEFORE breaking");
+
+		for (BlockPos breakPos : immediateBreaks) {
+			preventChainBreaks.add(breakPos);
+		}
+
+		System.out.println("[SoakStone] Prevent set size after adding all: " + preventChainBreaks.size());
 
 		for (BlockPos breakPos : immediateBreaks) {
 			BlockState breakState = level.getBlockState(breakPos);
@@ -198,12 +227,6 @@ public class SoakStoneBlock extends Block{
 			level.destroyBlock(breakPos, false);
 		}
 
-		preventChainBreaks.removeAll(immediateBreaks);
-	}
-
-	@Override
-	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-		standTime.remove(player.getUUID());
-		return super.playerWillDestroy(level, pos, state, player);
+		System.out.println("[SoakStone] All 3x3 blocks broken. Prevent set size: " + preventChainBreaks.size());
 	}
 }
