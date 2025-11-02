@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.blocks;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNDamageTypes;
 import corundum.rubinated_nether.content.RNEffects;
+import corundum.rubinated_nether.content.entity.BronzeEntity;
 import corundum.rubinated_nether.utils.BEBlock;
 import corundum.rubinated_nether.utils.RNConfig;
 import corundum.rubinated_nether.utils.TickableBlockEntity;
@@ -29,6 +30,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.List;
 
 public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<ChandelierBlock.ChandelierBlockEntity>, Fallable {
     protected static final VoxelShape SHAPE_BOTTOM = Block.box(2.0, -2.0, 2.0, 14.0, 5.0, 14.0);
@@ -118,19 +121,39 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
                 return;
             }
 
-            boolean blockCheck = false;
-            boolean playerCheck = false;
+            boolean hasUnobstructedLineOfSight = true;
+            boolean entityDetected = false;
             var currentPos = pPos.below();
-            while (!blockCheck && !playerCheck) {
-                if (pLevel.getBlockState(currentPos).getBlock() == Blocks.AIR) {
-                    playerCheck = !pLevel.getEntitiesOfClass(Player.class, new AABB(currentPos)).isEmpty();
-                    currentPos = currentPos.below();
-                    continue;
+
+            // Check for unobstructed line of sight and entities
+            while (hasUnobstructedLineOfSight && !entityDetected) {
+                BlockState blockState = pLevel.getBlockState(currentPos);
+
+                // If we hit a solid block, no line of sight
+                if (blockState.getBlock() != Blocks.AIR) {
+                    hasUnobstructedLineOfSight = false;
+                    break;
                 }
-                blockCheck = true;
+
+                // Check for entities at this position (excluding BronzeEntity)
+                List<Entity> entities = pLevel.getEntitiesOfClass(Entity.class, new AABB(currentPos));
+                for (Entity entity : entities) {
+                    if (!(entity instanceof BronzeEntity)) {
+                        entityDetected = true;
+                        break;
+                    }
+                }
+
+                // Move to next block below
+                currentPos = currentPos.below();
+
+                // Stop if we've gone too far down (prevent infinite loop)
+                if (currentPos.getY() < pLevel.getMinBuildHeight()) {
+                    break;
+                }
             }
 
-            if (!pState.getValue(WAXED) && playerCheck) {
+            if (!pState.getValue(WAXED) && entityDetected && hasUnobstructedLineOfSight) {
                 spawnFallingChandelier(pState, (ServerLevel) pLevel, pPos);
             }
         }
