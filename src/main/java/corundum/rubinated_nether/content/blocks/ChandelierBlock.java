@@ -16,6 +16,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -135,9 +136,9 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
                     break;
                 }
 
-                // Check for entities at this position (excluding BronzeEntity)
-                List<Entity> entities = pLevel.getEntitiesOfClass(Entity.class, new AABB(currentPos));
-                for (Entity entity : entities) {
+                // Check for LivingEntity only (excludes items, projectiles, etc.)
+                List<LivingEntity> entities = pLevel.getEntitiesOfClass(LivingEntity.class, new AABB(currentPos));
+                for (LivingEntity entity : entities) {
                     if (!(entity instanceof BronzeEntity)) {
                         entityDetected = true;
                         break;
