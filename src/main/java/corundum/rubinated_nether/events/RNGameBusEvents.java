@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNEffects;
-import corundum.rubinated_nether.content.blocks.LavaSpongeBlock;
+import corundum.rubinated_nether.content.blocks.SoakStoneBlock;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.effect.renderer.BronzeDiseasedEffectOverlay;
 import corundum.rubinated_nether.content.items.DrillItem;
@@ -177,7 +177,7 @@ public class RNGameBusEvents {
 
 		BlockPos landedOn = entity.blockPosition().below();
 
-		if (server.getBlockState(landedOn).getBlock() instanceof LavaSpongeBlock) {
+		if (server.getBlockState(landedOn).getBlock() instanceof SoakStoneBlock) {
 			server.destroyBlock(landedOn, false);
 		}
 	}

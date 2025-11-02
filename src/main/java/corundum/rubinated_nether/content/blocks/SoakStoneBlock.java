@@ -2,12 +2,15 @@ package corundum.rubinated_nether.content.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -20,24 +23,24 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
 
-public class LavaSpongeBlock extends Block{
+public class SoakStoneBlock extends Block{
 	public static final int MAX_DEPTH = 6;
 	public static final int MAX_COUNT = 64;
 	private static final Direction[] ALL_DIRECTIONS = Direction.values();
-
+	private static final int MAX_CHAIN_PROPAGATION = 256;
+	private static final int CHAIN_DELAY = 5;
 	private static final int CRUMBLE_TICKS = 40;
 
 	private final Map<UUID, Integer> standTime = new HashMap<>();
+	private static final Set<BlockPos> preventChainBreaks = new HashSet<>();
 
-	public LavaSpongeBlock(BlockBehaviour.Properties properties) {
+	public SoakStoneBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 	}
 
@@ -57,7 +60,6 @@ public class LavaSpongeBlock extends Block{
 			level.setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), 2);
 			level.levelEvent(2001, pos, Block.getId(Blocks.LAVA.defaultBlockState()));
 		}
-
 	}
 
 	private boolean removeLavaBreadthFirstSearch(Level level, BlockPos pos) {
@@ -99,6 +101,17 @@ public class LavaSpongeBlock extends Block{
 		}) > 1;
 	}
 
+	@Override
+	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+		if (!level.isClientSide && !state.is(newState.getBlock())) {
+			if (level instanceof ServerLevel serverLevel) {
+				if (!preventChainBreaks.remove(pos)) {
+					triggerChainDestruction(serverLevel, pos);
+				}
+			}
+		}
+		super.onRemove(state, level, pos, newState, movedByPiston);
+	}
 
 	@Override
 	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
@@ -106,39 +119,86 @@ public class LavaSpongeBlock extends Block{
 
 		if (level.isClientSide()) return;
 
-		if (tool.getEnchantmentLevel((Holder<Enchantment>) Enchantments.SILK_TOUCH) > 0) return;
+		if (EnchantmentHelper.getItemEnchantmentLevel(level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(Enchantments.SILK_TOUCH), tool) > 0) {
+			preventChainBreaks.add(pos.immutable());
+		}
+	}
 
-		Queue<BlockPos> toCheck = new ArrayDeque<>();
+	private void triggerChainDestruction(ServerLevel level, BlockPos origin) {
 		Set<BlockPos> visited = new HashSet<>();
-		toCheck.add(pos);
-		visited.add(pos);
+		visited.add(origin);
 
-		while (!toCheck.isEmpty()) {
-			BlockPos current = toCheck.poll();
+		for (Direction dir : Direction.values()) {
+			BlockPos neighborPos = origin.relative(dir);
+			BlockState neighborState = level.getBlockState(neighborPos);
 
-			for (Direction dir : Direction.values()) {
-				BlockPos neighborPos = current.relative(dir);
-				if (visited.contains(neighborPos)) continue;
-
-				BlockState neighborState = level.getBlockState(neighborPos);
-				if (neighborState.is(this)) {
-					visited.add(neighborPos);
-					toCheck.add(neighborPos);
-
-					Block.dropResources(neighborState, level, neighborPos);
-					level.destroyBlock(neighborPos, false);
-				}
+			if (neighborState.is(this) && !visited.contains(neighborPos)) {
+				scheduleChainBreak(level, neighborPos, visited, 1);
 			}
 		}
 	}
 
+	private void scheduleChainBreak(ServerLevel level, BlockPos pos, Set<BlockPos> globalVisited, int depth) {
+		if (depth > MAX_CHAIN_PROPAGATION) return;
+		if (globalVisited.contains(pos)) return;
+
+		globalVisited.add(pos);
+
+		if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
+			level.scheduleTick(pos, this, CHAIN_DELAY);
+		}
+	}
+
+	@Override
+	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		Block.dropResources(state, level, pos);
+		level.destroyBlock(pos, false);
+	}
 
 	@Override
 	public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-		if (!level.isClientSide && !entity.isShiftKeyDown()) {
-			level.scheduleTick(pos, this, 40);
+		if (level.isClientSide) return;
+
+		if (entity instanceof Player player) {
+			double fallDistance = entity.fallDistance;
+
+			if (fallDistance > 0.5) {
+				ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
+				if (boots.is(Items.LEATHER_BOOTS)) {
+					return;
+				}
+
+				if (level instanceof ServerLevel serverLevel) {
+					handleFallImpact(serverLevel, pos);
+				}
+			}
 		}
+
 		super.stepOn(level, pos, state, entity);
+	}
+
+	private void handleFallImpact(ServerLevel level, BlockPos center) {
+		Set<BlockPos> immediateBreaks = new HashSet<>();
+
+		for (int x = -1; x <= 1; x++) {
+			for (int z = -1; z <= 1; z++) {
+				BlockPos checkPos = center.offset(x, 0, z);
+				BlockState checkState = level.getBlockState(checkPos);
+
+				if (checkState.is(this)) {
+					immediateBreaks.add(checkPos.immutable());
+					preventChainBreaks.add(checkPos.immutable());
+				}
+			}
+		}
+
+		for (BlockPos breakPos : immediateBreaks) {
+			BlockState breakState = level.getBlockState(breakPos);
+			Block.dropResources(breakState, level, breakPos);
+			level.destroyBlock(breakPos, false);
+		}
+
+		preventChainBreaks.removeAll(immediateBreaks);
 	}
 
 	@Override
@@ -146,7 +206,4 @@ public class LavaSpongeBlock extends Block{
 		standTime.remove(player.getUUID());
 		return super.playerWillDestroy(level, pos, state, player);
 	}
-
-
 }
-

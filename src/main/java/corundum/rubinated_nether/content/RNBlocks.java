@@ -189,7 +189,7 @@ public class RNBlocks {
 
 	public static final DeferredBlock<Block> SOAKSTONE = registerBlockAndItem(
 		"soakstone",
-		() -> new LavaSpongeBlock(Block.Properties.ofFullCopy(Blocks.NETHERRACK))
+		() -> new SoakStoneBlock(Block.Properties.ofFullCopy(Blocks.NETHERRACK))
 	);
 
 	public static final DeferredBlock<Block> RUBY_GLASS = registerBlockAndItem(
