@@ -38,7 +38,7 @@ public enum Rubination implements StringRepresentable {
 	ARDENTER("ardenter", Map.of("minecraft:quick_charge", 5, "minecraft:unbreaking", 4, "rubinated_nether:crooked_shot_curse", 1), RNTags.Items.RUBINATION_CROSSBOW),
 	NIMIS("nimis", Map.of("minecraft:multishot", 3, "minecraft:quick_charge", 4, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_CROSSBOW),
 	IRA("ira", Map.of("minecraft:unbreaking", 5, "minecraft:riptide", 4, "rubinated_nether:bluntness_curse", 1), RNTags.Items.RUBINATION_TRIDENT),
-	INVIDIA("invidia", Map.of("minecraft:impaling", 7, "minecraft:unbreaking", 4, "minecraft:vanishing_curse", 1), RNTags.Items.RUBINATION_TRIDENT), //Recoil
+	INVIDIA("invidia", Map.of("minecraft:impaling", 7, "minecraft:unbreaking", 4, "rubinated_nether:recoil_curse", 1), RNTags.Items.RUBINATION_TRIDENT),
 	GULA("gula", Map.of("minecraft:riptide", 5, "minecraft:impaling", 6, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_TRIDENT),
 	IGNAVIA("ignavia", Map.of("minecraft:unbreaking", 5, "minecraft:wind_burst", 4, "rubinated_nether:buoyancy_curse", 1), RNTags.Items.RUBINATION_MACE),
 	KENODOXIA("kenodoxia", Map.of("minecraft:density", 7, "minecraft:unbreaking", 4, "rubinated_nether:sinking_curse", 1), RNTags.Items.RUBINATION_MACE), //Sinking

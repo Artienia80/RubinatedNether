@@ -2,10 +2,7 @@ package corundum.rubinated_nether.content.enchantment;
 
 import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.enchantment.custom.BuoyancyCurseEffect;
-import corundum.rubinated_nether.content.enchantment.custom.HookingCurseEffect;
-import corundum.rubinated_nether.content.enchantment.custom.LeechingCurseEffect;
-import corundum.rubinated_nether.content.enchantment.custom.MisfortuneCurseEffect;
+import corundum.rubinated_nether.content.enchantment.custom.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -68,6 +65,9 @@ public class RNEnchantments {
 
 	public static final ResourceKey<Enchantment> SINKING_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "sinking_curse"));
+
+	public static final ResourceKey<Enchantment> RECOIL_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
+			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "recoil_curse"));
 
 
 	public static void bootstrap(BootstrapContext<Enchantment> context) {
@@ -223,6 +223,15 @@ public class RNEnchantments {
 						Enchantment.dynamicCost(25, 25),
 						Enchantment.dynamicCost(75, 25),
 						8, // anvil cost
+						new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND})));
+
+		register(context, RECOIL_CURSE, Enchantment.enchantment(
+				Enchantment.definition(
+						holdergetter2.getOrThrow(ItemTags.TRIDENT_ENCHANTABLE),
+						5, 1,
+						Enchantment.dynamicCost(25, 25),
+						Enchantment.dynamicCost(75, 25),
+						8,
 						new EquipmentSlotGroup[]{EquipmentSlotGroup.MAINHAND})));
 	}
 
