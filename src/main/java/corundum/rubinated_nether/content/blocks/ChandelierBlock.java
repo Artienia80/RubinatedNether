@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.blocks;
 
+import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNDamageTypes;
 import corundum.rubinated_nether.content.RNEffects;
@@ -16,9 +17,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -73,9 +73,15 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
 
         FallingBlockEntity fallingblockentity = FallingBlockEntity.fall(pLevel, blockpos$mutableblockpos, blockstate);
 
-        int i = Math.max(1 + pPos.getY() - blockpos$mutableblockpos.getY(), 6);
-        float f = (RNConfig.chandelierStateMultiplierIncrease * (float) i) * tarnishingDamageMultiplier(chandelier.getAge());
+        int fallDistance = Math.max(1 + pPos.getY() - blockpos$mutableblockpos.getY(), 6);
+        float f = (RNConfig.chandelierStateMultiplierIncrease * (float) fallDistance) * tarnishingDamageMultiplier(chandelier.getAge());
+
         fallingblockentity.setHurtsEntities(f, RNConfig.chandelierDefaultDamage);
+
+        var nbt = fallingblockentity.saveWithoutId(new net.minecraft.nbt.CompoundTag());
+        nbt.putInt("ChandelierTarnishState", chandelier.getAge().ordinal());
+        nbt.putInt("ChandelierFallDistance", fallDistance);
+        fallingblockentity.load(nbt);
     }
 
     private static float tarnishingDamageMultiplier(TarnishState tarnishState)  {
@@ -95,11 +101,27 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
 
     @Override
     public DamageSource getFallDamageSource(Entity entity) {
-        return entity.damageSources().generic();
+        DamageSource source = new DamageSource(
+                entity.level().registryAccess()
+                        .registryOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE)
+                        .getHolderOrThrow(RNDamageTypes.CHANDELIER),
+                entity
+        );
+
+        if (entity instanceof FallingBlockEntity fallingBlock) {
+            var nbt = fallingBlock.saveWithoutId(new net.minecraft.nbt.CompoundTag());
+            int tarnishOrdinal = nbt.getInt("ChandelierTarnishState");
+            int fallDistance = nbt.getInt("ChandelierFallDistance");
+
+            fallingBlock.getPersistentData().putInt("ChandelierTarnish", tarnishOrdinal);
+            fallingBlock.getPersistentData().putInt("ChandelierFallDistance", fallDistance);
+        }
+
+        return source;
     }
 
-    private static void inflictDisease(LivingEntity player) {
-        player.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 1000));
+    @Override
+    public void onLand(Level level, BlockPos pos, BlockState fallingState, BlockState hitState, FallingBlockEntity fallingBlock) {
     }
 
     @Override
@@ -126,17 +148,14 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
             boolean entityDetected = false;
             var currentPos = pPos.below();
 
-            // Check for unobstructed line of sight and entities
             while (hasUnobstructedLineOfSight && !entityDetected) {
                 BlockState blockState = pLevel.getBlockState(currentPos);
 
-                // If we hit a solid block, no line of sight
                 if (blockState.getBlock() != Blocks.AIR) {
                     hasUnobstructedLineOfSight = false;
                     break;
                 }
 
-                // Check for LivingEntity only (excludes items, projectiles, etc.)
                 List<LivingEntity> entities = pLevel.getEntitiesOfClass(LivingEntity.class, new AABB(currentPos));
                 for (LivingEntity entity : entities) {
                     if (!(entity instanceof BronzeEntity)) {
@@ -145,10 +164,8 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
                     }
                 }
 
-                // Move to next block below
                 currentPos = currentPos.below();
 
-                // Stop if we've gone too far down (prevent infinite loop)
                 if (currentPos.getY() < pLevel.getMinBuildHeight()) {
                     break;
                 }

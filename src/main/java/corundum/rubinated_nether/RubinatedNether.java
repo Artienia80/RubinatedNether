@@ -56,8 +56,7 @@ public class RubinatedNether {
 			RNRecipes.RECIPE_TYPES,
 			RNRecipeSerializers.RECIPE_SERIALIZERS,
 			RNBlockEntities.BLOCK_ENTITY_TYPES,
-			RNMenuTypes.MENUS,
-			RNDamageTypes.DAMAGE_TYPES
+			RNMenuTypes.MENUS
 	);
 
 	public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
