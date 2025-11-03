@@ -48,36 +48,6 @@ public class RNGameBusEvents {
 	private static final Map<UUID, Long> lastLoggedTick = new HashMap<>();
 
 	@SubscribeEvent
-	public static void onEntityHurt(LivingDamageEvent.Pre event) {
-		var entity = event.getEntity();
-		var source = event.getSource();
-
-		if (source.is(RNDamageTypes.CHANDELIER)) {
-			if (source.getDirectEntity() instanceof FallingBlockEntity fallingBlock) {
-				int tarnishOrdinal = fallingBlock.getPersistentData().getInt("ChandelierTarnish");
-				int fallDistance = fallingBlock.getPersistentData().getInt("ChandelierFallDistance");
-
-				if (tarnishOrdinal == 4) {
-					int amplifier = 0;
-					if (fallDistance <= 10) {
-						amplifier = 0;
-					} else if (fallDistance <= 30) {
-						amplifier = 1;
-					} else if (fallDistance <= 90) {
-						amplifier = 2;
-					} else if (fallDistance <= 180) {
-						amplifier = 3;
-					} else {
-						amplifier = 4;
-					}
-
-					entity.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 72000, amplifier));
-				}
-			}
-		}
-	}
-
-	@SubscribeEvent
 	public static void onLivingHurt(LivingDamageEvent.Post event) {
 		var entity = event.getEntity();
 		var source = event.getSource();
