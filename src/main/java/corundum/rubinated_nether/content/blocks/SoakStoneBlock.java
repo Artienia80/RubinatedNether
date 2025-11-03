@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,7 +34,6 @@ public class SoakStoneBlock extends Block{
 	private static final Direction[] ALL_DIRECTIONS = Direction.values();
 	private static final int MAX_CHAIN_PROPAGATION = 256;
 	private static final int CHAIN_DELAY = 5;
-	private static final int CRUMBLE_TICKS = 40;
 
 	private final Map<UUID, Integer> standTime = new HashMap<>();
 	private static final Set<BlockPos> preventChainBreaks = new HashSet<>();
@@ -102,6 +100,62 @@ public class SoakStoneBlock extends Block{
 	}
 
 	@Override
+	public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+		if (!level.isClientSide && entity instanceof Player player) {
+			System.out.println("[SoakStone] fallOn at " + pos + " | fallDistance=" + fallDistance);
+
+			// Check if fall distance is over 0.5
+			if (fallDistance > 0.5f) {
+				ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
+				boolean hasLeatherBoots = boots.is(Items.LEATHER_BOOTS);
+
+				System.out.println("[SoakStone] Fall check passed | hasLeatherBoots=" + hasLeatherBoots);
+
+				// If wearing leather boots, do nothing
+				if (hasLeatherBoots) {
+					System.out.println("[SoakStone] Leather boots detected - no break");
+					super.fallOn(level, state, pos, entity, fallDistance);
+					return;
+				}
+
+				// No leather boots - break 3x3 area and trigger chain reactions
+				System.out.println("[SoakStone] No leather boots - triggering 3x3 break");
+				if (level instanceof ServerLevel serverLevel) {
+					breakAndChainFrom3x3(serverLevel, pos);
+				}
+			}
+		}
+
+		super.fallOn(level, state, pos, entity, fallDistance);
+	}
+
+	private void breakAndChainFrom3x3(ServerLevel level, BlockPos center) {
+		System.out.println("[SoakStone] Breaking 3x3 area at " + center);
+		Set<BlockPos> broken3x3 = new HashSet<>();
+
+		// Break 3x3 area immediately and collect positions
+		for (int x = -1; x <= 1; x++) {
+			for (int z = -1; z <= 1; z++) {
+				BlockPos checkPos = center.offset(x, 0, z);
+				BlockState checkState = level.getBlockState(checkPos);
+
+				if (checkState.is(this)) {
+					System.out.println("[SoakStone] Breaking at " + checkPos);
+					Block.dropResources(checkState, level, checkPos);
+					level.setBlock(checkPos, Blocks.AIR.defaultBlockState(), 3);
+					broken3x3.add(checkPos.immutable());
+				}
+			}
+		}
+
+		// Now trigger chain reactions outward from each block in the 3x3
+		System.out.println("[SoakStone] Triggering chain reactions from " + broken3x3.size() + " blocks");
+		for (BlockPos brokenPos : broken3x3) {
+			triggerChainDestruction(level, brokenPos);
+		}
+	}
+
+	@Override
 	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
 		if (!level.isClientSide()) {
 			ItemStack tool = player.getMainHandItem();
@@ -127,7 +181,7 @@ public class SoakStoneBlock extends Block{
 		if (!level.isClientSide && !state.is(newState.getBlock())) {
 			if (level instanceof ServerLevel serverLevel) {
 				boolean prevented = preventChainBreaks.remove(pos);
-				System.out.println("[SoakStone] onRemove at " + pos + " | prevented=" + prevented + " | preventSet size=" + preventChainBreaks.size());
+				System.out.println("[SoakStone] onRemove at " + pos + " | prevented=" + prevented);
 
 				if (!prevented) {
 					System.out.println("[SoakStone] Triggering chain destruction from " + pos);
@@ -144,6 +198,7 @@ public class SoakStoneBlock extends Block{
 		Set<BlockPos> visited = new HashSet<>();
 		visited.add(origin);
 
+		// Check all 6 directions from the broken block
 		for (Direction dir : Direction.values()) {
 			BlockPos neighborPos = origin.relative(dir);
 			BlockState neighborState = level.getBlockState(neighborPos);
@@ -170,63 +225,5 @@ public class SoakStoneBlock extends Block{
 		System.out.println("[SoakStone] tick at " + pos + " - breaking block");
 		Block.dropResources(state, level, pos);
 		level.destroyBlock(pos, false);
-	}
-
-	@Override
-	public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-		if (level.isClientSide) return;
-
-		if (entity instanceof Player player) {
-			double fallDistance = entity.fallDistance;
-			ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
-
-			System.out.println("[SoakStone] stepOn at " + pos + " | player=" + player.getName().getString() + " | fallDistance=" + fallDistance + " | boots=" + boots.getItem());
-
-			if (fallDistance > 0.5) {
-				if (boots.is(Items.LEATHER_BOOTS)) {
-					System.out.println("[SoakStone] Player has leather boots - NO BREAK AT ALL");
-					return;
-				}
-
-				if (level instanceof ServerLevel serverLevel) {
-					System.out.println("[SoakStone] Triggering fall impact");
-					handleFallImpact(serverLevel, pos);
-				}
-			}
-		}
-
-		super.stepOn(level, pos, state, entity);
-	}
-
-	private void handleFallImpact(ServerLevel level, BlockPos center) {
-		Set<BlockPos> immediateBreaks = new HashSet<>();
-
-		for (int x = -1; x <= 1; x++) {
-			for (int z = -1; z <= 1; z++) {
-				BlockPos checkPos = center.offset(x, 0, z);
-				BlockState checkState = level.getBlockState(checkPos);
-
-				if (checkState.is(this)) {
-					BlockPos immutablePos = checkPos.immutable();
-					immediateBreaks.add(immutablePos);
-				}
-			}
-		}
-
-		System.out.println("[SoakStone] Fall impact - adding " + immediateBreaks.size() + " blocks to prevent set BEFORE breaking");
-
-		for (BlockPos breakPos : immediateBreaks) {
-			preventChainBreaks.add(breakPos);
-		}
-
-		System.out.println("[SoakStone] Prevent set size after adding all: " + preventChainBreaks.size());
-
-		for (BlockPos breakPos : immediateBreaks) {
-			BlockState breakState = level.getBlockState(breakPos);
-			Block.dropResources(breakState, level, breakPos);
-			level.destroyBlock(breakPos, false);
-		}
-
-		System.out.println("[SoakStone] All 3x3 blocks broken. Prevent set size: " + preventChainBreaks.size());
 	}
 }

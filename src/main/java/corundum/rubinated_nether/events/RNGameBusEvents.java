@@ -169,17 +169,4 @@ public class RNGameBusEvents {
 		guiGraphics.flush();
 	}
 
-	@SubscribeEvent
-	public static void onFall(LivingFallEvent event) {
-		LivingEntity entity = event.getEntity();
-
-		if (!(entity.level() instanceof ServerLevel server)) return;
-
-		BlockPos landedOn = entity.blockPosition().below();
-
-		if (server.getBlockState(landedOn).getBlock() instanceof SoakStoneBlock) {
-			server.destroyBlock(landedOn, false);
-		}
-	}
-
 }
