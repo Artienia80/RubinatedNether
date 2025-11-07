@@ -74,7 +74,7 @@ public class BronzeEntity extends TarnishingEntity {
 
         this.bodyPart = new BronzePart(this, "body", 0.7F, 1.4F);
 
-        this.keyPart = new BronzePart(this, "key", 4.0F, 6.0F);
+        this.keyPart = new BronzePart(this, "key", 0.25F, 0.375F);
 
         this.subEntities = new BronzePart[]{this.bodyPart, this.keyPart};
         this.setId(ENTITY_COUNTER.getAndAdd(this.subEntities.length + 1) + 1);
@@ -86,6 +86,10 @@ public class BronzeEntity extends TarnishingEntity {
         for (int i = 0; i < this.subEntities.length; i++) {
             this.subEntities[i].setId(id + i + 1);
         }
+    }
+
+    private void tickPart(BronzePart part, double offsetX, double offsetY, double offsetZ) {
+        part.setPos(this.getX() + offsetX, this.getY() + offsetY, this.getZ() + offsetZ);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -215,11 +219,27 @@ public class BronzeEntity extends TarnishingEntity {
         setupAnimationStates();
 
         if (this.subEntities != null) {
-            // Body part at entity position
-            this.bodyPart.setPos(this.getX(), this.getY(), this.getZ());
+            Vec3[] partPositions = new Vec3[this.subEntities.length];
 
-            // Key part positioned above body (adjusted offset)
-            this.keyPart.setPos(this.getX(), this.getY() + 1.8, this.getZ());
+
+            for (int i = 0; i < this.subEntities.length; i++) {
+                partPositions[i] = new Vec3(this.subEntities[i].getX(), this.subEntities[i].getY(), this.subEntities[i].getZ());
+            }
+
+            // Body part at entity position
+            this.tickPart(this.bodyPart, 0.0, 0.0, 0.0);
+
+            // Key part positioned above body
+            this.tickPart(this.keyPart, 0.0, 1.4, 0.0);
+
+            for (int j = 0; j < this.subEntities.length; j++) {
+                this.subEntities[j].xo = partPositions[j].x;
+                this.subEntities[j].yo = partPositions[j].y;
+                this.subEntities[j].zo = partPositions[j].z;
+                this.subEntities[j].xOld = partPositions[j].x;
+                this.subEntities[j].yOld = partPositions[j].y;
+                this.subEntities[j].zOld = partPositions[j].z;
+            }
 
             // Sync rotation and ensure parts are in world
             for (BronzePart part : this.subEntities) {
@@ -492,6 +512,16 @@ public class BronzeEntity extends TarnishingEntity {
         else super.handleEntityEvent(state);
     }
 
+
+    @Override
+    public void recreateFromPacket(net.minecraft.network.protocol.game.ClientboundAddEntityPacket packet) {
+        super.recreateFromPacket(packet);
+        BronzePart[] parts = this.subEntities;
+        for (int i = 0; i < parts.length; i++) {
+            parts[i].setId(i + packet.getId());
+        }
+    }
+
     public class CrystallizeNearbyBronzeGoal extends Goal {
         private final BronzeEntity entity;
         private int cooldown;
@@ -675,6 +705,12 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
 
+    @Override
+    public boolean isPickable() {
+        return true;
+    }
+
+
     public boolean hurtFromPart(BronzePart part, DamageSource source, float amount) {
         // Check if already burrowed
         if(this.isBurrowed()){
@@ -683,10 +719,10 @@ public class BronzeEntity extends TarnishingEntity {
 
         // Apply damage multiplier based on which part was hit
         if (part == this.keyPart) {
-            amount *= 1.5F; // Key takes 1.5x damage
+            amount *= 2.0F;
         }
 
-        // Tarnished (level 3) defense mechanics
+        // Tarnished defense mechanics
         if (this.getTarnishLevel() == 3 && shockwaveGoal != null) {
             if (shockwaveGoal.isDefending()) {
                 if (!this.level().isClientSide()) {
