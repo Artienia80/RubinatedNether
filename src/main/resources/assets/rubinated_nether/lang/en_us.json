@@ -373,6 +373,9 @@
   "death.attack.chandelier": "%1$s was embraced by a falling chandelier",
   "death.attack.chandelier.player": "%1$s was embraced by a falling chandelier whilst fighting %2$s",
 
+  "death.attack.bronze_diseased": "%1$s crystallized due to bronze disease",
+  "death.attack.bronze_diseased.player": "%1$s crystallized due to bronze disease whilst fighting %2$s",
+
   "commands.rubinate.failed": "Nothing changed. Targets either have no item in their hands or the rubination could not be applied",
   "commands.rubinate.failed.entity": "%s is not a valid entity for this command",
   "commands.rubinate.failed.incompatible": "%s cannot support that rubination",

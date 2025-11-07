@@ -11,4 +11,9 @@ public class RNDamageTypes {
             Registries.DAMAGE_TYPE,
             RubinatedNether.id("chandelier")
     );
+
+    public static final ResourceKey<DamageType> BRONZE_DISEASED = ResourceKey.create(
+            Registries.DAMAGE_TYPE,
+            RubinatedNether.id("bronze_diseased")
+    );
 }
