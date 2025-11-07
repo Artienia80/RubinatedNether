@@ -36,6 +36,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.entity.PartEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
@@ -54,6 +55,10 @@ public class BronzeEntity extends TarnishingEntity {
     public final AnimationState ambushAnimationState = new AnimationState();
     public final AnimationState ramAnimationState = new AnimationState();
 
+    private final BronzePart[] subEntities;
+    private final BronzePart bodyPart;
+    private final BronzePart keyPart;
+
     private int lastTarnishLevel = -1;
     private TarnishedShockwaveGoal shockwaveGoal;
     private DiscoloredRamGoal dashGoal;
@@ -66,6 +71,21 @@ public class BronzeEntity extends TarnishingEntity {
 
     public BronzeEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
+
+        this.bodyPart = new BronzePart(this, "body", 0.7F, 1.4F);
+
+        this.keyPart = new BronzePart(this, "key", 4.0F, 6.0F);
+
+        this.subEntities = new BronzePart[]{this.bodyPart, this.keyPart};
+        this.setId(ENTITY_COUNTER.getAndAdd(this.subEntities.length + 1) + 1);
+    }
+
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+        for (int i = 0; i < this.subEntities.length; i++) {
+            this.subEntities[i].setId(id + i + 1);
+        }
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -193,6 +213,23 @@ public class BronzeEntity extends TarnishingEntity {
     public void tick() {
         super.tick();
         setupAnimationStates();
+
+        if (this.subEntities != null) {
+            // Body part at entity position
+            this.bodyPart.setPos(this.getX(), this.getY(), this.getZ());
+
+            // Key part positioned above body (adjusted offset)
+            this.keyPart.setPos(this.getX(), this.getY() + 1.8, this.getZ());
+
+            // Sync rotation and ensure parts are in world
+            for (BronzePart part : this.subEntities) {
+                part.setYRot(this.getYRot());
+                part.setXRot(this.getXRot());
+                if (!this.level().isClientSide() && part.isRemoved()) {
+                    this.level().addFreshEntity(part);
+                }
+            }
+        }
 
         if (!level().isClientSide()) {
             if (isMoving()) {
@@ -638,11 +675,18 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
 
-    @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtFromPart(BronzePart part, DamageSource source, float amount) {
+        // Check if already burrowed
         if(this.isBurrowed()){
             return false;
         }
+
+        // Apply damage multiplier based on which part was hit
+        if (part == this.keyPart) {
+            amount *= 1.5F; // Key takes 1.5x damage
+        }
+
+        // Tarnished (level 3) defense mechanics
         if (this.getTarnishLevel() == 3 && shockwaveGoal != null) {
             if (shockwaveGoal.isDefending()) {
                 if (!this.level().isClientSide()) {
@@ -662,6 +706,31 @@ public class BronzeEntity extends TarnishingEntity {
         }
 
         return super.hurt(source, amount);
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        return !this.level().isClientSide ? this.hurtFromPart(this.bodyPart, source, amount) : false;
+    }
+
+    @Override
+    public net.neoforged.neoforge.entity.PartEntity<?>[] getParts() {
+        return this.subEntities;
+    }
+
+    @Override
+    public boolean isMultipartEntity() {
+        return true;
+    }
+
+    @Override
+    public void remove(RemovalReason reason) {
+        super.remove(reason);
+        if (this.subEntities != null) {
+            for (BronzePart part : this.subEntities) {
+                part.remove(reason);
+            }
+        }
     }
 
     @Override
