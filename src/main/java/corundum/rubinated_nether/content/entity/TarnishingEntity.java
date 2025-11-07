@@ -144,6 +144,18 @@ public abstract class TarnishingEntity extends Monster {
         ItemStack stack = player.getItemInHand(hand);
         int level = getTarnishLevel();
 
+        if (stack.is(Items.SOUL_TORCH)) {
+            if (!isWaxed()) {
+                setTarnishLevel(CRYSTALLIZED);
+                if (!player.isCreative()) {
+                    stack.shrink(1);
+                }
+                this.level().playSound(player, blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0F, 0.8F);
+                RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 25, 0.5F, 1.75F, ParticleTypes.SOUL_FIRE_FLAME);
+                return InteractionResult.sidedSuccess(level().isClientSide());
+            }
+        }
+
         if (stack.is(Items.HONEYCOMB) && !isWaxed()) {
             setWaxed(true);
             if (!player.isCreative()) stack.shrink(1);
