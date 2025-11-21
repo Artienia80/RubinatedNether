@@ -107,220 +107,19 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.SHRINE_STONE_TILES_WALL
 		);
 
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.BRONZE_BLOCK,
-
+		Bronzecutter(recipeOutput, RNBlocks.BRONZE_BLOCK,
 				RNBlocks.CHISELED_BRONZE,
 				RNBlocks.CUT_BRONZE_BRICKS,
 				RNBlocks.CUT_BRONZE_BRICKS_STAIRS,
 				RNBlocks.CUT_BRONZE_BRICKS_SLAB,
 				RNBlocks.CUT_BRONZE_PILLAR,
 				RNBlocks.BRONZE_GRATE
-
 		);
 
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.CUT_BRONZE_BRICKS,
-
+		Bronzecutter(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS,
 				RNBlocks.CHISELED_BRONZE,
 				RNBlocks.CUT_BRONZE_BRICKS_STAIRS,
 				RNBlocks.CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.DISCOLORED_BRONZE_BLOCK,
-
-				RNBlocks.DISCOLORED_CHISELED_BRONZE,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
-				RNBlocks.DISCOLORED_BRONZE_GRATE
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
-
-				RNBlocks.DISCOLORED_CHISELED_BRONZE,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.CORRODED_BRONZE_BLOCK,
-
-				RNBlocks.CORRODED_CHISELED_BRONZE,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
-				RNBlocks.CORRODED_BRONZE_GRATE
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS,
-
-				RNBlocks.CORRODED_CHISELED_BRONZE,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.TARNISHED_BRONZE_BLOCK,
-
-				RNBlocks.TARNISHED_CHISELED_BRONZE,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
-				RNBlocks.TARNISHED_BRONZE_GRATE
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS,
-
-				RNBlocks.TARNISHED_CHISELED_BRONZE,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
-
-				RNBlocks.CRYSTALLIZED_CHISELED_BRONZE,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR,
-				RNBlocks.CRYSTALLIZED_BRONZE_GRATE
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS,
-
-				RNBlocks.CRYSTALLIZED_CHISELED_BRONZE,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_PILLAR))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_GRATE)))
-
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS_SLAB)))
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_GRATE)))
-
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB)))
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_PILLAR))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_GRATE)))
-
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB)))
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_GRATE)))
-
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB)))
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_GRATE)))
-
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB)))
 		);
 
 		tarnish(recipeOutput, this::lamp, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_LAMP);
@@ -790,7 +589,6 @@ public class RNRecipeProvider extends RecipeProvider {
 		return BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(block.get())));
 	}
 
-
 	private void wax(RecipeOutput recipeOutput, Supplier<? extends Block> block) {
 		ItemLike waxedBlock = waxed(block);
 
@@ -803,71 +601,31 @@ public class RNRecipeProvider extends RecipeProvider {
 	}
 
 	private void generateAllWaxingRecipes(RecipeOutput recipeOutput) {
-		wax(recipeOutput, RNBlocks.BRONZE_BLOCK);
-		wax(recipeOutput, RNBlocks.CHISELED_BRONZE);
-		wax(recipeOutput, RNBlocks.CUT_BRONZE_PILLAR);
-		wax(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS);
-		wax(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS_STAIRS);
-		wax(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS_SLAB);
-		wax(recipeOutput, RNBlocks.BRONZE_BULB);
-		wax(recipeOutput, RNBlocks.BRONZE_CHANDELIER);
-		wax(recipeOutput, RNBlocks.BRONZE_LANTERN);
-		wax(recipeOutput, RNBlocks.BRONZE_LAMP);
-		wax(recipeOutput, RNBlocks.BRONZE_CHAIN);
-		wax(recipeOutput, RNBlocks.BRONZE_LASER);
 
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_BLOCK);
-		wax(recipeOutput, RNBlocks.DISCOLORED_CHISELED_BRONZE);
-		wax(recipeOutput, RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR);
-		wax(recipeOutput, RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS);
-		wax(recipeOutput, RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS);
-		wax(recipeOutput, RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB);
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_BULB);
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_CHANDELIER);
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_LANTERN);
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_LAMP);
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_CHAIN);
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_LASER);
-
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_BLOCK);
-		wax(recipeOutput, RNBlocks.CORRODED_CHISELED_BRONZE);
-		wax(recipeOutput, RNBlocks.CORRODED_CUT_BRONZE_PILLAR);
-		wax(recipeOutput, RNBlocks.CORRODED_CUT_BRONZE_BRICKS);
-		wax(recipeOutput, RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS);
-		wax(recipeOutput, RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB);
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_BULB);
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_CHANDELIER);
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_LANTERN);
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_LAMP);
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_CHAIN);
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_LASER);
-
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_BLOCK);
-		wax(recipeOutput, RNBlocks.TARNISHED_CHISELED_BRONZE);
-		wax(recipeOutput, RNBlocks.TARNISHED_CUT_BRONZE_PILLAR);
-		wax(recipeOutput, RNBlocks.TARNISHED_CUT_BRONZE_BRICKS);
-		wax(recipeOutput, RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS);
-		wax(recipeOutput, RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB);
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_BULB);
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_CHANDELIER);
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_LANTERN);
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_LAMP);
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_CHAIN);
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_LASER);
-
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_BLOCK);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_CHISELED_BRONZE);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_BULB);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_LANTERN);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_LAMP);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_CHAIN);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_LASER);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_BLOCK);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.CHISELED_BRONZE);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.CUT_BRONZE_PILLAR);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS_STAIRS);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS_SLAB);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_BULB);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_CHANDELIER);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LANTERN);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LAMP);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_CHAIN);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LASER);
 	}
+
+	private void waxAllTarnishVariants(RecipeOutput recipeOutput, Supplier<? extends Block> baseBlock) {
+		String baseName = getFieldNameFromSupplier(baseBlock);
+
+		for (String prefix : TARNISH_PREFIXES) {
+			Supplier<? extends Block> tarnishedBlock = getBlockByName(prefix + baseName);
+			wax(recipeOutput, tarnishedBlock);
+		}
+	}
+
+
 
 	private void laser(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike laser, boolean isCopper) {
 		ItemLike scrapOrIngot = isCopper ? Items.COPPER_INGOT : RNItems.BRONZE_SCRAP;
@@ -931,16 +689,14 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(grateInput), has(grateInput))
 				.save(recipeOutput);
 	}
-	// Add these fields to your RNRecipeProvider class
 	private static final String[] TARNISH_PREFIXES = {
-			"", // unaffected (no prefix)
+			"",
 			"DISCOLORED_",
 			"CORRODED_",
 			"TARNISHED_",
 			"CRYSTALLIZED_"
 	};
 
-	// Functional interface for recipe generation methods
 	@FunctionalInterface
 	private interface RecipeGenerator {
 		void generate(RecipeOutput output, ItemLike input, ItemLike result);
@@ -951,35 +707,28 @@ public class RNRecipeProvider extends RecipeProvider {
 		void generate(RecipeOutput output, ItemLike input1, ItemLike input2, ItemLike result);
 	}
 
-	// Main tarnish method for 2-parameter recipes (input -> result)
-// This will generate BOTH unwaxed and waxed variants automatically
 	private void tarnish(RecipeOutput recipeOutput, RecipeGenerator generator,
 						 ItemLike baseInput, ItemLike baseResult) {
 		String inputName = getFieldName(baseInput);
 		String resultName = getFieldName(baseResult);
 
-		// Generate unwaxed variants
 		for (String prefix : TARNISH_PREFIXES) {
 			ItemLike input = getBlockByName(prefix + inputName);
 			ItemLike result = getBlockByName(prefix + resultName);
 			generator.generate(recipeOutput, input, result);
 		}
 
-		// Generate waxed variants if baseInput is a Block supplier
 		if (baseInput instanceof Supplier) {
 			tarnishWaxed(recipeOutput, generator, (Supplier<? extends Block>) baseInput, (Supplier<? extends Block>) baseResult);
 		}
 	}
 
-	// Main tarnish method for 3-parameter recipes (input1, input2 -> result)
-// This will generate BOTH unwaxed and waxed variants automatically
 	private void tarnish(RecipeOutput recipeOutput, RecipeGeneratorWithExtra generator,
 						 ItemLike baseInput1, ItemLike baseInput2, ItemLike baseResult) {
 		String input1Name = getFieldName(baseInput1);
 		String input2Name = getFieldName(baseInput2);
 		String resultName = getFieldName(baseResult);
 
-		// Generate unwaxed variants
 		for (String prefix : TARNISH_PREFIXES) {
 			ItemLike input1 = getBlockByName(prefix + input1Name);
 			ItemLike input2 = getBlockByName(prefix + input2Name);
@@ -987,7 +736,6 @@ public class RNRecipeProvider extends RecipeProvider {
 			generator.generate(recipeOutput, input1, input2, result);
 		}
 
-		// Generate waxed variants if all inputs are Block suppliers
 		if (baseInput1 instanceof Supplier && baseInput2 instanceof Supplier && baseResult instanceof Supplier) {
 			tarnishWaxed(recipeOutput, generator,
 					(Supplier<? extends Block>) baseInput1,
@@ -996,21 +744,16 @@ public class RNRecipeProvider extends RecipeProvider {
 		}
 	}
 
-	// Helper method to get the field name from an ItemLike (Supplier)
 	private String getFieldName(ItemLike itemLike) {
-		// Check if this is a waxed item from the registry
 		if (itemLike instanceof net.minecraft.world.item.Item ||
 				!(itemLike instanceof Supplier)) {
-			// It's a registry item (waxed variant), extract name from registry
 			String registryName = BuiltInRegistries.ITEM.getKey(itemLike.asItem()).getPath();
-			// Convert "waxed_bronze_block" to "BRONZE_BLOCK"
 			return registryName
 					.replace("waxed_", "")
 					.toUpperCase()
 					.replace("rubinated_nether:", "");
 		}
 
-		// Search through RNBlocks fields
 		for (var field : RNBlocks.class.getFields()) {
 			try {
 				if (field.get(null) == itemLike) {
@@ -1019,7 +762,6 @@ public class RNRecipeProvider extends RecipeProvider {
 			} catch (Exception ignored) {}
 		}
 
-		// Search through RNItems fields
 		for (var field : RNItems.class.getFields()) {
 			try {
 				if (field.get(null) == itemLike) {
@@ -1031,15 +773,12 @@ public class RNRecipeProvider extends RecipeProvider {
 		throw new RuntimeException("Could not find field name for: " + itemLike);
 	}
 
-	// Helper method to get block/item by name using reflection
 	@SuppressWarnings("unchecked")
 	private <T extends ItemLike> T getBlockByName(String name) {
 		try {
-			// Try to get from RNBlocks first
 			var field = RNBlocks.class.getField(name);
 			return (T) field.get(null);
 		} catch (NoSuchFieldException e) {
-			// If not found in blocks, try RNItems
 			try {
 				var field = RNItems.class.getField(name);
 				return (T) field.get(null);
@@ -1051,7 +790,6 @@ public class RNRecipeProvider extends RecipeProvider {
 		}
 	}
 
-	// Overload for waxed variants - applies tarnish to waxed blocks
 	private void tarnishWaxed(RecipeOutput recipeOutput, RecipeGenerator generator,
 							  Supplier<? extends Block> baseInput, Supplier<? extends Block> baseResult) {
 		String inputName = getFieldNameFromSupplier(baseInput);
@@ -1093,5 +831,60 @@ public class RNRecipeProvider extends RecipeProvider {
 			} catch (Exception ignored) {}
 		}
 		throw new RuntimeException("Could not find field name for supplier");
+	}
+
+	@SafeVarargs
+	private final void Bronzecutter(RecipeOutput recipeOutput,
+										  Supplier<? extends Block> baseInput,
+										  Supplier<? extends Block>... baseOutputs) {
+		String inputName = getFieldNameFromSupplier(baseInput);
+
+		for (String prefix : TARNISH_PREFIXES) {
+			Supplier<? extends Block> input = getBlockByName(prefix + inputName);
+
+			ItemLike[] outputs = new ItemLike[baseOutputs.length];
+			for (int i = 0; i < baseOutputs.length; i++) {
+				String outputName = getFieldNameFromSupplier(baseOutputs[i]);
+				outputs[i] = getBlockByName(prefix + outputName);
+			}
+
+			stonecutterListArray(recipeOutput, (ItemLike) input, outputs);
+		}
+
+		for (String prefix : TARNISH_PREFIXES) {
+			Supplier<? extends Block> input = getBlockByName(prefix + inputName);
+			ItemLike waxedInput = waxed(input);
+
+			ItemLike[] waxedOutputs = new ItemLike[baseOutputs.length];
+			for (int i = 0; i < baseOutputs.length; i++) {
+				String outputName = getFieldNameFromSupplier(baseOutputs[i]);
+				Supplier<? extends Block> output = getBlockByName(prefix + outputName);
+				waxedOutputs[i] = waxed(output);
+			}
+
+			stonecutterListArray(recipeOutput, waxedInput, waxedOutputs);
+		}
+	}
+
+	private void stonecutterListArray(RecipeOutput recipeOutput, ItemLike input, ItemLike[] outputs) {
+		for (ItemLike output : outputs) {
+			var count = 1;
+
+			if (output.asItem().toString().contains("slab")) {
+				count = 2;
+			}
+
+			if (isBronzeBlock(input)) {
+				count *= 4;
+			}
+
+			stonecutterResultFromBase(
+					recipeOutput,
+					RecipeCategory.BUILDING_BLOCKS,
+					output,
+					input,
+					count
+			);
+		}
 	}
 }
