@@ -11,21 +11,21 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_glowstone": {
-      "conditions": {
-        "items": [
-          {
-            "items": "minecraft:glowstone"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_oxidized_copper": {
       "conditions": {
         "items": [
           {
             "items": "minecraft:oxidized_copper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_quartz": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:quartz"
           }
         ]
       },
@@ -64,7 +64,7 @@
       "has_ruby_block",
       "has_copper_ingot",
       "has_redstone",
-      "has_glowstone",
+      "has_quartz",
       "has_oxidized_copper"
     ]
   ],
