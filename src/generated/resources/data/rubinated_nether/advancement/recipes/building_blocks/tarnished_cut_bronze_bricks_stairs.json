@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_tarnished_bronze_block": {
+    "has_tarnished_cut_bronze_bricks": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:tarnished_bronze_block"
+            "items": "rubinated_nether:tarnished_cut_bronze_bricks"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_tarnished_bronze_block"
+      "has_tarnished_cut_bronze_bricks"
     ]
   ],
   "rewards": {
