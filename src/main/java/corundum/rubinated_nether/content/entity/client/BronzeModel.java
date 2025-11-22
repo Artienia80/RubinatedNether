@@ -17,9 +17,15 @@ import net.minecraft.util.Mth;
 public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
 
     private final ModelPart root;
+    private final ModelPart bronze;
+    private final ModelPart head;
+    private final ModelPart windup;
 
     public BronzeModel(ModelPart root) {
         this.root = root.getChild("root");
+        this.bronze = this.root.getChild("bronze");
+        this.head = this.bronze.getChild("head");
+        this.windup = head.getChild("windup");
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -76,7 +82,13 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
     @Override
     public void setupAnim(BronzeEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
-        this.applyHeadRotation(netHeadYaw,headPitch);
+        if(!entity.isBurrowed()) {
+            this.applyHeadRotation(netHeadYaw, headPitch);
+            this.head.visible = true;
+        } else {
+            this.applyHeadRotation(0, 0);
+            this.head.visible = false;
+        }
 
 
         this.animateWalk(BronzeAnimations.MOVE, limbSwing, limbSwingAmount, 4f, 54);
@@ -85,14 +97,14 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
         this.animate(entity.defendAnimationState,BronzeAnimations.DEFEND, ageInTicks, 1f);
         this.animate(entity.stunAnimationState,BronzeAnimations.STUNNED, ageInTicks, 1f);
         this.animate(entity.drillAnimationState,BronzeAnimations.DRILL_DOWN, ageInTicks, 1f);
-        this.animate(entity.undergroundWalkAnimationState,BronzeAnimations.MOVE_UNDERGROUND,ageInTicks, 1f);
+        this.animate(entity.undergroundWalkAnimationState,BronzeAnimations.MOVE_UNDERGROUND, ageInTicks, 1f);
         this.animate(entity.ambushAnimationState,BronzeAnimations.DRILL_UP,ageInTicks, 1f);
         this.animate(entity.shockwaveAnimationState,BronzeAnimations.SHOCKWAVE,ageInTicks, 1f);
     }
 
     private void applyHeadRotation(float headYaw, float headPitch) {
-        headYaw = Mth.clamp(headYaw, -30f, 30f);
-        headPitch = Mth.clamp(headPitch, -25f, 45);
+        this.head.xRot = headPitch * 0.017453292F;
+        this.head.yRot = headYaw * 0.017453292F;
     }
 
     @Override

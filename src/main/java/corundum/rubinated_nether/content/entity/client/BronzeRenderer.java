@@ -13,6 +13,7 @@ public class BronzeRenderer extends MobRenderer<BronzeEntity, BronzeModel<Bronze
     private static final ResourceLocation CORRODED = ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/entity/bronze/bronze_corroded.png");
     private static final ResourceLocation TARNISHED = ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/entity/bronze/bronze_tarnished.png");
     private static final ResourceLocation CRYSTALLIZED = ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/entity/bronze/bronze_crystallized.png");
+
     public BronzeRenderer(EntityRendererProvider.Context context) {
             super(context, new BronzeModel<>(context.bakeLayer(RNModelLayers.BRONZE)), 0.2f);
     }

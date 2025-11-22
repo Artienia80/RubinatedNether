@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.entity;
 
 import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
+import corundum.rubinated_nether.utils.InGameLogger;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -112,12 +113,6 @@ public class BronzeEntity extends TarnishingEntity {
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
-
-        this.registerUnaffectedGoals();
-        this.registerDiscoloredGoals();
-        this.registerCorrodedGoals();
-        this.registerTarnishedGoals();
-        this.registerCrystallizedGoals();
     }
 
     private void registerUnaffectedGoals() {
@@ -151,6 +146,47 @@ public class BronzeEntity extends TarnishingEntity {
             public boolean canUse() { return BronzeEntity.this.getTarnishLevel() == 4 && super.canUse(); }
         });
         this.goalSelector.addGoal(1, new CrystallizeNearbyBronzeGoal(this));
+    }
+
+    private void removeUnaffectedGoals() {
+        this.targetSelector.removeGoal(new UnaffectedAttackGoal<>(this, Player.class));
+        this.goalSelector.removeGoal(new MeleeAttackGoal(this, 1.2, false) {
+            public boolean canUse() {
+                return (BronzeEntity.this.getTarnishLevel() == 0) && super.canUse();
+            }
+        });
+    }
+
+    private void removeDiscoloredGoals() {
+        this.dashGoal = new DiscoloredRamGoal(this);
+        this.goalSelector.removeGoal(this.dashGoal);
+        this.goalSelector.removeGoal(new AvoidEntityGoal<Player>(this, Player.class, 10.0F, 1.2, 1.2){
+            public boolean canUse() { return BronzeEntity.this.getTarnishLevel() == 1 && super.canUse(); }
+        });
+    }
+
+    private void removeCorrodedGoals() {
+        this.targetSelector.removeGoal(new CorrodedHideAndAmbushGoal(this));
+    }
+
+    private void removeTarnishedGoals() {
+        this.shockwaveGoal = new TarnishedShockwaveGoal(this);
+        this.targetSelector.removeGoal(shockwaveGoal);
+    }
+
+    private void removeCrystallizedGoals() {
+        this.goalSelector.removeGoal(new AvoidEntityGoal<Player>(this, Player.class, 15.0F, 2.2, 2.2){
+            public boolean canUse() { return BronzeEntity.this.getTarnishLevel() == 4 && super.canUse(); }
+        });
+        this.goalSelector.removeGoal(new CrystallizeNearbyBronzeGoal(this));
+    }
+
+    private void removeAllGoals() {
+        removeUnaffectedGoals();
+        removeDiscoloredGoals();
+        removeCorrodedGoals();
+        removeTarnishedGoals();
+        removeCrystallizedGoals();
     }
 
     private void setupAnimationStates() {
@@ -197,31 +233,21 @@ public class BronzeEntity extends TarnishingEntity {
         setupAnimationStates();
 
         if (!level().isClientSide()) {
-            if (isMoving()) {
-                walkAnimationState.startIfStopped(tickCount);
-                idleAnimationState.stop();
-            } else {
-                idleAnimationState.startIfStopped(tickCount);
-                walkAnimationState.stop();
-            }
+            System.out.println("Server Level is " + this.getTarnishLevel());
 
-            int currentLevel = getTarnishLevel();
+            handleMovingAnimationStates();
+
+            int currentLevel = this.getTarnishLevel();
             if (currentLevel != lastTarnishLevel) {
                 lastTarnishLevel = currentLevel;
                 updateAttributesForTarnish(currentLevel);
+                changeGoalsOnLevelChange(currentLevel);
             }
-            updateAttributesForTarnish(currentLevel);
+        } else {
+            InGameLogger.info("Client Level is " + this.getTarnishLevel());
         }
-        if (shockwaveCooldownTicks > 0) {
-            shockwaveCooldownTicks--;
-        }
-        if (ramCooldownTicks > 0) {
-            ramCooldownTicks--;
-        }
-        if (ambushCooldownTicks > 0) {
-            ambushCooldownTicks--;
-            this.setDeltaMovement(0, this.getDeltaMovement().y, 0);
-        }
+
+        decreaseCooldowns();
 
 
         if (!this.level().isClientSide()) {
@@ -252,7 +278,35 @@ public class BronzeEntity extends TarnishingEntity {
                     }
                 }
             }
+        }
+    }
 
+    private void decreaseCooldowns() {
+        if (shockwaveCooldownTicks > 0) {
+            shockwaveCooldownTicks--;
+        }
+        if (ramCooldownTicks > 0) {
+            ramCooldownTicks--;
+        }
+        if (ambushCooldownTicks > 0) {
+            ambushCooldownTicks--;
+            this.setDeltaMovement(0, this.getDeltaMovement().y, 0);
+        }
+    }
+
+    private void handleMovingAnimationStates() {
+        if(isBurrowed()){
+            walkAnimationState.stop();
+            idleAnimationState.stop();
+            return;
+        }
+
+        if (isMoving()) {
+            walkAnimationState.startIfStopped(tickCount);
+            idleAnimationState.stop();
+        } else {
+            idleAnimationState.startIfStopped(tickCount);
+            walkAnimationState.stop();
         }
     }
 
@@ -340,6 +394,27 @@ public class BronzeEntity extends TarnishingEntity {
             }
 
         }
+    }
+
+    private void changeGoalsOnLevelChange(int currentLevel) {
+        removeAllGoals();
+        switch (currentLevel) {
+            case 1:
+                registerDiscoloredGoals();
+                break;
+            case 2:
+                registerCorrodedGoals();
+                break;
+            case 3:
+                registerTarnishedGoals();
+                break;
+            case 4:
+                registerCrystallizedGoals();
+                break;
+            default:
+                registerUnaffectedGoals();
+        };
+
     }
 
     public class UnaffectedAttackGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
@@ -472,7 +547,7 @@ public class BronzeEntity extends TarnishingEntity {
 
         @Override
         public void tick() {
-            if(entity.getTarnishLevel() != 4   ) stop();
+            if(entity.getTarnishLevel() != 4) stop();
             if (--cooldown > 0) return;
             cooldown = 20 + entity.getRandom().nextInt(200);
 
@@ -970,14 +1045,5 @@ public class BronzeEntity extends TarnishingEntity {
     @Override
     public boolean canBeCollidedWith() {
         return !noCollision && super.canBeCollidedWith();
-    }
-
-
-    public void setTarnishLevel(int level) {
-        int oldLevel = getTarnishLevel();
-        entityData.set(this.TARNISH_STATE, level);
-        this.setTarget(null);
-
-        updateAttributesForTarnish(oldLevel + 1);
     }
 }

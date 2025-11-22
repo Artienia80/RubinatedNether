@@ -36,6 +36,8 @@ public abstract class TarnishingEntity extends Monster {
     private static final EntityDataAccessor<Boolean> WAXED =
             SynchedEntityData.defineId(TarnishingEntity.class, EntityDataSerializers.BOOLEAN);
 
+    private int clientSideVisualTarnishLevel = 0;
+
     private int tarnishTimer = 0;
 
     public TarnishingEntity(EntityType<? extends Monster> type, Level level) {
@@ -49,25 +51,37 @@ public abstract class TarnishingEntity extends Monster {
         builder.define(WAXED, false);
     }
 
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        super.onSyncedDataUpdated(key);
+
+        // This method is called on the client when data from the server updates.
+        if (this.level().isClientSide()) {
+            // Read the new state from the SynchedEntityData
+            int syncedLevel = this.getTarnishLevel();
+
+            // Check if the visual state needs updating
+            if (this.clientSideVisualTarnishLevel != syncedLevel) {
+                this.clientSideVisualTarnishLevel = syncedLevel;
+            }
+        }
+    }
+
     public int getTarnishLevel() {
         return entityData.get(TARNISH_STATE);
     }
 
     public void setTarnishLevel(int level) {
-        int oldLevel = getTarnishLevel();
         entityData.set(TARNISH_STATE, level);
         this.setTarget(null);
     }
 
-
     public void increaseTarnishLevel() {
         this.setTarnishLevel(this.getTarnishLevel() + 1);
-        this.setTarget(null);
     }
 
     public void decreaseTarnishLevel() {
         this.setTarnishLevel(this.getTarnishLevel() - 1);
-        this.setTarget(null);
     }
 
     public boolean isWaxed() {
@@ -87,7 +101,7 @@ public abstract class TarnishingEntity extends Monster {
             if (current < TARNISHED) {
                 tarnishTimer++;
                 if (tarnishTimer >= getTarnishInterval(current)) {
-                    setTarnishLevel(current + 1);
+                    increaseTarnishLevel();
                     tarnishTimer = 0;
                 }
             }
@@ -164,7 +178,7 @@ public abstract class TarnishingEntity extends Monster {
                 }
 
                 if (level().random.nextFloat() < 0.1F) {
-                    setTarnishLevel(getTarnishLevel() + 1);
+                    increaseTarnishLevel();
                     return InteractionResult.sidedSuccess(level().isClientSide());
                 }
                 handleEffects(player);
@@ -199,6 +213,11 @@ public abstract class TarnishingEntity extends Monster {
         super.readAdditionalSaveData(tag);
         setTarnishLevel(tag.getInt("TarnishState"));
         setWaxed(tag.getBoolean("Waxed"));
+
+        // 💡 Initialization for the client-side variable on load
+        if (this.level().isClientSide()) {
+            this.clientSideVisualTarnishLevel = getTarnishLevel();
+        }
     }
 
     @Override
@@ -210,7 +229,7 @@ public abstract class TarnishingEntity extends Monster {
             if (!isWaxed() && weapon.is(ItemTags.AXES)) {
                 if (level > 0 && level < CRYSTALLIZED) {
                     if (random.nextFloat() < 0.05f) {
-                        setTarnishLevel(level - 1);
+                        decreaseTarnishLevel();
                         level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 1.0F);
 
                         if (level().random.nextFloat() < 0.5f) {

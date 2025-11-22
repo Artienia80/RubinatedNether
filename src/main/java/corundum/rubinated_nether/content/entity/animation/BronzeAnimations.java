@@ -243,7 +243,7 @@ public class BronzeAnimations {
     public static final AnimationDefinition MOVE_UNDERGROUND = AnimationDefinition.Builder.withLength(2f).looping()
             .addAnimation("bronze",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
-                            new Keyframe(0f, KeyframeAnimations.posVec(0f, -22f, 0f),
+                            new Keyframe(0f, KeyframeAnimations.posVec(0f, -23f, 0f),
                                     AnimationChannel.Interpolations.LINEAR)))
             .addAnimation("windup",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
