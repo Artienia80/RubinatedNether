@@ -3,8 +3,11 @@ package corundum.rubinated_nether.events;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.RNDamageTypes;
 import corundum.rubinated_nether.content.RNEffects;
-import corundum.rubinated_nether.content.blocks.LavaSpongeBlock;
+import corundum.rubinated_nether.content.blocks.ChandelierBlock;
+import corundum.rubinated_nether.content.blocks.SoakStoneBlock;
+import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.effect.renderer.BronzeDiseasedEffectOverlay;
 import corundum.rubinated_nether.content.items.DrillItem;
@@ -17,10 +20,14 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
@@ -41,6 +48,30 @@ public class RNGameBusEvents {
 	private static final Map<UUID, Long> lastLoggedTick = new HashMap<>();
 
 	@SubscribeEvent
+	public static void onLivingHurt(LivingDamageEvent.Post event) {
+		var entity = event.getEntity();
+		var source = event.getSource();
+
+		if (source.is(RNDamageTypes.CHANDELIER)) {
+			if (source.getDirectEntity() instanceof FallingBlockEntity fallingBlock) {
+				BlockState blockState = fallingBlock.getBlockState();
+				if (blockState.getBlock() instanceof ChandelierBlock chandelier) {
+					TarnishingBronze.TarnishState tarnishState = chandelier.getAge();
+					if (tarnishState == TarnishingBronze.TarnishState.CRYSTALLIZED) {
+						boolean effectApplied = entity.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 72000, 0));
+
+						if (effectApplied) {
+						} else {
+						}
+					} else {
+					}
+				} else {
+				}
+			} else {
+			}
+		}
+	}
+	@SubscribeEvent
 	public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
 		var player = event.getEntity();
 		var itemStack = player.getMainHandItem();
@@ -56,7 +87,7 @@ public class RNGameBusEvents {
 
 			// Calculate multiplier
 			var multiplier = 1.0f + ((float) ticksUsed / DrillItem.MAX_USE_TICKS) *
-				(DrillItem.MAX_MULTIPLIER_BOOST - 1.0f);
+					(DrillItem.MAX_MULTIPLIER_BOOST - 1.0f);
 
 			// Increment ticksUsed but cap at MAX_USE_TICKS
 			if (ticksUsed < DrillItem.MAX_USE_TICKS) {
@@ -168,18 +199,4 @@ public class RNGameBusEvents {
 
 		guiGraphics.flush();
 	}
-
-	@SubscribeEvent
-	public static void onFall(LivingFallEvent event) {
-		LivingEntity entity = event.getEntity();
-
-		if (!(entity.level() instanceof ServerLevel server)) return;
-
-		BlockPos landedOn = entity.blockPosition().below();
-
-		if (server.getBlockState(landedOn).getBlock() instanceof LavaSpongeBlock) {
-			server.destroyBlock(landedOn, false);
-		}
-	}
-
 }

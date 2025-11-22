@@ -37,6 +37,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.entity.PartEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
@@ -55,6 +56,10 @@ public class BronzeEntity extends TarnishingEntity {
     public final AnimationState ambushAnimationState = new AnimationState();
     public final AnimationState ramAnimationState = new AnimationState();
 
+    private final BronzePart[] subEntities;
+    private final BronzePart bodyPart;
+    private final BronzePart keyPart;
+
     private int lastTarnishLevel = -1;
     private TarnishedShockwaveGoal shockwaveGoal;
     private DiscoloredRamGoal dashGoal;
@@ -67,6 +72,25 @@ public class BronzeEntity extends TarnishingEntity {
 
     public BronzeEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
+
+        this.bodyPart = new BronzePart(this, "body", 0.7F, 1.4F);
+
+        this.keyPart = new BronzePart(this, "key", 0.25F, 0.375F);
+
+        this.subEntities = new BronzePart[]{this.bodyPart, this.keyPart};
+        this.setId(ENTITY_COUNTER.getAndAdd(this.subEntities.length + 1) + 1);
+    }
+
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+        for (int i = 0; i < this.subEntities.length; i++) {
+            this.subEntities[i].setId(id + i + 1);
+        }
+    }
+
+    private void tickPart(BronzePart part, double offsetX, double offsetY, double offsetZ) {
+        part.setPos(this.getX() + offsetX, this.getY() + offsetY, this.getZ() + offsetZ);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -142,9 +166,7 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     private void registerCrystallizedGoals() {
-        this.goalSelector.addGoal(4, new AvoidEntityGoal<Player>(this, Player.class, 15.0F, 2.2, 2.2){
-            public boolean canUse() { return BronzeEntity.this.getTarnishLevel() == 4 && super.canUse(); }
-        });
+        this.goalSelector.addGoal(4, new CrystallizedOrbitGoal(this));
         this.goalSelector.addGoal(1, new CrystallizeNearbyBronzeGoal(this));
     }
 
@@ -231,6 +253,39 @@ public class BronzeEntity extends TarnishingEntity {
     public void tick() {
         super.tick();
         setupAnimationStates();
+
+        if (this.subEntities != null) {
+            Vec3[] partPositions = new Vec3[this.subEntities.length];
+
+
+            for (int i = 0; i < this.subEntities.length; i++) {
+                partPositions[i] = new Vec3(this.subEntities[i].getX(), this.subEntities[i].getY(), this.subEntities[i].getZ());
+            }
+
+            // Body part at entity position
+            this.tickPart(this.bodyPart, 0.0, 0.0, 0.0);
+
+            // Key part positioned above body
+            this.tickPart(this.keyPart, 0.0, 1.4, 0.0);
+
+            for (int j = 0; j < this.subEntities.length; j++) {
+                this.subEntities[j].xo = partPositions[j].x;
+                this.subEntities[j].yo = partPositions[j].y;
+                this.subEntities[j].zo = partPositions[j].z;
+                this.subEntities[j].xOld = partPositions[j].x;
+                this.subEntities[j].yOld = partPositions[j].y;
+                this.subEntities[j].zOld = partPositions[j].z;
+            }
+
+            // Sync rotation and ensure parts are in world
+            for (BronzePart part : this.subEntities) {
+                part.setYRot(this.getYRot());
+                part.setXRot(this.getXRot());
+                if (!this.level().isClientSide() && part.isRemoved()) {
+                    this.level().addFreshEntity(part);
+                }
+            }
+        }
 
         if (!level().isClientSide()) {
             System.out.println("Server Level is " + this.getTarnishLevel());
@@ -532,6 +587,16 @@ public class BronzeEntity extends TarnishingEntity {
         else super.handleEntityEvent(state);
     }
 
+
+    @Override
+    public void recreateFromPacket(net.minecraft.network.protocol.game.ClientboundAddEntityPacket packet) {
+        super.recreateFromPacket(packet);
+        BronzePart[] parts = this.subEntities;
+        for (int i = 0; i < parts.length; i++) {
+            parts[i].setId(i + packet.getId());
+        }
+    }
+
     public class CrystallizeNearbyBronzeGoal extends Goal {
         private final BronzeEntity entity;
         private int cooldown;
@@ -716,10 +781,23 @@ public class BronzeEntity extends TarnishingEntity {
 
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean isPickable() {
+        return true;
+    }
+
+
+    public boolean hurtFromPart(BronzePart part, DamageSource source, float amount) {
+        // Check if already burrowed
         if(this.isBurrowed()){
             return false;
         }
+
+        // Apply damage multiplier based on which part was hit
+        if (part == this.keyPart) {
+            amount *= 2.0F;
+        }
+
+        // Tarnished defense mechanics
         if (this.getTarnishLevel() == 3 && shockwaveGoal != null) {
             if (shockwaveGoal.isDefending()) {
                 if (!this.level().isClientSide()) {
@@ -739,6 +817,31 @@ public class BronzeEntity extends TarnishingEntity {
         }
 
         return super.hurt(source, amount);
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        return !this.level().isClientSide ? this.hurtFromPart(this.bodyPart, source, amount) : false;
+    }
+
+    @Override
+    public net.neoforged.neoforge.entity.PartEntity<?>[] getParts() {
+        return this.subEntities;
+    }
+
+    @Override
+    public boolean isMultipartEntity() {
+        return true;
+    }
+
+    @Override
+    public void remove(RemovalReason reason) {
+        super.remove(reason);
+        if (this.subEntities != null) {
+            for (BronzePart part : this.subEntities) {
+                part.remove(reason);
+            }
+        }
     }
 
     @Override
@@ -1045,5 +1148,109 @@ public class BronzeEntity extends TarnishingEntity {
     @Override
     public boolean canBeCollidedWith() {
         return !noCollision && super.canBeCollidedWith();
+    }
+
+    public class CrystallizedOrbitGoal extends Goal {
+        private final BronzeEntity entity;
+        private Player target;
+
+        private Vec3 moveDirection = Vec3.ZERO;
+        private int blocksToMove = 0;
+        private int blocksMoved = 0;
+
+        private static final double MIN_DISTANCE = 1.5;
+        private static final double MAX_DISTANCE = 6.0;
+        private static final double MOVE_SPEED = 0.32;
+
+        public CrystallizedOrbitGoal(BronzeEntity entity) {
+            this.entity = entity;
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        }
+
+        @Override
+        public boolean canUse() {
+            if (entity.getTarnishLevel() != 4) return false;
+
+            Player nearestPlayer = entity.level().getNearestPlayer(entity, MAX_DISTANCE + 5);
+            if (nearestPlayer != null && !nearestPlayer.isCreative() && !nearestPlayer.isSpectator()) {
+                this.target = nearestPlayer;
+                return true;
+            }
+
+            return false;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return entity.getTarnishLevel() == 4 && target != null && target.isAlive();
+        }
+
+        @Override
+        public void start() {
+            entity.getNavigation().stop();
+            pickNewDirection();
+        }
+
+        @Override
+        public void tick() {
+            if (entity.getTarnishLevel() != 4 || target == null) {
+                stop();
+                return;
+            }
+
+            double distanceToPlayer = entity.distanceTo(target);
+
+            boolean inDonut = distanceToPlayer >= MIN_DISTANCE && distanceToPlayer <= MAX_DISTANCE;
+
+            if (!inDonut) {
+                satisfyRequirements(distanceToPlayer);
+            } else {
+                if (blocksMoved >= blocksToMove) {
+                    pickNewDirection();
+                } else {
+                    moveInDirection();
+                    blocksMoved++;
+                }
+            }
+        }
+
+        private void satisfyRequirements(double currentDistance) {
+            Vec3 toPlayer = target.position().subtract(entity.position()).normalize();
+
+            if (currentDistance < MIN_DISTANCE) {
+                entity.setDeltaMovement(toPlayer.scale(-MOVE_SPEED));
+            } else if (currentDistance > MAX_DISTANCE) {
+                entity.setDeltaMovement(toPlayer.scale(MOVE_SPEED));
+            }
+
+            entity.lookAt(EntityAnchorArgument.Anchor.EYES, target.position());
+        }
+
+        private void pickNewDirection() {
+            double angle = entity.getRandom().nextDouble() * Math.PI * 2;
+            moveDirection = new Vec3(
+                    Math.cos(angle),
+                    0,
+                    Math.sin(angle)
+            ).normalize();
+
+            blocksToMove = 2 + entity.getRandom().nextInt(9);
+            blocksMoved = 0;
+        }
+
+        private void moveInDirection() {
+            entity.setDeltaMovement(moveDirection.scale(MOVE_SPEED));
+
+            entity.lookAt(EntityAnchorArgument.Anchor.EYES, target.position());
+        }
+
+        @Override
+        public void stop() {
+            entity.setDeltaMovement(Vec3.ZERO);
+            target = null;
+            moveDirection = Vec3.ZERO;
+            blocksToMove = 0;
+            blocksMoved = 0;
+        }
     }
 }

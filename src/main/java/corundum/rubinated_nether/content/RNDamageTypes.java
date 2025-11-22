@@ -2,19 +2,18 @@ package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.damagesource.DamageEffects;
-import net.minecraft.world.damagesource.DamageScaling;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.damagesource.DeathMessageType;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class RNDamageTypes {
-    public static final DeferredRegister<DamageType> DAMAGE_TYPES = DeferredRegister.create(
+
+    public static final ResourceKey<DamageType> CHANDELIER = ResourceKey.create(
             Registries.DAMAGE_TYPE,
-            RubinatedNether.MODID
+            RubinatedNether.id("chandelier")
     );
 
-    public static final DeferredHolder<DamageType, DamageType> CHANDELIER = DAMAGE_TYPES.register("chandelier",
-            () -> new DamageType("chandelier", DamageScaling.ALWAYS, 0.0F, DamageEffects.HURT, DeathMessageType.FALL_VARIANTS));
+    public static final ResourceKey<DamageType> BRONZE_DISEASED = ResourceKey.create(
+            Registries.DAMAGE_TYPE,
+            RubinatedNether.id("bronze_diseased")
+    );
 }

@@ -189,7 +189,7 @@ public class RNBlocks {
 
 	public static final DeferredBlock<Block> SOAKSTONE = registerBlockAndItem(
 		"soakstone",
-		() -> new LavaSpongeBlock(Block.Properties.ofFullCopy(Blocks.NETHERRACK))
+		() -> new SoakStoneBlock(Block.Properties.ofFullCopy(Blocks.NETHERRACK))
 	);
 
 	public static final DeferredBlock<Block> RUBY_GLASS = registerBlockAndItem(
@@ -1055,7 +1055,7 @@ public class RNBlocks {
 			"bronze_laser",
 			() -> new BronzeLaserBlock(
 					TarnishingBronze.TarnishState.UNAFFECTED,
-					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 
@@ -1063,7 +1063,7 @@ public class RNBlocks {
 			"discolored_bronze_laser",
 			() -> new BronzeLaserBlock(
 					TarnishingBronze.TarnishState.DISCOLORED,
-					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_PINK).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 
@@ -1071,7 +1071,7 @@ public class RNBlocks {
 			"corroded_bronze_laser",
 			() -> new BronzeLaserBlock(
 					TarnishingBronze.TarnishState.CORRODED,
-					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).mapColor(MapColor.CRIMSON_STEM).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 
@@ -1079,7 +1079,7 @@ public class RNBlocks {
 			"tarnished_bronze_laser",
 			() -> new BronzeLaserBlock(
 					TarnishingBronze.TarnishState.TARNISHED,
-					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_BLACK).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 
@@ -1087,7 +1087,7 @@ public class RNBlocks {
 			"crystallized_bronze_laser",
 			() -> new BronzeLaserBlock(
 					TarnishingBronze.TarnishState.CRYSTALLIZED,
-					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_WHITE).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 

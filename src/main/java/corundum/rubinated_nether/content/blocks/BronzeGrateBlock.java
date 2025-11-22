@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.blocks;
 
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.entity.BronzeEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -57,6 +58,9 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
         if (level.isClientSide) return;
         if (entity instanceof ItemEntity) return;
 
+        // Don't trigger falling if a BronzeEntity is stepping on it
+        if (entity instanceof BronzeEntity) return;
+
         if (hasImmediateRedstoneSignal(level, pos)) return;
 
         TarnishState tarnishState = getAgeFromBlock(state);
@@ -103,6 +107,7 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
     }
 
     private void triggerImmediateNeighbors(ServerLevel level, BlockPos fallenPos) {
+        // Check horizontal neighbors
         for (Direction direction : HORIZONTAL_DIRECTIONS) {
             BlockPos neighborPos = fallenPos.relative(direction);
             BlockState neighborState = level.getBlockState(neighborPos);
@@ -118,6 +123,23 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
 
             // Only schedule this immediate neighbor
             level.scheduleTick(neighborPos, neighborGrate, CASCADE_DELAY);
+        }
+
+        // Check block above
+        BlockPos abovePos = fallenPos.above();
+        BlockState aboveState = level.getBlockState(abovePos);
+
+        if (aboveState.getBlock() instanceof BronzeGrateBlock) {
+            BronzeGrateBlock aboveGrate = (BronzeGrateBlock) aboveState.getBlock();
+
+            // Check if the grate above can fall (any tarnish state)
+            if (!aboveGrate.hasImmediateRedstoneSignal(level, abovePos) &&
+                    !level.getBlockTicks().hasScheduledTick(abovePos, aboveGrate)) {
+
+                TarnishState aboveTarnish = aboveGrate.getAgeFromBlock(aboveState);
+                int delay = aboveTarnish == TarnishState.CRYSTALLIZED ? CASCADE_DELAY : getDelayForTarnishState(aboveTarnish);
+                level.scheduleTick(abovePos, aboveGrate, delay);
+            }
         }
     }
 

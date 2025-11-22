@@ -14,6 +14,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -106,221 +107,38 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.SHRINE_STONE_TILES_WALL
 		);
 
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.BRONZE_BLOCK,
-
+		Bronzecutter(recipeOutput, RNBlocks.BRONZE_BLOCK,
 				RNBlocks.CHISELED_BRONZE,
 				RNBlocks.CUT_BRONZE_BRICKS,
 				RNBlocks.CUT_BRONZE_BRICKS_STAIRS,
 				RNBlocks.CUT_BRONZE_BRICKS_SLAB,
 				RNBlocks.CUT_BRONZE_PILLAR,
 				RNBlocks.BRONZE_GRATE
-
 		);
 
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.CUT_BRONZE_BRICKS,
-
+		Bronzecutter(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS,
 				RNBlocks.CHISELED_BRONZE,
 				RNBlocks.CUT_BRONZE_BRICKS_STAIRS,
 				RNBlocks.CUT_BRONZE_BRICKS_SLAB
 		);
 
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.DISCOLORED_BRONZE_BLOCK,
+		tarnish(recipeOutput, this::lamp, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_LAMP);
+		tarnish(recipeOutput, this::bulb, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_BULB);
+		tarnish(recipeOutput, this::chandelier, RNBlocks.BRONZE_LANTERN, RNBlocks.BRONZE_GRATE, RNBlocks.BRONZE_CHANDELIER);
 
-				RNBlocks.DISCOLORED_CHISELED_BRONZE,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
-				RNBlocks.DISCOLORED_BRONZE_GRATE
-		);
+		tarnish(recipeOutput, (output, input, result) -> laser(output, input, result, false),
+				RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_LASER);
 
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
+		tarnish(recipeOutput, (output, input, result) -> grate(output, input, result, 4),
+				RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_GRATE);
 
-				RNBlocks.DISCOLORED_CHISELED_BRONZE,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.CORRODED_BRONZE_BLOCK,
-
-				RNBlocks.CORRODED_CHISELED_BRONZE,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
-				RNBlocks.CORRODED_BRONZE_GRATE
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS,
-
-				RNBlocks.CORRODED_CHISELED_BRONZE,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.TARNISHED_BRONZE_BLOCK,
-
-				RNBlocks.TARNISHED_CHISELED_BRONZE,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
-				RNBlocks.TARNISHED_BRONZE_GRATE
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS,
-
-				RNBlocks.TARNISHED_CHISELED_BRONZE,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
-
-				RNBlocks.CRYSTALLIZED_CHISELED_BRONZE,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR,
-				RNBlocks.CRYSTALLIZED_BRONZE_GRATE
-		);
-
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS,
-
-				RNBlocks.CRYSTALLIZED_CHISELED_BRONZE,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_PILLAR))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_GRATE)))
-
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS_SLAB)))
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_GRATE)))
-
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB)))
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_PILLAR))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_GRATE)))
-
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB)))
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_GRATE)))
-
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB)))
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_GRATE)))
-
-		);
-
-		stonecutterList(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS))),
-
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CHISELED_BRONZE))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB)))
-		);
+		tarnish(recipeOutput, this::stairsAndSlab, RNBlocks.CUT_BRONZE_BRICKS, RNBlocks.CUT_BRONZE_BRICKS_STAIRS, RNBlocks.CUT_BRONZE_BRICKS_SLAB);
+		tarnish(recipeOutput, (output, input, result) -> twoByTwo(output, input, result, 4),
+				RNBlocks.BRONZE_BLOCK, RNBlocks.CUT_BRONZE_BRICKS);
+		tarnish(recipeOutput, (output, input, result) -> oneByTwo(output, input, result, 1),
+				RNBlocks.CUT_BRONZE_BRICKS_SLAB, RNBlocks.CHISELED_BRONZE);
+		tarnish(recipeOutput, (output, input, result) -> oneByTwo(output, input, result, 2),
+				RNBlocks.BRONZE_BLOCK, RNBlocks.CUT_BRONZE_PILLAR);
 
 		stairsAndSlab(
 				recipeOutput,
@@ -477,294 +295,12 @@ public class RNRecipeProvider extends RecipeProvider {
 				1
 		);
 
-		stairsAndSlab(
-				recipeOutput,
-				RNBlocks.CUT_BRONZE_BRICKS,
-				RNBlocks.CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stairsAndSlab(
-				recipeOutput,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stairsAndSlab(
-				recipeOutput,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stairsAndSlab(
-				recipeOutput,
-				RNBlocks.TARNISHED_BRONZE_BLOCK,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stairsAndSlab(
-				recipeOutput,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB
-		);
-
-		stairsAndSlab(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS_SLAB)))
-		);
-
-		stairsAndSlab(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB)))
-		);
-
-		stairsAndSlab(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB)))
-		);
-
-		stairsAndSlab(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB)))
-		);
-
-		stairsAndSlab(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB)))
-		);
-
-
 		one(
 				recipeOutput,
 				RNItems.BRONZE_ROD,
 				RNItems.BRONZE_POWDER,
 				9
 		);
-
-		twoByTwo(
-				recipeOutput,
-				RNBlocks.BRONZE_BLOCK,
-				RNBlocks.CUT_BRONZE_BRICKS,
-				4
-		);
-
-		twoByTwo(
-				recipeOutput,
-				RNBlocks.DISCOLORED_BRONZE_BLOCK,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
-				4
-		);
-
-		twoByTwo(
-				recipeOutput,
-				RNBlocks.CORRODED_BRONZE_BLOCK,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS,
-				4
-		);
-
-		twoByTwo(
-				recipeOutput,
-				RNBlocks.TARNISHED_BRONZE_BLOCK,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS,
-				4
-		);
-
-		twoByTwo(
-				recipeOutput,
-				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS,
-				4
-		);
-
-		oneByTwo(
-				recipeOutput,
-				RNBlocks.BRONZE_BLOCK,
-				RNBlocks.CUT_BRONZE_PILLAR,
-				2
-		);
-
-		oneByTwo(
-				recipeOutput,
-				RNBlocks.DISCOLORED_BRONZE_BLOCK,
-				RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
-				2
-		);
-
-		oneByTwo(
-				recipeOutput,
-				RNBlocks.CORRODED_BRONZE_BLOCK,
-				RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
-				2
-		);
-
-		oneByTwo(
-				recipeOutput,
-				RNBlocks.TARNISHED_BRONZE_BLOCK,
-				RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
-				2
-		);
-
-		oneByTwo(
-				recipeOutput,
-				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR,
-				2
-		);
-
-		oneByTwo(
-				recipeOutput,
-				RNBlocks.CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.CHISELED_BRONZE,
-				1
-		);
-
-		oneByTwo(
-				recipeOutput,
-				RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.DISCOLORED_CHISELED_BRONZE,
-				1
-		);
-
-		oneByTwo(
-				recipeOutput,
-				RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.CORRODED_CHISELED_BRONZE,
-				1
-		);
-
-		oneByTwo(
-				recipeOutput,
-				RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.TARNISHED_CHISELED_BRONZE,
-				1
-		);
-
-		oneByTwo(
-				recipeOutput,
-				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB,
-				RNBlocks.CRYSTALLIZED_CHISELED_BRONZE,
-				1
-		);
-
-		twoByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS))),
-				4
-		);
-
-		twoByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS))),
-				4
-		);
-
-		twoByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS))),
-				4
-		);
-
-		twoByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS))),
-				4
-		);
-
-		twoByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS))),
-				4
-		);
-
-		oneByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_PILLAR))),
-				2
-		);
-
-		oneByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR))),
-				2
-		);
-
-		oneByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_PILLAR))),
-				2
-		);
-
-		oneByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR))),
-				2
-		);
-
-		oneByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR))),
-				2
-		);
-
-		oneByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CHISELED_BRONZE))),
-				1
-		);
-
-		oneByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_CHISELED_BRONZE))),
-				1
-		);
-
-		oneByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_CHISELED_BRONZE))),
-				1
-		);
-
-		oneByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_CHISELED_BRONZE))),
-				1
-		);
-
-		oneByTwo(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_CHISELED_BRONZE))),
-				1
-		);
-
 
 		oneByTwo(
 				recipeOutput,
@@ -791,75 +327,14 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.ORNATE_RUBY_GLASS_PANE
 		);
 
-		grate(
-				recipeOutput,
-				RNBlocks.BRONZE_BLOCK,
-				RNBlocks.BRONZE_GRATE,
-				4
-		);
-
-		grate(
-				recipeOutput,
-				RNBlocks.DISCOLORED_BRONZE_BLOCK,
-				RNBlocks.DISCOLORED_BRONZE_GRATE,
-				4
-		);
-
-		grate(
-				recipeOutput,
-				RNBlocks.CORRODED_BRONZE_BLOCK,
-				RNBlocks.CORRODED_BRONZE_GRATE,
-				4
-		);
-
-		grate(
-				recipeOutput,
-				RNBlocks.TARNISHED_BRONZE_BLOCK,
-				RNBlocks.TARNISHED_BRONZE_GRATE,
-				4
-		);
-
-		grate(
-				recipeOutput,
-				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
-				RNBlocks.CRYSTALLIZED_BRONZE_GRATE,
-				4
-		);
-
-		grate(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_GRATE))),
-				4
-		);
-
-		grate(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_GRATE))),
-				4
-		);
-
-		grate(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_GRATE))),
-				4
-		);
-
-		grate(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_GRATE))),
-				4
-		);
-
-		grate(
-				recipeOutput,
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))),
-				BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_GRATE))),
-				4
-		);
+		laser(recipeOutput, Blocks.COPPER_BLOCK, RNBlocks.COPPER_LASER, true);
+		laser(recipeOutput, Blocks.EXPOSED_COPPER, RNBlocks.EXPOSED_COPPER_LASER, true);
+		laser(recipeOutput, Blocks.WEATHERED_COPPER, RNBlocks.WEATHERED_COPPER_LASER, true);
+		laser(recipeOutput, Blocks.OXIDIZED_COPPER, RNBlocks.OXIDIZED_COPPER_LASER, true);
+		laser(recipeOutput, Blocks.WAXED_COPPER_BLOCK, RNBlocks.WAXED_COPPER_LASER, true);
+		laser(recipeOutput, Blocks.WAXED_EXPOSED_COPPER, RNBlocks.WAXED_EXPOSED_COPPER_LASER, true);
+		laser(recipeOutput, Blocks.WAXED_WEATHERED_COPPER, RNBlocks.WAXED_WEATHERED_COPPER_LASER, true);
+		laser(recipeOutput, Blocks.WAXED_OXIDIZED_COPPER, RNBlocks.WAXED_OXIDIZED_COPPER_LASER, true);
 
 		generateAllWaxingRecipes(recipeOutput);
 
@@ -884,9 +359,6 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(Blocks.GLASS), has(Blocks.GLASS))
 				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
 				.save(recipeOutput);
-
-
-
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNBlocks.FREEZER, 1)
 				.define('X', Blocks.COPPER_BLOCK)
@@ -941,245 +413,6 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRONZE_CHANDELIER, 1)
-				.define('X', RNBlocks.BRONZE_LANTERN)
-				.define('O', RNBlocks.BRONZE_GRATE)
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(RNBlocks.BRONZE_LANTERN), has(RNBlocks.BRONZE_LANTERN))
-				.unlockedBy(getHasName(RNBlocks.BRONZE_GRATE), has(RNBlocks.BRONZE_GRATE))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.DISCOLORED_BRONZE_CHANDELIER, 1)
-				.define('X', RNBlocks.DISCOLORED_BRONZE_LANTERN)
-				.define('O', RNBlocks.DISCOLORED_BRONZE_GRATE)
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(RNBlocks.DISCOLORED_BRONZE_LANTERN), has(RNBlocks.DISCOLORED_BRONZE_LANTERN))
-				.unlockedBy(getHasName(RNBlocks.DISCOLORED_BRONZE_GRATE), has(RNBlocks.DISCOLORED_BRONZE_GRATE))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CORRODED_BRONZE_CHANDELIER, 1)
-				.define('X', RNBlocks.CORRODED_BRONZE_LANTERN)
-				.define('O', RNBlocks.CORRODED_BRONZE_GRATE)
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(RNBlocks.CORRODED_BRONZE_LANTERN), has(RNBlocks.CORRODED_BRONZE_LANTERN))
-				.unlockedBy(getHasName(RNBlocks.CORRODED_BRONZE_GRATE), has(RNBlocks.CORRODED_BRONZE_GRATE))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.TARNISHED_BRONZE_CHANDELIER, 1)
-				.define('X', RNBlocks.TARNISHED_BRONZE_LANTERN)
-				.define('O', RNBlocks.TARNISHED_BRONZE_GRATE)
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(RNBlocks.TARNISHED_BRONZE_LANTERN), has(RNBlocks.TARNISHED_BRONZE_LANTERN))
-				.unlockedBy(getHasName(RNBlocks.TARNISHED_BRONZE_GRATE), has(RNBlocks.TARNISHED_BRONZE_GRATE))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER, 1)
-				.define('X', RNBlocks.CRYSTALLIZED_BRONZE_LANTERN)
-				.define('O', RNBlocks.CRYSTALLIZED_BRONZE_GRATE)
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_LANTERN), has(RNBlocks.CRYSTALLIZED_BRONZE_LANTERN))
-				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_GRATE), has(RNBlocks.CRYSTALLIZED_BRONZE_GRATE))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_CHANDELIER))), 1)
-				.define('X', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_LANTERN))))
-				.define('O', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_GRATE))))
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_LANTERN)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_LANTERN)))))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_GRATE)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_GRATE)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_CHANDELIER))), 1)
-				.define('X', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_LANTERN))))
-				.define('O', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_GRATE))))
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_LANTERN)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_LANTERN)))))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_GRATE)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_GRATE)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_CHANDELIER))), 1)
-				.define('X', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_LANTERN))))
-				.define('O', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_GRATE))))
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_LANTERN)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_LANTERN)))))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_GRATE)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_GRATE)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_CHANDELIER))), 1)
-				.define('X', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_LANTERN))))
-				.define('O', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_GRATE))))
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_LANTERN)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_LANTERN)))))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_GRATE)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_GRATE)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER))), 1)
-				.define('X', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_LANTERN))))
-				.define('O', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_GRATE))))
-				.pattern("XXX")
-				.pattern("XOX")
-				.pattern("XXX")
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_LANTERN)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_LANTERN)))))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_GRATE)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_GRATE)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRONZE_LAMP, 3)
-				.define('X', RNItems.BRONZE_SCRAP)
-				.define('A', RNBlocks.BRONZE_BLOCK)
-				.define('O', RNBlocks.MOLTEN_RUBY_BLOCK)
-				.define('I', RNBlocks.RUBY_GLASS_PANE)
-				.pattern("XAX")
-				.pattern("IOI")
-				.pattern("XAX")
-				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(RNBlocks.BRONZE_BLOCK), has(RNBlocks.BRONZE_BLOCK))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.DISCOLORED_BRONZE_LAMP, 3)
-				.define('X', RNItems.BRONZE_SCRAP)
-				.define('A', RNBlocks.DISCOLORED_BRONZE_BLOCK)
-				.define('O', RNBlocks.MOLTEN_RUBY_BLOCK)
-				.define('I', RNBlocks.RUBY_GLASS_PANE)
-				.pattern("XAX")
-				.pattern("IOI")
-				.pattern("XAX")
-				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(RNBlocks.DISCOLORED_BRONZE_BLOCK), has(RNBlocks.DISCOLORED_BRONZE_BLOCK))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CORRODED_BRONZE_LAMP, 3)
-				.define('X', RNItems.BRONZE_SCRAP)
-				.define('A', RNBlocks.CORRODED_BRONZE_BLOCK)
-				.define('O', RNBlocks.MOLTEN_RUBY_BLOCK)
-				.define('I', RNBlocks.RUBY_GLASS_PANE)
-				.pattern("XAX")
-				.pattern("IOI")
-				.pattern("XAX")
-				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(RNBlocks.CORRODED_BRONZE_BLOCK), has(RNBlocks.CORRODED_BRONZE_BLOCK))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.TARNISHED_BRONZE_LAMP, 3)
-				.define('X', RNItems.BRONZE_SCRAP)
-				.define('A', RNBlocks.TARNISHED_BRONZE_BLOCK)
-				.define('O', RNBlocks.MOLTEN_RUBY_BLOCK)
-				.define('I', RNBlocks.RUBY_GLASS_PANE)
-				.pattern("XAX")
-				.pattern("IOI")
-				.pattern("XAX")
-				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(RNBlocks.TARNISHED_BRONZE_BLOCK), has(RNBlocks.TARNISHED_BRONZE_BLOCK))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CRYSTALLIZED_BRONZE_LAMP, 3)
-				.define('X', RNItems.BRONZE_SCRAP)
-				.define('A', RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)
-				.define('O', RNBlocks.MOLTEN_RUBY_BLOCK)
-				.define('I', RNBlocks.RUBY_GLASS_PANE)
-				.pattern("XAX")
-				.pattern("IOI")
-				.pattern("XAX")
-				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK), has(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_LAMP))), 3)
-				.define('X', RNItems.BRONZE_SCRAP)
-				.define('A', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK))))
-				.define('O', RNBlocks.MOLTEN_RUBY_BLOCK)
-				.define('I', RNBlocks.RUBY_GLASS_PANE)
-				.pattern("XAX")
-				.pattern("IOI")
-				.pattern("XAX")
-				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_LAMP))), 3)
-				.define('X', RNItems.BRONZE_SCRAP)
-				.define('A', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK))))
-				.define('O', RNBlocks.MOLTEN_RUBY_BLOCK)
-				.define('I', RNBlocks.RUBY_GLASS_PANE)
-				.pattern("XAX")
-				.pattern("IOI")
-				.pattern("XAX")
-				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_LAMP))), 3)
-				.define('X', RNItems.BRONZE_SCRAP)
-				.define('A', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK))))
-				.define('O', RNBlocks.MOLTEN_RUBY_BLOCK)
-				.define('I', RNBlocks.RUBY_GLASS_PANE)
-				.pattern("XAX")
-				.pattern("IOI")
-				.pattern("XAX")
-				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_LAMP))), 3)
-				.define('X', RNItems.BRONZE_SCRAP)
-				.define('A', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK))))
-				.define('O', RNBlocks.MOLTEN_RUBY_BLOCK)
-				.define('I', RNBlocks.RUBY_GLASS_PANE)
-				.pattern("XAX")
-				.pattern("IOI")
-				.pattern("XAX")
-				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_LAMP))), 3)
-				.define('X', RNItems.BRONZE_SCRAP)
-				.define('A', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))))
-				.define('O', RNBlocks.MOLTEN_RUBY_BLOCK)
-				.define('I', RNBlocks.RUBY_GLASS_PANE)
-				.pattern("XAX")
-				.pattern("IOI")
-				.pattern("XAX")
-				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)))))
-				.save(recipeOutput);
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNItems.RUBY_LENS, 1)
 				.define('X', Items.COPPER_INGOT)
 				.define('L', Items.LEATHER)
@@ -1190,294 +423,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
 				.save(recipeOutput);
 
-// Bronze Laser
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRONZE_LASER, 1)
-				.define('A', RNBlocks.BRONZE_BLOCK)
-				.define('B', RNItems.BRONZE_SCRAP)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(RNBlocks.BRONZE_BLOCK), has(RNBlocks.BRONZE_BLOCK))
-				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.DISCOLORED_BRONZE_LASER, 1)
-				.define('A', RNBlocks.DISCOLORED_BRONZE_BLOCK)
-				.define('B', RNItems.BRONZE_SCRAP)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(RNBlocks.DISCOLORED_BRONZE_BLOCK), has(RNBlocks.DISCOLORED_BRONZE_BLOCK))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CORRODED_BRONZE_LASER, 1)
-				.define('A', RNBlocks.CORRODED_BRONZE_BLOCK)
-				.define('B', RNItems.BRONZE_SCRAP)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(RNBlocks.CORRODED_BRONZE_BLOCK), has(RNBlocks.CORRODED_BRONZE_BLOCK))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.TARNISHED_BRONZE_LASER, 1)
-				.define('A', RNBlocks.TARNISHED_BRONZE_BLOCK)
-				.define('B', RNItems.BRONZE_SCRAP)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(RNBlocks.TARNISHED_BRONZE_BLOCK), has(RNBlocks.TARNISHED_BRONZE_BLOCK))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CRYSTALLIZED_BRONZE_LASER, 1)
-				.define('A', RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)
-				.define('B', RNItems.BRONZE_SCRAP)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK), has(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_LASER))), 1)
-				.define('A', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK))))
-				.define('B', RNItems.BRONZE_SCRAP)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_LASER))), 1)
-				.define('A', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK))))
-				.define('B', RNItems.BRONZE_SCRAP)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_LASER))), 1)
-				.define('A', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK))))
-				.define('B', RNItems.BRONZE_SCRAP)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_LASER))), 1)
-				.define('A', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK))))
-				.define('B', RNItems.BRONZE_SCRAP)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_LASER))), 1)
-				.define('A', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))))
-				.define('B', RNItems.BRONZE_SCRAP)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)))))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.COPPER_LASER, 1)
-				.define('A', Blocks.COPPER_BLOCK)
-				.define('B', Items.COPPER_INGOT)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(Blocks.COPPER_BLOCK), has(Blocks.COPPER_BLOCK))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.EXPOSED_COPPER_LASER, 1)
-				.define('A', Blocks.EXPOSED_COPPER)
-				.define('B', Items.COPPER_INGOT)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(Blocks.EXPOSED_COPPER), has(Blocks.EXPOSED_COPPER))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WEATHERED_COPPER_LASER, 1)
-				.define('A', Blocks.WEATHERED_COPPER)
-				.define('B', Items.COPPER_INGOT)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(Blocks.WEATHERED_COPPER), has(Blocks.WEATHERED_COPPER))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.OXIDIZED_COPPER_LASER, 1)
-				.define('A', Blocks.OXIDIZED_COPPER)
-				.define('B', Items.COPPER_INGOT)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(Blocks.OXIDIZED_COPPER), has(Blocks.OXIDIZED_COPPER))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WAXED_COPPER_LASER, 1)
-				.define('A', Blocks.WAXED_COPPER_BLOCK)
-				.define('B', Items.COPPER_INGOT)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(Blocks.WAXED_COPPER_BLOCK), has(Blocks.WAXED_COPPER_BLOCK))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WAXED_EXPOSED_COPPER_LASER, 1)
-				.define('A', Blocks.WAXED_EXPOSED_COPPER)
-				.define('B', Items.COPPER_INGOT)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(Blocks.WAXED_EXPOSED_COPPER), has(Blocks.WAXED_EXPOSED_COPPER))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WAXED_WEATHERED_COPPER_LASER, 1)
-				.define('A', Blocks.WAXED_WEATHERED_COPPER)
-				.define('B', Items.COPPER_INGOT)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(Blocks.WAXED_WEATHERED_COPPER), has(Blocks.WAXED_WEATHERED_COPPER))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WAXED_OXIDIZED_COPPER_LASER, 1)
-				.define('A', Blocks.WAXED_OXIDIZED_COPPER)
-				.define('B', Items.COPPER_INGOT)
-				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
-				.define('E', RNBlocks.RUBY_BLOCK)
-				.pattern(" E ")
-				.pattern("BDB")
-				.pattern("ACA")
-				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
-				.unlockedBy(getHasName(Blocks.WAXED_OXIDIZED_COPPER), has(Blocks.WAXED_OXIDIZED_COPPER))
-				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRAZIER, 1)
 				.define('A', Blocks.OBSIDIAN)
@@ -1493,127 +439,6 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(Blocks.OBSIDIAN), has(Blocks.OBSIDIAN))
 				.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.BRONZE_BULB, 4)
-				.define('B', RNBlocks.BRONZE_BLOCK)
-				.define('R', Items.REDSTONE)
-				.define('X', Items.BLAZE_ROD)
-				.pattern(" B ")
-				.pattern("BXB")
-				.pattern(" R ")
-				.unlockedBy(getHasName(RNBlocks.BRONZE_BLOCK), has(RNBlocks.BRONZE_BLOCK))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.DISCOLORED_BRONZE_BULB, 4)
-				.define('B', RNBlocks.DISCOLORED_BRONZE_BLOCK)
-				.define('R', Items.REDSTONE)
-				.define('X', Items.BLAZE_ROD)
-				.pattern(" B ")
-				.pattern("BXB")
-				.pattern(" R ")
-				.unlockedBy(getHasName(RNBlocks.DISCOLORED_BRONZE_BLOCK), has(RNBlocks.DISCOLORED_BRONZE_BLOCK))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.CORRODED_BRONZE_BULB, 4)
-				.define('B', RNBlocks.CORRODED_BRONZE_BLOCK)
-				.define('R', Items.REDSTONE)
-				.define('X', Items.BLAZE_ROD)
-				.pattern(" B ")
-				.pattern("BXB")
-				.pattern(" R ")
-				.unlockedBy(getHasName(RNBlocks.CORRODED_BRONZE_BLOCK), has(RNBlocks.CORRODED_BRONZE_BLOCK))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.TARNISHED_BRONZE_BULB, 4)
-				.define('B', RNBlocks.TARNISHED_BRONZE_BLOCK)
-				.define('R', Items.REDSTONE)
-				.define('X', Items.BLAZE_ROD)
-				.pattern(" B ")
-				.pattern("BXB")
-				.pattern(" R ")
-				.unlockedBy(getHasName(RNBlocks.TARNISHED_BRONZE_BLOCK), has(RNBlocks.TARNISHED_BRONZE_BLOCK))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.CRYSTALLIZED_BRONZE_BULB, 4)
-				.define('B', RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)
-				.define('R', Items.REDSTONE)
-				.define('X', Items.BLAZE_ROD)
-				.pattern(" B ")
-				.pattern("BXB")
-				.pattern(" R ")
-				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK), has(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BULB))), 4)
-				.define('B', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK))))
-				.define('R', Items.REDSTONE)
-				.define('X', Items.BLAZE_ROD)
-				.pattern(" B ")
-				.pattern("BXB")
-				.pattern(" R ")
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_BLOCK)))))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BULB))), 4)
-				.define('B', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK))))
-				.define('R', Items.REDSTONE)
-				.define('X', Items.BLAZE_ROD)
-				.pattern(" B ")
-				.pattern("BXB")
-				.pattern(" R ")
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_BLOCK)))))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BULB))), 4)
-				.define('B', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK))))
-				.define('R', Items.REDSTONE)
-				.define('X', Items.BLAZE_ROD)
-				.pattern(" B ")
-				.pattern("BXB")
-				.pattern(" R ")
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_BLOCK)))))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BULB))), 4)
-				.define('B', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK))))
-				.define('R', Items.REDSTONE)
-				.define('X', Items.BLAZE_ROD)
-				.pattern(" B ")
-				.pattern("BXB")
-				.pattern(" R ")
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_BLOCK)))))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
-				.save(recipeOutput);
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BULB))), 4)
-				.define('B', BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK))))
-				.define('R', Items.REDSTONE)
-				.define('X', Items.BLAZE_ROD)
-				.pattern(" B ")
-				.pattern("BXB")
-				.pattern(" R ")
-				.unlockedBy(getHasName(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)))), has(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)))))
-				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
-				.save(recipeOutput);
-
-		// Waxing recipes for copper lasers (shapeless)
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WAXED_COPPER_LASER)
 				.requires(RNBlocks.COPPER_LASER)
 				.requires(Items.HONEYCOMB)
@@ -1760,8 +585,12 @@ public class RNRecipeProvider extends RecipeProvider {
 				inputName.contains("crystallized_bronze_block");
 	}
 
+	private ItemLike waxed(Supplier<? extends Block> block) {
+		return BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(block.get())));
+	}
+
 	private void wax(RecipeOutput recipeOutput, Supplier<? extends Block> block) {
-		ItemLike waxedBlock = BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(block.get())));
+		ItemLike waxedBlock = waxed(block);
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, waxedBlock)
 				.requires(block.get())
@@ -1772,69 +601,290 @@ public class RNRecipeProvider extends RecipeProvider {
 	}
 
 	private void generateAllWaxingRecipes(RecipeOutput recipeOutput) {
-		wax(recipeOutput, RNBlocks.BRONZE_BLOCK);
-		wax(recipeOutput, RNBlocks.CHISELED_BRONZE);
-		wax(recipeOutput, RNBlocks.CUT_BRONZE_PILLAR);
-		wax(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS);
-		wax(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS_STAIRS);
-		wax(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS_SLAB);
-		wax(recipeOutput, RNBlocks.BRONZE_BULB);
-		wax(recipeOutput, RNBlocks.BRONZE_CHANDELIER);
-		wax(recipeOutput, RNBlocks.BRONZE_LANTERN);
-		wax(recipeOutput, RNBlocks.BRONZE_LAMP);
-		wax(recipeOutput, RNBlocks.BRONZE_CHAIN);
-		wax(recipeOutput, RNBlocks.BRONZE_LASER);
 
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_BLOCK);
-		wax(recipeOutput, RNBlocks.DISCOLORED_CHISELED_BRONZE);
-		wax(recipeOutput, RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR);
-		wax(recipeOutput, RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS);
-		wax(recipeOutput, RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS);
-		wax(recipeOutput, RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB);
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_BULB);
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_CHANDELIER);
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_LANTERN);
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_LAMP);
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_CHAIN);
-		wax(recipeOutput, RNBlocks.DISCOLORED_BRONZE_LASER);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_BLOCK);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.CHISELED_BRONZE);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.CUT_BRONZE_PILLAR);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS_STAIRS);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS_SLAB);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_BULB);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_CHANDELIER);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LANTERN);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LAMP);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_CHAIN);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LASER);
+	}
 
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_BLOCK);
-		wax(recipeOutput, RNBlocks.CORRODED_CHISELED_BRONZE);
-		wax(recipeOutput, RNBlocks.CORRODED_CUT_BRONZE_PILLAR);
-		wax(recipeOutput, RNBlocks.CORRODED_CUT_BRONZE_BRICKS);
-		wax(recipeOutput, RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS);
-		wax(recipeOutput, RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB);
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_BULB);
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_CHANDELIER);
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_LANTERN);
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_LAMP);
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_CHAIN);
-		wax(recipeOutput, RNBlocks.CORRODED_BRONZE_LASER);
+	private void waxAllTarnishVariants(RecipeOutput recipeOutput, Supplier<? extends Block> baseBlock) {
+		String baseName = getFieldNameFromSupplier(baseBlock);
 
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_BLOCK);
-		wax(recipeOutput, RNBlocks.TARNISHED_CHISELED_BRONZE);
-		wax(recipeOutput, RNBlocks.TARNISHED_CUT_BRONZE_PILLAR);
-		wax(recipeOutput, RNBlocks.TARNISHED_CUT_BRONZE_BRICKS);
-		wax(recipeOutput, RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS);
-		wax(recipeOutput, RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB);
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_BULB);
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_CHANDELIER);
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_LANTERN);
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_LAMP);
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_CHAIN);
-		wax(recipeOutput, RNBlocks.TARNISHED_BRONZE_LASER);
+		for (String prefix : TARNISH_PREFIXES) {
+			Supplier<? extends Block> tarnishedBlock = getBlockByName(prefix + baseName);
+			wax(recipeOutput, tarnishedBlock);
+		}
+	}
 
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_BLOCK);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_CHISELED_BRONZE);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_BULB);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_LANTERN);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_LAMP);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_CHAIN);
-		wax(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_LASER);
+
+
+	private void laser(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike laser, boolean isCopper) {
+		ItemLike scrapOrIngot = isCopper ? Items.COPPER_INGOT : RNItems.BRONZE_SCRAP;
+		ItemLike glowOrQuartz = isCopper ? Items.QUARTZ : Items.GLOWSTONE;
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, laser, 1)
+				.define('A', blockInput)
+				.define('B', scrapOrIngot)
+				.define('C', Items.REDSTONE)
+				.define('D', glowOrQuartz)
+				.define('E', RNBlocks.RUBY_BLOCK)
+				.pattern(" E ")
+				.pattern("BDB")
+				.pattern("ACA")
+				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
+				.unlockedBy(getHasName(scrapOrIngot), has(scrapOrIngot))
+				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+				.unlockedBy(getHasName(glowOrQuartz), has(glowOrQuartz))
+				.unlockedBy(getHasName(blockInput), has(blockInput))
+				.save(recipeOutput);
+	}
+
+	private void bulb(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike bulb) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, bulb, 4)
+				.define('B', blockInput)
+				.define('R', Items.REDSTONE)
+				.define('X', Items.BLAZE_ROD)
+				.pattern(" B ")
+				.pattern("BXB")
+				.pattern(" R ")
+				.unlockedBy(getHasName(blockInput), has(blockInput))
+				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+				.unlockedBy(getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD))
+				.save(recipeOutput);
+	}
+
+	private void lamp(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike lamp) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, lamp, 3)
+				.define('X', RNItems.BRONZE_SCRAP)
+				.define('A', blockInput)
+				.define('O', RNBlocks.MOLTEN_RUBY_BLOCK)
+				.define('I', RNBlocks.RUBY_GLASS_PANE)
+				.pattern("XAX")
+				.pattern("IOI")
+				.pattern("XAX")
+				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
+				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
+				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
+				.unlockedBy(getHasName(blockInput), has(blockInput))
+				.save(recipeOutput);
+	}
+
+	private void chandelier(RecipeOutput recipeOutput, ItemLike lanternInput, ItemLike grateInput, ItemLike chandelier) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, chandelier, 1)
+				.define('X', lanternInput)
+				.define('O', grateInput)
+				.pattern("XXX")
+				.pattern("XOX")
+				.pattern("XXX")
+				.unlockedBy(getHasName(lanternInput), has(lanternInput))
+				.unlockedBy(getHasName(grateInput), has(grateInput))
+				.save(recipeOutput);
+	}
+	private static final String[] TARNISH_PREFIXES = {
+			"",
+			"DISCOLORED_",
+			"CORRODED_",
+			"TARNISHED_",
+			"CRYSTALLIZED_"
+	};
+
+	@FunctionalInterface
+	private interface RecipeGenerator {
+		void generate(RecipeOutput output, ItemLike input, ItemLike result);
+	}
+
+	@FunctionalInterface
+	private interface RecipeGeneratorWithExtra {
+		void generate(RecipeOutput output, ItemLike input1, ItemLike input2, ItemLike result);
+	}
+
+	private void tarnish(RecipeOutput recipeOutput, RecipeGenerator generator,
+						 ItemLike baseInput, ItemLike baseResult) {
+		String inputName = getFieldName(baseInput);
+		String resultName = getFieldName(baseResult);
+
+		for (String prefix : TARNISH_PREFIXES) {
+			ItemLike input = getBlockByName(prefix + inputName);
+			ItemLike result = getBlockByName(prefix + resultName);
+			generator.generate(recipeOutput, input, result);
+		}
+
+		if (baseInput instanceof Supplier) {
+			tarnishWaxed(recipeOutput, generator, (Supplier<? extends Block>) baseInput, (Supplier<? extends Block>) baseResult);
+		}
+	}
+
+	private void tarnish(RecipeOutput recipeOutput, RecipeGeneratorWithExtra generator,
+						 ItemLike baseInput1, ItemLike baseInput2, ItemLike baseResult) {
+		String input1Name = getFieldName(baseInput1);
+		String input2Name = getFieldName(baseInput2);
+		String resultName = getFieldName(baseResult);
+
+		for (String prefix : TARNISH_PREFIXES) {
+			ItemLike input1 = getBlockByName(prefix + input1Name);
+			ItemLike input2 = getBlockByName(prefix + input2Name);
+			ItemLike result = getBlockByName(prefix + resultName);
+			generator.generate(recipeOutput, input1, input2, result);
+		}
+
+		if (baseInput1 instanceof Supplier && baseInput2 instanceof Supplier && baseResult instanceof Supplier) {
+			tarnishWaxed(recipeOutput, generator,
+					(Supplier<? extends Block>) baseInput1,
+					(Supplier<? extends Block>) baseInput2,
+					(Supplier<? extends Block>) baseResult);
+		}
+	}
+
+	private String getFieldName(ItemLike itemLike) {
+		if (itemLike instanceof net.minecraft.world.item.Item ||
+				!(itemLike instanceof Supplier)) {
+			String registryName = BuiltInRegistries.ITEM.getKey(itemLike.asItem()).getPath();
+			return registryName
+					.replace("waxed_", "")
+					.toUpperCase()
+					.replace("rubinated_nether:", "");
+		}
+
+		for (var field : RNBlocks.class.getFields()) {
+			try {
+				if (field.get(null) == itemLike) {
+					return field.getName();
+				}
+			} catch (Exception ignored) {}
+		}
+
+		for (var field : RNItems.class.getFields()) {
+			try {
+				if (field.get(null) == itemLike) {
+					return field.getName();
+				}
+			} catch (Exception ignored) {}
+		}
+
+		throw new RuntimeException("Could not find field name for: " + itemLike);
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T extends ItemLike> T getBlockByName(String name) {
+		try {
+			var field = RNBlocks.class.getField(name);
+			return (T) field.get(null);
+		} catch (NoSuchFieldException e) {
+			try {
+				var field = RNItems.class.getField(name);
+				return (T) field.get(null);
+			} catch (Exception ex) {
+				throw new RuntimeException("Could not find block or item: " + name, ex);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("Error accessing field: " + name, e);
+		}
+	}
+
+	private void tarnishWaxed(RecipeOutput recipeOutput, RecipeGenerator generator,
+							  Supplier<? extends Block> baseInput, Supplier<? extends Block> baseResult) {
+		String inputName = getFieldNameFromSupplier(baseInput);
+		String resultName = getFieldNameFromSupplier(baseResult);
+
+		for (String prefix : TARNISH_PREFIXES) {
+			Supplier<? extends Block> input = getBlockByName(prefix + inputName);
+			Supplier<? extends Block> result = getBlockByName(prefix + resultName);
+			ItemLike waxedInput = waxed(input);
+			ItemLike waxedResult = waxed(result);
+			generator.generate(recipeOutput, waxedInput, waxedResult);
+		}
+	}
+
+	private void tarnishWaxed(RecipeOutput recipeOutput, RecipeGeneratorWithExtra generator,
+							  Supplier<? extends Block> baseInput1, Supplier<? extends Block> baseInput2,
+							  Supplier<? extends Block> baseResult) {
+		String input1Name = getFieldNameFromSupplier(baseInput1);
+		String input2Name = getFieldNameFromSupplier(baseInput2);
+		String resultName = getFieldNameFromSupplier(baseResult);
+
+		for (String prefix : TARNISH_PREFIXES) {
+			Supplier<? extends Block> input1 = getBlockByName(prefix + input1Name);
+			Supplier<? extends Block> input2 = getBlockByName(prefix + input2Name);
+			Supplier<? extends Block> result = getBlockByName(prefix + resultName);
+			ItemLike waxedInput1 = waxed(input1);
+			ItemLike waxedInput2 = waxed(input2);
+			ItemLike waxedResult = waxed(result);
+			generator.generate(recipeOutput, waxedInput1, waxedInput2, waxedResult);
+		}
+	}
+
+	private String getFieldNameFromSupplier(Supplier<? extends Block> supplier) {
+		for (var field : RNBlocks.class.getFields()) {
+			try {
+				if (field.get(null) == supplier) {
+					return field.getName();
+				}
+			} catch (Exception ignored) {}
+		}
+		throw new RuntimeException("Could not find field name for supplier");
+	}
+
+	@SafeVarargs
+	private final void Bronzecutter(RecipeOutput recipeOutput,
+										  Supplier<? extends Block> baseInput,
+										  Supplier<? extends Block>... baseOutputs) {
+		String inputName = getFieldNameFromSupplier(baseInput);
+
+		for (String prefix : TARNISH_PREFIXES) {
+			Supplier<? extends Block> input = getBlockByName(prefix + inputName);
+
+			ItemLike[] outputs = new ItemLike[baseOutputs.length];
+			for (int i = 0; i < baseOutputs.length; i++) {
+				String outputName = getFieldNameFromSupplier(baseOutputs[i]);
+				outputs[i] = getBlockByName(prefix + outputName);
+			}
+
+			stonecutterListArray(recipeOutput, (ItemLike) input, outputs);
+		}
+
+		for (String prefix : TARNISH_PREFIXES) {
+			Supplier<? extends Block> input = getBlockByName(prefix + inputName);
+			ItemLike waxedInput = waxed(input);
+
+			ItemLike[] waxedOutputs = new ItemLike[baseOutputs.length];
+			for (int i = 0; i < baseOutputs.length; i++) {
+				String outputName = getFieldNameFromSupplier(baseOutputs[i]);
+				Supplier<? extends Block> output = getBlockByName(prefix + outputName);
+				waxedOutputs[i] = waxed(output);
+			}
+
+			stonecutterListArray(recipeOutput, waxedInput, waxedOutputs);
+		}
+	}
+
+	private void stonecutterListArray(RecipeOutput recipeOutput, ItemLike input, ItemLike[] outputs) {
+		for (ItemLike output : outputs) {
+			var count = 1;
+
+			if (output.asItem().toString().contains("slab")) {
+				count = 2;
+			}
+
+			if (isBronzeBlock(input)) {
+				count *= 4;
+			}
+
+			stonecutterResultFromBase(
+					recipeOutput,
+					RecipeCategory.BUILDING_BLOCKS,
+					output,
+					input,
+					count
+			);
+		}
 	}
 }

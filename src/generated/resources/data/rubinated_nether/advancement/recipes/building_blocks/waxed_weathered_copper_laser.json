@@ -11,11 +11,11 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_glowstone": {
+    "has_quartz": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:glowstone"
+            "items": "minecraft:quartz"
           }
         ]
       },
@@ -64,7 +64,7 @@
       "has_ruby_block",
       "has_copper_ingot",
       "has_redstone",
-      "has_glowstone",
+      "has_quartz",
       "has_waxed_weathered_copper"
     ]
   ],

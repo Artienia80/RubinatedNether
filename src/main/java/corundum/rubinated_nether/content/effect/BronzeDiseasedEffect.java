@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.effect;
 
+import corundum.rubinated_nether.content.RNDamageTypes;
 import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -20,7 +21,7 @@ public class BronzeDiseasedEffect extends MobEffect {
         boolean onCrystallized = belowState.is(RNTags.Blocks.CRYSTALLIZED_BLOCKS);
 
         if (onCrystallized) {
-            entity.hurt(entity.damageSources().magic(), 1.0F);
+            entity.hurt(entity.damageSources().source(RNDamageTypes.BRONZE_DISEASED), 1.0F);
         }
         this.addAttributeModifier(
                 Attributes.ATTACK_DAMAGE,

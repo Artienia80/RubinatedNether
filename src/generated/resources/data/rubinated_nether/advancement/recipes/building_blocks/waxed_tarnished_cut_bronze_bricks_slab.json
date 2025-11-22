@@ -7,11 +7,11 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_waxed_tarnished_bronze_block": {
+    "has_waxed_tarnished_cut_bronze_bricks": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:waxed_tarnished_bronze_block"
+            "items": "rubinated_nether:waxed_tarnished_cut_bronze_bricks"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_waxed_tarnished_bronze_block"
+      "has_waxed_tarnished_cut_bronze_bricks"
     ]
   ],
   "rewards": {

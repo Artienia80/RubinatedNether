@@ -2,10 +2,7 @@ package corundum.rubinated_nether.content.enchantment;
 
 import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.enchantment.custom.BuoyancyCurseEffect;
-import corundum.rubinated_nether.content.enchantment.custom.HookingCurseEffect;
-import corundum.rubinated_nether.content.enchantment.custom.LeechingCurseEffect;
-import corundum.rubinated_nether.content.enchantment.custom.MisfortuneCurseEffect;
+import corundum.rubinated_nether.content.enchantment.custom.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect;
 import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
