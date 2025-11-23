@@ -1,49 +1,64 @@
 package corundum.rubinated_nether.content.entity;
 
 import corundum.rubinated_nether.content.RNEffects;
-import corundum.rubinated_nether.content.blocks.TarnishingBronze;
+import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.entity.goals.CorrodedHideAndAmbushGoal;
+import corundum.rubinated_nether.content.entity.goals.CrystallizeNearbyBronzeGoal;
+import corundum.rubinated_nether.content.entity.goals.CrystallizedOrbitGoal;
+import corundum.rubinated_nether.content.entity.goals.DiscoloredRamGoal;
+import corundum.rubinated_nether.content.entity.goals.TarnishedShockwaveGoal;
+import corundum.rubinated_nether.content.entity.goals.UnaffectedAttackGoal;
+import corundum.rubinated_nether.misc.RNAttachments;
+import corundum.rubinated_nether.networking.BronzeTarnishingData;
 import corundum.rubinated_nether.utils.InGameLogger;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
+import corundum.rubinated_nether.utils.RNParticleUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.entity.PartEntity;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumSet;
 import java.util.List;
 
-public class BronzeEntity extends TarnishingEntity {
+public class BronzeEntity extends Monster {
     public int idleAnimationTimeout = 0;
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState walkAnimationState = new AnimationState();
@@ -252,6 +267,8 @@ public class BronzeEntity extends TarnishingEntity {
     @Override
     public void tick() {
         super.tick();
+        tarnishingTickBehaviour();
+
         setupAnimationStates();
 
         if (this.subEntities != null) {
@@ -331,6 +348,26 @@ public class BronzeEntity extends TarnishingEntity {
                             player.removeEffect(RNEffects.BRONZE_DISEASED);
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private void tarnishingTickBehaviour() {
+        if (!level().isClientSide() && !isWaxed()) {
+            int current = getTarnishLevel();
+            if (current < TARNISHED) {
+                tarnishTimer++;
+                if (tarnishTimer >= getTarnishInterval(current)) {
+                    increaseTarnishLevel();
+                    tarnishTimer = 0;
+                }
+            }
+            if (isNearSoulFire()) {
+                tarnishTimer++;
+                if (tarnishTimer >= getTarnishInterval(current)) {
+                    setTarnishLevel(CRYSTALLIZED);
+                    tarnishTimer = 0;
                 }
             }
         }
@@ -469,51 +506,9 @@ public class BronzeEntity extends TarnishingEntity {
             default:
                 registerUnaffectedGoals();
         };
-
     }
 
-    public class UnaffectedAttackGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
-        private final TarnishingEntity entity;
 
-        public UnaffectedAttackGoal(TarnishingEntity entity, Class<T> targetType) {
-            super(entity, targetType, true);
-            this.entity = entity;
-        }
-
-        @Override
-        public boolean canUse() {
-            return entity.getTarnishLevel() == 0 && super.canUse();
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return entity.getTarnishLevel() == 0 && super.canContinueToUse();
-        }
-
-        @Override
-        public void start() {
-            super.start();
-            if(!level().isClientSide){
-                entity.level().broadcastEntityEvent(entity, (byte) 61);
-            }
-        }
-
-        @Override
-        public void tick(){
-            if(!level().isClientSide){
-                entity.level().broadcastEntityEvent(entity, (byte) 61);
-            }
-
-            if(entity.getTarnishLevel() != 0) stop();
-        }
-        @Override
-        public void stop() {
-            super.stop();
-            if(!level().isClientSide){
-                entity.level().broadcastEntityEvent(entity, (byte) 64);
-            }
-        }
-    }
 
 
     @Override
@@ -589,7 +584,7 @@ public class BronzeEntity extends TarnishingEntity {
 
 
     @Override
-    public void recreateFromPacket(net.minecraft.network.protocol.game.ClientboundAddEntityPacket packet) {
+    public void recreateFromPacket(ClientboundAddEntityPacket packet) {
         super.recreateFromPacket(packet);
         BronzePart[] parts = this.subEntities;
         for (int i = 0; i < parts.length; i++) {
@@ -597,192 +592,20 @@ public class BronzeEntity extends TarnishingEntity {
         }
     }
 
-    public class CrystallizeNearbyBronzeGoal extends Goal {
-        private final BronzeEntity entity;
-        private int cooldown;
-
-        public CrystallizeNearbyBronzeGoal(BronzeEntity entity) {
-            this.entity = entity;
-        }
-
-        @Override
-        public boolean canUse() {
-            return entity.getTarnishLevel() == 4;
-        }
-
-        @Override
-        public void tick() {
-            if(entity.getTarnishLevel() != 4) stop();
-            if (--cooldown > 0) return;
-            cooldown = 20 + entity.getRandom().nextInt(200);
-
-            BlockPos origin = entity.blockPosition();
-            Level level = entity.level();
-
-            for (BlockPos pos : BlockPos.betweenClosed(origin.offset(-3, -3, -3), origin.offset(3, 3, 3))) {
-                BlockState state = level.getBlockState(pos);
-                Block block = state.getBlock();
-
-                if (block instanceof TarnishingBronze tarnishing) {
-                    if (state.hasProperty(TarnishingBronze.WAXED) && state.getValue(TarnishingBronze.WAXED)) {
-                        BlockState unwaxed = state.setValue(TarnishingBronze.WAXED, false);
-                        level.setBlock(pos, unwaxed, 3);
-                        return;
-                    }
-
-                    if (!state.getValue(TarnishingBronze.WAXED) && TarnishingBronze.canCrystallize(block)) {
-                        tarnishing.getCrystallized(state).ifPresent(newState -> level.setBlockAndUpdate(pos, newState));
-                        return;
-                    }
-                }
-            }
-        }
-    }
-
-    public class TarnishedShockwaveGoal extends Goal {
-        private final BronzeEntity entity;
-        private int defenseTicks = 0;
-        private int hitCount = 0;
-        public boolean isDefending = false;
-
-        private boolean isStunned = false;
-        private int stunTicks = 0;
-
-        private static final int MAX_DEFENSE_TICKS = 150;
-        private static final int MAX_HITS_ALLOWED = 5;
-        private static final int STUN_DURATION = 80;
-        private static final int COOLDOWN_DURATION = 300;
-
-        public TarnishedShockwaveGoal(BronzeEntity entity) {
-            this.entity = entity;
-        }
-
-        @Override
-        public boolean canUse() {
-            return entity.getShockwaveCooldown() <= 0
-                    && entity.getTarnishLevel() == 3
-                    && entity.getTarget() instanceof Player;
-        }
-
-        @Override
-        public void start() {
-            defenseTicks = 0;
-            hitCount = 0;
-            isDefending = true;
-            isStunned = false;
-            stunTicks = 0;
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return (isDefending || isStunned) && entity.getTarnishLevel() == 3;
-        }
-
-        public boolean isDefending() {
-            return isDefending;
-        }
-
-        @Override
-        public void tick() {
-            if(entity.getTarnishLevel() != 3) stop();
-            if (isDefending) {
-                if (!level().isClientSide) {
-                    entity.level().broadcastEntityEvent(entity, (byte) 68);
-                }
-                defenseTicks++;
-
-                if (defenseTicks >= MAX_DEFENSE_TICKS) {
-                    isDefending = false;
-                    if (!level().isClientSide) {
-                        entity.level().broadcastEntityEvent(entity, (byte) 69);
-                    }
-
-                    if (hitCount < MAX_HITS_ALLOWED) {
-                        if (!level().isClientSide) {
-                            entity.level().broadcastEntityEvent(entity, (byte) 89);
-                        }
-                        spawnShockwaveParticles();
-                        buffNearbyBronzes();
-                        entity.setShockwaveCooldown(COOLDOWN_DURATION);
-                        this.stop();
-                    } else {
-                        isStunned = true;
-                        stunTicks = STUN_DURATION;
-
-                        if (!level().isClientSide) {
-                            entity.level().broadcastEntityEvent(entity, (byte) 71);
-                        }
-                    }
-                }
-
-                if (hitCount >= MAX_HITS_ALLOWED) {
-                    isDefending = false;
-                    isStunned = true;
-                    stunTicks = STUN_DURATION;
-
-                    if (!level().isClientSide) {
-                        entity.level().broadcastEntityEvent(entity, (byte) 69);
-                        entity.level().broadcastEntityEvent(entity, (byte) 71);
-                    }
-                }
-            }
-
-            if (isStunned) {
-                stunTicks--;
-                if (stunTicks <= 0) {
-                    isStunned = false;
-                    entity.setShockwaveCooldown(COOLDOWN_DURATION);
-
-                    this.stop();
-                }
-            }
-
-            if (entity.getShockwaveCooldown() > 0) {
-                entity.setShockwaveCooldown(COOLDOWN_DURATION);
-            }
-
-            System.out.println(defenseTicks);
-            System.out.println(hitCount);
-            System.out.println(isDefending());
-            System.out.println(isStunned);
-        }
-
-        @Override
-        public void stop() {
-            isDefending = false;
-            isStunned = false;
-            stunTicks = 0;
-
-            if (!level().isClientSide) {
-                entity.level().broadcastEntityEvent(entity, (byte) 69);
-                entity.level().broadcastEntityEvent(entity, (byte) 73);
-            }
-        }
-
-        public void onHitWhileDefending() {
-            if (isDefending()) {
-                hitCount++;
-            }
-        }
-
-        private void spawnShockwaveParticles() {
-            ((ServerLevel) entity.level()).sendParticles(ParticleTypes.EXPLOSION, entity.getX(), entity.getY(), entity.getZ(), 20, 1, 1, 1, 0.2);
-        }
-
-        private void buffNearbyBronzes() {
-            List<BronzeEntity> allies = entity.level().getEntitiesOfClass(BronzeEntity.class, entity.getBoundingBox().inflate(12.0));
-            for (BronzeEntity bronze : allies) {
-                if (bronze != entity && bronze.isAlive()) {
-                    bronze.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 200, 1));
-                }
-            }
-        }
-    }
-
 
     @Override
     public boolean isPickable() {
         return true;
+    }
+
+    @Override
+    public boolean isPushable() {
+        return !noCollision && super.isPushable();
+    }
+
+    @Override
+    public boolean canBeCollidedWith() {
+        return !noCollision && super.canBeCollidedWith();
     }
 
 
@@ -816,16 +639,40 @@ public class BronzeEntity extends TarnishingEntity {
             }
         }
 
+        if (!level().isClientSide() && source.getEntity() instanceof Player player) {
+            ItemStack weapon = player.getMainHandItem();
+            int level = getTarnishLevel();
+
+            if (!isWaxed() && weapon.is(ItemTags.AXES)) {
+                if (level > 0 && level < CRYSTALLIZED) {
+                    if (random.nextFloat() < 0.05f) {
+                        decreaseTarnishLevel();
+                        level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 1.0F);
+
+                        if (level().random.nextFloat() < 0.5f) {
+                            ItemEntity powder = new ItemEntity(level(), getX(), getY() + 1, getZ(),
+                                    new ItemStack(RNItems.BRONZE_POWDER.get()));
+                            level().addFreshEntity(powder);
+                        }
+                    }
+                } else if (level == CRYSTALLIZED) {
+                    if (random.nextFloat() < 0.05f) {
+                        setTarnishLevel(0);
+                        level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    }
+                }
+            }
+        }
         return super.hurt(source, amount);
     }
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        return !this.level().isClientSide ? this.hurtFromPart(this.bodyPart, source, amount) : false;
+        return !this.level().isClientSide && this.hurtFromPart(this.bodyPart, source, amount);
     }
 
     @Override
-    public net.neoforged.neoforge.entity.PartEntity<?>[] getParts() {
+    public PartEntity<?>[] getParts() {
         return this.subEntities;
     }
 
@@ -852,405 +699,161 @@ public class BronzeEntity extends TarnishingEntity {
         super.knockback(strength, x, z);
     }
 
-
-    public class DiscoloredRamGoal extends Goal {
-        private final BronzeEntity entity;
-        private Player target;
-
-        private int phase = 0;
-        private int phaseTicks = 0;
-        private Vec3 dashDirection = Vec3.ZERO;
-        private static final int CHARGE_TIME = 20;
-        private static final int DASH_TIME = 10;
-        private static final int COOLDOWN = 80;
-        private static final double RAM_SPEED = 1.2;
-        private boolean isStunned = false;
-        private int stunTicks = 0;
-        private static final int STUN_DURATION = 60;
+    // ----------------- TARNISHED SECTION ----------------------
 
 
-        public DiscoloredRamGoal(BronzeEntity entity) {
-            this.entity = entity;
-            this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
-        }
+    public static final int MAX_TARNISH = 4;
+    public static final int TARNISHED = 3;
+    public static final int CRYSTALLIZED = 4;
 
-        @Override
-        public boolean canUse() {
-            if (entity.getTarnishLevel() != 1) return false;
-            if (entity.getRamCooldown() > 0) return false;
+    private static final EntityDataAccessor<Boolean> WAXED =
+            SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.BOOLEAN);
 
-            Player player = entity.level().getNearestPlayer(entity, 15);
-            if (player != null && entity.hasLineOfSight(player) && !player.isCreative()) {
-                target = player;
-                return true;
-            }
+    private int tarnishTimer = 0;
 
-            return false;
-        }
-
-        @Override
-        public void start() {
-            phase = 1;
-            phaseTicks = 0;
-            entity.getNavigation().stop();
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return (phase > 0 || isStunned) && target != null && target.isAlive() && entity.getTarnishLevel() == 1;
-        }
-
-        @Override
-        public void tick() {
-            if (isStunned) {
-                stunTicks--;
-                entity.setDeltaMovement(0, entity.getDeltaMovement().y, 0);
-                if (stunTicks <= 0) {
-                    isStunned = false;
-                    entity.setRamCooldown(COOLDOWN);
-                    if (!level().isClientSide) {
-                        entity.level().broadcastEntityEvent(entity, (byte) 73);
-                    }
-                    stop();
-                }
-                return;
-            }
-
-            if (target == null) return;
-            if(entity.getTarnishLevel() != 1) stop();
-
-            switch (phase) {
-                case 1:
-                    entity.lookAt(EntityAnchorArgument.Anchor.EYES, target.position());
-                    phaseTicks++;
-                    if (phaseTicks >= CHARGE_TIME) {
-                        dashDirection = target.position().subtract(entity.position()).normalize();
-                        phase = 2;
-                        phaseTicks = 0;
-                    }
-                    break;
-
-                case 2:
-                    if (!level().isClientSide) {
-                        entity.level().broadcastEntityEvent(entity, (byte) 97);
-                    }
-                    entity.setDeltaMovement(dashDirection.scale(RAM_SPEED));
-                    entity.setYRot((float) (Mth.atan2(dashDirection.z, dashDirection.x) * (180F / Math.PI)) - 90F);
-                    entity.yBodyRot = entity.getYRot();
-
-                    if (entity.distanceTo(target) < 1.5) {
-                        boolean hasShield = target.isBlocking();
-                        if (hasShield) {
-                            Vec3 attackDir = entity.position().subtract(target.position()).normalize();
-                            Vec3 lookVec = target.getLookAngle().normalize();
-                            double dot = attackDir.dot(lookVec);
-
-                            if (dot > 0.3) {
-                                triggerStun();
-                                return;
-                            }
-                        }
-
-                        target.hurt(entity.damageSources().mobAttack(entity), 6.0F);
-                        stop();
-                    }
-
-
-                    phaseTicks++;
-                    if (phaseTicks >= DASH_TIME) {
-                        if (!level().isClientSide) {
-                            entity.level().broadcastEntityEvent(entity, (byte) 93);
-                        }
-                        stop();
-                    }
-                    break;
-            }
-
-        }
-
-        public boolean isDashing() {
-            return phase == 2;
-        }
-
-        private void triggerStun() {
-            isStunned = true;
-            stunTicks = STUN_DURATION;
-            entity.setDeltaMovement(Vec3.ZERO);
-            entity.level().broadcastEntityEvent(entity, (byte) 71);
-            phase = 0;
-        }
-
-        @Override
-        public void stop() {
-            if (!isStunned) {
-                entity.setRamCooldown(COOLDOWN);
-            }
-            entity.setDeltaMovement(Vec3.ZERO);
-            phase = 0;
-            target = null;
-        }
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(WAXED, false);
     }
 
+    public int getTarnishLevel() {
+        return this.getData(RNAttachments.TARNISH_LEVEL.get());
+    }
 
-    public class CorrodedHideAndAmbushGoal extends Goal {
-        private final BronzeEntity entity;
-        private Player target;
+    public void setTarnishLevel(int level) {
+        PacketDistributor.sendToAllPlayers(new BronzeTarnishingData(this.getId(), level));
+        this.handleLevelChange(level);
+    }
 
-        private int state = 0;
-        private int stateTicks = 0;
-        private Vec3 ambushTargetPos;
+    public void handleLevelChange(int level) {
+        this.setData(RNAttachments.TARNISH_LEVEL.get(), level);
+        this.setTarget(null);
+    }
 
-        private static final double MOVE_SPEED = 0.3;
-        private static final float ATTACK_RANGE = 1.5f;
-        private boolean hasAttacked = false;
+    public void increaseTarnishLevel() {
+        this.setTarnishLevel(this.getTarnishLevel() + 1);
+    }
 
-        public CorrodedHideAndAmbushGoal(BronzeEntity entity) {
-            this.entity = entity;
-            this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
-        }
+    public void decreaseTarnishLevel() {
+        this.setTarnishLevel(this.getTarnishLevel() - 1);
+    }
 
-        @Override
-        public boolean canUse() {
-            if (entity.getAmbushCooldown() > 0) return false;
-            if (entity.getTarget() instanceof Player player && entity.getTarnishLevel() == 2) {
-                if (entity.distanceTo(player) < 10 && entity.hasLineOfSight(player)) {
-                    this.target = player;
-                    return true;
-                }
-            }
-            return false;
-        }
+    public boolean isWaxed() {
+        return this.entityData.get(WAXED);
+    }
 
-        @Override
-        public boolean canContinueToUse() {
-            return state != 0 && entity.getTarnishLevel() == 2 && target != null && !entity.isInWater() && target.isAlive();
-        }
+    public void setWaxed(boolean waxed) {
+        this.entityData.set(WAXED, waxed);
+    }
 
-        @Override
-        public void start() {
-            state = 1;
-            stateTicks = 0;
-            entity.setBurrowed(true);
-            entity.getNavigation().stop();
-            entity.setNoCollision(true);
+    private int getTarnishInterval(int level) {
+        return switch (level) {
+            case 0 -> 1200;
+            case 1 -> 1600;
+            case 2 -> 2000;
+            case 3 -> 2400;
+            default -> Integer.MAX_VALUE;
+        };
+    }
 
-            if (!level().isClientSide) {
-                entity.level().broadcastEntityEvent(entity, (byte) 76);
-            }
-        }
-
-        @Override
-        public void tick() {
-            if(entity.getTarnishLevel() != 2) stop();
-            ambushTargetPos = target.position();
-            switch (state) {
-                case 1 -> {
-                    stateTicks++;
-                    if (stateTicks >= 20) {
-                        state = 2;
-                        stateTicks = 0;
-
-                        if (entity.level() instanceof ServerLevel server) {
-                            BlockPos below = entity.blockPosition().below();
-                            BlockState blockstate = entity.level().getBlockState(below);
-                            ParticleOptions dust = new BlockParticleOption(ParticleTypes.BLOCK, blockstate);
-
-                            server.sendParticles(dust, entity.getX(), entity.getY() + 0.1, entity.getZ(), 4, 0.2, 0.05, 0.2, 0.02);
-                        }
-
-                        if (!level().isClientSide) {
-                            entity.level().broadcastEntityEvent(entity, (byte) 79);
-                        }
-                    }
-                }
-
-                case 2 -> {
-                    Vec3 direction = ambushTargetPos.subtract(entity.position()).normalize();
-                    entity.setDeltaMovement(direction.scale(MOVE_SPEED));
-                    if (entity.level() instanceof ServerLevel server) {
-                        BlockPos below = entity.blockPosition().below();
-                        BlockState blockstate = entity.level().getBlockState(below);
-                        ParticleOptions dust = new BlockParticleOption(ParticleTypes.BLOCK, blockstate);
-
-                        server.sendParticles(dust, entity.getX(), entity.getY() + 0.1, entity.getZ(), 4, 0.2, 0.05, 0.2, 0.02);
-                    }
-
-                    if (entity.distanceToSqr(ambushTargetPos) < 1.1) {
-                        entity.setDeltaMovement(Vec3.ZERO);
-                        state = 3;
-                        stateTicks = 0;
-
-                        if (!level().isClientSide) {
-                            entity.level().broadcastEntityEvent(entity, (byte) 81);
-                        }
-                        if (entity.level() instanceof ServerLevel server) {
-                            BlockPos below = entity.blockPosition().below();
-                            BlockState blockstate = entity.level().getBlockState(below);
-                            ParticleOptions dust = new BlockParticleOption(ParticleTypes.BLOCK, blockstate);
-
-                            server.sendParticles(dust, entity.getX(), entity.getY() + 0.1, entity.getZ(), 4, 0.2, 0.05, 0.2, 0.02);
-                        }
-                    }
-                }
-
-                case 3 -> {
-                    stateTicks++;
-                    entity.setDeltaMovement(Vec3.ZERO);
-                    if (!level().isClientSide) {
-                        entity.level().broadcastEntityEvent(entity, (byte) 81);
-                    }
-                    if (stateTicks == 15 && !hasAttacked) {
-                        hasAttacked = true;
-
-                        boolean shouldDamage = entity.distanceToSqr(target) < ATTACK_RANGE;
-                        if (shouldDamage) {
-                            if (entity.level() instanceof ServerLevel server) {
-                                server.sendParticles(ParticleTypes.CRIT, target.getX(), target.getY() + 1, target.getZ(), 10, 0.3, 0.2, 0.3, 0.1);
-                            }
-                            target.hurt(entity.damageSources().mobAttack(entity), 6.0F);
-                        }
-                    }
-
-                    if (stateTicks >= 25) {
-                        entity.setBurrowed(false);
-                        stop();
-                    }
-                }
-
-
-                case 4 -> {
-
-                }
+    private boolean isNearSoulFire() {
+        BlockPos pos = blockPosition();
+        for (BlockPos nearby : BlockPos.betweenClosed(pos.offset(-5, -5, -5), pos.offset(5, 5, 5))) {
+            Block block = level().getBlockState(nearby).getBlock();
+            if (block == Blocks.SOUL_FIRE || block == Blocks.SOUL_TORCH || block == Blocks.SOUL_WALL_TORCH || block == Blocks.SOUL_LANTERN) {
+                return true;
             }
         }
+        return false;
+    }
 
-        @Override
-        public void stop() {
-            state = 0;
-            stateTicks = 0;
-            target = null;
-            entity.setBurrowed(false);
-            entity.setAmbushCooldown(30);
-            hasAttacked = false;
-            entity.setNoCollision(false);
+    @Override
+    public void handleDamageEvent(DamageSource damageSource) {
+        super.handleDamageEvent(damageSource);
+        if (!(damageSource.getDirectEntity() instanceof Player player)) return;
 
-            if (!level().isClientSide) {
-                entity.level().broadcastEntityEvent(entity, (byte) 87);
+        var stack = damageSource.getWeaponItem();
+
+        if (stack.getItem() instanceof AxeItem) {
+            if (!isWaxed() && this.getTarnishLevel() > 0 && this.getTarnishLevel() != 4) {
+                if (level().random.nextFloat() < 0.05f) {
+                    this.decreaseTarnishLevel();
+                    handleEffects(player);
+                }
             }
         }
     }
 
     @Override
-    public boolean isPushable() {
-        return !noCollision && super.isPushable();
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        int level = getTarnishLevel();
+
+        if (stack.is(Items.SOUL_TORCH)) {
+            if (!isWaxed()) {
+                setTarnishLevel(CRYSTALLIZED);
+                if (!player.isCreative()) {
+                    stack.shrink(1);
+                }
+                this.level().playSound(player, blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0F, 0.8F);
+                RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 25, 0.5F, 1.75F, ParticleTypes.SOUL_FIRE_FLAME);
+                return InteractionResult.sidedSuccess(level().isClientSide());
+            }
+        }
+
+        if (stack.is(Items.HONEYCOMB) && !isWaxed()) {
+            setWaxed(true);
+            if (!player.isCreative()) stack.shrink(1);
+            this.level().playSound(player, blockPosition(), SoundEvents.HONEYCOMB_WAX_ON, SoundSource.PLAYERS, 1.0F, 0.8F);
+            RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 15, 0.5F, 1.75F, ParticleTypes.HAPPY_VILLAGER);
+            return InteractionResult.sidedSuccess(level().isClientSide());
+        }
+
+        if(stack.is(ItemTags.AXES) && isWaxed()){
+            setWaxed(false);
+            handleScrapeEffects(player);
+        }
+
+        if (stack.is(RNItems.BRONZE_POWDER.get())) {
+            if (!isWaxed() && level < 3) {
+                if (!player.isCreative()) {
+                    stack.shrink(1);
+                }
+
+                if (level().random.nextFloat() < 0.1F) {
+                    increaseTarnishLevel();
+                    return InteractionResult.sidedSuccess(level().isClientSide());
+                }
+                handleEffects(player);
+
+                return InteractionResult.sidedSuccess(level().isClientSide());
+            }
+        }
+
+
+        return super.mobInteract(player, hand);
+    }
+
+    private void handleEffects(Player player) {
+        this.level().playSound(player, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 0.8F);
+        RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 15, 0.5F, 1.75F, ParticleTypes.HAPPY_VILLAGER);
+    }
+
+    private void handleScrapeEffects(Player player) {
+        this.level().playSound(player, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 0.8F);
+        RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 15, 0.5F, 1.75F, ParticleTypes.WAX_OFF);
     }
 
     @Override
-    public boolean canBeCollidedWith() {
-        return !noCollision && super.canBeCollidedWith();
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("Waxed", isWaxed());
     }
 
-    public class CrystallizedOrbitGoal extends Goal {
-        private final BronzeEntity entity;
-        private Player target;
-
-        private Vec3 moveDirection = Vec3.ZERO;
-        private int blocksToMove = 0;
-        private int blocksMoved = 0;
-
-        private static final double MIN_DISTANCE = 1.5;
-        private static final double MAX_DISTANCE = 6.0;
-        private static final double MOVE_SPEED = 0.32;
-
-        public CrystallizedOrbitGoal(BronzeEntity entity) {
-            this.entity = entity;
-            this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
-        }
-
-        @Override
-        public boolean canUse() {
-            if (entity.getTarnishLevel() != 4) return false;
-
-            Player nearestPlayer = entity.level().getNearestPlayer(entity, MAX_DISTANCE + 5);
-            if (nearestPlayer != null && !nearestPlayer.isCreative() && !nearestPlayer.isSpectator()) {
-                this.target = nearestPlayer;
-                return true;
-            }
-
-            return false;
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return entity.getTarnishLevel() == 4 && target != null && target.isAlive();
-        }
-
-        @Override
-        public void start() {
-            entity.getNavigation().stop();
-            pickNewDirection();
-        }
-
-        @Override
-        public void tick() {
-            if (entity.getTarnishLevel() != 4 || target == null) {
-                stop();
-                return;
-            }
-
-            double distanceToPlayer = entity.distanceTo(target);
-
-            boolean inDonut = distanceToPlayer >= MIN_DISTANCE && distanceToPlayer <= MAX_DISTANCE;
-
-            if (!inDonut) {
-                satisfyRequirements(distanceToPlayer);
-            } else {
-                if (blocksMoved >= blocksToMove) {
-                    pickNewDirection();
-                } else {
-                    moveInDirection();
-                    blocksMoved++;
-                }
-            }
-        }
-
-        private void satisfyRequirements(double currentDistance) {
-            Vec3 toPlayer = target.position().subtract(entity.position()).normalize();
-
-            if (currentDistance < MIN_DISTANCE) {
-                entity.setDeltaMovement(toPlayer.scale(-MOVE_SPEED));
-            } else if (currentDistance > MAX_DISTANCE) {
-                entity.setDeltaMovement(toPlayer.scale(MOVE_SPEED));
-            }
-
-            entity.lookAt(EntityAnchorArgument.Anchor.EYES, target.position());
-        }
-
-        private void pickNewDirection() {
-            double angle = entity.getRandom().nextDouble() * Math.PI * 2;
-            moveDirection = new Vec3(
-                    Math.cos(angle),
-                    0,
-                    Math.sin(angle)
-            ).normalize();
-
-            blocksToMove = 2 + entity.getRandom().nextInt(9);
-            blocksMoved = 0;
-        }
-
-        private void moveInDirection() {
-            entity.setDeltaMovement(moveDirection.scale(MOVE_SPEED));
-
-            entity.lookAt(EntityAnchorArgument.Anchor.EYES, target.position());
-        }
-
-        @Override
-        public void stop() {
-            entity.setDeltaMovement(Vec3.ZERO);
-            target = null;
-            moveDirection = Vec3.ZERO;
-            blocksToMove = 0;
-            blocksMoved = 0;
-        }
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        setWaxed(tag.getBoolean("Waxed"));
     }
 }

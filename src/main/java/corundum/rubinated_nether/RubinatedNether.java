@@ -10,8 +10,9 @@ import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
 import corundum.rubinated_nether.data.Datagen;
-import corundum.rubinated_nether.events.RNAnvilRepairHandler;
+import corundum.rubinated_nether.event.RNAnvilRepairHandler;
 import corundum.rubinated_nether.misc.DatapackRegistry;
+import corundum.rubinated_nether.misc.RNAttachments;
 import corundum.rubinated_nether.utils.RNConfig;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.minecraft.resources.ResourceLocation;
@@ -48,6 +49,7 @@ public class RubinatedNether {
 	private static final ImmutableList<DeferredRegister<?>> REGISTRIES = ImmutableList.of(
 			RNBlocks.BLOCKS,
 			RNItems.ITEMS,
+            RNAttachments.ATTACHMENT_TYPES,
 			RNArmorMaterials.ARMOR_MATERIALS,
 			RNEntityCreator.ENTITY_TYPES,
 			RNParticleTypes.PARTICLES,

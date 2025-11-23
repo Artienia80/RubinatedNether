@@ -1,4 +1,4 @@
-package corundum.rubinated_nether.events;
+package corundum.rubinated_nether.event;
 
 import corundum.rubinated_nether.content.enchantment.RNEnchantments;
 import corundum.rubinated_nether.content.RNItems;
@@ -6,11 +6,9 @@ import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNTags;
 import fuzs.puzzleslib.api.event.v1.core.EventResult;
 import fuzs.puzzleslib.api.event.v1.entity.player.AnvilEvents;
-import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 public class RNAnvilRepairHandler {
