@@ -1,5 +1,7 @@
 {
   "itemGroup.examplemod": "Rubinated Nether",
+  "itemGroup.rubinated_nether_general": "Rubinated Nether丨通用",
+  "itemGroup.rubinated_nether_bronze": "Rubinated Nether丨青铜",
 
   "block.rubinated_nether.molten_ruby_ore": "炽融红宝石矿石",
   "block.rubinated_nether.nether_ruby_ore": "下界红宝石矿石",
@@ -17,8 +19,6 @@
 
   "block.rubinated_nether.freezer": "冷冻器",
 
-  "block.rubinated_nether.ruby_lantern": "红宝石灯笼",
-  "block.rubinated_nether.ruby_chandelier": "红宝石吊灯",
   "block.rubinated_nether.lava_lamp": "炽融红宝石熔岩灯",
   "block.rubinated_nether.ruby_brazier": "红宝石火盆",
 
@@ -61,7 +61,6 @@
 
   "block.rubinated_nether.shrine_stone_coffer": "储物盒",
 
-  "block.rubinated_nether.ruby_laser": "红宝石激光器",
   "item.rubinated_nether.ruby_lens": "红宝石眼镜",
 
   "block.rubinated_nether.runestone": "符文石",
@@ -138,17 +137,17 @@
   "item.rubinated_nether.waxed_crystallized_cut_bronze_bricks_slab": "涂蜡的晶化切制青铜砖台阶",
   "item.rubinated_nether.waxed_crystallized_cut_bronze_bricks_stairs": "涂蜡的晶化切制青铜砖楼梯",
 
-  "block.rubinated_nether.bronze_bulb": "青铜灯",
-  "block.rubinated_nether.discolored_bronze_bulb": "脱色的青铜灯",
-  "block.rubinated_nether.corroded_bronze_bulb": "腐蚀的青铜灯",
-  "block.rubinated_nether.tarnished_bronze_bulb": "褪色的青铜灯",
-  "block.rubinated_nether.crystallized_bronze_bulb": "晶化的青铜灯",
+  "block.rubinated_nether.bronze_bulb": "青铜灯泡",
+  "block.rubinated_nether.discolored_bronze_bulb": "脱色的青铜灯泡",
+  "block.rubinated_nether.corroded_bronze_bulb": "腐蚀的青铜灯泡",
+  "block.rubinated_nether.tarnished_bronze_bulb": "褪色的青铜灯泡",
+  "block.rubinated_nether.crystallized_bronze_bulb": "晶化的青铜灯泡",
 
-  "item.rubinated_nether.waxed_bronze_bulb": "涂蜡的青铜灯",
-  "item.rubinated_nether.waxed_discolored_bronze_bulb": "涂蜡的脱色青铜灯",
-  "item.rubinated_nether.waxed_corroded_bronze_bulb": "涂蜡的腐蚀青铜灯",
-  "item.rubinated_nether.waxed_tarnished_bronze_bulb": "涂蜡的褪色青铜灯",
-  "item.rubinated_nether.waxed_crystallized_bronze_bulb": "涂蜡的晶化青铜灯",
+  "item.rubinated_nether.waxed_bronze_bulb": "涂蜡的青铜灯泡",
+  "item.rubinated_nether.waxed_discolored_bronze_bulb": "涂蜡的脱色青铜灯泡",
+  "item.rubinated_nether.waxed_corroded_bronze_bulb": "涂蜡的腐蚀青铜灯泡",
+  "item.rubinated_nether.waxed_tarnished_bronze_bulb": "涂蜡的褪色青铜灯泡",
+  "item.rubinated_nether.waxed_crystallized_bronze_bulb": "涂蜡的晶化青铜灯泡",
 
   "block.rubinated_nether.bronze_grate": "青铜格栅",
   "block.rubinated_nether.discolored_bronze_grate": "脱色的青铜格栅",
@@ -162,8 +161,79 @@
   "item.rubinated_nether.waxed_tarnished_bronze_grate": "涂蜡的褪色青铜格栅",
   "item.rubinated_nether.waxed_crystallized_bronze_grate": "涂蜡的晶化青铜格栅",
 
+  "block.rubinated_nether.bronze_lantern": "青铜灯笼",
+  "block.rubinated_nether.discolored_bronze_lantern": "脱色的青铜灯笼",
+  "block.rubinated_nether.corroded_bronze_lantern": "腐蚀的青铜灯笼",
+  "block.rubinated_nether.tarnished_bronze_lantern": "褪色的青铜灯笼",
+  "block.rubinated_nether.crystallized_bronze_lantern": "晶化的青铜灯笼",
+
+  "item.rubinated_nether.waxed_bronze_lantern": "涂蜡的青铜灯笼",
+  "item.rubinated_nether.waxed_discolored_bronze_lantern": "涂蜡的脱色青铜灯笼",
+  "item.rubinated_nether.waxed_corroded_bronze_lantern": "涂蜡的腐蚀青铜灯笼",
+  "item.rubinated_nether.waxed_tarnished_bronze_lantern": "涂蜡的褪色青铜灯笼",
+  "item.rubinated_nether.waxed_crystallized_bronze_lantern": "涂蜡的晶化青铜灯笼",
+
+  "block.rubinated_nether.bronze_chandelier": "青铜吊灯",
+  "block.rubinated_nether.discolored_bronze_chandelier": "脱色的青铜吊灯",
+  "block.rubinated_nether.corroded_bronze_chandelier": "腐蚀的青铜吊灯",
+  "block.rubinated_nether.tarnished_bronze_chandelier": "褪色的青铜吊灯",
+  "block.rubinated_nether.crystallized_bronze_chandelier": "晶化的青铜吊灯",
+
+  "item.rubinated_nether.waxed_bronze_chandelier": "涂蜡的青铜吊灯",
+  "item.rubinated_nether.waxed_discolored_bronze_chandelier": "涂蜡的脱色青铜吊灯",
+  "item.rubinated_nether.waxed_corroded_bronze_chandelier": "涂蜡的腐蚀青铜吊灯",
+  "item.rubinated_nether.waxed_tarnished_bronze_chandelier": "涂蜡的褪色青铜吊灯",
+  "item.rubinated_nether.waxed_crystallized_bronze_chandelier": "涂蜡的晶化青铜吊灯",
+
+  "block.rubinated_nether.bronze_chain": "青铜锁链",
+  "block.rubinated_nether.discolored_bronze_chain": "脱色的青铜锁链",
+  "block.rubinated_nether.corroded_bronze_chain": "腐蚀的青铜锁链",
+  "block.rubinated_nether.tarnished_bronze_chain": "褪色的青铜锁链",
+  "block.rubinated_nether.crystallized_bronze_chain": "晶化的青铜锁链",
+
+  "item.rubinated_nether.waxed_bronze_chain": "涂蜡的青铜锁链",
+  "item.rubinated_nether.waxed_discolored_bronze_chain": "涂蜡的脱色青铜锁链",
+  "item.rubinated_nether.waxed_corroded_bronze_chain": "涂蜡的腐蚀青铜锁链",
+  "item.rubinated_nether.waxed_tarnished_bronze_chain": "涂蜡的褪色青铜锁链",
+  "item.rubinated_nether.waxed_crystallized_bronze_chain": "涂蜡的晶化青铜锁链",
+
+  "block.rubinated_nether.bronze_lamp": "青铜灯",
+  "block.rubinated_nether.discolored_bronze_lamp": "脱色的青铜灯",
+  "block.rubinated_nether.corroded_bronze_lamp": "腐蚀的青铜灯",
+  "block.rubinated_nether.tarnished_bronze_lamp": "褪色的青铜灯",
+  "block.rubinated_nether.crystallized_bronze_lamp": "晶化的青铜灯",
+
+  "item.rubinated_nether.waxed_bronze_lamp": "涂蜡的青铜灯",
+  "item.rubinated_nether.waxed_discolored_bronze_lamp": "涂蜡的脱色青铜灯",
+  "item.rubinated_nether.waxed_corroded_bronze_lamp": "涂蜡的腐蚀青铜灯",
+  "item.rubinated_nether.waxed_tarnished_bronze_lamp": "涂蜡的褪色青铜灯",
+  "item.rubinated_nether.waxed_crystallized_bronze_lamp": "涂蜡的晶化青铜灯",
+
+  "block.rubinated_nether.bronze_laser": "青铜激光器",
+  "block.rubinated_nether.discolored_bronze_laser": "脱色的青铜激光器",
+  "block.rubinated_nether.corroded_bronze_laser": "腐蚀的青铜激光器",
+  "block.rubinated_nether.tarnished_bronze_laser": "褪色的青铜激光器",
+  "block.rubinated_nether.crystallized_bronze_laser": "晶化的青铜激光器",
+
+  "item.rubinated_nether.waxed_bronze_laser": "涂蜡的青铜激光器",
+  "item.rubinated_nether.waxed_discolored_bronze_laser": "涂蜡的脱色青铜激光器",
+  "item.rubinated_nether.waxed_corroded_bronze_laser": "涂蜡的腐蚀青铜激光器",
+  "item.rubinated_nether.waxed_tarnished_bronze_laser": "涂蜡的褪色青铜激光器",
+  "item.rubinated_nether.waxed_crystallized_bronze_laser": "涂蜡的晶化青铜激光器",
+
+  "block.rubinated_nether.copper_laser": "铜激光器",
+  "block.rubinated_nether.exposed_copper_laser": "斑驳的铜激光器",
+  "block.rubinated_nether.weathered_copper_laser": "锈蚀的铜激光器",
+  "block.rubinated_nether.oxidized_copper_laser": "氧化的铜激光器",
+  "block.rubinated_nether.waxed_copper_laser": "涂蜡的铜激光器",
+  "block.rubinated_nether.waxed_exposed_copper_laser": "涂蜡的斑驳铜激光器",
+  "block.rubinated_nether.waxed_weathered_copper_laser": "涂蜡的锈蚀铜激光器",
+  "block.rubinated_nether.waxed_oxidized_copper_laser": "涂蜡的氧化铜激光器",
+
   "item.rubinated_nether.bronze_rod": "青铜棒",
   "item.rubinated_nether.bronze_powder": "青铜粉",
+  "item.rubinated_nether.bronze_scrap": "青铜碎片",
+
   "item.rubinated_nether.bronze_shot": "青铜掷弹",
 
   "item.rubinated_nether.bronze_drill": "青铜手钻",
@@ -228,6 +298,21 @@
   "enchantment.rubinated_nether.buoyancy_curse": "轻飘诅咒",
   "enchantment.rubinated_nether.sinking_curse": "沉壤诅咒",
 
+  "enchantment.rubinated_nether.deficiency_curse.desc": "减慢工具的挖掘速度。",
+  "enchantment.rubinated_nether.misfortune_curse.desc": "破坏方块时可能不会产生掉落物。",
+  "enchantment.rubinated_nether.fragility_curse.desc": "加快工具的耐久度损失速率。",
+  "enchantment.rubinated_nether.bluntness_curse.desc": "减少物品的伤害。",
+  "enchantment.rubinated_nether.ravaging_curse.desc": "击杀生物时可能不会产生战利品。",
+  "enchantment.rubinated_nether.leeching_curse.desc": "受到敌人的攻击时会治疗敌人。",
+  "enchantment.rubinated_nether.exposure_curse.desc": "减少物品提供的护甲值。",
+  "enchantment.rubinated_nether.dullness_curse.desc": "减少射出的箭的伤害。",
+  "enchantment.rubinated_nether.hooking_curse.desc": "射出的箭会按其击退力度将目标拉向玩家。",
+  "enchantment.rubinated_nether.slow_charge_curse.desc": "减慢弩的装填速度。",
+  "enchantment.rubinated_nether.crooked_shot_curse.desc": "让弩的射击变得更不精准。",
+  "enchantment.rubinated_nether.recoil_curse.desc": "掷出三叉戟时朝反方向推动玩家。",
+  "enchantment.rubinated_nether.buoyancy_curse.desc": "减少物品的伤害。",
+  "enchantment.rubinated_nether.sinking_curse.desc": "下落攻击会摧毁玩家周围的方块。",
+
   "item.rubinated_nether.ritual_offering": "仪式祭品",
   "item.rubinated_nether.winding_key": "发条钥匙",
 
@@ -276,9 +361,6 @@
 
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
 
-  "death.attack.fallingBlock": "%1$s落入了坠落吊灯的怀抱",
-  "death.attack.fallingBlock.player": "%1$s在与%2$s战斗时落入了坠落吊灯的怀抱",
-
   "rubinated_nether.midnightconfig.category.brazier": "火盆",
   "rubinated_nether.midnightconfig.category.chandelier": "吊灯",
   "rubinated_nether.midnightconfig.category.client": "客户端",
@@ -286,6 +368,21 @@
   "entity.rubinated_nether.bronze": "青铜人",
 
   "effect.rubinated_nether.bronze_diseased": "青铜疫染",
-  "effect.rubinated_nether.blessed": "福佑"
+  "effect.rubinated_nether.blessed": "福佑",
+
+  "death.attack.chandelier": "%1$s落入了坠落吊灯的怀抱",
+  "death.attack.chandelier.player": "%1$s在与%2$s战斗时落入了坠落吊灯的怀抱",
+
+  "death.attack.bronze_diseased": "%1$s因为青铜疫病而晶化了",
+  "death.attack.bronze_diseased.player": "%1$s在与%2$s战斗时因为青铜疫病而晶化了",
+
+  "commands.rubinate.failed": "什么都没有发生。可能是目标手中没有物品，或是该物品不适用于耀红符印。",
+  "commands.rubinate.failed.entity": "此命令不接受%s实体",
+  "commands.rubinate.failed.incompatible": "%s不支持该耀红符印",
+  "commands.rubinate.failed.itemless": "%s未持有物品",
+  "commands.rubinate.failed.invalid": "未知耀红符印：%s",
+  "commands.rubinate.success.multiple": "已为%2$s个实体施加%1$s耀红符印",
+  "commands.rubinate.success.single": "已为%2$s的物品施加%1$s耀红符印"
+
 
 }
