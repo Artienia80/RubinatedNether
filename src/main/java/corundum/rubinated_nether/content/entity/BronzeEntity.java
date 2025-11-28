@@ -722,8 +722,8 @@ public class BronzeEntity extends Monster {
     }
 
     public void setTarnishLevel(int level) {
-        PacketDistributor.sendToAllPlayers(new BronzeTarnishingData(this.getId(), level));
-        this.handleLevelChange(level);
+        if(!this.level().isClientSide()) PacketDistributor.sendToPlayersTrackingEntityAndSelf(this, new BronzeTarnishingData(this.getId(), level));
+        handleLevelChange(level);
     }
 
     public void handleLevelChange(int level) {
