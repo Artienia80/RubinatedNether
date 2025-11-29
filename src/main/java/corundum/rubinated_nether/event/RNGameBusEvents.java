@@ -9,14 +9,17 @@ import corundum.rubinated_nether.content.blocks.ChandelierBlock;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.effect.renderer.BronzeDiseasedEffectOverlay;
+import corundum.rubinated_nether.content.entity.BronzeEntity;
 import corundum.rubinated_nether.content.items.DrillItem;
 import corundum.rubinated_nether.misc.DatapackRegistry;
+import corundum.rubinated_nether.networking.BronzeTarnishingData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,6 +30,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.slf4j.Logger;
 
 import java.util.HashMap;
@@ -182,6 +186,19 @@ public class RNGameBusEvents {
 		RenderSystem.enableDepthTest();
 		RenderSystem.disableBlend();
 	}
+
+    @SubscribeEvent
+    public static void onStartTracking(PlayerEvent.StartTracking event) {
+        // 1. Check if the entity being tracked is your BronzeEntity
+        if (event.getTarget() instanceof BronzeEntity bronzeEntity) {
+            int currentLevel = bronzeEntity.getTarnishLevel();
+
+            PacketDistributor.sendToPlayer(
+                    (ServerPlayer) event.getEntity(),
+                    new BronzeTarnishingData(bronzeEntity.getId(), currentLevel)
+            );
+        }
+    }
 
 	private static void blitFullScreen() {
 		Minecraft mc = Minecraft.getInstance();

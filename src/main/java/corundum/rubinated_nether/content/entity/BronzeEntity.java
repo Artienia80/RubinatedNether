@@ -722,14 +722,15 @@ public class BronzeEntity extends Monster {
     }
 
     public void setTarnishLevel(int level) {
-        if(!this.level().isClientSide()) PacketDistributor.sendToPlayersTrackingEntityAndSelf(this, new BronzeTarnishingData(this.getId(), level));
-        handleLevelChange(level);
+        this.setData(RNAttachments.TARNISH_LEVEL.get(), level);
+        if(!this.level().isClientSide())
+            PacketDistributor.sendToPlayersTrackingEntity(this, new BronzeTarnishingData(this.getId(), level));
     }
 
-    public void handleLevelChange(int level) {
-        this.setData(RNAttachments.TARNISH_LEVEL.get(), level);
-        this.setTarget(null);
-    }
+//    public void handleLevelChange(int level) {
+//        this.setData(RNAttachments.TARNISH_LEVEL.get(), level);
+//        this.setTarget(null);
+//    }
 
     public void increaseTarnishLevel() {
         this.setTarnishLevel(this.getTarnishLevel() + 1);
@@ -777,10 +778,11 @@ public class BronzeEntity extends Monster {
 
         if (stack.getItem() instanceof AxeItem) {
             if (!isWaxed() && this.getTarnishLevel() > 0 && this.getTarnishLevel() != 4) {
-                if (level().random.nextFloat() < 0.05f) {
-                    this.decreaseTarnishLevel();
-                    handleEffects(player);
-                }
+                if(!level().isClientSide())
+                    if (level().random.nextFloat() < 0.05f) {
+                        this.decreaseTarnishLevel();
+                        handleVFX(player);
+                    }
             }
         }
     }
@@ -792,7 +794,8 @@ public class BronzeEntity extends Monster {
 
         if (stack.is(Items.SOUL_TORCH)) {
             if (!isWaxed()) {
-                setTarnishLevel(CRYSTALLIZED);
+                if(!level().isClientSide())
+                    setTarnishLevel(CRYSTALLIZED);
                 if (!player.isCreative()) {
                     stack.shrink(1);
                 }
@@ -821,11 +824,12 @@ public class BronzeEntity extends Monster {
                     stack.shrink(1);
                 }
 
-                if (level().random.nextFloat() < 0.1F) {
-                    increaseTarnishLevel();
-                    return InteractionResult.sidedSuccess(level().isClientSide());
-                }
-                handleEffects(player);
+                if(!level().isClientSide())
+                    if (level().random.nextFloat() < 0.1F) {
+                        increaseTarnishLevel();
+                        return InteractionResult.sidedSuccess(level().isClientSide());
+                    }
+                handleVFX(player);
 
                 return InteractionResult.sidedSuccess(level().isClientSide());
             }
@@ -835,7 +839,7 @@ public class BronzeEntity extends Monster {
         return super.mobInteract(player, hand);
     }
 
-    private void handleEffects(Player player) {
+    private void handleVFX(Player player) {
         this.level().playSound(player, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 0.8F);
         RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 15, 0.5F, 1.75F, ParticleTypes.HAPPY_VILLAGER);
     }
