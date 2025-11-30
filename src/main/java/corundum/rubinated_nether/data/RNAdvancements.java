@@ -9,16 +9,13 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger;
-import net.minecraft.advancements.critereon.LocationPredicate;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
@@ -62,8 +59,19 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("freezer", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.FREEZER.get()))
 					.save(consumer, RubinatedNether.id( "obtain_freezer"), existingFileHelper);
 
-			AdvancementHolder frostedIce = Advancement.Builder.advancement()
+			AdvancementHolder powderSnow = Advancement.Builder.advancement()
 					.parent(freezer)
+					.display(Blocks.POWDER_SNOW,
+							Component.translatable("advancements.rubinated_nether.obtain_powder_snow.title"),
+							Component.translatable("advancements.rubinated_nether.obtain_powder_snow.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.OR)
+					.addCriterion("powder_snow", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.POWDER_SNOW))
+					.save(consumer, RubinatedNether.id( "obtain_powder_snow"), existingFileHelper);
+
+			AdvancementHolder frostedIce = Advancement.Builder.advancement()
+					.parent(powderSnow)
 					.display(Blocks.FROSTED_ICE,
 							Component.translatable("advancements.rubinated_nether.obtain_frosted_ice.title"),
 							Component.translatable("advancements.rubinated_nether.obtain_frosted_ice.description"),
@@ -73,16 +81,27 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("frosted_ice", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.FROSTED_ICE))
 					.save(consumer, RubinatedNether.id( "obtain_frosted_ice"), existingFileHelper);
 
-			AdvancementHolder rubinatedBlackstone = Advancement.Builder.advancement()
-					.parent(AdvancementSubProvider.createPlaceholder("nether/find_bastion"))
-					.display(RNBlocks.RUBINATED_BLACKSTONE.get(),
-							Component.translatable("advancements.rubinated_nether.obtain_rubinated_blackstone.title"),
-							Component.translatable("advancements.rubinated_nether.obtain_rubinated_blackstone.description"),
+			AdvancementHolder dryIce = Advancement.Builder.advancement()
+					.parent(frostedIce)
+					.display(Blocks.FROSTED_ICE,
+							Component.translatable("advancements.rubinated_nether.obtain_dry_ice.title"),
+							Component.translatable("advancements.rubinated_nether.obtain_dry_ice.description"),
 							null,
 							AdvancementType.TASK, true, true, false)
 					.requirements(AdvancementRequirements.Strategy.OR)
-					.addCriterion("rubinated_blackstone", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.RUBINATED_BLACKSTONE.get()))
-					.save(consumer, RubinatedNether.id( "obtain_rubinated_blackstone"), existingFileHelper);
+					.addCriterion("dry_ice", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.DRY_ICE))
+					.save(consumer, RubinatedNether.id( "obtain_dry_ice"), existingFileHelper);
+
+//			AdvancementHolder rubinatedBlackstone = Advancement.Builder.advancement()
+//					.parent(AdvancementSubProvider.createPlaceholder("nether/find_bastion"))
+//					.display(RNBlocks.RUBINATED_BLACKSTONE.get(),
+//							Component.translatable("advancements.rubinated_nether.obtain_rubinated_blackstone.title"),
+//							Component.translatable("advancements.rubinated_nether.obtain_rubinated_blackstone.description"),
+//							null,
+//							AdvancementType.TASK, true, true, false)
+//					.requirements(AdvancementRequirements.Strategy.OR)
+//					.addCriterion("rubinated_blackstone", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.RUBINATED_BLACKSTONE.get()))
+//					.save(consumer, RubinatedNether.id("obtain_rubinated_blackstone"), existingFileHelper);
 
 			AdvancementHolder moltenRuby = Advancement.Builder.advancement()
 					.parent(freezer)
@@ -122,29 +141,6 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("ornate_ruby_glass_pane", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.ORNATE_RUBY_GLASS_PANE.get()))
 					.save(consumer, RubinatedNether.id( "obtain_ruby_glass"), existingFileHelper);
 
-//			AdvancementHolder rubyLaser = Advancement.Builder.advancement()
-//					.parent(rubyGlass)
-//					.display(RNBlocks.BRONZE_LASER.get(),
-//							Component.translatable("advancements.rubinated_nether.obtain_ruby_laser.title"),
-//							Component.translatable("advancements.rubinated_nether.obtain_ruby_laser.description"),
-//							null,
-//							AdvancementType.TASK, true, true, false)
-//					.requirements(AdvancementRequirements.Strategy.OR)
-//					.addCriterion("ruby_laser", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.BRONZE_LASER.get()))
-//					.save(consumer, RubinatedNether.id( "obtain_ruby_laser"), existingFileHelper);
-
-//			AdvancementHolder rubyLights = Advancement.Builder.advancement()
-//					.parent(moltenRuby)
-//					.display(RNBlocks.LAVA_LAMP.get(),
-//							Component.translatable("advancements.rubinated_nether.obtain_ruby_lights.title"),
-//							Component.translatable("advancements.rubinated_nether.obtain_ruby_lights.description"),
-//							null,
-//							AdvancementType.TASK, true, true, false)
-//					.requirements(AdvancementRequirements.Strategy.AND)
-//					.addCriterion("ruby_lantern", InventoryChangeTrigger.TriggerInstance.hasItems(RNTags.Blocks.RUBY_GLASS))
-//					.addCriterion("ruby_chandelier", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.CHANDELIER.get()))
-//					.addCriterion("ruby_lamp", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.LAVA_LAMP.get()))
-//					.save(consumer, RubinatedNether.id( "obtain_ruby_lights"), existingFileHelper);
 
 			AdvancementHolder brazier = Advancement.Builder.advancement()
 					.parent(moltenRuby)
@@ -168,7 +164,7 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("ruby_lens", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.RUBY_LENS.get()))
 					.save(consumer, RubinatedNether.id( "obtain_ruby_lens"), existingFileHelper);
 
-			AdvancementHolder sacredShrine = Advancement.Builder.advancement()
+			AdvancementHolder enterShrine = Advancement.Builder.advancement()
 					.parent(AdvancementSubProvider.createPlaceholder("nether/root"))
 					.display(RNBlocks.SHRINE_STONE_BRICKS.get(),
 							Component.translatable("advancements.rubinated_nether.enter_shrine.title"),
@@ -179,20 +175,8 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("shrine_stone", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.SHRINE_STONE.get()))
 					.save(consumer, RubinatedNether.id( "enter_shrine"), existingFileHelper);
 
-			AdvancementHolder rubinousRitual = Advancement.Builder.advancement()
-					.parent(sacredShrine)
-					.display(RNItems.RUBY_ITEM.get(),
-							Component.translatable("advancements.rubinated_nether.rubinous_ritual.title"),
-							Component.translatable("advancements.rubinated_nether.rubinous_ritual.description"),
-							null,
-							AdvancementType.TASK, true, true, true)
-					.requirements(AdvancementRequirements.Strategy.OR)
-					.addCriterion("placeholder", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.RUNESTONE.get()))
-					.save(consumer, RubinatedNether.id( "rubinous_ritual"), existingFileHelper);
-
-
 			AdvancementHolder bronzeRod = Advancement.Builder.advancement()
-					.parent(sacredShrine)
+					.parent(enterShrine)
 					.display(RNItems.BRONZE_ROD.get(),
 							Component.translatable("advancements.rubinated_nether.bronze_rod.title"),
 							Component.translatable("advancements.rubinated_nether.bronze_rod.description"),
@@ -202,28 +186,77 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("bronze_rod", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.BRONZE_ROD.get()))
 					.save(consumer, RubinatedNether.id( "obtain_bronze_rod"), existingFileHelper);
 
-			AdvancementHolder bronzeBlock = Advancement.Builder.advancement()
+			AdvancementHolder ritualOffering = Advancement.Builder.advancement()
 					.parent(bronzeRod)
-					.display(RNBlocks.BRONZE_BLOCK.get(),
-							Component.translatable("advancements.rubinated_nether.bronze_block.title"),
-							Component.translatable("advancements.rubinated_nether.bronze_block.description"),
+					.display(RNItems.RITUAL_OFFERING.get(),
+							Component.translatable("advancements.rubinated_nether.offer_ritual_offering.title"),
+							Component.translatable("advancements.rubinated_nether.offer_ritual_offering.description"),
 							null,
 							AdvancementType.TASK, true, true, false)
-					.requirements(AdvancementRequirements.Strategy.OR)
-					.addCriterion("bronze_block", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.BRONZE_BLOCK.get()))
-					.save(consumer, RubinatedNether.id( "obtain_bronze_block"), existingFileHelper);
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible_nether",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setDimension(net.minecraft.world.level.Level.NETHER)))
+					.addCriterion("impossible_end",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setDimension(net.minecraft.world.level.Level.END)))
+					.save(consumer, RubinatedNether.id("offer_ritual_offering"), existingFileHelper);
 
-			AdvancementHolder shrineSentinel = Advancement.Builder.advancement()
-					.parent(bronzeRod)
-					.display(RNItems.BRONZE_POWDER.get(),
-							Component.translatable("advancements.rubinated_nether.shrine_sentinel.title"),
-							Component.translatable("advancements.rubinated_nether.shrine_sentinel.description"),
+			AdvancementHolder inscribeRune = Advancement.Builder.advancement()
+					.parent(ritualOffering)
+					.display(RNItems.RUNE.get(),
+							Component.translatable("advancements.rubinated_nether.inscribe_rune.title"),
+							Component.translatable("advancements.rubinated_nether.inscribe_rune.description"),
 							null,
 							AdvancementType.TASK, true, true, false)
-					.requirements(AdvancementRequirements.Strategy.OR)
-					.addCriterion("placeholder", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.BRONZE_POWDER.get()))
-					.save(consumer, RubinatedNether.id( "obtain_bronze_statue"), existingFileHelper);
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible_nether",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setDimension(net.minecraft.world.level.Level.NETHER)))
+					.addCriterion("impossible_end",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setDimension(net.minecraft.world.level.Level.END)))
+					.save(consumer, RubinatedNether.id("inscribe_rune"), existingFileHelper);
 
+			AdvancementHolder insertRune = Advancement.Builder.advancement()
+					.parent(inscribeRune)
+					.display(RNItems.PRIDE_RUNE.get(),
+							Component.translatable("advancements.rubinated_nether.insert_rune.title"),
+							Component.translatable("advancements.rubinated_nether.insert_rune.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible_nether",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setDimension(net.minecraft.world.level.Level.NETHER)))
+					.addCriterion("impossible_end",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setDimension(net.minecraft.world.level.Level.END)))
+					.save(consumer, RubinatedNether.id("insert_rune"), existingFileHelper);
+
+			AdvancementHolder rubinateItem = Advancement.Builder.advancement()
+					.parent(insertRune)
+					.display(RNItems.WINDING_KEY.get(),
+							Component.translatable("advancements.rubinated_nether.rubinate_item.title"),
+							Component.translatable("advancements.rubinated_nether.rubinate_item.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible_nether",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setDimension(net.minecraft.world.level.Level.NETHER)))
+					.addCriterion("impossible_end",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setDimension(net.minecraft.world.level.Level.END)))
+					.save(consumer, RubinatedNether.id("rubinate_item"), existingFileHelper);
 		}
 	}
 

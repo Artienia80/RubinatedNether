@@ -1,0 +1,33 @@
+{
+  "parent": "rubinated_nether:obtain_freezer",
+  "criteria": {
+    "powder_snow": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:powder_snow"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.obtain_powder_snow.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:powder_snow"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.obtain_powder_snow.title"
+    }
+  },
+  "requirements": [
+    [
+      "powder_snow"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

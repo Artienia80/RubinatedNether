@@ -1,0 +1,58 @@
+{
+  "parent": "rubinated_nether:offer_ritual_offering",
+  "criteria": {
+    "impossible_end": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "dimension": "minecraft:the_end"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "impossible_nether": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "dimension": "minecraft:the_nether"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.inscribe_rune.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:rune"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.inscribe_rune.title"
+    }
+  },
+  "requirements": [
+    [
+      "impossible_nether"
+    ],
+    [
+      "impossible_end"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

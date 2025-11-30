@@ -1,5 +1,5 @@
 {
-  "parent": "rubinated_nether:obtain_freezer",
+  "parent": "rubinated_nether:obtain_powder_snow",
   "criteria": {
     "frosted_ice": {
       "conditions": {
