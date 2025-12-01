@@ -1,5 +1,5 @@
 {
-  "parent": "rubinated_nether:obtain_bronze_rod",
+  "parent": "rubinated_nether:enter_shrine",
   "criteria": {
     "impossible": {
       "conditions": {
@@ -24,14 +24,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.rubinated_nether.offer_ritual_offering.description"
+      "translate": "advancements.rubinated_nether.pitfalls.description"
     },
     "icon": {
       "count": 1,
-      "id": "rubinated_nether:ritual_offering"
+      "id": "rubinated_nether:bronze_grate"
     },
     "title": {
-      "translate": "advancements.rubinated_nether.offer_ritual_offering.title"
+      "translate": "advancements.rubinated_nether.pitfalls.title"
     }
   },
   "requirements": [

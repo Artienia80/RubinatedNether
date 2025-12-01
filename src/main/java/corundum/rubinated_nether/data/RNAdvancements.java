@@ -83,7 +83,7 @@ public class RNAdvancements extends AdvancementProvider {
 
 			AdvancementHolder dryIce = Advancement.Builder.advancement()
 					.parent(frostedIce)
-					.display(Blocks.FROSTED_ICE,
+					.display(RNBlocks.DRY_ICE,
 							Component.translatable("advancements.rubinated_nether.obtain_dry_ice.title"),
 							Component.translatable("advancements.rubinated_nether.obtain_dry_ice.description"),
 							null,
@@ -166,7 +166,7 @@ public class RNAdvancements extends AdvancementProvider {
 
 			AdvancementHolder enterShrine = Advancement.Builder.advancement()
 					.parent(AdvancementSubProvider.createPlaceholder("nether/root"))
-					.display(RNBlocks.SHRINE_STONE_BRICKS.get(),
+					.display(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
 							Component.translatable("advancements.rubinated_nether.enter_shrine.title"),
 							Component.translatable("advancements.rubinated_nether.enter_shrine.description"),
 							null,
@@ -194,14 +194,10 @@ public class RNAdvancements extends AdvancementProvider {
 							null,
 							AdvancementType.TASK, true, true, false)
 					.requirements(AdvancementRequirements.Strategy.AND)
-					.addCriterion("impossible_nether",
+					.addCriterion("impossible",
 							PlayerTrigger.TriggerInstance.located(
 									LocationPredicate.Builder.location()
-											.setDimension(net.minecraft.world.level.Level.NETHER)))
-					.addCriterion("impossible_end",
-							PlayerTrigger.TriggerInstance.located(
-									LocationPredicate.Builder.location()
-											.setDimension(net.minecraft.world.level.Level.END)))
+											.setY(MinMaxBounds.Doubles.atMost(-65536))))
 					.save(consumer, RubinatedNether.id("offer_ritual_offering"), existingFileHelper);
 
 			AdvancementHolder inscribeRune = Advancement.Builder.advancement()
@@ -212,14 +208,10 @@ public class RNAdvancements extends AdvancementProvider {
 							null,
 							AdvancementType.TASK, true, true, false)
 					.requirements(AdvancementRequirements.Strategy.AND)
-					.addCriterion("impossible_nether",
+					.addCriterion("impossible",
 							PlayerTrigger.TriggerInstance.located(
 									LocationPredicate.Builder.location()
-											.setDimension(net.minecraft.world.level.Level.NETHER)))
-					.addCriterion("impossible_end",
-							PlayerTrigger.TriggerInstance.located(
-									LocationPredicate.Builder.location()
-											.setDimension(net.minecraft.world.level.Level.END)))
+											.setY(MinMaxBounds.Doubles.atMost(-65536))))
 					.save(consumer, RubinatedNether.id("inscribe_rune"), existingFileHelper);
 
 			AdvancementHolder insertRune = Advancement.Builder.advancement()
@@ -230,14 +222,10 @@ public class RNAdvancements extends AdvancementProvider {
 							null,
 							AdvancementType.TASK, true, true, false)
 					.requirements(AdvancementRequirements.Strategy.AND)
-					.addCriterion("impossible_nether",
+					.addCriterion("impossible",
 							PlayerTrigger.TriggerInstance.located(
 									LocationPredicate.Builder.location()
-											.setDimension(net.minecraft.world.level.Level.NETHER)))
-					.addCriterion("impossible_end",
-							PlayerTrigger.TriggerInstance.located(
-									LocationPredicate.Builder.location()
-											.setDimension(net.minecraft.world.level.Level.END)))
+											.setY(MinMaxBounds.Doubles.atMost(-65536))))
 					.save(consumer, RubinatedNether.id("insert_rune"), existingFileHelper);
 
 			AdvancementHolder rubinateItem = Advancement.Builder.advancement()
@@ -248,15 +236,143 @@ public class RNAdvancements extends AdvancementProvider {
 							null,
 							AdvancementType.TASK, true, true, false)
 					.requirements(AdvancementRequirements.Strategy.AND)
-					.addCriterion("impossible_nether",
+					.addCriterion("impossible",
 							PlayerTrigger.TriggerInstance.located(
 									LocationPredicate.Builder.location()
-											.setDimension(net.minecraft.world.level.Level.NETHER)))
-					.addCriterion("impossible_end",
-							PlayerTrigger.TriggerInstance.located(
-									LocationPredicate.Builder.location()
-											.setDimension(net.minecraft.world.level.Level.END)))
+											.setY(MinMaxBounds.Doubles.atMost(-65536))))
 					.save(consumer, RubinatedNether.id("rubinate_item"), existingFileHelper);
+
+			AdvancementHolder heavyBurden = Advancement.Builder.advancement()
+					.parent(enterShrine)
+					.display(RNBlocks.BRONZE_BLOCK.get(),
+							Component.translatable("advancements.rubinated_nether.heavy_burden.title"),
+							Component.translatable("advancements.rubinated_nether.heavy_burden.description"),
+							null,
+							AdvancementType.CHALLENGE, true, true, true)
+					.addCriterion("all_blocks", InventoryChangeTrigger.TriggerInstance.hasItems(
+							ItemPredicate.Builder.item().of(
+									RNBlocks.BRONZE_BLOCK,
+									RNRecipeProvider.waxed(RNBlocks.BRONZE_BLOCK)
+							).build(),
+							ItemPredicate.Builder.item().of(
+									RNBlocks.DISCOLORED_BRONZE_BLOCK,
+									RNRecipeProvider.waxed(RNBlocks.DISCOLORED_BRONZE_BLOCK)
+							).build(),
+							ItemPredicate.Builder.item().of(
+									RNBlocks.CORRODED_BRONZE_BLOCK,
+									RNRecipeProvider.waxed(RNBlocks.CORRODED_BRONZE_BLOCK)
+							).build(),
+							ItemPredicate.Builder.item().of(
+									RNBlocks.TARNISHED_BRONZE_BLOCK,
+									RNRecipeProvider.waxed(RNBlocks.TARNISHED_BRONZE_BLOCK)
+							).build(),
+							ItemPredicate.Builder.item().of(
+									RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
+									RNRecipeProvider.waxed(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)
+							).build(),
+							ItemPredicate.Builder.item().of(
+									net.minecraft.world.level.block.Blocks.COPPER_BLOCK,
+									net.minecraft.world.level.block.Blocks.WAXED_COPPER_BLOCK
+							).build(),
+							ItemPredicate.Builder.item().of(
+									net.minecraft.world.level.block.Blocks.EXPOSED_COPPER,
+									net.minecraft.world.level.block.Blocks.WAXED_EXPOSED_COPPER
+							).build(),
+							ItemPredicate.Builder.item().of(
+									net.minecraft.world.level.block.Blocks.WEATHERED_COPPER,
+									net.minecraft.world.level.block.Blocks.WAXED_WEATHERED_COPPER
+							).build(),
+							ItemPredicate.Builder.item().of(
+									net.minecraft.world.level.block.Blocks.OXIDIZED_COPPER,
+									net.minecraft.world.level.block.Blocks.WAXED_OXIDIZED_COPPER
+							).build()))
+					.save(consumer, RubinatedNether.id("heavy_burden"), existingFileHelper);
+
+			AdvancementHolder brightenUp = Advancement.Builder.advancement()
+					.parent(enterShrine)
+					.display(RNBlocks.BRONZE_LAMP.get(),
+							Component.translatable("advancements.rubinated_nether.brighten_up.title"),
+							Component.translatable("advancements.rubinated_nether.brighten_up.description"),
+							null,
+							AdvancementType.CHALLENGE, true, true, true)
+					.addCriterion("all_lights", InventoryChangeTrigger.TriggerInstance.hasItems(
+							ItemPredicate.Builder.item().of(
+									RNBlocks.BRONZE_LANTERN,
+									RNRecipeProvider.waxed(RNBlocks.BRONZE_LANTERN),
+									RNBlocks.DISCOLORED_BRONZE_LANTERN,
+									RNRecipeProvider.waxed(RNBlocks.DISCOLORED_BRONZE_LANTERN),
+									RNBlocks.CORRODED_BRONZE_LANTERN,
+									RNRecipeProvider.waxed(RNBlocks.CORRODED_BRONZE_LANTERN),
+									RNBlocks.TARNISHED_BRONZE_LANTERN,
+									RNRecipeProvider.waxed(RNBlocks.TARNISHED_BRONZE_LANTERN),
+									RNBlocks.CRYSTALLIZED_BRONZE_LANTERN,
+									RNRecipeProvider.waxed(RNBlocks.CRYSTALLIZED_BRONZE_LANTERN)
+							).build(),
+							ItemPredicate.Builder.item().of(
+									RNBlocks.BRONZE_CHANDELIER,
+									RNRecipeProvider.waxed(RNBlocks.BRONZE_CHANDELIER),
+									RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
+									RNRecipeProvider.waxed(RNBlocks.DISCOLORED_BRONZE_CHANDELIER),
+									RNBlocks.CORRODED_BRONZE_CHANDELIER,
+									RNRecipeProvider.waxed(RNBlocks.CORRODED_BRONZE_CHANDELIER),
+									RNBlocks.TARNISHED_BRONZE_CHANDELIER,
+									RNRecipeProvider.waxed(RNBlocks.TARNISHED_BRONZE_CHANDELIER),
+									RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER,
+									RNRecipeProvider.waxed(RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER)
+							).build(),
+							ItemPredicate.Builder.item().of(
+									RNBlocks.BRONZE_LAMP,
+									RNRecipeProvider.waxed(RNBlocks.BRONZE_LAMP),
+									RNBlocks.DISCOLORED_BRONZE_LAMP,
+									RNRecipeProvider.waxed(RNBlocks.DISCOLORED_BRONZE_LAMP),
+									RNBlocks.CORRODED_BRONZE_LAMP,
+									RNRecipeProvider.waxed(RNBlocks.CORRODED_BRONZE_LAMP),
+									RNBlocks.TARNISHED_BRONZE_LAMP,
+									RNRecipeProvider.waxed(RNBlocks.TARNISHED_BRONZE_LAMP),
+									RNBlocks.CRYSTALLIZED_BRONZE_LAMP,
+									RNRecipeProvider.waxed(RNBlocks.CRYSTALLIZED_BRONZE_LAMP)
+							).build(),
+							ItemPredicate.Builder.item().of(
+									RNBlocks.BRONZE_BULB,
+									RNRecipeProvider.waxed(RNBlocks.BRONZE_BULB),
+									RNBlocks.DISCOLORED_BRONZE_BULB,
+									RNRecipeProvider.waxed(RNBlocks.DISCOLORED_BRONZE_BULB),
+									RNBlocks.CORRODED_BRONZE_BULB,
+									RNRecipeProvider.waxed(RNBlocks.CORRODED_BRONZE_BULB),
+									RNBlocks.TARNISHED_BRONZE_BULB,
+									RNRecipeProvider.waxed(RNBlocks.TARNISHED_BRONZE_BULB),
+									RNBlocks.CRYSTALLIZED_BRONZE_BULB,
+									RNRecipeProvider.waxed(RNBlocks.CRYSTALLIZED_BRONZE_BULB)
+							).build()))
+					.save(consumer, RubinatedNether.id("brighten_up"), existingFileHelper);
+
+            AdvancementHolder pitfalls = Advancement.Builder.advancement()
+                    .parent(enterShrine)
+                    .display(RNBlocks.BRONZE_GRATE.get(),
+                            Component.translatable("advancements.rubinated_nether.pitfalls.title"),
+                            Component.translatable("advancements.rubinated_nether.pitfalls.description"),
+                            null,
+                            AdvancementType.TASK, true, true, false)
+                    .requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-65536))))
+                    .save(consumer, RubinatedNether.id("pitfalls"), existingFileHelper);
+
+            AdvancementHolder laserDetection = Advancement.Builder.advancement()
+					.parent(enterShrine)
+					.display(RNBlocks.BRONZE_LASER.get(),
+							Component.translatable("advancements.rubinated_nether.laser_detection.title"),
+							Component.translatable("advancements.rubinated_nether.laser_detection.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-65536))))
+					.save(consumer, RubinatedNether.id("laser_detection"), existingFileHelper);
 		}
 	}
 

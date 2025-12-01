@@ -1,7 +1,7 @@
 {
   "parent": "rubinated_nether:insert_rune",
   "criteria": {
-    "impossible_end": {
+    "impossible": {
       "conditions": {
         "player": [
           {
@@ -9,23 +9,11 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "dimension": "minecraft:the_end"
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:location"
-    },
-    "impossible_nether": {
-      "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "dimension": "minecraft:the_nether"
+                "position": {
+                  "y": {
+                    "max": -65536.0
+                  }
+                }
               }
             }
           }
@@ -48,10 +36,7 @@
   },
   "requirements": [
     [
-      "impossible_nether"
-    ],
-    [
-      "impossible_end"
+      "impossible"
     ]
   ],
   "sends_telemetry_event": true

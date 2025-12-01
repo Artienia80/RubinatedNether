@@ -585,7 +585,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				inputName.contains("crystallized_bronze_block");
 	}
 
-	private ItemLike waxed(Supplier<? extends Block> block) {
+	public static ItemLike waxed(Supplier<? extends Block> block) {
 		return BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(block.get())));
 	}
 

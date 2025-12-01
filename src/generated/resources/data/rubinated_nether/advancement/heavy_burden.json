@@ -1,0 +1,86 @@
+{
+  "parent": "rubinated_nether:enter_shrine",
+  "criteria": {
+    "all_blocks": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "rubinated_nether:bronze_block",
+              "rubinated_nether:waxed_bronze_block"
+            ]
+          },
+          {
+            "items": [
+              "rubinated_nether:discolored_bronze_block",
+              "rubinated_nether:waxed_discolored_bronze_block"
+            ]
+          },
+          {
+            "items": [
+              "rubinated_nether:corroded_bronze_block",
+              "rubinated_nether:waxed_corroded_bronze_block"
+            ]
+          },
+          {
+            "items": [
+              "rubinated_nether:tarnished_bronze_block",
+              "rubinated_nether:waxed_tarnished_bronze_block"
+            ]
+          },
+          {
+            "items": [
+              "rubinated_nether:crystallized_bronze_block",
+              "rubinated_nether:waxed_crystallized_bronze_block"
+            ]
+          },
+          {
+            "items": [
+              "minecraft:copper_block",
+              "minecraft:waxed_copper_block"
+            ]
+          },
+          {
+            "items": [
+              "minecraft:exposed_copper",
+              "minecraft:waxed_exposed_copper"
+            ]
+          },
+          {
+            "items": [
+              "minecraft:weathered_copper",
+              "minecraft:waxed_weathered_copper"
+            ]
+          },
+          {
+            "items": [
+              "minecraft:oxidized_copper",
+              "minecraft:waxed_oxidized_copper"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.heavy_burden.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:bronze_block"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.heavy_burden.title"
+    }
+  },
+  "requirements": [
+    [
+      "all_blocks"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
