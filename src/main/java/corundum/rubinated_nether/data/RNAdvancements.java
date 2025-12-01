@@ -2,6 +2,7 @@ package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.RNItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -16,6 +17,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
@@ -91,17 +93,6 @@ public class RNAdvancements extends AdvancementProvider {
 					.requirements(AdvancementRequirements.Strategy.OR)
 					.addCriterion("dry_ice", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.DRY_ICE))
 					.save(consumer, RubinatedNether.id( "obtain_dry_ice"), existingFileHelper);
-
-//			AdvancementHolder rubinatedBlackstone = Advancement.Builder.advancement()
-//					.parent(AdvancementSubProvider.createPlaceholder("nether/find_bastion"))
-//					.display(RNBlocks.RUBINATED_BLACKSTONE.get(),
-//							Component.translatable("advancements.rubinated_nether.obtain_rubinated_blackstone.title"),
-//							Component.translatable("advancements.rubinated_nether.obtain_rubinated_blackstone.description"),
-//							null,
-//							AdvancementType.TASK, true, true, false)
-//					.requirements(AdvancementRequirements.Strategy.OR)
-//					.addCriterion("rubinated_blackstone", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.RUBINATED_BLACKSTONE.get()))
-//					.save(consumer, RubinatedNether.id("obtain_rubinated_blackstone"), existingFileHelper);
 
 			AdvancementHolder moltenRuby = Advancement.Builder.advancement()
 					.parent(freezer)
@@ -199,6 +190,19 @@ public class RNAdvancements extends AdvancementProvider {
 									LocationPredicate.Builder.location()
 											.setY(MinMaxBounds.Doubles.atMost(-65536))))
 					.save(consumer, RubinatedNether.id("offer_ritual_offering"), existingFileHelper);
+
+			AdvancementHolder divineFavor = Advancement.Builder.advancement()
+					.parent(ritualOffering) // or whatever parent makes sense
+					.display(RNItems.BLESSED_ICON.get(), // Using the blessed effect as the icon
+							Component.translatable("advancements.rubinated_nether.divine_favor.title"),
+							Component.translatable("advancements.rubinated_nether.divine_favor.description"),
+							null,
+							AdvancementType.CHALLENGE, true, true, true)
+					.addCriterion("impossible",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-65536))))
+					.save(consumer, RubinatedNether.id("divine_favor"), existingFileHelper);
 
 			AdvancementHolder inscribeRune = Advancement.Builder.advancement()
 					.parent(ritualOffering)

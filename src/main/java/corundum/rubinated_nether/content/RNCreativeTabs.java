@@ -21,7 +21,7 @@ public class RNCreativeTabs {
 			() -> CreativeModeTab.builder()
 					.title(net.minecraft.network.chat.Component.translatable("itemGroup.rubinated_nether_general"))
 					.withTabsBefore(net.minecraft.world.item.CreativeModeTabs.COMBAT)
-					.icon(() -> RNItems.RUBY_ITEM.get().getDefaultInstance())
+					.icon(() -> RNItems.RUBY_ICON.get().getDefaultInstance())
 					.displayItems((parameters, output) -> {
 
 						addItems(

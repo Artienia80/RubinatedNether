@@ -651,11 +651,28 @@ public class RubinationMenu extends AbstractContainerMenu {
     public static void BlessPlayer(Player player, int durationTicks) {
         MobEffectInstance currentBlessing = player.getEffect(RNEffects.BLESSED);
 
+        int newDuration;
         if (currentBlessing != null) {
-            int newDuration = currentBlessing.getDuration() + durationTicks;
+            newDuration = currentBlessing.getDuration() + durationTicks;
             player.addEffect(new MobEffectInstance(RNEffects.BLESSED, newDuration, 0, false, true, true));
         } else {
+            newDuration = durationTicks;
             player.addEffect(new MobEffectInstance(RNEffects.BLESSED, durationTicks, 0, false, true, true));
+        }
+
+        // Check if duration exceeds 5h:20m
+        if (newDuration >= 384000 && player instanceof ServerPlayer serverPlayer) {
+            AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
+                    .get(RubinatedNether.id("divine_favor"));
+
+            if (advancementHolder != null) {
+                var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
+                if (!progress.isDone()) {
+                    for (String criterion : progress.getRemainingCriteria()) {
+                        serverPlayer.getAdvancements().award(advancementHolder, criterion);
+                    }
+                }
+            }
         }
     }
 }
