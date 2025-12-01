@@ -329,7 +329,7 @@
   "advancements.rubinated_nether.obtain_powder_snow.title": "Snowier Snow",
   "advancements.rubinated_nether.obtain_powder_snow.description": "Obtain Powder Snow from freezing a Bucket of Powder Snow",
   "advancements.rubinated_nether.obtain_dry_ice.title": "Scientifically Questionable",
-  "advancements.rubinated_nether.obtain_dry_ice.description": "Obtain the slippery Dry Ice, which can only be placed on Blue Ice!",
+  "advancements.rubinated_nether.obtain_dry_ice.description": "Obtain the slippery Dry Ice, which can only be placed on Blue Ice",
 
   "advancements.rubinated_nether.obtain_molten_ruby.description": "Acquire a Molten Ruby from Magma Veins",
   "advancements.rubinated_nether.obtain_molten_ruby.title": "Hot! Hot! Hot!",
@@ -362,6 +362,8 @@
 
   "advancements.rubinated_nether.pitfalls.title": "Pitfalls!",
   "advancements.rubinated_nether.pitfalls.description": "Step on a Bronze Grate and Watch it Fall",
+  "advancements.rubinated_nether.laser_detection.title": "I see you...",
+  "advancements.rubinated_nether.laser_detection.description": "Be Detected by a Bronze or Copper Laser",
 
   "menu.rubinated_nether.freezer": "Freezer",
   "gui.rubinated_nether.jei.freezer": "Freezing",
@@ -394,7 +396,5 @@
   "commands.rubinate.failed.itemless": "%s is not holding any item",
   "commands.rubinate.failed.invalid": "Unknown rubination: %s",
   "commands.rubinate.success.multiple": "Applied rubination %s to %s entities",
-  "commands.rubinate.success.single": "Applied rubination %s to %s's item",
-  "advancements.rubinated_nether.laser_detection.title": "I see you...",
-  "advancements.rubinated_nether.laser_detection.description": "Be Detected by a Bronze or Copper Laser"
+  "commands.rubinate.success.single": "Applied rubination %s to %s's item"
  }
