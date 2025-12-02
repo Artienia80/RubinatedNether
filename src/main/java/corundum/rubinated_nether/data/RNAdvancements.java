@@ -192,8 +192,8 @@ public class RNAdvancements extends AdvancementProvider {
 					.save(consumer, RubinatedNether.id("offer_ritual_offering"), existingFileHelper);
 
 			AdvancementHolder divineFavor = Advancement.Builder.advancement()
-					.parent(ritualOffering) // or whatever parent makes sense
-					.display(RNItems.BLESSED_ICON.get(), // Using the blessed effect as the icon
+					.parent(ritualOffering)
+					.display(RNItems.BLESSED_ICON.get(),
 							Component.translatable("advancements.rubinated_nether.divine_favor.title"),
 							Component.translatable("advancements.rubinated_nether.divine_favor.description"),
 							null,
