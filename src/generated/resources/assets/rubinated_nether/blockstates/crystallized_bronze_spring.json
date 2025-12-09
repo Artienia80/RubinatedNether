@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "extended=false,waxed=false": {
+      "model": "rubinated_nether:block/crystallized_bronze_spring_squished"
+    },
+    "extended=false,waxed=true": {
+      "model": "rubinated_nether:block/crystallized_bronze_spring_squished"
+    },
+    "extended=true,waxed=false": {
+      "model": "rubinated_nether:block/crystallized_bronze_spring_extended"
+    },
+    "extended=true,waxed=true": {
+      "model": "rubinated_nether:block/crystallized_bronze_spring_extended"
+    }
+  }
+}

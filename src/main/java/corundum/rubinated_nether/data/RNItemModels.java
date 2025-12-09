@@ -123,7 +123,6 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_LASER
 		);
 
-		// Custom item textures for chandeliers
 		customItemTextures("item/bronze/bronze_chandelier",
 				RNBlocks.BRONZE_CHANDELIER,
 				RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
@@ -132,7 +131,6 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER
 		);
 
-		// Custom item textures for lanterns
 		customItemTextures("item/bronze/bronze_lantern",
 				RNBlocks.BRONZE_LANTERN,
 				RNBlocks.DISCOLORED_BRONZE_LANTERN,
@@ -141,13 +139,20 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN
 		);
 
-		// Custom item textures for chains
 		customItemTextures("item/bronze/bronze_chain",
 				RNBlocks.BRONZE_CHAIN,
 				RNBlocks.DISCOLORED_BRONZE_CHAIN,
 				RNBlocks.CORRODED_BRONZE_CHAIN,
 				RNBlocks.TARNISHED_BRONZE_CHAIN,
 				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN
+		);
+
+		springBlockItems(
+				RNBlocks.BRONZE_SPRING,
+				RNBlocks.DISCOLORED_BRONZE_SPRING,
+				RNBlocks.CORRODED_BRONZE_SPRING,
+				RNBlocks.TARNISHED_BRONZE_SPRING,
+				RNBlocks.CRYSTALLIZED_BRONZE_SPRING
 		);
 
 		paneItem(
@@ -262,6 +267,22 @@ public class RNItemModels extends ItemModelProvider {
 					mcLoc("item/generated")
 			).texture("layer0", modLoc(baseTexture + "/" + blockName));
 
+		}
+	}
+
+	private void springBlockItems(DeferredBlock<?>... blocks) {
+		for (var block : blocks) {
+			String blockName = block.getId().getPath();
+
+			withExistingParent(
+					block.getId().toString(),
+					modLoc("block/" + blockName + "_squished")
+			);
+
+			withExistingParent(
+					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
+					modLoc("block/" + blockName + "_squished")
+			);
 		}
 	}
 

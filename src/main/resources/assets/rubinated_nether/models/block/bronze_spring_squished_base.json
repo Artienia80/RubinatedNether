@@ -1,0 +1,105 @@
+{
+  "parent": "minecraft:block/block",
+  "texture_size": [32, 32],
+  "textures": {
+    "particle": "#all"
+  },
+  "elements": [
+    {
+      "name": "SpringS-1",
+      "from": [2, 0, 2],
+      "to": [14, 4, 14],
+      "rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 2]},
+      "faces": {
+        "north": {"uv": [9, 14, 15, 16], "texture": "#all"},
+        "east": {"uv": [9, 13.5, 15, 15.5], "texture": "#all"},
+        "south": {"uv": [9, 13, 15, 15], "texture": "#all"},
+        "west": {"uv": [9, 12.5, 15, 14.5], "texture": "#all"}
+      }
+    },
+    {
+      "name": "SpringS-2",
+      "from": [2, 4, 2],
+      "to": [14, 8, 14],
+      "rotation": {"angle": 0, "axis": "y", "origin": [2, 4, 2]},
+      "faces": {
+        "north": {"uv": [9, 14, 15, 16], "texture": "#all"},
+        "east": {"uv": [9, 13.5, 15, 15.5], "texture": "#all"},
+        "south": {"uv": [9, 13, 15, 15], "texture": "#all"},
+        "west": {"uv": [9, 12.5, 15, 14.5], "texture": "#all"}
+      }
+    },
+    {
+      "name": "SpringS-3",
+      "from": [2, 8, 2],
+      "to": [14, 12, 14],
+      "rotation": {"angle": 0, "axis": "y", "origin": [2, 8, 2]},
+      "faces": {
+        "north": {"uv": [9, 14, 15, 16], "texture": "#all"},
+        "east": {"uv": [9, 13.5, 15, 15.5], "texture": "#all"},
+        "south": {"uv": [9, 13, 15, 15], "texture": "#all"},
+        "west": {"uv": [9, 12.5, 15, 14.5], "texture": "#all"}
+      }
+    },
+    {
+      "name": "SpringS-4",
+      "from": [2, 12, 2],
+      "to": [14, 16, 14],
+      "rotation": {"angle": 0, "axis": "y", "origin": [2, 12, 2]},
+      "faces": {
+        "north": {"uv": [9, 14, 15, 16], "texture": "#all"},
+        "east": {"uv": [9, 13.5, 15, 15.5], "texture": "#all"},
+        "south": {"uv": [9, 13, 15, 15], "texture": "#all"},
+        "west": {"uv": [9, 12.5, 15, 14.5], "texture": "#all"}
+      }
+    },
+    {
+      "name": "SpringS-1-Inverted",
+      "from": [14, 0, 2],
+      "to": [2, 4, 14],
+      "rotation": {"angle": 0, "axis": "y", "origin": [14, 0, 2]},
+      "faces": {
+        "north": {"uv": [15, 14, 9, 16], "texture": "#all"},
+        "east": {"uv": [15, 12.5, 9, 14.5], "texture": "#all"},
+        "south": {"uv": [15, 13, 9, 15], "texture": "#all"},
+        "west": {"uv": [15, 13.5, 9, 15.5], "texture": "#all"}
+      }
+    },
+    {
+      "name": "SpringS-2-Inverted",
+      "from": [14, 4, 2],
+      "to": [2, 8, 14],
+      "rotation": {"angle": 0, "axis": "y", "origin": [14, 4, 2]},
+      "faces": {
+        "north": {"uv": [15, 14, 9, 16], "texture": "#all"},
+        "east": {"uv": [15, 12.5, 9, 14.5], "texture": "#all"},
+        "south": {"uv": [15, 13, 9, 15], "texture": "#all"},
+        "west": {"uv": [15, 13.5, 9, 15.5], "texture": "#all"}
+      }
+    },
+    {
+      "name": "SpringS-3-Inverted",
+      "from": [14, 8, 2],
+      "to": [2, 12, 14],
+      "rotation": {"angle": 0, "axis": "y", "origin": [14, 8, 2]},
+      "faces": {
+        "north": {"uv": [15, 14, 9, 16], "texture": "#all"},
+        "east": {"uv": [15, 12.5, 9, 14.5], "texture": "#all"},
+        "south": {"uv": [15, 13, 9, 15], "texture": "#all"},
+        "west": {"uv": [15, 13.5, 9, 15.5], "texture": "#all"}
+      }
+    },
+    {
+      "name": "SpringS-4-Inverted",
+      "from": [14, 12, 2],
+      "to": [2, 16, 14],
+      "rotation": {"angle": 0, "axis": "y", "origin": [14, 12, 2]},
+      "faces": {
+        "north": {"uv": [15, 14, 9, 16], "texture": "#all"},
+        "east": {"uv": [15, 12.5, 9, 14.5], "texture": "#all"},
+        "south": {"uv": [15, 13, 9, 15], "texture": "#all"},
+        "west": {"uv": [15, 13.5, 9, 15.5], "texture": "#all"}
+      }
+    }
+  ]
+}

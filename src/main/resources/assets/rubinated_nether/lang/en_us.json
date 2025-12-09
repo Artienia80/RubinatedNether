@@ -209,6 +209,18 @@
   "item.rubinated_nether.waxed_tarnished_bronze_lamp": "Waxed Tarnished Bronze Lamp",
   "item.rubinated_nether.waxed_crystallized_bronze_lamp": "Waxed Crystallized Bronze Lamp",
 
+  "block.rubinated_nether.bronze_spring": "Bronze Spring",
+  "block.rubinated_nether.discolored_bronze_spring": "Discolored Bronze Spring",
+  "block.rubinated_nether.corroded_bronze_spring": "Corroded Bronze Spring",
+  "block.rubinated_nether.tarnished_bronze_spring": "Tarnished Bronze Spring",
+  "block.rubinated_nether.crystallized_bronze_spring": "Crystallized Bronze Spring",
+
+  "item.rubinated_nether.waxed_bronze_spring": "Waxed Bronze Spring",
+  "item.rubinated_nether.waxed_discolored_bronze_spring": "Waxed Discolored Bronze Spring",
+  "item.rubinated_nether.waxed_corroded_bronze_spring": "Waxed Corroded Bronze Spring",
+  "item.rubinated_nether.waxed_tarnished_bronze_spring": "Waxed Tarnished Bronze Spring",
+  "item.rubinated_nether.waxed_crystallized_bronze_spring": "Waxed Crystallized Bronze Spring",
+
   "block.rubinated_nether.bronze_laser": "Bronze Laser",
   "block.rubinated_nether.discolored_bronze_laser": "Discolored Bronze Laser",
   "block.rubinated_nether.corroded_bronze_laser": "Corroded Bronze Laser",
