@@ -188,20 +188,18 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         if (belowState.getBlock() instanceof BronzeSpringBlock &&
                 belowState.getValue(FACING) == Direction.UP &&
                 belowState.getValue(EXTENDED)) {
-            if (entity instanceof LivingEntity livingEntity && fallDistance > 0.1f) {
-                launchEntity(livingEntity, belowState);
+            if (fallDistance > 0.1f) {
+                launchEntity(entity, belowState);
             }
             return;
         }
 
         if (state.getValue(EXTENDED)) {
-            if (entity instanceof LivingEntity livingEntity) {
-                launchEntity(livingEntity, state);
-            }
+            launchEntity(entity, state);
             return;
         }
 
-        if (fallDistance > 0.5f && entity instanceof LivingEntity livingEntity) {
+        if (fallDistance > 0.5f) {
             BlockPos abovePos = pos.above();
             BlockState aboveState = level.getBlockState(abovePos);
 
@@ -209,7 +207,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
                 level.setBlock(pos, state.setValue(EXTENDED, true), 3);
                 level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.5F, 1.0F);
 
-                launchEntity(livingEntity, state);
+                launchEntity(entity, state);
 
                 level.scheduleTick(pos, this, getContractionDelay(state));
             }
@@ -219,14 +217,13 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (level.isClientSide) return;
-        if (!(entity instanceof LivingEntity livingEntity)) return;
 
         // Only trigger step-on for upward-facing springs
         if (state.getValue(FACING) != Direction.UP) return;
 
         if (tarnishState == TarnishState.CRYSTALLIZED) {
             if (isEntityOnSpring(entity, pos)) {
-                launchEntity(livingEntity, state);
+                launchEntity(entity, state);
             }
         }
     }
@@ -234,7 +231,6 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (level.isClientSide) return;
-        if (!(entity instanceof LivingEntity livingEntity)) return;
 
         Direction facing = state.getValue(FACING);
 
@@ -244,13 +240,13 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         }
 
         if (tarnishState == TarnishState.CRYSTALLIZED) {
-            launchEntity(livingEntity, state);
+            launchEntity(entity, state);
             return;
         }
 
         if (state.getValue(EXTENDED)) {
             if (entity.onGround() && entity.fallDistance > 0.0f && facing == Direction.UP) {
-                launchEntity(livingEntity, state);
+                launchEntity(entity, state);
                 entity.fallDistance = 0;
                 return;
             }
@@ -303,7 +299,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         };
     }
 
-    private void launchEntity(LivingEntity entity, BlockState state) {
+    private void launchEntity(Entity entity, BlockState state) {
         double velocityMultiplier = switch (tarnishState) {
             case UNAFFECTED -> 1.0;
             case DISCOLORED -> 2.0;
@@ -327,7 +323,10 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
 
         entity.setDeltaMovement(newVelocity);
         entity.hurtMarked = true;
-        entity.resetFallDistance();
+
+        if (entity instanceof LivingEntity livingEntity) {
+            livingEntity.resetFallDistance();
+        }
 
         entity.level().playSound(null, entity.blockPosition(),
                 SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.3F, 1.5F);
@@ -353,9 +352,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
                         center.x - 0.5, center.y - 0.5, center.z - 0.5,
                         center.x + 0.5, center.y + 0.5, center.z + 0.5
                 )).forEach(entity -> {
-                    if (entity instanceof LivingEntity livingEntity) {
-                        launchEntity(livingEntity, state);
-                    }
+                    launchEntity(entity, state);
                 });
 
                 level.setBlock(pos, state.setValue(EXTENDED, true), 3);
