@@ -765,7 +765,7 @@ public class BronzeAnimations {
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
                             new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM),
-                            new Keyframe(0.45833f, KeyframeAnimations.posVec(0f, -1f, 0f),
+                            new Keyframe(0.4583f, KeyframeAnimations.posVec(0f, -1f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM),
                             new Keyframe(1f, KeyframeAnimations.posVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
@@ -783,7 +783,7 @@ public class BronzeAnimations {
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
                             new Keyframe(0f, KeyframeAnimations.degreeVec(-90f, 0f, 0f),
                                     AnimationChannel.Interpolations.LINEAR),
-                            new Keyframe(1f, KeyframeAnimations.degreeVec(-90.35f, -0.04f, -720f),
-                                    AnimationChannel.Interpolations.LINEAR))).build();
-    
+                            new Keyframe(1f, KeyframeAnimations.degreeVec(-90.3492f, -0.0382f, -720f),
+                                    AnimationChannel.Interpolations.LINEAR)))
+            .build();
 }
