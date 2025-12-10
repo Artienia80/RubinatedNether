@@ -10,6 +10,8 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
+
 public class RNItems {
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(RubinatedNether.MODID);
 
@@ -102,11 +104,11 @@ public class RNItems {
 	}
 
 	private static @NotNull DeferredItem<RuneItem> makeRune(Rubination rubination) {
-		String name = rubination.name().toLowerCase();
+		String name = rubination.name().toLowerCase(Locale.ROOT);
 		String tooltipKey = "tooltip.rune." + name;
 
 		return ITEMS.register(
-				rubination.name().toLowerCase().concat("_rune"), // Converts name to lowercase
+				rubination.name().toLowerCase(Locale.ROOT).concat("_rune"), // Converts name to lowercase
 				() -> new RuneItem(new Item.Properties().stacksTo(1).rarity(RNRarity.RUBINATED_NETHER_RUBY.get()), rubination, tooltipKey)
 		);
 	}
