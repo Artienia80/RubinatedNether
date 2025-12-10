@@ -39,7 +39,6 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     public static final BooleanProperty WAXED = TarnishingBronze.WAXED;
 
     private static final double BASE_LAUNCH_VELOCITY = 0.5;
-    private static final double ACTIVATION_VELOCITY_THRESHOLD = 0.25;
 
     // Shapes for each direction
     private static final VoxelShape SQUISHED_UP = Block.box(2, 0, 2, 14, 16, 14);
@@ -176,52 +175,37 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
             return;
         }
 
-        if (!(entity instanceof LivingEntity livingEntity)) {
+        // Only trigger on vertical springs (UP facing)
+        if (state.getValue(FACING) != Direction.UP) {
             super.fallOn(level, state, pos, entity, fallDistance);
             return;
         }
 
-        Direction facing = state.getValue(FACING);
-        Vec3 velocity = entity.getDeltaMovement();
+        entity.causeFallDamage(fallDistance, 0.0F, level.damageSources().fall());
 
-        // Get velocity component in the direction opposite to spring facing
-        double approachVelocity = switch (facing) {
-            case UP -> -velocity.y;    // Falling down onto upward spring
-            case DOWN -> velocity.y;   // Moving up into downward spring
-            case NORTH -> velocity.z;  // Moving south into north spring
-            case SOUTH -> -velocity.z; // Moving north into south spring
-            case WEST -> velocity.x;   // Moving east into west spring
-            case EAST -> -velocity.x;  // Moving west into east spring
-        };
-
-        // Check if entity is moving toward the spring with sufficient velocity
-        if (approachVelocity >= ACTIVATION_VELOCITY_THRESHOLD) {
-            // Apply fall damage only for upward-facing springs
-            if (facing == Direction.UP) {
-                entity.causeFallDamage(fallDistance, 0.0F, level.damageSources().fall());
-            }
-
-            // Check if landing on an extended spring below
-            BlockPos belowPos = pos.below();
-            BlockState belowState = level.getBlockState(belowPos);
-            if (belowState.getBlock() instanceof BronzeSpringBlock &&
-                    belowState.getValue(FACING) == Direction.UP &&
-                    belowState.getValue(EXTENDED)) {
+        BlockPos belowPos = pos.below();
+        BlockState belowState = level.getBlockState(belowPos);
+        if (belowState.getBlock() instanceof BronzeSpringBlock &&
+                belowState.getValue(FACING) == Direction.UP &&
+                belowState.getValue(EXTENDED)) {
+            if (entity instanceof LivingEntity livingEntity && fallDistance > 0.1f) {
                 launchEntity(livingEntity, belowState);
-                return;
             }
+            return;
+        }
 
-            // If spring is already extended, launch immediately
-            if (state.getValue(EXTENDED)) {
+        if (state.getValue(EXTENDED)) {
+            if (entity instanceof LivingEntity livingEntity) {
                 launchEntity(livingEntity, state);
-                return;
             }
+            return;
+        }
 
-            // Try to extend and launch
-            BlockPos extendPos = pos.relative(facing);
-            BlockState extendState = level.getBlockState(extendPos);
+        if (fallDistance > 0.5f && entity instanceof LivingEntity livingEntity) {
+            BlockPos abovePos = pos.above();
+            BlockState aboveState = level.getBlockState(abovePos);
 
-            if (extendState.isAir() || extendState.canBeReplaced()) {
+            if (aboveState.isAir() || aboveState.canBeReplaced()) {
                 level.setBlock(pos, state.setValue(EXTENDED, true), 3);
                 level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.5F, 1.0F);
 
@@ -229,9 +213,6 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
 
                 level.scheduleTick(pos, this, getContractionDelay(state));
             }
-        } else {
-            // Not enough velocity, apply normal fall behavior
-            super.fallOn(level, state, pos, entity, fallDistance);
         }
     }
 
