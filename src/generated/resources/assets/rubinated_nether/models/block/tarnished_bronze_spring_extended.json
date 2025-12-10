@@ -1,5 +1,6 @@
 {
   "parent": "rubinated_nether:block/bronze_spring_extended_base",
+  "ambientocclusion": false,
   "render_type": "minecraft:cutout",
   "textures": {
     "all": "rubinated_nether:block/bronze/bronze_spring/tarnished_bronze_spring",
