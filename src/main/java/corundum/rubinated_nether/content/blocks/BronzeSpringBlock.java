@@ -103,8 +103,12 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         if (isWithinBounds(extendPos, level)) {
             BlockState extendState = level.getBlockState(extendPos);
             if (extendState.canBeReplaced(context) || extendState.getBlock() instanceof BronzeSpringBlock) {
+                boolean hasSignal = level.hasNeighborSignal(blockPos);
+                boolean canExtend = extendState.isAir() || extendState.canBeReplaced();
+
                 return this.defaultBlockState()
                         .setValue(FACING, facing)
+                        .setValue(EXTENDED, hasSignal && canExtend)
                         .setValue(WAXED, false);
             }
         }

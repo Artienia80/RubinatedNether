@@ -404,13 +404,15 @@ public class RNBlockStates extends BlockStateProvider {
 				.parent(models().getExistingFile(modLoc("block/bronze_spring_squished_base")))
 				.texture("all", modLoc(texturePath))
 				.texture("particle", modLoc(texturePath))
-				.renderType(mcLoc("cutout"));
+				.renderType(mcLoc("cutout"))
+				.ao(false);
 
 		var extendedModel = models().getBuilder(name + "_extended")
 				.parent(models().getExistingFile(modLoc("block/bronze_spring_extended_base")))
 				.texture("all", modLoc(texturePath))
 				.texture("particle", modLoc(texturePath))
-				.renderType(mcLoc("cutout"));
+				.renderType(mcLoc("cutout"))
+				.ao(false);
 
 		this.getVariantBuilder(spring.get()).forAllStates((state) -> {
 			boolean extended = state.getValue(BlockStateProperties.EXTENDED);
