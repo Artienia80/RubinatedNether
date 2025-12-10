@@ -414,8 +414,26 @@ public class RNBlockStates extends BlockStateProvider {
 
 		this.getVariantBuilder(spring.get()).forAllStates((state) -> {
 			boolean extended = state.getValue(BlockStateProperties.EXTENDED);
+			Direction facing = state.getValue(BlockStateProperties.FACING);
+
+			int rotationX = switch(facing) {
+				case UP -> 0;
+				case DOWN -> 180;
+				default -> 90;
+			};
+
+			int rotationY = switch(facing) {
+				case NORTH -> 0;
+				case SOUTH -> 180;
+				case EAST -> 90;
+				case WEST -> 270;
+				default -> 0;
+			};
+
 			return ConfiguredModel.builder()
 					.modelFile(extended ? extendedModel : squishedModel)
+					.rotationX(rotationX)
+					.rotationY(rotationY)
 					.build();
 		});
 	}
