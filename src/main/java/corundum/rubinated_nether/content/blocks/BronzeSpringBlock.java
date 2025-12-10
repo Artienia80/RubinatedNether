@@ -27,7 +27,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class BronzeSpringBlock extends TarnishingBronzeBlock {
     public static final BooleanProperty EXTENDED = BlockStateProperties.EXTENDED;
 
-    private static final double BASE_LAUNCH_VELOCITY = 0.5; // meters/s
+    private static final double BASE_LAUNCH_VELOCITY = 0.5;
 
     private static final VoxelShape SQUISHED_SHAPE = Block.box(2, 0, 2, 14, 16, 14);
     private static final VoxelShape EXTENDED_SHAPE = Block.box(2, 0, 2, 14, 24, 14);
@@ -52,8 +52,7 @@ public class BronzeSpringBlock extends TarnishingBronzeBlock {
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        // Keep collision shape at 16 blocks high so entities can land on top
-        return SQUISHED_SHAPE;
+        return state.getValue(EXTENDED) ? EXTENDED_SHAPE : SQUISHED_SHAPE;
     }
 
     @Override
@@ -62,9 +61,11 @@ public class BronzeSpringBlock extends TarnishingBronzeBlock {
         Level level = context.getLevel();
         BlockPos abovePos = blockPos.above();
 
-        // Check if there's enough space above (when extended, spring goes into block above)
-        if (blockPos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(abovePos).canBeReplaced(context)) {
-            return super.getStateForPlacement(context);
+        if (blockPos.getY() < level.getMaxBuildHeight() - 1) {
+            BlockState aboveState = level.getBlockState(abovePos);
+            if (aboveState.canBeReplaced(context) || aboveState.getBlock() instanceof BronzeSpringBlock) {
+                return super.getStateForPlacement(context);
+            }
         }
 
         return null;
@@ -73,11 +74,15 @@ public class BronzeSpringBlock extends TarnishingBronzeBlock {
     @Override
     protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState,
                                      LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
-        // If block above is no longer replaceable and spring is extended, prevent placement
-        if (facing == Direction.UP && state.getValue(EXTENDED)) {
-            if (!facingState.isAir() && !facingState.canBeReplaced()) {
-                // Contract the spring if block above becomes solid
-                return state.setValue(EXTENDED, false);
+        if (facing == Direction.UP) {
+            if (state.getValue(EXTENDED)) {
+                if (!facingState.isAir() && !facingState.canBeReplaced() && !(facingState.getBlock() instanceof BronzeSpringBlock)) {
+                    return state.setValue(EXTENDED, false);
+                }
+            }
+
+            if (facingState.getBlock() instanceof BronzeSpringBlock && state.getValue(EXTENDED)) {
+                return Blocks.AIR.defaultBlockState();
             }
         }
 
@@ -89,14 +94,13 @@ public class BronzeSpringBlock extends TarnishingBronzeBlock {
         BlockPos blockpos = pos.below();
         BlockState blockstate = level.getBlockState(blockpos);
 
-        // Check if block below can support this spring
-        boolean hasSupport = blockstate.isFaceSturdy(level, blockpos, Direction.UP);
+        boolean hasSupport = blockstate.isFaceSturdy(level, blockpos, Direction.UP) ||
+                blockstate.getBlock() instanceof BronzeSpringBlock;
 
-        // If extended, also check if space above is available
         if (state.getValue(EXTENDED)) {
             BlockPos abovePos = pos.above();
             BlockState aboveState = level.getBlockState(abovePos);
-            return hasSupport && (aboveState.isAir() || aboveState.canBeReplaced());
+            return hasSupport && (aboveState.isAir() || aboveState.canBeReplaced() || aboveState.getBlock() instanceof BronzeSpringBlock);
         }
 
         return hasSupport;
@@ -123,6 +127,15 @@ public class BronzeSpringBlock extends TarnishingBronzeBlock {
 
         entity.causeFallDamage(fallDistance, 0.0F, level.damageSources().fall());
 
+        BlockPos belowPos = pos.below();
+        BlockState belowState = level.getBlockState(belowPos);
+        if (belowState.getBlock() instanceof BronzeSpringBlock && belowState.getValue(EXTENDED)) {
+            if (entity instanceof LivingEntity livingEntity && fallDistance > 0.1f) {
+                ((BronzeSpringBlock) belowState.getBlock()).launchEntity(livingEntity, belowState);
+            }
+            return;
+        }
+
         if (state.getValue(EXTENDED)) {
             if (entity instanceof LivingEntity livingEntity) {
                 launchEntity(livingEntity, state);
@@ -130,22 +143,43 @@ public class BronzeSpringBlock extends TarnishingBronzeBlock {
             return;
         }
 
-        // Spring is squished - check if fall distance warrants a launch
         if (fallDistance > 0.5f && entity instanceof LivingEntity livingEntity) {
-            // Check if space above is clear before extending
             BlockPos abovePos = pos.above();
             BlockState aboveState = level.getBlockState(abovePos);
 
             if (aboveState.isAir() || aboveState.canBeReplaced()) {
-                // Extend spring
                 level.setBlock(pos, state.setValue(EXTENDED, true), 3);
                 level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.5F, 1.0F);
 
-                // Launch entity
                 launchEntity(livingEntity, state);
 
-                // Schedule squish back down with tarnish-based delay
                 level.scheduleTick(pos, this, getContractionDelay(state));
+            }
+        }
+    }
+
+    @Override
+    public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+        if (level.isClientSide) return;
+        if (!(entity instanceof LivingEntity livingEntity)) return;
+
+        TarnishState tarnishState = this.getAge();
+
+        if (tarnishState == TarnishState.CRYSTALLIZED) {
+            double relativeX = entity.getX() - pos.getX();
+            double relativeZ = entity.getZ() - pos.getZ();
+
+            double entityRadius = entity.getBbWidth() / 2.0;
+            double minX = 2.0 / 16.0;
+            double maxX = 14.0 / 16.0;
+            double minZ = 2.0 / 16.0;
+            double maxZ = 14.0 / 16.0;
+
+            boolean xOverlap = (relativeX + entityRadius > minX) && (relativeX - entityRadius < maxX);
+            boolean zOverlap = (relativeZ + entityRadius > minZ) && (relativeZ - entityRadius < maxZ);
+
+            if (xOverlap && zOverlap) {
+                launchEntity(livingEntity, state);
             }
         }
     }
@@ -155,17 +189,35 @@ public class BronzeSpringBlock extends TarnishingBronzeBlock {
         if (level.isClientSide) return;
         if (!(entity instanceof LivingEntity livingEntity)) return;
 
+        double relativeX = entity.getX() - pos.getX();
+        double relativeZ = entity.getZ() - pos.getZ();
+
+        double entityRadius = entity.getBbWidth() / 2.0;
+        double minX = 2.0 / 16.0;
+        double maxX = 14.0 / 16.0;
+        double minZ = 2.0 / 16.0;
+        double maxZ = 14.0 / 16.0;
+
+        boolean xOverlap = (relativeX + entityRadius > minX) && (relativeX - entityRadius < maxX);
+        boolean zOverlap = (relativeZ + entityRadius > minZ) && (relativeZ - entityRadius < maxZ);
+
+        if (!xOverlap || !zOverlap) {
+            return;
+        }
+
         TarnishState tarnishState = this.getAge();
 
-        // Crystallized springs launch on contact
         if (tarnishState == TarnishState.CRYSTALLIZED) {
             launchEntity(livingEntity, state);
             return;
         }
 
-        // Other tarnish states only launch when extended (powered by redstone)
         if (state.getValue(EXTENDED)) {
-            launchEntity(livingEntity, state);
+            if (entity.onGround() && entity.fallDistance > 0.0f) {
+                launchEntity(livingEntity, state);
+                entity.fallDistance = 0;
+                return;
+            }
         }
     }
 
@@ -187,7 +239,6 @@ public class BronzeSpringBlock extends TarnishingBronzeBlock {
         entity.hurtMarked = true;
         entity.resetFallDistance();
 
-        // Play sound
         entity.level().playSound(null, entity.blockPosition(),
                 SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.3F, 1.5F);
     }
@@ -201,11 +252,22 @@ public class BronzeSpringBlock extends TarnishingBronzeBlock {
         boolean isExtended = state.getValue(EXTENDED);
 
         if (hasSignal && !isExtended) {
-            // Check if space above is clear before extending
             BlockPos abovePos = pos.above();
             BlockState aboveState = level.getBlockState(abovePos);
 
             if (aboveState.isAir() || aboveState.canBeReplaced()) {
+                double minY = pos.getY() + 1.0;
+                double maxY = pos.getY() + 1.5;
+
+                level.getEntities(null, new net.minecraft.world.phys.AABB(
+                        pos.getX(), minY, pos.getZ(),
+                        pos.getX() + 1, maxY, pos.getZ() + 1
+                )).forEach(entity -> {
+                    if (entity instanceof LivingEntity livingEntity && entity.onGround()) {
+                        launchEntity(livingEntity, state);
+                    }
+                });
+
                 level.setBlock(pos, state.setValue(EXTENDED, true), 3);
                 level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.5F, 1.2F);
             }

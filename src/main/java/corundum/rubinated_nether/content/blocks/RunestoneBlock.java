@@ -124,13 +124,6 @@ public class RunestoneBlock extends BaseEntityBlock {
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(level, pos, state, placer, stack);
 
-		//TODO: figure this out later
-//		CustomData customdata = stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
-//		if (customdata.contains("RuneItem")) {
-//			level.setBlock(pos, state.setValue(HAS_RUNE, Boolean.TRUE), 2);
-//			level.setBlock(pos.above(), state.setValue(HAS_RUNE, Boolean.TRUE)
-//					.setValue(HALF, DoubleBlockHalf.UPPER), 3);
-//		} else
 			level.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), 3);
 	}
 
