@@ -5,6 +5,7 @@ import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.client.RubinatedNetherClient;
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.commands.RubinateCommand;
+import corundum.rubinated_nether.content.RNCapabilities;
 import corundum.rubinated_nether.content.enchantment.RNEnchantmentEffects;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
@@ -49,7 +50,7 @@ public class RubinatedNether {
 	private static final ImmutableList<DeferredRegister<?>> REGISTRIES = ImmutableList.of(
 			RNBlocks.BLOCKS,
 			RNItems.ITEMS,
-            RNAttachments.ATTACHMENT_TYPES,
+			RNAttachments.ATTACHMENT_TYPES,
 			RNArmorMaterials.ARMOR_MATERIALS,
 			RNEntityCreator.ENTITY_TYPES,
 			RNParticleTypes.PARTICLES,
@@ -70,12 +71,9 @@ public class RubinatedNether {
 		modEventBus.addListener(DatapackRegistry::datapackRegistry);
 		RNEnchantmentEffects.register(modEventBus);
 		RNEffects.register(modEventBus);
-
-		// Register command
 		NeoForge.EVENT_BUS.addListener(this::registerCommands);
-
-		// Register ruby anvil repair handler
 		RNAnvilRepairHandler.register();
+		RNCapabilities.register(modEventBus);
 
 		for (var registry : REGISTRIES)
 			registry.register(modEventBus);
