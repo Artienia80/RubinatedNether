@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
+import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
@@ -111,6 +112,14 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 					lastDistance.setValue(blockDistance);
 					// Calculate entity power based on distance
 					entityPower.set(calculatePowerLevel(blockDistance));
+
+					// Grant advancement when entity is detected AND within unobstructed range
+					if (!level.isClientSide) {
+						// Only grant if entity is closer than any block obstruction
+						if (blockRange == -1 || blockDistance < blockRange) {
+							grantLaserDetectionAdvancement(entity);
+						}
+					}
 				}
 			});
 
@@ -309,6 +318,22 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 			System.out.println("GET POWER LEVEL CALLED: returning " + powerLevel);
 		}
 		return powerLevel;
+	}
+
+	private void grantLaserDetectionAdvancement(net.minecraft.world.entity.Entity entity) {
+		if (entity instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+			var advancementHolder = serverPlayer.server.getAdvancements()
+					.get(RubinatedNether.id("laser_detection"));
+
+			if (advancementHolder != null) {
+				var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
+				if (!progress.isDone()) {
+					for (String criterion : progress.getRemainingCriteria()) {
+						serverPlayer.getAdvancements().award(advancementHolder, criterion);
+					}
+				}
+			}
+		}
 	}
 
 	public int getBlockRange() {

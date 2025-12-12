@@ -86,8 +86,18 @@ public class CorrodedHideAndAmbushGoal extends Goal {
             }
 
             case 2 -> {
-                Vec3 direction = ambushTargetPos.subtract(entity.position()).normalize();
-                entity.setDeltaMovement(direction.scale(MOVE_SPEED));
+                // Calculate horizontal direction only (ignore Y component to prevent flying)
+                Vec3 entityPosFlat = new Vec3(entity.getX(), 0, entity.getZ());
+                Vec3 targetPosFlat = new Vec3(ambushTargetPos.x, 0, ambushTargetPos.z);
+                Vec3 horizontalDirection = targetPosFlat.subtract(entityPosFlat).normalize();
+
+                // Keep entity at ground level while moving
+                double currentY = entity.getY();
+                entity.setDeltaMovement(horizontalDirection.x * MOVE_SPEED, 0, horizontalDirection.z * MOVE_SPEED);
+
+                // Force entity to stay at the same Y level (underground)
+                entity.setPos(entity.getX(), currentY, entity.getZ());
+
                 if (entity.level() instanceof ServerLevel server) {
                     BlockPos below = entity.blockPosition().below();
                     BlockState blockstate = entity.level().getBlockState(below);
@@ -96,7 +106,9 @@ public class CorrodedHideAndAmbushGoal extends Goal {
                     server.sendParticles(dust, entity.getX(), entity.getY() + 0.1, entity.getZ(), 4, 0.2, 0.05, 0.2, 0.02);
                 }
 
-                if (entity.distanceToSqr(ambushTargetPos) < 1.1) {
+                // Check horizontal distance only (changed from 1.1 to 0.5)
+                double horizontalDistSqr = entityPosFlat.distanceToSqr(targetPosFlat);
+                if (horizontalDistSqr < 0.25) { // 0.5 * 0.5 = 0.25
                     entity.setDeltaMovement(Vec3.ZERO);
                     state = 3;
                     stateTicks = 0;
@@ -128,7 +140,7 @@ public class CorrodedHideAndAmbushGoal extends Goal {
                         if (entity.level() instanceof ServerLevel server) {
                             server.sendParticles(ParticleTypes.CRIT, target.getX(), target.getY() + 1, target.getZ(), 10, 0.3, 0.2, 0.3, 0.1);
                         }
-                        target.hurt(entity.damageSources().mobAttack(entity), 6.0F);
+                        target.hurt(entity.damageSources().mobAttack(entity), 10.0F); // Changed from 6.0F to 10.0F
                     }
                 }
 

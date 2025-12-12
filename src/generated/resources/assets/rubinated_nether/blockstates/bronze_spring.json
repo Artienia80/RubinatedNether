@@ -1,0 +1,108 @@
+{
+  "variants": {
+    "extended=false,facing=down,waxed=false": {
+      "model": "rubinated_nether:block/bronze_spring_squished",
+      "x": 180
+    },
+    "extended=false,facing=down,waxed=true": {
+      "model": "rubinated_nether:block/bronze_spring_squished",
+      "x": 180
+    },
+    "extended=false,facing=east,waxed=false": {
+      "model": "rubinated_nether:block/bronze_spring_squished",
+      "x": 90,
+      "y": 90
+    },
+    "extended=false,facing=east,waxed=true": {
+      "model": "rubinated_nether:block/bronze_spring_squished",
+      "x": 90,
+      "y": 90
+    },
+    "extended=false,facing=north,waxed=false": {
+      "model": "rubinated_nether:block/bronze_spring_squished",
+      "x": 90
+    },
+    "extended=false,facing=north,waxed=true": {
+      "model": "rubinated_nether:block/bronze_spring_squished",
+      "x": 90
+    },
+    "extended=false,facing=south,waxed=false": {
+      "model": "rubinated_nether:block/bronze_spring_squished",
+      "x": 90,
+      "y": 180
+    },
+    "extended=false,facing=south,waxed=true": {
+      "model": "rubinated_nether:block/bronze_spring_squished",
+      "x": 90,
+      "y": 180
+    },
+    "extended=false,facing=up,waxed=false": {
+      "model": "rubinated_nether:block/bronze_spring_squished"
+    },
+    "extended=false,facing=up,waxed=true": {
+      "model": "rubinated_nether:block/bronze_spring_squished"
+    },
+    "extended=false,facing=west,waxed=false": {
+      "model": "rubinated_nether:block/bronze_spring_squished",
+      "x": 90,
+      "y": 270
+    },
+    "extended=false,facing=west,waxed=true": {
+      "model": "rubinated_nether:block/bronze_spring_squished",
+      "x": 90,
+      "y": 270
+    },
+    "extended=true,facing=down,waxed=false": {
+      "model": "rubinated_nether:block/bronze_spring_extended",
+      "x": 180
+    },
+    "extended=true,facing=down,waxed=true": {
+      "model": "rubinated_nether:block/bronze_spring_extended",
+      "x": 180
+    },
+    "extended=true,facing=east,waxed=false": {
+      "model": "rubinated_nether:block/bronze_spring_extended",
+      "x": 90,
+      "y": 90
+    },
+    "extended=true,facing=east,waxed=true": {
+      "model": "rubinated_nether:block/bronze_spring_extended",
+      "x": 90,
+      "y": 90
+    },
+    "extended=true,facing=north,waxed=false": {
+      "model": "rubinated_nether:block/bronze_spring_extended",
+      "x": 90
+    },
+    "extended=true,facing=north,waxed=true": {
+      "model": "rubinated_nether:block/bronze_spring_extended",
+      "x": 90
+    },
+    "extended=true,facing=south,waxed=false": {
+      "model": "rubinated_nether:block/bronze_spring_extended",
+      "x": 90,
+      "y": 180
+    },
+    "extended=true,facing=south,waxed=true": {
+      "model": "rubinated_nether:block/bronze_spring_extended",
+      "x": 90,
+      "y": 180
+    },
+    "extended=true,facing=up,waxed=false": {
+      "model": "rubinated_nether:block/bronze_spring_extended"
+    },
+    "extended=true,facing=up,waxed=true": {
+      "model": "rubinated_nether:block/bronze_spring_extended"
+    },
+    "extended=true,facing=west,waxed=false": {
+      "model": "rubinated_nether:block/bronze_spring_extended",
+      "x": 90,
+      "y": 270
+    },
+    "extended=true,facing=west,waxed=true": {
+      "model": "rubinated_nether:block/bronze_spring_extended",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

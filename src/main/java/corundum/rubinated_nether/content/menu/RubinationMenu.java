@@ -12,6 +12,7 @@ import corundum.rubinated_nether.content.blocks.RubinationAltarBlock;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneItem;
 import net.minecraft.Util;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
@@ -40,12 +41,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.CommonHooks;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class RubinationMenu extends AbstractContainerMenu {
     static final ResourceLocation EMPTY_SLOT_KEY = RubinatedNether.id("item/empty_slot_key");
@@ -204,6 +200,21 @@ public class RubinationMenu extends AbstractContainerMenu {
 
         BlessPlayer(player, 6000);
 
+        if (player instanceof ServerPlayer serverPlayer) {
+            AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
+                    .get(RubinatedNether.id("offer_ritual_offering"));
+
+            if (advancementHolder != null) {
+                var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
+                if (!progress.isDone()) {
+                    // Grant all remaining criteria to complete the advancement
+                    for (String criterion : progress.getRemainingCriteria()) {
+                        serverPlayer.getAdvancements().award(advancementHolder, criterion);
+                    }
+                }
+            }
+        }
+
         RubinationConverter.RubinateAreaOffering(level, blockPos);
 
         return InteractionResult.CONSUME;
@@ -287,6 +298,20 @@ public class RubinationMenu extends AbstractContainerMenu {
                     level.random.nextFloat() * 0.1F + 0.9F
             );
 
+            if (player instanceof ServerPlayer serverPlayer) {
+                AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
+                        .get(RubinatedNether.id("inscribe_rune"));
+
+                if (advancementHolder != null) {
+                    var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
+                    if (!progress.isDone()) {
+                        for (String criterion : progress.getRemainingCriteria()) {
+                            serverPlayer.getAdvancements().award(advancementHolder, criterion);
+                        }
+                    }
+                }
+            }
+
             this.rubinationSlots.setChanged();
             this.slotsChanged(this.rubinationSlots);
         });
@@ -329,6 +354,20 @@ public class RubinationMenu extends AbstractContainerMenu {
                     player.awardStat(Stats.ENCHANT_ITEM);
                     if (player instanceof ServerPlayer) {
                         CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer) player, itemstack2, itemCost);
+                    }
+
+                    if (player instanceof ServerPlayer serverPlayer) {
+                        AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
+                                .get(RubinatedNether.id("rubinate_item"));
+
+                        if (advancementHolder != null) {
+                            var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
+                            if (!progress.isDone()) {
+                                for (String criterion : progress.getRemainingCriteria()) {
+                                    serverPlayer.getAdvancements().award(advancementHolder, criterion);
+                                }
+                            }
+                        }
                     }
 
                     this.rubinationSlots.setChanged();
@@ -612,11 +651,28 @@ public class RubinationMenu extends AbstractContainerMenu {
     public static void BlessPlayer(Player player, int durationTicks) {
         MobEffectInstance currentBlessing = player.getEffect(RNEffects.BLESSED);
 
+        int newDuration;
         if (currentBlessing != null) {
-            int newDuration = currentBlessing.getDuration() + durationTicks;
+            newDuration = currentBlessing.getDuration() + durationTicks;
             player.addEffect(new MobEffectInstance(RNEffects.BLESSED, newDuration, 0, false, true, true));
         } else {
+            newDuration = durationTicks;
             player.addEffect(new MobEffectInstance(RNEffects.BLESSED, durationTicks, 0, false, true, true));
+        }
+
+        // Check if duration exceeds 5h:20m
+        if (newDuration >= 384000 && player instanceof ServerPlayer serverPlayer) {
+            AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
+                    .get(RubinatedNether.id("divine_favor"));
+
+            if (advancementHolder != null) {
+                var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
+                if (!progress.isDone()) {
+                    for (String criterion : progress.getRemainingCriteria()) {
+                        serverPlayer.getAdvancements().award(advancementHolder, criterion);
+                    }
+                }
+            }
         }
     }
 }

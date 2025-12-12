@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
+import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.CopperLaserBlock;
@@ -13,6 +14,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
@@ -87,7 +89,26 @@ public class CopperLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 
 			MutableBoolean hasEntity = new MutableBoolean(false);
 			((LevelAccessor) level).invokeGetEntities().get(range, entity -> {
+				// Calculate distance to entity along the laser's facing axis
+				double axisDistance;
+				switch (facing.getAxis()) {
+					case X -> axisDistance = Math.abs(entity.getX() - (worldPosition.getX() + 0.5));
+					case Y -> axisDistance = Math.abs(entity.getY() - (worldPosition.getY() + 0.5));
+					case Z -> axisDistance = Math.abs(entity.getZ() - (worldPosition.getZ() + 0.5));
+					default -> axisDistance = 0;
+				}
+
+				double blockDistance = Math.ceil(axisDistance);
+
 				hasEntity.setTrue();
+
+				// Grant advancement when entity is detected AND within unobstructed range
+				if (!level.isClientSide) {
+					// Only grant if entity is closer than any block obstruction
+					if (blockRange == -1 || blockDistance < blockRange) {
+						grantLaserDetectionAdvancement(entity);
+					}
+				}
 			});
 
 			if (mode == CopperLaserBlock.LaserMode.INFRARED) {
@@ -295,6 +316,22 @@ public class CopperLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 
 		// Recalculate power level from loaded timer
 		powerLevel = calculatePowerFromTimer();
+	}
+
+	private void grantLaserDetectionAdvancement(net.minecraft.world.entity.Entity entity) {
+		if (entity instanceof ServerPlayer serverPlayer) {
+			var advancementHolder = serverPlayer.server.getAdvancements()
+					.get(RubinatedNether.id("laser_detection"));
+
+			if (advancementHolder != null) {
+				var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
+				if (!progress.isDone()) {
+					for (String criterion : progress.getRemainingCriteria()) {
+						serverPlayer.getAdvancements().award(advancementHolder, criterion);
+					}
+				}
+			}
+		}
 	}
 
 	public int getPowerLevel() {

@@ -921,6 +921,80 @@ public class RNBlocks {
 			)
 	);
 
+	// BRONZE SPRINGS
+
+	// BRONZE SPRING
+
+	public static final DeferredBlock<Block> BRONZE_SPRING = registerWaxableBlock(
+			"bronze_spring",
+			() -> new BronzeSpringBlock(
+					TarnishingBronze.TarnishState.UNAFFECTED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.requiresCorrectToolForDrops()
+							.strength(4.0F, 110.0F)
+							.sound(SoundType.COPPER_GRATE)
+							.randomTicks()
+							.noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_SPRING = registerWaxableBlock(
+			"discolored_bronze_spring",
+			() -> new BronzeSpringBlock(
+					TarnishingBronze.TarnishState.DISCOLORED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.TERRACOTTA_PINK)
+							.requiresCorrectToolForDrops()
+							.strength(8.0F, 220.0F)
+							.sound(SoundType.COPPER_GRATE)
+							.randomTicks()
+							.noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_BRONZE_SPRING = registerWaxableBlock(
+			"corroded_bronze_spring",
+			() -> new BronzeSpringBlock(
+					TarnishingBronze.TarnishState.CORRODED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.CRIMSON_STEM)
+							.requiresCorrectToolForDrops()
+							.strength(16.0F, 440.0F)
+							.sound(SoundType.COPPER_GRATE)
+							.randomTicks()
+							.noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_SPRING = registerWaxableBlock(
+			"tarnished_bronze_spring",
+			() -> new BronzeSpringBlock(
+					TarnishingBronze.TarnishState.TARNISHED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.TERRACOTTA_BLACK)
+							.requiresCorrectToolForDrops()
+							.strength(32.0F, 880.0F)
+							.sound(SoundType.COPPER_GRATE)
+							.randomTicks()
+							.noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_SPRING = registerWaxableBlock(
+			"crystallized_bronze_spring",
+			() -> new BronzeSpringBlock(
+					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.TERRACOTTA_WHITE)
+							.requiresCorrectToolForDrops()
+							.strength(1.0F, 6.0F)
+							.sound(SoundType.COPPER_GRATE)
+							.randomTicks()
+							.noOcclusion()
+			)
+	);
+
 // BRONZE LANTERNS
 
 	public static final DeferredBlock<Block> BRONZE_LANTERN = registerWaxableBlock(

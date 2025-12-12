@@ -84,6 +84,17 @@ public class RNBlockStates extends BlockStateProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_LAMP
 		);
 
+		subfolder("bronze/bronze_spring/",
+				(rloc, name, block) -> {
+					springBlock(block, rloc);
+				},
+				RNBlocks.BRONZE_SPRING,
+				RNBlocks.DISCOLORED_BRONZE_SPRING,
+				RNBlocks.CORRODED_BRONZE_SPRING,
+				RNBlocks.TARNISHED_BRONZE_SPRING,
+				RNBlocks.CRYSTALLIZED_BRONZE_SPRING
+		);
+
 		this.simpleBlock(
 				RNBlocks.DRY_ICE.get(),
 				this.models()
@@ -368,7 +379,7 @@ public class RNBlockStates extends BlockStateProvider {
 				.withExistingParent(name, mcLoc("block/chain"))
 				.texture("all", modLoc(texturePath))
 				.texture("particle", modLoc(texturePath))
-				.renderType(mcLoc("cutout")); // Add this line for transparency
+				.renderType(mcLoc("cutout"));
 
 		this.getVariantBuilder(chain).forAllStates((state) -> ConfiguredModel.builder()
 				.modelFile(chainModel)
@@ -384,6 +395,49 @@ public class RNBlockStates extends BlockStateProvider {
 				})
 				.build()
 		);
+	}
+
+	public void springBlock(DeferredBlock<?> spring, String texturePath) {
+		var name = BuiltInRegistries.BLOCK.getKey(spring.get()).getPath();
+
+		var squishedModel = models().getBuilder(name + "_squished")
+				.parent(models().getExistingFile(modLoc("block/bronze_spring_squished_base")))
+				.texture("all", modLoc(texturePath))
+				.texture("particle", modLoc(texturePath))
+				.renderType(mcLoc("cutout"))
+				.ao(false);
+
+		var extendedModel = models().getBuilder(name + "_extended")
+				.parent(models().getExistingFile(modLoc("block/bronze_spring_extended_base")))
+				.texture("all", modLoc(texturePath))
+				.texture("particle", modLoc(texturePath))
+				.renderType(mcLoc("cutout"))
+				.ao(false);
+
+		this.getVariantBuilder(spring.get()).forAllStates((state) -> {
+			boolean extended = state.getValue(BlockStateProperties.EXTENDED);
+			Direction facing = state.getValue(BlockStateProperties.FACING);
+
+			int rotationX = switch(facing) {
+				case UP -> 0;
+				case DOWN -> 180;
+				default -> 90;
+			};
+
+			int rotationY = switch(facing) {
+				case NORTH -> 0;
+				case SOUTH -> 180;
+				case EAST -> 90;
+				case WEST -> 270;
+				default -> 0;
+			};
+
+			return ConfiguredModel.builder()
+					.modelFile(extended ? extendedModel : squishedModel)
+					.rotationX(rotationX)
+					.rotationY(rotationY)
+					.build();
+		});
 	}
 
 	public void subfolder(String folder, DeferredBlock<?>... blocks) {

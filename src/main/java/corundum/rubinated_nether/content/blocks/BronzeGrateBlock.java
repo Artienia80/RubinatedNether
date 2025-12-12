@@ -1,10 +1,13 @@
 package corundum.rubinated_nether.content.blocks;
 
+import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -74,8 +77,36 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
         }
 
         if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
-            level.scheduleTick(pos, this, delay);
+            // Only schedule and grant advancement if the grate will actually fall
+            // Check if there's a block below or if it's already supported
+            if (isFree(level.getBlockState(pos.below())) && pos.getY() >= level.getMinBuildHeight()) {
+                level.scheduleTick(pos, this, delay);
+
+                // Grant advancement to player after the delay
+                if (entity instanceof ServerPlayer serverPlayer) {
+                    scheduleAdvancementGrant(serverPlayer, (ServerLevel) level, delay);
+                }
+            }
         }
+    }
+
+    private void scheduleAdvancementGrant(ServerPlayer player, ServerLevel level, int delay) {
+        level.getServer().tell(new TickTask(
+                level.getServer().getTickCount() + delay,
+                () -> {
+                    var advancementHolder = player.server.getAdvancements()
+                            .get(RubinatedNether.id("pitfalls"));
+
+                    if (advancementHolder != null) {
+                        var progress = player.getAdvancements().getOrStartProgress(advancementHolder);
+                        if (!progress.isDone()) {
+                            for (String criterion : progress.getRemainingCriteria()) {
+                                player.getAdvancements().award(advancementHolder, criterion);
+                            }
+                        }
+                    }
+                }
+        ));
     }
 
     // Add this method back from the original code

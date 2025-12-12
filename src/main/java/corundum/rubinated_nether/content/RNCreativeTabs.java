@@ -21,7 +21,7 @@ public class RNCreativeTabs {
 			() -> CreativeModeTab.builder()
 					.title(net.minecraft.network.chat.Component.translatable("itemGroup.rubinated_nether_general"))
 					.withTabsBefore(net.minecraft.world.item.CreativeModeTabs.COMBAT)
-					.icon(() -> RNItems.RUBY_ITEM.get().getDefaultInstance())
+					.icon(() -> RNItems.RUBY_ICON.get().getDefaultInstance())
 					.displayItems((parameters, output) -> {
 
 						addItems(
@@ -173,7 +173,6 @@ public class RNCreativeTabs {
 
 						addWaxableItems(
 								output,
-
 								RNBlocks.BRONZE_BLOCK,
 								RNBlocks.CHISELED_BRONZE,
 								RNBlocks.CUT_BRONZE_PILLAR,
@@ -182,6 +181,11 @@ public class RNCreativeTabs {
 								RNBlocks.CUT_BRONZE_BRICKS_SLAB,
 								RNBlocks.BRONZE_BULB,
 								RNBlocks.BRONZE_GRATE,
+								RNBlocks.BRONZE_SPRING,
+								RNBlocks.BRONZE_LANTERN,
+								RNBlocks.BRONZE_CHAIN,
+								RNBlocks.BRONZE_CHANDELIER,
+								RNBlocks.BRONZE_LAMP,
 
 								RNBlocks.DISCOLORED_BRONZE_BLOCK,
 								RNBlocks.DISCOLORED_CHISELED_BRONZE,
@@ -191,6 +195,11 @@ public class RNCreativeTabs {
 								RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB,
 								RNBlocks.DISCOLORED_BRONZE_BULB,
 								RNBlocks.DISCOLORED_BRONZE_GRATE,
+								RNBlocks.DISCOLORED_BRONZE_SPRING,
+								RNBlocks.DISCOLORED_BRONZE_LANTERN,
+								RNBlocks.DISCOLORED_BRONZE_CHAIN,
+								RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
+								RNBlocks.DISCOLORED_BRONZE_LAMP,
 
 								RNBlocks.CORRODED_BRONZE_BLOCK,
 								RNBlocks.CORRODED_CHISELED_BRONZE,
@@ -200,6 +209,11 @@ public class RNCreativeTabs {
 								RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB,
 								RNBlocks.CORRODED_BRONZE_BULB,
 								RNBlocks.CORRODED_BRONZE_GRATE,
+								RNBlocks.CORRODED_BRONZE_SPRING,
+								RNBlocks.CORRODED_BRONZE_LANTERN,
+								RNBlocks.CORRODED_BRONZE_CHAIN,
+								RNBlocks.CORRODED_BRONZE_CHANDELIER,
+								RNBlocks.CORRODED_BRONZE_LAMP,
 
 								RNBlocks.TARNISHED_BRONZE_BLOCK,
 								RNBlocks.TARNISHED_CHISELED_BRONZE,
@@ -209,6 +223,12 @@ public class RNCreativeTabs {
 								RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB,
 								RNBlocks.TARNISHED_BRONZE_BULB,
 								RNBlocks.TARNISHED_BRONZE_GRATE,
+								RNBlocks.TARNISHED_BRONZE_SPRING,
+								RNBlocks.TARNISHED_BRONZE_LANTERN,
+								RNBlocks.TARNISHED_BRONZE_CHAIN,
+								RNBlocks.TARNISHED_BRONZE_CHANDELIER,
+								RNBlocks.TARNISHED_BRONZE_LAMP,
+
 
 								RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
 								RNBlocks.CRYSTALLIZED_CHISELED_BRONZE,
@@ -218,30 +238,12 @@ public class RNCreativeTabs {
 								RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB,
 								RNBlocks.CRYSTALLIZED_BRONZE_BULB,
 								RNBlocks.CRYSTALLIZED_BRONZE_GRATE,
-
-								RNBlocks.BRONZE_LANTERN,
-								RNBlocks.DISCOLORED_BRONZE_LANTERN,
-								RNBlocks.CORRODED_BRONZE_LANTERN,
-								RNBlocks.TARNISHED_BRONZE_LANTERN,
+								RNBlocks.CRYSTALLIZED_BRONZE_SPRING,
 								RNBlocks.CRYSTALLIZED_BRONZE_LANTERN,
-
-								RNBlocks.BRONZE_CHAIN,
-								RNBlocks.DISCOLORED_BRONZE_CHAIN,
-								RNBlocks.CORRODED_BRONZE_CHAIN,
-								RNBlocks.TARNISHED_BRONZE_CHAIN,
 								RNBlocks.CRYSTALLIZED_BRONZE_CHAIN,
-
-								RNBlocks.BRONZE_CHANDELIER,
-								RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
-								RNBlocks.CORRODED_BRONZE_CHANDELIER,
-								RNBlocks.TARNISHED_BRONZE_CHANDELIER,
 								RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER,
-
-								RNBlocks.BRONZE_LAMP,
-								RNBlocks.DISCOLORED_BRONZE_LAMP,
-								RNBlocks.CORRODED_BRONZE_LAMP,
-								RNBlocks.TARNISHED_BRONZE_LAMP,
 								RNBlocks.CRYSTALLIZED_BRONZE_LAMP
+
 						);
 					})
 					.build()

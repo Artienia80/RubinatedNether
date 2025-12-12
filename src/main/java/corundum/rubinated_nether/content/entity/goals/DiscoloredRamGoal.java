@@ -83,13 +83,14 @@ public class DiscoloredRamGoal extends Goal {
                     dashDirection = target.position().subtract(entity.position()).normalize();
                     phase = 2;
                     phaseTicks = 0;
+                    // Start ram animation when beginning the dash
+                    if (!entity.level().isClientSide) {
+                        entity.level().broadcastEntityEvent(entity, (byte) 97);
+                    }
                 }
                 break;
 
             case 2:
-                if (!entity.level().isClientSide) {
-                    entity.level().broadcastEntityEvent(entity, (byte) 97);
-                }
                 entity.setDeltaMovement(dashDirection.scale(RAM_SPEED));
                 entity.setYRot((float) (Mth.atan2(dashDirection.z, dashDirection.x) * (180F / Math.PI)) - 90F);
                 entity.yBodyRot = entity.getYRot();
@@ -114,9 +115,6 @@ public class DiscoloredRamGoal extends Goal {
 
                 phaseTicks++;
                 if (phaseTicks >= DASH_TIME) {
-                    if (!entity.level().isClientSide) {
-                        entity.level().broadcastEntityEvent(entity, (byte) 93);
-                    }
                     stop();
                 }
                 break;
@@ -132,7 +130,11 @@ public class DiscoloredRamGoal extends Goal {
         isStunned = true;
         stunTicks = STUN_DURATION;
         entity.setDeltaMovement(Vec3.ZERO);
-        entity.level().broadcastEntityEvent(entity, (byte) 71);
+        // Stop ram animation and start stun animation
+        if (!entity.level().isClientSide) {
+            entity.level().broadcastEntityEvent(entity, (byte) 93); // Stop ram
+            entity.level().broadcastEntityEvent(entity, (byte) 71); // Start stun
+        }
         phase = 0;
     }
 
@@ -140,6 +142,10 @@ public class DiscoloredRamGoal extends Goal {
     public void stop() {
         if (!isStunned) {
             entity.setRamCooldown(COOLDOWN);
+            // Stop ram animation when goal ends normally
+            if (!entity.level().isClientSide && phase == 2) {
+                entity.level().broadcastEntityEvent(entity, (byte) 93);
+            }
         }
         entity.setDeltaMovement(Vec3.ZERO);
         phase = 0;

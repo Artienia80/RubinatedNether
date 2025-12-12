@@ -1,0 +1,9 @@
+{
+  "parent": "rubinated_nether:block/bronze_spring_squished_base",
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "all": "rubinated_nether:block/bronze/bronze_spring/tarnished_bronze_spring",
+    "particle": "rubinated_nether:block/bronze/bronze_spring/tarnished_bronze_spring"
+  }
+}

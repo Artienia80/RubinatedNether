@@ -15,6 +15,8 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
+
 public class RNItems {
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(RubinatedNether.MODID);
 
@@ -85,21 +87,25 @@ public class RNItems {
 	public static final DeferredItem<Item> BRONZE_POWDER = basicItem("bronze_powder");
 	public static final DeferredItem<Item> BRONZE_SCRAP = basicItem("bronze_scrap");
 
-
 	public static final DeferredItem<Item> RITUAL_OFFERING = basicItem("ritual_offering");
 	public static final DeferredItem<Item> WINDING_KEY = basicItem("winding_key");
-
-
 
 	public static final DeferredItem<Item> BRONZE_SHOT = ITEMS.register(
 		"bronze_shot",
 		() -> new BronzeShotItem(new Item.Properties())
 	);
 
-
 	public static final DeferredItem<Item> BRONZE_SPAWN_EGG = ITEMS.register("bronze_spawn_egg",
 			() -> new DeferredSpawnEggItem(RNEntityCreator.BRONZE, 0xbf8142, 0x76422c,
 					new Item.Properties()));
+
+	//Not Actual Items
+
+	public static final DeferredItem<Item> BLESSED_ICON = ITEMS.register("blessed_icon",
+			() -> new Item(new Item.Properties()));
+
+	public static final DeferredItem<Item> RUBY_ICON = ITEMS.register("ruby_icon",
+			() -> new Item(new Item.Properties()));
 
 	public static DeferredItem<Item> basicItem(String name) {
 		return ITEMS.registerSimpleItem(
@@ -116,11 +122,11 @@ public class RNItems {
 	}
 
 	private static @NotNull DeferredItem<RuneItem> makeRune(Rubination rubination) {
-		String name = rubination.name().toLowerCase();
+		String name = rubination.name().toLowerCase(Locale.ROOT);
 		String tooltipKey = "tooltip.rune." + name;
 
 		return ITEMS.register(
-				rubination.name().toLowerCase().concat("_rune"), // Converts name to lowercase
+				rubination.name().toLowerCase(Locale.ROOT).concat("_rune"), // Converts name to lowercase
 				() -> new RuneItem(new Item.Properties().stacksTo(1).rarity(RNRarity.RUBINATED_NETHER_RUBY.get()), rubination, tooltipKey)
 		);
 	}

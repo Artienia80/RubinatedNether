@@ -1,0 +1,43 @@
+{
+  "parent": "rubinated_nether:enter_shrine",
+  "criteria": {
+    "impossible": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "position": {
+                  "y": {
+                    "max": -65536.0
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.laser_detection.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:bronze_laser"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.laser_detection.title"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

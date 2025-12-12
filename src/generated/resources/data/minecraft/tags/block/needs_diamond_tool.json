@@ -92,6 +92,11 @@
     "rubinated_nether:discolored_bronze_lamp",
     "rubinated_nether:corroded_bronze_lamp",
     "rubinated_nether:tarnished_bronze_lamp",
-    "rubinated_nether:crystallized_bronze_lamp"
+    "rubinated_nether:crystallized_bronze_lamp",
+    "rubinated_nether:bronze_spring",
+    "rubinated_nether:discolored_bronze_spring",
+    "rubinated_nether:corroded_bronze_spring",
+    "rubinated_nether:tarnished_bronze_spring",
+    "rubinated_nether:crystallized_bronze_spring"
   ]
 }

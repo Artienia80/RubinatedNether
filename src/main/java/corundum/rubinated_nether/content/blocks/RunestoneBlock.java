@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
+import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockStateProperties;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNTags;
@@ -8,8 +9,10 @@ import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneItem;
 import corundum.rubinated_nether.mixin.accessors.DoublePlantBlockAccessor;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -121,13 +124,6 @@ public class RunestoneBlock extends BaseEntityBlock {
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(level, pos, state, placer, stack);
 
-		//TODO: figure this out later
-//		CustomData customdata = stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
-//		if (customdata.contains("RuneItem")) {
-//			level.setBlock(pos, state.setValue(HAS_RUNE, Boolean.TRUE), 2);
-//			level.setBlock(pos.above(), state.setValue(HAS_RUNE, Boolean.TRUE)
-//					.setValue(HALF, DoubleBlockHalf.UPPER), 3);
-//		} else
 			level.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), 3);
 	}
 
@@ -245,6 +241,21 @@ public class RunestoneBlock extends BaseEntityBlock {
 		var itemStack = stack.consumeAndReturn(1, player);
 		((RunestoneBlockEntity) blockEntity).setTheItem(itemStack);
 		blockEntity.setChanged();
+
+		if (player instanceof ServerPlayer serverPlayer) {
+			AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
+					.get(RubinatedNether.id("insert_rune"));
+
+			if (advancementHolder != null) {
+				var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
+				if (!progress.isDone()) {
+					// Grant all remaining criteria to complete the advancement
+					for (String criterion : progress.getRemainingCriteria()) {
+						serverPlayer.getAdvancements().award(advancementHolder, criterion);
+					}
+				}
+			}
+		}
 
 		level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockState));
 	}
