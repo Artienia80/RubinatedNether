@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "rubinated_nether:block/freezer_front",
+    "side": "rubinated_nether:block/freezer_side",
+    "top": "rubinated_nether:block/freezer_top",
+    "bottom": "rubinated_nether:block/freezer_bottom"
+  }
+}

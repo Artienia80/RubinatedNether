@@ -16,33 +16,27 @@ import corundum.rubinated_nether.misc.DatapackRegistry;
 import corundum.rubinated_nether.misc.RNAttachments;
 import corundum.rubinated_nether.utils.RNConfig;
 import eu.midnightdust.lib.config.MidnightConfig;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.*;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
 
-/**
- * A couple of guidelines for this codebase: <br>
- *     <b>-</b> The number of parameters in a method should never be more than <b>7</b>. <br>
- *     <b>-</b> In normal circumstances, methods should not be longer than <b>10</b> lines of code.
- *     Having more than that likely means some behaviour can be detached. And yes, lines with just
- *     a bracket or single line breakdowns don't count.   <br>
- *     <b>-</b> It is recommended that a line doesn't go over <b>100</b> columns. If it does it is either
- *     by a small count, or they should be cut down into more lines. <br>
- */
+import java.util.Optional;
+
 @Mod(RubinatedNether.MODID)
 public class RubinatedNether {
-
-	//TODO: Code Cleanup (including mandating the use of "var")
-	//TODO: Add more comments
-
-	//TODO: Figure out why the f**k accesstransformers are not working
 
 	public static final String MODID = "rubinated_nether";
 	public static final Logger LOGGER = LogUtils.getLogger();
@@ -66,6 +60,7 @@ public class RubinatedNether {
 		LOGGER.info("Rubinating all over your Nether...");
 
 		modEventBus.addListener(this::commonSetup);
+		modEventBus.addListener(this::addPackFinders); // Add this line
 
 		modEventBus.addListener(Datagen::datagen);
 		modEventBus.addListener(DatapackRegistry::datapackRegistry);
@@ -86,12 +81,45 @@ public class RubinatedNether {
 		}
 	}
 
+	public void addPackFinders(AddPackFindersEvent event) {
+		if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+			var resourcePath = ModList.get()
+					.getModFileById(MODID)
+					.getFile()
+					.findResource("resourcepacks/simple_freezer");
+
+			event.addRepositorySource((consumer) -> {
+				var pack = Pack.readMetaAndCreate(
+						new PackLocationInfo(
+								"builtin/simple_freezer",
+								Component.literal("Simplified Freezer Model"),
+								PackSource.BUILT_IN,
+								Optional.empty()
+						),
+						new Pack.ResourcesSupplier() {
+							@Override
+							public PackResources openPrimary(PackLocationInfo location) {
+								return new PathPackResources(location, resourcePath);
+							}
+
+							@Override
+							public PackResources openFull(PackLocationInfo location, Pack.Metadata metadata) {
+								return new PathPackResources(location, resourcePath);
+							}
+						},
+						PackType.CLIENT_RESOURCES,
+						new PackSelectionConfig(false, Pack.Position.TOP, false)
+				);
+
+				if (pack != null) {
+					consumer.accept(pack);
+				}
+			});
+		}
+	}
+
 	public void commonSetup(FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
-//        LimitlessInvWrapper.registerLimitlessBlockEntityContainer(
-//              CofferBlockEntity::getContainer,
-//              Holder.direct(RNBlockEntities.COFFER.get())
-//        );
 		});
 	}
 
