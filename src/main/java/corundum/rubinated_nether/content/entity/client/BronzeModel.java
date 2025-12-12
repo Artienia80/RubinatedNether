@@ -84,10 +84,10 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
         this.root().getAllParts().forEach(ModelPart::resetPose);
         if(!entity.isBurrowed()) {
             this.applyHeadRotation(netHeadYaw, headPitch);
-            this.head.visible = true;
+            this.head.y = this.head.getInitialPose().y;
         } else {
             this.applyHeadRotation(0, 0);
-            this.head.visible = false;
+            this.head.y = this.head.y + 2.3F;
         }
 
 

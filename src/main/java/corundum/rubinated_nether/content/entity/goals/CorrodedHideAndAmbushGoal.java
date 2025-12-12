@@ -53,7 +53,6 @@ public class CorrodedHideAndAmbushGoal extends Goal {
         stateTicks = 0;
         entity.setBurrowed(true);
         entity.getNavigation().stop();
-        entity.setNoCollision(true);
 
         if (!entity.level().isClientSide) {
             entity.level().broadcastEntityEvent(entity, (byte) 76);
@@ -165,7 +164,6 @@ public class CorrodedHideAndAmbushGoal extends Goal {
         entity.setBurrowed(false);
         entity.setAmbushCooldown(30);
         hasAttacked = false;
-        entity.setNoCollision(false);
 
         if (!entity.level().isClientSide) {
             entity.level().broadcastEntityEvent(entity, (byte) 87);

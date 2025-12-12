@@ -10,7 +10,6 @@ import corundum.rubinated_nether.content.entity.goals.TarnishedShockwaveGoal;
 import corundum.rubinated_nether.content.entity.goals.UnaffectedAttackGoal;
 import corundum.rubinated_nether.misc.RNAttachments;
 import corundum.rubinated_nether.networking.BronzeTarnishingData;
-import corundum.rubinated_nether.utils.InGameLogger;
 import corundum.rubinated_nether.utils.RNParticleUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -81,15 +80,15 @@ public class BronzeEntity extends Monster {
     private int shockwaveCooldownTicks = 0;
     private int ramCooldownTicks = 0;
     private int ambushCooldownTicks = 0;
-    private boolean isBurrowed = false;
-    private boolean noCollision = false;
+
+    private static final EntityDataAccessor<Boolean> IS_BURROWED =
+            SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.BOOLEAN);
 
 
     public BronzeEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
 
         this.bodyPart = new BronzePart(this, "body", 0.7F, 1.4F);
-
         this.keyPart = new BronzePart(this, "key", 0.25F, 0.375F);
 
         this.subEntities = new BronzePart[]{this.bodyPart, this.keyPart};
@@ -104,8 +103,12 @@ public class BronzeEntity extends Monster {
         }
     }
 
-    private void tickPart(BronzePart part, double offsetX, double offsetY, double offsetZ) {
-        part.setPos(this.getX() + offsetX, this.getY() + offsetY, this.getZ() + offsetZ);
+    private void tickPart(BronzePart part, double offsetX, double offsetY, double offsetZ, double burrowedOffset) {
+        if(this.isBurrowed()){
+            part.setPos(this.getX() + offsetX, this.getY() + offsetY - burrowedOffset, this.getZ() + offsetZ);
+        } else {
+            part.setPos(this.getX() + offsetX, this.getY() + offsetY, this.getZ() + offsetZ);
+        }
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -247,10 +250,6 @@ public class BronzeEntity extends Monster {
         return this.getTarnishLevel() == 4;
     }
 
-    public void setNoCollision(boolean noCollision) {
-        this.noCollision = noCollision;
-    }
-
     @Override
     public void aiStep() {
         super.aiStep();
@@ -280,10 +279,10 @@ public class BronzeEntity extends Monster {
             }
 
             // Body part at entity position
-            this.tickPart(this.bodyPart, 0.0, 0.0, 0.0);
+            this.tickPart(this.bodyPart, 0.0, 0.0, 0.0, 500);
 
             // Key part positioned above body
-            this.tickPart(this.keyPart, 0.0, 1.4, 0.0);
+            this.tickPart(this.keyPart, 0.0, 1.4, 0.0, 1.4);
 
             for (int j = 0; j < this.subEntities.length; j++) {
                 this.subEntities[j].xo = partPositions[j].x;
@@ -305,7 +304,6 @@ public class BronzeEntity extends Monster {
         }
 
         if (!level().isClientSide()) {
-            System.out.println("Server Level is " + this.getTarnishLevel());
 
             handleMovingAnimationStates();
 
@@ -315,8 +313,6 @@ public class BronzeEntity extends Monster {
                 updateAttributesForTarnish(currentLevel);
                 changeGoalsOnLevelChange(currentLevel);
             }
-        } else {
-            InGameLogger.info("Client Level is " + this.getTarnishLevel());
         }
 
         decreaseCooldowns();
@@ -419,11 +415,11 @@ public class BronzeEntity extends Monster {
     }
 
     public boolean isBurrowed() {
-        return isBurrowed;
+        return this.entityData.get(IS_BURROWED);
     }
 
     public void setBurrowed(boolean burrowed) {
-        this.isBurrowed = burrowed;
+        this.entityData.set(IS_BURROWED, burrowed);
     }
 
     @Override
@@ -595,17 +591,17 @@ public class BronzeEntity extends Monster {
 
     @Override
     public boolean isPickable() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isPushable() {
-        return !noCollision && super.isPushable();
+        return !canBeCollidedWith() && super.isPushable();
     }
 
     @Override
     public boolean canBeCollidedWith() {
-        return !noCollision && super.canBeCollidedWith();
+        return !isBurrowed() && super.canBeCollidedWith();
     }
 
 
@@ -715,6 +711,7 @@ public class BronzeEntity extends Monster {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(WAXED, false);
+        builder.define(IS_BURROWED, false);
     }
 
     public int getTarnishLevel() {
@@ -726,11 +723,6 @@ public class BronzeEntity extends Monster {
         if(!this.level().isClientSide())
             PacketDistributor.sendToPlayersTrackingEntity(this, new BronzeTarnishingData(this.getId(), level));
     }
-
-//    public void handleLevelChange(int level) {
-//        this.setData(RNAttachments.TARNISH_LEVEL.get(), level);
-//        this.setTarget(null);
-//    }
 
     public void increaseTarnishLevel() {
         this.setTarnishLevel(this.getTarnishLevel() + 1);
