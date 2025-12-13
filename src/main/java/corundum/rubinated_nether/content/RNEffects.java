@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.effect.BlessedEffect;
+import corundum.rubinated_nether.content.effect.BrazierPowerEffect;
 import corundum.rubinated_nether.content.effect.BronzeDiseasedEffect;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,6 +19,9 @@ public class RNEffects {
 
     public static final Holder<MobEffect>  BLESSED = MOB_EFFECTS.register("blessed",
             () -> new BlessedEffect());
+
+    public static final Holder<MobEffect> BRAZIER_POWER = MOB_EFFECTS.register("brazier_power",
+            () -> new BrazierPowerEffect());
 
 
     public static void register(IEventBus bus){

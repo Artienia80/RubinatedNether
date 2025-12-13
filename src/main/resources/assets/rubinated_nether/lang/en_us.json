@@ -389,10 +389,6 @@
 
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
 
-  "rubinated_nether.midnightconfig.category.brazier": "Brazier",
-  "rubinated_nether.midnightconfig.category.chandelier": "Chandelier",
-  "rubinated_nether.midnightconfig.category.client": "Client",
-
   "entity.rubinated_nether.bronze": "Bronze",
 
   "effect.rubinated_nether.bronze_diseased": "Bronze Diseased",
@@ -410,5 +406,23 @@
   "commands.rubinate.failed.itemless": "%s is not holding any item",
   "commands.rubinate.failed.invalid": "Unknown rubination: %s",
   "commands.rubinate.success.multiple": "Applied rubination %s to %s entities",
-  "commands.rubinate.success.single": "Applied rubination %s to %s's item"
+  "commands.rubinate.success.single": "Applied rubination %s to %s's item",
+
+  "rubinated_nether.midnightconfig.category.brazier": "Brazier",
+  "rubinated_nether.midnightconfig.category.chandelier": "Chandelier",
+  "rubinated_nether.midnightconfig.category.client": "Client",
+
+  "rubinated_nether.midnightconfig.chandelierDefaultDamage": "Chandelier Default Damage Value",
+  "rubinated_nether.midnightconfig.chandelierStateMultiplierIncrease": "Chandelier Damage Multiplier Increase",
+  "rubinated_nether.midnightconfig.brazierEffectRange": "Brazier Effect Range",
+  "rubinated_nether.midnightconfig.brazierEffectDuration": "Brazier Effect Duration",
+  "rubinated_nether.midnightconfig.brazierEffectParticles": "Brazier Effect Particles",
+  "rubinated_nether.midnightconfig.brazierPowerLavaVision": "Brazier Power Lava Vision",
+  "rubinated_nether.midnightconfig.brazierPowerViewRange": "Brazier Power Non-Fog View Range",
+  "rubinated_nether.midnightconfig.brazierPowerLavaHealing": "Brazier Power Lava Healing",
+  "rubinated_nether.midnightconfig.brazierPowerLavaSwim": "Brazier Power Lava Swimming",
+  "rubinated_nether.midnightconfig.brazierPowerDisableFireOverlay": "Brazier Power Disable Fire Overlay",
+  "rubinated_nether.midnightconfig.brazierPowerLavaImmuneItems": "Brazier Power Lava-Immune Items",
+  "rubinated_nether.midnightconfig.rubyLensOpacity": "Ruby Lens Opacity",
+  "rubinated_nether.midnightconfig.brazierParticleCount": "Brazier Particle Count"
  }

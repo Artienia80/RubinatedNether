@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.content.RNBlockEntities;
+import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.RNParticleTypes;
 import corundum.rubinated_nether.utils.RNConfig;
 import corundum.rubinated_nether.utils.TickableBlockEntity;
@@ -38,7 +39,7 @@ public class BrazierBlockEntity extends BlockEntity implements TickableBlockEnti
 
 		for(ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
 			player.addEffect(new MobEffectInstance(
-				MobEffects.FIRE_RESISTANCE,
+				RNEffects.BRAZIER_POWER,
 				Mth.floor(20 * RNConfig.brazierEffectDuration),
 				0, true, RNConfig.brazierEffectParticles, true
 			));
