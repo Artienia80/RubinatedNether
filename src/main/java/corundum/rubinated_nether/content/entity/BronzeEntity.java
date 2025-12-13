@@ -8,12 +8,8 @@ import corundum.rubinated_nether.content.entity.goals.CrystallizedOrbitGoal;
 import corundum.rubinated_nether.content.entity.goals.DiscoloredRamGoal;
 import corundum.rubinated_nether.content.entity.goals.TarnishedShockwaveGoal;
 import corundum.rubinated_nether.content.entity.goals.UnaffectedAttackGoal;
-import corundum.rubinated_nether.misc.RNAttachments;
-import corundum.rubinated_nether.networking.BronzeTarnishingData;
-import corundum.rubinated_nether.utils.RNParticleUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -23,8 +19,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AnimationState;
@@ -43,21 +37,16 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.entity.PartEntity;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class BronzeEntity extends Monster {
+public class BronzeEntity extends TarnishingEntity {
     public int idleAnimationTimeout = 0;
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState walkAnimationState = new AnimationState();
@@ -140,10 +129,6 @@ public class BronzeEntity extends Monster {
         return this.getDeltaMovement().horizontalDistance() > 0.01F;
     }
 
-    protected boolean isSunSensitive() {
-        return false;
-    }
-
     @Override
     protected void registerGoals() {
         // base
@@ -169,8 +154,10 @@ public class BronzeEntity extends Monster {
     private void registerDiscoloredGoals() {
         this.dashGoal = new DiscoloredRamGoal(this);
         this.goalSelector.addGoal(2, this.dashGoal);
-        this.goalSelector.addGoal(3, new AvoidEntityGoal<Player>(this, Player.class, 10.0F, 1.2, 1.2){
-            public boolean canUse() { return BronzeEntity.this.getTarnishLevel() == 1 && super.canUse(); }
+        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Player.class, 10.0F, 1.2, 1.2) {
+            public boolean canUse() {
+                return BronzeEntity.this.getTarnishLevel() == 1 && super.canUse();
+            }
         });
     }
 
@@ -259,15 +246,10 @@ public class BronzeEntity extends Monster {
         }
     }
 
-    public boolean isDashing() {
-        return this.dashGoal != null && this.dashGoal.isDashing();
-    }
 
     @Override
     public void tick() {
         super.tick();
-        tarnishingTickBehaviour();
-
         setupAnimationStates();
 
         if (this.subEntities != null) {
@@ -349,25 +331,6 @@ public class BronzeEntity extends Monster {
         }
     }
 
-    private void tarnishingTickBehaviour() {
-        if (!level().isClientSide() && !isWaxed()) {
-            int current = getTarnishLevel();
-            if (current < TARNISHED) {
-                tarnishTimer++;
-                if (tarnishTimer >= getTarnishInterval(current)) {
-                    increaseTarnishLevel();
-                    tarnishTimer = 0;
-                }
-            }
-            if (isNearSoulFire()) {
-                tarnishTimer++;
-                if (tarnishTimer >= getTarnishInterval(current)) {
-                    setTarnishLevel(CRYSTALLIZED);
-                    tarnishTimer = 0;
-                }
-            }
-        }
-    }
 
     private void decreaseCooldowns() {
         if (shockwaveCooldownTicks > 0) {
@@ -383,13 +346,13 @@ public class BronzeEntity extends Monster {
     }
 
     private void handleMovingAnimationStates() {
-        if(isBurrowed()){
+        if(this.isBurrowed()){
             walkAnimationState.stop();
             idleAnimationState.stop();
             return;
         }
 
-        if (isMoving()) {
+        if (this.isMoving()) {
             walkAnimationState.startIfStopped(tickCount);
             idleAnimationState.stop();
         } else {
@@ -591,7 +554,7 @@ public class BronzeEntity extends Monster {
 
     @Override
     public boolean isPickable() {
-        return false;
+        return true;
     }
 
     @Override
@@ -601,16 +564,10 @@ public class BronzeEntity extends Monster {
 
     @Override
     public boolean canBeCollidedWith() {
-        return !isBurrowed() && super.canBeCollidedWith();
+        return super.canBeCollidedWith();
     }
 
-
     public boolean hurtFromPart(BronzePart part, DamageSource source, float amount) {
-        // Check if already burrowed
-        if(this.isBurrowed()){
-            return false;
-        }
-
         // Apply damage multiplier based on which part was hit
         if (part == this.keyPart) {
             amount *= 2.0F;
@@ -663,11 +620,6 @@ public class BronzeEntity extends Monster {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
-        return !this.level().isClientSide && this.hurtFromPart(this.bodyPart, source, amount);
-    }
-
-    @Override
     public PartEntity<?>[] getParts() {
         return this.subEntities;
     }
@@ -695,161 +647,15 @@ public class BronzeEntity extends Monster {
         super.knockback(strength, x, z);
     }
 
-    // ----------------- TARNISHED SECTION ----------------------
-
-
-    public static final int MAX_TARNISH = 4;
-    public static final int TARNISHED = 3;
-    public static final int CRYSTALLIZED = 4;
-
-    private static final EntityDataAccessor<Boolean> WAXED =
-            SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.BOOLEAN);
-
-    private int tarnishTimer = 0;
-
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        builder.define(WAXED, false);
         builder.define(IS_BURROWED, false);
     }
 
-    public int getTarnishLevel() {
-        return this.getData(RNAttachments.TARNISH_LEVEL.get());
-    }
-
-    public void setTarnishLevel(int level) {
-        this.setData(RNAttachments.TARNISH_LEVEL.get(), level);
-        if(!this.level().isClientSide())
-            PacketDistributor.sendToPlayersTrackingEntity(this, new BronzeTarnishingData(this.getId(), level));
-    }
-
-    public void increaseTarnishLevel() {
-        this.setTarnishLevel(this.getTarnishLevel() + 1);
-    }
-
-    public void decreaseTarnishLevel() {
-        this.setTarnishLevel(this.getTarnishLevel() - 1);
-    }
-
-    public boolean isWaxed() {
-        return this.entityData.get(WAXED);
-    }
-
-    public void setWaxed(boolean waxed) {
-        this.entityData.set(WAXED, waxed);
-    }
-
-    private int getTarnishInterval(int level) {
-        return switch (level) {
-            case 0 -> 1200;
-            case 1 -> 1600;
-            case 2 -> 2000;
-            case 3 -> 2400;
-            default -> Integer.MAX_VALUE;
-        };
-    }
-
-    private boolean isNearSoulFire() {
-        BlockPos pos = blockPosition();
-        for (BlockPos nearby : BlockPos.betweenClosed(pos.offset(-5, -5, -5), pos.offset(5, 5, 5))) {
-            Block block = level().getBlockState(nearby).getBlock();
-            if (block == Blocks.SOUL_FIRE || block == Blocks.SOUL_TORCH || block == Blocks.SOUL_WALL_TORCH || block == Blocks.SOUL_LANTERN) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
-    public void handleDamageEvent(DamageSource damageSource) {
-        super.handleDamageEvent(damageSource);
-        if (!(damageSource.getDirectEntity() instanceof Player player)) return;
-
-        var stack = damageSource.getWeaponItem();
-
-        if (stack.getItem() instanceof AxeItem) {
-            if (!isWaxed() && this.getTarnishLevel() > 0 && this.getTarnishLevel() != 4) {
-                if(!level().isClientSide())
-                    if (level().random.nextFloat() < 0.05f) {
-                        this.decreaseTarnishLevel();
-                        handleVFX(player);
-                    }
-            }
-        }
-    }
-
-    @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-        int level = getTarnishLevel();
-
-        if (stack.is(Items.SOUL_TORCH)) {
-            if (!isWaxed()) {
-                if(!level().isClientSide())
-                    setTarnishLevel(CRYSTALLIZED);
-                if (!player.isCreative()) {
-                    stack.shrink(1);
-                }
-                this.level().playSound(player, blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0F, 0.8F);
-                RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 25, 0.5F, 1.75F, ParticleTypes.SOUL_FIRE_FLAME);
-                return InteractionResult.sidedSuccess(level().isClientSide());
-            }
-        }
-
-        if (stack.is(Items.HONEYCOMB) && !isWaxed()) {
-            setWaxed(true);
-            if (!player.isCreative()) stack.shrink(1);
-            this.level().playSound(player, blockPosition(), SoundEvents.HONEYCOMB_WAX_ON, SoundSource.PLAYERS, 1.0F, 0.8F);
-            RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 15, 0.5F, 1.75F, ParticleTypes.HAPPY_VILLAGER);
-            return InteractionResult.sidedSuccess(level().isClientSide());
-        }
-
-        if(stack.is(ItemTags.AXES) && isWaxed()){
-            setWaxed(false);
-            handleScrapeEffects(player);
-        }
-
-        if (stack.is(RNItems.BRONZE_POWDER.get())) {
-            if (!isWaxed() && level < 3) {
-                if (!player.isCreative()) {
-                    stack.shrink(1);
-                }
-
-                if(!level().isClientSide())
-                    if (level().random.nextFloat() < 0.1F) {
-                        increaseTarnishLevel();
-                        return InteractionResult.sidedSuccess(level().isClientSide());
-                    }
-                handleVFX(player);
-
-                return InteractionResult.sidedSuccess(level().isClientSide());
-            }
-        }
-
-
-        return super.mobInteract(player, hand);
-    }
-
-    private void handleVFX(Player player) {
-        this.level().playSound(player, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 0.8F);
-        RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 15, 0.5F, 1.75F, ParticleTypes.HAPPY_VILLAGER);
-    }
-
-    private void handleScrapeEffects(Player player) {
-        this.level().playSound(player, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 0.8F);
-        RNParticleUtils.spawnParticles(this.level(), new Vec3(this.getX(), this.getY(), this.getZ()), 15, 0.5F, 1.75F, ParticleTypes.WAX_OFF);
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putBoolean("Waxed", isWaxed());
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        setWaxed(tag.getBoolean("Waxed"));
+    public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
+        super.onSyncedDataUpdated(pKey);
+        this.refreshDimensions();
     }
 }

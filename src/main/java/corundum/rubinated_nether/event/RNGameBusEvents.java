@@ -21,11 +21,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.event.entity.EntityEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
@@ -58,18 +60,21 @@ public class RNGameBusEvents {
 					TarnishingBronze.TarnishState tarnishState = chandelier.getAge();
 					if (tarnishState == TarnishingBronze.TarnishState.CRYSTALLIZED) {
 						boolean effectApplied = entity.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 72000, 0));
-
-						if (effectApplied) {
-						} else {
-						}
-					} else {
 					}
-				} else {
 				}
-			} else {
 			}
 		}
 	}
+
+    @SubscribeEvent
+    public static void changeBronzeSize(EntityEvent.Size event) {
+        if (!(event.getEntity() instanceof BronzeEntity bronzeEntity)) return;
+
+        event.setNewSize(bronzeEntity.isBurrowed() ?
+                EntityDimensions.fixed(0.1F, 0.1F) :
+                EntityDimensions.scalable(0.7F, 1.4F));
+    }
+
 	@SubscribeEvent
 	public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
 		var player = event.getEntity();
