@@ -28,7 +28,6 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.BLEEDING_OBSIDIAN,
 				RNBlocks.DRY_ICE,
 				RNBlocks.SOAKSTONE,
-				RNBlocks.BRAZIER,
 				RNBlocks.RUBINATION_ALTAR,
 				RNBlocks.RUBY_GLASS,
 				RNBlocks.ORNATE_RUBY_GLASS,
@@ -250,7 +249,14 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.KENODOXIA_RUNE,
 				RNItems.PHILARGYRIA_RUNE
 		);
+
+		withExistingParent(
+				RNBlocks.BRAZIER.getId().toString(),
+				modLoc("block/ruby_brazier_0")
+		);
 	}
+
+
 
 	private void customItemTextures(String baseTexture, DeferredBlock<?>... blocks) {
 		for (var block : blocks) {

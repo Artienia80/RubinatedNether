@@ -2,6 +2,7 @@ package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.blocks.BrazierBlock;
 import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
 import corundum.rubinated_nether.content.blocks.CopperLaserBlock;
 import corundum.rubinated_nether.content.blocks.SixWayPillarBlock;
@@ -37,12 +38,6 @@ public class RNBlockStates extends BlockStateProvider {
 		this.simpleBlock(RNBlocks.RUBY_BLOCK.get());
 		this.axisBlock(RNBlocks.MOLTEN_RUBY_BLOCK.get());
 		this.simpleBlock(RNBlocks.BLEEDING_OBSIDIAN.get());
-
-		this.simpleBlock(
-				RNBlocks.BRAZIER.get(),
-				this.models()
-						.withExistingParent("ruby_brazier", this.modLoc("block/ruby_brazier_base"))
-		);
 
 		this.simpleBlock(
 				RNBlocks.RUBINATION_ALTAR.get(),
@@ -306,6 +301,7 @@ public class RNBlockStates extends BlockStateProvider {
 
 		generateBronzeLaserFamily("laser");
 		generateCopperLaserFamily("laser");
+		brazierBlock();
 	}
 
 	private void glassWithPane(Block glass, IronBarsBlock pane, String name, ResourceLocation edge) {
@@ -466,6 +462,108 @@ public class RNBlockStates extends BlockStateProvider {
 			);
 		}
 	}
+
+	private void brazierBlock() {
+		for (int level = 0; level <= 9; level++) {
+			generateBrazierModel(level);
+		}
+
+		getVariantBuilder(RNBlocks.BRAZIER.get())
+				.forAllStates(state -> {
+					int level = state.getValue(BrazierBlock.LEVEL);
+					return ConfiguredModel.builder()
+							.modelFile(models().getExistingFile(modLoc("block/ruby_brazier_" + level)))
+							.build();
+				});
+	}
+
+    private void generateBrazierModel(int level) {
+        String modelName = "ruby_brazier_" + level;
+
+        float surfaceY = 4 + level;
+
+        var builder = models().getBuilder(modelName)
+                .parent(models().getExistingFile(mcLoc("block/block")))
+                .renderType("cutout")
+                .texture("0", mcLoc("block/obsidian"))
+                .texture("1", modLoc("block/brazier/brazier_bars_side"))
+                .texture("2", modLoc("block/brazier/brazier_bars_top"))
+                .texture("3", modLoc("block/altar/null"))
+                .texture("6", modLoc("block/brazier/cauldron_bottom"))
+                .texture("7", modLoc("block/brazier/cauldron_side"))
+                .texture("8", modLoc("block/brazier/brazier_base"))
+                .texture("9", modLoc("block/molten_ruby_block_end"))
+                .texture("particle", mcLoc("block/obsidian"))
+
+                // Base
+                .element()
+                .from(0, 0, 0).to(16, 3, 16)
+                .face(Direction.NORTH).uvs(0, 0, 16, 3).texture("#8").end()
+                .face(Direction.EAST).uvs(0, 0, 16, 3).texture("#8").end()
+                .face(Direction.SOUTH).uvs(0, 0, 16, 3).texture("#8").end()
+                .face(Direction.WEST).uvs(0, 0, 16, 3).texture("#8").end()
+                .face(Direction.UP).uvs(0, 0, 16, 16).texture("#8").end()
+                .face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#0").end()
+                .end()
+
+                // Outer cauldron walls
+                .element()
+                .from(2, 5, 2).to(14, 16, 14)
+                .rotation().angle(0).axis(Direction.Axis.Y).origin(2, 5, 2).end()
+                .face(Direction.NORTH).uvs(2, 3, 14, 14).texture("#7").end()
+                .face(Direction.EAST).uvs(2, 3, 14, 14).texture("#7").end()
+                .face(Direction.SOUTH).uvs(2, 3, 14, 14).texture("#7").end()
+                .face(Direction.WEST).uvs(2, 3, 14, 14).texture("#7").end()
+                .face(Direction.UP).uvs(0, 0, 12, 12).texture("#3").end()
+                .face(Direction.DOWN).uvs(2, 2, 14, 14).texture("#6").end()
+                .end()
+
+                // Inner cauldron walls (crossed) - Now using #7 instead of #10
+                .element()
+                .from(14, 5, 2).to(2, 16, 14)
+                .rotation().angle(0).axis(Direction.Axis.Y).origin(14, 5, 2).end()
+                .face(Direction.NORTH).uvs(2, 3, 14, 14).texture("#7").end()
+                .face(Direction.EAST).uvs(2, 3, 14, 14).texture("#7").end()
+                .face(Direction.SOUTH).uvs(2, 3, 14, 14).texture("#7").end()
+                .face(Direction.WEST).uvs(2, 3, 14, 14).texture("#7").end()
+                .face(Direction.UP).uvs(0, 0, 12, 12).texture("#3").end()
+                .face(Direction.DOWN).uvs(2, 2, 14, 14).texture("#6").end()
+                .end()
+
+                // Bars - vertical
+                .element()
+                .from(1, 3, 1).to(15, 11, 15)
+                .rotation().angle(0).axis(Direction.Axis.Y).origin(1, 3, 1).end()
+                .face(Direction.NORTH).uvs(1, 0, 15, 8).texture("#1").end()
+                .face(Direction.EAST).uvs(1, 0, 15, 8).texture("#1").end()
+                .face(Direction.SOUTH).uvs(1, 0, 15, 8).texture("#1").end()
+                .face(Direction.WEST).uvs(1, 0, 15, 8).texture("#1").end()
+                .face(Direction.UP).uvs(1, 1, 15, 15).texture("#2").end()
+                .face(Direction.DOWN).uvs(0, 0, 14, 14).texture("#1").end()
+                .end()
+
+                // Bars - crossed
+                .element()
+                .from(15, 3, 1).to(1, 11, 15)
+                .rotation().angle(0).axis(Direction.Axis.Y).origin(15, 3, 1).end()
+                .face(Direction.NORTH).uvs(1, 0, 15, 8).texture("#1").end()
+                .face(Direction.EAST).uvs(1, 0, 15, 8).texture("#1").end()
+                .face(Direction.SOUTH).uvs(1, 0, 15, 8).texture("#1").end()
+                .face(Direction.WEST).uvs(1, 0, 15, 8).texture("#1").end()
+                .face(Direction.UP).uvs(1, 1, 15, 15).texture("#2").end()
+                .face(Direction.DOWN).uvs(0, 0, 14, 14).texture("#3").end()
+                .end();
+
+        // Only add molten ruby surface if level > 0
+        if (level > 0) {
+            builder.element()
+                    .from(2, surfaceY, 2).to(14, surfaceY, 14)
+                    .rotation().angle(0).axis(Direction.Axis.Y).origin(2, surfaceY, 2).end()
+                    .face(Direction.UP).uvs(0, 0, 12, 12).texture("#9").end()
+                    .face(Direction.DOWN).uvs(0, 0, 12, 12).texture("#9").end()
+                    .end();
+        }
+    }
 
 	// Constants for laser families
 	private static final String[] BRONZE_LASER_STATES = {
@@ -713,6 +811,8 @@ public class RNBlockStates extends BlockStateProvider {
 				.face(Direction.DOWN).uvs(3, 3, 13, 13).texture("#0").end()
 				.end();
 	}
+
+
 
 	private void generateChandelierModel(String variantName) {
 		// Extract the bronze state prefix (e.g., "bronze", "discolored_bronze", etc.)

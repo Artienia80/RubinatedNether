@@ -398,16 +398,6 @@ public class RNBlocks {
 	);
 
 
-	public static final DeferredBlock<Block> BRAZIER = registerBlockAndItem(
-		"ruby_brazier", 
-		() -> new BrazierBlock(
-			BlockBehaviour.Properties
-				.ofFullCopy(Blocks.COPPER_BLOCK)
-				.mapColor(MapColor.FIRE)
-				.noOcclusion()
-		)
-	);
-
 	public static final DeferredBlock<Block> RUBINATION_ALTAR = registerBlockAndItem(
 			"rubination_altar",
 			() -> new RubinationAltarBlock(
@@ -1227,6 +1217,16 @@ public class RNBlocks {
 			() -> new CopperLaserBlock(
 					WeatheringCopper.WeatherState.OXIDIZED,
 					BlockBehaviour.Properties.ofFullCopy(Blocks.WAXED_OXIDIZED_COPPER).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> BRAZIER = registerBlockAndItem(
+			"ruby_brazier",
+			() -> new BrazierBlock(
+					BlockBehaviour.Properties
+							.ofFullCopy(RNBlocks.BRONZE_BLOCK.get())
+							.mapColor(MapColor.FIRE)
+							.noOcclusion()
 			)
 	);
 
