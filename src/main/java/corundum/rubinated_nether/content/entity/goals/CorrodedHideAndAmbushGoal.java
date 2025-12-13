@@ -32,7 +32,7 @@ public class CorrodedHideAndAmbushGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (entity.getAmbushCooldown() > 0) return false;
+        if (entity.getAmbushCooldown() > 0 || entity.isBurrowed()) return false;
         if (entity.getTarget() instanceof Player player && entity.getTarnishLevel() == 2) {
             if (entity.distanceTo(player) < 10 && entity.hasLineOfSight(player)) {
                 this.target = player;

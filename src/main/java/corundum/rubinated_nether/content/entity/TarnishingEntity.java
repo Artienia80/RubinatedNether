@@ -18,6 +18,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
@@ -110,13 +111,23 @@ public abstract class TarnishingEntity extends Monster {
 
         var stack = damageSource.getWeaponItem();
 
-        if (stack.getItem() instanceof AxeItem) {
+        if (stack.is(ItemTags.AXES)) {
             if (!isWaxed() && this.getTarnishLevel() > 0 && this.getTarnishLevel() != 4) {
                 if(!level().isClientSide())
                     if (level().random.nextFloat() < 0.05f) {
                         this.decreaseTarnishLevel();
                         handleVFX(player);
+                        if (level().random.nextFloat() < 0.5f) {
+                            ItemEntity powder = new ItemEntity(level(), getX(), getY() + 1, getZ(),
+                                    new ItemStack(RNItems.BRONZE_POWDER.get()));
+                            level().addFreshEntity(powder);
+                        }
                     }
+            } else if (this.getTarnishLevel() == CRYSTALLIZED) {
+                if (random.nextFloat() < 0.05f) {
+                    this.setTarnishLevel(0);
+                    handleVFX(player);
+                }
             }
         }
     }

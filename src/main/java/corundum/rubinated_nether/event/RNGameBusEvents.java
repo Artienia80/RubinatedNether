@@ -71,7 +71,7 @@ public class RNGameBusEvents {
         if (!(event.getEntity() instanceof BronzeEntity bronzeEntity)) return;
 
         event.setNewSize(bronzeEntity.isBurrowed() ?
-                EntityDimensions.fixed(0.1F, 0.1F) :
+                EntityDimensions.fixed(0.35F, 0.375F) :
                 EntityDimensions.scalable(0.7F, 1.4F));
     }
 

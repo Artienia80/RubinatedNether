@@ -47,7 +47,7 @@ public class BronzePart extends PartEntity<BronzeEntity> {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        return !this.isInvulnerableTo(source) && this.parentMob.hurtFromPart(this, source, amount);
+        return this.parentMob.hurtFromPart(this, source, amount);
     }
 
     @Override

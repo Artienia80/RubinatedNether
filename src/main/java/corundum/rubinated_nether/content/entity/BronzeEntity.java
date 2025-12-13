@@ -78,7 +78,7 @@ public class BronzeEntity extends TarnishingEntity {
         super(entityType, level);
 
         this.bodyPart = new BronzePart(this, "body", 0.7F, 1.4F);
-        this.keyPart = new BronzePart(this, "key", 0.25F, 0.375F);
+        this.keyPart = new BronzePart(this, "key", 0.35F, 0.375F);
 
         this.subEntities = new BronzePart[]{this.bodyPart, this.keyPart};
         this.setId(ENTITY_COUNTER.getAndAdd(this.subEntities.length + 1) + 1);
@@ -202,8 +202,10 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     private void removeCrystallizedGoals() {
-        this.goalSelector.removeGoal(new AvoidEntityGoal<Player>(this, Player.class, 15.0F, 2.2, 2.2){
-            public boolean canUse() { return BronzeEntity.this.getTarnishLevel() == 4 && super.canUse(); }
+        this.goalSelector.removeGoal(new AvoidEntityGoal<>(this, Player.class, 15.0F, 2.2, 2.2) {
+            public boolean canUse() {
+                return BronzeEntity.this.getTarnishLevel() == 4 && super.canUse();
+            }
         });
         this.goalSelector.removeGoal(new CrystallizeNearbyBronzeGoal(this));
     }
@@ -557,16 +559,6 @@ public class BronzeEntity extends TarnishingEntity {
         return true;
     }
 
-    @Override
-    public boolean isPushable() {
-        return !canBeCollidedWith() && super.isPushable();
-    }
-
-    @Override
-    public boolean canBeCollidedWith() {
-        return super.canBeCollidedWith();
-    }
-
     public boolean hurtFromPart(BronzePart part, DamageSource source, float amount) {
         // Apply damage multiplier based on which part was hit
         if (part == this.keyPart) {
@@ -589,31 +581,6 @@ public class BronzeEntity extends TarnishingEntity {
 
             if (shockwaveGoal.isStunned) {
                 amount *= 1.5f;
-            }
-        }
-
-        if (!level().isClientSide() && source.getEntity() instanceof Player player) {
-            ItemStack weapon = player.getMainHandItem();
-            int level = getTarnishLevel();
-
-            if (!isWaxed() && weapon.is(ItemTags.AXES)) {
-                if (level > 0 && level < CRYSTALLIZED) {
-                    if (random.nextFloat() < 0.05f) {
-                        decreaseTarnishLevel();
-                        level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 1.0F);
-
-                        if (level().random.nextFloat() < 0.5f) {
-                            ItemEntity powder = new ItemEntity(level(), getX(), getY() + 1, getZ(),
-                                    new ItemStack(RNItems.BRONZE_POWDER.get()));
-                            level().addFreshEntity(powder);
-                        }
-                    }
-                } else if (level == CRYSTALLIZED) {
-                    if (random.nextFloat() < 0.05f) {
-                        setTarnishLevel(0);
-                        level().playSound(null, blockPosition(), SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 1.0F);
-                    }
-                }
             }
         }
         return super.hurt(source, amount);
@@ -641,9 +608,9 @@ public class BronzeEntity extends TarnishingEntity {
 
     @Override
     public void knockback(double strength, double x, double z) {
-        if (this.getTarnishLevel() == 3 && shockwaveGoal != null && shockwaveGoal.isDefending()) {
-            return;
-        }
+        if (shockwaveGoal != null && shockwaveGoal.isDefending()) return;
+        if(this.isBurrowed()) return;
+
         super.knockback(strength, x, z);
     }
 
