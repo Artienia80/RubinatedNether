@@ -1,7 +1,6 @@
 package corundum.rubinated_nether.content.entity;
 
 import corundum.rubinated_nether.content.RNEffects;
-import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.entity.goals.CorrodedHideAndAmbushGoal;
 import corundum.rubinated_nether.content.entity.goals.CrystallizeNearbyBronzeGoal;
 import corundum.rubinated_nether.content.entity.goals.CrystallizedOrbitGoal;
@@ -17,8 +16,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AnimationState;
@@ -34,19 +31,35 @@ import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.entity.PartEntity;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class BronzeEntity extends TarnishingEntity {
+
+    private int lastTarnishLevel = -1;
+
+    private final BronzePart[] subEntities;
+    private final BronzePart bodyPart;
+    private final BronzePart keyPart;
+
+    // Goals
+    private TarnishedShockwaveGoal shockwaveGoal;
+    private DiscoloredRamGoal dashGoal;
+    private int shockwaveCooldownTicks = 0;
+    private int ramCooldownTicks = 0;
+    private int ambushCooldownTicks = 0;
+
+    // Synchronized
+    private static final EntityDataAccessor<Boolean> IS_BURROWED =
+            SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.BOOLEAN);
+
+    // Animation
     public int idleAnimationTimeout = 0;
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState walkAnimationState = new AnimationState();
@@ -59,19 +72,6 @@ public class BronzeEntity extends TarnishingEntity {
     public final AnimationState ambushAnimationState = new AnimationState();
     public final AnimationState ramAnimationState = new AnimationState();
 
-    private final BronzePart[] subEntities;
-    private final BronzePart bodyPart;
-    private final BronzePart keyPart;
-
-    private int lastTarnishLevel = -1;
-    private TarnishedShockwaveGoal shockwaveGoal;
-    private DiscoloredRamGoal dashGoal;
-    private int shockwaveCooldownTicks = 0;
-    private int ramCooldownTicks = 0;
-    private int ambushCooldownTicks = 0;
-
-    private static final EntityDataAccessor<Boolean> IS_BURROWED =
-            SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.BOOLEAN);
 
 
     public BronzeEntity(EntityType<? extends Monster> entityType, Level level) {
@@ -84,49 +84,12 @@ public class BronzeEntity extends TarnishingEntity {
         this.setId(ENTITY_COUNTER.getAndAdd(this.subEntities.length + 1) + 1);
     }
 
-    @Override
-    public void setId(int id) {
-        super.setId(id);
-        for (int i = 0; i < this.subEntities.length; i++) {
-            this.subEntities[i].setId(id + i + 1);
-        }
-    }
-
-    private void tickPart(BronzePart part, double offsetX, double offsetY, double offsetZ, double burrowedOffset) {
-        if(this.isBurrowed()){
-            part.setPos(this.getX() + offsetX, this.getY() + offsetY - burrowedOffset, this.getZ() + offsetZ);
-        } else {
-            part.setPos(this.getX() + offsetX, this.getY() + offsetY, this.getZ() + offsetZ);
-        }
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0)
                 .add(Attributes.FOLLOW_RANGE, 35.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.2)
                 .add(Attributes.ATTACK_DAMAGE, 4.0);
-    }
-
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.SILVERFISH_AMBIENT;
-    }
-
-    @Override
-    protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return SoundEvents.SILVERFISH_HURT;
-    }
-
-    @Override
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.SILVERFISH_DEATH;
-    }
-
-
-    @Nullable
-    private boolean isMoving() {
-        return this.getDeltaMovement().horizontalDistance() > 0.01F;
     }
 
     @Override
@@ -218,6 +181,77 @@ public class BronzeEntity extends TarnishingEntity {
         removeCrystallizedGoals();
     }
 
+    @Override
+    public void handleEntityEvent(byte state) {
+        if (state == 61){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.unaffectedAttackAnimationState.startIfStopped(this.tickCount);
+        }
+        if (state == 64){
+            this.unaffectedAttackAnimationState.stop();
+        }
+        if (state == 68){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.defendAnimationState.startIfStopped(200);
+        }
+        if (state == 69){
+            this.defendAnimationState.stop();
+        }
+        if (state == 89){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.defendAnimationState.stop();
+            this.shockwaveAnimationState.startIfStopped(10);
+        }
+        if (state == 92){
+            this.shockwaveAnimationState.stop();
+        }
+        if (state == 71){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.defendAnimationState.stop();
+            this.shockwaveAnimationState.stop();
+            this.stunAnimationState.startIfStopped(this.tickCount);
+        }
+        if (state == 73){
+            this.stunAnimationState.stop();
+        }
+        if (state == 76){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.drillAnimationState.startIfStopped(this.tickCount);
+        }
+        if (state == 79){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.drillAnimationState.stop();
+            this.undergroundWalkAnimationState.startIfStopped(this.tickCount);
+        }
+        if (state == 81){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.drillAnimationState.stop();
+            this.undergroundWalkAnimationState.stop();
+            this.ambushAnimationState.startIfStopped(this.tickCount);
+        }
+        if (state == 87){
+            this.ambushAnimationState.stop();
+            this.undergroundWalkAnimationState.stop();
+            this.drillAnimationState.stop();
+        }
+        if (state == 97){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.ramAnimationState.startIfStopped(this.tickCount);
+        }
+        if (state == 93){
+            this.ramAnimationState.stop();
+        }
+        else super.handleEntityEvent(state);
+    }
+
     private void setupAnimationStates() {
         if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = 80;
@@ -227,16 +261,20 @@ public class BronzeEntity extends TarnishingEntity {
         }
     }
 
-    public int getShockwaveCooldown() {
-        return this.shockwaveCooldownTicks;
-    }
+    private void handleMovingAnimationStates() {
+        if(this.isBurrowed()){
+            walkAnimationState.stop();
+            idleAnimationState.stop();
+            return;
+        }
 
-    public void setShockwaveCooldown(int ticks) {
-        this.shockwaveCooldownTicks = ticks;
-    }
-
-    public boolean isCrystallized(){
-        return this.getTarnishLevel() == 4;
+        if (this.isMoving()) {
+            walkAnimationState.startIfStopped(tickCount);
+            idleAnimationState.stop();
+        } else {
+            idleAnimationState.startIfStopped(tickCount);
+            walkAnimationState.stop();
+        }
     }
 
     @Override
@@ -333,65 +371,6 @@ public class BronzeEntity extends TarnishingEntity {
         }
     }
 
-
-    private void decreaseCooldowns() {
-        if (shockwaveCooldownTicks > 0) {
-            shockwaveCooldownTicks--;
-        }
-        if (ramCooldownTicks > 0) {
-            ramCooldownTicks--;
-        }
-        if (ambushCooldownTicks > 0) {
-            ambushCooldownTicks--;
-            this.setDeltaMovement(0, this.getDeltaMovement().y, 0);
-        }
-    }
-
-    private void handleMovingAnimationStates() {
-        if(this.isBurrowed()){
-            walkAnimationState.stop();
-            idleAnimationState.stop();
-            return;
-        }
-
-        if (this.isMoving()) {
-            walkAnimationState.startIfStopped(tickCount);
-            idleAnimationState.stop();
-        } else {
-            idleAnimationState.startIfStopped(tickCount);
-            walkAnimationState.stop();
-        }
-    }
-
-    public int getRamCooldown() {
-        return ramCooldownTicks;
-    }
-
-    public void setRamCooldown(int ticks) {
-        this.ramCooldownTicks = ticks;
-    }
-
-    public int getAmbushCooldown() {
-        return ambushCooldownTicks;
-    }
-
-    public void setAmbushCooldown(int ticks) {
-        this.ambushCooldownTicks = ticks;
-    }
-
-    public boolean isBurrowed() {
-        return this.entityData.get(IS_BURROWED);
-    }
-
-    public void setBurrowed(boolean burrowed) {
-        this.entityData.set(IS_BURROWED, burrowed);
-    }
-
-    @Override
-    public float getWalkTargetValue(BlockPos pos, LevelReader level) {
-        return level.getBlockState(pos).isAir() ? 10.0F : 0.0F;
-    }
-
     private void updateAttributesForTarnish(int level) {
         AttributeInstance speed = this.getAttribute(Attributes.MOVEMENT_SPEED);
         AttributeInstance health = this.getAttribute(Attributes.MAX_HEALTH);
@@ -469,94 +448,20 @@ public class BronzeEntity extends TarnishingEntity {
         };
     }
 
-
-
-
     @Override
-    public void handleEntityEvent(byte state) {
-        if (state == 61){
-            this.idleAnimationState.stop();
-            this.walkAnimationState.stop();
-            this.unaffectedAttackAnimationState.startIfStopped(this.tickCount);
-        }
-        if (state == 64){
-            this.unaffectedAttackAnimationState.stop();
-        }
-        if (state == 68){
-            this.idleAnimationState.stop();
-            this.walkAnimationState.stop();
-            this.defendAnimationState.startIfStopped(200);
-        }
-        if (state == 69){
-            this.defendAnimationState.stop();
-        }
-        if (state == 89){
-            this.idleAnimationState.stop();
-            this.walkAnimationState.stop();
-            this.defendAnimationState.stop();
-            this.shockwaveAnimationState.startIfStopped(10);
-        }
-        if (state == 92){
-            this.shockwaveAnimationState.stop();
-        }
-        if (state == 71){
-            this.idleAnimationState.stop();
-            this.walkAnimationState.stop();
-            this.defendAnimationState.stop();
-            this.shockwaveAnimationState.stop();
-            this.stunAnimationState.startIfStopped(this.tickCount);
-        }
-        if (state == 73){
-            this.stunAnimationState.stop();
-        }
-        if (state == 76){
-            this.idleAnimationState.stop();
-            this.walkAnimationState.stop();
-            this.drillAnimationState.startIfStopped(this.tickCount);
-        }
-        if (state == 79){
-            this.idleAnimationState.stop();
-            this.walkAnimationState.stop();
-            this.drillAnimationState.stop();
-            this.undergroundWalkAnimationState.startIfStopped(this.tickCount);
-        }
-        if (state == 81){
-            this.idleAnimationState.stop();
-            this.walkAnimationState.stop();
-            this.drillAnimationState.stop();
-            this.undergroundWalkAnimationState.stop();
-            this.ambushAnimationState.startIfStopped(this.tickCount);
-        }
-        if (state == 87){
-            this.ambushAnimationState.stop();
-            this.undergroundWalkAnimationState.stop();
-            this.drillAnimationState.stop();
-        }
-        if (state == 97){
-            this.idleAnimationState.stop();
-            this.walkAnimationState.stop();
-            this.ramAnimationState.startIfStopped(this.tickCount);
-        }
-        if (state == 93){
-            this.ramAnimationState.stop();
-        }
-        else super.handleEntityEvent(state);
+    public void knockback(double strength, double x, double z) {
+        if (shockwaveGoal != null && shockwaveGoal.isDefending()) return;
+        if(this.isBurrowed()) return;
+
+        super.knockback(strength, x, z);
     }
 
-
-    @Override
-    public void recreateFromPacket(ClientboundAddEntityPacket packet) {
-        super.recreateFromPacket(packet);
-        BronzePart[] parts = this.subEntities;
-        for (int i = 0; i < parts.length; i++) {
-            parts[i].setId(i + packet.getId());
+    private void tickPart(BronzePart part, double offsetX, double offsetY, double offsetZ, double burrowedOffset) {
+        if(this.isBurrowed()){
+            part.setPos(this.getX() + offsetX, this.getY() + offsetY - burrowedOffset, this.getZ() + offsetZ);
+        } else {
+            part.setPos(this.getX() + offsetX, this.getY() + offsetY, this.getZ() + offsetZ);
         }
-    }
-
-
-    @Override
-    public boolean isPickable() {
-        return true;
     }
 
     public boolean hurtFromPart(BronzePart part, DamageSource source, float amount) {
@@ -586,6 +491,79 @@ public class BronzeEntity extends TarnishingEntity {
         return super.hurt(source, amount);
     }
 
+
+    private void decreaseCooldowns() {
+        if (shockwaveCooldownTicks > 0) {
+            shockwaveCooldownTicks--;
+        }
+        if (ramCooldownTicks > 0) {
+            ramCooldownTicks--;
+        }
+        if (ambushCooldownTicks > 0) {
+            ambushCooldownTicks--;
+            this.setDeltaMovement(0, this.getDeltaMovement().y, 0);
+        }
+    }
+
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+        for (int i = 0; i < this.subEntities.length; i++) {
+            this.subEntities[i].setId(id + i + 1);
+        }
+    }
+
+    public int getShockwaveCooldown() {
+        return this.shockwaveCooldownTicks;
+    }
+
+    public void setShockwaveCooldown(int ticks) {
+        this.shockwaveCooldownTicks = ticks;
+    }
+
+    public boolean isCrystallized(){
+        return this.getTarnishLevel() == 4;
+    }
+
+    public int getRamCooldown() {
+        return ramCooldownTicks;
+    }
+
+    public void setRamCooldown(int ticks) {
+        this.ramCooldownTicks = ticks;
+    }
+
+    public int getAmbushCooldown() {
+        return ambushCooldownTicks;
+    }
+
+    public void setAmbushCooldown(int ticks) {
+        this.ambushCooldownTicks = ticks;
+    }
+
+    public boolean isBurrowed() {
+        return this.entityData.get(IS_BURROWED);
+    }
+
+    public void setBurrowed(boolean burrowed) {
+        this.entityData.set(IS_BURROWED, burrowed);
+    }
+
+    private boolean isMoving() {
+        return this.getDeltaMovement().horizontalDistance() > 0.01F;
+    }
+
+    @Override
+    public float getWalkTargetValue(BlockPos pos, LevelReader level) {
+        return level.getBlockState(pos).isAir() ? 10.0F : 0.0F;
+    }
+
+
+    @Override
+    public boolean isPickable() {
+        return true;
+    }
+
     @Override
     public PartEntity<?>[] getParts() {
         return this.subEntities;
@@ -597,21 +575,18 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     @Override
-    public void remove(RemovalReason reason) {
-        super.remove(reason);
-        if (this.subEntities != null) {
-            for (BronzePart part : this.subEntities) {
-                part.remove(reason);
-            }
-        }
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.SILVERFISH_AMBIENT;
     }
 
     @Override
-    public void knockback(double strength, double x, double z) {
-        if (shockwaveGoal != null && shockwaveGoal.isDefending()) return;
-        if(this.isBurrowed()) return;
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return SoundEvents.SILVERFISH_HURT;
+    }
 
-        super.knockback(strength, x, z);
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.SILVERFISH_DEATH;
     }
 
     @Override
@@ -624,5 +599,24 @@ public class BronzeEntity extends TarnishingEntity {
     public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
         super.onSyncedDataUpdated(pKey);
         this.refreshDimensions();
+    }
+
+    @Override
+    public void recreateFromPacket(ClientboundAddEntityPacket packet) {
+        super.recreateFromPacket(packet);
+        BronzePart[] parts = this.subEntities;
+        for (int i = 0; i < parts.length; i++) {
+            parts[i].setId(i + packet.getId());
+        }
+    }
+
+    @Override
+    public void remove(RemovalReason reason) {
+        super.remove(reason);
+        if (this.subEntities != null) {
+            for (BronzePart part : this.subEntities) {
+                part.remove(reason);
+            }
+        }
     }
 }
