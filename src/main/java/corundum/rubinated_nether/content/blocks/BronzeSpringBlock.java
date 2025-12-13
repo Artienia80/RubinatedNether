@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -39,6 +40,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     public static final BooleanProperty WAXED = TarnishingBronze.WAXED;
 
     private static final double BASE_LAUNCH_VELOCITY = 0.5;
+    private static final double CRYSTALLIZED_DETECTION_RANGE = 0.3; // blocks in front of spring
 
     // Shapes for each direction
     private static final VoxelShape SQUISHED_UP = Block.box(2, 0, 2, 14, 16, 14);
@@ -100,20 +102,41 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         Level level = context.getLevel();
         BlockPos extendPos = blockPos.relative(facing);
 
-        if (isWithinBounds(extendPos, level)) {
-            BlockState extendState = level.getBlockState(extendPos);
-            if (extendState.canBeReplaced(context) || extendState.getBlock() instanceof BronzeSpringBlock) {
-                boolean hasSignal = level.hasNeighborSignal(blockPos);
-                boolean canExtend = extendState.isAir() || extendState.canBeReplaced();
-
-                return this.defaultBlockState()
-                        .setValue(FACING, facing)
-                        .setValue(EXTENDED, hasSignal && canExtend)
-                        .setValue(WAXED, false);
-            }
+        if (!isWithinBounds(extendPos, level)) {
+            return null;
         }
 
-        return null;
+        BlockState extendState = level.getBlockState(extendPos);
+
+        if (extendState.isAir() || extendState.canBeReplaced(context) || extendState.getBlock() instanceof BronzeSpringBlock) {
+            boolean hasSignal = level.hasNeighborSignal(blockPos);
+            boolean canExtend = extendState.isAir() || extendState.canBeReplaced();
+
+            BlockState placementState = this.defaultBlockState()
+                    .setValue(FACING, facing)
+                    .setValue(EXTENDED, hasSignal && canExtend)
+                    .setValue(WAXED, false);
+
+            // Schedule ticking for crystallized springs
+            if (tarnishState == TarnishState.CRYSTALLIZED && !level.isClientSide()) {
+                level.scheduleTick(blockPos, this, 1);
+            }
+
+            return placementState;
+        }
+
+        // Allow placement even if blocked, but always compressed
+        BlockState placementState = this.defaultBlockState()
+                .setValue(FACING, facing)
+                .setValue(EXTENDED, false)
+                .setValue(WAXED, false);
+
+        // Schedule ticking for crystallized springs
+        if (tarnishState == TarnishState.CRYSTALLIZED && !level.isClientSide()) {
+            level.scheduleTick(blockPos, this, 1);
+        }
+
+        return placementState;
     }
 
     private boolean isWithinBounds(BlockPos pos, Level level) {
@@ -221,9 +244,23 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         // Only trigger step-on for upward-facing springs
         if (state.getValue(FACING) != Direction.UP) return;
 
-        if (tarnishState == TarnishState.CRYSTALLIZED) {
-            if (isEntityOnSpring(entity, pos)) {
-                launchEntity(entity, state);
+        // Only crystallized springs trigger on step
+        if (tarnishState != TarnishState.CRYSTALLIZED) return;
+
+        if (isEntityOnSpring(entity, pos)) {
+            // Extend the spring first
+            BlockPos abovePos = pos.above();
+            BlockState aboveState = level.getBlockState(abovePos);
+
+            if (aboveState.isAir() || aboveState.canBeReplaced()) {
+                level.setBlock(pos, state.setValue(EXTENDED, true), 3);
+                level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.5F, 1.2F);
+
+                // Then launch the entity
+                launchEntity(entity, state.setValue(EXTENDED, true));
+
+                // Schedule contraction
+                level.scheduleTick(pos, this, getContractionDelay(state));
             }
         }
     }
@@ -234,13 +271,13 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
 
         Direction facing = state.getValue(FACING);
 
-        // Check if entity is within the spring's bounds based on facing direction
-        if (!isEntityInSpringBounds(entity, pos, facing)) {
+        // For crystallized springs, ignore entityInside - only use proximity detection
+        if (tarnishState == TarnishState.CRYSTALLIZED) {
             return;
         }
 
-        if (tarnishState == TarnishState.CRYSTALLIZED) {
-            launchEntity(entity, state);
+        // Check if entity is within the spring's bounds based on facing direction
+        if (!isEntityInSpringBounds(entity, pos, facing)) {
             return;
         }
 
@@ -251,6 +288,108 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
                 return;
             }
         }
+    }
+
+    @Override
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        // Handle contraction from redstone
+        if (state.getValue(EXTENDED) && !level.hasNeighborSignal(pos)) {
+            level.setBlock(pos, state.setValue(EXTENDED, false), 3);
+            level.playSound(null, pos, SoundEvents.PISTON_CONTRACT, SoundSource.BLOCKS, 0.5F, 1.0F);
+        }
+
+        // Crystallized springs check for nearby entities and reschedule
+        if (tarnishState == TarnishState.CRYSTALLIZED) {
+            checkAndLaunchNearbyEntities(state, level, pos);
+            // Reschedule the next tick (every tick = 1/20 second)
+            level.scheduleTick(pos, this, 1);
+        }
+    }
+
+    private void checkAndLaunchNearbyEntities(BlockState state, Level level, BlockPos pos) {
+        Direction facing = state.getValue(FACING);
+        BlockPos extendPos = pos.relative(facing);
+        BlockState extendState = level.getBlockState(extendPos);
+
+        // Only check if spring can extend into the space ahead
+        if (!extendState.isAir() && !extendState.canBeReplaced()) {
+            return;
+        }
+
+        AABB detectionBox = getDetectionBox(pos, facing);
+
+        boolean foundEntity = false;
+        for (Entity entity : level.getEntitiesOfClass(Entity.class, detectionBox)) {
+            if (shouldLaunchEntity(entity, pos, facing)) {
+                foundEntity = true;
+            }
+        }
+
+        // Extend the spring FIRST if we found an entity and it's not already extended
+        if (foundEntity && !state.getValue(EXTENDED)) {
+            level.setBlock(pos, state.setValue(EXTENDED, true), 3);
+            level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.5F, 1.2F);
+
+            // Now launch all entities in the detection box
+            for (Entity entity : level.getEntitiesOfClass(Entity.class, detectionBox)) {
+                if (shouldLaunchEntity(entity, pos, facing)) {
+                    launchEntity(entity, state.setValue(EXTENDED, true));
+                }
+            }
+
+            // Schedule contraction
+            level.scheduleTick(pos, this, getContractionDelay(state));
+        }
+    }
+
+    private AABB getDetectionBox(BlockPos pos, Direction facing) {
+        // Spring is 12x12 pixels (0.75 blocks) centered in the block
+        // min = 2/16 = 0.125, max = 14/16 = 0.875
+        double min = 0.125;
+        double max = 0.875;
+        double range = CRYSTALLIZED_DETECTION_RANGE;
+
+        return switch (facing) {
+            case UP -> new AABB(
+                    pos.getX() + min, pos.getY() + 1, pos.getZ() + min,
+                    pos.getX() + max, pos.getY() + 1 + range, pos.getZ() + max
+            );
+            case DOWN -> new AABB(
+                    pos.getX() + min, pos.getY() - range, pos.getZ() + min,
+                    pos.getX() + max, pos.getY(), pos.getZ() + max
+            );
+            case NORTH -> new AABB(
+                    pos.getX() + min, pos.getY() + min, pos.getZ() - range,
+                    pos.getX() + max, pos.getY() + max, pos.getZ()
+            );
+            case SOUTH -> new AABB(
+                    pos.getX() + min, pos.getY() + min, pos.getZ() + 1,
+                    pos.getX() + max, pos.getY() + max, pos.getZ() + 1 + range
+            );
+            case WEST -> new AABB(
+                    pos.getX() - range, pos.getY() + min, pos.getZ() + min,
+                    pos.getX(), pos.getY() + max, pos.getZ() + max
+            );
+            case EAST -> new AABB(
+                    pos.getX() + 1, pos.getY() + min, pos.getZ() + min,
+                    pos.getX() + 1 + range, pos.getY() + max, pos.getZ() + max
+            );
+        };
+    }
+
+    private boolean shouldLaunchEntity(Entity entity, BlockPos pos, Direction facing) {
+        Vec3 entityPos = entity.position();
+        Vec3 springCenter = Vec3.atCenterOf(pos);
+
+        // Check if entity is in the "firing zone" in front of the spring
+        return switch (facing) {
+            case UP -> entityPos.y > springCenter.y;
+            case DOWN -> entityPos.y < springCenter.y;
+            case NORTH -> entityPos.z < springCenter.z;
+            case SOUTH -> entityPos.z > springCenter.z;
+            case WEST -> entityPos.x < springCenter.x;
+            case EAST -> entityPos.x > springCenter.x;
+        };
     }
 
     private boolean isEntityOnSpring(Entity entity, BlockPos pos) {
@@ -271,11 +410,12 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
 
     private boolean isEntityInSpringBounds(Entity entity, BlockPos pos, Direction facing) {
         double entityRadius = entity.getBbWidth() / 2.0;
-        double min = 2.0 / 16.0;
-        double max = 14.0 / 16.0;
+        double min = 2.0 / 16.0;  // 0.125
+        double max = 14.0 / 16.0; // 0.875
 
         return switch (facing) {
             case UP, DOWN -> {
+                // For vertical springs, check X and Z (12x12 area in horizontal plane)
                 double relativeX = entity.getX() - pos.getX();
                 double relativeZ = entity.getZ() - pos.getZ();
                 boolean xOverlap = (relativeX + entityRadius > min) && (relativeX - entityRadius < max);
@@ -283,17 +423,19 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
                 yield xOverlap && zOverlap;
             }
             case NORTH, SOUTH -> {
+                // For north/south springs, check X and Y (12x12 area in vertical X plane)
                 double relativeX = entity.getX() - pos.getX();
                 double relativeY = entity.getY() - pos.getY();
                 boolean xOverlap = (relativeX + entityRadius > min) && (relativeX - entityRadius < max);
-                boolean yOverlap = (relativeY + entityRadius > min) && (relativeY - entityRadius < max);
+                boolean yOverlap = (relativeY + entity.getBbHeight() / 2.0 > min) && (relativeY - entity.getBbHeight() / 2.0 < max);
                 yield xOverlap && yOverlap;
             }
             case WEST, EAST -> {
+                // For west/east springs, check Z and Y (12x12 area in vertical Z plane)
                 double relativeZ = entity.getZ() - pos.getZ();
                 double relativeY = entity.getY() - pos.getY();
                 boolean zOverlap = (relativeZ + entityRadius > min) && (relativeZ - entityRadius < max);
-                boolean yOverlap = (relativeY + entityRadius > min) && (relativeY - entityRadius < max);
+                boolean yOverlap = (relativeY + entity.getBbHeight() / 2.0 > min) && (relativeY - entity.getBbHeight() / 2.0 < max);
                 yield zOverlap && yOverlap;
             }
         };
@@ -348,7 +490,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
             if (extendState.isAir() || extendState.canBeReplaced()) {
                 // Launch entities in the extension space
                 Vec3 center = Vec3.atCenterOf(extendPos);
-                level.getEntities(null, new net.minecraft.world.phys.AABB(
+                level.getEntities(null, new AABB(
                         center.x - 0.5, center.y - 0.5, center.z - 0.5,
                         center.x + 0.5, center.y + 0.5, center.z + 0.5
                 )).forEach(entity -> {
@@ -363,14 +505,6 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
                 level.setBlock(pos, state.setValue(EXTENDED, false), 3);
                 level.playSound(null, pos, SoundEvents.PISTON_CONTRACT, SoundSource.BLOCKS, 0.5F, 1.0F);
             }
-        }
-    }
-
-    @Override
-    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (state.getValue(EXTENDED) && !level.hasNeighborSignal(pos)) {
-            level.setBlock(pos, state.setValue(EXTENDED, false), 3);
-            level.playSound(null, pos, SoundEvents.PISTON_CONTRACT, SoundSource.BLOCKS, 0.5F, 1.0F);
         }
     }
 
