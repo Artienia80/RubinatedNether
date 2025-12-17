@@ -193,9 +193,9 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     private int getContractionDelay(BlockState state) {
         return switch (tarnishState) {
             case UNAFFECTED -> 10;
-            case DISCOLORED -> 20;
-            case CORRODED -> 40;
-            case TARNISHED -> 80;
+            case DISCOLORED -> 15;
+            case CORRODED -> 20;
+            case TARNISHED -> 40;
             case CRYSTALLIZED -> 5;
         };
     }
@@ -452,10 +452,10 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
 
     private void launchEntity(Entity entity, BlockState state) {
         double velocityMultiplier = switch (tarnishState) {
-            case UNAFFECTED -> 1.0;
+            case UNAFFECTED -> 1.5;
             case DISCOLORED -> 2.0;
-            case CORRODED -> 4.0;
-            case TARNISHED -> 8.0;
+            case CORRODED -> 3.0;
+            case TARNISHED -> 4.0;
             case CRYSTALLIZED -> 1.5;
         };
 
