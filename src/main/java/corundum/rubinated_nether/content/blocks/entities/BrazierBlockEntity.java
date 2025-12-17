@@ -1,8 +1,6 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
-import corundum.rubinated_nether.content.RNBlockEntities;
-import corundum.rubinated_nether.content.RNEffects;
-import corundum.rubinated_nether.content.RNParticleTypes;
+import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.BrazierBlock;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
@@ -14,6 +12,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -135,11 +134,9 @@ public class BrazierBlockEntity extends BlockEntity {
 				shouldUpdate = true;
 			} else {
 				int currentAmplifier = currentEffect.getAmplifier();
-				int currentDuration = currentEffect.getDuration();
 
+				// Only update if amplifier is wrong - don't touch duration
 				if (currentAmplifier != targetAmplifier) {
-					shouldUpdate = true;
-				} else if (Math.abs(currentDuration - fuelDurationTicks) > 40) {
 					shouldUpdate = true;
 				}
 			}
@@ -220,9 +217,106 @@ public class BrazierBlockEntity extends BlockEntity {
 		setChanged();
 	}
 
+	public void addFuelWithBonus(int levels, float multiplier) {
+		int baseSeconds = levels * RNConfig.getBrazierSecondsPerLevel();
+		remainingFuelSeconds += (int)(baseSeconds * multiplier);
+		setChanged();
+	}
+
+	public void addFuelNuggets(int nuggets) {
+		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+		int secondsPerNugget = secondsPerLevel / 9;
+		remainingFuelSeconds += nuggets * secondsPerNugget;
+		setChanged();
+	}
+
 	public void setFuelForLevel(int level) {
 		remainingFuelSeconds = level * RNConfig.getBrazierSecondsPerLevel();
 		setChanged();
+	}
+
+	public ItemStack extractFuel() {
+		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+
+		// Check if we have MORE than 9 rubies worth (bonus fuel from ruby block)
+		// If so, extract the entire ruby block and clear all fuel
+		if (remainingFuelSeconds > secondsPerLevel * 9) {
+			remainingFuelSeconds = 0;
+			setChanged();
+			return new ItemStack(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem(), 1);
+		}
+		// Check if we have exactly or close to 9 rubies worth
+		else if (remainingFuelSeconds >= secondsPerLevel * 9) {
+			remainingFuelSeconds -= secondsPerLevel * 9;
+			setChanged();
+			return new ItemStack(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem(), 1);
+		} else if (remainingFuelSeconds >= secondsPerLevel) {
+			// Enough for a full ruby
+			remainingFuelSeconds -= secondsPerLevel;
+			setChanged();
+			return new ItemStack(RNItems.MOLTEN_RUBY_ITEM.get(), 1);
+		} else if (remainingFuelSeconds > 0) {
+			// Not enough for full ruby, calculate nuggets
+			int secondsPerNugget = secondsPerLevel / 9;
+			int nuggetCount = remainingFuelSeconds / secondsPerNugget;
+
+			if (nuggetCount > 0) {
+				// Give nuggets and remove that much time
+				int secondsToRemove = nuggetCount * secondsPerNugget;
+				remainingFuelSeconds -= secondsToRemove;
+				setChanged();
+				return new ItemStack(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get(), nuggetCount);
+			} else {
+				// Less than 1 nugget worth - void it
+				remainingFuelSeconds = 0;
+				setChanged();
+				return ItemStack.EMPTY;
+			}
+		}
+
+		return ItemStack.EMPTY;
+	}
+
+	// Returns the amount of seconds removed (for effect duration reduction)
+	public int extractFuelWithDuration() {
+		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+
+		// Check if we have enough for a full ruby block (9 rubies)
+		if (remainingFuelSeconds >= secondsPerLevel * 9) {
+			remainingFuelSeconds -= secondsPerLevel * 9;
+			setChanged();
+			return secondsPerLevel * 9;
+		} else if (remainingFuelSeconds >= secondsPerLevel) {
+			// Enough for a full ruby
+			remainingFuelSeconds -= secondsPerLevel;
+			setChanged();
+			return secondsPerLevel;
+		} else if (remainingFuelSeconds > 0) {
+			// Not enough for full ruby, calculate nuggets
+			int secondsPerNugget = secondsPerLevel / 9;
+			int nuggetCount = remainingFuelSeconds / secondsPerNugget;
+
+			if (nuggetCount > 0) {
+				// Give nuggets and remove that much time
+				int secondsToRemove = nuggetCount * secondsPerNugget;
+				remainingFuelSeconds -= secondsToRemove;
+				setChanged();
+				return secondsToRemove;
+			} else {
+				// Less than 1 nugget worth - void it
+				int oldSeconds = remainingFuelSeconds;
+				remainingFuelSeconds = 0;
+				setChanged();
+				return oldSeconds;
+			}
+		}
+
+		return 0;
+	}
+
+	public int calculateLevelFromFuel() {
+		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+		return (remainingFuelSeconds + secondsPerLevel - 1) / secondsPerLevel; // Round up
 	}
 
 	@Override
