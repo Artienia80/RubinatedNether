@@ -418,6 +418,7 @@
   "rubinated_nether.midnightconfig.brazierEffectRange": "Brazier Effect Range",
   "rubinated_nether.midnightconfig.brazierEffectDuration": "Brazier Effect Duration",
   "rubinated_nether.midnightconfig.brazierEffectParticles": "Brazier Effect Particles",
+  "rubinated_nether.midnightconfig.brazierMinutesPerLevel": "Molten Ruby Fuel Duration",
   "rubinated_nether.midnightconfig.brazierPowerLavaVision": "Brazier Power Lava Vision",
   "rubinated_nether.midnightconfig.brazierPowerViewRange": "Brazier Power Non-Fog View Range",
   "rubinated_nether.midnightconfig.brazierPowerLavaHealing": "Brazier Power Lava Healing",
