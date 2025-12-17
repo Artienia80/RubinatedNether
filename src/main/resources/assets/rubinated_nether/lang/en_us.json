@@ -415,16 +415,14 @@
 
   "rubinated_nether.midnightconfig.chandelierDefaultDamage": "Chandelier Default Damage Value",
   "rubinated_nether.midnightconfig.chandelierStateMultiplierIncrease": "Chandelier Damage Multiplier Increase",
-  "rubinated_nether.midnightconfig.brazierEffectRange": "Brazier Effect Range",
-  "rubinated_nether.midnightconfig.brazierEffectDuration": "Brazier Effect Duration",
-  "rubinated_nether.midnightconfig.brazierEffectParticles": "Brazier Effect Particles",
+  "rubinated_nether.midnightconfig.brazierEffectRange": "Brazier Power Range",
+  "rubinated_nether.midnightconfig.brazierEffectParticles": "Brazier Particles",
+  "rubinated_nether.midnightconfig.brazierParticleCount": "Brazier Particle Count",
   "rubinated_nether.midnightconfig.brazierMinutesPerLevel": "Molten Ruby Fuel Duration",
   "rubinated_nether.midnightconfig.brazierPowerLavaVision": "Brazier Power Lava Vision",
-  "rubinated_nether.midnightconfig.brazierPowerViewRange": "Brazier Power Non-Fog View Range",
+  "rubinated_nether.midnightconfig.brazierPowerViewRange": "Brazier Power Lava Vision Range",
   "rubinated_nether.midnightconfig.brazierPowerLavaHealing": "Brazier Power Lava Healing",
-  "rubinated_nether.midnightconfig.brazierPowerLavaSwim": "Brazier Power Lava Swimming",
   "rubinated_nether.midnightconfig.brazierPowerDisableFireOverlay": "Brazier Power Disable Fire Overlay",
   "rubinated_nether.midnightconfig.brazierPowerLavaImmuneItems": "Brazier Power Lava-Immune Items",
-  "rubinated_nether.midnightconfig.rubyLensOpacity": "Ruby Lens Opacity",
-  "rubinated_nether.midnightconfig.brazierParticleCount": "Brazier Particle Count"
+  "rubinated_nether.midnightconfig.rubyLensOpacity": "Ruby Lens Opacity"
  }

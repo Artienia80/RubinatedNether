@@ -206,7 +206,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 	}
 
 	private void clientTick(Level level, BlockPos pos, BlockState state) {
-		if (RNConfig.brazierParticleCount == 0) return;
+		if (RNConfig.brazierParticleCount == 0 || !RNConfig.brazierEffectParticles) return;
 
 		int fillLevel = state.getValue(BrazierBlock.LEVEL);
 		if (fillLevel == 0) return;
