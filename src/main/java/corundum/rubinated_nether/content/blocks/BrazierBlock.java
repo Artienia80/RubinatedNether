@@ -101,14 +101,17 @@ public class BrazierBlock extends BaseEntityBlock {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        // Molten Ruby Block - fill to 9 levels with 5% bonus
+        // Molten Ruby Block - fill with or without bonus
         if (stack.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
-            if (currentLevel < 9) {
-                if (!level.isClientSide) {
-                    // 9 rubies worth + 5% bonus = 9.45 rubies worth
+            if (!level.isClientSide) {
+                int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+                int maxSeconds = secondsPerLevel * 9;
+
+                // Only allow if it fits
+                if (brazier.getRemainingFuelSeconds() == 0) {
+                    // Empty brazier - add with bonus
                     brazier.addFuelWithBonus(9, 1.05f);
 
-                    // Update to visual level based on actual fuel
                     int newLevel = brazier.calculateLevelFromFuel();
                     level.setBlock(pos, state.setValue(LEVEL, Math.min(9, newLevel)), 3);
                     level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -116,8 +119,28 @@ public class BrazierBlock extends BaseEntityBlock {
                     if (!player.isCreative()) {
                         stack.shrink(1);
                     }
+                    return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                } else if (brazier.getRemainingFuelSeconds() + (secondsPerLevel * 9) <= maxSeconds) {
+                    // Partially filled - add without bonus
+                    brazier.addFuel(9);
+
+                    int newLevel = brazier.calculateLevelFromFuel();
+                    level.setBlock(pos, state.setValue(LEVEL, Math.min(9, newLevel)), 3);
+                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+                    if (!player.isCreative()) {
+                        stack.shrink(1);
+                    }
+                    return ItemInteractionResult.sidedSuccess(level.isClientSide);
                 }
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            } else {
+                // Client side - just return success if it would fit
+                int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+                int maxSeconds = secondsPerLevel * 9;
+                if (brazier.getRemainingFuelSeconds() == 0 ||
+                        brazier.getRemainingFuelSeconds() + (secondsPerLevel * 9) <= maxSeconds) {
+                    return ItemInteractionResult.sidedSuccess(true);
+                }
             }
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }

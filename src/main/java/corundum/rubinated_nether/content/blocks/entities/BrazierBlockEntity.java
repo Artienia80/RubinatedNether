@@ -144,8 +144,10 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 				shouldUpdate = true;
 			} else {
 				int currentAmplifier = currentEffect.getAmplifier();
+				int currentDuration = currentEffect.getDuration();
 
-				if (currentAmplifier != targetAmplifier) {
+				// Update if amplifier changed OR if duration differs by more than 1 second worth of ticks
+				if (currentAmplifier != targetAmplifier || Math.abs(currentDuration - fuelDurationTicks) > TICKS_PER_SECOND) {
 					shouldUpdate = true;
 				}
 			}
@@ -371,15 +373,21 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
 		int maxSeconds = secondsPerLevel * 9;
 
-		// Check based on actual fuel seconds, not visual level
+		// Check based on actual fuel seconds
 		if (stack.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
-			// Would adding 9 levels exceed max?
-			return remainingFuelSeconds + (secondsPerLevel * 9) <= maxSeconds;
+			// Blocks only get bonus when brazier is empty
+			if (remainingFuelSeconds == 0) {
+				// Empty brazier - allow with bonus (9 * 1.05 = 9.45 levels worth)
+				int bonusSeconds = (int)(secondsPerLevel * 9 * 1.05f);
+				return bonusSeconds <= maxSeconds; // This will be true since 9.45 > 9, but we allow it
+			} else {
+				// Partially filled - check without bonus
+				return remainingFuelSeconds + (secondsPerLevel * 9) <= maxSeconds;
+			}
 		} else if (stack.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
-			// Would adding 1 level exceed max?
 			return remainingFuelSeconds + secondsPerLevel <= maxSeconds;
 		} else {
-			// For nuggets, check if adding one nugget would exceed max fuel time
+			// Nuggets
 			int secondsPerNugget = secondsPerLevel / 9;
 			return remainingFuelSeconds + secondsPerNugget <= maxSeconds;
 		}
@@ -462,8 +470,14 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 
 		boolean added = false;
 		if (stack.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
-			if (remainingFuelSeconds + (secondsPerLevel * 9) <= maxSeconds) {
+			// Only apply bonus if brazier is completely empty
+			if (remainingFuelSeconds == 0) {
 				addFuelWithBonus(9, 1.05f);
+				stack.shrink(1);
+				added = true;
+			} else if (remainingFuelSeconds + (secondsPerLevel * 9) <= maxSeconds) {
+				// Partially filled - no bonus
+				addFuel(9);
 				stack.shrink(1);
 				added = true;
 			}
