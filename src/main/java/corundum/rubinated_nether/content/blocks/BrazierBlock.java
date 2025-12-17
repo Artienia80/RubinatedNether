@@ -160,43 +160,46 @@ public class BrazierBlock extends BaseEntityBlock {
         if (stack.getItem() instanceof net.minecraft.world.item.ShovelItem) {
             if (currentLevel > 0) {
                 if (!level.isClientSide) {
+                    // Store old fuel amount before extraction
+                    int oldFuelSeconds = brazier.getRemainingFuelSeconds();
+                    int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+
                     ItemStack extracted = brazier.extractFuel();
 
                     if (!extracted.isEmpty()) {
-                        // Special handling for ruby block extraction
-                        boolean wasOverfilled = false;
+                        boolean shouldClearEffects = false;
                         int secondsRemoved;
 
                         if (extracted.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
-                            int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
-                            int oldFuelSeconds = brazier.getRemainingFuelSeconds() + (secondsPerLevel * 9); // Add back what was removed
-
-                            // Check if it was overfilled (had bonus fuel)
+                            // Ruby block was extracted
+                            // Check if it had bonus fuel (more than 9 rubies worth)
                             if (oldFuelSeconds > secondsPerLevel * 9) {
-                                wasOverfilled = true;
-                                secondsRemoved = oldFuelSeconds; // Remove ALL fuel including bonus
+                                // Had bonus fuel - clear all effects immediately
+                                shouldClearEffects = true;
+                                secondsRemoved = oldFuelSeconds - brazier.getRemainingFuelSeconds();
                             } else {
-                                secondsRemoved = secondsPerLevel * 9; // Normal 9 ruby removal
+                                // Normal 9 ruby removal
+                                secondsRemoved = secondsPerLevel * 9;
                             }
+                        } else if (extracted.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+                            secondsRemoved = secondsPerLevel;
+                        } else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
+                            int secondsPerNugget = secondsPerLevel / 9;
+                            secondsRemoved = extracted.getCount() * secondsPerNugget;
                         } else {
-                            // Calculate seconds removed for rubies and nuggets normally
-                            secondsRemoved = 0; // Will be set below
+                            secondsRemoved = 0;
                         }
 
-                        // Calculate durability damage based on what was extracted
+                        // Calculate durability damage
                         int baseDamage;
                         if (extracted.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
                             baseDamage = 81; // 9 rubies * 9
                         } else if (extracted.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
                             baseDamage = 9;
-                            secondsRemoved = RNConfig.getBrazierSecondsPerLevel();
                         } else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
-                            baseDamage = extracted.getCount(); // 1 per nugget
-                            int secondsPerNugget = RNConfig.getBrazierSecondsPerLevel() / 9;
-                            secondsRemoved = extracted.getCount() * secondsPerNugget;
+                            baseDamage = extracted.getCount();
                         } else {
-                            baseDamage = 0; // Fallback
-                            secondsRemoved = 0;
+                            baseDamage = 0;
                         }
 
                         // Double damage if not netherite shovel
@@ -205,23 +208,20 @@ public class BrazierBlock extends BaseEntityBlock {
 
                         // Apply tool damage
                         if (!player.isCreative() && stack.isDamageableItem()) {
-                            // Use the hand's equipment slot (MAINHAND or OFFHAND)
                             net.minecraft.world.entity.EquipmentSlot equipmentSlot = hand == InteractionHand.MAIN_HAND ?
                                     net.minecraft.world.entity.EquipmentSlot.MAINHAND :
                                     net.minecraft.world.entity.EquipmentSlot.OFFHAND;
                             stack.hurtAndBreak(finalDamage, player, equipmentSlot);
                         }
 
-                        // Reduce effect duration for all players in range
+                        // Update effects for all players in range
                         int x = pos.getX(), y = pos.getY(), z = pos.getZ();
                         AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
                         Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
                                 .and(EntitySelector.NO_SPECTATORS);
 
-                        int ticksToReduce = secondsRemoved * 20; // Convert seconds to ticks
-
-                        // If overfilled ruby block was removed, immediately clear all effects
-                        if (wasOverfilled) {
+                        if (shouldClearEffects) {
+                            // Clear all effects immediately (ruby block with bonus was removed)
                             for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
                                 if (serverPlayer.hasEffect(RNEffects.BRAZIER_POWER)) {
                                     serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
@@ -229,6 +229,7 @@ public class BrazierBlock extends BaseEntityBlock {
                             }
                         } else {
                             // Normal duration reduction
+                            int ticksToReduce = secondsRemoved * 20;
                             for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
                                 MobEffectInstance currentEffect = serverPlayer.getEffect(RNEffects.BRAZIER_POWER);
                                 if (currentEffect != null) {
@@ -236,7 +237,6 @@ public class BrazierBlock extends BaseEntityBlock {
                                     int newDuration = Math.max(0, currentDuration - ticksToReduce);
 
                                     if (newDuration > 0) {
-                                        // Reapply with reduced duration
                                         serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
                                         serverPlayer.addEffect(new MobEffectInstance(
                                                 RNEffects.BRAZIER_POWER,
@@ -247,14 +247,13 @@ public class BrazierBlock extends BaseEntityBlock {
                                                 currentEffect.showIcon()
                                         ));
                                     } else {
-                                        // Duration would be 0 or negative, remove effect
                                         serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
                                     }
                                 }
                             }
                         }
 
-                        // Update visual level based on remaining fuel
+                        // Update visual level
                         int newLevel = brazier.calculateLevelFromFuel();
                         level.setBlock(pos, state.setValue(LEVEL, newLevel), 3);
                         level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -264,7 +263,19 @@ public class BrazierBlock extends BaseEntityBlock {
                             player.drop(extracted, false);
                         }
                     } else {
-                        // Not enough fuel to extract even a nugget
+                        // Not enough fuel to extract even a nugget - fuel was voided
+                        // Immediately remove effects from all players in range
+                        int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+                        AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
+                        Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
+                                .and(EntitySelector.NO_SPECTATORS);
+
+                        for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
+                            if (serverPlayer.hasEffect(RNEffects.BRAZIER_POWER)) {
+                                serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
+                            }
+                        }
+
                         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.0F);
                     }
                 }
