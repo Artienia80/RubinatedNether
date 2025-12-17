@@ -140,6 +140,9 @@ public class RNRecipeProvider extends RecipeProvider {
 		tarnish(recipeOutput, (output, input, result) -> oneByTwo(output, input, result, 2),
 				RNBlocks.BRONZE_BLOCK, RNBlocks.CUT_BRONZE_PILLAR);
 
+		tarnish(recipeOutput, this::spring, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_SPRING);
+
+
 		stairsAndSlab(
 				recipeOutput,
 				RNBlocks.SHRINE_STONE,
@@ -554,6 +557,18 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 	}
 
+	private void spring(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike spring) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, spring, 6)
+				.define('X', RNItems.BRONZE_ROD)
+				.define('O', blockInput)
+				.pattern(" X ")
+				.pattern(" O ")
+				.pattern(" X ")
+				.unlockedBy(getHasName(RNItems.BRONZE_ROD), has(RNItems.BRONZE_ROD))
+				.unlockedBy(getHasName(blockInput), has(blockInput))
+				.save(recipeOutput);
+	}
+
 	private void stonecutterList(RecipeOutput recipeOutput, ItemLike input, ItemLike... outputs) {
 		for (ItemLike output : outputs) {
 			var count = 1;
@@ -614,6 +629,7 @@ public class RNRecipeProvider extends RecipeProvider {
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LAMP);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_CHAIN);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LASER);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_SPRING);
 	}
 
 	private void waxAllTarnishVariants(RecipeOutput recipeOutput, Supplier<? extends Block> baseBlock) {

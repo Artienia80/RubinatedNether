@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "O": {
+      "item": "rubinated_nether:waxed_crystallized_bronze_block"
+    },
+    "X": {
+      "item": "rubinated_nether:bronze_rod"
+    }
+  },
+  "pattern": [
+    " X ",
+    " O ",
+    " X "
+  ],
+  "result": {
+    "count": 6,
+    "id": "rubinated_nether:waxed_crystallized_bronze_spring"
+  }
+}

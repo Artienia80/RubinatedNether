@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "waxed_bronze_spring",
+  "ingredients": [
+    {
+      "item": "rubinated_nether:bronze_spring"
+    },
+    {
+      "item": "minecraft:honeycomb"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:waxed_bronze_spring"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bronze_rod": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:bronze_rod"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "rubinated_nether:waxed_discolored_bronze_spring"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_waxed_discolored_bronze_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:waxed_discolored_bronze_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_bronze_rod",
+      "has_waxed_discolored_bronze_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "rubinated_nether:waxed_discolored_bronze_spring"
+    ]
+  }
+}

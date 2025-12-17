@@ -2,14 +2,21 @@ package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -24,6 +31,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -522,6 +531,52 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     @Override
     public TarnishState getAge() {
         return tarnishState;
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(
+            ItemStack stack,
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            InteractionHand hand,
+            BlockHitResult hitResult
+    ) {
+        return waxing(
+                stack,
+                state,
+                level,
+                pos,
+                player,
+                hand,
+                hitResult
+        )
+                ? ItemInteractionResult.SUCCESS
+                : super.useItemOn(
+                stack,
+                state,
+                level,
+                pos,
+                player,
+                hand,
+                hitResult
+        );
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(
+            BlockState state,
+            HitResult target,
+            LevelReader level,
+            BlockPos pos,
+            Player player
+    ) {
+        return new ItemStack(
+                state.getValue(WAXED)
+                        ? BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(this)))
+                        : this
+        );
     }
 
     @Override
