@@ -71,49 +71,67 @@ public class BrazierBlock extends BaseEntityBlock {
 		return COLLISION_SHAPE;
 	}
 
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        int currentLevel = state.getValue(LEVEL);
-        BlockEntity be = level.getBlockEntity(pos);
+	@Override
+	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+		int currentLevel = state.getValue(LEVEL);
+		BlockEntity be = level.getBlockEntity(pos);
 
-        if (!(be instanceof BrazierBlockEntity brazier)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
+		if (!(be instanceof BrazierBlockEntity brazier)) {
+			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		}
 
-        // Molten Ruby Block - fill from 0 to 9
-        if (stack.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
-            if (currentLevel == 0) {
-                if (!level.isClientSide) {
-                    brazier.setFuelForLevel(9); // Set fuel FIRST
-                    level.setBlock(pos, state.setValue(LEVEL, 9), 3); // Then update level
-                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    if (!player.isCreative()) {
-                        stack.shrink(1);
-                    }
-                }
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
-            }
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
+		// Molten Ruby Block - fill from 0 to 9
+		if (stack.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
+			if (currentLevel == 0) {
+				if (!level.isClientSide) {
+					brazier.setFuelForLevel(9); // Set fuel FIRST
+					level.setBlock(pos, state.setValue(LEVEL, 9), 3); // Then update level
+					level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
+					if (!player.isCreative()) {
+						stack.shrink(1);
+					}
+				}
+				return ItemInteractionResult.sidedSuccess(level.isClientSide);
+			}
+			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		}
 
-        // Molten Ruby - add one level
-        if (stack.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
-            if (currentLevel < 9) {
-                if (!level.isClientSide) {
-                    brazier.addFuel(1); // Add fuel FIRST
-                    level.setBlock(pos, state.setValue(LEVEL, currentLevel + 1), 3); // Then update level
-                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1.0F, 1.5F);
-                    if (!player.isCreative()) {
-                        stack.shrink(1);
-                    }
-                }
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
-            }
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
+		// Molten Ruby - add one level
+		if (stack.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+			if (currentLevel < 9) {
+				if (!level.isClientSide) {
+					brazier.addFuel(1); // Add fuel FIRST
+					level.setBlock(pos, state.setValue(LEVEL, currentLevel + 1), 3); // Then update level
+					level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1.0F, 1.5F);
+					if (!player.isCreative()) {
+						stack.shrink(1);
+					}
+				}
+				return ItemInteractionResult.sidedSuccess(level.isClientSide);
+			}
+			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		}
 
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-    }
+		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+	}
+
+	// Override onRemove to remove effect from players when brazier is broken
+	@Override
+	protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+		// Only remove effects if the block is actually being removed (not just changing state)
+		if (!state.is(newState.getBlock())) {
+			if (!level.isClientSide) {
+				BlockEntity blockEntity = level.getBlockEntity(pos);
+				if (blockEntity instanceof BrazierBlockEntity brazier) {
+					// Pass the current position so it's excluded from the search
+					brazier.removeEffectFromAllPlayersInRange(level, pos);
+				}
+			}
+		}
+
+		// Call super AFTER we've cleaned up effects
+		super.onRemove(state, level, pos, newState, movedByPiston);
+	}
 
 	@Override
 	public RenderShape getRenderShape(BlockState state) {

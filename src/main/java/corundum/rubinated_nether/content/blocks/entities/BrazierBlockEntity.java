@@ -26,6 +26,7 @@ public class BrazierBlockEntity extends BlockEntity {
 
 	private int remainingFuelSeconds = 0;
 	private int tickCounter = 0;
+	private boolean levelJustChanged = false;
 
 	public BrazierBlockEntity(BlockPos pos, BlockState blockState) {
 		super(RNBlockEntities.BRAZIER.get(), pos, blockState);
@@ -42,6 +43,8 @@ public class BrazierBlockEntity extends BlockEntity {
 	private void serverTick(Level level, BlockPos pos, BlockState state) {
 		int currentLevel = state.getValue(BrazierBlock.LEVEL);
 
+		levelJustChanged = false;
+
 		if (currentLevel > 0 && remainingFuelSeconds > 0) {
 			tickCounter++;
 
@@ -56,40 +59,54 @@ public class BrazierBlockEntity extends BlockEntity {
 				if (expectedLevel < currentLevel) {
 					System.out.println("DEBUG: Level dropping from " + currentLevel + " to " + expectedLevel);
 
+					levelJustChanged = true;
+
+					level.setBlock(pos, state.setValue(BrazierBlock.LEVEL, Math.max(0, expectedLevel)), 3);
+
 					int x = pos.getX(), y = pos.getY(), z = pos.getZ();
 					AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
 					Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
 							.and(EntitySelector.NO_SPECTATORS);
 
+					int fuelDurationTicks = Math.max(20, remainingFuelSeconds * TICKS_PER_SECOND);
+					int newAmplifier = expectedLevel - 1;
+
 					for (ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
-						if (player.hasEffect(RNEffects.BRAZIER_POWER)) {
-							MobEffectInstance oldEffect = player.getEffect(RNEffects.BRAZIER_POWER);
+						MobEffectInstance oldEffect = player.getEffect(RNEffects.BRAZIER_POWER);
+
+						if (oldEffect != null) {
 							System.out.println("DEBUG: Player " + player.getName().getString() +
 									" had amplifier " + oldEffect.getAmplifier() + ", removing...");
 
 							player.removeEffect(RNEffects.BRAZIER_POWER);
 
-							int fuelDurationTicks = Math.max(20, remainingFuelSeconds * TICKS_PER_SECOND);
-							int newAmplifier = expectedLevel - 1;
-
-							System.out.println("DEBUG: Applying new amplifier " + newAmplifier);
-
-							player.addEffect(new MobEffectInstance(
-									RNEffects.BRAZIER_POWER,
-									fuelDurationTicks,
-									newAmplifier,
-									true,
-									RNConfig.brazierEffectParticles,
-									true
-							));
+							System.out.println("DEBUG: Effect removed, now has effect? " + player.hasEffect(RNEffects.BRAZIER_POWER));
 						}
-					}
 
-					level.setBlock(pos, state.setValue(BrazierBlock.LEVEL, Math.max(0, expectedLevel)), 3);
+						System.out.println("DEBUG: Applying new amplifier " + newAmplifier);
+
+						MobEffectInstance newEffect = new MobEffectInstance(
+								RNEffects.BRAZIER_POWER,
+								fuelDurationTicks,
+								newAmplifier,
+								true,
+								RNConfig.brazierEffectParticles,
+								true
+						);
+
+						boolean applied = player.addEffect(newEffect);
+						System.out.println("DEBUG: Applied? " + applied);
+
+						MobEffectInstance afterEffect = player.getEffect(RNEffects.BRAZIER_POWER);
+						System.out.println("DEBUG: After apply, player has amplifier: " +
+								(afterEffect != null ? afterEffect.getAmplifier() : "null"));
+					}
 				}
 			}
 
-			updatePlayersInRange(level, pos, currentLevel);
+			if (!levelJustChanged) {
+				updatePlayersInRange(level, pos, currentLevel);
+			}
 		} else if (currentLevel > 0 && remainingFuelSeconds <= 0) {
 			level.setBlock(pos, state.setValue(BrazierBlock.LEVEL, 0), 3);
 		}
@@ -224,5 +241,55 @@ public class BrazierBlockEntity extends BlockEntity {
 
 	public int getRemainingFuelSeconds() {
 		return remainingFuelSeconds;
+	}
+
+	// Method to remove effect from all players in range (for when block is broken)
+	// excludePos parameter allows us to ignore the brazier being broken
+	public void removeEffectFromAllPlayersInRange(Level level, BlockPos excludePos) {
+		int x = worldPosition.getX(), y = worldPosition.getY(), z = worldPosition.getZ();
+		AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
+
+		Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
+				.and(EntitySelector.NO_SPECTATORS);
+
+		for (ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
+			if (player.hasEffect(RNEffects.BRAZIER_POWER)) {
+				// Check if player is in range of another brazier (excluding the one being broken)
+				if (!isPlayerInRangeOfAnyBrazierExcluding(level, player, excludePos)) {
+					player.removeEffect(RNEffects.BRAZIER_POWER);
+					System.out.println("DEBUG: Removed effect from " + player.getName().getString() + " due to brazier being broken");
+				}
+			}
+		}
+	}
+
+	// Helper method to check for other braziers, excluding a specific position
+	private boolean isPlayerInRangeOfAnyBrazierExcluding(Level level, ServerPlayer player, BlockPos excludePos) {
+		BlockPos playerPos = player.blockPosition();
+		int searchRadius = RNConfig.brazierEffectRange + 1;
+
+		for (BlockPos pos : BlockPos.betweenClosed(
+				playerPos.offset(-searchRadius, -searchRadius, -searchRadius),
+				playerPos.offset(searchRadius, searchRadius, searchRadius))) {
+
+			// Skip the brazier being broken
+			if (pos.equals(excludePos)) {
+				continue;
+			}
+
+			BlockEntity be = level.getBlockEntity(pos);
+			if (be instanceof BrazierBlockEntity brazier) {
+				BlockState state = level.getBlockState(pos);
+				int brazierLevel = state.getValue(BrazierBlock.LEVEL);
+
+				if (brazierLevel > 0 && brazier.remainingFuelSeconds > 0) {
+					double distSq = player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+					if (distSq <= RNConfig.brazierEffectRange * RNConfig.brazierEffectRange) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }
