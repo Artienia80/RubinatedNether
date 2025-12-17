@@ -1,6 +1,9 @@
 package corundum.rubinated_nether.content.blocks;
 
+import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -13,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class BronzeBulbBlock extends Block {
@@ -28,9 +33,15 @@ public class BronzeBulbBlock extends Block {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public final BlockState nextStateWaxed;
     public final BlockState nextStateScraped;
+    private final boolean isWaxed;
 
     public BronzeBulbBlock(BlockBehaviour.Properties properties, Block block, Block block2) {
+        this(properties, block, block2, false);
+    }
+
+    public BronzeBulbBlock(BlockBehaviour.Properties properties, Block block, Block block2, boolean isWaxed) {
         super(properties);
+        this.isWaxed = isWaxed;
         // Handle null blocks gracefully
         this.nextStateWaxed = block != null ? block.defaultBlockState() : null;
         this.nextStateScraped = block2 != null ? block2.defaultBlockState() : null;
@@ -102,6 +113,21 @@ public class BronzeBulbBlock extends Block {
             return ItemInteractionResult.FAIL;
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(
+            BlockState state,
+            HitResult target,
+            LevelReader level,
+            BlockPos pos,
+            Player player
+    ) {
+        return new ItemStack(
+                isWaxed
+                        ? BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(this)))
+                        : this
+        );
     }
 
     // this is unused, it's for reference
