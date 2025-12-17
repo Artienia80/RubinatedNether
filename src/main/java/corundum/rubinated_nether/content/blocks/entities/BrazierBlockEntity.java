@@ -4,28 +4,38 @@ import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.BrazierBlock;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
 
-public class BrazierBlockEntity extends BlockEntity {
+public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer {
 	private static final int TICKS_PER_SECOND = 20;
+	private static final int[] SLOTS_FOR_UP = new int[]{0};
+	private static final int[] SLOTS_FOR_DOWN = new int[]{0};
+	private static final int[] SLOTS_FOR_SIDES = new int[]{0};
 
 	private int remainingFuelSeconds = 0;
 	private int tickCounter = 0;
 	private boolean levelJustChanged = false;
+	private ItemStack virtualSlot = ItemStack.EMPTY;
 
 	public BrazierBlockEntity(BlockPos pos, BlockState blockState) {
 		super(RNBlockEntities.BRAZIER.get(), pos, blockState);
@@ -135,7 +145,6 @@ public class BrazierBlockEntity extends BlockEntity {
 			} else {
 				int currentAmplifier = currentEffect.getAmplifier();
 
-				// Only update if amplifier is wrong - don't touch duration
 				if (currentAmplifier != targetAmplifier) {
 					shouldUpdate = true;
 				}
@@ -238,36 +247,28 @@ public class BrazierBlockEntity extends BlockEntity {
 	public ItemStack extractFuel() {
 		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
 
-		// Check if we have MORE than 9 rubies worth (bonus fuel from ruby block)
-		// If so, extract the entire ruby block and clear all fuel
 		if (remainingFuelSeconds > secondsPerLevel * 9) {
 			remainingFuelSeconds = 0;
 			setChanged();
 			return new ItemStack(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem(), 1);
-		}
-		// Check if we have exactly or close to 9 rubies worth
-		else if (remainingFuelSeconds >= secondsPerLevel * 9) {
+		} else if (remainingFuelSeconds >= secondsPerLevel * 9) {
 			remainingFuelSeconds -= secondsPerLevel * 9;
 			setChanged();
 			return new ItemStack(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem(), 1);
 		} else if (remainingFuelSeconds >= secondsPerLevel) {
-			// Enough for a full ruby
 			remainingFuelSeconds -= secondsPerLevel;
 			setChanged();
 			return new ItemStack(RNItems.MOLTEN_RUBY_ITEM.get(), 1);
 		} else if (remainingFuelSeconds > 0) {
-			// Not enough for full ruby, calculate nuggets
 			int secondsPerNugget = secondsPerLevel / 9;
 			int nuggetCount = remainingFuelSeconds / secondsPerNugget;
 
 			if (nuggetCount > 0) {
-				// Give nuggets and remove that much time
 				int secondsToRemove = nuggetCount * secondsPerNugget;
 				remainingFuelSeconds -= secondsToRemove;
 				setChanged();
 				return new ItemStack(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get(), nuggetCount);
 			} else {
-				// Less than 1 nugget worth - void it
 				remainingFuelSeconds = 0;
 				setChanged();
 				return ItemStack.EMPTY;
@@ -277,46 +278,9 @@ public class BrazierBlockEntity extends BlockEntity {
 		return ItemStack.EMPTY;
 	}
 
-	// Returns the amount of seconds removed (for effect duration reduction)
-	public int extractFuelWithDuration() {
-		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
-
-		// Check if we have enough for a full ruby block (9 rubies)
-		if (remainingFuelSeconds >= secondsPerLevel * 9) {
-			remainingFuelSeconds -= secondsPerLevel * 9;
-			setChanged();
-			return secondsPerLevel * 9;
-		} else if (remainingFuelSeconds >= secondsPerLevel) {
-			// Enough for a full ruby
-			remainingFuelSeconds -= secondsPerLevel;
-			setChanged();
-			return secondsPerLevel;
-		} else if (remainingFuelSeconds > 0) {
-			// Not enough for full ruby, calculate nuggets
-			int secondsPerNugget = secondsPerLevel / 9;
-			int nuggetCount = remainingFuelSeconds / secondsPerNugget;
-
-			if (nuggetCount > 0) {
-				// Give nuggets and remove that much time
-				int secondsToRemove = nuggetCount * secondsPerNugget;
-				remainingFuelSeconds -= secondsToRemove;
-				setChanged();
-				return secondsToRemove;
-			} else {
-				// Less than 1 nugget worth - void it
-				int oldSeconds = remainingFuelSeconds;
-				remainingFuelSeconds = 0;
-				setChanged();
-				return oldSeconds;
-			}
-		}
-
-		return 0;
-	}
-
 	public int calculateLevelFromFuel() {
 		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
-		return (remainingFuelSeconds + secondsPerLevel - 1) / secondsPerLevel; // Round up
+		return (remainingFuelSeconds + secondsPerLevel - 1) / secondsPerLevel;
 	}
 
 	@Override
@@ -337,8 +301,6 @@ public class BrazierBlockEntity extends BlockEntity {
 		return remainingFuelSeconds;
 	}
 
-	// Method to remove effect from all players in range (for when block is broken)
-	// excludePos parameter allows us to ignore the brazier being broken
 	public void removeEffectFromAllPlayersInRange(Level level, BlockPos excludePos) {
 		int x = worldPosition.getX(), y = worldPosition.getY(), z = worldPosition.getZ();
 		AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
@@ -348,7 +310,6 @@ public class BrazierBlockEntity extends BlockEntity {
 
 		for (ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
 			if (player.hasEffect(RNEffects.BRAZIER_POWER)) {
-				// Check if player is in range of another brazier (excluding the one being broken)
 				if (!isPlayerInRangeOfAnyBrazierExcluding(level, player, excludePos)) {
 					player.removeEffect(RNEffects.BRAZIER_POWER);
 					System.out.println("DEBUG: Removed effect from " + player.getName().getString() + " due to brazier being broken");
@@ -357,7 +318,6 @@ public class BrazierBlockEntity extends BlockEntity {
 		}
 	}
 
-	// Helper method to check for other braziers, excluding a specific position
 	private boolean isPlayerInRangeOfAnyBrazierExcluding(Level level, ServerPlayer player, BlockPos excludePos) {
 		BlockPos playerPos = player.blockPosition();
 		int searchRadius = RNConfig.brazierEffectRange + 1;
@@ -366,7 +326,6 @@ public class BrazierBlockEntity extends BlockEntity {
 				playerPos.offset(-searchRadius, -searchRadius, -searchRadius),
 				playerPos.offset(searchRadius, searchRadius, searchRadius))) {
 
-			// Skip the brazier being broken
 			if (pos.equals(excludePos)) {
 				continue;
 			}
@@ -385,5 +344,268 @@ public class BrazierBlockEntity extends BlockEntity {
 			}
 		}
 		return false;
+	}
+
+	// WorldlyContainer implementation for hopper compatibility
+	@Override
+	public int[] getSlotsForFace(Direction direction) {
+		if (direction == Direction.DOWN) {
+			return SLOTS_FOR_DOWN;
+		} else if (direction == Direction.UP) {
+			return SLOTS_FOR_UP;
+		} else {
+			return SLOTS_FOR_SIDES;
+		}
+	}
+
+	@Override
+	public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
+		if (index != 0) return false;
+
+		if (!stack.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem()) &&
+				!stack.is(RNItems.MOLTEN_RUBY_ITEM.get()) &&
+				!stack.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
+			return false;
+		}
+
+		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+		int maxSeconds = secondsPerLevel * 9;
+
+		// Check based on actual fuel seconds, not visual level
+		if (stack.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
+			// Would adding 9 levels exceed max?
+			return remainingFuelSeconds + (secondsPerLevel * 9) <= maxSeconds;
+		} else if (stack.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+			// Would adding 1 level exceed max?
+			return remainingFuelSeconds + secondsPerLevel <= maxSeconds;
+		} else {
+			// For nuggets, check if adding one nugget would exceed max fuel time
+			int secondsPerNugget = secondsPerLevel / 9;
+			return remainingFuelSeconds + secondsPerNugget <= maxSeconds;
+		}
+	}
+
+	@Override
+	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+		return direction == Direction.DOWN && index == 0;
+	}
+
+	@Override
+	public int getContainerSize() {
+		return 1;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return virtualSlot.isEmpty();
+	}
+
+	@Override
+	public ItemStack getItem(int slot) {
+		return slot == 0 ? virtualSlot : ItemStack.EMPTY;
+	}
+
+	@Override
+	public ItemStack removeItem(int slot, int amount) {
+		if (slot != 0 || amount <= 0) {
+			return ItemStack.EMPTY;
+		}
+
+		BlockState state = level.getBlockState(worldPosition);
+		int currentLevel = state.getValue(BrazierBlock.LEVEL);
+
+		if (currentLevel <= 0) {
+			return ItemStack.EMPTY;
+		}
+
+		ItemStack extracted = extractFuel();
+
+		if (!extracted.isEmpty()) {
+			int newLevel = calculateLevelFromFuel();
+			level.setBlock(worldPosition, state.setValue(BrazierBlock.LEVEL, newLevel), 3);
+
+			int secondsRemoved = 0;
+			int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+
+			if (extracted.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
+				secondsRemoved = secondsPerLevel * 9;
+			} else if (extracted.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+				secondsRemoved = secondsPerLevel;
+			} else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
+				int secondsPerNugget = secondsPerLevel / 9;
+				secondsRemoved = extracted.getCount() * secondsPerNugget;
+			}
+
+			updatePlayerEffectDurations(secondsRemoved);
+
+			return extracted;
+		}
+
+		return ItemStack.EMPTY;
+	}
+
+	@Override
+	public ItemStack removeItemNoUpdate(int slot) {
+		ItemStack result = virtualSlot;
+		virtualSlot = ItemStack.EMPTY;
+		return result;
+	}
+
+	@Override
+	public void setItem(int slot, ItemStack stack) {
+		if (slot != 0 || stack.isEmpty()) {
+			return;
+		}
+
+		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+		int maxSeconds = secondsPerLevel * 9;
+
+		boolean added = false;
+		if (stack.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
+			if (remainingFuelSeconds + (secondsPerLevel * 9) <= maxSeconds) {
+				addFuelWithBonus(9, 1.05f);
+				stack.shrink(1);
+				added = true;
+			}
+		} else if (stack.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+			if (remainingFuelSeconds + secondsPerLevel <= maxSeconds) {
+				addFuel(1);
+				stack.shrink(1);
+				added = true;
+			}
+		} else if (stack.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
+			int secondsPerNugget = secondsPerLevel / 9;
+			if (remainingFuelSeconds + secondsPerNugget <= maxSeconds) {
+				addFuelNuggets(1);
+				stack.shrink(1);
+				added = true;
+			}
+		}
+
+		if (added) {
+			int newLevel = calculateLevelFromFuel();
+			BlockState state = level.getBlockState(worldPosition);
+			level.setBlock(worldPosition, state.setValue(BrazierBlock.LEVEL, Math.min(9, newLevel)), 3);
+			setChanged();
+		}
+
+		virtualSlot = stack.isEmpty() ? ItemStack.EMPTY : stack;
+	}
+
+	@Override
+	public boolean stillValid(Player player) {
+		return true;
+	}
+
+	@Override
+	public void clearContent() {
+		virtualSlot = ItemStack.EMPTY;
+	}
+
+	private void updatePlayerEffectDurations(int secondsRemoved) {
+		if (secondsRemoved <= 0) return;
+
+		int x = worldPosition.getX(), y = worldPosition.getY(), z = worldPosition.getZ();
+		AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
+		Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
+				.and(EntitySelector.NO_SPECTATORS);
+
+		int ticksToReduce = secondsRemoved * 20;
+
+		for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
+			MobEffectInstance currentEffect = serverPlayer.getEffect(RNEffects.BRAZIER_POWER);
+			if (currentEffect != null) {
+				int currentDuration = currentEffect.getDuration();
+				int newDuration = Math.max(0, currentDuration - ticksToReduce);
+
+				if (newDuration > 0) {
+					serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
+					serverPlayer.addEffect(new MobEffectInstance(
+							RNEffects.BRAZIER_POWER,
+							newDuration,
+							currentEffect.getAmplifier(),
+							currentEffect.isAmbient(),
+							currentEffect.isVisible(),
+							currentEffect.showIcon()
+					));
+				} else {
+					serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
+				}
+			}
+		}
+	}
+
+	public IItemHandler getItemHandler(Direction side) {
+		return new IItemHandler() {
+			@Override
+			public int getSlots() {
+				return 1;
+			}
+
+			@Override
+			public @NotNull ItemStack getStackInSlot(int slot) {
+				return ItemStack.EMPTY;
+			}
+
+			@Override
+			public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+				if (stack.isEmpty() || slot != 0) {
+					return stack;
+				}
+
+				if (!canPlaceItemThroughFace(0, stack, side)) {
+					return stack;
+				}
+
+				if (!simulate) {
+					setItem(0, stack.copy());
+				}
+
+				return ItemStack.EMPTY;
+			}
+
+			@Override
+			public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
+				if (slot != 0 || side != Direction.DOWN) {
+					return ItemStack.EMPTY;
+				}
+
+				if (!simulate) {
+					return removeItem(0, amount);
+				}
+
+				BlockState state = level.getBlockState(worldPosition);
+				int currentLevel = state.getValue(BrazierBlock.LEVEL);
+
+				if (currentLevel <= 0) {
+					return ItemStack.EMPTY;
+				}
+
+				int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+				if (remainingFuelSeconds >= secondsPerLevel * 9) {
+					return new ItemStack(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem(), 1);
+				} else if (remainingFuelSeconds >= secondsPerLevel) {
+					return new ItemStack(RNItems.MOLTEN_RUBY_ITEM.get(), 1);
+				} else if (remainingFuelSeconds > 0) {
+					int secondsPerNugget = secondsPerLevel / 9;
+					int nuggetCount = remainingFuelSeconds / secondsPerNugget;
+					if (nuggetCount > 0) {
+						return new ItemStack(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get(), nuggetCount);
+					}
+				}
+
+				return ItemStack.EMPTY;
+			}
+
+			@Override
+			public int getSlotLimit(int slot) {
+				return 64;
+			}
+
+			@Override
+			public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+				return canPlaceItemThroughFace(0, stack, side);
+			}
+		};
 	}
 }

@@ -81,6 +81,18 @@ public class BrazierBlock extends BaseEntityBlock {
     }
 
     @Override
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
+        super.onPlace(state, level, pos, oldState, isMoving);
+
+        if (!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof BrazierBlockEntity brazier) {
+                blockEntity.setChanged();
+            }
+        }
+    }
+
+    @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         int currentLevel = state.getValue(LEVEL);
         BlockEntity be = level.getBlockEntity(pos);
