@@ -25,6 +25,14 @@ public class RNConfig extends MidnightConfig {
 	@Entry(
 			category = BRAZIER,
 			isSlider = true,
+			min = 1,
+			max = 120
+	)
+	public static int brazierMinutesPerLevel = 20;
+
+	@Entry(
+			category = BRAZIER,
+			isSlider = true,
 			min = 0,
 			max = 32
 	)
@@ -76,4 +84,22 @@ public class RNConfig extends MidnightConfig {
 			max = 6
 	)
 	public static int brazierParticleCount = 2;
+
+	/* -- Calculated Values -- */
+
+	/**
+	 * Calculates how many seconds one brazier level provides.
+	 * @return seconds per level (default: 1200 = 20 minutes)
+	 */
+	public static int getBrazierSecondsPerLevel() {
+		return brazierMinutesPerLevel * 60;
+	}
+
+	/**
+	 * Calculates total burn time for a full brazier (9 levels).
+	 * @return total minutes (default: 180 = 3 hours)
+	 */
+	public static int getBrazierFullBurnTimeMinutes() {
+		return brazierMinutesPerLevel * 9;
+	}
 }

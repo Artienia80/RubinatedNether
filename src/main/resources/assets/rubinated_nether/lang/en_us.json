@@ -333,7 +333,6 @@
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Obtain Bleeding Obsidian",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Blood For The Blood God!",
 
-
   "advancements.rubinated_nether.obtain_freezer.description": "Craft a Freezer",
   "advancements.rubinated_nether.obtain_freezer.title": "Cold! Cold! Cold!",
   "advancements.rubinated_nether.obtain_frosted_ice.description": "Freeze Snow or Water into Frosted Ice",
@@ -393,6 +392,8 @@
 
   "effect.rubinated_nether.bronze_diseased": "Bronze Diseased",
   "effect.rubinated_nether.blessed": "Blessed",
+  "effect.rubinated_nether.brazier_power": "Brazier Power",
+
 
   "death.attack.chandelier": "%1$s was embraced by a falling chandelier",
   "death.attack.chandelier.player": "%1$s was embraced by a falling chandelier whilst fighting %2$s",
