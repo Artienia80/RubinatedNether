@@ -6,6 +6,7 @@ public class RNConfig extends MidnightConfig {
 	public static final String BRAZIER = "brazier";
 	public static final String CHANDELIER = "chandelier";
 	public static final String COFFER = "coffer";
+	public static final String ALTAR = "altar";
 	public static final String CLIENT = "client";
 
 	/* -- Brazier -- */
@@ -14,7 +15,7 @@ public class RNConfig extends MidnightConfig {
 			category = BRAZIER,
 			isSlider = true,
 			min = 0,
-			max = 32
+			max = 128
 	)
 	public static int brazierEffectRange = 16;
 
@@ -27,15 +28,7 @@ public class RNConfig extends MidnightConfig {
 	public static int brazierMinutesPerLevel = 20;
 
 	@Entry(category = BRAZIER)
-	public static boolean brazierEffectParticles = true;
-
-	@Entry(
-			category = BRAZIER,
-			isSlider = true,
-			min = 1,
-			max = 6
-	)
-	public static int brazierParticleCount = 2;
+	public static boolean brazierPowerFireRes = true;
 
 	@Entry(category = BRAZIER)
 	public static boolean brazierPowerLavaVision = true;
@@ -52,10 +45,26 @@ public class RNConfig extends MidnightConfig {
 	public static boolean brazierPowerLavaHealing = true;
 
 	@Entry(category = BRAZIER)
+	public static boolean brazierPowerLavaImmuneItems = true;
+
+	@Entry(category = BRAZIER)
 	public static boolean brazierPowerDisableFireOverlay = true;
 
 	@Entry(category = BRAZIER)
-	public static boolean brazierPowerLavaImmuneItems = true;
+	public static boolean brazierEffectParticles = true;
+
+	@Entry(
+			category = BRAZIER,
+			isSlider = true,
+			min = 1,
+			max = 6
+	)
+	public static int brazierParticleCount = 2;
+
+	/* -- Altar -- */
+
+	@Entry(category = ALTAR)
+	public static boolean blessedEffectGlowing = true;
 
 	/* -- Chandelier -- */
 
@@ -74,7 +83,6 @@ public class RNConfig extends MidnightConfig {
 
 	@Entry(
 			category = COFFER,
-			name = "Stack Size Multiplier",
 			isSlider = true,
 			min = 1,
 			max = 16
@@ -90,6 +98,14 @@ public class RNConfig extends MidnightConfig {
 			max = 1f
 	)
 	public static float rubyLensOpacity = 1f;
+
+	@Entry(
+			category = CLIENT,
+			isSlider = true,
+			min = 0f,
+			max = 1f
+	)
+	public static float bronzeDiseasedOverlayOpacity = 1f;
 
 	/* -- Calculated Values -- */
 

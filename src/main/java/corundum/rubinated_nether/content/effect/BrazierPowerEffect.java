@@ -14,8 +14,10 @@ public class BrazierPowerEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-        entity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 40, 0, true, false, false));
-        if (RNConfig.brazierPowerLavaHealing && entity.isInLava()) {
+        if (RNConfig.brazierPowerFireRes) {
+            entity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 40, 0, true, false, false));
+        }
+            if (RNConfig.brazierPowerLavaHealing && entity.isInLava()) {
             entity.heal(1.0F);
         }
 

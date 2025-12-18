@@ -420,14 +420,19 @@
   "rubinated_nether.midnightconfig.brazierEffectParticles": "Brazier Particles",
   "rubinated_nether.midnightconfig.brazierParticleCount": "Brazier Particle Count",
   "rubinated_nether.midnightconfig.brazierMinutesPerLevel": "Molten Ruby Fuel Duration",
+  "rubinated_nether.midnightconfig.brazierPowerFireRes": "Brazier Power Grants Fire Resistance",
   "rubinated_nether.midnightconfig.brazierPowerLavaVision": "Brazier Power Lava Vision",
   "rubinated_nether.midnightconfig.brazierPowerViewRange": "Brazier Power Lava Vision Range",
   "rubinated_nether.midnightconfig.brazierPowerLavaHealing": "Brazier Power Lava Healing",
   "rubinated_nether.midnightconfig.brazierPowerDisableFireOverlay": "Brazier Power Disable Fire Overlay",
   "rubinated_nether.midnightconfig.brazierPowerLavaImmuneItems": "Brazier Power Lava-Immune Items",
 
+  "rubinated_nether.midnightconfig.blessedEffectGlowing": "Blessed Grants Glowing Effect",
+
+
   "rubinated_nether.midnightconfig.cofferStackMultiplier": "Coffer Stack Multiplier",
 
+  "rubinated_nether.midnightconfig.rubyLensOpacity": "Ruby Lens Opacity",
+  "rubinated_nether.midnightconfig.bronzeDiseasedOverlayOpacity": "Bronze Diseased Overlay Opacity"
 
-  "rubinated_nether.midnightconfig.rubyLensOpacity": "Ruby Lens Opacity"
- }
+}

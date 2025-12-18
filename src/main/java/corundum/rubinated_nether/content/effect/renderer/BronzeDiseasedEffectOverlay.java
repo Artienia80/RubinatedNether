@@ -14,7 +14,7 @@ public class BronzeDiseasedEffectOverlay {
             ResourceLocation.fromNamespaceAndPath("rubinated_nether", "textures/gui/bronze_overlay.png");
 
     public static void renderHud(Gui gui, GuiGraphics graphics) {
-        if(RNConfig.rubyLensOpacity == 0) return;
+        if(RNConfig.bronzeDiseasedOverlayOpacity == 0) return;
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
         if(player != null && minecraft.options.getCameraType().isFirstPerson() && player.hasEffect(RNEffects.BRONZE_DISEASED)) {
