@@ -5,6 +5,7 @@ import eu.midnightdust.lib.config.MidnightConfig;
 public class RNConfig extends MidnightConfig {
 	public static final String BRAZIER = "brazier";
 	public static final String CHANDELIER = "chandelier";
+	public static final String COFFER = "coffer";
 	public static final String CLIENT = "client";
 
 	/* -- Brazier -- */
@@ -69,6 +70,16 @@ public class RNConfig extends MidnightConfig {
 	)
 	public static float chandelierStateMultiplierIncrease = .25F;
 
+	/* -- Coffer -- */
+
+	@Entry(
+			category = COFFER,
+			name = "Stack Size Multiplier",
+			isSlider = true,
+			min = 1,
+			max = 16
+	)
+	public static int cofferStackMultiplier = 4;
 
 	/* -- Client -- */
 

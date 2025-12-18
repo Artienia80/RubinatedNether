@@ -415,6 +415,7 @@
 
   "rubinated_nether.midnightconfig.chandelierDefaultDamage": "Chandelier Default Damage Value",
   "rubinated_nether.midnightconfig.chandelierStateMultiplierIncrease": "Chandelier Damage Multiplier Increase",
+
   "rubinated_nether.midnightconfig.brazierEffectRange": "Brazier Power Range",
   "rubinated_nether.midnightconfig.brazierEffectParticles": "Brazier Particles",
   "rubinated_nether.midnightconfig.brazierParticleCount": "Brazier Particle Count",
@@ -424,5 +425,9 @@
   "rubinated_nether.midnightconfig.brazierPowerLavaHealing": "Brazier Power Lava Healing",
   "rubinated_nether.midnightconfig.brazierPowerDisableFireOverlay": "Brazier Power Disable Fire Overlay",
   "rubinated_nether.midnightconfig.brazierPowerLavaImmuneItems": "Brazier Power Lava-Immune Items",
+
+  "rubinated_nether.midnightconfig.cofferStackMultiplier": "Coffer Stack Multiplier",
+
+
   "rubinated_nether.midnightconfig.rubyLensOpacity": "Ruby Lens Opacity"
  }

@@ -348,6 +348,19 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		return false;
 	}
 
+	// Helper method to check fuel type
+	private boolean isGreatFuel(ItemStack stack) {
+		return stack.is(RNTags.Items.GREAT_BRAZIER_FUEL);
+	}
+
+	private boolean isStandardFuel(ItemStack stack) {
+		return stack.is(RNTags.Items.STANDARD_BRAZIER_FUEL);
+	}
+
+	private boolean isSmallFuel(ItemStack stack) {
+		return stack.is(RNTags.Items.SMALL_BRAZIER_FUEL);
+	}
+
 	// WorldlyContainer implementation for hopper compatibility
 	@Override
 	public int[] getSlotsForFace(Direction direction) {
@@ -364,9 +377,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 	public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
 		if (index != 0) return false;
 
-		if (!stack.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem()) &&
-				!stack.is(RNItems.MOLTEN_RUBY_ITEM.get()) &&
-				!stack.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
+		if (!isGreatFuel(stack) && !isStandardFuel(stack) && !isSmallFuel(stack)) {
 			return false;
 		}
 
@@ -374,7 +385,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		int maxSeconds = secondsPerLevel * 9;
 
 		// Check based on actual fuel seconds
-		if (stack.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
+		if (isGreatFuel(stack)) {
 			// Blocks only get bonus when brazier is empty
 			if (remainingFuelSeconds == 0) {
 				// Empty brazier - allow with bonus (9 * 1.05 = 9.45 levels worth)
@@ -384,7 +395,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 				// Partially filled - check without bonus
 				return remainingFuelSeconds + (secondsPerLevel * 9) <= maxSeconds;
 			}
-		} else if (stack.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+		} else if (isStandardFuel(stack)) {
 			return remainingFuelSeconds + secondsPerLevel <= maxSeconds;
 		} else {
 			// Nuggets
@@ -435,11 +446,11 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 			int secondsRemoved = 0;
 			int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
 
-			if (extracted.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
+			if (isGreatFuel(extracted)) {
 				secondsRemoved = secondsPerLevel * 9;
-			} else if (extracted.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+			} else if (isStandardFuel(extracted)) {
 				secondsRemoved = secondsPerLevel;
-			} else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
+			} else if (isSmallFuel(extracted)) {
 				int secondsPerNugget = secondsPerLevel / 9;
 				secondsRemoved = extracted.getCount() * secondsPerNugget;
 			}
@@ -469,7 +480,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		int maxSeconds = secondsPerLevel * 9;
 
 		boolean added = false;
-		if (stack.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
+		if (isGreatFuel(stack)) {
 			// Only apply bonus if brazier is completely empty
 			if (remainingFuelSeconds == 0) {
 				addFuelWithBonus(9, 1.05f);
@@ -481,13 +492,13 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 				stack.shrink(1);
 				added = true;
 			}
-		} else if (stack.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+		} else if (isStandardFuel(stack)) {
 			if (remainingFuelSeconds + secondsPerLevel <= maxSeconds) {
 				addFuel(1);
 				stack.shrink(1);
 				added = true;
 			}
-		} else if (stack.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
+		} else if (isSmallFuel(stack)) {
 			int secondsPerNugget = secondsPerLevel / 9;
 			if (remainingFuelSeconds + secondsPerNugget <= maxSeconds) {
 				addFuelNuggets(1);

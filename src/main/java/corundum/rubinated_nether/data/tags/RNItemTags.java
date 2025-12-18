@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.data.tags;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.HolderLookup;
@@ -101,5 +102,18 @@ public class RNItemTags extends ItemTagsProvider {
 				.addTag(RNTags.Items.RUBINATION_CROSSBOW)
 				.addTag(RNTags.Items.RUBINATION_TRIDENT)
 				.addTag(RNTags.Items.RUBINATION_MACE);
+
+		// Brazier fuel tags
+		this.tag(RNTags.Items.SMALL_BRAZIER_FUEL).add(
+				RNItems.MOLTEN_RUBY_NUGGET_ITEM.asItem()
+		);
+
+		this.tag(RNTags.Items.STANDARD_BRAZIER_FUEL).add(
+				RNItems.MOLTEN_RUBY_ITEM.asItem()
+		);
+
+		this.tag(RNTags.Items.GREAT_BRAZIER_FUEL).add(
+				RNBlocks.MOLTEN_RUBY_BLOCK.asItem()
+		);
 	}
 }

@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.menu.coffer.CofferMenu;
+import corundum.rubinated_nether.utils.RNConfig;
 import fuzs.limitlesscontainers.api.limitlesscontainers.v1.LimitlessContainerUtils;
 import fuzs.limitlesscontainers.api.limitlesscontainers.v1.MultipliedContainer;
 import fuzs.puzzleslib.api.container.v1.ContainerMenuHelper;
@@ -153,12 +154,12 @@ public class CofferBlockEntity extends ChestBlockEntity implements LidBlockEntit
 
     @Override
     public int getMaxStackSize() {
-        return 256;
+        return 64 * RNConfig.cofferStackMultiplier;
     }
 
     @Override
     public int getMaxStackSize(ItemStack stack) {
-        return stack.getMaxStackSize() * 4;
+        return stack.getMaxStackSize() * RNConfig.cofferStackMultiplier;
     }
 
 
@@ -190,8 +191,7 @@ public class CofferBlockEntity extends ChestBlockEntity implements LidBlockEntit
 
         @Override
         public int getStackSizeMultiplier() {
-            return 4;
+            return RNConfig.cofferStackMultiplier;
         }
     }
 }
-

@@ -90,8 +90,11 @@ public final class RNTags {
 		public static final TagKey<Item> RUBINATION_TRIDENT = createTag(Registries.ITEM, "rubination_trident");
 		public static final TagKey<Item> RUBINATION_MACE = createTag(Registries.ITEM, "rubination_mace");
 
-
 		public static final TagKey<Item> RUBINATABLE = createTag(Registries.ITEM, "rubinatable");
+
+		public static final TagKey<Item> SMALL_BRAZIER_FUEL = createTag(Registries.ITEM, "small_brazier_fuel");
+		public static final TagKey<Item> STANDARD_BRAZIER_FUEL = createTag(Registries.ITEM, "standard_brazier_fuel");
+		public static final TagKey<Item> GREAT_BRAZIER_FUEL = createTag(Registries.ITEM, "great_brazier_fuel");
 
 	}
 
