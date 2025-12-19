@@ -66,6 +66,17 @@ public class RNConfig extends MidnightConfig {
 	@Entry(category = ALTAR)
 	public static boolean blessedEffectGlowing = true;
 
+	@Entry(category = ALTAR)
+	public static boolean bronzeDiseasedWeakness = true;
+
+	@Entry(
+			category = ALTAR,
+			isSlider = true,
+			min = 0,
+			max = 1
+	)
+	public static float bronzeDiseasedWeaknessStrength = 0.4f;
+
 	/* -- Chandelier -- */
 
 	@Entry(category = CHANDELIER)

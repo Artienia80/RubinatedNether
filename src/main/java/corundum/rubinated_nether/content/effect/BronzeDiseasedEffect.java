@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.effect;
 
 import corundum.rubinated_nether.content.RNDamageTypes;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -23,12 +24,16 @@ public class BronzeDiseasedEffect extends MobEffect {
         if (onCrystallized) {
             entity.hurt(entity.damageSources().source(RNDamageTypes.BRONZE_DISEASED), 1.0F);
         }
-        this.addAttributeModifier(
-                Attributes.ATTACK_DAMAGE,
-                ResourceLocation.withDefaultNamespace("effect.weakness"),
-                -0.4,
-                AttributeModifier.Operation.ADD_VALUE
-        );
+
+        if (RNConfig.bronzeDiseasedWeakness) {
+            this.addAttributeModifier(
+                    Attributes.ATTACK_DAMAGE,
+                    ResourceLocation.withDefaultNamespace("effect.weakness"),
+                    -RNConfig.bronzeDiseasedWeaknessStrength,
+                    AttributeModifier.Operation.ADD_VALUE
+
+            );
+        }
 
         super.applyEffectTick(entity, amplifier);
         return true;
