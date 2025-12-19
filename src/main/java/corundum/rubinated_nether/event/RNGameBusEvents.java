@@ -192,19 +192,6 @@ public class RNGameBusEvents {
 		RenderSystem.disableBlend();
 	}
 
-    @SubscribeEvent
-    public static void onStartTracking(PlayerEvent.StartTracking event) {
-        // 1. Check if the entity being tracked is your BronzeEntity
-        if (event.getTarget() instanceof BronzeEntity bronzeEntity) {
-            int currentLevel = bronzeEntity.getTarnishLevel();
-
-            PacketDistributor.sendToPlayer(
-                    (ServerPlayer) event.getEntity(),
-                    new BronzeTarnishingData(bronzeEntity.getId(), currentLevel)
-            );
-        }
-    }
-
 	private static void blitFullScreen() {
 		Minecraft mc = Minecraft.getInstance();
 		GuiGraphics guiGraphics = new GuiGraphics(mc, mc.renderBuffers().bufferSource());

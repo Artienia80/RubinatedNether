@@ -20,6 +20,12 @@ public class BronzeRenderer extends MobRenderer<BronzeEntity, BronzeModel<Bronze
 
     @Override
     public ResourceLocation getTextureLocation(BronzeEntity entity) {
-        return entity.getTarnishLevel() == 1 ? DISCOLORED : entity.getTarnishLevel() == 2 ? CORRODED : entity.getTarnishLevel() == 3 ? TARNISHED : entity.getTarnishLevel() == 4 ? CRYSTALLIZED : LOCATION;
+        return switch (entity.getTarnishLevel()){
+            case UNAFFECTED -> LOCATION;
+            case DISCOLORED -> DISCOLORED;
+            case CORRODED -> CORRODED;
+            case TARNISHED -> TARNISHED;
+            case CRYSTALLIZED -> CRYSTALLIZED;
+        };
     }
 }

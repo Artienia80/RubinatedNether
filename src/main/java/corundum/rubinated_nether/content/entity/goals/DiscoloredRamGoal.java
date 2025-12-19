@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.entity.goals;
 
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.util.Mth;
@@ -32,7 +33,7 @@ public class DiscoloredRamGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (entity.getTarnishLevel() != 1) return false;
+        if (!entity.getTarnishLevel().equals(TarnishStage.DISCOLORED)) return false;
         if (entity.getRamCooldown() > 0) return false;
 
         Player player = entity.level().getNearestPlayer(entity, 15);
@@ -53,7 +54,7 @@ public class DiscoloredRamGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return (phase > 0 || isStunned) && target != null && target.isAlive() && entity.getTarnishLevel() == 1;
+        return (phase > 0 || isStunned) && target != null && target.isAlive() && entity.getTarnishLevel().equals(TarnishStage.DISCOLORED);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class DiscoloredRamGoal extends Goal {
         }
 
         if (target == null) return;
-        if(entity.getTarnishLevel() != 1) stop();
+        if(!entity.getTarnishLevel().equals(TarnishStage.DISCOLORED)) stop();
 
         switch (phase) {
             case 1:

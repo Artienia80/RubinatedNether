@@ -73,20 +73,20 @@ public class BronzeEntity extends TarnishingEntity {
     public final AnimationState ambushAnimationState = new AnimationState();
     public final AnimationState ramAnimationState = new AnimationState();
 
-    private static final byte NORMAL_ATTACK_START = 61;
-    private static final byte NORMAL_ATTACK_STOP = 64;
-    private static final byte DEFENCE_START = 68;
-    private static final byte DEFENCE_STOP = 69;
-    private static final byte SHOCKWAVE_START = 89;
-    private static final byte SHOCKWAVE_STOP = 92;
-    private static final byte STUN_START = 71;
-    private static final byte STUN_STOP = 73;
-    private static final byte DRILL_START = 76;
-    private static final byte UNDERGROUND_START = 79;
-    private static final byte AMBUSH_START = 81;
-    private static final byte AMBUSH_STOP = 87;
-    private static final byte RAM_STOP = 93;
-    private static final byte RAM_START = 97;
+    public static final byte NORMAL_ATTACK_START = 61;
+    public static final byte NORMAL_ATTACK_STOP = 64;
+    public static final byte DEFENCE_START = 68;
+    public static final byte DEFENCE_STOP = 69;
+    public static final byte SHOCKWAVE_START = 89;
+    public static final byte SHOCKWAVE_STOP = 92;
+    public static final byte STUN_START = 71;
+    public static final byte STUN_STOP = 73;
+    public static final byte DRILL_START = 76;
+    public static final byte UNDERGROUND_START = 79;
+    public static final byte AMBUSH_START = 81;
+    public static final byte AMBUSH_STOP = 87;
+    public static final byte RAM_STOP = 93;
+    public static final byte RAM_START = 97;
 
 
     public BronzeEntity(EntityType<? extends Monster> entityType, Level level) {
