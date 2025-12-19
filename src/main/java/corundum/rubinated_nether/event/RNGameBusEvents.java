@@ -5,8 +5,8 @@ import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNDamageTypes;
 import corundum.rubinated_nether.content.RNEffects;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.ChandelierBlock;
-import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.effect.renderer.BronzeDiseasedEffectOverlay;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
@@ -57,8 +57,8 @@ public class RNGameBusEvents {
 			if (source.getDirectEntity() instanceof FallingBlockEntity fallingBlock) {
 				BlockState blockState = fallingBlock.getBlockState();
 				if (blockState.getBlock() instanceof ChandelierBlock chandelier) {
-					TarnishingBronze.TarnishState tarnishState = chandelier.getAge();
-					if (tarnishState == TarnishingBronze.TarnishState.CRYSTALLIZED) {
+					TarnishStage tarnishStage = chandelier.getAge();
+					if (tarnishStage == TarnishStage.CRYSTALLIZED) {
 						boolean effectApplied = entity.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 72000, 0));
 					}
 				}

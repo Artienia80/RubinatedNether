@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.blocks;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,7 +41,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBronze {
     public static final MapCodec<BronzeSpringBlock> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    TarnishState.CODEC.fieldOf("tarnishing_state").forGetter(BronzeSpringBlock::getAge),
+                    TarnishStage.CODEC.fieldOf("tarnishing_state").forGetter(BronzeSpringBlock::getAge),
                     propertiesCodec()
             ).apply(instance, BronzeSpringBlock::new)
     );
@@ -70,9 +71,9 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     private static final VoxelShape SQUISHED_EAST = Block.box(0, 2, 2, 16, 14, 14);
     private static final VoxelShape EXTENDED_EAST = Block.box(0, 2, 2, 24, 14, 14);
 
-    private final TarnishState tarnishState;
+    private final TarnishStage tarnishState;
 
-    public BronzeSpringBlock(TarnishState tarnishState, BlockBehaviour.Properties properties) {
+    public BronzeSpringBlock(TarnishStage tarnishState, BlockBehaviour.Properties properties) {
         super(properties);
         this.tarnishState = tarnishState;
         this.registerDefaultState(this.stateDefinition.any()
@@ -529,7 +530,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     }
 
     @Override
-    public TarnishState getAge() {
+    public TarnishStage getAge() {
         return tarnishState;
     }
 

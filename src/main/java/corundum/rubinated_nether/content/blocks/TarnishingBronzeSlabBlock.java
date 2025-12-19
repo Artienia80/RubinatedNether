@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -26,7 +27,7 @@ import net.minecraft.world.phys.HitResult;
 public class TarnishingBronzeSlabBlock extends SlabBlock implements TarnishingBronze {
 	public static final MapCodec<TarnishingBronzeSlabBlock> CODEC = RecordCodecBuilder.mapCodec(
 		blockInstance -> blockInstance.group(
-			TarnishState.CODEC
+			TarnishStage.CODEC
 				.fieldOf("tarnishing_state")
 				.forGetter(ChangeOverTimeBlock::getAge),
 
@@ -34,16 +35,16 @@ public class TarnishingBronzeSlabBlock extends SlabBlock implements TarnishingBr
 		)
 		.apply(blockInstance, TarnishingBronzeSlabBlock::new)
 	);
-	private final TarnishState tarnishState;
+	private final TarnishStage tarnishStage;
 
 	@Override
 	public MapCodec<TarnishingBronzeSlabBlock> codec() {
 		return CODEC;
 	}
 
-	public TarnishingBronzeSlabBlock(TarnishState tarnishState, Properties properties) {
+	public TarnishingBronzeSlabBlock(TarnishStage tarnishStage, Properties properties) {
 		super(properties);
-		this.tarnishState = tarnishState;
+		this.tarnishStage = tarnishStage;
 		this.registerDefaultState(defaultBlockState().setValue(WAXED, false));
 	}
 
@@ -74,8 +75,8 @@ public class TarnishingBronzeSlabBlock extends SlabBlock implements TarnishingBr
 		return TarnishingBronze.canCrystallize(state.getBlock());
 	}
 
-	public TarnishState getAge() {
-		return this.tarnishState;
+	public TarnishStage getAge() {
+		return this.tarnishStage;
 	}
 
 	@Override

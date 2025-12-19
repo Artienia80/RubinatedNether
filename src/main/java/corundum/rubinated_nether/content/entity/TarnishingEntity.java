@@ -1,8 +1,10 @@
 package corundum.rubinated_nether.content.entity;
 
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.misc.RNAttachments;
 import corundum.rubinated_nether.networking.BronzeTarnishingData;
+import corundum.rubinated_nether.utils.RNEntityDataSerializers;
 import corundum.rubinated_nether.utils.RNParticleUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -32,12 +34,10 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 public abstract class TarnishingEntity extends Monster {
 
-    public static final int MAX_TARNISH = 4;
-    public static final int TARNISHED = 3;
-    public static final int CRYSTALLIZED = 4;
-
     private static final EntityDataAccessor<Boolean> WAXED =
             SynchedEntityData.defineId(TarnishingEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<TarnishStage> TARNISH_STAGE =
+            SynchedEntityData.defineId(TarnishingEntity.class, RNEntityDataSerializers.TARNISH_STAGE.get());
 
     private int tarnishTimer = 0;
 
@@ -55,24 +55,27 @@ public abstract class TarnishingEntity extends Monster {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(WAXED, false);
+        builder.define(TARNISH_STAGE, TarnishStage.UNAFFECTED);
     }
 
-    public int getTarnishLevel() {
-        return this.getData(RNAttachments.TARNISH_LEVEL.get());
+    public TarnishStage getTarnishLevel() {
+        return this.entityData.get(TARNISH_STAGE);
     }
 
-    public void setTarnishLevel(int level) {
-        this.setData(RNAttachments.TARNISH_LEVEL.get(), level);
-        if(!this.level().isClientSide())
-            PacketDistributor.sendToPlayersTrackingEntity(this, new BronzeTarnishingData(this.getId(), level));
+    public void setTarnishLevel(TarnishStage stage) {
+        this.entityData.set(TARNISH_STAGE, stage);
     }
 
     public void increaseTarnishLevel() {
-        this.setTarnishLevel(this.getTarnishLevel() + 1);
+        this.setTarnishLevel(
+                TarnishStage.byId(this.getTarnishLevel().getId() + 1)
+        );
     }
 
     public void decreaseTarnishLevel() {
-        this.setTarnishLevel(this.getTarnishLevel() - 1);
+        this.setTarnishLevel(
+                TarnishStage.byId(this.getTarnishLevel().getId() - 1)
+        );
     }
 
     public boolean isWaxed() {
@@ -83,14 +86,8 @@ public abstract class TarnishingEntity extends Monster {
         this.entityData.set(WAXED, waxed);
     }
 
-    private int getTarnishInterval(int level) {
-        return switch (level) {
-            case 0 -> 1200;
-            case 1 -> 1600;
-            case 2 -> 2000;
-            case 3 -> 2400;
-            default -> Integer.MAX_VALUE;
-        };
+    private int getTarnishInterval(TarnishStage stage) {
+        return stage.getTarnishDuration();
     }
 
     private boolean isNearSoulFire() {
@@ -112,7 +109,7 @@ public abstract class TarnishingEntity extends Monster {
         var stack = damageSource.getWeaponItem();
 
         if (stack.is(ItemTags.AXES)) {
-            if (!isWaxed() && this.getTarnishLevel() > 0 && this.getTarnishLevel() != 4) {
+            if (!isWaxed() && this.getTarnishLevel().getId() > 0 && this.getTarnishLevel().getId() != 4) {
                 if(!level().isClientSide())
                     if (level().random.nextFloat() < 0.05f) {
                         this.decreaseTarnishLevel();
@@ -123,9 +120,9 @@ public abstract class TarnishingEntity extends Monster {
                             level().addFreshEntity(powder);
                         }
                     }
-            } else if (this.getTarnishLevel() == CRYSTALLIZED) {
+            } else if (this.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED)) {
                 if (random.nextFloat() < 0.05f) {
-                    this.setTarnishLevel(0);
+                    this.setTarnishLevel(TarnishStage.UNAFFECTED);
                     handleVFX(player);
                 }
             }
@@ -135,12 +132,12 @@ public abstract class TarnishingEntity extends Monster {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        int level = getTarnishLevel();
+        TarnishStage stage = getTarnishLevel();
 
         if (stack.is(Items.SOUL_TORCH)) {
             if (!isWaxed()) {
                 if(!level().isClientSide())
-                    setTarnishLevel(CRYSTALLIZED);
+                    setTarnishLevel(TarnishStage.CRYSTALLIZED);
                 if (!player.isCreative()) {
                     stack.shrink(1);
                 }
@@ -164,7 +161,7 @@ public abstract class TarnishingEntity extends Monster {
         }
 
         if (stack.is(RNItems.BRONZE_POWDER.get())) {
-            if (!isWaxed() && level < 3) {
+            if (!isWaxed() && stage.getId() < 3) {
                 if (!player.isCreative()) {
                     stack.shrink(1);
                 }
@@ -198,18 +195,20 @@ public abstract class TarnishingEntity extends Monster {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("Waxed", isWaxed());
+        tag.putByte("TarnishStage", this.getTarnishLevel().getId());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         setWaxed(tag.getBoolean("Waxed"));
+        setTarnishLevel(TarnishStage.byId(tag.getByte("TarnishStage")));
     }
 
     private void tarnishingTickBehaviour() {
         if (!level().isClientSide() && !isWaxed()) {
-            int current = getTarnishLevel();
-            if (current < TARNISHED) {
+            TarnishStage current = getTarnishLevel();
+            if (current.getId() < TarnishStage.TARNISHED.getId()) {
                 tarnishTimer++;
                 if (tarnishTimer >= getTarnishInterval(current)) {
                     increaseTarnishLevel();
@@ -219,7 +218,7 @@ public abstract class TarnishingEntity extends Monster {
             if (isNearSoulFire()) {
                 tarnishTimer++;
                 if (tarnishTimer >= getTarnishInterval(current)) {
-                    setTarnishLevel(CRYSTALLIZED);
+                    setTarnishLevel(TarnishStage.CRYSTALLIZED);
                     tarnishTimer = 0;
                 }
             }
