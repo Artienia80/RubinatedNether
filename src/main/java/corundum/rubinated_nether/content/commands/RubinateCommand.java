@@ -8,7 +8,9 @@ import com.mojang.brigadier.exceptions.Dynamic2CommandExceptionType;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
+import corundum.rubinated_nether.content.RNRarity;
 import corundum.rubinated_nether.content.items.Rubination;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -133,6 +135,9 @@ public class RubinateCommand {
             }
 
             heldItem.set(DataComponents.ENCHANTMENTS, mutableEnchantments.toImmutable());
+
+            heldItem.set(DataComponents.RARITY, RNRarity.RUBINATED_NETHER_RUBY.get());
+
             successCount++;
         }
 
@@ -146,7 +151,7 @@ public class RubinateCommand {
             final Rubination finalRubination = rubination;
             source.sendSuccess(() ->
                             Component.translatable("commands.rubinate.success.single",
-                                    Component.literal(finalRubination.getCapitalisedName()).withStyle(net.minecraft.ChatFormatting.RED),
+                                    Component.literal(finalRubination.getCapitalisedName()).withStyle(ChatFormatting.DARK_RED),
                                     target.getDisplayName()),
                     true
             );
@@ -155,7 +160,7 @@ public class RubinateCommand {
             final int finalSuccessCount = successCount;
             source.sendSuccess(() ->
                             Component.translatable("commands.rubinate.success.multiple",
-                                    Component.literal(finalRubination.getCapitalisedName()).withStyle(net.minecraft.ChatFormatting.RED),
+                                    Component.literal(finalRubination.getCapitalisedName()).withStyle(ChatFormatting.DARK_RED),
                                     finalSuccessCount),
                     true
             );

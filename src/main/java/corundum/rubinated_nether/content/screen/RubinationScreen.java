@@ -180,9 +180,9 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 
 				if (optionalList.getFirst().isEmpty()) {
 					var randomName = RubinationNames.getInstance().getRandomName(this.font, 100);
-					list.add(Component.literal(randomName.getString()).withStyle(ChatFormatting.RED, ChatFormatting.OBFUSCATED));
+					list.add(Component.literal(randomName.getString()).withStyle(ChatFormatting.DARK_RED, ChatFormatting.OBFUSCATED));
 				} else {
-					list.add(Component.translatable("container." + result.getSerializedName() + ".clue").withStyle(ChatFormatting.RED));
+					list.add(Component.translatable("container." + result.getSerializedName() + ".clue").withStyle(ChatFormatting.DARK_RED));
 					for (var h = 0; h < 3; ++h) {
 						list.add(
 								Component.translatable(
