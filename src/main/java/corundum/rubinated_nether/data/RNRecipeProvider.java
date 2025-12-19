@@ -429,14 +429,14 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRAZIER, 1)
 				.define('A', Blocks.OBSIDIAN)
-				.define('B', Items.COPPER_INGOT)
+				.define('B', RNItems.BRONZE_ROD)
 				.define('C', RNBlocks.MOLTEN_RUBY_BLOCK)
 				.define('D', Items.NETHERITE_INGOT)
 				.pattern("BCB")
 				.pattern("BDB")
 				.pattern("AAA")
 				.unlockedBy(getHasName(RNBlocks.MOLTEN_RUBY_BLOCK), has(RNBlocks.MOLTEN_RUBY_BLOCK))
-				.unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+				.unlockedBy(getHasName(RNItems.BRONZE_ROD), has(RNItems.BRONZE_ROD))
 				.unlockedBy(getHasName(Items.NETHERITE_INGOT), has(Items.NETHERITE_INGOT))
 				.unlockedBy(getHasName(Blocks.OBSIDIAN), has(Blocks.OBSIDIAN))
 				.save(recipeOutput);

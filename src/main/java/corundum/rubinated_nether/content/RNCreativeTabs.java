@@ -100,6 +100,7 @@ public class RNCreativeTabs {
 
 								RNItems.RITUAL_OFFERING,
 								RNItems.WINDING_KEY,
+								RNItems.COGWHEEL,
 
 								RNItems.BRONZE_SPAWN_EGG
 						);

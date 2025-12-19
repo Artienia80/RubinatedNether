@@ -88,6 +88,7 @@ public class RNItems {
 	public static final DeferredItem<Item> BRONZE_SCRAP = basicItem("bronze_scrap");
 
 	public static final DeferredItem<Item> RITUAL_OFFERING = basicItem("ritual_offering");
+	public static final DeferredItem<Item> COGWHEEL = basicItem("cogwheel");
 	public static final DeferredItem<Item> WINDING_KEY = basicItem("winding_key");
 
 	public static final DeferredItem<Item> BRONZE_SHOT = ITEMS.register(
