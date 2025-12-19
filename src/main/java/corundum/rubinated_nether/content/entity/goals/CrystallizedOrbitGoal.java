@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.entity.goals;
 
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -27,7 +28,7 @@ public class CrystallizedOrbitGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (entity.getTarnishLevel() != 4) return false;
+        if (!entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED)) return false;
 
         Player nearestPlayer = entity.level().getNearestPlayer(entity, MAX_DISTANCE + 5);
         if (nearestPlayer != null && !nearestPlayer.isCreative() && !nearestPlayer.isSpectator()) {
@@ -40,7 +41,7 @@ public class CrystallizedOrbitGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return entity.getTarnishLevel() == 4 && target != null && target.isAlive();
+        return entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED) && target != null && target.isAlive();
     }
 
     @Override
@@ -51,7 +52,7 @@ public class CrystallizedOrbitGoal extends Goal {
 
     @Override
     public void tick() {
-        if (entity.getTarnishLevel() != 4 || target == null) {
+        if (!entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED) || target == null) {
             stop();
             return;
         }

@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.entity.goals;
 
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import net.minecraft.core.BlockPos;
@@ -18,12 +19,12 @@ public class CrystallizeNearbyBronzeGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return entity.getTarnishLevel() == 4;
+        return entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED);
     }
 
     @Override
     public void tick() {
-        if(entity.getTarnishLevel() != 4) stop();
+        if(!entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED)) stop();
         if (--cooldown > 0) return;
         cooldown = 20 + entity.getRandom().nextInt(200);
 

@@ -16,6 +16,7 @@ import corundum.rubinated_nether.event.RNBronzeDiseasedHeartHandler;
 import corundum.rubinated_nether.misc.DatapackRegistry;
 import corundum.rubinated_nether.misc.RNAttachments;
 import corundum.rubinated_nether.utils.RNConfig;
+import corundum.rubinated_nether.utils.RNEntityDataSerializers;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -54,7 +55,8 @@ public class RubinatedNether {
 			RNRecipes.RECIPE_TYPES,
 			RNRecipeSerializers.RECIPE_SERIALIZERS,
 			RNBlockEntities.BLOCK_ENTITY_TYPES,
-			RNMenuTypes.MENUS
+			RNMenuTypes.MENUS,
+			RNEntityDataSerializers.SERIALIZERS
 	);
 
 	public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {

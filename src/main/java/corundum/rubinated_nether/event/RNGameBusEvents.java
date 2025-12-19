@@ -5,8 +5,8 @@ import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNDamageTypes;
 import corundum.rubinated_nether.content.RNEffects;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.ChandelierBlock;
-import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.effect.renderer.BronzeDiseasedEffectOverlay;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
@@ -57,8 +57,8 @@ public class RNGameBusEvents {
 			if (source.getDirectEntity() instanceof FallingBlockEntity fallingBlock) {
 				BlockState blockState = fallingBlock.getBlockState();
 				if (blockState.getBlock() instanceof ChandelierBlock chandelier) {
-					TarnishingBronze.TarnishState tarnishState = chandelier.getAge();
-					if (tarnishState == TarnishingBronze.TarnishState.CRYSTALLIZED) {
+					TarnishStage tarnishStage = chandelier.getAge();
+					if (tarnishStage == TarnishStage.CRYSTALLIZED) {
 						boolean effectApplied = entity.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 72000, 0));
 					}
 				}
@@ -191,19 +191,6 @@ public class RNGameBusEvents {
 		RenderSystem.enableDepthTest();
 		RenderSystem.disableBlend();
 	}
-
-    @SubscribeEvent
-    public static void onStartTracking(PlayerEvent.StartTracking event) {
-        // 1. Check if the entity being tracked is your BronzeEntity
-        if (event.getTarget() instanceof BronzeEntity bronzeEntity) {
-            int currentLevel = bronzeEntity.getTarnishLevel();
-
-            PacketDistributor.sendToPlayer(
-                    (ServerPlayer) event.getEntity(),
-                    new BronzeTarnishingData(bronzeEntity.getId(), currentLevel)
-            );
-        }
-    }
 
 	private static void blitFullScreen() {
 		Minecraft mc = Minecraft.getInstance();

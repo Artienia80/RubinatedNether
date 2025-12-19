@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -26,14 +27,14 @@ import net.minecraft.world.phys.HitResult;
 public class TarnishingPillarBlock extends SixWayPillarBlock implements TarnishingBronze {
 	public static final MapCodec<TarnishingBronzeBlock> CODEC = RecordCodecBuilder.mapCodec(
 		blockInstance -> blockInstance.group(
-			TarnishingBronze.TarnishState.CODEC
+			TarnishStage.CODEC
 				.fieldOf("tarnishing_state")
 				.forGetter(ChangeOverTimeBlock::getAge),
 			propertiesCodec()
 		)
 		.apply(blockInstance, TarnishingBronzeBlock::new)
 	);
-	private final TarnishingBronze.TarnishState tarnishState;
+	private final TarnishStage tarnishStage;
 
 	@Override
 	public MapCodec<TarnishingBronzeBlock> codec() {
@@ -41,11 +42,11 @@ public class TarnishingPillarBlock extends SixWayPillarBlock implements Tarnishi
 	}
 
 	public TarnishingPillarBlock(
-		TarnishingBronze.TarnishState tarnishState, 
+		TarnishStage tarnishStage,
 		BlockBehaviour.Properties properties
 	) {
 		super(properties);
-		this.tarnishState = tarnishState;
+		this.tarnishStage = tarnishStage;
 		registerDefaultState(defaultBlockState().setValue(WAXED, false));
 	}
 
@@ -76,8 +77,8 @@ public class TarnishingPillarBlock extends SixWayPillarBlock implements Tarnishi
 		return TarnishingBronze.canCrystallize(state.getBlock());
 	}
 
-	public TarnishingBronze.TarnishState getAge() {
-		return this.tarnishState;
+	public TarnishStage getAge() {
+		return this.tarnishStage;
 	}
 
 	@Override

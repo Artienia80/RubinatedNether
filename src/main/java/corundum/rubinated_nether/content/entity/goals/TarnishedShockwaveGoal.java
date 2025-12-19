@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.entity.goals;
 
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -31,7 +32,7 @@ public class TarnishedShockwaveGoal extends Goal {
     @Override
     public boolean canUse() {
         return entity.getShockwaveCooldown() <= 0
-                && entity.getTarnishLevel() == 3
+                && entity.getTarnishLevel().equals(TarnishStage.TARNISHED)
                 && entity.getTarget() instanceof Player;
     }
 
@@ -46,7 +47,7 @@ public class TarnishedShockwaveGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return (isDefending || isStunned) && entity.getTarnishLevel() == 3;
+        return (isDefending || isStunned) && entity.getTarnishLevel().equals(TarnishStage.TARNISHED);
     }
 
     public boolean isDefending() {
@@ -55,22 +56,23 @@ public class TarnishedShockwaveGoal extends Goal {
 
     @Override
     public void tick() {
-        if(entity.getTarnishLevel() != 3) stop();
+        if(!entity.getTarnishLevel().equals(TarnishStage.TARNISHED)) stop();
+
         if (isDefending) {
             if (!entity.level().isClientSide) {
-                entity.level().broadcastEntityEvent(entity, (byte) 68);
+                entity.level().broadcastEntityEvent(entity, BronzeEntity.DEFENCE_START);
             }
             defenseTicks++;
 
             if (defenseTicks >= MAX_DEFENSE_TICKS) {
                 isDefending = false;
                 if (!entity.level().isClientSide) {
-                    entity.level().broadcastEntityEvent(entity, (byte) 69);
+                    entity.level().broadcastEntityEvent(entity, BronzeEntity.DEFENCE_STOP);
                 }
 
                 if (hitCount < MAX_HITS_ALLOWED) {
                     if (!entity.level().isClientSide) {
-                        entity.level().broadcastEntityEvent(entity, (byte) 89);
+                        entity.level().broadcastEntityEvent(entity, BronzeEntity.SHOCKWAVE_START);
                     }
                     spawnShockwaveParticles();
                     buffNearbyBronzes();
@@ -81,7 +83,7 @@ public class TarnishedShockwaveGoal extends Goal {
                     stunTicks = STUN_DURATION;
 
                     if (!entity.level().isClientSide) {
-                        entity.level().broadcastEntityEvent(entity, (byte) 71);
+                        entity.level().broadcastEntityEvent(entity, BronzeEntity.STUN_START);
                     }
                 }
             }
@@ -92,8 +94,8 @@ public class TarnishedShockwaveGoal extends Goal {
                 stunTicks = STUN_DURATION;
 
                 if (!entity.level().isClientSide) {
-                    entity.level().broadcastEntityEvent(entity, (byte) 69);
-                    entity.level().broadcastEntityEvent(entity, (byte) 71);
+                    entity.level().broadcastEntityEvent(entity, BronzeEntity.DEFENCE_STOP);
+                    entity.level().broadcastEntityEvent(entity, BronzeEntity.STUN_START);
                 }
             }
         }
@@ -125,8 +127,8 @@ public class TarnishedShockwaveGoal extends Goal {
         stunTicks = 0;
 
         if (!entity.level().isClientSide) {
-            entity.level().broadcastEntityEvent(entity, (byte) 69);
-            entity.level().broadcastEntityEvent(entity, (byte) 73);
+            entity.level().broadcastEntityEvent(entity,  BronzeEntity.DEFENCE_STOP);
+            entity.level().broadcastEntityEvent(entity, BronzeEntity.STUN_STOP);
         }
     }
 

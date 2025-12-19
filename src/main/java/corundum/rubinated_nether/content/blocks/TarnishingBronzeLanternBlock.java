@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -27,20 +28,20 @@ import net.minecraft.world.phys.HitResult;
 public class TarnishingBronzeLanternBlock extends LanternBlock implements TarnishingBronze {
     public static final MapCodec<TarnishingBronzeLanternBlock> CODEC = RecordCodecBuilder.mapCodec(
             blockInstance -> blockInstance.group(
-                            TarnishingBronze.TarnishState.CODEC
+                            TarnishStage.CODEC
                                     .fieldOf("tarnishing_state")
                                     .forGetter(ChangeOverTimeBlock::getAge),
                             propertiesCodec()
                     )
                     .apply(blockInstance, TarnishingBronzeLanternBlock::new)
     );
-    private final TarnishingBronze.TarnishState tarnishState;
+    private final TarnishStage tarnishStage;
 
     // Remove the codec() override method entirely
 
-    public TarnishingBronzeLanternBlock(TarnishingBronze.TarnishState tarnishState, BlockBehaviour.Properties properties) {
+    public TarnishingBronzeLanternBlock(TarnishStage tarnishStage, BlockBehaviour.Properties properties) {
         super(properties);
-        this.tarnishState = tarnishState;
+        this.tarnishStage = tarnishStage;
         this.registerDefaultState(defaultBlockState()
                 .setValue(WAXED, false)
                 .setValue(HANGING, false)
@@ -104,8 +105,8 @@ public class TarnishingBronzeLanternBlock extends LanternBlock implements Tarnis
         return TarnishingBronze.canCrystallize(state.getBlock());
     }
 
-    public TarnishingBronze.TarnishState getAge() {
-        return this.tarnishState;
+    public TarnishStage getAge() {
+        return this.tarnishStage;
     }
 
     @Override

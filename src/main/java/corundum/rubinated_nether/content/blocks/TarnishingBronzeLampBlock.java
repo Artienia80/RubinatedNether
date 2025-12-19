@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.utils.ShapeUtils;
 import net.minecraft.core.BlockPos;
@@ -37,7 +38,7 @@ import java.util.Map;
 public class TarnishingBronzeLampBlock extends RotatedPillarBlock implements TarnishingBronze {
 	public static final MapCodec<TarnishingBronzeLampBlock> CODEC = RecordCodecBuilder.mapCodec(
 			blockInstance -> blockInstance.group(
-							TarnishingBronze.TarnishState.CODEC
+							TarnishStage.CODEC
 									.fieldOf("tarnishing_state")
 									.forGetter(ChangeOverTimeBlock::getAge),
 							propertiesCodec()
@@ -49,7 +50,7 @@ public class TarnishingBronzeLampBlock extends RotatedPillarBlock implements Tar
 			Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D)
 	);
 
-	private final TarnishingBronze.TarnishState tarnishState;
+	private final TarnishStage tarnishStage;
 
 	@Override
 	public MapCodec<TarnishingBronzeLampBlock> codec() {
@@ -57,11 +58,11 @@ public class TarnishingBronzeLampBlock extends RotatedPillarBlock implements Tar
 	}
 
 	public TarnishingBronzeLampBlock(
-			TarnishingBronze.TarnishState tarnishState,
+			TarnishStage tarnishStage,
 			BlockBehaviour.Properties properties
 	) {
 		super(properties);
-		this.tarnishState = tarnishState;
+		this.tarnishStage = tarnishStage;
 		registerDefaultState(defaultBlockState().setValue(WAXED, false));
 	}
 
@@ -117,8 +118,8 @@ public class TarnishingBronzeLampBlock extends RotatedPillarBlock implements Tar
 		return TarnishingBronze.canCrystallize(state.getBlock());
 	}
 
-	public TarnishingBronze.TarnishState getAge() {
-		return this.tarnishState;
+	public TarnishStage getAge() {
+		return this.tarnishStage;
 	}
 
 	@Override

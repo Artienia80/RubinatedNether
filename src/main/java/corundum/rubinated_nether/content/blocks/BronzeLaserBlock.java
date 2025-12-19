@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.entities.BronzeLaserBlockEntity;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.utils.BEBlock;
@@ -48,7 +49,7 @@ public class BronzeLaserBlock extends DirectionalBlock implements BEBlock<Bronze
 
 	public static final MapCodec<BronzeLaserBlock> CODEC = RecordCodecBuilder.mapCodec(
 			instance -> instance.group(
-					TarnishState.CODEC.fieldOf("tarnishing_state").forGetter(BronzeLaserBlock::getAge),
+					TarnishStage.CODEC.fieldOf("tarnishing_state").forGetter(BronzeLaserBlock::getAge),
 					propertiesCodec()
 			).apply(instance, BronzeLaserBlock::new)
 	);
@@ -61,7 +62,7 @@ public class BronzeLaserBlock extends DirectionalBlock implements BEBlock<Bronze
 	public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
 	public static final EnumProperty<LaserMode> MODE = EnumProperty.create("mode", LaserMode.class);
 
-	private final TarnishState tarnishState;
+	private final TarnishStage tarnishStage;
 
 	public enum LaserMode implements StringRepresentable {
 		SPECTRUM("spectrum"), // Blocks + Entities
@@ -85,9 +86,9 @@ public class BronzeLaserBlock extends DirectionalBlock implements BEBlock<Bronze
 		public boolean detectsEntities() { return this == SPECTRUM || this == INFRARED; }
 	}
 
-	public BronzeLaserBlock(TarnishState state, BlockBehaviour.Properties props) {
+	public BronzeLaserBlock(TarnishStage state, BlockBehaviour.Properties props) {
 		super(props);
-		this.tarnishState = state;
+		this.tarnishStage = state;
 		this.registerDefaultState(this.defaultBlockState()
 				.setValue(FACING, Direction.NORTH)
 				.setValue(POWER, 0)
@@ -176,8 +177,8 @@ public class BronzeLaserBlock extends DirectionalBlock implements BEBlock<Bronze
 	}
 
 	@Override
-	public TarnishState getAge() {
-		return tarnishState;
+	public TarnishStage getAge() {
+		return tarnishStage;
 	}
 
 	// Redstone stuff stays the same

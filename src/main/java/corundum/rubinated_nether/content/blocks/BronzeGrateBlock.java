@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.blocks;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,8 +33,8 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
     private static final Direction[] HORIZONTAL_DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
     private static final int CASCADE_DELAY = 5; // Base delay for cascade
 
-    public BronzeGrateBlock(TarnishState tarnishState, BlockBehaviour.Properties properties) {
-        super(tarnishState, properties);
+    public BronzeGrateBlock(TarnishStage tarnishStage, BlockBehaviour.Properties properties) {
+        super(tarnishStage, properties);
     }
 
     @Override
@@ -66,14 +67,14 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
 
         if (hasImmediateRedstoneSignal(level, pos)) return;
 
-        TarnishState tarnishState = getAgeFromBlock(state);
+        TarnishStage tarnishStage = getAgeFromBlock(state);
 
         // Handle all tarnish states, not just crystallized
         int delay;
-        if (tarnishState == TarnishState.CRYSTALLIZED) {
+        if (tarnishStage == TarnishStage.CRYSTALLIZED) {
             delay = 5; // Fast fall for crystallized (cascade behavior)
         } else {
-            delay = getDelayForTarnishState(tarnishState); // Normal delays for other states
+            delay = getDelayForTarnishState(tarnishStage); // Normal delays for other states
         }
 
         if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
@@ -110,7 +111,7 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
     }
 
     // Add this method back from the original code
-    private int getDelayForTarnishState(TarnishState state) {
+    private int getDelayForTarnishState(TarnishStage state) {
         return switch (state) {
             case CRYSTALLIZED -> 5; // 0.25 second
             case UNAFFECTED   -> 20; // 1 second
@@ -125,7 +126,7 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
         if (isConnectedToRedstone(level, pos)) return;
 
         if (isFree(level.getBlockState(pos.below())) && pos.getY() >= level.getMinBuildHeight()) {
-            boolean isCrystallized = getAgeFromBlock(state) == TarnishState.CRYSTALLIZED;
+            boolean isCrystallized = getAgeFromBlock(state) == TarnishStage.CRYSTALLIZED;
 
             FallingBlockEntity fallingBlock = FallingBlockEntity.fall(level, pos, state);
             this.falling(fallingBlock);
@@ -148,7 +149,7 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
             BronzeGrateBlock neighborGrate = (BronzeGrateBlock) neighborState.getBlock();
 
             // Check if neighbor is crystallized and should fall
-            if (neighborGrate.getAgeFromBlock(neighborState) != TarnishState.CRYSTALLIZED) continue;
+            if (neighborGrate.getAgeFromBlock(neighborState) != TarnishStage.CRYSTALLIZED) continue;
             if (neighborGrate.hasImmediateRedstoneSignal(level, neighborPos)) continue;
             if (level.getBlockTicks().hasScheduledTick(neighborPos, neighborGrate)) continue;
 
@@ -167,8 +168,8 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
             if (!aboveGrate.hasImmediateRedstoneSignal(level, abovePos) &&
                     !level.getBlockTicks().hasScheduledTick(abovePos, aboveGrate)) {
 
-                TarnishState aboveTarnish = aboveGrate.getAgeFromBlock(aboveState);
-                int delay = aboveTarnish == TarnishState.CRYSTALLIZED ? CASCADE_DELAY : getDelayForTarnishState(aboveTarnish);
+                TarnishStage aboveTarnish = aboveGrate.getAgeFromBlock(aboveState);
+                int delay = aboveTarnish == TarnishStage.CRYSTALLIZED ? CASCADE_DELAY : getDelayForTarnishState(aboveTarnish);
                 level.scheduleTick(abovePos, aboveGrate, delay);
             }
         }
@@ -182,7 +183,7 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
 
     }
 
-    private TarnishState getAgeFromBlock(BlockState state) {
+    private TarnishStage getAgeFromBlock(BlockState state) {
         return ((TarnishingBronzeBlock) state.getBlock()).getAge();
     }
 

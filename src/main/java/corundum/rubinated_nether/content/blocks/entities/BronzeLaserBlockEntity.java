@@ -3,8 +3,8 @@ package corundum.rubinated_nether.content.blocks.entities;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
-import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.mixin.accessors.LevelAccessor;
 import corundum.rubinated_nether.utils.BlockUpdateListener;
 import corundum.rubinated_nether.utils.ShapeUtils;
@@ -164,8 +164,8 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 	@SuppressWarnings({"DataFlowIssue"})
 	@Override
 	public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
-		TarnishingBronze.TarnishState tarnishState = getTarnishState();
-		this.currentRange = calculateMaxRange(tarnishState);
+		TarnishStage tarnishStage = getTarnishState();
+		this.currentRange = calculateMaxRange(tarnishStage);
 
 		Direction facing = getBlockState().getValue(BronzeLaserBlock.FACING);
 		BronzeLaserBlock.LaserMode mode = getBlockState().getValue(BronzeLaserBlock.MODE);
@@ -269,15 +269,15 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 				.move(worldPosition.relative(facing));
 	}
 
-	private TarnishingBronze.TarnishState getTarnishState() {
+	private TarnishStage getTarnishState() {
 		if (getBlockState().getBlock() instanceof BronzeLaserBlock bronzeLaser) {
 			return bronzeLaser.getAge();
 		}
-		return TarnishingBronze.TarnishState.UNAFFECTED;
+		return TarnishStage.UNAFFECTED;
 	}
 
-	private int calculateMaxRange(TarnishingBronze.TarnishState tarnishState) {
-		return switch (tarnishState) {
+	private int calculateMaxRange(TarnishStage tarnishStage) {
+		return switch (tarnishStage) {
 			case UNAFFECTED, CRYSTALLIZED -> 15;
 			case DISCOLORED -> 30;
 			case CORRODED -> 45;
@@ -285,8 +285,8 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		};
 	}
 
-	private int getBlocksPerPowerLevel(TarnishingBronze.TarnishState tarnishState) {
-		return switch (tarnishState) {
+	private int getBlocksPerPowerLevel(TarnishStage tarnishStage) {
+		return switch (tarnishStage) {
 			case UNAFFECTED, CRYSTALLIZED -> 1;
 			case DISCOLORED -> 2;
 			case CORRODED -> 3;
@@ -295,9 +295,9 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 	}
 
 	private int calculatePowerLevel(double distance) {
-		TarnishingBronze.TarnishState tarnishState = getTarnishState();
-		int maxRange = calculateMaxRange(tarnishState);
-		int blocksPerPowerLevel = getBlocksPerPowerLevel(tarnishState);
+		TarnishStage tarnishStage = getTarnishState();
+		int maxRange = calculateMaxRange(tarnishStage);
+		int blocksPerPowerLevel = getBlocksPerPowerLevel(tarnishStage);
 
 		// No obstruction found - power level 0 (when beyond max range or no obstruction)
 		if (distance > maxRange) {

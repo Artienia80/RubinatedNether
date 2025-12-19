@@ -75,7 +75,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> BRONZE_CHANDELIER = registerWaxableBlock(
 			"bronze_chandelier",
 			() -> new ChandelierBlock(
-					TarnishingBronze.TarnishState.UNAFFECTED,
+					TarnishStage.UNAFFECTED,
 					Block.Properties
 							.ofFullCopy(Blocks.COPPER_BLOCK)
 							.noOcclusion()
@@ -86,7 +86,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> DISCOLORED_BRONZE_CHANDELIER = registerWaxableBlock(
 			"discolored_bronze_chandelier",
 			() -> new ChandelierBlock(
-					TarnishingBronze.TarnishState.DISCOLORED,
+					TarnishStage.DISCOLORED,
 					Block.Properties
 							.ofFullCopy(Blocks.COPPER_BLOCK)
 							.noOcclusion()
@@ -97,7 +97,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CORRODED_BRONZE_CHANDELIER = registerWaxableBlock(
 			"corroded_bronze_chandelier",
 			() -> new ChandelierBlock(
-					TarnishingBronze.TarnishState.CORRODED,
+					TarnishStage.CORRODED,
 					Block.Properties
 							.ofFullCopy(Blocks.COPPER_BLOCK)
 							.noOcclusion()
@@ -108,7 +108,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> TARNISHED_BRONZE_CHANDELIER = registerWaxableBlock(
 			"tarnished_bronze_chandelier",
 			() -> new ChandelierBlock(
-					TarnishingBronze.TarnishState.TARNISHED,
+					TarnishStage.TARNISHED,
 					Block.Properties
 							.ofFullCopy(Blocks.COPPER_BLOCK)
 							.noOcclusion()
@@ -119,7 +119,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_CHANDELIER = registerWaxableBlock(
 			"crystallized_bronze_chandelier",
 			() -> new ChandelierBlock(
-					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					TarnishStage.CRYSTALLIZED,
 					Block.Properties
 							.ofFullCopy(Blocks.COPPER_BLOCK)
 							.noOcclusion()
@@ -130,7 +130,7 @@ public class RNBlocks {
 	public static final DeferredBlock<RotatedPillarBlock> BRONZE_LAMP = registerWaxableBlock(
 			"bronze_lamp",
 			() -> new TarnishingBronzeLampBlock(
-					TarnishingBronze.TarnishState.UNAFFECTED,
+					TarnishStage.UNAFFECTED,
 					Block.Properties
 							.ofFullCopy(Blocks.COPPER_BLOCK)
 							.lightLevel($ -> 15)
@@ -140,7 +140,7 @@ public class RNBlocks {
 	public static final DeferredBlock<RotatedPillarBlock> DISCOLORED_BRONZE_LAMP = registerWaxableBlock(
 			"discolored_bronze_lamp",
 			() -> new TarnishingBronzeLampBlock(
-					TarnishingBronze.TarnishState.DISCOLORED,
+					TarnishStage.DISCOLORED,
 					Block.Properties
 							.ofFullCopy(Blocks.COPPER_BLOCK)
 							.lightLevel($ -> 15)
@@ -150,7 +150,7 @@ public class RNBlocks {
 	public static final DeferredBlock<RotatedPillarBlock> CORRODED_BRONZE_LAMP = registerWaxableBlock(
 			"corroded_bronze_lamp",
 			() -> new TarnishingBronzeLampBlock(
-					TarnishingBronze.TarnishState.CORRODED,
+					TarnishStage.CORRODED,
 					Block.Properties
 							.ofFullCopy(Blocks.COPPER_BLOCK)
 							.lightLevel($ -> 15)
@@ -160,7 +160,7 @@ public class RNBlocks {
 	public static final DeferredBlock<RotatedPillarBlock> TARNISHED_BRONZE_LAMP = registerWaxableBlock(
 			"tarnished_bronze_lamp",
 			() -> new TarnishingBronzeLampBlock(
-					TarnishingBronze.TarnishState.TARNISHED,
+					TarnishStage.TARNISHED,
 					Block.Properties
 							.ofFullCopy(Blocks.COPPER_BLOCK)
 							.lightLevel($ -> 15)
@@ -170,7 +170,7 @@ public class RNBlocks {
 	public static final DeferredBlock<RotatedPillarBlock> CRYSTALLIZED_BRONZE_LAMP = registerWaxableBlock(
 			"crystallized_bronze_lamp",
 			() -> new TarnishingBronzeLampBlock(
-					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					TarnishStage.CRYSTALLIZED,
 					Block.Properties
 							.ofFullCopy(Blocks.COPPER_BLOCK)
 							.lightLevel($ -> 15)
@@ -414,7 +414,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> BRONZE_BLOCK = registerWaxableBlock(
 		"bronze_block",
 		() -> new TarnishingBronzeBlock(
-			TarnishingBronze.TarnishState.UNAFFECTED,
+			TarnishStage.UNAFFECTED,
 			BlockBehaviour.Properties.of()
 				.mapColor(MapColor.GOLD)
 				.requiresCorrectToolForDrops()
@@ -427,7 +427,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> DISCOLORED_BRONZE_BLOCK = registerWaxableBlock(
 		"discolored_bronze_block",
 		() -> new TarnishingBronzeBlock(
-			TarnishingBronze.TarnishState.DISCOLORED,
+			TarnishStage.DISCOLORED,
 			BlockBehaviour.Properties.of()
 				.mapColor(MapColor.TERRACOTTA_PINK)
 				.requiresCorrectToolForDrops()
@@ -440,7 +440,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CORRODED_BRONZE_BLOCK = registerWaxableBlock(
 		"corroded_bronze_block",
 		() -> new TarnishingBronzeBlock(
-			TarnishingBronze.TarnishState.CORRODED,
+			TarnishStage.CORRODED,
 			BlockBehaviour.Properties.of()
 				.mapColor(MapColor.CRIMSON_STEM)
 				.requiresCorrectToolForDrops()
@@ -453,7 +453,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> TARNISHED_BRONZE_BLOCK = registerWaxableBlock(
 		"tarnished_bronze_block",
 		() -> new TarnishingBronzeBlock(
-			TarnishingBronze.TarnishState.TARNISHED,
+			TarnishStage.TARNISHED,
 			BlockBehaviour.Properties.of()
 				.mapColor(MapColor.TERRACOTTA_BLACK)
 				.requiresCorrectToolForDrops()
@@ -466,7 +466,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_BLOCK = registerWaxableBlock(
 		"crystallized_bronze_block",
 		() -> new TarnishingBronzeBlock(
-			TarnishingBronze.TarnishState.CRYSTALLIZED,
+			TarnishStage.CRYSTALLIZED,
 			BlockBehaviour.Properties.of()
 				.mapColor(MapColor.TERRACOTTA_WHITE)
 				.requiresCorrectToolForDrops()
@@ -481,7 +481,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CUT_BRONZE_PILLAR = registerWaxableBlock(
 		"cut_bronze_pillar",
 		() -> new TarnishingPillarBlock(
-			TarnishingBronze.TarnishState.UNAFFECTED,
+			TarnishStage.UNAFFECTED,
 			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(5.0F, 150.0F)
@@ -491,7 +491,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> DISCOLORED_CUT_BRONZE_PILLAR = registerWaxableBlock(
 		"discolored_cut_bronze_pillar",
 		() -> new TarnishingPillarBlock(
-			TarnishingBronze.TarnishState.DISCOLORED,
+			TarnishStage.DISCOLORED,
 			BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(15.0F, 300.0F)
@@ -501,7 +501,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CORRODED_CUT_BRONZE_PILLAR = registerWaxableBlock(
 		"corroded_cut_bronze_pillar",
 		() -> new TarnishingPillarBlock(
-			TarnishingBronze.TarnishState.CORRODED,
+			TarnishStage.CORRODED,
 			BlockBehaviour.Properties.ofFullCopy(CORRODED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(25.0F, 600.0F)
@@ -511,7 +511,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> TARNISHED_CUT_BRONZE_PILLAR = registerWaxableBlock(
 		"tarnished_cut_bronze_pillar",
 		() -> new TarnishingPillarBlock(
-			TarnishingBronze.TarnishState.TARNISHED,
+			TarnishStage.TARNISHED,
 			BlockBehaviour.Properties.ofFullCopy(TARNISHED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(50.0F, 1200.0F)
@@ -521,7 +521,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CRYSTALLIZED_CUT_BRONZE_PILLAR = registerWaxableBlock(
 		"crystallized_cut_bronze_pillar",
 		() -> new TarnishingPillarBlock(
-			TarnishingBronze.TarnishState.CRYSTALLIZED,
+			TarnishStage.CRYSTALLIZED,
 			BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(1.0F, 6.0F)
@@ -533,7 +533,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CUT_BRONZE_BRICKS = registerWaxableBlock(
 		"cut_bronze_bricks",
 		() -> new TarnishingBronzeBlock(
-			TarnishingBronze.TarnishState.UNAFFECTED,
+			TarnishStage.UNAFFECTED,
 			BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(5.0F, 150.0F)
@@ -543,7 +543,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> DISCOLORED_CUT_BRONZE_BRICKS = registerWaxableBlock(
 		"discolored_cut_bronze_bricks",
 		() -> new TarnishingBronzeBlock(
-			TarnishingBronze.TarnishState.DISCOLORED,
+			TarnishStage.DISCOLORED,
 			BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(15.0F, 300.0F)
@@ -553,7 +553,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CORRODED_CUT_BRONZE_BRICKS = registerWaxableBlock(
 		"corroded_cut_bronze_bricks",
 		() -> new TarnishingBronzeBlock(
-			TarnishingBronze.TarnishState.CORRODED,
+			TarnishStage.CORRODED,
 			BlockBehaviour.Properties.ofFullCopy(CORRODED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(25.0F, 600.0F)
@@ -563,7 +563,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> TARNISHED_CUT_BRONZE_BRICKS = registerWaxableBlock(
 		"tarnished_cut_bronze_bricks",
 		() -> new TarnishingBronzeBlock(
-			TarnishingBronze.TarnishState.TARNISHED,
+			TarnishStage.TARNISHED,
 			BlockBehaviour.Properties.ofFullCopy(TARNISHED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(50.0F, 1200.0F)
@@ -573,7 +573,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CRYSTALLIZED_CUT_BRONZE_BRICKS = registerWaxableBlock(
 		"crystallized_cut_bronze_bricks",
 		() -> new TarnishingBronzeBlock(
-			TarnishingBronze.TarnishState.CRYSTALLIZED,
+			TarnishStage.CRYSTALLIZED,
 			BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(1.0F, 6.0F)
@@ -585,7 +585,7 @@ public class RNBlocks {
 	public static final DeferredBlock<SlabBlock> CUT_BRONZE_BRICKS_SLAB = registerWaxableBlock(
 		"cut_bronze_bricks_slab",
 		() -> new TarnishingBronzeSlabBlock(
-			TarnishingBronze.TarnishState.UNAFFECTED,
+			TarnishStage.UNAFFECTED,
 			SlabBlock.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(5.0F, 150.0F)
@@ -595,7 +595,7 @@ public class RNBlocks {
 	public static final DeferredBlock<StairBlock> CUT_BRONZE_BRICKS_STAIRS = registerWaxableBlock(
 		"cut_bronze_bricks_stairs",
 		() -> new TarnishingBronzeStairBlock(
-			TarnishingBronze.TarnishState.UNAFFECTED,
+			TarnishStage.UNAFFECTED,
 				BRONZE_BLOCK.get().defaultBlockState(),
 			BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
@@ -606,7 +606,7 @@ public class RNBlocks {
 	public static final DeferredBlock<SlabBlock> DISCOLORED_CUT_BRONZE_BRICKS_SLAB = registerWaxableBlock(
 		"discolored_cut_bronze_bricks_slab",
 		() -> new TarnishingBronzeSlabBlock(
-			TarnishingBronze.TarnishState.DISCOLORED,
+			TarnishStage.DISCOLORED,
 			SlabBlock.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(15.0F, 300.0F)
@@ -615,7 +615,7 @@ public class RNBlocks {
 	public static final DeferredBlock<StairBlock> DISCOLORED_CUT_BRONZE_BRICKS_STAIRS = registerWaxableBlock(
 		"discolored_cut_bronze_bricks_stairs",
 		() -> new TarnishingBronzeStairBlock(
-			TarnishingBronze.TarnishState.DISCOLORED,
+			TarnishStage.DISCOLORED,
 				DISCOLORED_BRONZE_BLOCK.get().defaultBlockState(),
 			BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
@@ -626,7 +626,7 @@ public class RNBlocks {
 	public static final DeferredBlock<SlabBlock> CORRODED_CUT_BRONZE_BRICKS_SLAB = registerWaxableBlock(
 		"corroded_cut_bronze_bricks_slab",
 		() -> new TarnishingBronzeSlabBlock(
-			TarnishingBronze.TarnishState.CORRODED,
+			TarnishStage.CORRODED,
 			SlabBlock.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get())
 				.requiresCorrectToolForDrops()
 				.strength(25.0F, 600.0F)
@@ -635,7 +635,7 @@ public class RNBlocks {
 	public static final DeferredBlock<StairBlock> CORRODED_CUT_BRONZE_BRICKS_STAIRS = registerWaxableBlock(
 		"corroded_cut_bronze_bricks_stairs",
 		() -> new TarnishingBronzeStairBlock(
-			TarnishingBronze.TarnishState.CORRODED,
+			TarnishStage.CORRODED,
 				CORRODED_BRONZE_BLOCK.get().defaultBlockState(),
 			BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
@@ -646,7 +646,7 @@ public class RNBlocks {
 	public static final DeferredBlock<SlabBlock> TARNISHED_CUT_BRONZE_BRICKS_SLAB = registerWaxableBlock(
 		"tarnished_cut_bronze_bricks_slab",
 		() -> new TarnishingBronzeSlabBlock(
-			TarnishingBronze.TarnishState.TARNISHED,
+			TarnishStage.TARNISHED,
 			SlabBlock.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(50.0F, 1200.0F)
@@ -655,7 +655,7 @@ public class RNBlocks {
 	public static final DeferredBlock<StairBlock> TARNISHED_CUT_BRONZE_BRICKS_STAIRS = registerWaxableBlock(
 		"tarnished_cut_bronze_bricks_stairs",
 		() -> new TarnishingBronzeStairBlock(
-			TarnishingBronze.TarnishState.TARNISHED,
+			TarnishStage.TARNISHED,
 				TARNISHED_BRONZE_BLOCK.get().defaultBlockState(),
 			BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
@@ -666,7 +666,7 @@ public class RNBlocks {
 	public static final DeferredBlock<SlabBlock> CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB = registerWaxableBlock(
 		"crystallized_cut_bronze_bricks_slab",
 		() -> new TarnishingBronzeSlabBlock(
-			TarnishingBronze.TarnishState.CRYSTALLIZED,
+			TarnishStage.CRYSTALLIZED,
 			SlabBlock.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
 					.strength(1.0F, 6.0F)
@@ -675,7 +675,7 @@ public class RNBlocks {
 	public static final DeferredBlock<StairBlock> CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS = registerWaxableBlock(
 		"crystallized_cut_bronze_bricks_stairs",
 		() -> new TarnishingBronzeStairBlock(
-			TarnishingBronze.TarnishState.CRYSTALLIZED,
+			TarnishStage.CRYSTALLIZED,
 				CRYSTALLIZED_BRONZE_BLOCK.get().defaultBlockState(),
 			BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get())
 					.requiresCorrectToolForDrops()
@@ -688,7 +688,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> BRONZE_BULB = registerWaxableBlock(
 			"bronze_bulb",
 			() -> new TarnishingBronzeBulbBlock(
-					TarnishingBronze.TarnishState.UNAFFECTED,
+					TarnishStage.UNAFFECTED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
 							.requiresCorrectToolForDrops()
@@ -703,7 +703,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> DISCOLORED_BRONZE_BULB = registerWaxableBlock(
 			"discolored_bronze_bulb",
 			() -> new TarnishingBronzeBulbBlock(
-					TarnishingBronze.TarnishState.DISCOLORED,
+					TarnishStage.DISCOLORED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.TERRACOTTA_PINK)
 							.requiresCorrectToolForDrops()
@@ -718,7 +718,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CORRODED_BRONZE_BULB = registerWaxableBlock(
 			"corroded_bronze_bulb",
 			() -> new TarnishingBronzeBulbBlock(
-					TarnishingBronze.TarnishState.CORRODED,
+					TarnishStage.CORRODED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.CRIMSON_STEM)
 							.requiresCorrectToolForDrops()
@@ -733,7 +733,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> TARNISHED_BRONZE_BULB = registerWaxableBlock(
 			"tarnished_bronze_bulb",
 			() -> new TarnishingBronzeBulbBlock(
-					TarnishingBronze.TarnishState.TARNISHED,
+					TarnishStage.TARNISHED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.TERRACOTTA_BLACK)
 							.requiresCorrectToolForDrops()
@@ -748,7 +748,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_BULB = registerWaxableBlock(
 			"crystallized_bronze_bulb",
 			() -> new TarnishingBronzeBulbBlock(
-					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					TarnishStage.CRYSTALLIZED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.TERRACOTTA_WHITE)
 							.requiresCorrectToolForDrops()
@@ -765,7 +765,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CHISELED_BRONZE = registerWaxableBlock(
 			"chiseled_bronze",
 			() -> new TarnishingBronzeBlock(
-					TarnishingBronze.TarnishState.UNAFFECTED,
+					TarnishStage.UNAFFECTED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
 							.requiresCorrectToolForDrops()
@@ -778,7 +778,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> DISCOLORED_CHISELED_BRONZE = registerWaxableBlock(
 			"discolored_chiseled_bronze",
 			() -> new TarnishingBronzeBlock(
-					TarnishingBronze.TarnishState.DISCOLORED,
+					TarnishStage.DISCOLORED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.TERRACOTTA_PINK)
 							.requiresCorrectToolForDrops()
@@ -791,7 +791,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CORRODED_CHISELED_BRONZE = registerWaxableBlock(
 			"corroded_chiseled_bronze",
 			() -> new TarnishingBronzeBlock(
-					TarnishingBronze.TarnishState.CORRODED,
+					TarnishStage.CORRODED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.CRIMSON_STEM)
 							.requiresCorrectToolForDrops()
@@ -804,7 +804,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> TARNISHED_CHISELED_BRONZE = registerWaxableBlock(
 			"tarnished_chiseled_bronze",
 			() -> new TarnishingBronzeBlock(
-					TarnishingBronze.TarnishState.TARNISHED,
+					TarnishStage.TARNISHED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.TERRACOTTA_BLACK)
 							.requiresCorrectToolForDrops()
@@ -817,7 +817,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CRYSTALLIZED_CHISELED_BRONZE = registerWaxableBlock(
 			"crystallized_chiseled_bronze",
 			() -> new TarnishingBronzeBlock(
-					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					TarnishStage.CRYSTALLIZED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.TERRACOTTA_WHITE)
 							.requiresCorrectToolForDrops()
@@ -832,7 +832,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> BRONZE_GRATE = registerWaxableBlock(
 			"bronze_grate",
 			() -> new BronzeGrateBlock(
-					TarnishingBronze.TarnishState.UNAFFECTED,
+					TarnishStage.UNAFFECTED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
 							.requiresCorrectToolForDrops()
@@ -848,7 +848,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> DISCOLORED_BRONZE_GRATE = registerWaxableBlock(
 			"discolored_bronze_grate",
 			() -> new BronzeGrateBlock(
-					TarnishingBronze.TarnishState.DISCOLORED,
+					TarnishStage.DISCOLORED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
 							.requiresCorrectToolForDrops()
@@ -864,7 +864,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CORRODED_BRONZE_GRATE = registerWaxableBlock(
 			"corroded_bronze_grate",
 			() -> new BronzeGrateBlock(
-					TarnishingBronze.TarnishState.CORRODED,
+					TarnishStage.CORRODED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
 							.requiresCorrectToolForDrops()
@@ -880,7 +880,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> TARNISHED_BRONZE_GRATE = registerWaxableBlock(
 			"tarnished_bronze_grate",
 			() -> new BronzeGrateBlock(
-					TarnishingBronze.TarnishState.TARNISHED,
+					TarnishStage.TARNISHED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
 							.requiresCorrectToolForDrops()
@@ -897,7 +897,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_GRATE = registerWaxableBlock(
 			"crystallized_bronze_grate",
 			() -> new BronzeGrateBlock(
-					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					TarnishStage.CRYSTALLIZED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
 							.requiresCorrectToolForDrops()
@@ -918,7 +918,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> BRONZE_SPRING = registerWaxableBlock(
 			"bronze_spring",
 			() -> new BronzeSpringBlock(
-					TarnishingBronze.TarnishState.UNAFFECTED,
+					TarnishStage.UNAFFECTED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
 							.requiresCorrectToolForDrops()
@@ -932,7 +932,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> DISCOLORED_BRONZE_SPRING = registerWaxableBlock(
 			"discolored_bronze_spring",
 			() -> new BronzeSpringBlock(
-					TarnishingBronze.TarnishState.DISCOLORED,
+					TarnishStage.DISCOLORED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.TERRACOTTA_PINK)
 							.requiresCorrectToolForDrops()
@@ -946,7 +946,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CORRODED_BRONZE_SPRING = registerWaxableBlock(
 			"corroded_bronze_spring",
 			() -> new BronzeSpringBlock(
-					TarnishingBronze.TarnishState.CORRODED,
+					TarnishStage.CORRODED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.CRIMSON_STEM)
 							.requiresCorrectToolForDrops()
@@ -960,7 +960,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> TARNISHED_BRONZE_SPRING = registerWaxableBlock(
 			"tarnished_bronze_spring",
 			() -> new BronzeSpringBlock(
-					TarnishingBronze.TarnishState.TARNISHED,
+					TarnishStage.TARNISHED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.TERRACOTTA_BLACK)
 							.requiresCorrectToolForDrops()
@@ -974,7 +974,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_SPRING = registerWaxableBlock(
 			"crystallized_bronze_spring",
 			() -> new BronzeSpringBlock(
-					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					TarnishStage.CRYSTALLIZED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.TERRACOTTA_WHITE)
 							.requiresCorrectToolForDrops()
@@ -990,7 +990,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> BRONZE_LANTERN = registerWaxableBlock(
 			"bronze_lantern",
 			() -> new TarnishingBronzeLanternBlock(
-					TarnishingBronze.TarnishState.UNAFFECTED,
+					TarnishStage.UNAFFECTED,
 					Block.Properties
 							.ofFullCopy(Blocks.LANTERN)
 							.mapColor(MapColor.GOLD)
@@ -1002,7 +1002,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> DISCOLORED_BRONZE_LANTERN = registerWaxableBlock(
 			"discolored_bronze_lantern",
 			() -> new TarnishingBronzeLanternBlock(
-					TarnishingBronze.TarnishState.DISCOLORED,
+					TarnishStage.DISCOLORED,
 					Block.Properties
 							.ofFullCopy(Blocks.LANTERN)
 							.mapColor(MapColor.TERRACOTTA_PINK)
@@ -1014,7 +1014,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CORRODED_BRONZE_LANTERN = registerWaxableBlock(
 			"corroded_bronze_lantern",
 			() -> new TarnishingBronzeLanternBlock(
-					TarnishingBronze.TarnishState.CORRODED,
+					TarnishStage.CORRODED,
 					Block.Properties
 							.ofFullCopy(Blocks.LANTERN)
 							.mapColor(MapColor.CRIMSON_STEM)
@@ -1026,7 +1026,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> TARNISHED_BRONZE_LANTERN = registerWaxableBlock(
 			"tarnished_bronze_lantern",
 			() -> new TarnishingBronzeLanternBlock(
-					TarnishingBronze.TarnishState.TARNISHED,
+					TarnishStage.TARNISHED,
 					Block.Properties
 							.ofFullCopy(Blocks.LANTERN)
 							.mapColor(MapColor.TERRACOTTA_BLACK)
@@ -1038,7 +1038,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_LANTERN = registerWaxableBlock(
 			"crystallized_bronze_lantern",
 			() -> new TarnishingBronzeLanternBlock(
-					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					TarnishStage.CRYSTALLIZED,
 					Block.Properties
 							.ofFullCopy(Blocks.LANTERN)
 							.mapColor(MapColor.TERRACOTTA_WHITE)
@@ -1052,7 +1052,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> BRONZE_CHAIN = registerWaxableBlock(
 			"bronze_chain",
 			() -> new TarnishingBronzeChainBlock(
-					TarnishingBronze.TarnishState.UNAFFECTED,
+					TarnishStage.UNAFFECTED,
 					Block.Properties
 							.ofFullCopy(Blocks.CHAIN)
 							.mapColor(MapColor.GOLD)
@@ -1063,7 +1063,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> DISCOLORED_BRONZE_CHAIN = registerWaxableBlock(
 			"discolored_bronze_chain",
 			() -> new TarnishingBronzeChainBlock(
-					TarnishingBronze.TarnishState.DISCOLORED,
+					TarnishStage.DISCOLORED,
 					Block.Properties
 							.ofFullCopy(Blocks.CHAIN)
 							.mapColor(MapColor.TERRACOTTA_PINK)
@@ -1074,7 +1074,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CORRODED_BRONZE_CHAIN = registerWaxableBlock(
 			"corroded_bronze_chain",
 			() -> new TarnishingBronzeChainBlock(
-					TarnishingBronze.TarnishState.CORRODED,
+					TarnishStage.CORRODED,
 					Block.Properties
 							.ofFullCopy(Blocks.CHAIN)
 							.mapColor(MapColor.CRIMSON_STEM)
@@ -1085,7 +1085,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> TARNISHED_BRONZE_CHAIN = registerWaxableBlock(
 			"tarnished_bronze_chain",
 			() -> new TarnishingBronzeChainBlock(
-					TarnishingBronze.TarnishState.TARNISHED,
+					TarnishStage.TARNISHED,
 					Block.Properties
 							.ofFullCopy(Blocks.CHAIN)
 							.mapColor(MapColor.TERRACOTTA_BLACK)
@@ -1096,7 +1096,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_CHAIN = registerWaxableBlock(
 			"crystallized_bronze_chain",
 			() -> new TarnishingBronzeChainBlock(
-					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					TarnishStage.CRYSTALLIZED,
 					Block.Properties
 							.ofFullCopy(Blocks.CHAIN)
 							.mapColor(MapColor.TERRACOTTA_WHITE)
@@ -1118,7 +1118,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> BRONZE_LASER = registerWaxableBlock(
 			"bronze_laser",
 			() -> new BronzeLaserBlock(
-					TarnishingBronze.TarnishState.UNAFFECTED,
+					TarnishStage.UNAFFECTED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
@@ -1126,7 +1126,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> DISCOLORED_BRONZE_LASER = registerWaxableBlock(
 			"discolored_bronze_laser",
 			() -> new BronzeLaserBlock(
-					TarnishingBronze.TarnishState.DISCOLORED,
+					TarnishStage.DISCOLORED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
@@ -1134,7 +1134,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CORRODED_BRONZE_LASER = registerWaxableBlock(
 			"corroded_bronze_laser",
 			() -> new BronzeLaserBlock(
-					TarnishingBronze.TarnishState.CORRODED,
+					TarnishStage.CORRODED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
@@ -1142,7 +1142,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> TARNISHED_BRONZE_LASER = registerWaxableBlock(
 			"tarnished_bronze_laser",
 			() -> new BronzeLaserBlock(
-					TarnishingBronze.TarnishState.TARNISHED,
+					TarnishStage.TARNISHED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
@@ -1150,7 +1150,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_LASER = registerWaxableBlock(
 			"crystallized_bronze_laser",
 			() -> new BronzeLaserBlock(
-					TarnishingBronze.TarnishState.CRYSTALLIZED,
+					TarnishStage.CRYSTALLIZED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);

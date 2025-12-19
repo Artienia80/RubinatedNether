@@ -3,15 +3,14 @@ package corundum.rubinated_nether.content.blocks;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
-import com.mojang.serialization.Codec;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNDataMaps;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.TarnishStage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -30,7 +29,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.TarnishState> {
+public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 	public static final BooleanProperty WAXED = BooleanProperty.create("waxed");
 
 	Supplier<BiMap<Block, Block>> NEXT_BY_BLOCK = Suppliers.memoize(
@@ -243,27 +242,7 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishingBronze.T
 
 	@Override
 	default float getChanceModifier() {
-		return this.getAge() == TarnishingBronze.TarnishState.UNAFFECTED ? 0.75F : 1.0F;
-	}
-
-	enum TarnishState implements StringRepresentable {
-		UNAFFECTED("unaffected"),
-		DISCOLORED("discolored"),
-		CORRODED("corroded"),
-		TARNISHED("tarnished"),
-		CRYSTALLIZED("crystallized");
-
-		public static final Codec<TarnishingBronze.TarnishState> CODEC = StringRepresentable.fromEnum(TarnishingBronze.TarnishState::values);
-		private final String name;
-
-		TarnishState(String name) {
-			this.name = name;
-		}
-
-		@Override
-		public String getSerializedName() {
-			return this.name;
-		}
+		return this.getAge() == TarnishStage.UNAFFECTED ? 0.75F : 1.0F;
 	}
 
 	default boolean waxing(

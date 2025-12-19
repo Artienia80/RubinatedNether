@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.TarnishStage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -27,23 +28,23 @@ import net.minecraft.world.phys.BlockHitResult;
 public class TarnishingBronzeBulbBlock extends BronzeBulbBlock implements TarnishingBronze {
 	public static final MapCodec<TarnishingBronzeBulbBlock> CODEC = RecordCodecBuilder.mapCodec(
 			blockInstance -> blockInstance.group(
-							TarnishingBronze.TarnishState.CODEC
+							TarnishStage.CODEC
 									.fieldOf("tarnishing_state")
 									.forGetter(ChangeOverTimeBlock::getAge),
 							propertiesCodec()
 					)
 					.apply(blockInstance, TarnishingBronzeBulbBlock::new)
 	);
-	private final TarnishingBronze.TarnishState tarnishState;
+	private final TarnishStage tarnishStage;
 
 	@Override
 	protected MapCodec<TarnishingBronzeBulbBlock> codec() {
 		return CODEC;
 	}
 
-	public TarnishingBronzeBulbBlock(TarnishingBronze.TarnishState tarnishState, BlockBehaviour.Properties properties) {
+	public TarnishingBronzeBulbBlock(TarnishStage tarnishStage, BlockBehaviour.Properties properties) {
 		super(properties, null, null); // We'll handle transitions through TarnishingBronze interface
-		this.tarnishState = tarnishState;
+		this.tarnishStage = tarnishStage;
 		this.registerDefaultState(defaultBlockState().setValue(WAXED, false));
 	}
 
@@ -206,7 +207,7 @@ public class TarnishingBronzeBulbBlock extends BronzeBulbBlock implements Tarnis
 		return TarnishingBronze.getNext(state.getBlock()).isPresent();
 	}
 
-	public TarnishingBronze.TarnishState getAge() {
-		return this.tarnishState;
+	public TarnishStage getAge() {
+		return this.tarnishStage;
 	}
 }

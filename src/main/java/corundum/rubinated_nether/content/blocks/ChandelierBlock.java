@@ -1,9 +1,8 @@
 package corundum.rubinated_nether.content.blocks;
 
-import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNDamageTypes;
-import corundum.rubinated_nether.content.RNEffects;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import corundum.rubinated_nether.utils.BEBlock;
 import corundum.rubinated_nether.utils.RNConfig;
@@ -13,7 +12,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -39,8 +37,8 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
     protected static final VoxelShape SHAPE_TOP = Block.box(-8.0, 5.0, -8.0, 24.0, 10.0, 24.0);
     protected static final VoxelShape SHAPE = Shapes.or(SHAPE_BOTTOM, SHAPE_TOP);
 
-    public ChandelierBlock(TarnishState tarnishState, Properties properties) {
-        super(tarnishState, properties);
+    public ChandelierBlock(TarnishStage tarnishStage, Properties properties) {
+        super(tarnishStage, properties);
     }
 
     @Override
@@ -84,9 +82,9 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
         fallingblockentity.load(nbt);
     }
 
-    private static float tarnishingDamageMultiplier(TarnishState tarnishState)  {
+    private static float tarnishingDamageMultiplier(TarnishStage tarnishStage)  {
         var multiplier = RNConfig.chandelierStateMultiplierIncrease;
-        return tarnishState.ordinal() != 4 ? multiplier * (tarnishState.ordinal() + 2) : multiplier;
+        return tarnishStage.ordinal() != 4 ? multiplier * (tarnishStage.ordinal() + 2) : multiplier;
     }
 
     @Override

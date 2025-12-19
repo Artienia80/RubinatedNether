@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.blocks;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,7 +41,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBronze {
     public static final MapCodec<BronzeSpringBlock> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    TarnishState.CODEC.fieldOf("tarnishing_state").forGetter(BronzeSpringBlock::getAge),
+                    TarnishStage.CODEC.fieldOf("tarnishing_state").forGetter(BronzeSpringBlock::getAge),
                     propertiesCodec()
             ).apply(instance, BronzeSpringBlock::new)
     );
@@ -70,11 +71,11 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     private static final VoxelShape SQUISHED_EAST = Block.box(0, 2, 2, 16, 14, 14);
     private static final VoxelShape EXTENDED_EAST = Block.box(0, 2, 2, 24, 14, 14);
 
-    private final TarnishState tarnishState;
+    private final TarnishStage tarnishStage;
 
-    public BronzeSpringBlock(TarnishState tarnishState, BlockBehaviour.Properties properties) {
+    public BronzeSpringBlock(TarnishStage tarnishStage, BlockBehaviour.Properties properties) {
         super(properties);
-        this.tarnishState = tarnishState;
+        this.tarnishStage = tarnishStage;
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.UP)
                 .setValue(EXTENDED, false)
@@ -127,7 +128,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
                     .setValue(WAXED, false);
 
             // Schedule ticking for crystallized springs
-            if (tarnishState == TarnishState.CRYSTALLIZED && !level.isClientSide()) {
+            if (tarnishStage == TarnishStage.CRYSTALLIZED && !level.isClientSide()) {
                 level.scheduleTick(blockPos, this, 1);
             }
 
@@ -141,7 +142,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
                 .setValue(WAXED, false);
 
         // Schedule ticking for crystallized springs
-        if (tarnishState == TarnishState.CRYSTALLIZED && !level.isClientSide()) {
+        if (tarnishStage == TarnishStage.CRYSTALLIZED && !level.isClientSide()) {
             level.scheduleTick(blockPos, this, 1);
         }
 
@@ -191,7 +192,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     }
 
     private int getContractionDelay(BlockState state) {
-        return switch (tarnishState) {
+        return switch (tarnishStage) {
             case UNAFFECTED -> 10;
             case DISCOLORED -> 15;
             case CORRODED -> 20;
@@ -254,7 +255,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         if (state.getValue(FACING) != Direction.UP) return;
 
         // Only crystallized springs trigger on step
-        if (tarnishState != TarnishState.CRYSTALLIZED) return;
+        if (tarnishStage != TarnishStage.CRYSTALLIZED) return;
 
         if (isEntityOnSpring(entity, pos)) {
             // Extend the spring first
@@ -281,7 +282,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         Direction facing = state.getValue(FACING);
 
         // For crystallized springs, ignore entityInside - only use proximity detection
-        if (tarnishState == TarnishState.CRYSTALLIZED) {
+        if (tarnishStage == TarnishStage.CRYSTALLIZED) {
             return;
         }
 
@@ -308,7 +309,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         }
 
         // Crystallized springs check for nearby entities and reschedule
-        if (tarnishState == TarnishState.CRYSTALLIZED) {
+        if (tarnishStage == TarnishStage.CRYSTALLIZED) {
             checkAndLaunchNearbyEntities(state, level, pos);
             // Reschedule the next tick (every tick = 1/20 second)
             level.scheduleTick(pos, this, 1);
@@ -451,7 +452,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     }
 
     private void launchEntity(Entity entity, BlockState state) {
-        double velocityMultiplier = switch (tarnishState) {
+        double velocityMultiplier = switch (tarnishStage) {
             case UNAFFECTED -> 1.5;
             case DISCOLORED -> 2.0;
             case CORRODED -> 3.0;
@@ -529,8 +530,8 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     }
 
     @Override
-    public TarnishState getAge() {
-        return tarnishState;
+    public TarnishStage getAge() {
+        return tarnishStage;
     }
 
     @Override

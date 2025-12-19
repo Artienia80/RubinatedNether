@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.entity.goals;
 
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -33,7 +34,7 @@ public class CorrodedHideAndAmbushGoal extends Goal {
     @Override
     public boolean canUse() {
         if (entity.getAmbushCooldown() > 0 || entity.isBurrowed()) return false;
-        if (entity.getTarget() instanceof Player player && entity.getTarnishLevel() == 2) {
+        if (entity.getTarget() instanceof Player player && entity.getTarnishLevel().equals(TarnishStage.CORRODED)) {
             if (entity.distanceTo(player) < 10 && entity.hasLineOfSight(player)) {
                 this.target = player;
                 return true;
@@ -44,7 +45,7 @@ public class CorrodedHideAndAmbushGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return state != 0 && entity.getTarnishLevel() == 2 && target != null && !entity.isInWater() && target.isAlive();
+        return state != 0 && entity.getTarnishLevel().equals(TarnishStage.CORRODED) && target != null && !entity.isInWater() && target.isAlive();
     }
 
     @Override
@@ -61,7 +62,7 @@ public class CorrodedHideAndAmbushGoal extends Goal {
 
     @Override
     public void tick() {
-        if(entity.getTarnishLevel() != 2) stop();
+        if(!entity.getTarnishLevel().equals(TarnishStage.CORRODED)) stop();
         ambushTargetPos = target.position();
         switch (state) {
             case 1 -> {

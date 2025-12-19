@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.entity.goals;
 
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -14,12 +15,12 @@ public class UnaffectedAttackGoal<T extends LivingEntity> extends NearestAttacka
 
     @Override
     public boolean canUse() {
-        return entity.getTarnishLevel() == 0 && super.canUse();
+        return entity.getTarnishLevel().equals(TarnishStage.UNAFFECTED) && super.canUse();
     }
 
     @Override
     public boolean canContinueToUse() {
-        return entity.getTarnishLevel() == 0 && super.canContinueToUse();
+        return entity.getTarnishLevel().equals(TarnishStage.UNAFFECTED) && super.canContinueToUse();
     }
 
     @Override
@@ -36,7 +37,7 @@ public class UnaffectedAttackGoal<T extends LivingEntity> extends NearestAttacka
             entity.level().broadcastEntityEvent(entity, (byte) 61);
         }
 
-        if(entity.getTarnishLevel() != 0) stop();
+        if(!entity.getTarnishLevel().equals(TarnishStage.UNAFFECTED)) stop();
     }
     @Override
     public void stop() {
