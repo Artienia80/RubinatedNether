@@ -14,7 +14,6 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -230,28 +229,28 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		threeByThree(
 			recipeOutput,
-			RNItems.RUBY_SHARD_ITEM,
-			RNItems.RUBY_ITEM,
+			RNItems.RUBY_SHARD,
+			RNItems.RUBY,
 			1
 		);
 
 		threeByThree(
 			recipeOutput,
-			RNItems.MOLTEN_RUBY_NUGGET_ITEM,
-			RNItems.MOLTEN_RUBY_ITEM,
+			RNItems.MOLTEN_RUBY_NUGGET,
+			RNItems.MOLTEN_RUBY,
 			1
 		);
 
 		threeByThree(
 			recipeOutput,
-			RNItems.MOLTEN_RUBY_ITEM,
+			RNItems.MOLTEN_RUBY,
 			RNBlocks.MOLTEN_RUBY_BLOCK,
 			1
 		);
 
 		threeByThree(
 			recipeOutput,
-			RNItems.RUBY_ITEM,
+			RNItems.RUBY,
 			RNBlocks.RUBY_BLOCK,
 			1
 		);
@@ -259,28 +258,28 @@ public class RNRecipeProvider extends RecipeProvider {
 		one(
 			recipeOutput,
 			RNBlocks.RUBY_BLOCK,
-			RNItems.RUBY_ITEM,
+			RNItems.RUBY,
 			9
 		);
 
 		one(
 			recipeOutput,
 			RNBlocks.MOLTEN_RUBY_BLOCK,
-			RNItems.MOLTEN_RUBY_ITEM,
+			RNItems.MOLTEN_RUBY,
 			9
 		);
 
 		one(
 			recipeOutput,
-			RNItems.RUBY_ITEM,
-			RNItems.RUBY_SHARD_ITEM,
+			RNItems.RUBY,
+			RNItems.RUBY_SHARD,
 			9
 		);
 
 		one(
 			recipeOutput,
-			RNItems.MOLTEN_RUBY_ITEM,
-			RNItems.MOLTEN_RUBY_NUGGET_ITEM,
+			RNItems.MOLTEN_RUBY,
+			RNItems.MOLTEN_RUBY_NUGGET,
 			9
 		);
 
@@ -345,22 +344,22 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBY_GLASS, 8)
 				.define('X', Blocks.GLASS)
-				.define('O', RNItems.RUBY_ITEM)
+				.define('O', RNItems.RUBY)
 				.pattern("XXX")
 				.pattern("XOX")
 				.pattern("XXX")
 				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS), has(RNBlocks.RUBY_GLASS))
-				.unlockedBy(getHasName(RNItems.RUBY_ITEM), has(RNItems.RUBY_ITEM))
+				.unlockedBy(getHasName(RNItems.RUBY), has(RNItems.RUBY))
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.MOLTEN_RUBY_GLASS, 8)
 				.define('X', Blocks.GLASS)
-				.define('O', RNItems.MOLTEN_RUBY_ITEM)
+				.define('O', RNItems.MOLTEN_RUBY)
 				.pattern("XXX")
 				.pattern("XOX")
 				.pattern("XXX")
 				.unlockedBy(getHasName(Blocks.GLASS), has(Blocks.GLASS))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
+				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY), has(RNItems.MOLTEN_RUBY))
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNBlocks.FREEZER, 1)
@@ -389,21 +388,21 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.RITUAL_OFFERING, 1)
 				.define('X', RNItems.BRONZE_ROD)
-				.define('O', RNItems.RUBY_ITEM)
+				.define('O', RNItems.RUBY)
 				.pattern("XXX")
 				.pattern(" O ")
 				.unlockedBy(getHasName(RNItems.BRONZE_ROD), has(RNItems.BRONZE_ROD))
-				.unlockedBy(getHasName(RNItems.RUBY_ITEM), has(RNItems.RUBY_ITEM))
+				.unlockedBy(getHasName(RNItems.RUBY), has(RNItems.RUBY))
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRONZE_LANTERN, 1)
 				.define('X', RNItems.BRONZE_POWDER)
-				.define('O', RNItems.MOLTEN_RUBY_ITEM)
+				.define('O', RNItems.MOLTEN_RUBY)
 				.pattern("XXX")
 				.pattern("XOX")
 				.pattern("XXX")
 				.unlockedBy(getHasName(RNItems.BRONZE_POWDER), has(RNItems.BRONZE_POWDER))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
+				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY), has(RNItems.MOLTEN_RUBY))
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRONZE_CHAIN, 1)
@@ -688,7 +687,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern("IOI")
 				.pattern("XAX")
 				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
-				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY_ITEM), has(RNItems.MOLTEN_RUBY_ITEM))
+				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY), has(RNItems.MOLTEN_RUBY))
 				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
 				.unlockedBy(getHasName(blockInput), has(blockInput))
 				.save(recipeOutput);

@@ -146,7 +146,7 @@ public class BrazierBlock extends BaseEntityBlock {
         }
 
         // Molten Ruby - add one level
-        if (stack.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+        if (stack.is(RNItems.MOLTEN_RUBY.get())) {
             if (currentLevel < 9) {
                 if (!level.isClientSide) {
                     brazier.addFuel(1);
@@ -166,7 +166,7 @@ public class BrazierBlock extends BaseEntityBlock {
         }
 
         // Molten Ruby Nugget - add 1/9th of a level
-        if (stack.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
+        if (stack.is(RNItems.MOLTEN_RUBY_NUGGET.get())) {
             if (currentLevel < 9) {
                 if (!level.isClientSide) {
                     int oldLevel = brazier.calculateLevelFromFuel();
@@ -216,9 +216,9 @@ public class BrazierBlock extends BaseEntityBlock {
                                 // Normal 9 ruby removal
                                 secondsRemoved = secondsPerLevel * 9;
                             }
-                        } else if (extracted.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+                        } else if (extracted.is(RNItems.MOLTEN_RUBY.get())) {
                             secondsRemoved = secondsPerLevel;
-                        } else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
+                        } else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET.get())) {
                             int secondsPerNugget = secondsPerLevel / 9;
                             secondsRemoved = extracted.getCount() * secondsPerNugget;
                         } else {
@@ -229,9 +229,9 @@ public class BrazierBlock extends BaseEntityBlock {
                         int baseDamage;
                         if (extracted.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
                             baseDamage = 81; // 9 rubies * 9
-                        } else if (extracted.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+                        } else if (extracted.is(RNItems.MOLTEN_RUBY.get())) {
                             baseDamage = 9;
-                        } else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
+                        } else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET.get())) {
                             baseDamage = extracted.getCount();
                         } else {
                             baseDamage = 0;

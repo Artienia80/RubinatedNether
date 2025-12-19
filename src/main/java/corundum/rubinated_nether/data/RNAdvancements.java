@@ -2,7 +2,6 @@ package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.RNItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -16,8 +15,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
@@ -96,24 +93,24 @@ public class RNAdvancements extends AdvancementProvider {
 
 			AdvancementHolder moltenRuby = Advancement.Builder.advancement()
 					.parent(freezer)
-					.display(RNItems.MOLTEN_RUBY_ITEM,
+					.display(RNItems.MOLTEN_RUBY,
 							Component.translatable("advancements.rubinated_nether.obtain_molten_ruby.title"),
 							Component.translatable("advancements.rubinated_nether.obtain_molten_ruby.description"),
 							null,
 							AdvancementType.TASK, true, true, false)
 					.requirements(AdvancementRequirements.Strategy.OR)
-					.addCriterion("molten_ruby", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.MOLTEN_RUBY_ITEM))
+					.addCriterion("molten_ruby", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.MOLTEN_RUBY))
 					.save(consumer, RubinatedNether.id( "obtain_molten_ruby"), existingFileHelper);
 
 			AdvancementHolder ruby = Advancement.Builder.advancement()
 					.parent(moltenRuby)
-					.display(RNItems.RUBY_ITEM.get(),
+					.display(RNItems.RUBY.get(),
 							Component.translatable("advancements.rubinated_nether.obtain_ruby.title"),
 							Component.translatable("advancements.rubinated_nether.obtain_ruby.description"),
 							null,
 							AdvancementType.TASK, true, true, false)
 					.requirements(AdvancementRequirements.Strategy.OR)
-					.addCriterion("ruby", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.RUBY_ITEM))
+					.addCriterion("ruby", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.RUBY))
 					.save(consumer, RubinatedNether.id( "obtain_ruby"), existingFileHelper);
 
 			AdvancementHolder rubyGlass = Advancement.Builder.advancement()

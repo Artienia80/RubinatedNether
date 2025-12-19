@@ -68,7 +68,7 @@ public class RNJeiPlugin implements IModPlugin {
 			IIngredientManager ingredientManager) {
 
 		var recipes = new ArrayList<IJeiAnvilRecipe>();
-		var ruby = new ItemStack(RNItems.RUBY_ITEM.get());
+		var ruby = new ItemStack(RNItems.RUBY.get());
 
 		// Get ALL item stacks and filter for damageable ones
 		ingredientManager.getAllItemStacks()

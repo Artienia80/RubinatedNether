@@ -29,10 +29,10 @@ public class RNAnvilRepairHandler {
 
 		float efficiencyMultiplier;
 		float levelCostPerUnit;
-		if (secondaryItem.is(RNItems.RUBY_ITEM.get())) {
+		if (secondaryItem.is(RNItems.RUBY.get())) {
 			efficiencyMultiplier = 1.0f;
 			levelCostPerUnit = 1.0f;
-		} else if (secondaryItem.is(RNItems.RUBY_SHARD_ITEM.get())) {
+		} else if (secondaryItem.is(RNItems.RUBY_SHARD.get())) {
 			efficiencyMultiplier = 1.0f / 9.0f;
 			levelCostPerUnit = 0.1f;
 		} else if (secondaryItem.is(RNBlocks.RUBY_BLOCK.get().asItem())) {
@@ -122,8 +122,8 @@ public class RNAnvilRepairHandler {
 			ItemStack outputItem,
 			fuzs.puzzleslib.api.event.v1.data.MutableFloat breakChance) {
 
-		if (secondaryItem.is(RNItems.RUBY_ITEM.get()) ||
-				secondaryItem.is(RNItems.RUBY_SHARD_ITEM.get()) ||
+		if (secondaryItem.is(RNItems.RUBY.get()) ||
+				secondaryItem.is(RNItems.RUBY_SHARD.get()) ||
 				secondaryItem.is(RNBlocks.RUBY_BLOCK.get().asItem())) {
 			breakChance.mapFloat(f -> 0.08f);
 		}

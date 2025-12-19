@@ -105,11 +105,11 @@ public class RNItemTags extends ItemTagsProvider {
 
 		// Brazier fuel tags
 		this.tag(RNTags.Items.SMALL_BRAZIER_FUEL).add(
-				RNItems.MOLTEN_RUBY_NUGGET_ITEM.asItem()
+				RNItems.MOLTEN_RUBY_NUGGET.asItem()
 		);
 
 		this.tag(RNTags.Items.STANDARD_BRAZIER_FUEL).add(
-				RNItems.MOLTEN_RUBY_ITEM.asItem()
+				RNItems.MOLTEN_RUBY.asItem()
 		);
 
 		this.tag(RNTags.Items.GREAT_BRAZIER_FUEL).add(

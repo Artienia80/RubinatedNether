@@ -20,10 +20,10 @@ import java.util.Locale;
 public class RNItems {
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(RubinatedNether.MODID);
 
-	public static final DeferredItem<Item> RUBY_ITEM = basicItem("ruby");
-	public static final DeferredItem<Item> MOLTEN_RUBY_ITEM = basicItem("molten_ruby");
-	public static final DeferredItem<Item> RUBY_SHARD_ITEM = basicItem("ruby_shard");
-	public static final DeferredItem<Item> MOLTEN_RUBY_NUGGET_ITEM = basicItem("molten_ruby_nugget");
+	public static final DeferredItem<Item> RUBY = basicItem("ruby");
+	public static final DeferredItem<Item> MOLTEN_RUBY = basicItem("molten_ruby");
+	public static final DeferredItem<Item> RUBY_SHARD = basicItem("ruby_shard");
+	public static final DeferredItem<Item> MOLTEN_RUBY_NUGGET = basicItem("molten_ruby_nugget");
 
 	// Runes
 	public static final DeferredItem<Item> RUNE = basicItem("rune");

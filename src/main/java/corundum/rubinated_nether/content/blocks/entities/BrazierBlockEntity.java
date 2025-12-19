@@ -260,7 +260,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		} else if (remainingFuelSeconds >= secondsPerLevel) {
 			remainingFuelSeconds -= secondsPerLevel;
 			setChanged();
-			return new ItemStack(RNItems.MOLTEN_RUBY_ITEM.get(), 1);
+			return new ItemStack(RNItems.MOLTEN_RUBY.get(), 1);
 		} else if (remainingFuelSeconds > 0) {
 			int secondsPerNugget = secondsPerLevel / 9;
 			int nuggetCount = remainingFuelSeconds / secondsPerNugget;
@@ -269,7 +269,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 				int secondsToRemove = nuggetCount * secondsPerNugget;
 				remainingFuelSeconds -= secondsToRemove;
 				setChanged();
-				return new ItemStack(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get(), nuggetCount);
+				return new ItemStack(RNItems.MOLTEN_RUBY_NUGGET.get(), nuggetCount);
 			} else {
 				remainingFuelSeconds = 0;
 				setChanged();
@@ -610,12 +610,12 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 				if (remainingFuelSeconds >= secondsPerLevel * 9) {
 					return new ItemStack(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem(), 1);
 				} else if (remainingFuelSeconds >= secondsPerLevel) {
-					return new ItemStack(RNItems.MOLTEN_RUBY_ITEM.get(), 1);
+					return new ItemStack(RNItems.MOLTEN_RUBY.get(), 1);
 				} else if (remainingFuelSeconds > 0) {
 					int secondsPerNugget = secondsPerLevel / 9;
 					int nuggetCount = remainingFuelSeconds / secondsPerNugget;
 					if (nuggetCount > 0) {
-						return new ItemStack(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get(), nuggetCount);
+						return new ItemStack(RNItems.MOLTEN_RUBY_NUGGET.get(), nuggetCount);
 					}
 				}
 

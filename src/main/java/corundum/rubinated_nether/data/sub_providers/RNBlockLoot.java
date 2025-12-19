@@ -197,7 +197,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 											LootPool.lootPool()
 													.when(this.hasSilkTouch().invert())
 													.add(
-															LootItem.lootTableItem(RNItems.MOLTEN_RUBY_NUGGET_ITEM)
+															LootItem.lootTableItem(RNItems.MOLTEN_RUBY_NUGGET)
 																	.apply(
 																			SetItemCountFunction.setCount(UniformGenerator.between(3, 9))
 																	)
@@ -215,11 +215,11 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		);
 		this.dropOther(
 			RNBlocks.NETHER_RUBY_ORE.get(),
-			RNItems.RUBY_ITEM.get()
+			RNItems.RUBY.get()
 		);
 		this.dropOther(
 			RNBlocks.RUBINATED_BLACKSTONE.get(),
-			RNItems.RUBY_SHARD_ITEM.get()
+			RNItems.RUBY_SHARD.get()
 		);
 
 		this.add(
@@ -244,7 +244,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 			LootPool.lootPool()
 				.when(this.hasSilkTouch().invert())
 				.add(
-					LootItem.lootTableItem(RNItems.RUBY_SHARD_ITEM)
+					LootItem.lootTableItem(RNItems.RUBY_SHARD)
 						.apply(
 							SetItemCountFunction.setCount(UniformGenerator.between(2, 5))
 						)
