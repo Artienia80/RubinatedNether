@@ -386,15 +386,6 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNItems.RITUAL_OFFERING, 1)
-				.define('X', RNItems.BRONZE_ROD)
-				.define('O', RNItems.RUBY)
-				.pattern("XXX")
-				.pattern(" O ")
-				.unlockedBy(getHasName(RNItems.BRONZE_ROD), has(RNItems.BRONZE_ROD))
-				.unlockedBy(getHasName(RNItems.RUBY), has(RNItems.RUBY))
-				.save(recipeOutput);
-
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRONZE_LANTERN, 1)
 				.define('X', RNItems.BRONZE_POWDER)
 				.define('O', RNItems.MOLTEN_RUBY)

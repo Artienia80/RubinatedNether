@@ -22,6 +22,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -35,6 +36,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
@@ -56,6 +58,10 @@ public class RubinationMenu extends AbstractContainerMenu {
     private int axeCycle = 0;
     private boolean hadAxeInSlot = false;
     private boolean hasEnoughRubinatedBlocks = false;
+
+    // New fields for category cycling
+    private int inscriptionCategoryCycle = -1;
+    private boolean hadRuneInSlot = false;
 
     public final ContainerData data;
 
@@ -83,6 +89,17 @@ public class RubinationMenu extends AbstractContainerMenu {
             (RuneItem) RNItems.PHILARGYRIA_RUNE.get()
     );
 
+    // Category mapping: 1-7 correspond to the 7 rubination categories
+    private static final List<TagKey<Item>> RUBINATION_CATEGORIES = List.of(
+            RNTags.Items.RUBINATION_TOOL,      // 1
+            RNTags.Items.RUBINATION_WEAPON,    // 2
+            RNTags.Items.RUBINATION_ARMOR,     // 3
+            RNTags.Items.RUBINATION_BOW,       // 4
+            RNTags.Items.RUBINATION_CROSSBOW,  // 5
+            RNTags.Items.RUBINATION_TRIDENT,   // 6
+            RNTags.Items.RUBINATION_MACE       // 7
+    );
+
     public RubinationMenu(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, ContainerLevelAccess.NULL);
     }
@@ -98,6 +115,9 @@ public class RubinationMenu extends AbstractContainerMenu {
 
         this.rubinationClue = new int[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
         this.access = access;
+
+        // Initialize category cycle with random value 0-6 (representing categories 1-7)
+        this.inscriptionCategoryCycle = new Random().nextInt(7);
 
         // LEFT SLOT - RubinatableSlot (index 0)
         this.addSlot(new Slot(this.rubinationSlots, 0, 70, 84) {
@@ -497,11 +517,15 @@ public class RubinationMenu extends AbstractContainerMenu {
     private List<Rubination> getRubinationMapForInscription(ItemStack stack) {
         var arrayList = new ArrayList<Rubination>();
 
-        List<RuneItem> shuffledRunes = new ArrayList<>(ALL_RUNES);
-        Collections.shuffle(shuffledRunes);
+        // Get the current category based on the cycle
+        TagKey<Item> currentCategory = RUBINATION_CATEGORIES.get(inscriptionCategoryCycle);
 
-        for (int i = 0; i < Math.min(3, shuffledRunes.size()); i++) {
-            arrayList.add(shuffledRunes.get(i).getRubination());
+        // Get all runes that match the current category
+        for (RuneItem rune : ALL_RUNES) {
+            Rubination rubination = rune.getRubination();
+            if (rubination.getItemTag().equals(currentCategory)) {
+                arrayList.add(rubination);
+            }
         }
 
         currentInscriptionOptions.clear();
@@ -572,6 +596,18 @@ public class RubinationMenu extends AbstractContainerMenu {
             } else if (!rubinatableItem.isEmpty() && !currentlyHasAxe) {
                 axeCycle = 0;
                 hadAxeInSlot = false;
+            }
+
+            // Handle rune cycling for inscription mode
+            boolean currentlyHasRune = !rubinatableItem.isEmpty() && rubinatableItem.is(RNItems.RUNE.get());
+
+            if (currentlyHasRune && !hadRuneInSlot) {
+                // Rune was just placed
+                hadRuneInSlot = true;
+            } else if (!currentlyHasRune && hadRuneInSlot) {
+                // Rune was just removed, increment category cycle for next insertion
+                inscriptionCategoryCycle = (inscriptionCategoryCycle + 1) % RUBINATION_CATEGORIES.size();
+                hadRuneInSlot = false;
             }
 
             if (isInscriptionMode()) {
@@ -654,6 +690,8 @@ public class RubinationMenu extends AbstractContainerMenu {
         super.removed(player);
         axeCycle = 0;
         hadAxeInSlot = false;
+        hadRuneInSlot = false;
+        inscriptionCategoryCycle = -1;
         this.access.execute((level, blockPos) -> this.clearContainer(player, this.rubinationSlots));
     }
 
