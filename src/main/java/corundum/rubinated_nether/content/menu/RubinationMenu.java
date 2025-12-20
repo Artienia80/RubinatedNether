@@ -127,14 +127,21 @@ public class RubinationMenu extends AbstractContainerMenu {
                 return 1;
             }
 
+            @Override
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
                 ItemStack consumableSlot = rubinationSlots.getItem(1);
 
-                // If consumable has inscription item (key), show empty_slot_rune
+                // If key (inscription item) in right slot, show rune icon
                 if (consumableSlot.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM)) {
                     return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_RUNE);
                 }
 
+                // If cog (rubination item) in right slot, show nothing
+                if (consumableSlot.is(RNTags.Items.ALTAR_RUBINATION_ITEM)) {
+                    return null;
+                }
+
+                // If consumable is empty, show nothing (let consumable slot do the cycling)
                 return null;
             }
         });
@@ -173,6 +180,19 @@ public class RubinationMenu extends AbstractContainerMenu {
             }
 
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                ItemStack rubinatableSlot = rubinationSlots.getItem(0);
+
+                // If rune in left slot, show key icon
+                if (rubinatableSlot.is(RNItems.RUNE.get())) {
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_KEY);
+                }
+
+                // If tool/weapon (rubinatable) in left slot, show cog icon
+                if (!rubinatableSlot.isEmpty() && rubinatableSlot.is(RNTags.Items.RUBINATABLE)) {
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_COG);
+                }
+
+                // If both slots empty, cycle between key and cog
                 long currentTime = System.currentTimeMillis();
                 boolean showCog = (currentTime / 5000) % 2 == 1;
 
@@ -657,13 +677,18 @@ public class RubinationMenu extends AbstractContainerMenu {
                 if (!this.moveItemStackTo(itemstack1, 2, 38, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (itemstack1.is(RNTags.Items.ALTAR_RUBINATION_ITEM)
-                    || itemstack1.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM)
-                    || itemstack1.is(RNItems.RUNE.get())) {
-                if (!this.moveItemStackTo(itemstack1, 1, 2, true)) {
+            } else if (itemstack1.is(RNItems.RUNE.get())) {
+                // Runes go to the LEFT slot (index 0), but only if slot allows it
+                if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (itemstack1.is(RNTags.Items.ALTAR_RUBINATION_ITEM) || itemstack1.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM)) {
+                // Consumables (keys/cogs) go to the RIGHT slot (index 1)
+                if (!this.moveItemStackTo(itemstack1, 1, 2, false)) {
                     return ItemStack.EMPTY;
                 }
             } else {
+                // Other items (tools/weapons) go to LEFT slot (index 0)
                 if (this.slots.get(0).hasItem() || !this.slots.get(0).mayPlace(itemstack1)) {
                     return ItemStack.EMPTY;
                 }
