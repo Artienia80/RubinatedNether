@@ -1,10 +1,7 @@
 package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
-import corundum.rubinated_nether.content.RNBlockEntities;
-import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.RNEffects;
-import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
@@ -102,7 +99,7 @@ public class BrazierBlock extends BaseEntityBlock {
         }
 
         // Molten Ruby Block - fill with or without bonus
-        if (stack.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
+        if (stack.is(RNTags.Items.GREAT_BRAZIER_FUEL)) {
             if (!level.isClientSide) {
                 int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
                 int maxSeconds = secondsPerLevel * 9;
@@ -146,7 +143,7 @@ public class BrazierBlock extends BaseEntityBlock {
         }
 
         // Molten Ruby - add one level
-        if (stack.is(RNItems.MOLTEN_RUBY.get())) {
+        if (stack.is(RNTags.Items.STANDARD_BRAZIER_FUEL)) {
             if (currentLevel < 9) {
                 if (!level.isClientSide) {
                     brazier.addFuel(1);
@@ -166,7 +163,7 @@ public class BrazierBlock extends BaseEntityBlock {
         }
 
         // Molten Ruby Nugget - add 1/9th of a level
-        if (stack.is(RNItems.MOLTEN_RUBY_NUGGET.get())) {
+        if (stack.is(RNTags.Items.SMALL_BRAZIER_FUEL)) {
             if (currentLevel < 9) {
                 if (!level.isClientSide) {
                     int oldLevel = brazier.calculateLevelFromFuel();
@@ -191,8 +188,8 @@ public class BrazierBlock extends BaseEntityBlock {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        // Bronze Rod - convert fuel to ritual offering
-        if (stack.is(RNItems.BRONZE_ROD.get())) {
+        // Bronze Rod or Ritual Offering - convert fuel to ritual offering
+        if (stack.is(RNTags.Items.OFFERING_BRAZIER_ITEM)) {
             if (!level.isClientSide) {
                 int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
 

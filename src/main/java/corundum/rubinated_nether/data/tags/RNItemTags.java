@@ -116,6 +116,10 @@ public class RNItemTags extends ItemTagsProvider {
 				RNBlocks.MOLTEN_RUBY_BLOCK.asItem()
 		);
 
+		this.tag(RNTags.Items.OFFERING_BRAZIER_ITEM).add(
+				RNItems.BRONZE_ROD.asItem()
+		);
+
 		// Altar Offering tags
 		this.tag(RNTags.Items.ALTAR_OFFERING_ITEM).add(
 				RNItems.RITUAL_OFFERING.asItem()

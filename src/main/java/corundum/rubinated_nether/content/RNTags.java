@@ -95,6 +95,8 @@ public final class RNTags {
 		public static final TagKey<Item> SMALL_BRAZIER_FUEL = createTag(Registries.ITEM, "small_brazier_fuel");
 		public static final TagKey<Item> STANDARD_BRAZIER_FUEL = createTag(Registries.ITEM, "standard_brazier_fuel");
 		public static final TagKey<Item> GREAT_BRAZIER_FUEL = createTag(Registries.ITEM, "great_brazier_fuel");
+		public static final TagKey<Item> OFFERING_BRAZIER_ITEM = createTag(Registries.ITEM, "offering_brazier_item");
+
 
 		public static final TagKey<Item> ALTAR_OFFERING_ITEM = createTag(Registries.ITEM, "altar_offering_item");
 		public static final TagKey<Item> ALTAR_INSCRIPTION_ITEM = createTag(Registries.ITEM, "altar_inscription_item");
