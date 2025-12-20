@@ -198,6 +198,8 @@ public class BrazierBlock extends BaseEntityBlock {
 
                 // Check if there's more than 1 ruby's worth of fuel
                 if (brazier.getRemainingFuelSeconds() > secondsPerLevel) {
+                    int oldLevel = currentLevel;
+
                     // Reduce fuel by one level
                     brazier.addFuel(-1);
 
@@ -205,33 +207,9 @@ public class BrazierBlock extends BaseEntityBlock {
                     int newLevel = brazier.calculateLevelFromFuel();
                     level.setBlock(pos, state.setValue(LEVEL, newLevel), 3);
 
-                    // Reduce effect duration for all players in range
-                    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-                    AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
-                    Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
-                            .and(EntitySelector.NO_SPECTATORS);
-
-                    int ticksToReduce = secondsPerLevel * 20;
-                    for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
-                        MobEffectInstance currentEffect = serverPlayer.getEffect(RNEffects.BRAZIER_POWER);
-                        if (currentEffect != null) {
-                            int currentDuration = currentEffect.getDuration();
-                            int newDuration = Math.max(0, currentDuration - ticksToReduce);
-
-                            if (newDuration > 0) {
-                                serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
-                                serverPlayer.addEffect(new MobEffectInstance(
-                                        RNEffects.BRAZIER_POWER,
-                                        newDuration,
-                                        currentEffect.getAmplifier(),
-                                        currentEffect.isAmbient(),
-                                        currentEffect.isVisible(),
-                                        currentEffect.showIcon()
-                                ));
-                            } else {
-                                serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
-                            }
-                        }
+                    // Update effect amplifiers if level changed
+                    if (newLevel != oldLevel) {
+                        brazier.updateEffectAmplifiersForLevelChange(level, pos, newLevel);
                     }
 
                     // Consume bronze rod and give ritual offering
@@ -265,6 +243,7 @@ public class BrazierBlock extends BaseEntityBlock {
                     // Store old fuel amount before extraction
                     int oldFuelSeconds = brazier.getRemainingFuelSeconds();
                     int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+                    int oldLevel = currentLevel;
 
                     ItemStack extracted = brazier.extractFuel();
 
@@ -316,48 +295,28 @@ public class BrazierBlock extends BaseEntityBlock {
                             stack.hurtAndBreak(finalDamage, player, equipmentSlot);
                         }
 
-                        // Update effects for all players in range
-                        int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-                        AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
-                        Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
-                                .and(EntitySelector.NO_SPECTATORS);
+                        // Update visual level
+                        int newLevel = brazier.calculateLevelFromFuel();
+                        level.setBlock(pos, state.setValue(LEVEL, newLevel), 3);
 
+                        // Update effects based on whether we should clear or just update amplifiers
                         if (shouldClearEffects) {
                             // Clear all effects immediately (ruby block with bonus was removed)
+                            int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+                            AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
+                            Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
+                                    .and(EntitySelector.NO_SPECTATORS);
+
                             for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
                                 if (serverPlayer.hasEffect(RNEffects.BRAZIER_POWER)) {
                                     serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
                                 }
                             }
-                        } else {
-                            // Normal duration reduction
-                            int ticksToReduce = secondsRemoved * 20;
-                            for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
-                                MobEffectInstance currentEffect = serverPlayer.getEffect(RNEffects.BRAZIER_POWER);
-                                if (currentEffect != null) {
-                                    int currentDuration = currentEffect.getDuration();
-                                    int newDuration = Math.max(0, currentDuration - ticksToReduce);
-
-                                    if (newDuration > 0) {
-                                        serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
-                                        serverPlayer.addEffect(new MobEffectInstance(
-                                                RNEffects.BRAZIER_POWER,
-                                                newDuration,
-                                                currentEffect.getAmplifier(),
-                                                currentEffect.isAmbient(),
-                                                currentEffect.isVisible(),
-                                                currentEffect.showIcon()
-                                        ));
-                                    } else {
-                                        serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
-                                    }
-                                }
-                            }
+                        } else if (newLevel != oldLevel) {
+                            // Level changed - update amplifiers
+                            brazier.updateEffectAmplifiersForLevelChange(level, pos, newLevel);
                         }
 
-                        // Update visual level
-                        int newLevel = brazier.calculateLevelFromFuel();
-                        level.setBlock(pos, state.setValue(LEVEL, newLevel), 3);
                         level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
 
                         // Give back the extracted item

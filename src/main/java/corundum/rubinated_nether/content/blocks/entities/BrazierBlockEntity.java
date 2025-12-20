@@ -72,44 +72,8 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 
 					level.setBlock(pos, state.setValue(BrazierBlock.LEVEL, Math.max(0, expectedLevel)), 3);
 
-					int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-					AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
-					Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
-							.and(EntitySelector.NO_SPECTATORS);
-
-					int fuelDurationTicks = Math.max(20, remainingFuelSeconds * TICKS_PER_SECOND);
-					int newAmplifier = expectedLevel - 1;
-
-					for (ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
-						MobEffectInstance oldEffect = player.getEffect(RNEffects.BRAZIER_POWER);
-
-						if (oldEffect != null) {
-							System.out.println("DEBUG: Player " + player.getName().getString() +
-									" had amplifier " + oldEffect.getAmplifier() + ", removing...");
-
-							player.removeEffect(RNEffects.BRAZIER_POWER);
-
-							System.out.println("DEBUG: Effect removed, now has effect? " + player.hasEffect(RNEffects.BRAZIER_POWER));
-						}
-
-						System.out.println("DEBUG: Applying new amplifier " + newAmplifier);
-
-						MobEffectInstance newEffect = new MobEffectInstance(
-								RNEffects.BRAZIER_POWER,
-								fuelDurationTicks,
-								newAmplifier,
-								true,
-								RNConfig.brazierEffectParticles,
-								true
-						);
-
-						boolean applied = player.addEffect(newEffect);
-						System.out.println("DEBUG: Applied? " + applied);
-
-						MobEffectInstance afterEffect = player.getEffect(RNEffects.BRAZIER_POWER);
-						System.out.println("DEBUG: After apply, player has amplifier: " +
-								(afterEffect != null ? afterEffect.getAmplifier() : "null"));
-					}
+					// Use centralized method for updating effect amplifiers
+					updateEffectAmplifiersForLevelChange(level, pos, expectedLevel);
 				}
 			}
 
@@ -122,6 +86,55 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 
 		if (level.getGameTime() % TICKS_PER_SECOND == 0) {
 			removeEffectFromPlayersOutOfRange(level, pos);
+		}
+	}
+
+	/**
+	 * Updates effect amplifiers for all players in range when the brazier level changes.
+	 * This removes the old effect and applies a new one with the correct amplifier.
+	 *
+	 * @param level The level/world
+	 * @param pos The brazier position
+	 * @param newLevel The new brazier level (0-9)
+	 */
+	public void updateEffectAmplifiersForLevelChange(Level level, BlockPos pos, int newLevel) {
+		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+		AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
+		Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
+				.and(EntitySelector.NO_SPECTATORS);
+
+		int fuelDurationTicks = Math.max(20, remainingFuelSeconds * TICKS_PER_SECOND);
+		int newAmplifier = newLevel - 1;
+
+		for (ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
+			MobEffectInstance oldEffect = player.getEffect(RNEffects.BRAZIER_POWER);
+
+			if (oldEffect != null) {
+				System.out.println("DEBUG: Player " + player.getName().getString() +
+						" had amplifier " + oldEffect.getAmplifier() + ", removing...");
+
+				player.removeEffect(RNEffects.BRAZIER_POWER);
+
+				System.out.println("DEBUG: Effect removed, now has effect? " + player.hasEffect(RNEffects.BRAZIER_POWER));
+			}
+
+			System.out.println("DEBUG: Applying new amplifier " + newAmplifier);
+
+			MobEffectInstance newEffect = new MobEffectInstance(
+					RNEffects.BRAZIER_POWER,
+					fuelDurationTicks,
+					newAmplifier,
+					true,
+					RNConfig.brazierEffectParticles,
+					true
+			);
+
+			boolean applied = player.addEffect(newEffect);
+			System.out.println("DEBUG: Applied? " + applied);
+
+			MobEffectInstance afterEffect = player.getEffect(RNEffects.BRAZIER_POWER);
+			System.out.println("DEBUG: After apply, player has amplifier: " +
+					(afterEffect != null ? afterEffect.getAmplifier() : "null"));
 		}
 	}
 
