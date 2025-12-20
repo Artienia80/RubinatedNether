@@ -193,11 +193,11 @@ public class BrazierBlock extends BaseEntityBlock {
 
         // Bronze Rod - convert fuel to ritual offering
         if (stack.is(RNItems.BRONZE_ROD.get())) {
-            int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+            if (!level.isClientSide) {
+                int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
 
-            // Check if there's more than 1 ruby's worth of fuel
-            if (brazier.getRemainingFuelSeconds() > secondsPerLevel) {
-                if (!level.isClientSide) {
+                // Check if there's more than 1 ruby's worth of fuel
+                if (brazier.getRemainingFuelSeconds() > secondsPerLevel) {
                     // Reduce fuel by one level
                     brazier.addFuel(-1);
 
@@ -245,8 +245,15 @@ public class BrazierBlock extends BaseEntityBlock {
                     }
 
                     level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 1.2F);
+
+                    return ItemInteractionResult.sidedSuccess(false);
                 }
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            } else {
+                // Client side - return success if currentLevel > 1
+                // (visual approximation since we don't have exact fuel sync)
+                if (currentLevel > 1) {
+                    return ItemInteractionResult.sidedSuccess(true);
+                }
             }
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
