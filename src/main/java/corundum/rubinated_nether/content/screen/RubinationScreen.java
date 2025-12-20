@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.RubinationConverter;
 import corundum.rubinated_nether.content.items.Rubination;
@@ -49,19 +50,20 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	private void updateRubinatedBlockStatus() {
 		if (this.minecraft.player != null && this.minecraft.level != null) {
 			BlockPos playerPos = this.minecraft.player.blockPosition();
-			// In creative mode, always allow inscription (no block requirement)
 			if (this.minecraft.player.getAbilities().instabuild) {
 				hasEnoughRubinatedBlocks = true;
 			} else {
-				// In survival mode, require 100 blocks
 				hasEnoughRubinatedBlocks = RubinationConverter.hasEnoughBlocksForInscription(this.minecraft.level, playerPos);
 			}
 		}
 	}
 
 	private boolean isInscriptionMode() {
-		ItemStack keySlotItem = this.menu.getSlot(1).getItem();
-		return keySlotItem.getItem().toString().contains("rune") && !keySlotItem.getItem().toString().contains("_rune");
+		ItemStack rubinatableSlot = this.menu.getSlot(0).getItem();
+		ItemStack consumableSlot = this.menu.getSlot(1).getItem();
+
+		// Inscription mode if there's a blank rune in the LEFT slot OR inscription item in RIGHT slot
+		return rubinatableSlot.is(RNItems.RUNE.get()) || consumableSlot.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM);
 	}
 
 	protected void init() {
@@ -103,8 +105,23 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 			var formattedtext = RubinationNames.getInstance().getRandomName(this.font, 20);
 			var i2 = 6839882;
 
-			// Check if we can show options (either has enough keys/blessing OR creative mode)
-			boolean canShowOptions = (k >= 1 || this.minecraft.player.getAbilities().instabuild) && this.menu.rubinationClue[l][l] != -1;
+			// Check if we can show options based on mode
+			boolean canShowOptions = false;
+
+			if (inscriptionMode) {
+				// For inscription mode: need BOTH blank rune AND inscription item AND enough blocks (or creative)
+				ItemStack rubinatableSlot = this.menu.getSlot(0).getItem();
+				ItemStack consumableSlot = this.menu.getSlot(1).getItem();
+				boolean hasBothItems = rubinatableSlot.is(RNItems.RUNE.get()) && consumableSlot.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM);
+
+				canShowOptions = hasBothItems
+						&& (hasEnoughRubinatedBlocks || this.minecraft.player.getAbilities().instabuild)
+						&& this.menu.rubinationClue[l][l] != -1;
+			} else {
+				// For rubination mode: need keys (or creative)
+				canShowOptions = (k >= 1 || this.minecraft.player.getAbilities().instabuild)
+						&& this.menu.rubinationClue[l][l] != -1;
+			}
 
 			if (canShowOptions) {
 				var j2 = mouseX - i1;
@@ -115,11 +132,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 					i2 = 16777088;
 				} else {
 					if (inscriptionMode) {
-						if (hasEnoughRubinatedBlocks) {
-							guiGraphics.blitSprite(RUBINATION_SLOT_INSCRIPTION_SPRITE, i1, j1, 21, 59);
-						} else {
-							guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_INSCRIPTION_SPRITE, i1, j1, 21, 59);
-						}
+						guiGraphics.blitSprite(RUBINATION_SLOT_INSCRIPTION_SPRITE, i1, j1, 21, 59);
 					} else {
 						guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 21, 59);
 					}
@@ -203,7 +216,6 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	@Override
 	public void containerTick() {
 		super.containerTick();
-		// Update on container tick to catch slot changes
 		if (isInscriptionMode()) {
 			updateRubinatedBlockStatus();
 		}

@@ -46,6 +46,7 @@ import java.util.*;
 public class RubinationMenu extends AbstractContainerMenu {
     static final ResourceLocation EMPTY_SLOT_KEY = RubinatedNether.id("item/empty_slot_key");
     static final ResourceLocation EMPTY_SLOT_RUNE = RubinatedNether.id("item/empty_slot_rune");
+    static final ResourceLocation EMPTY_SLOT_COG = RubinatedNether.id("item/empty_slot_cog");
     private final Container rubinationSlots;
     private final ContainerLevelAccess access;
     public final int[][] rubinationClue;
@@ -125,6 +126,17 @@ public class RubinationMenu extends AbstractContainerMenu {
             public int getMaxStackSize() {
                 return 1;
             }
+
+            public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                ItemStack consumableSlot = rubinationSlots.getItem(1);
+
+                // If consumable has inscription item (key), show empty_slot_rune
+                if (consumableSlot.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM)) {
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_RUNE);
+                }
+
+                return null;
+            }
         });
 
         // RIGHT SLOT - ConsumableSlot (index 1)
@@ -162,10 +174,10 @@ public class RubinationMenu extends AbstractContainerMenu {
 
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
                 long currentTime = System.currentTimeMillis();
-                boolean showRune = (currentTime / 5000) % 2 == 1;
+                boolean showCog = (currentTime / 5000) % 2 == 1;
 
-                if (showRune) {
-                    return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_RUNE);
+                if (showCog) {
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_COG);
                 }
                 return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_KEY);
             }
@@ -330,7 +342,13 @@ public class RubinationMenu extends AbstractContainerMenu {
             return false;
         }
 
+        var itemCost = 1;
         boolean isCreative = player.getAbilities().instabuild;
+        boolean hasEnoughKeys = isCreative || (!consumableItem.isEmpty() && consumableItem.getCount() >= itemCost);
+
+        if (!hasEnoughKeys) {
+            return false;
+        }
 
         this.access.execute((level, blockPos) -> {
             if (!isCreative && !RubinationConverter.hasEnoughBlocksForInscription(level, blockPos)) {
@@ -348,7 +366,12 @@ public class RubinationMenu extends AbstractContainerMenu {
 
             this.rubinationSlots.setItem(0, inscribedRune);
 
+            // Consume the inscription item
             if (!isCreative) {
+                consumableItem.consume(itemCost, player);
+                if (consumableItem.isEmpty()) {
+                    this.rubinationSlots.setItem(1, ItemStack.EMPTY);
+                }
                 RubinationConverter.derubinateBlocks(level, blockPos, 20, 100);
             }
 
