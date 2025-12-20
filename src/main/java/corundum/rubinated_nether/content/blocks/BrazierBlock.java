@@ -191,6 +191,66 @@ public class BrazierBlock extends BaseEntityBlock {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
+        // Bronze Rod - convert fuel to ritual offering
+        if (stack.is(RNItems.BRONZE_ROD.get())) {
+            int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+
+            // Check if there's more than 1 ruby's worth of fuel
+            if (brazier.getRemainingFuelSeconds() > secondsPerLevel) {
+                if (!level.isClientSide) {
+                    // Reduce fuel by one level
+                    brazier.addFuel(-1);
+
+                    // Update visual level
+                    int newLevel = brazier.calculateLevelFromFuel();
+                    level.setBlock(pos, state.setValue(LEVEL, newLevel), 3);
+
+                    // Reduce effect duration for all players in range
+                    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+                    AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
+                    Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
+                            .and(EntitySelector.NO_SPECTATORS);
+
+                    int ticksToReduce = secondsPerLevel * 20;
+                    for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
+                        MobEffectInstance currentEffect = serverPlayer.getEffect(RNEffects.BRAZIER_POWER);
+                        if (currentEffect != null) {
+                            int currentDuration = currentEffect.getDuration();
+                            int newDuration = Math.max(0, currentDuration - ticksToReduce);
+
+                            if (newDuration > 0) {
+                                serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
+                                serverPlayer.addEffect(new MobEffectInstance(
+                                        RNEffects.BRAZIER_POWER,
+                                        newDuration,
+                                        currentEffect.getAmplifier(),
+                                        currentEffect.isAmbient(),
+                                        currentEffect.isVisible(),
+                                        currentEffect.showIcon()
+                                ));
+                            } else {
+                                serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
+                            }
+                        }
+                    }
+
+                    // Consume bronze rod and give ritual offering
+                    if (!player.isCreative()) {
+                        stack.shrink(1);
+                    }
+
+                    ItemStack ritualOffering = new ItemStack(RNItems.RITUAL_OFFERING.get(), 1);
+                    if (!player.getInventory().add(ritualOffering)) {
+                        player.drop(ritualOffering, false);
+                    }
+
+                    level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 1.2F);
+                }
+                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            }
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+
         // Shovel - extract fuel (gives ruby or nuggets based on remaining time)
         if (stack.getItem() instanceof net.minecraft.world.item.ShovelItem) {
             if (currentLevel > 0) {
