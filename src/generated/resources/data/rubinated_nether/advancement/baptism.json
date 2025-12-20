@@ -1,5 +1,5 @@
 {
-  "parent": "rubinated_nether:baptism",
+  "parent": "rubinated_nether:max_brazier",
   "criteria": {
     "impossible": {
       "conditions": {
@@ -24,14 +24,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.rubinated_nether.offer_ritual_offering.description"
+      "translate": "advancements.rubinated_nether.baptism.description"
     },
     "icon": {
       "count": 1,
-      "id": "rubinated_nether:rubination_altar"
+      "id": "rubinated_nether:ritual_offering"
     },
     "title": {
-      "translate": "advancements.rubinated_nether.offer_ritual_offering.title"
+      "translate": "advancements.rubinated_nether.baptism.title"
     }
   },
   "requirements": [

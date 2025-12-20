@@ -188,9 +188,37 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("bronze_rod", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.BRONZE_ROD.get()))
 					.save(consumer, RubinatedNether.id( "obtain_bronze_rod"), existingFileHelper);
 
-			AdvancementHolder ritualOffering = Advancement.Builder.advancement()
+			AdvancementHolder max_brazier = Advancement.Builder.advancement()
 					.parent(bronzeRod)
+					.display(RNBlocks.BRAZIER.get(),
+							Component.translatable("advancements.rubinated_nether.max_brazier.title"),
+							Component.translatable("advancements.rubinated_nether.max_brazier.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("max_brazier"), existingFileHelper);
+
+			AdvancementHolder baptism = Advancement.Builder.advancement()
+					.parent(max_brazier)
 					.display(RNItems.RITUAL_OFFERING.get(),
+							Component.translatable("advancements.rubinated_nether.baptism.title"),
+							Component.translatable("advancements.rubinated_nether.baptism.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("baptism"), existingFileHelper);
+
+			AdvancementHolder ritualOffering = Advancement.Builder.advancement()
+					.parent(baptism)
+					.display(RNBlocks.RUBINATION_ALTAR.get(),
 							Component.translatable("advancements.rubinated_nether.offer_ritual_offering.title"),
 							Component.translatable("advancements.rubinated_nether.offer_ritual_offering.description"),
 							null,
