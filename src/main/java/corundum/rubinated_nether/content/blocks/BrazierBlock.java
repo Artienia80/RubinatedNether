@@ -1,7 +1,11 @@
 package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
-import corundum.rubinated_nether.content.*;
+import corundum.rubinated_nether.content.RNBlockEntities;
+import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.RNEffects;
+import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
@@ -10,7 +14,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
@@ -98,13 +101,12 @@ public class BrazierBlock extends BaseEntityBlock {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        // Molten Ruby Block - fill with or without bonus
+        // Molten Ruby Block - only fits in empty brazier
         if (stack.is(RNTags.Items.GREAT_BRAZIER_FUEL)) {
             if (!level.isClientSide) {
                 int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
                 int maxSeconds = secondsPerLevel * 9;
 
-                // Only allow if it fits
                 if (brazier.getRemainingFuelSeconds() == 0) {
                     // Empty brazier - add with bonus
                     brazier.addFuelWithBonus(9, 1.05f);
@@ -131,11 +133,8 @@ public class BrazierBlock extends BaseEntityBlock {
                     return ItemInteractionResult.sidedSuccess(level.isClientSide);
                 }
             } else {
-                // Client side - just return success if it would fit
-                int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
-                int maxSeconds = secondsPerLevel * 9;
-                if (brazier.getRemainingFuelSeconds() == 0 ||
-                        brazier.getRemainingFuelSeconds() + (secondsPerLevel * 9) <= maxSeconds) {
+                // Client side - only show animation if completely empty
+                if (currentLevel == 0) {
                     return ItemInteractionResult.sidedSuccess(true);
                 }
             }
