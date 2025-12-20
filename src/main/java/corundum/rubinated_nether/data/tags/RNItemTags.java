@@ -115,5 +115,18 @@ public class RNItemTags extends ItemTagsProvider {
 		this.tag(RNTags.Items.GREAT_BRAZIER_FUEL).add(
 				RNBlocks.MOLTEN_RUBY_BLOCK.asItem()
 		);
+
+		// Altar Offering tags
+		this.tag(RNTags.Items.ALTAR_OFFERING_ITEM).add(
+				RNItems.RITUAL_OFFERING.asItem()
+		);
+
+		this.tag(RNTags.Items.ALTAR_INSCRIPTION_ITEM).add(
+				RNItems.WINDING_KEY.asItem()
+		);
+
+		this.tag(RNTags.Items.ALTAR_RUBINATION_ITEM).add(
+				RNItems.COGWHEEL.asItem()
+		);
 	}
 }

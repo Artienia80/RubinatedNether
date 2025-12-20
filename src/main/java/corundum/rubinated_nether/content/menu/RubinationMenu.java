@@ -58,13 +58,6 @@ public class RubinationMenu extends AbstractContainerMenu {
 
     public final ContainerData data;
 
-    private static final Map<Block, Block> RUBINATED_TO_NORMAL_MAP = Map.of(
-            RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(), RNBlocks.SHRINE_STONE_TILES.get(),
-            RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(), RNBlocks.SHRINE_STONE_PILLAR.get(),
-            RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(), RNBlocks.SHRINE_STONE_BRICKS.get(),
-            RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(), RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get()
-    );
-
     private static final List<RuneItem> ALL_RUNES = List.of(
             (RuneItem) RNItems.GREED_RUNE.get(),
             (RuneItem) RNItems.WRATH_RUNE.get(),
@@ -105,14 +98,19 @@ public class RubinationMenu extends AbstractContainerMenu {
         this.rubinationClue = new int[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
         this.access = access;
 
+        // LEFT SLOT - RubinatableSlot (index 0)
         this.addSlot(new Slot(this.rubinationSlots, 0, 70, 84) {
             public int getMaxStackSize() {
                 return 1;
             }
         });
+
+        // RIGHT SLOT - ConsumableSlot (index 1)
         this.addSlot(new Slot(this.rubinationSlots, 1, 90, 84) {
             public boolean mayPlace(ItemStack itemStack) {
-                return itemStack.is(RNItems.WINDING_KEY.get()) || itemStack.is(RNItems.RUNE.get());
+                return itemStack.is(RNTags.Items.ALTAR_RUBINATION_ITEM)
+                        || itemStack.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM)
+                        || itemStack.is(RNItems.RUNE.get());
             }
 
             public int getMaxStackSize() {
@@ -181,7 +179,7 @@ public class RubinationMenu extends AbstractContainerMenu {
 
         ItemStack heldItem = player.getItemInHand(hand);
 
-        if (!heldItem.is(RNItems.RITUAL_OFFERING.get())) {
+        if (!heldItem.is(RNTags.Items.ALTAR_OFFERING_ITEM)) {
             return InteractionResult.PASS;
         }
 
@@ -207,7 +205,6 @@ public class RubinationMenu extends AbstractContainerMenu {
             if (advancementHolder != null) {
                 var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
                 if (!progress.isDone()) {
-                    // Grant all remaining criteria to complete the advancement
                     for (String criterion : progress.getRemainingCriteria()) {
                         serverPlayer.getAdvancements().award(advancementHolder, criterion);
                     }
@@ -221,13 +218,16 @@ public class RubinationMenu extends AbstractContainerMenu {
     }
 
     private boolean isInscriptionMode() {
-        ItemStack keySlotItem = this.rubinationSlots.getItem(1);
-        return keySlotItem.is(RNItems.RUNE.get());
+        ItemStack rubinatableSlot = this.rubinationSlots.getItem(0);
+        ItemStack consumableSlot = this.rubinationSlots.getItem(1);
+
+        // Inscription mode if there's a blank rune in the LEFT slot OR inscription item in RIGHT slot
+        return rubinatableSlot.is(RNItems.RUNE.get()) || consumableSlot.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM);
     }
 
     private boolean isRubinationMode() {
-        ItemStack keySlotItem = this.rubinationSlots.getItem(1);
-        return keySlotItem.is(RNItems.WINDING_KEY.get());
+        ItemStack consumableSlot = this.rubinationSlots.getItem(1);
+        return consumableSlot.is(RNTags.Items.ALTAR_RUBINATION_ITEM);
     }
 
     public boolean hasEnoughRubinatedBlocks() {
@@ -235,7 +235,7 @@ public class RubinationMenu extends AbstractContainerMenu {
     }
 
     public int countRubinatedBlocks() {
-        final int[] count = {0}; // Use array to allow modification in lambda
+        final int[] count = {0};
         this.access.execute((level, blockPos) -> {
             count[0] = RubinationConverter.countRubinatedBlocks(level, blockPos, 20);
         });
@@ -244,13 +244,13 @@ public class RubinationMenu extends AbstractContainerMenu {
 
     public boolean clickMenuButton(Player player, int id) {
         if (id >= 0) {
-            var itemstack = this.rubinationSlots.getItem(0);
-            var keySlotItem = this.rubinationSlots.getItem(1);
+            var rubinatableItem = this.rubinationSlots.getItem(0);
+            var consumableItem = this.rubinationSlots.getItem(1);
 
             if (isInscriptionMode()) {
-                return handleInscription(player, id, itemstack, keySlotItem);
+                return handleInscription(player, id, rubinatableItem, consumableItem);
             } else if (isRubinationMode()) {
-                return handleRubination(player, id, itemstack, keySlotItem);
+                return handleRubination(player, id, rubinatableItem, consumableItem);
             }
         } else {
             var var10000 = String.valueOf(player.getName());
@@ -260,8 +260,9 @@ public class RubinationMenu extends AbstractContainerMenu {
         return false;
     }
 
-    private boolean handleInscription(Player player, int id, ItemStack itemstack, ItemStack runeItem) {
-        if (!runeItem.is(RNItems.RUNE.get())) {
+    private boolean handleInscription(Player player, int id, ItemStack rubinatableItem, ItemStack consumableItem) {
+        // Check if we have a blank rune in the rubinatable slot
+        if (!rubinatableItem.is(RNItems.RUNE.get())) {
             return false;
         }
 
@@ -281,12 +282,11 @@ public class RubinationMenu extends AbstractContainerMenu {
 
             ItemStack inscribedRune = getRuneItemFromRubination(selectedRubination);
 
-            this.rubinationSlots.setItem(1, inscribedRune);
+            this.rubinationSlots.setItem(0, inscribedRune);
 
             // Only consume blocks in survival mode
             if (!isCreative) {
                 RubinationConverter.derubinateBlocks(level, blockPos, 20, 100);
-                ;
             }
 
             level.playSound(
@@ -319,21 +319,21 @@ public class RubinationMenu extends AbstractContainerMenu {
         return true;
     }
 
-    private boolean handleRubination(Player player, int id, ItemStack itemstack, ItemStack keyItem) {
+    private boolean handleRubination(Player player, int id, ItemStack rubinatableItem, ItemStack consumableItem) {
         var itemCost = 1;
 
         boolean isCreative = player.getAbilities().instabuild;
-        boolean hasEnoughKeys = isCreative || (!keyItem.isEmpty() && keyItem.getCount() >= itemCost);
+        boolean hasEnoughKeys = isCreative || (!consumableItem.isEmpty() && consumableItem.getCount() >= itemCost);
 
         if (!hasEnoughKeys) {
             return false;
-        } else if (!itemstack.isEmpty()) {
+        } else if (!rubinatableItem.isEmpty()) {
             this.access.execute((level, blockPos) -> {
-                var arrayList = this.getRubinationMap(itemstack, runes);
+                var arrayList = this.getRubinationMap(rubinatableItem, runes);
                 var selectedEnchantments = this.getSelectedEnchants(level.registryAccess(), arrayList, id);
 
                 if (!arrayList.isEmpty() && selectedEnchantments != null) {
-                    var itemstack2 = itemstack.getItem().applyEnchantments(itemstack, selectedEnchantments);
+                    var itemstack2 = rubinatableItem.getItem().applyEnchantments(rubinatableItem, selectedEnchantments);
 
                     // Apply custom rarity to rubinated items
                     itemstack2 = itemstack2.copy();
@@ -343,8 +343,8 @@ public class RubinationMenu extends AbstractContainerMenu {
                     CommonHooks.onPlayerEnchantItem(player, itemstack2, selectedEnchantments);
 
                     if (!isCreative) {
-                        keyItem.consume(itemCost, player);
-                        if (keyItem.isEmpty()) {
+                        consumableItem.consume(itemCost, player);
+                        if (consumableItem.isEmpty()) {
                             this.rubinationSlots.setItem(1, ItemStack.EMPTY);
                         }
                     }
@@ -392,53 +392,12 @@ public class RubinationMenu extends AbstractContainerMenu {
     private List<Rubination> getRubinationMapForInscription(ItemStack stack) {
         var arrayList = new ArrayList<Rubination>();
 
-        // If no item is present, show 3 random runes
-        if (stack.isEmpty()) {
-            List<RuneItem> shuffledRunes = new ArrayList<>(ALL_RUNES);
-            Collections.shuffle(shuffledRunes);
+        // FOR TESTING: Show 3 random runes
+        List<RuneItem> shuffledRunes = new ArrayList<>(ALL_RUNES);
+        Collections.shuffle(shuffledRunes);
 
-            for (int i = 0; i < Math.min(3, shuffledRunes.size()); i++) {
-                arrayList.add(shuffledRunes.get(i).getRubination());
-            }
-
-            // Store the current options for consistent selection
-            currentInscriptionOptions.clear();
-            currentInscriptionOptions.addAll(arrayList);
-            return arrayList;
-        }
-
-        // If item is present and is an axe, apply axe cycling
-        if (stack.is(net.minecraft.tags.ItemTags.AXES)) {
-            var toolRubinations = new ArrayList<Rubination>();
-            var weaponRubinations = new ArrayList<Rubination>();
-
-            for (RuneItem rune : ALL_RUNES) {
-                Rubination rubination = rune.getRubination();
-
-                if (stack.is(rubination.getItemTag())) {
-                    if (rubination.getItemTag().equals(RNTags.Items.RUBINATION_TOOL)) {
-                        toolRubinations.add(rubination);
-                    } else if (rubination.getItemTag().equals(RNTags.Items.RUBINATION_WEAPON)) {
-                        weaponRubinations.add(rubination);
-                    }
-                }
-            }
-
-            boolean showToolsOnly = (axeCycle % 2 == 0);
-
-            if (showToolsOnly) {
-                arrayList.addAll(toolRubinations);
-            } else {
-                arrayList.addAll(weaponRubinations);
-            }
-        } else {
-            // If item is present and not an axe, show runes that match the item
-            for (RuneItem rune : ALL_RUNES) {
-                Rubination rubination = rune.getRubination();
-                if (stack.is(rubination.getItemTag())) {
-                    arrayList.add(rubination);
-                }
-            }
+        for (int i = 0; i < Math.min(3, shuffledRunes.size()); i++) {
+            arrayList.add(shuffledRunes.get(i).getRubination());
         }
 
         // Store the current options for consistent selection
@@ -498,16 +457,16 @@ public class RubinationMenu extends AbstractContainerMenu {
 
     public void slotsChanged(Container inventory) {
         if (inventory == this.rubinationSlots) {
-            var itemstack = inventory.getItem(0);
+            var rubinatableItem = inventory.getItem(0);
 
-            boolean currentlyHasAxe = !itemstack.isEmpty() && itemstack.is(net.minecraft.tags.ItemTags.AXES);
+            boolean currentlyHasAxe = !rubinatableItem.isEmpty() && rubinatableItem.is(net.minecraft.tags.ItemTags.AXES);
 
             if (currentlyHasAxe && !hadAxeInSlot) {
                 axeCycle++;
                 hadAxeInSlot = true;
             } else if (!currentlyHasAxe && hadAxeInSlot) {
                 hadAxeInSlot = false;
-            } else if (!itemstack.isEmpty() && !currentlyHasAxe) {
+            } else if (!rubinatableItem.isEmpty() && !currentlyHasAxe) {
                 axeCycle = 0;
                 hadAxeInSlot = false;
             }
@@ -515,15 +474,13 @@ public class RubinationMenu extends AbstractContainerMenu {
             // Check if we're in inscription mode and update rubinated block count
             if (isInscriptionMode()) {
                 this.access.execute((level, blockPos) -> {
-                    // Need to check if current player is in creative mode
-                    // Since we don't have direct access to player here, we'll handle this in the screen
                     hasEnoughRubinatedBlocks = RubinationConverter.hasEnoughBlocksForInscription(level, blockPos);
                 });
             } else {
-                hasEnoughRubinatedBlocks = false; // Reset when not in inscription mode
+                hasEnoughRubinatedBlocks = false;
             }
 
-            if (isInscriptionMode() || (!itemstack.isEmpty() && itemstack.isEnchantable())) {
+            if (isInscriptionMode() || (!rubinatableItem.isEmpty() && rubinatableItem.isEnchantable())) {
                 this.access.execute((level, blockPos) -> {
                     var idmap = level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).asHolderIdMap();
 
@@ -545,9 +502,9 @@ public class RubinationMenu extends AbstractContainerMenu {
 
                     List<Rubination> arrayList;
                     if (isInscriptionMode()) {
-                        arrayList = this.getRubinationMapForInscription(itemstack);
+                        arrayList = this.getRubinationMapForInscription(rubinatableItem);
                     } else {
-                        arrayList = this.getRubinationMap(itemstack, runes);
+                        arrayList = this.getRubinationMap(rubinatableItem, runes);
                     }
 
                     for(int l = 0; l < 3; l++) {
@@ -618,7 +575,9 @@ public class RubinationMenu extends AbstractContainerMenu {
                 if (!this.moveItemStackTo(itemstack1, 2, 38, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (itemstack1.is(RNItems.WINDING_KEY.get()) || itemstack1.is(RNItems.RUNE.get())) {
+            } else if (itemstack1.is(RNTags.Items.ALTAR_RUBINATION_ITEM)
+                    || itemstack1.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM)
+                    || itemstack1.is(RNItems.RUNE.get())) {
                 if (!this.moveItemStackTo(itemstack1, 1, 2, true)) {
                     return ItemStack.EMPTY;
                 }
