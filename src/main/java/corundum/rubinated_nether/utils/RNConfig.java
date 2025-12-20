@@ -63,6 +63,38 @@ public class RNConfig extends MidnightConfig {
 
 	/* -- Altar -- */
 
+	@Entry(
+			category = ALTAR,
+			isSlider = true,
+			min = 0,
+			max = 1024
+	)
+	public static int altarInscriptionCost = 100;
+
+	@Entry(
+			category = ALTAR,
+			isSlider = true,
+			min = 0,
+			max = 1
+	)
+	public static int altarLesserBlessingTime = 5;
+
+	@Entry(
+			category = ALTAR,
+			isSlider = true,
+			min = 0,
+			max = 1
+	)
+	public static int altarGreaterBlessingTime = 20;
+
+	@Entry(
+			category = ALTAR,
+			isSlider = true,
+			min = 0,
+			max = 1
+	)
+	public static int alterFullBlessingThreshold = 320;
+
 	@Entry(category = ALTAR)
 	public static boolean blessedEffectGlowing = true;
 

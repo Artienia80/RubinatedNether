@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content;
 
+import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -155,7 +156,7 @@ public class RubinationConverter {
     }
 
     public static boolean hasEnoughBlocksForInscription(Level level, BlockPos centerPos, int radius) {
-        return countRubinatedBlocks(level, centerPos, radius) >= 100;
+        return countRubinatedBlocks(level, centerPos, radius) >= RNConfig.altarInscriptionCost;
     }
 
     public static boolean hasEnoughBlocksForInscription(Level level, BlockPos centerPos) {

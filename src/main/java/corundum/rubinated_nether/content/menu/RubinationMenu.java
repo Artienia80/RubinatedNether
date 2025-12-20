@@ -11,6 +11,7 @@ import corundum.rubinated_nether.content.RubinationConverter;
 import corundum.rubinated_nether.content.blocks.RubinationAltarBlock;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneItem;
+import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.Util;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -286,7 +287,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                 level.random.nextFloat() * 0.1F + 0.9F
         );
 
-        BlessPlayer(player, 6000);
+        BlessPlayer(player, RNConfig.altarLesserBlessingTime*60*20);
 
         if (player instanceof ServerPlayer serverPlayer) {
             AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
@@ -319,8 +320,8 @@ public class RubinationMenu extends AbstractContainerMenu {
             player.addEffect(new MobEffectInstance(RNEffects.BLESSED, durationTicks, 0, false, true, true));
         }
 
-        // Check if duration exceeds 5h:20m (384000 ticks)
-        if (newDuration >= 384000 && player instanceof ServerPlayer serverPlayer) {
+        // Check if duration exceeds Threshold, by default 5h:20m (384000 ticks) (64 Offerings)
+        if (newDuration >= RNConfig.alterFullBlessingThreshold*60*20 && player instanceof ServerPlayer serverPlayer) {
             AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
                     .get(RubinatedNether.id("divine_favor"));
 
@@ -412,7 +413,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                 if (consumableItem.isEmpty()) {
                     this.rubinationSlots.setItem(1, ItemStack.EMPTY);
                 }
-                RubinationConverter.derubinateBlocks(level, blockPos, 20, 100);
+                RubinationConverter.derubinateBlocks(level, blockPos, 20, RNConfig.altarInscriptionCost);
             }
 
             level.playSound(
@@ -474,7 +475,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                         }
                     }
 
-                    BlessPlayer(player, 24000);
+                    BlessPlayer(player, RNConfig.altarGreaterBlessingTime*60*20);
 
                     player.awardStat(Stats.ENCHANT_ITEM);
                     if (player instanceof ServerPlayer) {
