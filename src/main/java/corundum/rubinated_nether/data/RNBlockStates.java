@@ -477,93 +477,93 @@ public class RNBlockStates extends BlockStateProvider {
 				});
 	}
 
-    private void generateBrazierModel(int level) {
-        String modelName = "ruby_brazier_" + level;
+	private void generateBrazierModel(int level) {
+		String modelName = "ruby_brazier_" + level;
 
-        float surfaceY = 4 + level;
+		float surfaceY = 4 + level;
 
-        var builder = models().getBuilder(modelName)
-                .parent(models().getExistingFile(mcLoc("block/block")))
-                .renderType("cutout")
-                .texture("0", mcLoc("block/obsidian"))
-                .texture("1", modLoc("block/brazier/brazier_bars_side"))
-                .texture("2", modLoc("block/brazier/brazier_bars_top"))
-                .texture("3", modLoc("block/altar/null"))
-                .texture("6", modLoc("block/brazier/cauldron_bottom"))
-                .texture("7", modLoc("block/brazier/cauldron_side"))
-                .texture("8", modLoc("block/brazier/brazier_base"))
-                .texture("9", modLoc("block/molten_ruby_block_end"))
-                .texture("particle", mcLoc("block/obsidian"))
+		var builder = models().getBuilder(modelName)
+				.parent(models().getExistingFile(mcLoc("block/block")))
+				.renderType("cutout")
+				.texture("0", mcLoc("block/obsidian"))
+				.texture("1", modLoc("block/brazier/brazier_bars_side"))
+				.texture("2", modLoc("block/brazier/brazier_bars_top"))
+				.texture("3", modLoc("block/altar/null"))
+				.texture("6", modLoc("block/brazier/cauldron_bottom"))
+				.texture("7", modLoc("block/brazier/cauldron_side"))
+				.texture("8", modLoc("block/brazier/brazier_base"))
+				.texture("9", modLoc("block/molten_ruby_block_end"))
+				.texture("particle", mcLoc("block/obsidian"))
 
-                // Base
-                .element()
-                .from(0, 0, 0).to(16, 3, 16)
-                .face(Direction.NORTH).uvs(0, 0, 16, 3).texture("#8").end()
-                .face(Direction.EAST).uvs(0, 0, 16, 3).texture("#8").end()
-                .face(Direction.SOUTH).uvs(0, 0, 16, 3).texture("#8").end()
-                .face(Direction.WEST).uvs(0, 0, 16, 3).texture("#8").end()
-                .face(Direction.UP).uvs(0, 0, 16, 16).texture("#8").end()
-                .face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#0").end()
-                .end()
+				// Base
+				.element()
+				.from(0, 0, 0).to(16, 3, 16)
+				.face(Direction.NORTH).uvs(0, 0, 16, 3).texture("#8").end()
+				.face(Direction.EAST).uvs(0, 0, 16, 3).texture("#8").end()
+				.face(Direction.SOUTH).uvs(0, 0, 16, 3).texture("#8").end()
+				.face(Direction.WEST).uvs(0, 0, 16, 3).texture("#8").end()
+				.face(Direction.UP).uvs(0, 0, 16, 16).texture("#8").end()
+				.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#0").end()
+				.end()
 
-                // Outer cauldron walls
-                .element()
-                .from(2, 5, 2).to(14, 16, 14)
-                .rotation().angle(0).axis(Direction.Axis.Y).origin(2, 5, 2).end()
-                .face(Direction.NORTH).uvs(2, 3, 14, 14).texture("#7").end()
-                .face(Direction.EAST).uvs(2, 3, 14, 14).texture("#7").end()
-                .face(Direction.SOUTH).uvs(2, 3, 14, 14).texture("#7").end()
-                .face(Direction.WEST).uvs(2, 3, 14, 14).texture("#7").end()
-                .face(Direction.UP).uvs(0, 0, 12, 12).texture("#3").end()
-                .face(Direction.DOWN).uvs(2, 2, 14, 14).texture("#6").end()
-                .end()
+				// Outer cauldron walls
+				.element()
+				.from(2, 5, 2).to(14, 16, 14)
+				.rotation().angle(0).axis(Direction.Axis.Y).origin(2, 5, 2).end()
+				.face(Direction.NORTH).uvs(2, 3, 14, 14).texture("#7").end()
+				.face(Direction.EAST).uvs(2, 3, 14, 14).texture("#7").end()
+				.face(Direction.SOUTH).uvs(2, 3, 14, 14).texture("#7").end()
+				.face(Direction.WEST).uvs(2, 3, 14, 14).texture("#7").end()
+				.face(Direction.UP).uvs(0, 0, 12, 12).texture("#3").end()
+				.face(Direction.DOWN).uvs(2, 2, 14, 14).texture("#6").end()
+				.end()
 
-                // Inner cauldron walls (crossed) - Now using #7 instead of #10
-                .element()
-                .from(14, 5, 2).to(2, 16, 14)
-                .rotation().angle(0).axis(Direction.Axis.Y).origin(14, 5, 2).end()
-                .face(Direction.NORTH).uvs(2, 3, 14, 14).texture("#7").end()
-                .face(Direction.EAST).uvs(2, 3, 14, 14).texture("#7").end()
-                .face(Direction.SOUTH).uvs(2, 3, 14, 14).texture("#7").end()
-                .face(Direction.WEST).uvs(2, 3, 14, 14).texture("#7").end()
-                .face(Direction.UP).uvs(0, 0, 12, 12).texture("#3").end()
-                .face(Direction.DOWN).uvs(2, 2, 14, 14).texture("#6").end()
-                .end()
+				// Inner cauldron walls (crossed)
+				.element()
+				.from(14, 5, 2).to(2, 16, 14)
+				.rotation().angle(0).axis(Direction.Axis.Y).origin(14, 5, 2).end()
+				.face(Direction.NORTH).uvs(2, 3, 14, 14).texture("#7").end()
+				.face(Direction.EAST).uvs(2, 3, 14, 14).texture("#7").end()
+				.face(Direction.SOUTH).uvs(2, 3, 14, 14).texture("#7").end()
+				.face(Direction.WEST).uvs(2, 3, 14, 14).texture("#7").end()
+				.face(Direction.UP).uvs(0, 0, 12, 12).texture("#3").end()
+				.face(Direction.DOWN).uvs(2, 2, 14, 14).texture("#6").end()
+				.end()
 
-                // Bars - vertical
-                .element()
-                .from(1, 3, 1).to(15, 11, 15)
-                .rotation().angle(0).axis(Direction.Axis.Y).origin(1, 3, 1).end()
-                .face(Direction.NORTH).uvs(1, 0, 15, 8).texture("#1").end()
-                .face(Direction.EAST).uvs(1, 0, 15, 8).texture("#1").end()
-                .face(Direction.SOUTH).uvs(1, 0, 15, 8).texture("#1").end()
-                .face(Direction.WEST).uvs(1, 0, 15, 8).texture("#1").end()
-                .face(Direction.UP).uvs(1, 1, 15, 15).texture("#2").end()
-                .face(Direction.DOWN).uvs(0, 0, 14, 14).texture("#1").end()
-                .end()
+				// Bars - vertical
+				.element()
+				.from(1, 3, 1).to(15, 11, 15)
+				.rotation().angle(0).axis(Direction.Axis.Y).origin(1, 3, 1).end()
+				.face(Direction.NORTH).uvs(1, 0, 15, 8).texture("#1").end()
+				.face(Direction.EAST).uvs(1, 0, 15, 8).texture("#1").end()
+				.face(Direction.SOUTH).uvs(1, 0, 15, 8).texture("#1").end()
+				.face(Direction.WEST).uvs(1, 0, 15, 8).texture("#1").end()
+				.face(Direction.UP).uvs(1, 1, 15, 15).texture("#2").end()
+				.face(Direction.DOWN).uvs(0, 0, 14, 14).texture("#1").end()
+				.end()
 
-                // Bars - crossed
-                .element()
-                .from(15, 3, 1).to(1, 11, 15)
-                .rotation().angle(0).axis(Direction.Axis.Y).origin(15, 3, 1).end()
-                .face(Direction.NORTH).uvs(1, 0, 15, 8).texture("#1").end()
-                .face(Direction.EAST).uvs(1, 0, 15, 8).texture("#1").end()
-                .face(Direction.SOUTH).uvs(1, 0, 15, 8).texture("#1").end()
-                .face(Direction.WEST).uvs(1, 0, 15, 8).texture("#1").end()
-                .face(Direction.UP).uvs(1, 1, 15, 15).texture("#2").end()
-                .face(Direction.DOWN).uvs(0, 0, 14, 14).texture("#3").end()
-                .end();
+				// Bars - crossed
+				.element()
+				.from(15, 3, 1).to(1, 11, 15)
+				.rotation().angle(0).axis(Direction.Axis.Y).origin(15, 3, 1).end()
+				.face(Direction.NORTH).uvs(1, 0, 15, 8).texture("#1").end()
+				.face(Direction.EAST).uvs(1, 0, 15, 8).texture("#1").end()
+				.face(Direction.SOUTH).uvs(1, 0, 15, 8).texture("#1").end()
+				.face(Direction.WEST).uvs(1, 0, 15, 8).texture("#1").end()
+				.face(Direction.UP).uvs(1, 1, 15, 15).texture("#2").end()
+				.face(Direction.DOWN).uvs(0, 0, 14, 14).texture("#3").end()
+				.end();
 
-        // Only add molten ruby surface if level > 0
-        if (level > 0) {
-            builder.element()
-                    .from(2, surfaceY, 2).to(14, surfaceY, 14)
-                    .rotation().angle(0).axis(Direction.Axis.Y).origin(2, surfaceY, 2).end()
-                    .face(Direction.UP).uvs(0, 0, 12, 12).texture("#9").end()
-                    .face(Direction.DOWN).uvs(0, 0, 12, 12).texture("#9").end()
-                    .end();
-        }
-    }
+		// Only add molten ruby surface if level > 0
+		if (level > 0) {
+			builder.element()
+					.from(2, surfaceY, 2).to(14, surfaceY, 14)
+					.rotation().angle(0).axis(Direction.Axis.Y).origin(2, surfaceY, 2).end()
+					.face(Direction.UP).uvs(0, 0, 12, 12).texture("#9").emissivity(15, 15).end()
+					.face(Direction.DOWN).uvs(0, 0, 12, 12).texture("#9").emissivity(15, 15).end()
+					.end();
+		}
+	}
 
 	// Constants for laser families
 	private static final String[] BRONZE_LASER_STATES = {

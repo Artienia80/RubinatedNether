@@ -1227,9 +1227,9 @@ public class RNBlocks {
 							.ofFullCopy(RNBlocks.BRONZE_BLOCK.get())
 							.mapColor(MapColor.FIRE)
 							.noOcclusion()
+							.lightLevel(state -> state.getValue(BrazierBlock.LEVEL))
 			)
 	);
-
 
 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {

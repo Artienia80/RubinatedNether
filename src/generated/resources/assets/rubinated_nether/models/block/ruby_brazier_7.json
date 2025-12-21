@@ -356,6 +356,10 @@
     {
       "faces": {
         "down": {
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          },
           "texture": "#9",
           "uv": [
             0.0,
@@ -365,6 +369,10 @@
           ]
         },
         "up": {
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          },
           "texture": "#9",
           "uv": [
             0.0,
