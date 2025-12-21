@@ -197,16 +197,17 @@ public class RNItemModels extends ItemModelProvider {
 
 				RNBlocks.RUNESTONE,
 				RNItems.RUBY_LENS,
-				RNItems.RUBY_ITEM,
-				RNItems.MOLTEN_RUBY_ITEM,
-				RNItems.RUBY_SHARD_ITEM,
-				RNItems.MOLTEN_RUBY_NUGGET_ITEM,
+				RNItems.RUBY,
+				RNItems.MOLTEN_RUBY,
+				RNItems.RUBY_SHARD,
+				RNItems.MOLTEN_RUBY_NUGGET,
 				RNItems.MUSIC_DISC_SHIMMER,
 				RNItems.BRONZE_ROD,
 				RNItems.BRONZE_POWDER,
 				RNItems.BRONZE_SCRAP,
 				RNItems.BRONZE_SHOT,
 				RNItems.RITUAL_OFFERING,
+				RNItems.COGWHEEL,
 				RNItems.WINDING_KEY,
 				RNItems.RUNE
 		);

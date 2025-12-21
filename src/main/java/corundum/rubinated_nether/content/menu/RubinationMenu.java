@@ -11,6 +11,7 @@ import corundum.rubinated_nether.content.RubinationConverter;
 import corundum.rubinated_nether.content.blocks.RubinationAltarBlock;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneItem;
+import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.Util;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -22,6 +23,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -35,6 +37,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
@@ -46,6 +49,7 @@ import java.util.*;
 public class RubinationMenu extends AbstractContainerMenu {
     static final ResourceLocation EMPTY_SLOT_KEY = RubinatedNether.id("item/empty_slot_key");
     static final ResourceLocation EMPTY_SLOT_RUNE = RubinatedNether.id("item/empty_slot_rune");
+    static final ResourceLocation EMPTY_SLOT_COG = RubinatedNether.id("item/empty_slot_cog");
     private final Container rubinationSlots;
     private final ContainerLevelAccess access;
     public final int[][] rubinationClue;
@@ -56,14 +60,11 @@ public class RubinationMenu extends AbstractContainerMenu {
     private boolean hadAxeInSlot = false;
     private boolean hasEnoughRubinatedBlocks = false;
 
-    public final ContainerData data;
+    // New fields for category cycling
+    private int inscriptionCategoryCycle = -1;
+    private boolean hadRuneInSlot = false;
 
-    private static final Map<Block, Block> RUBINATED_TO_NORMAL_MAP = Map.of(
-            RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(), RNBlocks.SHRINE_STONE_TILES.get(),
-            RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(), RNBlocks.SHRINE_STONE_PILLAR.get(),
-            RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(), RNBlocks.SHRINE_STONE_BRICKS.get(),
-            RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(), RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get()
-    );
+    public final ContainerData data;
 
     private static final List<RuneItem> ALL_RUNES = List.of(
             (RuneItem) RNItems.GREED_RUNE.get(),
@@ -89,6 +90,17 @@ public class RubinationMenu extends AbstractContainerMenu {
             (RuneItem) RNItems.PHILARGYRIA_RUNE.get()
     );
 
+    // Category mapping: 1-7 correspond to the 7 rubination categories
+    private static final List<TagKey<Item>> RUBINATION_CATEGORIES = List.of(
+            RNTags.Items.RUBINATION_TOOL,      // 1
+            RNTags.Items.RUBINATION_WEAPON,    // 2
+            RNTags.Items.RUBINATION_ARMOR,     // 3
+            RNTags.Items.RUBINATION_BOW,       // 4
+            RNTags.Items.RUBINATION_CROSSBOW,  // 5
+            RNTags.Items.RUBINATION_TRIDENT,   // 6
+            RNTags.Items.RUBINATION_MACE       // 7
+    );
+
     public RubinationMenu(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, ContainerLevelAccess.NULL);
     }
@@ -105,18 +117,82 @@ public class RubinationMenu extends AbstractContainerMenu {
         this.rubinationClue = new int[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
         this.access = access;
 
+        // Initialize category cycle with random value 0-6 (representing categories 1-7)
+        this.inscriptionCategoryCycle = new Random().nextInt(7);
+
+        // LEFT SLOT - RubinatableSlot (index 0)
         this.addSlot(new Slot(this.rubinationSlots, 0, 70, 84) {
-            public int getMaxStackSize() {
-                return 1;
-            }
-        });
-        this.addSlot(new Slot(this.rubinationSlots, 1, 90, 84) {
+            @Override
             public boolean mayPlace(ItemStack itemStack) {
-                return itemStack.is(RNItems.WINDING_KEY.get()) || itemStack.is(RNItems.RUNE.get());
+                ItemStack consumableSlot = rubinationSlots.getItem(1);
+
+                // If consumable has inscription item, only accept blank runes
+                if (consumableSlot.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM)) {
+                    return itemStack.is(RNItems.RUNE.get());
+                }
+
+                // If consumable has rubination item (key/cogwheel), only accept enchantable items
+                if (consumableSlot.is(RNTags.Items.ALTAR_RUBINATION_ITEM)) {
+                    return itemStack.isEnchantable();
+                }
+
+                // If consumable is empty, accept either blank runes or enchantable items
+                if (consumableSlot.isEmpty()) {
+                    return itemStack.is(RNItems.RUNE.get()) || itemStack.isEnchantable();
+                }
+
+                return false;
             }
 
             public int getMaxStackSize() {
-                // Only restrict runes to stack size 1, allow normal stacking for winding keys
+                return 1;
+            }
+
+            @Override
+            public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                ItemStack consumableSlot = rubinationSlots.getItem(1);
+
+                // If key (inscription item) in right slot, show rune icon
+                if (consumableSlot.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM)) {
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_RUNE);
+                }
+
+                // If cog (rubination item) in right slot, show nothing
+                if (consumableSlot.is(RNTags.Items.ALTAR_RUBINATION_ITEM)) {
+                    return null;
+                }
+
+                // If consumable is empty, show nothing (let consumable slot do the cycling)
+                return null;
+            }
+        });
+
+        // RIGHT SLOT - ConsumableSlot (index 1)
+        this.addSlot(new Slot(this.rubinationSlots, 1, 90, 84) {
+            @Override
+            public boolean mayPlace(ItemStack itemStack) {
+                ItemStack rubinatableSlot = rubinationSlots.getItem(0);
+
+                // If rubinatable has blank rune, only accept inscription items
+                if (rubinatableSlot.is(RNItems.RUNE.get())) {
+                    return itemStack.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM);
+                }
+
+                // If rubinatable has enchantable item, only accept rubination items (keys/cogwheels)
+                if (!rubinatableSlot.isEmpty() && rubinatableSlot.isEnchantable()) {
+                    return itemStack.is(RNTags.Items.ALTAR_RUBINATION_ITEM);
+                }
+
+                // If rubinatable is empty, accept any valid consumable
+                if (rubinatableSlot.isEmpty()) {
+                    return itemStack.is(RNTags.Items.ALTAR_RUBINATION_ITEM)
+                            || itemStack.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM);
+                }
+
+                return false;
+            }
+
+            public int getMaxStackSize() {
                 ItemStack currentItem = this.getItem();
                 if (!currentItem.isEmpty() && currentItem.is(RNItems.RUNE.get())) {
                     return 1;
@@ -125,11 +201,24 @@ public class RubinationMenu extends AbstractContainerMenu {
             }
 
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-                long currentTime = System.currentTimeMillis();
-                boolean showRune = (currentTime / 5000) % 2 == 1;
+                ItemStack rubinatableSlot = rubinationSlots.getItem(0);
 
-                if (showRune) {
-                    return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_RUNE);
+                // If rune in left slot, show key icon
+                if (rubinatableSlot.is(RNItems.RUNE.get())) {
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_KEY);
+                }
+
+                // If tool/weapon (rubinatable) in left slot, show cog icon
+                if (!rubinatableSlot.isEmpty() && rubinatableSlot.is(RNTags.Items.RUBINATABLE)) {
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_COG);
+                }
+
+                // If both slots empty, cycle between key and cog
+                long currentTime = System.currentTimeMillis();
+                boolean showCog = (currentTime / 5000) % 2 == 1;
+
+                if (showCog) {
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_COG);
                 }
                 return Pair.of(InventoryMenu.BLOCK_ATLAS, RubinationMenu.EMPTY_SLOT_KEY);
             }
@@ -181,7 +270,7 @@ public class RubinationMenu extends AbstractContainerMenu {
 
         ItemStack heldItem = player.getItemInHand(hand);
 
-        if (!heldItem.is(RNItems.RITUAL_OFFERING.get())) {
+        if (!heldItem.is(RNTags.Items.ALTAR_OFFERING_ITEM)) {
             return InteractionResult.PASS;
         }
 
@@ -198,7 +287,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                 level.random.nextFloat() * 0.1F + 0.9F
         );
 
-        BlessPlayer(player, 6000);
+        BlessPlayer(player, RNConfig.altarLesserBlessingTime*60*20);
 
         if (player instanceof ServerPlayer serverPlayer) {
             AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
@@ -207,7 +296,6 @@ public class RubinationMenu extends AbstractContainerMenu {
             if (advancementHolder != null) {
                 var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
                 if (!progress.isDone()) {
-                    // Grant all remaining criteria to complete the advancement
                     for (String criterion : progress.getRemainingCriteria()) {
                         serverPlayer.getAdvancements().award(advancementHolder, criterion);
                     }
@@ -220,14 +308,44 @@ public class RubinationMenu extends AbstractContainerMenu {
         return InteractionResult.CONSUME;
     }
 
+    public static void BlessPlayer(Player player, int durationTicks) {
+        MobEffectInstance currentBlessing = player.getEffect(RNEffects.BLESSED);
+
+        int newDuration;
+        if (currentBlessing != null) {
+            newDuration = currentBlessing.getDuration() + durationTicks;
+            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, newDuration, 0, false, true, true));
+        } else {
+            newDuration = durationTicks;
+            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, durationTicks, 0, false, true, true));
+        }
+
+        // Check if duration exceeds Threshold, by default 5h:20m (384000 ticks) (64 Offerings)
+        if (newDuration >= RNConfig.alterFullBlessingThreshold*60*20 && player instanceof ServerPlayer serverPlayer) {
+            AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
+                    .get(RubinatedNether.id("divine_favor"));
+
+            if (advancementHolder != null) {
+                var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
+                if (!progress.isDone()) {
+                    for (String criterion : progress.getRemainingCriteria()) {
+                        serverPlayer.getAdvancements().award(advancementHolder, criterion);
+                    }
+                }
+            }
+        }
+    }
+
     private boolean isInscriptionMode() {
-        ItemStack keySlotItem = this.rubinationSlots.getItem(1);
-        return keySlotItem.is(RNItems.RUNE.get());
+        ItemStack rubinatableSlot = this.rubinationSlots.getItem(0);
+        ItemStack consumableSlot = this.rubinationSlots.getItem(1);
+
+        return rubinatableSlot.is(RNItems.RUNE.get()) || consumableSlot.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM);
     }
 
     private boolean isRubinationMode() {
-        ItemStack keySlotItem = this.rubinationSlots.getItem(1);
-        return keySlotItem.is(RNItems.WINDING_KEY.get());
+        ItemStack consumableSlot = this.rubinationSlots.getItem(1);
+        return consumableSlot.is(RNTags.Items.ALTAR_RUBINATION_ITEM);
     }
 
     public boolean hasEnoughRubinatedBlocks() {
@@ -235,7 +353,7 @@ public class RubinationMenu extends AbstractContainerMenu {
     }
 
     public int countRubinatedBlocks() {
-        final int[] count = {0}; // Use array to allow modification in lambda
+        final int[] count = {0};
         this.access.execute((level, blockPos) -> {
             count[0] = RubinationConverter.countRubinatedBlocks(level, blockPos, 20);
         });
@@ -244,13 +362,13 @@ public class RubinationMenu extends AbstractContainerMenu {
 
     public boolean clickMenuButton(Player player, int id) {
         if (id >= 0) {
-            var itemstack = this.rubinationSlots.getItem(0);
-            var keySlotItem = this.rubinationSlots.getItem(1);
+            var rubinatableItem = this.rubinationSlots.getItem(0);
+            var consumableItem = this.rubinationSlots.getItem(1);
 
             if (isInscriptionMode()) {
-                return handleInscription(player, id, itemstack, keySlotItem);
+                return handleInscription(player, id, rubinatableItem, consumableItem);
             } else if (isRubinationMode()) {
-                return handleRubination(player, id, itemstack, keySlotItem);
+                return handleRubination(player, id, rubinatableItem, consumableItem);
             }
         } else {
             var var10000 = String.valueOf(player.getName());
@@ -260,12 +378,18 @@ public class RubinationMenu extends AbstractContainerMenu {
         return false;
     }
 
-    private boolean handleInscription(Player player, int id, ItemStack itemstack, ItemStack runeItem) {
-        if (!runeItem.is(RNItems.RUNE.get())) {
+    private boolean handleInscription(Player player, int id, ItemStack rubinatableItem, ItemStack consumableItem) {
+        if (!rubinatableItem.is(RNItems.RUNE.get())) {
             return false;
         }
 
+        var itemCost = 1;
         boolean isCreative = player.getAbilities().instabuild;
+        boolean hasEnoughKeys = isCreative || (!consumableItem.isEmpty() && consumableItem.getCount() >= itemCost);
+
+        if (!hasEnoughKeys) {
+            return false;
+        }
 
         this.access.execute((level, blockPos) -> {
             if (!isCreative && !RubinationConverter.hasEnoughBlocksForInscription(level, blockPos)) {
@@ -281,12 +405,15 @@ public class RubinationMenu extends AbstractContainerMenu {
 
             ItemStack inscribedRune = getRuneItemFromRubination(selectedRubination);
 
-            this.rubinationSlots.setItem(1, inscribedRune);
+            this.rubinationSlots.setItem(0, inscribedRune);
 
-            // Only consume blocks in survival mode
+            // Consume the inscription item
             if (!isCreative) {
-                RubinationConverter.derubinateBlocks(level, blockPos, 20, 100);
-                ;
+                consumableItem.consume(itemCost, player);
+                if (consumableItem.isEmpty()) {
+                    this.rubinationSlots.setItem(1, ItemStack.EMPTY);
+                }
+                RubinationConverter.derubinateBlocks(level, blockPos, 20, RNConfig.altarInscriptionCost);
             }
 
             level.playSound(
@@ -319,23 +446,22 @@ public class RubinationMenu extends AbstractContainerMenu {
         return true;
     }
 
-    private boolean handleRubination(Player player, int id, ItemStack itemstack, ItemStack keyItem) {
+    private boolean handleRubination(Player player, int id, ItemStack rubinatableItem, ItemStack consumableItem) {
         var itemCost = 1;
 
         boolean isCreative = player.getAbilities().instabuild;
-        boolean hasEnoughKeys = isCreative || (!keyItem.isEmpty() && keyItem.getCount() >= itemCost);
+        boolean hasEnoughKeys = isCreative || (!consumableItem.isEmpty() && consumableItem.getCount() >= itemCost);
 
         if (!hasEnoughKeys) {
             return false;
-        } else if (!itemstack.isEmpty()) {
+        } else if (!rubinatableItem.isEmpty()) {
             this.access.execute((level, blockPos) -> {
-                var arrayList = this.getRubinationMap(itemstack, runes);
+                var arrayList = this.getRubinationMap(rubinatableItem, runes);
                 var selectedEnchantments = this.getSelectedEnchants(level.registryAccess(), arrayList, id);
 
                 if (!arrayList.isEmpty() && selectedEnchantments != null) {
-                    var itemstack2 = itemstack.getItem().applyEnchantments(itemstack, selectedEnchantments);
+                    var itemstack2 = rubinatableItem.getItem().applyEnchantments(rubinatableItem, selectedEnchantments);
 
-                    // Apply custom rarity to rubinated items
                     itemstack2 = itemstack2.copy();
                     itemstack2.set(net.minecraft.core.component.DataComponents.RARITY, RNRarity.RUBINATED_NETHER_RUBY.get());
 
@@ -343,13 +469,13 @@ public class RubinationMenu extends AbstractContainerMenu {
                     CommonHooks.onPlayerEnchantItem(player, itemstack2, selectedEnchantments);
 
                     if (!isCreative) {
-                        keyItem.consume(itemCost, player);
-                        if (keyItem.isEmpty()) {
+                        consumableItem.consume(itemCost, player);
+                        if (consumableItem.isEmpty()) {
                             this.rubinationSlots.setItem(1, ItemStack.EMPTY);
                         }
                     }
 
-                    BlessPlayer(player, 24000);
+                    BlessPlayer(player, RNConfig.altarGreaterBlessingTime*60*20);
 
                     player.awardStat(Stats.ENCHANT_ITEM);
                     if (player instanceof ServerPlayer) {
@@ -392,56 +518,17 @@ public class RubinationMenu extends AbstractContainerMenu {
     private List<Rubination> getRubinationMapForInscription(ItemStack stack) {
         var arrayList = new ArrayList<Rubination>();
 
-        // If no item is present, show 3 random runes
-        if (stack.isEmpty()) {
-            List<RuneItem> shuffledRunes = new ArrayList<>(ALL_RUNES);
-            Collections.shuffle(shuffledRunes);
+        // Get the current category based on the cycle
+        TagKey<Item> currentCategory = RUBINATION_CATEGORIES.get(inscriptionCategoryCycle);
 
-            for (int i = 0; i < Math.min(3, shuffledRunes.size()); i++) {
-                arrayList.add(shuffledRunes.get(i).getRubination());
-            }
-
-            // Store the current options for consistent selection
-            currentInscriptionOptions.clear();
-            currentInscriptionOptions.addAll(arrayList);
-            return arrayList;
-        }
-
-        // If item is present and is an axe, apply axe cycling
-        if (stack.is(net.minecraft.tags.ItemTags.AXES)) {
-            var toolRubinations = new ArrayList<Rubination>();
-            var weaponRubinations = new ArrayList<Rubination>();
-
-            for (RuneItem rune : ALL_RUNES) {
-                Rubination rubination = rune.getRubination();
-
-                if (stack.is(rubination.getItemTag())) {
-                    if (rubination.getItemTag().equals(RNTags.Items.RUBINATION_TOOL)) {
-                        toolRubinations.add(rubination);
-                    } else if (rubination.getItemTag().equals(RNTags.Items.RUBINATION_WEAPON)) {
-                        weaponRubinations.add(rubination);
-                    }
-                }
-            }
-
-            boolean showToolsOnly = (axeCycle % 2 == 0);
-
-            if (showToolsOnly) {
-                arrayList.addAll(toolRubinations);
-            } else {
-                arrayList.addAll(weaponRubinations);
-            }
-        } else {
-            // If item is present and not an axe, show runes that match the item
-            for (RuneItem rune : ALL_RUNES) {
-                Rubination rubination = rune.getRubination();
-                if (stack.is(rubination.getItemTag())) {
-                    arrayList.add(rubination);
-                }
+        // Get all runes that match the current category
+        for (RuneItem rune : ALL_RUNES) {
+            Rubination rubination = rune.getRubination();
+            if (rubination.getItemTag().equals(currentCategory)) {
+                arrayList.add(rubination);
             }
         }
 
-        // Store the current options for consistent selection
         currentInscriptionOptions.clear();
         currentInscriptionOptions.addAll(arrayList);
         return arrayList;
@@ -498,32 +585,41 @@ public class RubinationMenu extends AbstractContainerMenu {
 
     public void slotsChanged(Container inventory) {
         if (inventory == this.rubinationSlots) {
-            var itemstack = inventory.getItem(0);
+            var rubinatableItem = inventory.getItem(0);
 
-            boolean currentlyHasAxe = !itemstack.isEmpty() && itemstack.is(net.minecraft.tags.ItemTags.AXES);
+            boolean currentlyHasAxe = !rubinatableItem.isEmpty() && rubinatableItem.is(net.minecraft.tags.ItemTags.AXES);
 
             if (currentlyHasAxe && !hadAxeInSlot) {
                 axeCycle++;
                 hadAxeInSlot = true;
             } else if (!currentlyHasAxe && hadAxeInSlot) {
                 hadAxeInSlot = false;
-            } else if (!itemstack.isEmpty() && !currentlyHasAxe) {
+            } else if (!rubinatableItem.isEmpty() && !currentlyHasAxe) {
                 axeCycle = 0;
                 hadAxeInSlot = false;
             }
 
-            // Check if we're in inscription mode and update rubinated block count
+            // Handle rune cycling for inscription mode
+            boolean currentlyHasRune = !rubinatableItem.isEmpty() && rubinatableItem.is(RNItems.RUNE.get());
+
+            if (currentlyHasRune && !hadRuneInSlot) {
+                // Rune was just placed
+                hadRuneInSlot = true;
+            } else if (!currentlyHasRune && hadRuneInSlot) {
+                // Rune was just removed, increment category cycle for next insertion
+                inscriptionCategoryCycle = (inscriptionCategoryCycle + 1) % RUBINATION_CATEGORIES.size();
+                hadRuneInSlot = false;
+            }
+
             if (isInscriptionMode()) {
                 this.access.execute((level, blockPos) -> {
-                    // Need to check if current player is in creative mode
-                    // Since we don't have direct access to player here, we'll handle this in the screen
                     hasEnoughRubinatedBlocks = RubinationConverter.hasEnoughBlocksForInscription(level, blockPos);
                 });
             } else {
-                hasEnoughRubinatedBlocks = false; // Reset when not in inscription mode
+                hasEnoughRubinatedBlocks = false;
             }
 
-            if (isInscriptionMode() || (!itemstack.isEmpty() && itemstack.isEnchantable())) {
+            if (isInscriptionMode() || (!rubinatableItem.isEmpty() && rubinatableItem.isEnchantable())) {
                 this.access.execute((level, blockPos) -> {
                     var idmap = level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).asHolderIdMap();
 
@@ -545,9 +641,9 @@ public class RubinationMenu extends AbstractContainerMenu {
 
                     List<Rubination> arrayList;
                     if (isInscriptionMode()) {
-                        arrayList = this.getRubinationMapForInscription(itemstack);
+                        arrayList = this.getRubinationMapForInscription(rubinatableItem);
                     } else {
-                        arrayList = this.getRubinationMap(itemstack, runes);
+                        arrayList = this.getRubinationMap(rubinatableItem, runes);
                     }
 
                     for(int l = 0; l < 3; l++) {
@@ -595,6 +691,8 @@ public class RubinationMenu extends AbstractContainerMenu {
         super.removed(player);
         axeCycle = 0;
         hadAxeInSlot = false;
+        hadRuneInSlot = false;
+        inscriptionCategoryCycle = -1;
         this.access.execute((level, blockPos) -> this.clearContainer(player, this.rubinationSlots));
     }
 
@@ -618,11 +716,18 @@ public class RubinationMenu extends AbstractContainerMenu {
                 if (!this.moveItemStackTo(itemstack1, 2, 38, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (itemstack1.is(RNItems.WINDING_KEY.get()) || itemstack1.is(RNItems.RUNE.get())) {
-                if (!this.moveItemStackTo(itemstack1, 1, 2, true)) {
+            } else if (itemstack1.is(RNItems.RUNE.get())) {
+                // Runes go to the LEFT slot (index 0), but only if slot allows it
+                if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (itemstack1.is(RNTags.Items.ALTAR_RUBINATION_ITEM) || itemstack1.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM)) {
+                // Consumables (keys/cogs) go to the RIGHT slot (index 1)
+                if (!this.moveItemStackTo(itemstack1, 1, 2, false)) {
                     return ItemStack.EMPTY;
                 }
             } else {
+                // Other items (tools/weapons) go to LEFT slot (index 0)
                 if (this.slots.get(0).hasItem() || !this.slots.get(0).mayPlace(itemstack1)) {
                     return ItemStack.EMPTY;
                 }
@@ -646,33 +751,5 @@ public class RubinationMenu extends AbstractContainerMenu {
         }
 
         return itemstack;
-    }
-
-    public static void BlessPlayer(Player player, int durationTicks) {
-        MobEffectInstance currentBlessing = player.getEffect(RNEffects.BLESSED);
-
-        int newDuration;
-        if (currentBlessing != null) {
-            newDuration = currentBlessing.getDuration() + durationTicks;
-            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, newDuration, 0, false, true, true));
-        } else {
-            newDuration = durationTicks;
-            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, durationTicks, 0, false, true, true));
-        }
-
-        // Check if duration exceeds 5h:20m
-        if (newDuration >= 384000 && player instanceof ServerPlayer serverPlayer) {
-            AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
-                    .get(RubinatedNether.id("divine_favor"));
-
-            if (advancementHolder != null) {
-                var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
-                if (!progress.isDone()) {
-                    for (String criterion : progress.getRemainingCriteria()) {
-                        serverPlayer.getAdvancements().award(advancementHolder, criterion);
-                    }
-                }
-            }
-        }
     }
 }

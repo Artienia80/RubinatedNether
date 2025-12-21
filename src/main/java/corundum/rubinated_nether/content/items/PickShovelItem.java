@@ -65,7 +65,7 @@ public class PickShovelItem extends DiggerItem {
 				level.gameEvent(GameEvent.BLOCK_CHANGE, blockpos, GameEvent.Context.of(player, derubinatedState));
 
 				ItemEntity rubyShard = new ItemEntity(level, blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5,
-						new ItemStack(RNItems.RUBY_SHARD_ITEM.get()));
+						new ItemStack(RNItems.RUBY_SHARD.get()));
 				rubyShard.setDefaultPickUpDelay();
 				level.addFreshEntity(rubyShard);
 			}

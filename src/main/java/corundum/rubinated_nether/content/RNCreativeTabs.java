@@ -27,10 +27,10 @@ public class RNCreativeTabs {
 						addItems(
 								output,
 
-								RNItems.RUBY_ITEM,
-								RNItems.MOLTEN_RUBY_ITEM,
-								RNItems.RUBY_SHARD_ITEM,
-								RNItems.MOLTEN_RUBY_NUGGET_ITEM,
+								RNItems.RUBY,
+								RNItems.MOLTEN_RUBY,
+								RNItems.RUBY_SHARD,
+								RNItems.MOLTEN_RUBY_NUGGET,
 
 								RNBlocks.NETHER_RUBY_ORE,
 								RNBlocks.MOLTEN_RUBY_ORE,
@@ -100,6 +100,7 @@ public class RNCreativeTabs {
 
 								RNItems.RITUAL_OFFERING,
 								RNItems.WINDING_KEY,
+								RNItems.COGWHEEL,
 
 								RNItems.BRONZE_SPAWN_EGG
 						);

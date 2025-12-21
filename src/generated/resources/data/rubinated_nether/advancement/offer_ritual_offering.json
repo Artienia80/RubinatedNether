@@ -1,5 +1,5 @@
 {
-  "parent": "rubinated_nether:obtain_bronze_rod",
+  "parent": "rubinated_nether:baptism",
   "criteria": {
     "impossible": {
       "conditions": {
@@ -11,7 +11,7 @@
               "location": {
                 "position": {
                   "y": {
-                    "max": -65536.0
+                    "max": -250314.0
                   }
                 }
               }
@@ -28,7 +28,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "rubinated_nether:ritual_offering"
+      "id": "rubinated_nether:rubination_altar"
     },
     "title": {
       "translate": "advancements.rubinated_nether.offer_ritual_offering.title"

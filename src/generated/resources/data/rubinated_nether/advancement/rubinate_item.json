@@ -11,7 +11,7 @@
               "location": {
                 "position": {
                   "y": {
-                    "max": -65536.0
+                    "max": -250314.0
                   }
                 }
               }
@@ -28,7 +28,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "rubinated_nether:winding_key"
+      "id": "rubinated_nether:cogwheel"
     },
     "title": {
       "translate": "advancements.rubinated_nether.rubinate_item.title"

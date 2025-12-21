@@ -146,7 +146,7 @@ public class BrazierBlock extends BaseEntityBlock {
         }
 
         // Molten Ruby - add one level
-        if (stack.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+        if (stack.is(RNItems.MOLTEN_RUBY.get())) {
             if (currentLevel < 9) {
                 if (!level.isClientSide) {
                     brazier.addFuel(1);
@@ -166,7 +166,7 @@ public class BrazierBlock extends BaseEntityBlock {
         }
 
         // Molten Ruby Nugget - add 1/9th of a level
-        if (stack.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
+        if (stack.is(RNItems.MOLTEN_RUBY_NUGGET.get())) {
             if (currentLevel < 9) {
                 if (!level.isClientSide) {
                     int oldLevel = brazier.calculateLevelFromFuel();
@@ -185,6 +185,66 @@ public class BrazierBlock extends BaseEntityBlock {
                     if (!player.isCreative()) {
                         stack.shrink(1);
                     }
+                }
+                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            }
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+
+        // Bronze Rod - convert fuel to ritual offering
+        if (stack.is(RNItems.BRONZE_ROD.get())) {
+            int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+
+            // Check if there's more than 1 ruby's worth of fuel
+            if (brazier.getRemainingFuelSeconds() > secondsPerLevel) {
+                if (!level.isClientSide) {
+                    // Reduce fuel by one level
+                    brazier.addFuel(-1);
+
+                    // Update visual level
+                    int newLevel = brazier.calculateLevelFromFuel();
+                    level.setBlock(pos, state.setValue(LEVEL, newLevel), 3);
+
+                    // Reduce effect duration for all players in range
+                    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+                    AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
+                    Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
+                            .and(EntitySelector.NO_SPECTATORS);
+
+                    int ticksToReduce = secondsPerLevel * 20;
+                    for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
+                        MobEffectInstance currentEffect = serverPlayer.getEffect(RNEffects.BRAZIER_POWER);
+                        if (currentEffect != null) {
+                            int currentDuration = currentEffect.getDuration();
+                            int newDuration = Math.max(0, currentDuration - ticksToReduce);
+
+                            if (newDuration > 0) {
+                                serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
+                                serverPlayer.addEffect(new MobEffectInstance(
+                                        RNEffects.BRAZIER_POWER,
+                                        newDuration,
+                                        currentEffect.getAmplifier(),
+                                        currentEffect.isAmbient(),
+                                        currentEffect.isVisible(),
+                                        currentEffect.showIcon()
+                                ));
+                            } else {
+                                serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
+                            }
+                        }
+                    }
+
+                    // Consume bronze rod and give ritual offering
+                    if (!player.isCreative()) {
+                        stack.shrink(1);
+                    }
+
+                    ItemStack ritualOffering = new ItemStack(RNItems.RITUAL_OFFERING.get(), 1);
+                    if (!player.getInventory().add(ritualOffering)) {
+                        player.drop(ritualOffering, false);
+                    }
+
+                    level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 1.2F);
                 }
                 return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
@@ -216,9 +276,9 @@ public class BrazierBlock extends BaseEntityBlock {
                                 // Normal 9 ruby removal
                                 secondsRemoved = secondsPerLevel * 9;
                             }
-                        } else if (extracted.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+                        } else if (extracted.is(RNItems.MOLTEN_RUBY.get())) {
                             secondsRemoved = secondsPerLevel;
-                        } else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
+                        } else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET.get())) {
                             int secondsPerNugget = secondsPerLevel / 9;
                             secondsRemoved = extracted.getCount() * secondsPerNugget;
                         } else {
@@ -229,9 +289,9 @@ public class BrazierBlock extends BaseEntityBlock {
                         int baseDamage;
                         if (extracted.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
                             baseDamage = 81; // 9 rubies * 9
-                        } else if (extracted.is(RNItems.MOLTEN_RUBY_ITEM.get())) {
+                        } else if (extracted.is(RNItems.MOLTEN_RUBY.get())) {
                             baseDamage = 9;
-                        } else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET_ITEM.get())) {
+                        } else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET.get())) {
                             baseDamage = extracted.getCount();
                         } else {
                             baseDamage = 0;

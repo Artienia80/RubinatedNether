@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -482,6 +483,25 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
 
         entity.level().playSound(null, entity.blockPosition(),
                 SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.3F, 1.5F);
+
+        // Grant advancement if entity is a player
+        if (entity instanceof ServerPlayer serverPlayer) {
+            grantSpringAdvancement(serverPlayer);
+        }
+    }
+
+    private void grantSpringAdvancement(ServerPlayer player) {
+        var advancementHolder = player.server.getAdvancements()
+                .get(RubinatedNether.id("springs"));
+
+        if (advancementHolder != null) {
+            var progress = player.getAdvancements().getOrStartProgress(advancementHolder);
+            if (!progress.isDone()) {
+                for (String criterion : progress.getRemainingCriteria()) {
+                    player.getAdvancements().award(advancementHolder, criterion);
+                }
+            }
+        }
     }
 
     @Override

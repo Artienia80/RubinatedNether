@@ -1,5 +1,5 @@
 {
-  "parent": "rubinated_nether:offer_ritual_offering",
+  "parent": "rubinated_nether:obtain_bronze_rod",
   "criteria": {
     "impossible": {
       "conditions": {
@@ -24,14 +24,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.rubinated_nether.inscribe_rune.description"
+      "translate": "advancements.rubinated_nether.max_brazier.description"
     },
     "icon": {
       "count": 1,
-      "id": "rubinated_nether:winding_key"
+      "id": "rubinated_nether:ruby_brazier"
     },
     "title": {
-      "translate": "advancements.rubinated_nether.inscribe_rune.title"
+      "translate": "advancements.rubinated_nether.max_brazier.title"
     }
   },
   "requirements": [

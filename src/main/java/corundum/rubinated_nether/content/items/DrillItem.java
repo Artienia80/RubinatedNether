@@ -34,7 +34,7 @@ public class DrillItem extends PickShovelItem {
 	public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity miningEntity) {
 		if (!level.isClientSide() && state.is(RNBlocks.MOLTEN_RUBY_ORE.get())) {
 			int count = 3 + level.random.nextInt(2); // 3-4 items
-			ItemStack drops = new ItemStack(RNItems.MOLTEN_RUBY_ITEM.get(), count);
+			ItemStack drops = new ItemStack(RNItems.MOLTEN_RUBY.get(), count);
 			Block.popResource(level, pos, drops);
 		}
 

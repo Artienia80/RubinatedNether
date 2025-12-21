@@ -2,7 +2,6 @@ package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.RNItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -16,8 +15,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
@@ -96,24 +93,24 @@ public class RNAdvancements extends AdvancementProvider {
 
 			AdvancementHolder moltenRuby = Advancement.Builder.advancement()
 					.parent(freezer)
-					.display(RNItems.MOLTEN_RUBY_ITEM,
+					.display(RNItems.MOLTEN_RUBY,
 							Component.translatable("advancements.rubinated_nether.obtain_molten_ruby.title"),
 							Component.translatable("advancements.rubinated_nether.obtain_molten_ruby.description"),
 							null,
 							AdvancementType.TASK, true, true, false)
 					.requirements(AdvancementRequirements.Strategy.OR)
-					.addCriterion("molten_ruby", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.MOLTEN_RUBY_ITEM))
+					.addCriterion("molten_ruby", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.MOLTEN_RUBY))
 					.save(consumer, RubinatedNether.id( "obtain_molten_ruby"), existingFileHelper);
 
 			AdvancementHolder ruby = Advancement.Builder.advancement()
 					.parent(moltenRuby)
-					.display(RNItems.RUBY_ITEM.get(),
+					.display(RNItems.RUBY.get(),
 							Component.translatable("advancements.rubinated_nether.obtain_ruby.title"),
 							Component.translatable("advancements.rubinated_nether.obtain_ruby.description"),
 							null,
 							AdvancementType.TASK, true, true, false)
 					.requirements(AdvancementRequirements.Strategy.OR)
-					.addCriterion("ruby", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.RUBY_ITEM))
+					.addCriterion("ruby", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.RUBY))
 					.save(consumer, RubinatedNether.id( "obtain_ruby"), existingFileHelper);
 
 			AdvancementHolder rubyGlass = Advancement.Builder.advancement()
@@ -155,6 +152,20 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("ruby_lens", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.RUBY_LENS.get()))
 					.save(consumer, RubinatedNether.id( "obtain_ruby_lens"), existingFileHelper);
 
+			AdvancementHolder laserDetection = Advancement.Builder.advancement()
+					.parent(rubyLens)
+					.display(RNBlocks.BRONZE_LASER.get(),
+							Component.translatable("advancements.rubinated_nether.laser_detection.title"),
+							Component.translatable("advancements.rubinated_nether.laser_detection.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("laser_detection"), existingFileHelper);
+
 			AdvancementHolder enterShrine = Advancement.Builder.advancement()
 					.parent(AdvancementSubProvider.createPlaceholder("nether/root"))
 					.display(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(),
@@ -177,9 +188,37 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("bronze_rod", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.BRONZE_ROD.get()))
 					.save(consumer, RubinatedNether.id( "obtain_bronze_rod"), existingFileHelper);
 
-			AdvancementHolder ritualOffering = Advancement.Builder.advancement()
+			AdvancementHolder max_brazier = Advancement.Builder.advancement()
 					.parent(bronzeRod)
+					.display(RNBlocks.BRAZIER.get(),
+							Component.translatable("advancements.rubinated_nether.max_brazier.title"),
+							Component.translatable("advancements.rubinated_nether.max_brazier.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("max_brazier"), existingFileHelper);
+
+			AdvancementHolder baptism = Advancement.Builder.advancement()
+					.parent(max_brazier)
 					.display(RNItems.RITUAL_OFFERING.get(),
+							Component.translatable("advancements.rubinated_nether.baptism.title"),
+							Component.translatable("advancements.rubinated_nether.baptism.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("baptism"), existingFileHelper);
+
+			AdvancementHolder ritualOffering = Advancement.Builder.advancement()
+					.parent(baptism)
+					.display(RNBlocks.RUBINATION_ALTAR.get(),
 							Component.translatable("advancements.rubinated_nether.offer_ritual_offering.title"),
 							Component.translatable("advancements.rubinated_nether.offer_ritual_offering.description"),
 							null,
@@ -188,7 +227,7 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("impossible",
 							PlayerTrigger.TriggerInstance.located(
 									LocationPredicate.Builder.location()
-											.setY(MinMaxBounds.Doubles.atMost(-65536))))
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
 					.save(consumer, RubinatedNether.id("offer_ritual_offering"), existingFileHelper);
 
 			AdvancementHolder divineFavor = Advancement.Builder.advancement()
@@ -201,12 +240,12 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("impossible",
 							PlayerTrigger.TriggerInstance.located(
 									LocationPredicate.Builder.location()
-											.setY(MinMaxBounds.Doubles.atMost(-65536))))
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
 					.save(consumer, RubinatedNether.id("divine_favor"), existingFileHelper);
 
 			AdvancementHolder inscribeRune = Advancement.Builder.advancement()
 					.parent(ritualOffering)
-					.display(RNItems.RUNE.get(),
+					.display(RNItems.WINDING_KEY.get(),
 							Component.translatable("advancements.rubinated_nether.inscribe_rune.title"),
 							Component.translatable("advancements.rubinated_nether.inscribe_rune.description"),
 							null,
@@ -215,7 +254,7 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("impossible",
 							PlayerTrigger.TriggerInstance.located(
 									LocationPredicate.Builder.location()
-											.setY(MinMaxBounds.Doubles.atMost(-65536))))
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
 					.save(consumer, RubinatedNether.id("inscribe_rune"), existingFileHelper);
 
 			AdvancementHolder insertRune = Advancement.Builder.advancement()
@@ -229,12 +268,12 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("impossible",
 							PlayerTrigger.TriggerInstance.located(
 									LocationPredicate.Builder.location()
-											.setY(MinMaxBounds.Doubles.atMost(-65536))))
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
 					.save(consumer, RubinatedNether.id("insert_rune"), existingFileHelper);
 
 			AdvancementHolder rubinateItem = Advancement.Builder.advancement()
 					.parent(insertRune)
-					.display(RNItems.WINDING_KEY.get(),
+					.display(RNItems.COGWHEEL.get(),
 							Component.translatable("advancements.rubinated_nether.rubinate_item.title"),
 							Component.translatable("advancements.rubinated_nether.rubinate_item.description"),
 							null,
@@ -243,7 +282,7 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("impossible",
 							PlayerTrigger.TriggerInstance.located(
 									LocationPredicate.Builder.location()
-											.setY(MinMaxBounds.Doubles.atMost(-65536))))
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
 					.save(consumer, RubinatedNether.id("rubinate_item"), existingFileHelper);
 
 			AdvancementHolder heavyBurden = Advancement.Builder.advancement()
@@ -361,22 +400,23 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("impossible",
 							PlayerTrigger.TriggerInstance.located(
 									LocationPredicate.Builder.location()
-											.setY(MinMaxBounds.Doubles.atMost(-65536))))
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
                     .save(consumer, RubinatedNether.id("pitfalls"), existingFileHelper);
 
-            AdvancementHolder laserDetection = Advancement.Builder.advancement()
+			AdvancementHolder springs = Advancement.Builder.advancement()
 					.parent(enterShrine)
-					.display(RNBlocks.BRONZE_LASER.get(),
-							Component.translatable("advancements.rubinated_nether.laser_detection.title"),
-							Component.translatable("advancements.rubinated_nether.laser_detection.description"),
+					.display(RNBlocks.BRONZE_SPRING.get(),
+							Component.translatable("advancements.rubinated_nether.springs.title"),
+							Component.translatable("advancements.rubinated_nether.springs.description"),
 							null,
 							AdvancementType.TASK, true, true, false)
 					.requirements(AdvancementRequirements.Strategy.AND)
 					.addCriterion("impossible",
 							PlayerTrigger.TriggerInstance.located(
 									LocationPredicate.Builder.location()
-											.setY(MinMaxBounds.Doubles.atMost(-65536))))
-					.save(consumer, RubinatedNether.id("laser_detection"), existingFileHelper);
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("springs"), existingFileHelper);
+
 		}
 	}
 

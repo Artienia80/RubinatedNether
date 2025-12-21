@@ -41,6 +41,72 @@
         }
       ],
       "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:limit_count",
+              "limit": {
+                "max": 1.0
+              }
+            }
+          ],
+          "name": "rubinated_nether:winding_key"
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 90
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:limit_count",
+              "limit": {
+                "max": 1.0
+              }
+            }
+          ],
+          "name": "rubinated_nether:cogwheel"
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 98
+        }
+      ],
+      "rolls": 1.0
     }
   ],
   "random_sequence": "rubinated_nether:entities/bronze"

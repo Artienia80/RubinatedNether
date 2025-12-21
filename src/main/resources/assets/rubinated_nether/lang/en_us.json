@@ -327,6 +327,7 @@
 
   "item.rubinated_nether.ritual_offering": "Ritual Offering",
   "item.rubinated_nether.winding_key": "Winding Key",
+  "item.rubinated_nether.cogwheel": "Cogwheel",
 
   "item.rubinated_nether.bronze_spawn_egg": "Bronze Spawn Egg",
 
@@ -348,8 +349,12 @@
   "advancements.rubinated_nether.obtain_ruby.title": "Welcome back, Old Friend",
   "advancements.rubinated_nether.obtain_ruby_glass.description": "Craft the blast-resistant Ruby Glass",
   "advancements.rubinated_nether.obtain_ruby_glass.title": "Over 9000!",
+
   "advancements.rubinated_nether.wear_lens.description": "Equip a pair of Ruby Lenses to see lasers",
   "advancements.rubinated_nether.wear_lens.title": "Rose-Tinted Glasses",
+  "advancements.rubinated_nether.laser_detection.title": "I see you...",
+  "advancements.rubinated_nether.laser_detection.description": "Be Detected by a Bronze or Copper Laser",
+
   "advancements.rubinated_nether.obtain_brazier.description": "Craft a Brazier",
   "advancements.rubinated_nether.obtain_brazier.title": "I'll Be Back",
 
@@ -357,14 +362,18 @@
   "advancements.rubinated_nether.enter_shrine.title": "Don't Turn Left",
   "advancements.rubinated_nether.bronze_rod.description": "Obtain a Bronze Rod",
   "advancements.rubinated_nether.bronze_rod.title": "The Emperor's New Ore",
+  "advancements.rubinated_nether.max_brazier.title": "Diabolical Stew",
+  "advancements.rubinated_nether.max_brazier.description": "Fill up the Brazier completely with Molten Rubies",
+  "advancements.rubinated_nether.baptism.title": "Baptism",
+  "advancements.rubinated_nether.baptism.description": "Dip a Bronze Rod into the Brazier to obtain a Ritual Offering",
   "advancements.rubinated_nether.offer_ritual_offering.title": "Bless You!",
   "advancements.rubinated_nether.offer_ritual_offering.description": "Offer a Ritual Offering to the Rubination Altar",
   "advancements.rubinated_nether.inscribe_rune.title": "Path of the Rubinators",
-  "advancements.rubinated_nether.inscribe_rune.description": "Insert a Rune and a tool/weapon into the Rubination Altar in a fully Rubinated room and Inscribe it",
+  "advancements.rubinated_nether.inscribe_rune.description": "Inscribe a blank rune in a Rubination Altar via a Winding Key, surrounded by Rubinated blocks",
   "advancements.rubinated_nether.insert_rune.title": "Ruby Red Runes",
   "advancements.rubinated_nether.insert_rune.description": "Insert a Rune of Rubination into a Runestone",
   "advancements.rubinated_nether.rubinate_item.title": "A Faustian Bargain",
-  "advancements.rubinated_nether.rubinate_item.description": "Rubinate a tool or weapon in a Rubination Altar via a Winding Key",
+  "advancements.rubinated_nether.rubinate_item.description": "Rubinate a tool or weapon in a Rubination Altar via a Cogwheel",
 
   "advancements.rubinated_nether.divine_favor.title": "Holy Day",
   "advancements.rubinated_nether.divine_favor.description": "Obtain the Maximum Blessing Effect",
@@ -375,8 +384,8 @@
 
   "advancements.rubinated_nether.pitfalls.title": "Pitfalls!",
   "advancements.rubinated_nether.pitfalls.description": "Step on a Bronze Grate and Watch it Fall",
-  "advancements.rubinated_nether.laser_detection.title": "I see you...",
-  "advancements.rubinated_nether.laser_detection.description": "Be Detected by a Bronze or Copper Laser",
+  "advancements.rubinated_nether.springs.title": "Boing!",
+  "advancements.rubinated_nether.springs.description": "Step on a Bronze Spring and Get Launched",
 
   "menu.rubinated_nether.freezer": "Freezer",
   "gui.rubinated_nether.jei.freezer": "Freezing",

@@ -1,5 +1,5 @@
 {
-  "parent": "rubinated_nether:enter_shrine",
+  "parent": "rubinated_nether:obtain_ruby_lens",
   "criteria": {
     "impossible": {
       "conditions": {
@@ -11,7 +11,7 @@
               "location": {
                 "position": {
                   "y": {
-                    "max": -65536.0
+                    "max": -250314.0
                   }
                 }
               }
