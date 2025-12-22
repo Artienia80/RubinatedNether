@@ -1,7 +1,7 @@
 {
   "variants": {
     "axis=x": {
-      "model": "rubinated_nether:block/rubinated_shrine_stone_pillar_horizontal",
+      "model": "rubinated_nether:block/rubinated_shrine_stone_pillar",
       "x": 90,
       "y": 90
     },
@@ -9,7 +9,7 @@
       "model": "rubinated_nether:block/rubinated_shrine_stone_pillar"
     },
     "axis=z": {
-      "model": "rubinated_nether:block/rubinated_shrine_stone_pillar_horizontal",
+      "model": "rubinated_nether:block/rubinated_shrine_stone_pillar",
       "x": 90
     }
   }

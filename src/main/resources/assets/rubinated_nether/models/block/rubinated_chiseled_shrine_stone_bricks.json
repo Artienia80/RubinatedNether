@@ -1,0 +1,40 @@
+{
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "end": "rubinated_nether:block/rubinated_chiseled_shrine_stone_bricks_end",
+    "side": "rubinated_nether:block/rubinated_chiseled_shrine_stone_bricks_side",
+    "overlay_end": "rubinated_nether:block/rubinated_chiseled_shrine_stone_bricks_end_e",
+    "overlay_side": "rubinated_nether:block/rubinated_chiseled_shrine_stone_bricks_side_e",
+    "particle": "rubinated_nether:block/rubinated_chiseled_shrine_stone_bricks_side"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "down": {"texture": "#end"},
+        "up": {"texture": "#end"},
+        "north": {"texture": "#side"},
+        "south": {"texture": "#side"},
+        "west": {"texture": "#side"},
+        "east": {"texture": "#side"}
+      }
+    },
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "down": {"texture": "#overlay_end"},
+        "up": {"texture": "#overlay_end"},
+        "north": {"texture": "#overlay_side"},
+        "south": {"texture": "#overlay_side"},
+        "west": {"texture": "#overlay_side"},
+        "east": {"texture": "#overlay_side"}
+      },
+      "neoforge_data": {
+        "block_light": 15,
+        "sky_light": 15
+      }
+    }
+  ]
+}
