@@ -119,8 +119,8 @@ public class RNConfig extends MidnightConfig {
 	@Entry(
 			category = COFFER,
 			isSlider = true,
-			min = 1,
-			max = 16
+			min = 2,
+			max = 15
 	)
 	public static int cofferStackMultiplier = 4;
 
