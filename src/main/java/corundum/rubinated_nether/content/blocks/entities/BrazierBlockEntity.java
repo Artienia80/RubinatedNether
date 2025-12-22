@@ -10,7 +10,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -68,13 +67,8 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 				int expectedLevel = (remainingFuelSeconds + secondsPerLevel - 1) / secondsPerLevel;
 
 				if (expectedLevel < currentLevel) {
-					System.out.println("DEBUG: Level dropping from " + currentLevel + " to " + expectedLevel);
-
 					levelJustChanged = true;
-
 					level.setBlock(pos, state.setValue(BrazierBlock.LEVEL, Math.max(0, expectedLevel)), 3);
-
-					// Use centralized method for updating effect amplifiers
 					updateEffectAmplifiersForLevelChange(level, pos, expectedLevel);
 				}
 			}
@@ -91,14 +85,6 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		}
 	}
 
-	/**
-	 * Updates effect amplifiers for all players in range when the brazier level changes.
-	 * This removes the old effect and applies a new one with the correct amplifier.
-	 *
-	 * @param level The level/world
-	 * @param pos The brazier position
-	 * @param newLevel The new brazier level (0-9)
-	 */
 	public void updateEffectAmplifiersForLevelChange(Level level, BlockPos pos, int newLevel) {
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
 		AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
@@ -112,15 +98,8 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 			MobEffectInstance oldEffect = player.getEffect(RNEffects.BRAZIER_POWER);
 
 			if (oldEffect != null) {
-				System.out.println("DEBUG: Player " + player.getName().getString() +
-						" had amplifier " + oldEffect.getAmplifier() + ", removing...");
-
 				player.removeEffect(RNEffects.BRAZIER_POWER);
-
-				System.out.println("DEBUG: Effect removed, now has effect? " + player.hasEffect(RNEffects.BRAZIER_POWER));
 			}
-
-			System.out.println("DEBUG: Applying new amplifier " + newAmplifier);
 
 			MobEffectInstance newEffect = new MobEffectInstance(
 					RNEffects.BRAZIER_POWER,
@@ -131,12 +110,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 					true
 			);
 
-			boolean applied = player.addEffect(newEffect);
-			System.out.println("DEBUG: Applied? " + applied);
-
-			MobEffectInstance afterEffect = player.getEffect(RNEffects.BRAZIER_POWER);
-			System.out.println("DEBUG: After apply, player has amplifier: " +
-					(afterEffect != null ? afterEffect.getAmplifier() : "null"));
+			player.addEffect(newEffect);
 		}
 	}
 
@@ -161,7 +135,6 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 				int currentAmplifier = currentEffect.getAmplifier();
 				int currentDuration = currentEffect.getDuration();
 
-				// Update if amplifier changed OR if duration differs by more than 1 second worth of ticks
 				if (currentAmplifier != targetAmplifier || Math.abs(currentDuration - fuelDurationTicks) > TICKS_PER_SECOND) {
 					shouldUpdate = true;
 				}
@@ -229,14 +202,13 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		RandomSource random = level.random;
 		int xPos = pos.getX(), yPos = pos.getY(), zPos = pos.getZ();
 
-		// Calculate surface Y position based on fill level (moves up 1 pixel per level)
-		double surfaceY = yPos + 0.3125 + (fillLevel * 0.0625); // 0.3125 = 5/16 blocks, 0.0625 = 1 pixel
+		// Calculate surface Y position based on fill level
+		double surfaceY = yPos + 0.3125 + (fillLevel * 0.0625);
 
-		// Check if block above is air (like lava does)
+		// Check if block above is air
 		BlockPos blockAbove = pos.above();
 		if (level.getBlockState(blockAbove).isAir() && !level.getBlockState(blockAbove).isSolidRender(level, blockAbove)) {
-			// Pop particles - scales with fill level (more frequent at higher levels)
-			// Base frequency increased from 1/100 to 1/40, then scales down with level
+			// Pop particles - scales with fill level
 			int popChance = Math.max(10, 40 - (fillLevel * 3));
 			if (random.nextInt(popChance) == 0) {
 				double d0 = xPos + 0.2 + random.nextDouble() * 0.6;
@@ -246,63 +218,34 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 				level.playLocalSound(d0, d1, d2, SoundEvents.LAVA_POP, SoundSource.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, false);
 			}
 
-			// Ambient sound (same frequency as lava)
+			// Ambient sound
 			if (random.nextInt(200) == 0) {
 				level.playLocalSound(xPos, surfaceY, zPos, SoundEvents.LAVA_AMBIENT, SoundSource.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, false);
 			}
 		}
 
-		// RUBY SPIRIT PARTICLE SPAWNING WITH COMPREHENSIVE DEBUG
+		// Ruby Spirit particles - frequency scales with level
+		// Level 1 = 1x frequency (1/100 chance)
+		// Level 9 = 2x frequency (1/50 chance)
+		// Linear interpolation: chance = 100 - (fillLevel - 1) * 6.25
 		if (fillLevel > 0) {
-			// Temporary: Spawn every tick for maximum visibility during testing
-			if (true) { // Change back to: random.nextInt(10) == 0
+			// Calculate spawn chance: lerp from 100 at level 1 to 50 at level 9
+			float levelNormalized = (fillLevel - 1) / 8.0f; // 0.0 at level 1, 1.0 at level 9
+			int spawnChance = (int)(100 - (levelNormalized * 50)); // 100 to 50
+
+			if (random.nextInt(spawnChance) == 0) {
 				double sx = xPos + 0.3 + random.nextDouble() * 0.4;
 				double sz = zPos + 0.3 + random.nextDouble() * 0.4;
 				double spawnY = surfaceY + 0.1;
 
-				System.out.println("=== RUBY SPIRIT DEBUG ===");
-				System.out.println("Spawning at: X=" + sx + ", Y=" + spawnY + ", Z=" + sz);
-				System.out.println("Fill level: " + fillLevel);
-				System.out.println("Particle type: " + RNParticleTypes.RUBY_SPIRIT.get());
-				System.out.println("Block above is air: " + level.getBlockState(blockAbove).isAir());
-
-				// METHOD 1: Standard spawn (what we've been using)
-				System.out.println("\nMETHOD 1: Using level.addParticle()");
-				level.addParticle(RNParticleTypes.RUBY_SPIRIT.get(), sx, spawnY, sz, 0.0, 0.0, 0.0);
-
-				// METHOD 2: Direct ParticleEngine test
-				System.out.println("METHOD 2: Direct ParticleEngine.createParticle()");
-				try {
-					net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
-					if (mc != null && mc.particleEngine != null) {
-						System.out.println("  ParticleEngine exists: YES");
-						net.minecraft.client.particle.Particle particle = mc.particleEngine.createParticle(
-								RNParticleTypes.RUBY_SPIRIT.get(),
-								sx, spawnY, sz,
-								0.0, 0.0, 0.0
-						);
-						if (particle != null) {
-							System.out.println("  ✓ Particle created successfully!");
-							System.out.println("  Particle class: " + particle.getClass().getSimpleName());
-						} else {
-							System.out.println("  ✗ ERROR: createParticle returned NULL!");
-							System.out.println("  This means the Provider is NOT registered or failed to create particle!");
-						}
-					} else {
-						System.out.println("  ERROR: Minecraft or ParticleEngine is null!");
-					}
-				} catch (Exception e) {
-					System.out.println("  ERROR: " + e.getMessage());
-					e.printStackTrace();
+				net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+				if (mc != null && mc.particleEngine != null) {
+					mc.particleEngine.createParticle(
+							RNParticleTypes.RUBY_SPIRIT.get(),
+							sx, spawnY, sz,
+							0.0, 0.0, 0.0
+					);
 				}
-
-				// METHOD 3: Spawn RUBY_AURA for comparison (we know this works)
-				System.out.println("\nMETHOD 3: Spawning RUBY_AURA (known working) for comparison");
-				level.addParticle(RNParticleTypes.RUBY_AURA.get(), sx, spawnY + 0.5, sz, 0.0, 0.0, 0.0);
-				System.out.println("  RUBY_AURA spawned 0.5 blocks higher (should be visible)");
-
-				System.out.println("\nParticle spawn command sent!");
-				System.out.println("========================\n");
 			}
 		}
 	}
@@ -398,7 +341,6 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 			if (player.hasEffect(RNEffects.BRAZIER_POWER)) {
 				if (!isPlayerInRangeOfAnyBrazierExcluding(level, player, excludePos)) {
 					player.removeEffect(RNEffects.BRAZIER_POWER);
-					System.out.println("DEBUG: Removed effect from " + player.getName().getString() + " due to brazier being broken");
 				}
 			}
 		}
@@ -432,7 +374,6 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		return false;
 	}
 
-	// Helper method to check fuel type
 	private boolean isGreatFuel(ItemStack stack) {
 		return stack.is(RNTags.Items.GREAT_BRAZIER_FUEL);
 	}
@@ -445,7 +386,6 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		return stack.is(RNTags.Items.SMALL_BRAZIER_FUEL);
 	}
 
-	// WorldlyContainer implementation for hopper compatibility
 	@Override
 	public int[] getSlotsForFace(Direction direction) {
 		if (direction == Direction.DOWN) {
@@ -468,21 +408,16 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
 		int maxSeconds = secondsPerLevel * 9;
 
-		// Check based on actual fuel seconds
 		if (isGreatFuel(stack)) {
-			// Blocks only get bonus when brazier is empty
 			if (remainingFuelSeconds == 0) {
-				// Empty brazier - allow with bonus (9 * 1.05 = 9.45 levels worth)
 				int bonusSeconds = (int)(secondsPerLevel * 9 * 1.05f);
-				return bonusSeconds <= maxSeconds; // This will be true since 9.45 > 9, but we allow it
+				return bonusSeconds <= maxSeconds;
 			} else {
-				// Partially filled - check without bonus
 				return remainingFuelSeconds + (secondsPerLevel * 9) <= maxSeconds;
 			}
 		} else if (isStandardFuel(stack)) {
 			return remainingFuelSeconds + secondsPerLevel <= maxSeconds;
 		} else {
-			// Nuggets
 			int secondsPerNugget = secondsPerLevel / 9;
 			return remainingFuelSeconds + secondsPerNugget <= maxSeconds;
 		}
@@ -565,13 +500,11 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 
 		boolean added = false;
 		if (isGreatFuel(stack)) {
-			// Only apply bonus if brazier is completely empty
 			if (remainingFuelSeconds == 0) {
 				addFuelWithBonus(9, 1.05f);
 				stack.shrink(1);
 				added = true;
 			} else if (remainingFuelSeconds + (secondsPerLevel * 9) <= maxSeconds) {
-				// Partially filled - no bonus
 				addFuel(9);
 				stack.shrink(1);
 				added = true;

@@ -34,9 +34,8 @@ public class RubyAuraParticle extends TextureSheetParticle {
     }
 
     public int getLightColor(float partialTick) {
-        int i = super.getLightColor(partialTick);
-        int k = i >> 16 & 255;
-        return 240 | k << 16;
+        // Make it fully emissive - visible in the dark
+        return 240 | 240 << 16;
     }
 
     public float getQuadSize(float scaleFactor) {
