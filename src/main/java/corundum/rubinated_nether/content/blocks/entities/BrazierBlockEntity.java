@@ -8,6 +8,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.WorldlyContainer;
@@ -227,12 +229,81 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		RandomSource random = level.random;
 		int xPos = pos.getX(), yPos = pos.getY(), zPos = pos.getZ();
 
-		int scaledParticleCount = Math.max(1, (RNConfig.brazierParticleCount * fillLevel) / 9);
+		// Calculate surface Y position based on fill level (moves up 1 pixel per level)
+		double surfaceY = yPos + 0.3125 + (fillLevel * 0.0625); // 0.3125 = 5/16 blocks, 0.0625 = 1 pixel
 
-		for (int i = 0; i < scaledParticleCount; i++) {
-			double x = Mth.clamp(xPos + random.nextGaussian() / 6.0, xPos - 0.4, xPos + 0.4);
-			double z = Mth.clamp(zPos + random.nextGaussian() / 6.0, zPos - 0.4, zPos + 0.4);
-			level.addParticle(RNParticleTypes.RUBY_AURA.get(), x + 0.5, yPos + 0.5, z + 0.5, 0, 0.02, 0);
+		// Check if block above is air (like lava does)
+		BlockPos blockAbove = pos.above();
+		if (level.getBlockState(blockAbove).isAir() && !level.getBlockState(blockAbove).isSolidRender(level, blockAbove)) {
+			// Pop particles - scales with fill level (more frequent at higher levels)
+			// Base frequency increased from 1/100 to 1/40, then scales down with level
+			int popChance = Math.max(10, 40 - (fillLevel * 3));
+			if (random.nextInt(popChance) == 0) {
+				double d0 = xPos + 0.2 + random.nextDouble() * 0.6;
+				double d1 = surfaceY + 0.1;
+				double d2 = zPos + 0.2 + random.nextDouble() * 0.6;
+				level.addParticle(RNParticleTypes.RUBY_AURA.get(), d0, d1, d2, 0.0, 0.0, 0.0);
+				level.playLocalSound(d0, d1, d2, SoundEvents.LAVA_POP, SoundSource.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, false);
+			}
+
+			// Ambient sound (same frequency as lava)
+			if (random.nextInt(200) == 0) {
+				level.playLocalSound(xPos, surfaceY, zPos, SoundEvents.LAVA_AMBIENT, SoundSource.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, false);
+			}
+		}
+
+		// RUBY SPIRIT PARTICLE SPAWNING WITH COMPREHENSIVE DEBUG
+		if (fillLevel > 0) {
+			// Temporary: Spawn every tick for maximum visibility during testing
+			if (true) { // Change back to: random.nextInt(10) == 0
+				double sx = xPos + 0.3 + random.nextDouble() * 0.4;
+				double sz = zPos + 0.3 + random.nextDouble() * 0.4;
+				double spawnY = surfaceY + 0.1;
+
+				System.out.println("=== RUBY SPIRIT DEBUG ===");
+				System.out.println("Spawning at: X=" + sx + ", Y=" + spawnY + ", Z=" + sz);
+				System.out.println("Fill level: " + fillLevel);
+				System.out.println("Particle type: " + RNParticleTypes.RUBY_SPIRIT.get());
+				System.out.println("Block above is air: " + level.getBlockState(blockAbove).isAir());
+
+				// METHOD 1: Standard spawn (what we've been using)
+				System.out.println("\nMETHOD 1: Using level.addParticle()");
+				level.addParticle(RNParticleTypes.RUBY_SPIRIT.get(), sx, spawnY, sz, 0.0, 0.0, 0.0);
+
+				// METHOD 2: Direct ParticleEngine test
+				System.out.println("METHOD 2: Direct ParticleEngine.createParticle()");
+				try {
+					net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+					if (mc != null && mc.particleEngine != null) {
+						System.out.println("  ParticleEngine exists: YES");
+						net.minecraft.client.particle.Particle particle = mc.particleEngine.createParticle(
+								RNParticleTypes.RUBY_SPIRIT.get(),
+								sx, spawnY, sz,
+								0.0, 0.0, 0.0
+						);
+						if (particle != null) {
+							System.out.println("  ✓ Particle created successfully!");
+							System.out.println("  Particle class: " + particle.getClass().getSimpleName());
+						} else {
+							System.out.println("  ✗ ERROR: createParticle returned NULL!");
+							System.out.println("  This means the Provider is NOT registered or failed to create particle!");
+						}
+					} else {
+						System.out.println("  ERROR: Minecraft or ParticleEngine is null!");
+					}
+				} catch (Exception e) {
+					System.out.println("  ERROR: " + e.getMessage());
+					e.printStackTrace();
+				}
+
+				// METHOD 3: Spawn RUBY_AURA for comparison (we know this works)
+				System.out.println("\nMETHOD 3: Spawning RUBY_AURA (known working) for comparison");
+				level.addParticle(RNParticleTypes.RUBY_AURA.get(), sx, spawnY + 0.5, sz, 0.0, 0.0, 0.0);
+				System.out.println("  RUBY_AURA spawned 0.5 blocks higher (should be visible)");
+
+				System.out.println("\nParticle spawn command sent!");
+				System.out.println("========================\n");
+			}
 		}
 	}
 

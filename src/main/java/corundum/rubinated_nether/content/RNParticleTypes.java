@@ -19,6 +19,11 @@ public final class RNParticleTypes {
 		() -> new SimpleParticleType(true)
 	);
 
+	public static final Supplier<SimpleParticleType> RUBY_SPIRIT = PARTICLES.register(
+			"ruby_spirit",
+			() -> new SimpleParticleType(false)
+	);
+
 	public static final Supplier<SimpleParticleType> RUBINATE = PARTICLES.register(
 			"rubinate",
 			() -> new SimpleParticleType(false)
