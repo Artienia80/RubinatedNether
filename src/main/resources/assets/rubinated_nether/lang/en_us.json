@@ -12,7 +12,6 @@
   "item.rubinated_nether.ruby_shard": "Ruby Shard",
   "item.rubinated_nether.molten_ruby_nugget": "Molten Ruby Nugget",
 
-
   "block.rubinated_nether.ruby_block": "Block of Ruby",
   "block.rubinated_nether.molten_ruby_block": "Block of Molten Ruby",
   "block.rubinated_nether.bleeding_obsidian": "Bleeding Obsidian",
@@ -420,6 +419,8 @@
 
   "rubinated_nether.midnightconfig.category.brazier": "Brazier",
   "rubinated_nether.midnightconfig.category.chandelier": "Chandelier",
+  "rubinated_nether.midnightconfig.category.altar": "Altar",
+  "rubinated_nether.midnightconfig.category.coffer": "Coffer",
   "rubinated_nether.midnightconfig.category.client": "Client",
 
   "rubinated_nether.midnightconfig.chandelierDefaultDamage": "Chandelier Default Damage Value",
