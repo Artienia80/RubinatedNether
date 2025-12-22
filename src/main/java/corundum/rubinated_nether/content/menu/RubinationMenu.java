@@ -321,7 +321,7 @@ public class RubinationMenu extends AbstractContainerMenu {
         }
 
         // Check if duration exceeds Threshold, by default 5h:20m (384000 ticks) (64 Offerings)
-        if (newDuration >= RNConfig.alterFullBlessingThreshold*60*20 && player instanceof ServerPlayer serverPlayer) {
+        if (newDuration >= RNConfig.altarFullBlessingThreshold*60*20 && player instanceof ServerPlayer serverPlayer) {
             AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
                     .get(RubinatedNether.id("divine_favor"));
 

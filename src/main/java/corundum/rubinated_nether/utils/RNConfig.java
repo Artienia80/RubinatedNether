@@ -53,14 +53,6 @@ public class RNConfig extends MidnightConfig {
 	@Entry(category = BRAZIER)
 	public static boolean brazierEffectParticles = true;
 
-	@Entry(
-			category = BRAZIER,
-			isSlider = true,
-			min = 1,
-			max = 6
-	)
-	public static int brazierParticleCount = 2;
-
 	/* -- Altar -- */
 
 	@Entry(
@@ -75,7 +67,7 @@ public class RNConfig extends MidnightConfig {
 			category = ALTAR,
 			isSlider = true,
 			min = 0,
-			max = 1
+			max = 20
 	)
 	public static int altarLesserBlessingTime = 5;
 
@@ -83,17 +75,17 @@ public class RNConfig extends MidnightConfig {
 			category = ALTAR,
 			isSlider = true,
 			min = 0,
-			max = 1
+			max = 60
 	)
 	public static int altarGreaterBlessingTime = 20;
 
 	@Entry(
 			category = ALTAR,
 			isSlider = true,
-			min = 0,
-			max = 1
+			min = 60,
+			max = 1440
 	)
-	public static int alterFullBlessingThreshold = 320;
+	public static int altarFullBlessingThreshold = 320;
 
 	@Entry(category = ALTAR)
 	public static boolean blessedEffectGlowing = true;
