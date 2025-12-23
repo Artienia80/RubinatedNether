@@ -64,7 +64,10 @@ public class RNBlocks {
 
 	public static final DeferredBlock<RotatedPillarBlock> MOLTEN_RUBY_BLOCK = registerBlockAndItem(
 			"molten_ruby_block",
-			() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK))
+			() -> new RotatedPillarBlock(
+					Block.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK)
+							.lightLevel($ -> 10)
+			)
 	);
 
 	public static final DeferredBlock<Block> BLEEDING_OBSIDIAN = registerBlockAndItem(
@@ -1007,7 +1010,7 @@ public class RNBlocks {
 							.ofFullCopy(Blocks.LANTERN)
 							.mapColor(MapColor.TERRACOTTA_PINK)
 							.strength(5.0F, 40.0F)
-							.lightLevel($ -> 12)
+							.lightLevel($ -> 15)
 			)
 	);
 
@@ -1019,7 +1022,7 @@ public class RNBlocks {
 							.ofFullCopy(Blocks.LANTERN)
 							.mapColor(MapColor.CRIMSON_STEM)
 							.strength(5.0F, 80.0F)
-							.lightLevel($ -> 8)
+							.lightLevel($ -> 15)
 			)
 	);
 
@@ -1031,7 +1034,7 @@ public class RNBlocks {
 							.ofFullCopy(Blocks.LANTERN)
 							.mapColor(MapColor.TERRACOTTA_BLACK)
 							.strength(5.0F, 160.0F)
-							.lightLevel($ -> 4)
+							.lightLevel($ -> 15)
 			)
 	);
 

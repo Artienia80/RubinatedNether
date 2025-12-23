@@ -1,6 +1,8 @@
 {
   "pack": {
     "pack_format": 34,
-    "description": "Optional resource pack for §4Rubinated Nether"
+    "description": {
+      "translate": "resourcepack.rubinated_nether.simple_freezer.desc"
+    }
   }
 }

@@ -448,8 +448,12 @@
   "rubinated_nether.midnightconfig.cofferStackMultiplier": "Coffer Stack Multiplier",
 
   "rubinated_nether.midnightconfig.rubyLensOpacity": "Ruby Lens Opacity",
-  "rubinated_nether.midnightconfig.bronzeDiseasedOverlayOpacity": "Bronze Diseased Overlay Opacity"
+  "rubinated_nether.midnightconfig.bronzeDiseasedOverlayOpacity": "Bronze Diseased Overlay Opacity",
 
+  "resourcepack.rubinated_nether.simple_freezer": "§4Simplified Freezer Model",
+  "resourcepack.rubinated_nether.aurichalcum": "§4Bronze No More!",
 
+  "resourcepack.rubinated_nether.simple_freezer.desc": "Turns the Freezer into a cube model",
+  "resourcepack.rubinated_nether.aurichalcum.desc": "Renames 'Bronze' into 'Aurichalcum' for Modpacks"
 
 }

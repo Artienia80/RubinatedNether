@@ -1,0 +1,201 @@
+{
+  "itemGroup.rubinated_nether_bronze": "Rubinated Nether - Aurichalcum",
+
+  "block.rubinated_nether.bronze_block": "Block of Aurichalcum",
+  "block.rubinated_nether.discolored_bronze_block": "Discolored Aurichalcum",
+  "block.rubinated_nether.corroded_bronze_block": "Corroded Aurichalcum",
+  "block.rubinated_nether.tarnished_bronze_block": "Tarnished Aurichalcum",
+  "block.rubinated_nether.crystallized_bronze_block": "Crystallized Aurichalcum",
+
+  "item.rubinated_nether.waxed_bronze_block": "Waxed Block of Aurichalcum",
+  "item.rubinated_nether.waxed_discolored_bronze_block": "Waxed Discolored Aurichalcum",
+  "item.rubinated_nether.waxed_corroded_bronze_block": "Waxed Corroded Aurichalcum",
+  "item.rubinated_nether.waxed_tarnished_bronze_block": "Waxed Tarnished Aurichalcum",
+  "item.rubinated_nether.waxed_crystallized_bronze_block": "Waxed Crystallized Aurichalcum",
+
+  "block.rubinated_nether.chiseled_bronze": "Chiseled Aurichalcum",
+  "block.rubinated_nether.discolored_chiseled_bronze": "Discolored Chiseled Aurichalcum",
+  "block.rubinated_nether.corroded_chiseled_bronze": "Corroded Chiseled Aurichalcum",
+  "block.rubinated_nether.tarnished_chiseled_bronze": "Tarnished Chiseled Aurichalcum",
+  "block.rubinated_nether.crystallized_chiseled_bronze": "Crystallized Chiseled Aurichalcum",
+
+  "item.rubinated_nether.waxed_chiseled_bronze": "Waxed Chiseled Aurichalcum",
+  "item.rubinated_nether.waxed_discolored_chiseled_bronze": "Waxed Discolored Chiseled Aurichalcum",
+  "item.rubinated_nether.waxed_corroded_chiseled_bronze": "Waxed Corroded Chiseled Aurichalcum",
+  "item.rubinated_nether.waxed_tarnished_chiseled_bronze": "Waxed Tarnished Chiseled Aurichalcum",
+  "item.rubinated_nether.waxed_crystallized_chiseled_bronze": "Waxed Crystallized Chiseled Aurichalcum",
+
+  "block.rubinated_nether.cut_bronze_pillar": "Cut Aurichalcum Pillar",
+  "block.rubinated_nether.discolored_cut_bronze_pillar": "Discolored Cut Aurichalcum Pillar",
+  "block.rubinated_nether.corroded_cut_bronze_pillar": "Corroded Cut Aurichalcum Pillar",
+  "block.rubinated_nether.tarnished_cut_bronze_pillar": "Tarnished Cut Aurichalcum Pillar",
+  "block.rubinated_nether.crystallized_cut_bronze_pillar": "Crystallized Cut Aurichalcum Pillar",
+
+  "item.rubinated_nether.waxed_cut_bronze_pillar": "Waxed Cut Aurichalcum Pillar",
+  "item.rubinated_nether.waxed_discolored_cut_bronze_pillar": "Waxed Discolored Cut Aurichalcum Pillar",
+  "item.rubinated_nether.waxed_corroded_cut_bronze_pillar": "Waxed Corroded Cut Aurichalcum Pillar",
+  "item.rubinated_nether.waxed_tarnished_cut_bronze_pillar": "Waxed Tarnished Cut Aurichalcum Pillar",
+  "item.rubinated_nether.waxed_crystallized_cut_bronze_pillar": "Waxed Crystallized Cut Aurichalcum Pillar",
+
+  "block.rubinated_nether.cut_bronze_bricks": "Cut Aurichalcum Bricks",
+  "block.rubinated_nether.cut_bronze_bricks_slab": "Cut Aurichalcum Brick Slab",
+  "block.rubinated_nether.cut_bronze_bricks_stairs": "Cut Aurichalcum Brick Stairs",
+  "block.rubinated_nether.discolored_cut_bronze_bricks": "Discolored Cut Aurichalcum Bricks",
+  "block.rubinated_nether.discolored_cut_bronze_bricks_slab": "Discolored Cut Aurichalcum Brick Slab",
+  "block.rubinated_nether.discolored_cut_bronze_bricks_stairs": "Discolored Cut Aurichalcum Brick Stairs",
+  "block.rubinated_nether.corroded_cut_bronze_bricks": "Corroded Cut Aurichalcum Bricks",
+  "block.rubinated_nether.corroded_cut_bronze_bricks_slab": "Corroded Cut Aurichalcum Brick Slab",
+  "block.rubinated_nether.corroded_cut_bronze_bricks_stairs": "Corroded Cut Aurichalcum Brick Stairs",
+  "block.rubinated_nether.tarnished_cut_bronze_bricks": "Tarnished Cut Aurichalcum Bricks",
+  "block.rubinated_nether.tarnished_cut_bronze_bricks_slab": "Tarnished Cut Aurichalcum Brick Slab",
+  "block.rubinated_nether.tarnished_cut_bronze_bricks_stairs": "Tarnished Cut Aurichalcum Brick Stairs",
+  "block.rubinated_nether.crystallized_cut_bronze_bricks": "Crystallized Cut Aurichalcum Bricks",
+  "block.rubinated_nether.crystallized_cut_bronze_bricks_slab": "Crystallized Cut Aurichalcum Brick Slab",
+  "block.rubinated_nether.crystallized_cut_bronze_bricks_stairs": "Crystallized Cut Aurichalcum Brick Stairs",
+
+  "item.rubinated_nether.waxed_cut_bronze_bricks": "Waxed Cut Aurichalcum Bricks",
+  "item.rubinated_nether.waxed_cut_bronze_bricks_slab": "Waxed Cut Aurichalcum Brick Slab",
+  "item.rubinated_nether.waxed_cut_bronze_bricks_stairs": "Waxed Cut Aurichalcum Brick Stairs",
+  "item.rubinated_nether.waxed_discolored_cut_bronze_bricks": "Waxed Discolored Cut Aurichalcum Bricks",
+  "item.rubinated_nether.waxed_discolored_cut_bronze_bricks_slab": "Waxed Discolored Cut Aurichalcum Brick Slab",
+  "item.rubinated_nether.waxed_discolored_cut_bronze_bricks_stairs": "Waxed Discolored Cut Aurichalcum Brick Stairs",
+  "item.rubinated_nether.waxed_corroded_cut_bronze_bricks": "Waxed Corroded Cut Aurichalcum Bricks",
+  "item.rubinated_nether.waxed_corroded_cut_bronze_bricks_slab": "Waxed Corroded Cut Aurichalcum Brick Slab",
+  "item.rubinated_nether.waxed_corroded_cut_bronze_bricks_stairs": "Waxed Corroded Cut Aurichalcum Brick Stairs",
+  "item.rubinated_nether.waxed_tarnished_cut_bronze_bricks": "Waxed Tarnished Cut Aurichalcum Bricks",
+  "item.rubinated_nether.waxed_tarnished_cut_bronze_bricks_slab": "Waxed Tarnished Cut Aurichalcum Brick Slab",
+  "item.rubinated_nether.waxed_tarnished_cut_bronze_bricks_stairs": "Waxed Tarnished Cut Aurichalcum Brick Stairs",
+  "item.rubinated_nether.waxed_crystallized_cut_bronze_bricks": "Waxed Crystallized Cut Aurichalcum Bricks",
+  "item.rubinated_nether.waxed_crystallized_cut_bronze_bricks_slab": "Waxed Crystallized Cut Aurichalcum Brick Slab",
+  "item.rubinated_nether.waxed_crystallized_cut_bronze_bricks_stairs": "Waxed Crystallized Cut Aurichalcum Brick Stairs",
+
+  "block.rubinated_nether.bronze_bulb": "Aurichalcum Bulb",
+  "block.rubinated_nether.discolored_bronze_bulb": "Discolored Aurichalcum Bulb",
+  "block.rubinated_nether.corroded_bronze_bulb": "Corroded Aurichalcum Bulb",
+  "block.rubinated_nether.tarnished_bronze_bulb": "Tarnished Aurichalcum Bulb",
+  "block.rubinated_nether.crystallized_bronze_bulb": "Crystallized Aurichalcum Bulb",
+
+  "item.rubinated_nether.waxed_bronze_bulb": "Waxed Aurichalcum Bulb",
+  "item.rubinated_nether.waxed_discolored_bronze_bulb": "Waxed Discolored Aurichalcum Bulb",
+  "item.rubinated_nether.waxed_corroded_bronze_bulb": "Waxed Corroded Aurichalcum Bulb",
+  "item.rubinated_nether.waxed_tarnished_bronze_bulb": "Waxed Tarnished Aurichalcum Bulb",
+  "item.rubinated_nether.waxed_crystallized_bronze_bulb": "Waxed Crystallized Aurichalcum Bulb",
+
+  "block.rubinated_nether.bronze_grate": "Aurichalcum Grate",
+  "block.rubinated_nether.discolored_bronze_grate": "Discolored Aurichalcum Grate",
+  "block.rubinated_nether.corroded_bronze_grate": "Corroded Aurichalcum Grate",
+  "block.rubinated_nether.tarnished_bronze_grate": "Tarnished Aurichalcum Grate",
+  "block.rubinated_nether.crystallized_bronze_grate": "Crystallized Aurichalcum Grate",
+
+  "item.rubinated_nether.waxed_bronze_grate": "Waxed Aurichalcum Grate",
+  "item.rubinated_nether.waxed_discolored_bronze_grate": "Waxed Discolored Aurichalcum Grate",
+  "item.rubinated_nether.waxed_corroded_bronze_grate": "Waxed Corroded Aurichalcum Grate",
+  "item.rubinated_nether.waxed_tarnished_bronze_grate": "Waxed Tarnished Aurichalcum Grate",
+  "item.rubinated_nether.waxed_crystallized_bronze_grate": "Waxed Crystallized Aurichalcum Grate",
+
+  "block.rubinated_nether.bronze_lantern": "Aurichalcum Lantern",
+  "block.rubinated_nether.discolored_bronze_lantern": "Discolored Aurichalcum Lantern",
+  "block.rubinated_nether.corroded_bronze_lantern": "Corroded Aurichalcum Lantern",
+  "block.rubinated_nether.tarnished_bronze_lantern": "Tarnished Aurichalcum Lantern",
+  "block.rubinated_nether.crystallized_bronze_lantern": "Crystallized Aurichalcum Lantern",
+
+  "item.rubinated_nether.waxed_bronze_lantern": "Waxed Aurichalcum Lantern",
+  "item.rubinated_nether.waxed_discolored_bronze_lantern": "Waxed Discolored Aurichalcum Lantern",
+  "item.rubinated_nether.waxed_corroded_bronze_lantern": "Waxed Corroded Aurichalcum Lantern",
+  "item.rubinated_nether.waxed_tarnished_bronze_lantern": "Waxed Tarnished Aurichalcum Lantern",
+  "item.rubinated_nether.waxed_crystallized_bronze_lantern": "Waxed Crystallized Aurichalcum Lantern",
+
+  "block.rubinated_nether.bronze_chandelier": "Aurichalcum Chandelier",
+  "block.rubinated_nether.discolored_bronze_chandelier": "Discolored Aurichalcum Chandelier",
+  "block.rubinated_nether.corroded_bronze_chandelier": "Corroded Aurichalcum Chandelier",
+  "block.rubinated_nether.tarnished_bronze_chandelier": "Tarnished Aurichalcum Chandelier",
+  "block.rubinated_nether.crystallized_bronze_chandelier": "Crystallized Aurichalcum Chandelier",
+
+  "item.rubinated_nether.waxed_bronze_chandelier": "Waxed Aurichalcum Chandelier",
+  "item.rubinated_nether.waxed_discolored_bronze_chandelier": "Waxed Discolored Aurichalcum Chandelier",
+  "item.rubinated_nether.waxed_corroded_bronze_chandelier": "Waxed Corroded Aurichalcum Chandelier",
+  "item.rubinated_nether.waxed_tarnished_bronze_chandelier": "Waxed Tarnished Aurichalcum Chandelier",
+  "item.rubinated_nether.waxed_crystallized_bronze_chandelier": "Waxed Crystallized Aurichalcum Chandelier",
+
+  "block.rubinated_nether.bronze_chain": "Aurichalcum Chain",
+  "block.rubinated_nether.discolored_bronze_chain": "Discolored Aurichalcum Chain",
+  "block.rubinated_nether.corroded_bronze_chain": "Corroded Aurichalcum Chain",
+  "block.rubinated_nether.tarnished_bronze_chain": "Tarnished Aurichalcum Chain",
+  "block.rubinated_nether.crystallized_bronze_chain": "Crystallized Aurichalcum Chain",
+
+  "item.rubinated_nether.waxed_bronze_chain": "Waxed Aurichalcum Chain",
+  "item.rubinated_nether.waxed_discolored_bronze_chain": "Waxed Discolored Aurichalcum Chain",
+  "item.rubinated_nether.waxed_corroded_bronze_chain": "Waxed Corroded Aurichalcum Chain",
+  "item.rubinated_nether.waxed_tarnished_bronze_chain": "Waxed Tarnished Aurichalcum Chain",
+  "item.rubinated_nether.waxed_crystallized_bronze_chain": "Waxed Crystallized Aurichalcum Chain",
+
+  "block.rubinated_nether.bronze_lamp": "Aurichalcum Lamp",
+  "block.rubinated_nether.discolored_bronze_lamp": "Discolored Aurichalcum Lamp",
+  "block.rubinated_nether.corroded_bronze_lamp": "Corroded Aurichalcum Lamp",
+  "block.rubinated_nether.tarnished_bronze_lamp": "Tarnished Aurichalcum Lamp",
+  "block.rubinated_nether.crystallized_bronze_lamp": "Crystallized Aurichalcum Lamp",
+
+  "item.rubinated_nether.waxed_bronze_lamp": "Waxed Aurichalcum Lamp",
+  "item.rubinated_nether.waxed_discolored_bronze_lamp": "Waxed Discolored Aurichalcum Lamp",
+  "item.rubinated_nether.waxed_corroded_bronze_lamp": "Waxed Corroded Aurichalcum Lamp",
+  "item.rubinated_nether.waxed_tarnished_bronze_lamp": "Waxed Tarnished Aurichalcum Lamp",
+  "item.rubinated_nether.waxed_crystallized_bronze_lamp": "Waxed Crystallized Aurichalcum Lamp",
+
+  "block.rubinated_nether.bronze_spring": "Aurichalcum Spring",
+  "block.rubinated_nether.discolored_bronze_spring": "Discolored Aurichalcum Spring",
+  "block.rubinated_nether.corroded_bronze_spring": "Corroded Aurichalcum Spring",
+  "block.rubinated_nether.tarnished_bronze_spring": "Tarnished Aurichalcum Spring",
+  "block.rubinated_nether.crystallized_bronze_spring": "Crystallized Aurichalcum Spring",
+
+  "item.rubinated_nether.waxed_bronze_spring": "Waxed Aurichalcum Spring",
+  "item.rubinated_nether.waxed_discolored_bronze_spring": "Waxed Discolored Aurichalcum Spring",
+  "item.rubinated_nether.waxed_corroded_bronze_spring": "Waxed Corroded Aurichalcum Spring",
+  "item.rubinated_nether.waxed_tarnished_bronze_spring": "Waxed Tarnished Aurichalcum Spring",
+  "item.rubinated_nether.waxed_crystallized_bronze_spring": "Waxed Crystallized Aurichalcum Spring",
+
+  "block.rubinated_nether.bronze_laser": "Aurichalcum Laser",
+  "block.rubinated_nether.discolored_bronze_laser": "Discolored Aurichalcum Laser",
+  "block.rubinated_nether.corroded_bronze_laser": "Corroded Aurichalcum Laser",
+  "block.rubinated_nether.tarnished_bronze_laser": "Tarnished Aurichalcum Laser",
+  "block.rubinated_nether.crystallized_bronze_laser": "Crystallized Aurichalcum Laser",
+
+  "item.rubinated_nether.waxed_bronze_laser": "Waxed Aurichalcum Laser",
+  "item.rubinated_nether.waxed_discolored_bronze_laser": "Waxed Discolored Aurichalcum Laser",
+  "item.rubinated_nether.waxed_corroded_bronze_laser": "Waxed Corroded Aurichalcum Laser",
+  "item.rubinated_nether.waxed_tarnished_bronze_laser": "Waxed Tarnished Aurichalcum Laser",
+  "item.rubinated_nether.waxed_crystallized_bronze_laser": "Waxed Crystallized Aurichalcum Laser",
+
+  "item.rubinated_nether.bronze_rod": "Aurichalcum Rod",
+  "item.rubinated_nether.bronze_powder": "Aurichalcum Powder",
+  "item.rubinated_nether.bronze_scrap": "Aurichalcum Scrap",
+
+  "item.rubinated_nether.bronze_shot": "Aurichalcum Shot",
+
+  "item.rubinated_nether.bronze_drill": "Aurichalcum Drill",
+
+  "item.rubinated_nether.bronze_spawn_egg": "Aurichalcum Spawn Egg",
+
+  "advancements.rubinated_nether.laser_detection.description": "Be Detected by a Aurichalcum or Copper Laser",
+
+  "advancements.rubinated_nether.bronze_rod.description": "Obtain a Aurichalcum Rod",
+
+  "advancements.rubinated_nether.baptism.description": "Dip a Aurichalcum Rod into the Brazier to obtain a Ritual Offering",
+
+  "advancements.rubinated_nether.heavy_burden.description": "Carry All Copper and Aurichalcum Block Variants",
+  "advancements.rubinated_nether.brighten_up.description": "Carry at least one Aurichalcum Lantern, Chandelier, Lamp and Bulb",
+
+  "advancements.rubinated_nether.pitfalls.description": "Step on a Aurichalcum Grate and Watch it Fall",
+  "advancements.rubinated_nether.springs.description": "Step on a Aurichalcum Spring and Get Launched",
+
+  "entity.rubinated_nether.bronze": "Aurichalcum",
+
+  "effect.rubinated_nether.bronze_diseased": "Aurichalcum Diseased",
+
+  "death.attack.bronze_diseased": "%1$s crystallized due to aurichalcum disease",
+  "death.attack.bronze_diseased.player": "%1$s crystallized due to aurichalcum disease whilst fighting %2$s",
+
+  "rubinated_nether.midnightconfig.bronzeDiseasedWeakness": "Aurichalcum Diseased Grants Weakness",
+  "rubinated_nether.midnightconfig.bronzeDiseasedWeaknessStrength": "Aurichalcum Diseased Weakness Strength",
+
+  "rubinated_nether.midnightconfig.bronzeDiseasedOverlayOpacity": "Aurichalcum Diseased Overlay Opacity"
+}

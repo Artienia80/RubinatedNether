@@ -40,100 +40,135 @@ import java.util.Optional;
 @Mod(RubinatedNether.MODID)
 public class RubinatedNether {
 
-	public static final String MODID = "rubinated_nether";
-	public static final Logger LOGGER = LogUtils.getLogger();
+    public static final String MODID = "rubinated_nether";
+    public static final Logger LOGGER = LogUtils.getLogger();
 
-	private static final ImmutableList<DeferredRegister<?>> REGISTRIES = ImmutableList.of(
-			RNBlocks.BLOCKS,
-			RNItems.ITEMS,
-			RNAttachments.ATTACHMENT_TYPES,
-			RNArmorMaterials.ARMOR_MATERIALS,
-			RNEntityCreator.ENTITY_TYPES,
-			RNParticleTypes.PARTICLES,
-			RNSoundEvents.SOUNDS,
-			RNCreativeTabs.CREATIVE_MODE_TABS,
-			RNRecipes.RECIPE_TYPES,
-			RNRecipeSerializers.RECIPE_SERIALIZERS,
-			RNBlockEntities.BLOCK_ENTITY_TYPES,
-			RNMenuTypes.MENUS,
-			RNEntityDataSerializers.SERIALIZERS
-	);
+    private static final ImmutableList<DeferredRegister<?>> REGISTRIES = ImmutableList.of(
+            RNBlocks.BLOCKS,
+            RNItems.ITEMS,
+            RNAttachments.ATTACHMENT_TYPES,
+            RNArmorMaterials.ARMOR_MATERIALS,
+            RNEntityCreator.ENTITY_TYPES,
+            RNParticleTypes.PARTICLES,
+            RNSoundEvents.SOUNDS,
+            RNCreativeTabs.CREATIVE_MODE_TABS,
+            RNRecipes.RECIPE_TYPES,
+            RNRecipeSerializers.RECIPE_SERIALIZERS,
+            RNBlockEntities.BLOCK_ENTITY_TYPES,
+            RNMenuTypes.MENUS,
+            RNEntityDataSerializers.SERIALIZERS
+    );
 
-	public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
-		LOGGER.info("Rubinating all over your Nether...");
+    public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
+        LOGGER.info("Rubinating all over your Nether...");
 
-		modEventBus.addListener(this::commonSetup);
-		modEventBus.addListener(this::addPackFinders); // Add this line
+        modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::addPackFinders); // Add this line
 
-		modEventBus.addListener(Datagen::datagen);
-		modEventBus.addListener(DatapackRegistry::datapackRegistry);
-		RNEnchantmentEffects.register(modEventBus);
-		RNEffects.register(modEventBus);
-		NeoForge.EVENT_BUS.addListener(this::registerCommands);
-		RNAnvilRepairHandler.register();
-		RNCapabilities.register(modEventBus);
+        modEventBus.addListener(Datagen::datagen);
+        modEventBus.addListener(DatapackRegistry::datapackRegistry);
+        RNEnchantmentEffects.register(modEventBus);
+        RNEffects.register(modEventBus);
+        NeoForge.EVENT_BUS.addListener(this::registerCommands);
+        RNAnvilRepairHandler.register();
+        RNCapabilities.register(modEventBus);
 
-		for (var registry : REGISTRIES)
-			registry.register(modEventBus);
+        for (var registry : REGISTRIES)
+            registry.register(modEventBus);
 
-		MidnightConfig.init(MODID, RNConfig.class);
+        MidnightConfig.init(MODID, RNConfig.class);
 
-		if (dist == Dist.CLIENT) {
-			RubinatedNetherClient.client(modEventBus);
-			modEventBus.addListener(RNRecipeCategories::registerRecipeCategories);
-			NeoForge.EVENT_BUS.addListener(RNBronzeDiseasedHeartHandler::onPlayerHeartType);
+        if (dist == Dist.CLIENT) {
+            RubinatedNetherClient.client(modEventBus);
+            modEventBus.addListener(RNRecipeCategories::registerRecipeCategories);
+            NeoForge.EVENT_BUS.addListener(RNBronzeDiseasedHeartHandler::onPlayerHeartType);
 
-		}
+        }
 
-	}
+    }
 
-	public void addPackFinders(AddPackFindersEvent event) {
-		if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-			var resourcePath = ModList.get()
-					.getModFileById(MODID)
-					.getFile()
-					.findResource("resourcepacks/simple_freezer");
+    public void addPackFinders(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            // Simple Freezer Pack
+            var simpleFreezerPath = ModList.get()
+                    .getModFileById(MODID)
+                    .getFile()
+                    .findResource("resourcepacks/simple_freezer");
 
-			event.addRepositorySource((consumer) -> {
-				var pack = Pack.readMetaAndCreate(
-						new PackLocationInfo(
-								"builtin/simple_freezer",
-								Component.literal("Simplified Freezer Model"),
-								PackSource.BUILT_IN,
-								Optional.empty()
-						),
-						new Pack.ResourcesSupplier() {
-							@Override
-							public PackResources openPrimary(PackLocationInfo location) {
-								return new PathPackResources(location, resourcePath);
-							}
+            event.addRepositorySource((consumer) -> {
+                var pack = Pack.readMetaAndCreate(
+                        new PackLocationInfo(
+                                "builtin/simple_freezer",
+                                Component.translatable("resourcepack.rubinated_nether.simple_freezer"),
+                                PackSource.BUILT_IN,
+                                Optional.empty()
+                        ),
+                        new Pack.ResourcesSupplier() {
+                            @Override
+                            public PackResources openPrimary(PackLocationInfo location) {
+                                return new PathPackResources(location, simpleFreezerPath);
+                            }
 
-							@Override
-							public PackResources openFull(PackLocationInfo location, Pack.Metadata metadata) {
-								return new PathPackResources(location, resourcePath);
-							}
-						},
-						PackType.CLIENT_RESOURCES,
-						new PackSelectionConfig(false, Pack.Position.TOP, false)
-				);
+                            @Override
+                            public PackResources openFull(PackLocationInfo location, Pack.Metadata metadata) {
+                                return new PathPackResources(location, simpleFreezerPath);
+                            }
+                        },
+                        PackType.CLIENT_RESOURCES,
+                        new PackSelectionConfig(false, Pack.Position.TOP, false)
+                );
 
-				if (pack != null) {
-					consumer.accept(pack);
-				}
-			});
-		}
-	}
+                if (pack != null) {
+                    consumer.accept(pack);
+                }
+            });
 
-	public void commonSetup(FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> {
-		});
-	}
+            // Aurichalcum Pack
+            var aurichalcumPath = ModList.get()
+                    .getModFileById(MODID)
+                    .getFile()
+                    .findResource("resourcepacks/aurichalcum");
 
-	public void registerCommands(RegisterCommandsEvent event) {
-		RubinateCommand.register(event.getDispatcher());
-	}
+            event.addRepositorySource((consumer) -> {
+                var pack = Pack.readMetaAndCreate(
+                        new PackLocationInfo(
+                                "builtin/aurichalcum",
+                                Component.translatable("resourcepack.rubinated_nether.aurichalcum"),
+                                PackSource.BUILT_IN,
+                                Optional.empty()
+                        ),
+                        new Pack.ResourcesSupplier() {
+                            @Override
+                            public PackResources openPrimary(PackLocationInfo location) {
+                                return new PathPackResources(location, aurichalcumPath);
+                            }
 
-	public static ResourceLocation id(String s) {
-		return ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, s);
-	}
+                            @Override
+                            public PackResources openFull(PackLocationInfo location, Pack.Metadata metadata) {
+                                return new PathPackResources(location, aurichalcumPath);
+                            }
+                        },
+                        PackType.CLIENT_RESOURCES,
+                        new PackSelectionConfig(false, Pack.Position.TOP, false)
+                );
+
+                if (pack != null) {
+                    consumer.accept(pack);
+                }
+            });
+        }
+    }
+
+    public void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+        });
+    }
+
+    public void registerCommands(RegisterCommandsEvent event) {
+        RubinateCommand.register(event.getDispatcher());
+    }
+
+    public static ResourceLocation id(String s) {
+        return ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, s);
+    }
 }
