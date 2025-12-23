@@ -90,17 +90,18 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
             this.head.y = this.head.y + 2.3F;
         }
 
+        if(!entity.ramAnimationState.isStarted() || !entity.isBurrowed())
+            this.animateWalk(BronzeAnimations.MOVE, limbSwing, limbSwingAmount, 4f, 54);
 
-        this.animateWalk(BronzeAnimations.MOVE, limbSwing, limbSwingAmount, 4f, 54);
-        this.animate(entity.idleAnimationState,BronzeAnimations.IDLE,ageInTicks, 1f);
-        this.animate(entity.unaffectedAttackAnimationState,BronzeAnimations.BASH,ageInTicks, 1f);
-        this.animate(entity.defendAnimationState,BronzeAnimations.DEFEND, ageInTicks, 1f);
-        this.animate(entity.stunAnimationState,BronzeAnimations.STUNNED, ageInTicks, 1f);
-        this.animate(entity.drillAnimationState,BronzeAnimations.DRILL_DOWN, ageInTicks, 1f);
-        this.animate(entity.undergroundWalkAnimationState,BronzeAnimations.MOVE_UNDERGROUND, ageInTicks, 1f);
-        this.animate(entity.ambushAnimationState,BronzeAnimations.DRILL_UP,ageInTicks, 1f);
-        this.animate(entity.shockwaveAnimationState,BronzeAnimations.SHOCKWAVE,ageInTicks, 1f);
-        this.animate(entity.ramAnimationState,BronzeAnimations.RAM,ageInTicks, 1f);
+        this.animate(entity.idleAnimationState, BronzeAnimations.IDLE, ageInTicks, 1f);
+        this.animate(entity.unaffectedAttackAnimationState, BronzeAnimations.BASH, ageInTicks, 1f);
+        this.animate(entity.defendAnimationState, BronzeAnimations.DEFEND, ageInTicks, 1f);
+        this.animate(entity.stunAnimationState, BronzeAnimations.STUNNED, ageInTicks, 1f);
+        this.animate(entity.drillAnimationState, BronzeAnimations.DRILL_DOWN, ageInTicks, 1f);
+        this.animate(entity.undergroundWalkAnimationState, BronzeAnimations.MOVE_UNDERGROUND, ageInTicks, 1f);
+        this.animate(entity.ambushAnimationState, BronzeAnimations.DRILL_UP, ageInTicks, 1f);
+        this.animate(entity.shockwaveAnimationState, BronzeAnimations.SHOCKWAVE, ageInTicks, 1f);
+        this.animate(entity.ramAnimationState, BronzeAnimations.RAM, ageInTicks, 1f);
     }
 
     private void applyHeadRotation(float headYaw, float headPitch) {

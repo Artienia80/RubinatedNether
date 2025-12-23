@@ -57,7 +57,7 @@ public enum TarnishStage {
     }
 
     public byte getId(){
-        return (byte) this.id;
+        return this.id;
     }
 
     public double getArmor() {

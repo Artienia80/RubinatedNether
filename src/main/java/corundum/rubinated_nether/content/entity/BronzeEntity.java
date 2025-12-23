@@ -43,7 +43,7 @@ import java.util.List;
 
 public class BronzeEntity extends TarnishingEntity {
 
-    private TarnishStage lastTarnishLevel = TarnishStage.UNAFFECTED;
+    private TarnishStage lastTarnishLevel = null;
 
     private final BronzePart[] subEntities;
     private final BronzePart bodyPart;
@@ -58,6 +58,8 @@ public class BronzeEntity extends TarnishingEntity {
 
     // Synchronized
     private static final EntityDataAccessor<Boolean> IS_BURROWED =
+            SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_DEFENDING =
             SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.BOOLEAN);
 
     // Animation
@@ -97,6 +99,8 @@ public class BronzeEntity extends TarnishingEntity {
 
         this.subEntities = new BronzePart[]{this.bodyPart, this.keyPart};
         this.setId(ENTITY_COUNTER.getAndAdd(this.subEntities.length + 1) + 1);
+
+        this.setTarnishLevel(TarnishStage.UNAFFECTED);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -170,8 +174,10 @@ public class BronzeEntity extends TarnishingEntity {
     private void removeDiscoloredGoals() {
         this.dashGoal = new DiscoloredRamGoal(this);
         this.goalSelector.removeGoal(this.dashGoal);
-        this.goalSelector.removeGoal(new AvoidEntityGoal<Player>(this, Player.class, 10.0F, 1.2, 1.2){
-            public boolean canUse() { return BronzeEntity.this.getTarnishLevel().equals(TarnishStage.DISCOLORED) && super.canUse(); }
+        this.goalSelector.removeGoal(new AvoidEntityGoal<>(this, Player.class, 10.0F, 1.2, 1.2) {
+            public boolean canUse() {
+                return BronzeEntity.this.getTarnishLevel().equals(TarnishStage.DISCOLORED) && super.canUse();
+            }
         });
     }
 
@@ -346,15 +352,7 @@ public class BronzeEntity extends TarnishingEntity {
         }
 
         if (!level().isClientSide()) {
-
             handleMovingAnimationStates();
-
-            TarnishStage currentLevel = this.getTarnishLevel();
-            if (!currentLevel.equals(lastTarnishLevel)) {
-                lastTarnishLevel = currentLevel;
-                updateAttributesForTarnish(currentLevel);
-                changeGoalsOnLevelChange(currentLevel);
-            }
         }
 
         decreaseCooldowns();
@@ -436,8 +434,7 @@ public class BronzeEntity extends TarnishingEntity {
 
     @Override
     public void knockback(double strength, double x, double z) {
-        if (shockwaveGoal != null && shockwaveGoal.isDefending()) return;
-        if(this.isBurrowed()) return;
+        if(this.isBurrowed() || this.isDefending()) return;
 
         super.knockback(strength, x, z);
     }
@@ -458,7 +455,7 @@ public class BronzeEntity extends TarnishingEntity {
 
         // Tarnished defense mechanics
         if (this.getTarnishLevel().equals(TarnishStage.TARNISHED) && shockwaveGoal != null) {
-            if (shockwaveGoal.isDefending()) {
+            if (this.isDefending()) {
                 if (!this.level().isClientSide()) {
                     ((ServerLevel) this.level()).sendParticles(
                             ParticleTypes.CRIT,
@@ -535,6 +532,14 @@ public class BronzeEntity extends TarnishingEntity {
         this.entityData.set(IS_BURROWED, burrowed);
     }
 
+    public boolean isDefending() {
+        return this.entityData.get(IS_DEFENDING);
+    }
+
+    public void setDefending(boolean defending) {
+        this.entityData.set(IS_DEFENDING, defending);
+    }
+
     private boolean isMoving() {
         return this.getDeltaMovement().horizontalDistance() > 0.01F;
     }
@@ -561,6 +566,13 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     @Override
+    public void setTarnishLevel(TarnishStage stage) {
+        super.setTarnishLevel(stage);
+        this.updateAttributesForTarnish(stage);
+        this.changeGoalsOnLevelChange(stage);
+    }
+
+    @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.SILVERFISH_AMBIENT;
     }
@@ -579,6 +591,7 @@ public class BronzeEntity extends TarnishingEntity {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(IS_BURROWED, false);
+        builder.define(IS_DEFENDING, false);
     }
 
     @Override

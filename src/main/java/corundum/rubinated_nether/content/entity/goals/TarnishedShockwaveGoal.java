@@ -15,7 +15,6 @@ public class TarnishedShockwaveGoal extends Goal {
     private final BronzeEntity entity;
     private int defenseTicks = 0;
     private int hitCount = 0;
-    public boolean isDefending = false;
 
     public boolean isStunned = false;
     private int stunTicks = 0;
@@ -40,32 +39,28 @@ public class TarnishedShockwaveGoal extends Goal {
     public void start() {
         defenseTicks = 0;
         hitCount = 0;
-        isDefending = true;
+        this.entity.setDefending(true);
         isStunned = false;
         stunTicks = 0;
     }
 
     @Override
     public boolean canContinueToUse() {
-        return (isDefending || isStunned) && entity.getTarnishLevel().equals(TarnishStage.TARNISHED);
-    }
-
-    public boolean isDefending() {
-        return isDefending;
+        return (this.entity.isDefending() || isStunned) && entity.getTarnishLevel().equals(TarnishStage.TARNISHED);
     }
 
     @Override
     public void tick() {
         if(!entity.getTarnishLevel().equals(TarnishStage.TARNISHED)) stop();
 
-        if (isDefending) {
+        if (this.entity.isDefending()) {
             if (!entity.level().isClientSide) {
                 entity.level().broadcastEntityEvent(entity, BronzeEntity.DEFENCE_START);
             }
             defenseTicks++;
 
             if (defenseTicks >= MAX_DEFENSE_TICKS) {
-                isDefending = false;
+                this.entity.setDefending(false);
                 if (!entity.level().isClientSide) {
                     entity.level().broadcastEntityEvent(entity, BronzeEntity.DEFENCE_STOP);
                 }
@@ -89,7 +84,7 @@ public class TarnishedShockwaveGoal extends Goal {
             }
 
             if (hitCount >= MAX_HITS_ALLOWED) {
-                isDefending = false;
+                this.entity.setDefending(false);
                 isStunned = true;
                 stunTicks = STUN_DURATION;
 
@@ -113,27 +108,22 @@ public class TarnishedShockwaveGoal extends Goal {
         if (entity.getShockwaveCooldown() > 0) {
             entity.setShockwaveCooldown(COOLDOWN_DURATION);
         }
-
-        System.out.println(defenseTicks);
-        System.out.println(hitCount);
-        System.out.println(isDefending());
-        System.out.println(isStunned);
     }
 
     @Override
     public void stop() {
-        isDefending = false;
+        this.entity.setDefending(false);
         isStunned = false;
         stunTicks = 0;
 
         if (!entity.level().isClientSide) {
-            entity.level().broadcastEntityEvent(entity,  BronzeEntity.DEFENCE_STOP);
+            entity.level().broadcastEntityEvent(entity, BronzeEntity.DEFENCE_STOP);
             entity.level().broadcastEntityEvent(entity, BronzeEntity.STUN_STOP);
         }
     }
 
     public void onHitWhileDefending() {
-        if (isDefending()) {
+        if (this.entity.isDefending()) {
             hitCount++;
         }
     }

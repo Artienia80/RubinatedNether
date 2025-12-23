@@ -86,7 +86,7 @@ public class DiscoloredRamGoal extends Goal {
                     phaseTicks = 0;
                     // Start ram animation when beginning the dash
                     if (!entity.level().isClientSide) {
-                        entity.level().broadcastEntityEvent(entity, (byte) 97);
+                        entity.level().broadcastEntityEvent(entity, BronzeEntity.RAM_START);
                     }
                 }
                 break;
@@ -133,8 +133,8 @@ public class DiscoloredRamGoal extends Goal {
         entity.setDeltaMovement(Vec3.ZERO);
         // Stop ram animation and start stun animation
         if (!entity.level().isClientSide) {
-            entity.level().broadcastEntityEvent(entity, (byte) 93); // Stop ram
-            entity.level().broadcastEntityEvent(entity, (byte) 71); // Start stun
+            entity.level().broadcastEntityEvent(entity, BronzeEntity.RAM_STOP); // Stop ram
+            entity.level().broadcastEntityEvent(entity, BronzeEntity.STUN_START); // Start stun
         }
         phase = 0;
     }
@@ -145,7 +145,7 @@ public class DiscoloredRamGoal extends Goal {
             entity.setRamCooldown(COOLDOWN);
             // Stop ram animation when goal ends normally
             if (!entity.level().isClientSide && phase == 2) {
-                entity.level().broadcastEntityEvent(entity, (byte) 93);
+                entity.level().broadcastEntityEvent(entity, BronzeEntity.RAM_STOP); // Stop ram
             }
         }
         entity.setDeltaMovement(Vec3.ZERO);

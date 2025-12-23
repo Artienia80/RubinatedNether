@@ -13,7 +13,9 @@ import corundum.rubinated_nether.utils.UpdateListenerHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
@@ -282,7 +284,7 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 			case DISCOLORED -> 30;
 			case CORRODED -> 45;
 			case TARNISHED -> 60;
-		};
+        };
 	}
 
 	private int getBlocksPerPowerLevel(TarnishStage tarnishStage) {
@@ -320,8 +322,8 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		return powerLevel;
 	}
 
-	private void grantLaserDetectionAdvancement(net.minecraft.world.entity.Entity entity) {
-		if (entity instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+	private void grantLaserDetectionAdvancement(Entity entity) {
+		if (entity instanceof ServerPlayer serverPlayer) {
 			var advancementHolder = serverPlayer.server.getAdvancements()
 					.get(RubinatedNether.id("laser_detection"));
 

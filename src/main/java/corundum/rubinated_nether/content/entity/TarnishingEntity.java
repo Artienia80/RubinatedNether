@@ -2,8 +2,6 @@ package corundum.rubinated_nether.content.entity;
 
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.TarnishStage;
-import corundum.rubinated_nether.misc.RNAttachments;
-import corundum.rubinated_nether.networking.BronzeTarnishingData;
 import corundum.rubinated_nether.utils.RNEntityDataSerializers;
 import corundum.rubinated_nether.utils.RNParticleUtils;
 import net.minecraft.core.BlockPos;
@@ -19,25 +17,22 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 public abstract class TarnishingEntity extends Monster {
 
     private static final EntityDataAccessor<Boolean> WAXED =
             SynchedEntityData.defineId(TarnishingEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<TarnishStage> TARNISH_STAGE =
-            SynchedEntityData.defineId(TarnishingEntity.class, RNEntityDataSerializers.TARNISH_STAGE.get());
+    private static final EntityDataAccessor<Byte> TARNISH_STAGE =
+            SynchedEntityData.defineId(TarnishingEntity.class, EntityDataSerializers.BYTE);
 
     private int tarnishTimer = 0;
 
@@ -55,15 +50,15 @@ public abstract class TarnishingEntity extends Monster {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(WAXED, false);
-        builder.define(TARNISH_STAGE, TarnishStage.UNAFFECTED);
+        builder.define(TARNISH_STAGE, (byte) 0);
     }
 
     public TarnishStage getTarnishLevel() {
-        return this.entityData.get(TARNISH_STAGE);
+        return TarnishStage.byId(this.entityData.get(TARNISH_STAGE));
     }
 
     public void setTarnishLevel(TarnishStage stage) {
-        this.entityData.set(TARNISH_STAGE, stage);
+        this.entityData.set(TARNISH_STAGE, stage.getId());
     }
 
     public void increaseTarnishLevel() {
