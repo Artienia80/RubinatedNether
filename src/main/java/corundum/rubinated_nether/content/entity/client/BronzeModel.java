@@ -90,7 +90,7 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
             this.head.y = this.head.y + 2.3F;
         }
 
-        if(!entity.ramAnimationState.isStarted() || !entity.isBurrowed())
+        if(!entity.ramAnimationState.isStarted() && !entity.isBurrowed())
             this.animateWalk(BronzeAnimations.MOVE, limbSwing, limbSwingAmount, 4f, 54);
 
         this.animate(entity.idleAnimationState, BronzeAnimations.IDLE, ageInTicks, 1f);
