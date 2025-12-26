@@ -396,34 +396,41 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     private void spawnStunParticles() {
-        if (this.level().isClientSide()) {
-            // Smoke particles emanating outward erratically
-            for (int i = 0; i < 3; i++) {
-                double offsetX = (this.random.nextDouble() - 0.5) * 0.6;
-                double offsetY = this.random.nextDouble() * 1.2;
-                double offsetZ = (this.random.nextDouble() - 0.5) * 0.6;
+        // Spawn on BOTH client and server
+        // Smoke particles emanating outward erratically
+        for (int i = 0; i < 3; i++) {
+            double offsetX = (this.random.nextDouble() - 0.5) * 0.6;
+            double offsetY = this.random.nextDouble() * 1.2;
+            double offsetZ = (this.random.nextDouble() - 0.5) * 0.6;
 
-                double velocityX = (this.random.nextDouble() - 0.5) * 0.15;
-                double velocityY = this.random.nextDouble() * 0.05;
-                double velocityZ = (this.random.nextDouble() - 0.5) * 0.15;
+            double velocityX = (this.random.nextDouble() - 0.5) * 0.15;
+            double velocityY = this.random.nextDouble() * 0.05;
+            double velocityZ = (this.random.nextDouble() - 0.5) * 0.15;
 
-                this.level().addParticle(ParticleTypes.SMOKE,
+            if (this.level() instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(ParticleTypes.SMOKE,
                         this.getX() + offsetX,
                         this.getY() + offsetY,
                         this.getZ() + offsetZ,
-                        velocityX, velocityY, velocityZ);
+                        1, velocityX, velocityY, velocityZ, 0.0);
             }
+        }
 
-            // Trial spawner detection particles rising upward
-            if (this.random.nextFloat() < 0.3f) {
-                double offsetX = (this.random.nextDouble() - 0.5) * 0.4;
-                double offsetZ = (this.random.nextDouble() - 0.5) * 0.4;
+        // Electric spark particles shooting out in random directions
+        if (this.random.nextFloat() < 0.6f) {
+            double offsetX = (this.random.nextDouble() - 0.5) * 0.4;
+            double offsetZ = (this.random.nextDouble() - 0.5) * 0.4;
 
-                this.level().addParticle(ParticleTypes.TRIAL_SPAWNER_DETECTED_PLAYER,
+            double velocityX = (this.random.nextDouble() - 0.5) * 0.5;
+            double velocityY = (this.random.nextDouble() - 0.5) * 0.5;
+            double velocityZ = (this.random.nextDouble() - 0.5) * 0.5;
+
+            if (this.level() instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(ParticleTypes.ELECTRIC_SPARK,
                         this.getX() + offsetX,
-                        this.getY() + 0.2,
+                        this.getY() + 1.0,
                         this.getZ() + offsetZ,
-                        0, 0.1, 0);
+                        2, velocityX, velocityY, velocityZ, 1.0);
             }
         }
     }

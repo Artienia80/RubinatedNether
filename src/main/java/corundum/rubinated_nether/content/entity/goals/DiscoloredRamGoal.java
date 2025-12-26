@@ -23,7 +23,7 @@ public class DiscoloredRamGoal extends Goal {
     private static final double RAM_SPEED = 1.2;
     private boolean isStunned = false;
     private int stunTicks = 0;
-    private static final int STUN_DURATION = 60;
+    private static final int STUN_DURATION = 40;
 
 
     public DiscoloredRamGoal(BronzeEntity entity) {
