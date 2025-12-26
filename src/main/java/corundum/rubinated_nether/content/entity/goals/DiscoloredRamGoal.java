@@ -104,41 +104,59 @@ public class DiscoloredRamGoal extends Goal {
 
             case 2:
                 entity.setDeltaMovement(dashDirection.scale(RAM_SPEED));
+                // Keep rotation locked during dash - don't update it
+                // entity.setYRot and lookAt calls removed from this phase
 
-                // Check for collisions with any living entity
+                // Check for collisions with any living entity - larger radius for better detection
                 java.util.List<net.minecraft.world.entity.LivingEntity> nearbyEntities = entity.level().getEntitiesOfClass(
                         net.minecraft.world.entity.LivingEntity.class,
-                        entity.getBoundingBox().inflate(0.5),
+                        entity.getBoundingBox().inflate(1.2),
                         e -> e != entity && e.isAlive()
                 );
 
                 for (net.minecraft.world.entity.LivingEntity hitEntity : nearbyEntities) {
-                    // Check if it's the target player with a shield
-                    if (hitEntity == target && target.isBlocking()) {
-                        Vec3 attackDir = entity.position().subtract(target.position()).normalize();
-                        Vec3 lookVec = target.getLookAngle().normalize();
+                    // Calculate actual distance for more accurate collision
+                    double distance = entity.distanceTo(hitEntity);
+
+                    // Only process if actually close enough (within 2 blocks)
+                    if (distance > 2.0) continue;
+
+                    // Check if it's a player with a shield - check if they're blocking and facing correctly
+                    boolean shouldStun = false;
+                    if (hitEntity instanceof Player player && player.isBlocking()) {
+                        Vec3 attackDir = entity.position().subtract(player.position()).normalize();
+                        Vec3 lookVec = player.getLookAngle().normalize();
                         double dot = attackDir.dot(lookVec);
 
+                        // Player is blocking and facing the attack
                         if (dot > 0.3) {
-                            // Play shield block sound
-                            target.level().playSound(null, target.blockPosition(),
-                                    net.minecraft.sounds.SoundEvents.SHIELD_BLOCK,
-                                    net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 1.0F);
-
-                            triggerStun();
-                            return;
+                            shouldStun = true;
                         }
                     }
 
-                    // Deal damage to any entity hit (including target without proper shield block)
-                    hitEntity.hurt(entity.damageSources().mobAttack(entity), 6.0F);
-                    // Knockback the entity
-                    double knockbackStrength = 0.5;
-                    hitEntity.knockback(knockbackStrength,
-                            -dashDirection.x,
-                            -dashDirection.z);
+                    // Always deal damage - this will let shield mechanics work naturally
+                    boolean damageBlocked = hitEntity.hurt(entity.damageSources().mobAttack(entity), 6.0F);
 
-                    // Stop the ram but don't stun (unless it was a successful shield block)
+                    // If damage was blocked by shield and they were facing correctly, stun
+                    if (shouldStun) {
+                        // Disable the shield for a period of time
+                        if (hitEntity instanceof Player player) {
+                            player.getCooldowns().addCooldown(player.getUseItem().getItem(), 100);
+                            player.stopUsingItem();
+                        }
+                        triggerStun();
+                        return;
+                    }
+
+                    // Knockback the entity if they took damage
+                    if (damageBlocked || !shouldStun) {
+                        double knockbackStrength = 0.5;
+                        hitEntity.knockback(knockbackStrength,
+                                -dashDirection.x,
+                                -dashDirection.z);
+                    }
+
+                    // Stop the ram but don't stun (unless shield blocked it)
                     stop();
                     return;
                 }
