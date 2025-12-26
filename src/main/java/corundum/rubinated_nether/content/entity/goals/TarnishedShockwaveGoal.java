@@ -6,8 +6,11 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
@@ -23,6 +26,8 @@ public class TarnishedShockwaveGoal extends Goal {
     private static final int MAX_HITS_ALLOWED = 5;
     private static final int STUN_DURATION = 80;
     private static final int COOLDOWN_DURATION = 300;
+    private static final double KNOCKBACK_RADIUS = 8.0;
+    private static final double KNOCKBACK_STRENGTH = 1.5;
 
     public TarnishedShockwaveGoal(BronzeEntity entity) {
         this.entity = entity;
@@ -70,7 +75,7 @@ public class TarnishedShockwaveGoal extends Goal {
                         entity.level().broadcastEntityEvent(entity, BronzeEntity.SHOCKWAVE_START);
                     }
                     spawnShockwaveParticles();
-                    buffNearbyBronzes();
+                    performShockwave();
                     entity.setShockwaveCooldown(COOLDOWN_DURATION);
                     this.stop();
                 } else {
@@ -132,6 +137,11 @@ public class TarnishedShockwaveGoal extends Goal {
         ((ServerLevel) entity.level()).sendParticles(ParticleTypes.EXPLOSION, entity.getX(), entity.getY(), entity.getZ(), 20, 1, 1, 1, 0.2);
     }
 
+    private void performShockwave() {
+        buffNearbyBronzes();
+        knockbackNearbyEntities();
+    }
+
     private void buffNearbyBronzes() {
         List<BronzeEntity> allies = entity.level().getEntitiesOfClass(BronzeEntity.class, entity.getBoundingBox().inflate(12.0));
         for (BronzeEntity bronze : allies) {
@@ -139,5 +149,53 @@ public class TarnishedShockwaveGoal extends Goal {
                 bronze.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 200, 1));
             }
         }
+    }
+
+    private void knockbackNearbyEntities() {
+        Vec3 explosionCenter = entity.position();
+
+        // Get all living entities in range
+        List<LivingEntity> nearbyEntities = entity.level().getEntitiesOfClass(
+                LivingEntity.class,
+                entity.getBoundingBox().inflate(KNOCKBACK_RADIUS),
+                e -> e != entity && !(e instanceof BronzeEntity)
+        );
+
+        for (LivingEntity target : nearbyEntities) {
+            double distance = target.distanceTo(entity);
+
+            // Only knockback if within radius
+            if (distance <= KNOCKBACK_RADIUS) {
+                // Calculate direction from explosion center to target
+                Vec3 direction = target.position().subtract(explosionCenter).normalize();
+
+                // Calculate knockback strength based on distance (closer = stronger)
+                double distanceFactor = 1.0 - (distance / KNOCKBACK_RADIUS);
+                double knockbackMultiplier = KNOCKBACK_STRENGTH * distanceFactor;
+
+                // Apply knockback using explosion-like calculation
+                double knockbackResistance = 0.0;
+                if (target.getAttributes().hasAttribute(net.minecraft.world.entity.ai.attributes.Attributes.EXPLOSION_KNOCKBACK_RESISTANCE)) {
+                    knockbackResistance = target.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.EXPLOSION_KNOCKBACK_RESISTANCE);
+                }
+
+                double finalKnockback = knockbackMultiplier * (1.0 - knockbackResistance);
+
+                // Apply the knockback
+                Vec3 knockbackVec = new Vec3(
+                        direction.x * finalKnockback,
+                        Math.min(direction.y * finalKnockback + 0.4, 1.0), // Add upward component, cap it
+                        direction.z * finalKnockback
+                );
+
+                target.setDeltaMovement(target.getDeltaMovement().add(knockbackVec));
+                target.hurtMarked = true; // Force velocity update on client
+            }
+        }
+
+        // Play sound effect
+        entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(),
+                net.minecraft.sounds.SoundEvents.GENERIC_EXPLODE,
+                net.minecraft.sounds.SoundSource.HOSTILE, 2.0F, 0.8F);
     }
 }

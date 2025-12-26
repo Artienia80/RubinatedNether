@@ -141,7 +141,7 @@ public class DiscoloredRamGoal extends Goal {
                     if (shouldStun) {
                         // Disable the shield for a period of time
                         if (hitEntity instanceof Player player) {
-                            player.getCooldowns().addCooldown(player.getUseItem().getItem(), 100);
+                            player.getCooldowns().addCooldown(player.getUseItem().getItem(), 50);
                             player.stopUsingItem();
                         }
                         triggerStun();
