@@ -10,6 +10,7 @@ import corundum.rubinated_nether.content.entity.goals.TarnishedShockwaveGoal;
 import corundum.rubinated_nether.content.entity.goals.UnaffectedAttackGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -570,6 +571,13 @@ public class BronzeEntity extends TarnishingEntity {
         super.setTarnishLevel(stage);
         this.updateAttributesForTarnish(stage);
         this.changeGoalsOnLevelChange(stage);
+    }
+
+    @Override
+    public Component getName() {
+        TarnishStage stage = getTarnishLevel();
+        String stageName = stage.name().toLowerCase();
+        return Component.translatable("entity.rubinated_nether.bronze." + stageName);
     }
 
     @Override
