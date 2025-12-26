@@ -12,25 +12,26 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.EnumSet;
 import java.util.List;
 
 public class TarnishedShockwaveGoal extends Goal {
     private final BronzeEntity entity;
     private int defenseTicks = 0;
-    private int hitCount = 0;
 
     public boolean isStunned = false;
     private int stunTicks = 0;
 
     private static final int MAX_DEFENSE_TICKS = 150;
-    private static final int MAX_HITS_ALLOWED = 5;
     private static final int STUN_DURATION = 80;
     private static final int COOLDOWN_DURATION = 300;
     private static final double KNOCKBACK_RADIUS = 8.0;
-    private static final double KNOCKBACK_STRENGTH = 1.5;
+    private static final double KNOCKBACK_STRENGTH = 3.5;
+    private static final float SHOCKWAVE_DAMAGE = 8.0F;
 
     public TarnishedShockwaveGoal(BronzeEntity entity) {
         this.entity = entity;
+        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
     @Override
@@ -43,10 +44,10 @@ public class TarnishedShockwaveGoal extends Goal {
     @Override
     public void start() {
         defenseTicks = 0;
-        hitCount = 0;
         this.entity.setDefending(true);
         isStunned = false;
         stunTicks = 0;
+        entity.getNavigation().stop();
     }
 
     @Override
@@ -59,6 +60,10 @@ public class TarnishedShockwaveGoal extends Goal {
         if(!entity.getTarnishLevel().equals(TarnishStage.TARNISHED)) stop();
 
         if (this.entity.isDefending()) {
+            // Keep entity still during defense
+            entity.setDeltaMovement(0, entity.getDeltaMovement().y, 0);
+            entity.getNavigation().stop();
+
             if (!entity.level().isClientSide) {
                 entity.level().broadcastEntityEvent(entity, BronzeEntity.DEFENCE_START);
             }
@@ -70,42 +75,25 @@ public class TarnishedShockwaveGoal extends Goal {
                     entity.level().broadcastEntityEvent(entity, BronzeEntity.DEFENCE_STOP);
                 }
 
-                if (hitCount < MAX_HITS_ALLOWED) {
-                    if (!entity.level().isClientSide) {
-                        entity.level().broadcastEntityEvent(entity, BronzeEntity.SHOCKWAVE_START);
-                    }
-                    spawnShockwaveParticles();
-                    performShockwave();
-                    entity.setShockwaveCooldown(COOLDOWN_DURATION);
-                    this.stop();
-                } else {
-                    isStunned = true;
-                    stunTicks = STUN_DURATION;
-
-                    if (!entity.level().isClientSide) {
-                        entity.level().broadcastEntityEvent(entity, BronzeEntity.STUN_START);
-                    }
-                }
-            }
-
-            if (hitCount >= MAX_HITS_ALLOWED) {
-                this.entity.setDefending(false);
-                isStunned = true;
-                stunTicks = STUN_DURATION;
-
                 if (!entity.level().isClientSide) {
-                    entity.level().broadcastEntityEvent(entity, BronzeEntity.DEFENCE_STOP);
-                    entity.level().broadcastEntityEvent(entity, BronzeEntity.STUN_START);
+                    entity.level().broadcastEntityEvent(entity, BronzeEntity.SHOCKWAVE_START);
                 }
+                spawnShockwaveParticles();
+                performShockwave();
+                entity.setShockwaveCooldown(COOLDOWN_DURATION);
+                this.stop();
             }
         }
 
         if (isStunned) {
+            entity.setDeltaMovement(0, entity.getDeltaMovement().y, 0);
             stunTicks--;
             if (stunTicks <= 0) {
                 isStunned = false;
                 entity.setShockwaveCooldown(COOLDOWN_DURATION);
-
+                if (!entity.level().isClientSide) {
+                    entity.level().broadcastEntityEvent(entity, BronzeEntity.STUN_STOP);
+                }
                 this.stop();
             }
         }
@@ -127,9 +115,24 @@ public class TarnishedShockwaveGoal extends Goal {
         }
     }
 
-    public void onHitWhileDefending() {
+    public void triggerStunFromKeyHit() {
         if (this.entity.isDefending()) {
-            hitCount++;
+            this.entity.setDefending(false);
+            isStunned = true;
+            stunTicks = STUN_DURATION;
+            entity.setDeltaMovement(Vec3.ZERO);
+
+            if (!entity.level().isClientSide) {
+                entity.level().broadcastEntityEvent(entity, BronzeEntity.DEFENCE_STOP);
+                entity.level().broadcastEntityEvent(entity, BronzeEntity.STUN_START);
+                // Play electrical malfunction sounds
+                entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(),
+                        net.minecraft.sounds.SoundEvents.BEACON_DEACTIVATE,
+                        net.minecraft.sounds.SoundSource.HOSTILE, 1.2F, 0.8F);
+                entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(),
+                        net.minecraft.sounds.SoundEvents.REDSTONE_TORCH_BURNOUT,
+                        net.minecraft.sounds.SoundSource.HOSTILE, 1.5F, 0.5F);
+            }
         }
     }
 
@@ -181,15 +184,18 @@ public class TarnishedShockwaveGoal extends Goal {
 
                 double finalKnockback = knockbackMultiplier * (1.0 - knockbackResistance);
 
-                // Apply the knockback
+                // Apply the knockback with more upward force
                 Vec3 knockbackVec = new Vec3(
                         direction.x * finalKnockback,
-                        Math.min(direction.y * finalKnockback + 0.4, 1.0), // Add upward component, cap it
+                        Math.min(direction.y * finalKnockback + 0.8, 1.5), // Even more upward component
                         direction.z * finalKnockback
                 );
 
                 target.setDeltaMovement(target.getDeltaMovement().add(knockbackVec));
                 target.hurtMarked = true; // Force velocity update on client
+
+                // Deal damage
+                target.hurt(entity.damageSources().mobAttack(entity), SHOCKWAVE_DAMAGE);
             }
         }
 

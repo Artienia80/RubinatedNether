@@ -497,9 +497,15 @@ public class BronzeEntity extends TarnishingEntity {
         // Apply damage multiplier based on which part was hit
         if (part == this.keyPart) {
             amount *= 2.0F;
+
+            // If Tarnished and defending, stun when key is hit
+            if (this.getTarnishLevel().equals(TarnishStage.TARNISHED) && shockwaveGoal != null && this.isDefending()) {
+                shockwaveGoal.triggerStunFromKeyHit();
+                return false; // Don't apply damage, just stun
+            }
         }
 
-        // Tarnished defense mechanics
+        // Tarnished defense mechanics (only if not already handled by key hit)
         if (this.getTarnishLevel().equals(TarnishStage.TARNISHED) && shockwaveGoal != null) {
             if (this.isDefending()) {
                 if (!this.level().isClientSide()) {
@@ -509,7 +515,7 @@ public class BronzeEntity extends TarnishingEntity {
                             10, 0.2, 0.4, 0.2, 0.1
                     );
                 }
-                shockwaveGoal.onHitWhileDefending();
+                // Body hits are deflected
                 return false;
             }
 
