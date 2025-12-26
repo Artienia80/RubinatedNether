@@ -85,11 +85,10 @@ public abstract class TarnishingEntity extends Monster {
         return stage.getTarnishDuration();
     }
 
-    private boolean isNearSoulFire() {
+    private boolean isNearCatalyst() {
         BlockPos pos = blockPosition();
         for (BlockPos nearby : BlockPos.betweenClosed(pos.offset(-5, -5, -5), pos.offset(5, 5, 5))) {
-            Block block = level().getBlockState(nearby).getBlock();
-            if (block == Blocks.SOUL_FIRE || block == Blocks.SOUL_TORCH || block == Blocks.SOUL_WALL_TORCH || block == Blocks.SOUL_LANTERN) {
+            if (level().getBlockState(nearby).is(corundum.rubinated_nether.content.RNTags.Blocks.CRYSTALLIZATION_CATALYST)) {
                 return true;
             }
         }
@@ -213,7 +212,7 @@ public abstract class TarnishingEntity extends Monster {
                     tarnishTimer = 0;
                 }
             }
-            if (isNearSoulFire()) {
+            if (isNearCatalyst()) {
                 tarnishTimer++;
                 if (tarnishTimer >= getTarnishInterval(current)) {
                     setTarnishLevel(TarnishStage.CRYSTALLIZED);

@@ -31,6 +31,10 @@ public class DiscoloredRamGoal extends Goal {
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
+    public boolean isStunned() {
+        return isStunned;
+    }
+
     @Override
     public boolean canUse() {
         if (!entity.getTarnishLevel().equals(TarnishStage.DISCOLORED)) return false;
@@ -135,6 +139,8 @@ public class DiscoloredRamGoal extends Goal {
         if (!entity.level().isClientSide) {
             entity.level().broadcastEntityEvent(entity, BronzeEntity.RAM_STOP); // Stop ram
             entity.level().broadcastEntityEvent(entity, BronzeEntity.STUN_START); // Start stun
+            // Play loud metallic crash sound
+            entity.level().playSound(null, entity.blockPosition(), net.minecraft.sounds.SoundEvents.ANVIL_LAND, net.minecraft.sounds.SoundSource.HOSTILE, 1.5F, 0.5F);
         }
         phase = 0;
     }

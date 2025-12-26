@@ -319,6 +319,11 @@ public class BronzeEntity extends TarnishingEntity {
         super.tick();
         setupAnimationStates();
 
+        // Spawn particles when stunned
+        if ((shockwaveGoal != null && shockwaveGoal.isStunned) || (dashGoal != null && dashGoal.isStunned())) {
+            spawnStunParticles();
+        }
+
         if (this.subEntities != null) {
             Vec3[] partPositions = new Vec3[this.subEntities.length];
 
@@ -386,6 +391,39 @@ public class BronzeEntity extends TarnishingEntity {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private void spawnStunParticles() {
+        if (this.level().isClientSide()) {
+            // Smoke particles emanating outward erratically
+            for (int i = 0; i < 3; i++) {
+                double offsetX = (this.random.nextDouble() - 0.5) * 0.6;
+                double offsetY = this.random.nextDouble() * 1.2;
+                double offsetZ = (this.random.nextDouble() - 0.5) * 0.6;
+
+                double velocityX = (this.random.nextDouble() - 0.5) * 0.15;
+                double velocityY = this.random.nextDouble() * 0.05;
+                double velocityZ = (this.random.nextDouble() - 0.5) * 0.15;
+
+                this.level().addParticle(ParticleTypes.SMOKE,
+                        this.getX() + offsetX,
+                        this.getY() + offsetY,
+                        this.getZ() + offsetZ,
+                        velocityX, velocityY, velocityZ);
+            }
+
+            // Trial spawner detection particles rising upward
+            if (this.random.nextFloat() < 0.3f) {
+                double offsetX = (this.random.nextDouble() - 0.5) * 0.4;
+                double offsetZ = (this.random.nextDouble() - 0.5) * 0.4;
+
+                this.level().addParticle(ParticleTypes.TRIAL_SPAWNER_DETECTED_PLAYER,
+                        this.getX() + offsetX,
+                        this.getY() + 0.2,
+                        this.getZ() + offsetZ,
+                        0, 0.1, 0);
             }
         }
     }
