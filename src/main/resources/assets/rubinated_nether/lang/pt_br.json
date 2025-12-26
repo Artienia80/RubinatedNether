@@ -328,7 +328,7 @@
   "item.rubinated_nether.winding_key": "Chave de Corda",
   "item.rubinated_nether.cogwheel": "Engrenagem",
 
-  "item.rubinated_nether.bronze_spawn_egg": "Ovo de Desova de Bronze",
+  "item.rubinated_nether.bronze_spawn_egg": "Ovo Gerador de Bronze",
 
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Obtenha Obsidiana Sangrenta",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Sangue Derramado.",
@@ -449,6 +449,11 @@
   "rubinated_nether.midnightconfig.cofferStackMultiplier": "Multiplicador de Stack da Arca",
 
   "rubinated_nether.midnightconfig.rubyLensOpacity": "Opacidade das Lentes de Rubi",
-  "rubinated_nether.midnightconfig.bronzeDiseasedOverlayOpacity": "Opacidade da Tela de Doença do Bronze"
+  "rubinated_nether.midnightconfig.bronzeDiseasedOverlayOpacity": "Opacidade da Tela de Doença do Bronze",
+
+  "resourcepack.rubinated_nether.simple_freezer": "§4Simplified Freezer Model",
+  "resourcepack.rubinated_nether.aurichalcum": "§4Bronze No More!",
+  "resourcepack.rubinated_nether.simple_freezer.desc": "Turns the Freezer into a cube model",
+  "resourcepack.rubinated_nether.aurichalcum.desc": "Renames 'Bronze' into 'Aurichalcum' for Modpacks"
 
 }

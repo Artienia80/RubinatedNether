@@ -13,12 +13,12 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class BronzeChargeProjectileRenderer extends EntityRenderer<BronzeShotProjectileEntity> {
-	private BronzeChargeProjectileModel model;
+public class BronzeShotProjectileRenderer extends EntityRenderer<BronzeShotProjectileEntity> {
+	private BronzeShotProjectileModel model;
 
-	public BronzeChargeProjectileRenderer(EntityRendererProvider.Context context) {
+	public BronzeShotProjectileRenderer(EntityRendererProvider.Context context) {
 		super(context);
-		this.model = new BronzeChargeProjectileModel(context.bakeLayer(BronzeChargeProjectileModel.LAYER_LOCATION));
+		this.model = new BronzeShotProjectileModel(context.bakeLayer(BronzeShotProjectileModel.LAYER_LOCATION));
 	}
 
 	@Override

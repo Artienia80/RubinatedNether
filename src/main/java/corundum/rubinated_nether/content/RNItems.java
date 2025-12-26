@@ -1,11 +1,7 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.items.BronzeShotItem;
-import corundum.rubinated_nether.content.items.DrillItem;
-import corundum.rubinated_nether.content.items.Rubination;
-import corundum.rubinated_nether.content.items.RubyLensItem;
-import corundum.rubinated_nether.content.items.RuneItem;
+import corundum.rubinated_nether.content.items.*;
 import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -97,8 +93,24 @@ public class RNItems {
 	);
 
 	public static final DeferredItem<Item> BRONZE_SPAWN_EGG = ITEMS.register("bronze_spawn_egg",
-			() -> new DeferredSpawnEggItem(RNEntityCreator.BRONZE, 0xbf8142, 0x76422c,
-					new Item.Properties()));
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.UNAFFECTED,
+					0xbf8142, 0x76422c, new Item.Properties()));
+
+	public static final DeferredItem<Item> DISCOLORED_BRONZE_SPAWN_EGG = ITEMS.register("discolored_bronze_spawn_egg",
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.DISCOLORED,
+					0xC77459, 0x6D411C, new Item.Properties()));
+
+	public static final DeferredItem<Item> CORRODED_BRONZE_SPAWN_EGG = ITEMS.register("corroded_bronze_spawn_egg",
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.CORRODED,
+					0xB25B4E, 0x662D1B, new Item.Properties()));
+
+	public static final DeferredItem<Item> TARNISHED_BRONZE_SPAWN_EGG = ITEMS.register("tarnished_bronze_spawn_egg",
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.TARNISHED,
+					0x6F4A4F, 0x352227, new Item.Properties()));
+
+	public static final DeferredItem<Item> CRYSTALLIZED_BRONZE_SPAWN_EGG = ITEMS.register("crystallized_bronze_spawn_egg",
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.CRYSTALLIZED,
+					0xACD1B0, 0x738E79, new Item.Properties()));
 
 	//Not Actual Items
 

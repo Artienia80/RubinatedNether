@@ -8,8 +8,8 @@ import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNEntityCreator;
 import corundum.rubinated_nether.content.RNModelLayers;
 import corundum.rubinated_nether.content.effect.renderer.BronzeDiseasedEffectOverlay;
-import corundum.rubinated_nether.content.entity.client.BronzeChargeProjectileModel;
-import corundum.rubinated_nether.content.entity.client.BronzeChargeProjectileRenderer;
+import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileModel;
+import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileRenderer;
 import corundum.rubinated_nether.content.gui.RubyLensOverlay;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.screen.CofferScreen;
@@ -36,8 +36,8 @@ public class RNClientModBusEvents {
 	@SubscribeEvent
 	public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(
-			BronzeChargeProjectileModel.LAYER_LOCATION, 
-			BronzeChargeProjectileModel::createBodyLayer
+			BronzeShotProjectileModel.LAYER_LOCATION, 
+			BronzeShotProjectileModel::createBodyLayer
 		);
         event.registerLayerDefinition(RNModelLayers.COFFER,
                 CofferRenderer::createSingleBodyLayer
@@ -58,7 +58,7 @@ public class RNClientModBusEvents {
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_LASER.get(), BronzeLaserRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.COPPER_LASER.get(), CopperLaserRenderer::new);
 
-        event.registerEntityRenderer(RNEntityCreator.BRONZE_SHOT.get(), BronzeChargeProjectileRenderer::new);
+        event.registerEntityRenderer(RNEntityCreator.BRONZE_SHOT.get(), BronzeShotProjectileRenderer::new);
     }
 
 	@SubscribeEvent

@@ -15,12 +15,12 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 
-public class BronzeChargeProjectileModel extends EntityModel<BronzeShotProjectileEntity> {
+public class BronzeShotProjectileModel extends EntityModel<BronzeShotProjectileEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION =
 			new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "bronze_shot"), "main");
 	private final ModelPart bronze_shot;
 
-	public BronzeChargeProjectileModel(ModelPart root) {
+	public BronzeShotProjectileModel(ModelPart root) {
 		this.bronze_shot = root.getChild("bronze_shot");
 	}
 

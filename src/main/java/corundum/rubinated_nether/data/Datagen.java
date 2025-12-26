@@ -57,7 +57,7 @@ public class Datagen {
 		datagen.addProvider(event.includeClient(), new RNFluidTags(output, lookupProvider, fileHelper));
 		datagen.addProvider(event.includeClient(), new RNEntityTags(output, lookupProvider, fileHelper));
 		datagen.addProvider(event.includeClient(), new RNEnchantmentTags(output, lookupProvider, fileHelper));
-
+		datagen.addProvider(event.includeClient(), new RNLanguage(output));
 
 		// Worldgen
 		datagen.addProvider(

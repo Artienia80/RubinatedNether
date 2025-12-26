@@ -161,11 +161,14 @@ public abstract class TarnishingEntity extends Monster {
                     stack.shrink(1);
                 }
 
-                if(!level().isClientSide())
-                    if (level().random.nextFloat() < 0.1F) {
+                if(!level().isClientSide()) {
+                    // 100% chance in creative, 10% chance in survival
+                    float chance = player.isCreative() ? 1.0F : 0.1F;
+                    if (level().random.nextFloat() < chance) {
                         increaseTarnishLevel();
                         return InteractionResult.sidedSuccess(level().isClientSide());
                     }
+                }
                 handleVFX(player);
 
                 return InteractionResult.sidedSuccess(level().isClientSide());

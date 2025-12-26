@@ -255,6 +255,14 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.BRAZIER.getId().toString(),
 				modLoc("block/ruby_brazier_0")
 		);
+
+		spawnEggItems(
+				RNItems.BRONZE_SPAWN_EGG,
+				RNItems.DISCOLORED_BRONZE_SPAWN_EGG,
+				RNItems.CORRODED_BRONZE_SPAWN_EGG,
+				RNItems.TARNISHED_BRONZE_SPAWN_EGG,
+				RNItems.CRYSTALLIZED_BRONZE_SPAWN_EGG
+		);
 	}
 
 
@@ -334,6 +342,15 @@ public class RNItemModels extends ItemModelProvider {
 			withExistingParent(
 					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
 					block.getId()
+			);
+		}
+	}
+
+	private void spawnEggItems(DeferredItem<?>... items) {
+		for (var item : items) {
+			withExistingParent(
+					item.getId().toString(),
+					mcLoc("item/template_spawn_egg")
 			);
 		}
 	}

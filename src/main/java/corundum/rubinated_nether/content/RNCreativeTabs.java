@@ -102,7 +102,11 @@ public class RNCreativeTabs {
 								RNItems.WINDING_KEY,
 								RNItems.COGWHEEL,
 
-								RNItems.BRONZE_SPAWN_EGG
+								RNItems.BRONZE_SPAWN_EGG,
+								RNItems.DISCOLORED_BRONZE_SPAWN_EGG,
+								RNItems.CORRODED_BRONZE_SPAWN_EGG,
+								RNItems.TARNISHED_BRONZE_SPAWN_EGG,
+								RNItems.CRYSTALLIZED_BRONZE_SPAWN_EGG
 						);
 
 						// Add Bronze Lasers
