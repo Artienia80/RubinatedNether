@@ -542,53 +542,53 @@ public class BronzeAnimations {
                                     AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("rod1",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
-                            new Keyframe(0f, KeyframeAnimations.posVec(8f, 4f, 0f),
+                            new Keyframe(0f, KeyframeAnimations.posVec(8f, 2f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("rod1",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -35f),
+                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -40f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("rod_2",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
-                            new Keyframe(0f, KeyframeAnimations.posVec(8f, 4f, 0f),
+                            new Keyframe(0f, KeyframeAnimations.posVec(8f, 2f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("rod_2",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -35f),
+                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -40f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("rod3",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
-                            new Keyframe(0f, KeyframeAnimations.posVec(-8f, 4f, 0f),
+                            new Keyframe(0f, KeyframeAnimations.posVec(-8f, 2f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("rod3",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 35f),
+                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 40f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("rod_4",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
-                            new Keyframe(0f, KeyframeAnimations.posVec(8f, 4f, 0f),
+                            new Keyframe(0f, KeyframeAnimations.posVec(8f, 2f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("rod_4",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -35f),
+                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -40f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("rod_5",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
-                            new Keyframe(0f, KeyframeAnimations.posVec(8f, 4f, 0f),
+                            new Keyframe(0f, KeyframeAnimations.posVec(8f, 2f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("rod_5",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -35f),
+                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -40f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("rod_6",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
-                            new Keyframe(0f, KeyframeAnimations.posVec(8f, 4f, 0f),
+                            new Keyframe(0f, KeyframeAnimations.posVec(8f, 2f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("rod_6",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -35f),
+                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -40f),
                                     AnimationChannel.Interpolations.CATMULLROM))).build();
-    public static final AnimationDefinition SHOCKWAVE = AnimationDefinition.Builder.withLength(0.5f)
+public static final AnimationDefinition SHOCKWAVE = AnimationDefinition.Builder.withLength(0.5f)
             .addAnimation("bronze",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
                             new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
@@ -712,6 +712,12 @@ public class BronzeAnimations {
                             new Keyframe(0.41667f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM))).build();
     public static final AnimationDefinition STUNNED = AnimationDefinition.Builder.withLength(1f).looping()
+            .addAnimation("bronze",
+                    new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(1f, KeyframeAnimations.degreeVec(0f, 360f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR)))
             .addAnimation("head",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
                             new Keyframe(0.25f, KeyframeAnimations.posVec(0f, 0f, 0f),
