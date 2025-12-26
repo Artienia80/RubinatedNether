@@ -7,6 +7,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.EnumSet;
 
@@ -82,10 +83,16 @@ public class DiscoloredRamGoal extends Goal {
 
         switch (phase) {
             case 1:
+                // Only look at target during charge phase
                 entity.lookAt(EntityAnchorArgument.Anchor.EYES, target.position());
                 phaseTicks++;
                 if (phaseTicks >= CHARGE_TIME) {
+                    // Calculate dash direction and lock rotation before starting dash
                     dashDirection = target.position().subtract(entity.position()).normalize();
+                    entity.setYRot((float) (Mth.atan2(dashDirection.z, dashDirection.x) * (180F / Math.PI)) - 90F);
+                    entity.yBodyRot = entity.getYRot();
+                    entity.yHeadRot = entity.getYRot();
+
                     phase = 2;
                     phaseTicks = 0;
                     // Start ram animation when beginning the dash
@@ -97,26 +104,44 @@ public class DiscoloredRamGoal extends Goal {
 
             case 2:
                 entity.setDeltaMovement(dashDirection.scale(RAM_SPEED));
-                entity.setYRot((float) (Mth.atan2(dashDirection.z, dashDirection.x) * (180F / Math.PI)) - 90F);
-                entity.yBodyRot = entity.getYRot();
 
-                if (entity.distanceTo(target) < 1.5) {
-                    boolean hasShield = target.isBlocking();
-                    if (hasShield) {
+                // Check for collisions with any living entity
+                java.util.List<net.minecraft.world.entity.LivingEntity> nearbyEntities = entity.level().getEntitiesOfClass(
+                        net.minecraft.world.entity.LivingEntity.class,
+                        entity.getBoundingBox().inflate(0.5),
+                        e -> e != entity && e.isAlive()
+                );
+
+                for (net.minecraft.world.entity.LivingEntity hitEntity : nearbyEntities) {
+                    // Check if it's the target player with a shield
+                    if (hitEntity == target && target.isBlocking()) {
                         Vec3 attackDir = entity.position().subtract(target.position()).normalize();
                         Vec3 lookVec = target.getLookAngle().normalize();
                         double dot = attackDir.dot(lookVec);
 
                         if (dot > 0.3) {
+                            // Play shield block sound
+                            target.level().playSound(null, target.blockPosition(),
+                                    net.minecraft.sounds.SoundEvents.SHIELD_BLOCK,
+                                    net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 1.0F);
+
                             triggerStun();
                             return;
                         }
                     }
 
-                    target.hurt(entity.damageSources().mobAttack(entity), 6.0F);
-                    stop();
-                }
+                    // Deal damage to any entity hit (including target without proper shield block)
+                    hitEntity.hurt(entity.damageSources().mobAttack(entity), 6.0F);
+                    // Knockback the entity
+                    double knockbackStrength = 0.5;
+                    hitEntity.knockback(knockbackStrength,
+                            -dashDirection.x,
+                            -dashDirection.z);
 
+                    // Stop the ram but don't stun (unless it was a successful shield block)
+                    stop();
+                    return;
+                }
 
                 phaseTicks++;
                 if (phaseTicks >= DASH_TIME) {
@@ -139,8 +164,9 @@ public class DiscoloredRamGoal extends Goal {
         if (!entity.level().isClientSide) {
             entity.level().broadcastEntityEvent(entity, BronzeEntity.RAM_STOP); // Stop ram
             entity.level().broadcastEntityEvent(entity, BronzeEntity.STUN_START); // Start stun
-            // Play loud metallic crash sound
-            entity.level().playSound(null, entity.blockPosition(), net.minecraft.sounds.SoundEvents.ANVIL_LAND, net.minecraft.sounds.SoundSource.HOSTILE, 1.5F, 0.5F);
+            // Play electrical malfunction sounds
+            entity.level().playSound(null, entity.blockPosition(), net.minecraft.sounds.SoundEvents.BEACON_DEACTIVATE, net.minecraft.sounds.SoundSource.HOSTILE, 1.2F, 0.8F);
+            entity.level().playSound(null, entity.blockPosition(), net.minecraft.sounds.SoundEvents.REDSTONE_TORCH_BURNOUT, net.minecraft.sounds.SoundSource.HOSTILE, 1.5F, 0.5F);
         }
         phase = 0;
     }
