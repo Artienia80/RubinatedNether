@@ -28,7 +28,8 @@ public class RNLanguage implements DataProvider {
         return CompletableFuture.allOf(
                 generateLanguageFile("aurichalcum", "en_us", "Bronze", "Aurichalcum"),
                 generateLanguageFile("aurichalcum", "zh_cn", "青铜", "山铜"),
-                generateLanguageFile("aurichalcum", "pt_br", "Bronze", "Oricalco")
+                generateLanguageFile("aurichalcum", "pt_br", "Bronze", "Oricalco"),
+                generateLanguageFile("aurichalcum", "hu_hu", "Bronz", "Aurichalcum")
                 // Add more language files here as needed
         );
     }
@@ -70,8 +71,18 @@ public class RNLanguage implements DataProvider {
                         continue;
                     }
 
+                    String modifiedValue = value;
+
+                    // Special handling for Hungarian
+                    if (langFile.equals("hu_hu")) {
+                        // Priority 1: Handle "a bronz" -> "az aurichalcum" (with capital variations)
+                        modifiedValue = modifiedValue.replace("a bronz", "az aurichalcum");
+                        modifiedValue = modifiedValue.replace("A bronz", "Az aurichalcum");
+                        modifiedValue = modifiedValue.replace("A Bronz", "Az Aurichalcum");
+                    }
+
                     // Replace search term with replace term (case-sensitive)
-                    String modifiedValue = value.replace(searchTerm, replaceTerm);
+                    modifiedValue = modifiedValue.replace(searchTerm, replaceTerm);
 
                     // Also handle lowercase versions
                     String searchLower = searchTerm.toLowerCase();
