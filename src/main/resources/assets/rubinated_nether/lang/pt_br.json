@@ -329,6 +329,10 @@
   "item.rubinated_nether.cogwheel": "Engrenagem",
 
   "item.rubinated_nether.bronze_spawn_egg": "Ovo Gerador de Bronze",
+  "item.rubinated_nether.discolored_bronze_spawn_egg": "Ovo Gerador de Bronze Discolorido",
+  "item.rubinated_nether.corroded_bronze_spawn_egg": "Ovo Gerador de Bronze Corroído",
+  "item.rubinated_nether.tarnished_bronze_spawn_egg": "Ovo Gerador de Bronze Manchado",
+  "item.rubinated_nether.crystallized_bronze_spawn_egg": "Ovo Gerador de Bronze Cristalizado",
 
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Obtenha Obsidiana Sangrenta",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Sangue Derramado.",
@@ -396,12 +400,16 @@
 
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
 
-  "entity.rubinated_nether.bronze": "Bronze",
+  "entity.rubinated_nether.bronze_shot": "Bola de Bronze",
+  "entity.rubinated_nether.bronze.unaffected": "Bronze",
+  "entity.rubinated_nether.bronze.discolored": "Bronze Discolorido",
+  "entity.rubinated_nether.bronze.corroded": "Bronze Corroído",
+  "entity.rubinated_nether.bronze.tarnished": "Bronze Manchado",
+  "entity.rubinated_nether.bronze.crystallized": "Bronze Cristalizado",
 
   "effect.rubinated_nether.bronze_diseased": "Doença do Bronze",
   "effect.rubinated_nether.blessed": "Bênção",
   "effect.rubinated_nether.brazier_power": "Proteção Rubica",
-
 
   "death.attack.chandelier": "%1$s foi esmagado por um candelabro",
   "death.attack.chandelier.player": "%1$s foi esmagado por um candelabro enquanto lutava com %2$s",
@@ -451,9 +459,8 @@
   "rubinated_nether.midnightconfig.rubyLensOpacity": "Opacidade das Lentes de Rubi",
   "rubinated_nether.midnightconfig.bronzeDiseasedOverlayOpacity": "Opacidade da Tela de Doença do Bronze",
 
-  "resourcepack.rubinated_nether.simple_freezer": "§4Simplified Freezer Model",
-  "resourcepack.rubinated_nether.aurichalcum": "§4Bronze No More!",
-  "resourcepack.rubinated_nether.simple_freezer.desc": "Turns the Freezer into a cube model",
-  "resourcepack.rubinated_nether.aurichalcum.desc": "Renames 'Bronze' into 'Aurichalcum' for Modpacks"
-
+  "resourcepack.rubinated_nether.simple_freezer": "§4Modelo Simplificado de Congelador",
+  "resourcepack.rubinated_nether.aurichalcum": "§4Bronze Jamais!",
+  "resourcepack.rubinated_nether.simple_freezer.desc": "Transforma o congelador em um cubo",
+  "resourcepack.rubinated_nether.aurichalcum.desc": "Renomeia o 'Bronze' em 'Oricalco' para Modpacks"
 }
