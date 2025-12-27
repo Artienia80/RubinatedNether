@@ -21,7 +21,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -37,6 +39,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.entity.PartEntity;
 
@@ -327,16 +330,15 @@ public class BronzeEntity extends TarnishingEntity {
         if (this.subEntities != null) {
             Vec3[] partPositions = new Vec3[this.subEntities.length];
 
-
             for (int i = 0; i < this.subEntities.length; i++) {
                 partPositions[i] = new Vec3(this.subEntities[i].getX(), this.subEntities[i].getY(), this.subEntities[i].getZ());
             }
 
             // Body part at entity position
-            this.tickPart(this.bodyPart, 0.0, 0.0, 0.0, 500);
+            this.tickPart(this.bodyPart, 0.0, 0.0, 0.0, 500, 0.25);
 
             // Key part positioned above body
-            this.tickPart(this.keyPart, 0.0, 1.4, 0.0, 1.4);
+            this.tickPart(this.keyPart, 0.0, 1.4, 0.0, 1.4, 0.25);
 
             for (int j = 0; j < this.subEntities.length; j++) {
                 this.subEntities[j].xo = partPositions[j].x;
@@ -362,7 +364,6 @@ public class BronzeEntity extends TarnishingEntity {
         }
 
         decreaseCooldowns();
-
 
         if (!this.level().isClientSide()) {
             List<BronzeEntity> bronzes = this.level().getEntitiesOfClass(BronzeEntity.class, this.getBoundingBox().inflate(25.0D));
@@ -393,6 +394,26 @@ public class BronzeEntity extends TarnishingEntity {
                 }
             }
         }
+    }
+
+    @Override
+    protected AABB makeBoundingBox() {
+        EntityDimensions dimensions = this.getDimensions(this.getPose());
+
+        if (this.isDefending()) {
+            // Shrink height by 0.25 blocks
+            float width = dimensions.width();
+            float height = dimensions.height() - 0.25F;
+            float f = width / 2.0F;
+
+            Vec3 pos = this.position();
+            return new AABB(
+                    pos.x - f, pos.y, pos.z - f,
+                    pos.x + f, pos.y + height, pos.z + f
+            );
+        }
+
+        return super.makeBoundingBox();
     }
 
     private void spawnStunParticles() {
@@ -485,27 +506,44 @@ public class BronzeEntity extends TarnishingEntity {
         super.knockback(strength, x, z);
     }
 
-    private void tickPart(BronzePart part, double offsetX, double offsetY, double offsetZ, double burrowedOffset) {
+    private void tickPart(BronzePart part, double offsetX, double offsetY, double offsetZ, double burrowedOffset, double defendingOffset) {
         if(this.isBurrowed()){
             part.setPos(this.getX() + offsetX, this.getY() + offsetY - burrowedOffset, this.getZ() + offsetZ);
+        } else if(this.isDefending()) {
+            part.setPos(this.getX() + offsetX, this.getY() + offsetY - defendingOffset, this.getZ() + offsetZ);
         } else {
             part.setPos(this.getX() + offsetX, this.getY() + offsetY, this.getZ() + offsetZ);
         }
     }
-
     public boolean hurtFromPart(BronzePart part, DamageSource source, float amount) {
+        // Store defending state before damage
+        boolean wasDefending = this.isDefending();
+        boolean wasBurrowed = this.isBurrowed();
+
         // Apply damage multiplier based on which part was hit
         if (part == this.keyPart) {
             amount *= 2.0F;
 
-            // If Tarnished and defending, stun when key is hit
+            // If Tarnished and defending, stun ONLY when key is hit with bronze shot
             if (this.getTarnishLevel().equals(TarnishStage.TARNISHED) && shockwaveGoal != null && this.isDefending()) {
-                shockwaveGoal.triggerStunFromKeyHit();
-                return false; // Don't apply damage, just stun
+                // Check if damage source is from bronze shot projectile
+                if (source.getDirectEntity() instanceof BronzeShotProjectileEntity) { // Replace with your actual projectile class
+                    shockwaveGoal.triggerStunFromKeyHit();
+                    return false;
+                }
+                // If hit with something else while defending, block the damage but stay defending
+                if (!this.level().isClientSide()) {
+                    ((ServerLevel) this.level()).sendParticles(
+                            ParticleTypes.CRIT,
+                            this.getX(), this.getY(0.5), this.getZ(),
+                            10, 0.2, 0.4, 0.2, 0.1
+                    );
+                }
+                return false;
             }
         }
 
-        // Tarnished defense mechanics (only if not already handled by key hit)
+        // Tarnished defense mechanics
         if (this.getTarnishLevel().equals(TarnishStage.TARNISHED) && shockwaveGoal != null) {
             if (this.isDefending()) {
                 if (!this.level().isClientSide()) {
@@ -515,7 +553,6 @@ public class BronzeEntity extends TarnishingEntity {
                             10, 0.2, 0.4, 0.2, 0.1
                     );
                 }
-                // Body hits are deflected
                 return false;
             }
 
@@ -523,7 +560,15 @@ public class BronzeEntity extends TarnishingEntity {
                 amount *= 1.5f;
             }
         }
-        return super.hurt(source, amount);
+
+        boolean result = super.hurt(source, amount);
+
+        // Force parts to maintain position if still defending/burrowed after damage
+        if (wasDefending && this.isDefending() || wasBurrowed && this.isBurrowed()) {
+            updatePartPositions();
+        }
+
+        return result;
     }
 
 
@@ -580,16 +625,19 @@ public class BronzeEntity extends TarnishingEntity {
         return this.entityData.get(IS_BURROWED);
     }
 
-    public void setBurrowed(boolean burrowed) {
-        this.entityData.set(IS_BURROWED, burrowed);
-    }
-
     public boolean isDefending() {
         return this.entityData.get(IS_DEFENDING);
     }
 
+
     public void setDefending(boolean defending) {
         this.entityData.set(IS_DEFENDING, defending);
+        updatePartPositions();
+    }
+
+    public void setBurrowed(boolean burrowed) {
+        this.entityData.set(IS_BURROWED, burrowed);
+        updatePartPositions();
     }
 
     private boolean isMoving() {
@@ -656,7 +704,22 @@ public class BronzeEntity extends TarnishingEntity {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
         super.onSyncedDataUpdated(pKey);
+
+        // Update part positions immediately when defending state changes
+        if (pKey.equals(IS_DEFENDING) || pKey.equals(IS_BURROWED)) {
+            updatePartPositions();
+        }
+
         this.refreshDimensions();
+    }
+
+    private void updatePartPositions() {
+        if (this.subEntities != null) {
+            // Body part at entity position
+            this.tickPart(this.bodyPart, 0.0, 0.0, 0.0, 500, 0.25);
+            // Key part positioned above body
+            this.tickPart(this.keyPart, 0.0, 1.4, 0.0, 1.4, 0.25);
+        }
     }
 
     @Override
