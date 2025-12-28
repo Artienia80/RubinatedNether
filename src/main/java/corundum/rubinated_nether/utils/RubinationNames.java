@@ -16,7 +16,7 @@ public class RubinationNames {
 	private static final Style ROOT_STYLE;
 	private static final RubinationNames INSTANCE;
 	private final RandomSource random = RandomSource.create();
-	private final String[] words = new String[]{"ruby", "coal", "deal", "blue", "fire", "cold", "free", "cube", "self", "ball", "grow", "wife", "love"};
+	private final String[] words = new String[]{"ruby", "coal", "deal", "blue", "fire", "cold", "free", "cube", "self", "ball", "grow", "arti", "love", "wife", "kolo"};
 
 	public static RubinationNames getInstance() {
 		return INSTANCE;
