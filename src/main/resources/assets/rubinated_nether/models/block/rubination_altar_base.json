@@ -10,6 +10,7 @@
 		"4": "rubinated_nether:block/altar/altar_top",
 		"5": "rubinated_nether:block/bleeding_obsidian",
 		"6": "rubinated_nether:block/altar/altar_side",
+		"overlay5": "rubinated_nether:block/bleeding_obsidian_e",
 		"overlay6": "rubinated_nether:block/altar/altar_side_glow",
 		"particle": "block/obsidian"
 	},
@@ -120,6 +121,72 @@
 		},
 
 		{
+			"from": [2, 0, 2],
+			"to": [14, 4, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 2]},
+			"faces": {
+				"up": {"uv": [0, 0, 12, 12], "texture": "#overlay5"}
+			},
+			"neoforge_data": {
+				"color": "FFFFFFFF",
+				"block_light": 15,
+				"sky_light": 15
+			}
+		},
+		{
+			"from": [0, 4, 0],
+			"to": [6, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 4, 0]},
+			"faces": {
+				"east": {"uv": [0, 0, 16, 10], "texture": "#overlay5"}
+			},
+			"neoforge_data": {
+				"color": "FFFFFFFF",
+				"block_light": 15,
+				"sky_light": 15
+			}
+		},
+		{
+			"from": [10, 4, 0],
+			"to": [16, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [10, 4, 0]},
+			"faces": {
+				"west": {"uv": [0, 0, 16, 10], "texture": "#overlay5"}
+			},
+			"neoforge_data": {
+				"color": "FFFFFFFF",
+				"block_light": 15,
+				"sky_light": 15
+			}
+		},
+		{
+			"from": [6, 4, 0],
+			"to": [10, 14, 6],
+			"rotation": {"angle": 0, "axis": "y", "origin": [6, 4, 0]},
+			"faces": {
+				"south": {"uv": [0, 0, 4, 10], "texture": "#overlay5"}
+			},
+			"neoforge_data": {
+				"color": "FFFFFFFF",
+				"block_light": 15,
+				"sky_light": 15
+			}
+		},
+		{
+			"from": [6, 4, 10],
+			"to": [10, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [6, 4, 10]},
+			"faces": {
+				"north": {"uv": [0, 0, 4, 10], "texture": "#overlay5"}
+			},
+			"neoforge_data": {
+				"color": "FFFFFFFF",
+				"block_light": 15,
+				"sky_light": 15
+			}
+		},
+
+		{
 			"from": [0, 4, 0],
 			"to": [6, 14, 16],
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, 4, 0]},
@@ -129,6 +196,7 @@
 				"west": {"uv": [0, 0, 16, 10], "texture": "#overlay6"}
 			},
 			"neoforge_data": {
+				"color": "FFFFFFFF",
 				"block_light": 15,
 				"sky_light": 15
 			}
@@ -143,6 +211,7 @@
 				"south": {"uv": [10, 0, 16, 10], "texture": "#overlay6"}
 			},
 			"neoforge_data": {
+				"color": "FFFFFFFF",
 				"block_light": 15,
 				"sky_light": 15
 			}
@@ -155,6 +224,7 @@
 				"north": {"uv": [6, 0, 10, 10], "texture": "#overlay6"}
 			},
 			"neoforge_data": {
+				"color": "FFFFFFFF",
 				"block_light": 15,
 				"sky_light": 15
 			}
@@ -167,6 +237,7 @@
 				"south": {"uv": [6, 0, 10, 10], "texture": "#overlay6"}
 			},
 			"neoforge_data": {
+				"color": "FFFFFFFF",
 				"block_light": 15,
 				"sky_light": 15
 			}
@@ -180,10 +251,16 @@
 			"children": [0, 1, 2, 3, 4, 5, 6, 7]
 		},
 		{
-			"name": "glowing_elements",
+			"name": "bleeding_obsidian_glow",
+			"origin": [8, 8, 8],
+			"color": 2,
+			"children": [8, 9, 10, 11, 12]
+		},
+		{
+			"name": "altar_side_glow",
 			"origin": [8, 8, 8],
 			"color": 1,
-			"children": [8, 9, 10, 11]
+			"children": [13, 14, 15, 16]
 		}
 	]
 }
