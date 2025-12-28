@@ -16,6 +16,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -37,9 +38,21 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	private static final ResourceLocation RUBINATION_SLOT_INSCRIPTION_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_inscription");
 	private static final ResourceLocation UNDISCOVERED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/undiscovered_rune.png");
 	private static final ResourceLocation DISABLED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/disabled_rune.png");
+	private static final ResourceLocation INSCRIPTION_DISABLED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/inscription_disabled_rune.png");
 	private static final ResourceLocation RUBINATION_ALTAR_LOCATION = RubinatedNether.id("textures/gui/rubination_altar.png");
 
+	// Font colors
+	private static final int COLOR_ENABLED = 6839882;              // Default enabled (purple-ish)
+	private static final int COLOR_HIGHLIGHTED = 16777088;         // Highlighted/hover (yellow-gold)
+	private static final int COLOR_DISABLED = 0x494949;            // Disabled dark gray
+	private static final int COLOR_INSCRIPTION_ENABLED = 0xD34343; // Inscription mode enabled (red)
+	private static final int COLOR_INSCRIPTION_DISABLED = 0x990B31; // Inscription mode disabled (dark red)
+
 	private boolean hasEnoughRubinatedBlocks = false;
+	private int tickCounter = 0;
+	private static final int NAME_UPDATE_INTERVAL = 3;
+	private FormattedText[] cachedNames = new FormattedText[3];
+	private boolean namesNeedUpdate = true;
 
 	public RubinationScreen(RubinationMenu menu, Inventory playerInventory, Component title) {
 		super(menu, playerInventory, title);
@@ -69,6 +82,14 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	protected void init() {
 		super.init();
 		updateRubinatedBlockStatus();
+		updateCachedNames();
+	}
+
+	private void updateCachedNames() {
+		for (int i = 0; i < 3; i++) {
+			cachedNames[i] = RubinationNames.getInstance().getRandomName(this.font, 40);
+		}
+		namesNeedUpdate = false;
 	}
 
 
@@ -102,8 +123,12 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 			var i1 = i + 42 + (l * 36);
 			var j1 = j + 16;
 
-			var formattedtext = RubinationNames.getInstance().getRandomName(this.font, 20);
-			var i2 = 6839882;
+			// Use cached name that only updates every 0.5 seconds
+			if (namesNeedUpdate) {
+				updateCachedNames();
+			}
+			var formattedtext = cachedNames[l];
+			int textColor;
 
 			// Check if we can show options based on mode
 			boolean canShowOptions = false;
@@ -129,12 +154,14 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				RenderSystem.enableBlend();
 				if (j2 >= 0 && k2 >= 0 && j2 < 21 && k2 < 59) {
 					guiGraphics.blitSprite(RUBINATION_SLOT_HIGHLIGHTED_SPRITE, i1, j1, 21, 59);
-					i2 = 16777088;
+					textColor = COLOR_HIGHLIGHTED;
 				} else {
 					if (inscriptionMode) {
 						guiGraphics.blitSprite(RUBINATION_SLOT_INSCRIPTION_SPRITE, i1, j1, 21, 59);
+						textColor = COLOR_INSCRIPTION_ENABLED;
 					} else {
 						guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 21, 59);
+						textColor = COLOR_ENABLED;
 					}
 				}
 
@@ -143,7 +170,10 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				guiGraphics.blit(RubinatedNether.id("textures/item/rune_" + Rubination.parseRubinationTextureName(result) + ".png"), i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
 
 				RenderSystem.disableBlend();
-				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 8, j1 + 20, 1, i2);
+				guiGraphics.pose().pushPose();
+				guiGraphics.pose().translate(-1.5f, 0, 0);
+				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 8, j1 + 20, 1, textColor);
+				guiGraphics.pose().popPose();
 			} else {
 				RenderSystem.enableBlend();
 				var optionalList = getEnchantReferences(l);
@@ -153,27 +183,28 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				boolean hasItemButNoRubination = hasRubinatable && !hasRubinationOptions;
 
 				if (inscriptionMode) {
+					// Disabled inscription mode
 					guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_INSCRIPTION_SPRITE, i1, j1, 21, 59);
-					guiGraphics.blit(DISABLED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+					guiGraphics.blit(INSCRIPTION_DISABLED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+					textColor = COLOR_INSCRIPTION_DISABLED;
 				} else {
+					// Disabled rubination mode
 					if (hasItemButNoRubination) {
 						guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 21, 59);
 						guiGraphics.blit(UNDISCOVERED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+						textColor = (COLOR_ENABLED & 16711422) >> 1; // Dimmed version
 					} else {
 						guiGraphics.blitSprite(RUBINATION_SLOT_UNDISCOVERED_SPRITE, i1, j1, 21, 59);
 						guiGraphics.blit(DISABLED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+						textColor = COLOR_DISABLED;
 					}
 				}
 
 				RenderSystem.disableBlend();
-
-				int textColor;
-				if (hasItemButNoRubination) {
-					textColor = (i2 & 16711422) >> 1;
-				} else {
-					textColor = 0x494949;
-				}
+				guiGraphics.pose().pushPose();
+				guiGraphics.pose().translate(-1.5f, 0, 0);
 				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 8, j1 + 20, 1, textColor);
+				guiGraphics.pose().popPose();
 			}
 		}
 	}
@@ -218,6 +249,11 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 		super.containerTick();
 		if (isInscriptionMode()) {
 			updateRubinatedBlockStatus();
+		}
+		tickCounter++;
+		if (tickCounter >= NAME_UPDATE_INTERVAL) {
+			tickCounter = 0;
+			namesNeedUpdate = true;
 		}
 	}
 

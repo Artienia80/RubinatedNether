@@ -27,11 +27,11 @@ public class RubinationAltarParticle extends TextureSheetParticle {
 		this.x = this.xo;
 		this.y = this.yo;
 		this.z = this.zo;
-		this.quadSize = 0.1F * (this.random.nextFloat() * 0.5F + 0.2F);
+		this.quadSize = 0.1F * (this.random.nextFloat() * 0.5F + 0.5F);
 		float f = this.random.nextFloat() * 0.6F + 0.4F;
-		this.rCol = f;
-		this.gCol = 0.3F * f;
-		this.bCol = 0.3F * f;
+		this.rCol = 0.667F;
+		this.gCol = 0.0F;
+		this.bCol = 0.0F;
 		this.hasPhysics = false;
 		this.lifetime = (int)(Math.random() * 10.0) + 75;
 	}
@@ -63,19 +63,9 @@ public class RubinationAltarParticle extends TextureSheetParticle {
 		this.setLocationFromBoundingbox();
 	}
 
+	@Override
 	public int getLightColor(float partialTick) {
-		var i = super.getLightColor(partialTick);
-		var f = (float)this.age / (float)this.lifetime;
-		f *= f;
-		f *= f;
-		var j = i & 255;
-		var k = i >> 16 & 255;
-		k += (int)(f * 15.0F * 16.0F);
-		if (k > 240) {
-			k = 240;
-		}
-
-		return j | k << 16;
+		return 240 | 240 << 16;
 	}
 
 	public static class Provider implements ParticleProvider<SimpleParticleType> {

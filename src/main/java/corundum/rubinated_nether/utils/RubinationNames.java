@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.utils;
 
+import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
@@ -12,7 +13,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class RubinationNames {
-	private static final ResourceLocation ALT_FONT = ResourceLocation.withDefaultNamespace("alt");
+	private static final ResourceLocation ALT_FONT = RubinatedNether.id("em38");
 	private static final Style ROOT_STYLE;
 	private static final RubinationNames INSTANCE;
 	private final RandomSource random = RandomSource.create();
@@ -23,10 +24,14 @@ public class RubinationNames {
 	}
 
 	public FormattedText getRandomName(Font fontRenderer, int maxWidth) {
-		var stringbuilder = new StringBuilder();
-		stringbuilder.append(Util.getRandom(this.words, this.random));
+		var word = Util.getRandom(this.words, this.random);
+		var result = fontRenderer.getSplitter().headByWidth(
+				Component.literal(word).withStyle(ROOT_STYLE),
+				maxWidth,
+				Style.EMPTY
+		);
 
-		return fontRenderer.getSplitter().headByWidth(Component.literal(stringbuilder.toString()).withStyle(ROOT_STYLE), maxWidth, Style.EMPTY);
+		return result;
 	}
 
 	public void initSeed(long seed) {
