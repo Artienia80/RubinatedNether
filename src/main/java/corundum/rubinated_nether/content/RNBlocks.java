@@ -70,9 +70,10 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> BLEEDING_OBSIDIAN = registerBlockAndItem(
-		"bleeding_obsidian", 
-		() -> new Block(Block.Properties.ofFullCopy(Blocks.CRYING_OBSIDIAN))
+	public static final DeferredBlock<Block> BLEEDING_OBSIDIAN = registerBlockAndItemWithRarity(
+			"bleeding_obsidian",
+			() -> new Block(Block.Properties.ofFullCopy(Blocks.OBSIDIAN)),
+			RNRarity.RUBINATED.get()
 	);
 
 	public static final DeferredBlock<Block> BRONZE_CHANDELIER = registerWaxableBlock(
@@ -362,33 +363,29 @@ public class RNBlocks {
 			"rubinated_chiseled_shrine_stone_bricks",
 			() -> new SixWayPillarBlock(
 					Block.Properties.ofFullCopy(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get())
-							.lightLevel($ -> 7)
 			),
-			RNRarity.RUBINATED_NETHER_RUBY.get()
+			RNRarity.RUBINATED.get()
 	);
 	public static final DeferredBlock<Block> RUBINATED_SHRINE_STONE_BRICKS = registerBlockAndItemWithRarity(
 			"rubinated_shrine_stone_bricks",
 			() -> new Block(
 					Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_BRICKS.get())
-							.lightLevel($ -> 7)
 			),
-			RNRarity.RUBINATED_NETHER_RUBY.get()
+			RNRarity.RUBINATED.get()
 	);
 
 	public static final DeferredBlock<Block> RUBINATED_SHRINE_STONE_TILES = registerBlockAndItemWithRarity(
 			"rubinated_shrine_stone_tiles",
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
-					.lightLevel($ -> 7)
 			),
-			RNRarity.RUBINATED_NETHER_RUBY.get()
+			RNRarity.RUBINATED.get()
 	);
 
 	public static final DeferredBlock<RotatedPillarBlock> RUBINATED_SHRINE_STONE_PILLAR = registerBlockAndItemWithRarity(
 			"rubinated_shrine_stone_pillar",
 			() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
-					.lightLevel($ -> 7)
 			),
-			RNRarity.RUBINATED_NETHER_RUBY.get()
+			RNRarity.RUBINATED.get()
 	);
 
 	public static final DeferredBlock<Block> FREEZER = registerBlockAndItem(

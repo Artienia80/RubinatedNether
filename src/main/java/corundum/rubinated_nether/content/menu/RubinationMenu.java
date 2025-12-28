@@ -41,7 +41,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.CommonHooks;
 
 import java.util.*;
@@ -463,7 +462,7 @@ public class RubinationMenu extends AbstractContainerMenu {
                     var itemstack2 = rubinatableItem.getItem().applyEnchantments(rubinatableItem, selectedEnchantments);
 
                     itemstack2 = itemstack2.copy();
-                    itemstack2.set(net.minecraft.core.component.DataComponents.RARITY, RNRarity.RUBINATED_NETHER_RUBY.get());
+                    itemstack2.set(net.minecraft.core.component.DataComponents.RARITY, RNRarity.RUBINATED.get());
 
                     this.rubinationSlots.setItem(0, itemstack2);
                     CommonHooks.onPlayerEnchantItem(player, itemstack2, selectedEnchantments);

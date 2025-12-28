@@ -6,7 +6,6 @@ import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
@@ -65,7 +64,7 @@ public class RNItems {
 		"music_disc_shimmer", 
 		new Item.Properties()
 			.stacksTo(1)
-			.rarity(RNRarity.RUBINATED_NETHER_RUBY.get())
+			.rarity(RNRarity.RUBINATED.get())
 			.jukeboxPlayable(RNJukeboxSongs.SHIMMER)
 	);
 
@@ -140,7 +139,7 @@ public class RNItems {
 
 		return ITEMS.register(
 				rubination.name().toLowerCase(Locale.ROOT).concat("_rune"), // Converts name to lowercase
-				() -> new RuneItem(new Item.Properties().stacksTo(1).rarity(RNRarity.RUBINATED_NETHER_RUBY.get()), rubination, tooltipKey)
+				() -> new RuneItem(new Item.Properties().stacksTo(1).rarity(RNRarity.RUBINATED.get()), rubination, tooltipKey)
 		);
 	}
 }
