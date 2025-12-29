@@ -136,7 +136,7 @@ public class RubinateCommand {
 
             heldItem.set(DataComponents.ENCHANTMENTS, mutableEnchantments.toImmutable());
 
-            heldItem.set(DataComponents.RARITY, RNRarity.RUBINATED.get());
+            heldItem.set(DataComponents.RARITY, RNRarity.RUBINATED_NETHER_RUBY.get());
 
             successCount++;
         }

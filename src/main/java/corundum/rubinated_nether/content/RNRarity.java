@@ -11,5 +11,5 @@ import net.neoforged.fml.common.asm.enumextension.NetworkedEnum;
 @IndexedEnum
 @NamedEnum(1)
 public class RNRarity {
-	public static final Supplier<Rarity> RUBINATED = Suppliers.memoize(() -> Rarity.valueOf("RUBINATED"));
+	public static final Supplier<Rarity> RUBINATED_NETHER_RUBY = Suppliers.memoize(() -> Rarity.valueOf("RUBINATED_NETHER_RUBY"));
 }
