@@ -155,7 +155,10 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.DISCOLORED_BRONZE_SPRING.get(),
 				RNBlocks.CORRODED_BRONZE_SPRING.get(),
 				RNBlocks.TARNISHED_BRONZE_SPRING.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get()
+				RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get(),
+
+				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get()
 
 				);
 
@@ -315,8 +318,10 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_LASER.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get()
-				);
+				RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get()
+
+		);
 
 		this.tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).addTag(RNTags.Blocks.CRYSTALLIZED_BLOCKS);
 

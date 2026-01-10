@@ -96,6 +96,9 @@ public class RNCreativeTabs {
 								RNItems.BRONZE_POWDER,
 								RNItems.BRONZE_SCRAP,
 								RNItems.BRONZE_SHOT,
+
+								RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
+
 								RNItems.BRONZE_DRILL,
 
 								RNItems.RITUAL_OFFERING,

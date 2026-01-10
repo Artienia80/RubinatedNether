@@ -2,10 +2,7 @@ package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.blocks.BrazierBlock;
-import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
-import corundum.rubinated_nether.content.blocks.CopperLaserBlock;
-import corundum.rubinated_nether.content.blocks.SixWayPillarBlock;
+import corundum.rubinated_nether.content.blocks.*;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -295,7 +292,75 @@ public class RNBlockStates extends BlockStateProvider {
 		generateBronzeLaserFamily("laser");
 		generateCopperLaserFamily("laser");
 		brazierBlock();
+
+        generateCrystalModels();
+        crystalBlockState(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get(), "crystallized_bronze_crystal");
+        crystalBlockState(RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get(), "crystallized_bronze_cluster");
+
+
 	}
+
+    private void generateCrystalModels() {
+        models().getBuilder("crystallized_bronze_crystal")
+                .parent(models().getExistingFile(mcLoc("block/cross")))
+                .texture("cross", modLoc("block/crystallized_bronze_crystal"))
+                .element()
+                .from(5, 0, 8).to(11, 7, 8)
+                .rotation().angle(45).axis(Direction.Axis.Y).origin(8, 8, 8).end()
+                .face(Direction.NORTH).uvs(5, 9, 11, 16).texture("#cross").end()
+                .face(Direction.SOUTH).uvs(5, 9, 11, 16).texture("#cross").end()
+                .end()
+                .element()
+                .from(8, 0, 5).to(8, 7, 11)
+                .rotation().angle(45).axis(Direction.Axis.Y).origin(8, 8, 8).end()
+                .face(Direction.WEST).uvs(5, 9, 11, 16).texture("#cross").end()
+                .face(Direction.EAST).uvs(5, 9, 11, 16).texture("#cross").end()
+                .end()
+                .renderType(mcLoc("cutout"));
+
+        models().getBuilder("crystallized_bronze_cluster")
+                .parent(models().getExistingFile(mcLoc("block/cross")))
+                .texture("cross", modLoc("block/crystallized_bronze_cluster"))
+                .element()
+                .from(4, 0, 8).to(12, 9, 8)
+                .rotation().angle(45).axis(Direction.Axis.Y).origin(8, 8, 8).end()
+                .face(Direction.NORTH).uvs(4, 7, 12, 16).texture("#cross").end()
+                .face(Direction.SOUTH).uvs(4, 7, 12, 16).texture("#cross").end()
+                .end()
+                .element()
+                .from(8, 0, 4).to(8, 9, 12)
+                .rotation().angle(45).axis(Direction.Axis.Y).origin(8, 8, 8).end()
+                .face(Direction.WEST).uvs(4, 7, 12, 16).texture("#cross").end()
+                .face(Direction.EAST).uvs(4, 7, 12, 16).texture("#cross").end()
+                .end()
+                .renderType(mcLoc("cutout"));
+    }
+
+    private void crystalBlockState(Block crystal, String modelName) {
+        getVariantBuilder(crystal).forAllStates(state -> {
+            Direction facing = state.getValue(BlockStateProperties.FACING);
+
+            int rotationX = switch(facing) {
+                case UP -> 0;
+                case DOWN -> 180;
+                default -> 90;
+            };
+
+            int rotationY = switch(facing) {
+                case NORTH -> 0;
+                case SOUTH -> 180;
+                case EAST -> 90;
+                case WEST -> 270;
+                default -> 0;
+            };
+
+            return ConfiguredModel.builder()
+                    .modelFile(models().getExistingFile(modLoc("block/" + modelName)))
+                    .rotationX(rotationX)
+                    .rotationY(rotationY)
+                    .build();
+        });
+    }
 
 	private void glassWithPane(Block glass, IronBarsBlock pane, String name, ResourceLocation edge) {
 		this.simpleBlock(
@@ -972,6 +1037,7 @@ public class RNBlockStates extends BlockStateProvider {
         .face(Direction.WEST).uvs(0, 5, 16, 11).texture("#3").end()
         .end();
 	}
+
 
 	private String blockName(DeferredBlock<?> block) {
 		return block.getId().toString().split(":")[1];

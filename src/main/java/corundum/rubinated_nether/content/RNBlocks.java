@@ -1233,7 +1233,31 @@ public class RNBlocks {
 							.lightLevel(state -> state.getValue(BrazierBlock.LEVEL))
 			)
 	);
+    public static final DeferredBlock<CrystallizedBronzeCrystalBlock> CRYSTALLIZED_BRONZE_CRYSTAL = registerBlockAndItem(
+            "crystallized_bronze_crystal",
+            () -> new CrystallizedBronzeCrystalBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.TERRACOTTA_WHITE)
+                            .requiresCorrectToolForDrops()
+                            .strength(1.5F)
+                            .sound(SoundType.AMETHYST_CLUSTER)
+                            .noOcclusion()
+                            .randomTicks()
+            )
+    );
 
+    public static final DeferredBlock<CrystallizedBronzeClusterBlock> CRYSTALLIZED_BRONZE_CLUSTER = BLOCKS.register(
+            "crystallized_bronze_cluster",
+            () -> new CrystallizedBronzeClusterBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.TERRACOTTA_WHITE)
+                            .requiresCorrectToolForDrops()
+                            .strength(1.5F)
+                            .sound(SoundType.AMETHYST_CLUSTER)
+                            .noOcclusion()
+                            .randomTicks()
+            )
+    );
 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);

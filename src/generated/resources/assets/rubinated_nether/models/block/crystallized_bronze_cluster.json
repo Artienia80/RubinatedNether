@@ -1,0 +1,67 @@
+{
+  "parent": "minecraft:block/cross",
+  "elements": [
+    {
+      "faces": {
+        "north": {
+          "texture": "#cross"
+        },
+        "south": {
+          "texture": "#cross"
+        }
+      },
+      "from": [
+        4,
+        0,
+        8
+      ],
+      "rotation": {
+        "angle": 45.0,
+        "axis": "y",
+        "origin": [
+          8,
+          8,
+          8
+        ]
+      },
+      "to": [
+        12,
+        9,
+        8
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#cross"
+        },
+        "west": {
+          "texture": "#cross"
+        }
+      },
+      "from": [
+        8,
+        0,
+        4
+      ],
+      "rotation": {
+        "angle": 45.0,
+        "axis": "y",
+        "origin": [
+          8,
+          8,
+          8
+        ]
+      },
+      "to": [
+        8,
+        9,
+        12
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "cross": "rubinated_nether:block/crystallized_bronze_cluster"
+  }
+}

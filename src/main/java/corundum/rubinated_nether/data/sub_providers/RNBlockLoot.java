@@ -182,6 +182,36 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.WAXED_WEATHERED_COPPER_LASER.get());
 		this.dropSelf(RNBlocks.WAXED_OXIDIZED_COPPER_LASER.get());
 
+		this.dropSelf(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get());
+
+		this.add(
+				RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get(),
+				(block) -> {
+					return LootTable.lootTable()
+							.withPool(
+									applyExplosionCondition(
+											RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER,
+											LootPool.lootPool()
+													.add(
+															LootItem.lootTableItem(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL)
+																	.apply(
+																			SetItemCountFunction.setCount(
+																					UniformGenerator.between(1, 2)
+																			)
+																	)
+																	.apply(
+																			ApplyBonusCount.addOreBonusCount(
+																					registries
+																							.lookupOrThrow(Registries.ENCHANTMENT)
+																							.getOrThrow(Enchantments.FORTUNE)
+																			)
+																	)
+													)
+									)
+							);
+				}
+		);
+
 		this.add(
 				RNBlocks.MOLTEN_RUBY_ORE.get(),
 				(block) -> {

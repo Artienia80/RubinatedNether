@@ -241,6 +241,10 @@
   "block.rubinated_nether.waxed_weathered_copper_laser": "Waxed Weathered Copper Laser",
   "block.rubinated_nether.waxed_oxidized_copper_laser": "Waxed Oxidized Copper Laser",
 
+  "block.rubinated_nether.crystallized_bronze_crystal": "Crystallized Bronze",
+  "block.rubinated_nether.crystallized_bronze_cluster": "Crystallized Bronze",
+
+
   "item.rubinated_nether.bronze_rod": "Bronze Rod",
   "item.rubinated_nether.bronze_powder": "Bronze Powder",
   "item.rubinated_nether.bronze_scrap": "Bronze Scrap",

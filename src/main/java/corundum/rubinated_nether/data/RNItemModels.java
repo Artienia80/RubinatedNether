@@ -209,7 +209,8 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.RITUAL_OFFERING,
 				RNItems.COGWHEEL,
 				RNItems.WINDING_KEY,
-				RNItems.RUNE
+				RNItems.RUNE,
+				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL
 		);
 
 		// Runes
