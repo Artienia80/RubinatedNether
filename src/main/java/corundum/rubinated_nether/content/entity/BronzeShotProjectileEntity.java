@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.entity;
 import com.google.common.collect.ImmutableList;
 import corundum.rubinated_nether.content.RNEntityCreator;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.TarnishStage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.core.particles.ParticleTypes;
@@ -95,32 +96,55 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 
 	@Override
 	protected void onHitEntity(EntityHitResult result) {
-		if (hasBounced && !hasBeenDeflected) 
-			return;
-
 		Entity entity = result.getEntity();
+
+		// Get the actual Bronze entity if we hit a part
+		Entity targetEntity = entity;
+		if (entity instanceof BronzePart part) {
+			targetEntity = part.parentMob;
+		}
+
+		// Special handling for Crystallized Bronze - always allow damage even after bounce
+		boolean isCrystallizedBronze = targetEntity instanceof BronzeEntity bronze
+				&& bronze.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED);
+
+		// Early return UNLESS hitting crystallized bronze
+		if (hasBounced && !hasBeenDeflected && !isCrystallizedBronze) {
+			return;
+		}
+
+		// Deal damage to the entity that was actually hit (part or main entity)
 		entity.hurt(this.damageSources().thrown(this, this.getOwner()), (float)getBaseDamage());
 
-		if (!hasBeenDeflected)
-			this.setDeltaMovement(this.getDeltaMovement().multiply(-0.001, -0.3, -0.001));
-
-		this.playSound(SoundEvents.ANVIL_PLACE, 1.0F, 1.0F);
-		hasBounced = true;
-		weight = 0;
+		// Different behavior for crystallized vs normal hits
+		if (!isCrystallizedBronze) {
+			// Normal bounce behavior for non-crystallized entities
+			if (!hasBeenDeflected) {
+				this.setDeltaMovement(this.getDeltaMovement().multiply(-0.001, -0.3, -0.001));
+			}
+			this.playSound(SoundEvents.ANVIL_PLACE, 1.0F, 1.0F);
+			hasBounced = true;
+			weight = 0;
+		} else {
+			// Crystallized bronze: projectile is consumed/destroyed
+			this.playSound(SoundEvents.AMETHYST_BLOCK_BREAK, 2.0F, 0.8F);
+			this.discard(); // Remove the projectile
+		}
 
 		if (entity instanceof LivingEntity livingEntity) {
-			// Apply potion effects
-
-			var effects = ImmutableList.of(
-				MobEffects.MOVEMENT_SLOWDOWN,
-				MobEffects.BLINDNESS,
-				MobEffects.BLINDNESS
-			);
-
-			for (var effect : effects) {
-				livingEntity.addEffect(
-					new MobEffectInstance(effect, 60, 5, true, false)
+			// Apply potion effects only to non-crystallized entities
+			if (!isCrystallizedBronze) {
+				var effects = ImmutableList.of(
+						MobEffects.MOVEMENT_SLOWDOWN,
+						MobEffects.BLINDNESS,
+						MobEffects.BLINDNESS
 				);
+
+				for (var effect : effects) {
+					livingEntity.addEffect(
+							new MobEffectInstance(effect, 60, 5, true, false)
+					);
+				}
 			}
 		}
 	}

@@ -1,7 +1,6 @@
 package corundum.rubinated_nether.content.entity;
 
-import corundum.rubinated_nether.content.RNEffects;
-import corundum.rubinated_nether.content.TarnishStage;
+import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.entity.goals.CorrodedHideAndAmbushGoal;
 import corundum.rubinated_nether.content.entity.goals.CrystallizeNearbyBronzeGoal;
 import corundum.rubinated_nether.content.entity.goals.CrystallizedOrbitGoal;
@@ -9,6 +8,7 @@ import corundum.rubinated_nether.content.entity.goals.DiscoloredRamGoal;
 import corundum.rubinated_nether.content.entity.goals.TarnishedShockwaveGoal;
 import corundum.rubinated_nether.content.entity.goals.UnaffectedAttackGoal;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -18,6 +18,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AnimationState;
@@ -39,10 +40,13 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.entity.PartEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BronzeEntity extends TarnishingEntity {
@@ -515,23 +519,47 @@ public class BronzeEntity extends TarnishingEntity {
             part.setPos(this.getX() + offsetX, this.getY() + offsetY, this.getZ() + offsetZ);
         }
     }
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (this.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED) &&
+                source.getDirectEntity() instanceof BronzeShotProjectileEntity) {
+
+            if (!this.level().isClientSide()) {
+                ServerLevel serverLevel = (ServerLevel) this.level();
+                BlockPos centerPos = this.blockPosition();
+
+                spawnCrystalExplosionParticles(serverLevel, centerPos);
+
+                serverLevel.playSound(
+                        null,
+                        centerPos,
+                        SoundEvents.AMETHYST_BLOCK_BREAK,
+                        SoundSource.HOSTILE,
+                        2.0F,
+                        0.8F + this.random.nextFloat() * 0.4F
+                );
+
+                spreadCrystalizedBlocks(serverLevel, centerPos);
+            }
+
+            return super.hurt(source, 99.0F);
+        }
+
+        return super.hurt(source, amount);
+    }
+
     public boolean hurtFromPart(BronzePart part, DamageSource source, float amount) {
-        // Store defending state before damage
         boolean wasDefending = this.isDefending();
         boolean wasBurrowed = this.isBurrowed();
 
-        // Apply damage multiplier based on which part was hit
         if (part == this.keyPart) {
             amount *= 2.0F;
 
-            // If Tarnished and defending, stun ONLY when key is hit with bronze shot
             if (this.getTarnishLevel().equals(TarnishStage.TARNISHED) && shockwaveGoal != null && this.isDefending()) {
-                // Check if damage source is from bronze shot projectile
-                if (source.getDirectEntity() instanceof BronzeShotProjectileEntity) { // Replace with your actual projectile class
+                if (source.getDirectEntity() instanceof BronzeShotProjectileEntity) {
                     shockwaveGoal.triggerStunFromKeyHit();
                     return false;
                 }
-                // If hit with something else while defending, block the damage but stay defending
                 if (!this.level().isClientSide()) {
                     ((ServerLevel) this.level()).sendParticles(
                             ParticleTypes.CRIT,
@@ -543,7 +571,6 @@ public class BronzeEntity extends TarnishingEntity {
             }
         }
 
-        // Tarnished defense mechanics
         if (this.getTarnishLevel().equals(TarnishStage.TARNISHED) && shockwaveGoal != null) {
             if (this.isDefending()) {
                 if (!this.level().isClientSide()) {
@@ -563,12 +590,130 @@ public class BronzeEntity extends TarnishingEntity {
 
         boolean result = super.hurt(source, amount);
 
-        // Force parts to maintain position if still defending/burrowed after damage
         if (wasDefending && this.isDefending() || wasBurrowed && this.isBurrowed()) {
             updatePartPositions();
         }
 
         return result;
+    }
+
+    private void spawnCrystalExplosionParticles(ServerLevel level, BlockPos centerPos) {
+        for (int i = 0; i < 50 + random.nextInt(30); i++) {
+            double offsetX = (random.nextDouble() - 0.5) * 2.0;
+            double offsetY = random.nextDouble() * 2.0;
+            double offsetZ = (random.nextDouble() - 0.5) * 2.0;
+
+            double velocityX = (random.nextDouble() - 0.5) * 0.8;
+            double velocityY = random.nextDouble() * 0.6 + 0.2;
+            double velocityZ = (random.nextDouble() - 0.5) * 0.8;
+
+            level.sendParticles(
+                    ParticleTypes.END_ROD,
+                    centerPos.getX() + 0.5 + offsetX,
+                    centerPos.getY() + 1.0 + offsetY,
+                    centerPos.getZ() + 0.5 + offsetZ,
+                    2,
+                    velocityX, velocityY, velocityZ,
+                    0.2
+            );
+        }
+
+        for (int i = 0; i < 30; i++) {
+            double offsetX = (random.nextDouble() - 0.5) * 1.5;
+            double offsetY = random.nextDouble() * 1.5;
+            double offsetZ = (random.nextDouble() - 0.5) * 1.5;
+
+            level.sendParticles(
+                    ParticleTypes.GLOW,
+                    centerPos.getX() + 0.5 + offsetX,
+                    centerPos.getY() + 1.0 + offsetY,
+                    centerPos.getZ() + 0.5 + offsetZ,
+                    1,
+                    0, 0, 0,
+                    0.1
+            );
+        }
+    }
+
+    private void spreadCrystalizedBlocks(ServerLevel level, BlockPos centerPos) {
+        int successfulConversions = 0;
+        final int MAX_ATTEMPTS = 150;
+        final double RADIUS = 8.0;
+
+        for (int attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+            BlockPos targetPos = generateRandomPositionInSphere(centerPos, RADIUS);
+
+            BlockState currentState = level.getBlockState(targetPos);
+
+            if (!currentState.isAir()) {
+                continue;
+            }
+
+            Direction attachmentDirection = findAttachmentDirection(level, targetPos);
+            if (attachmentDirection == null) {
+                continue;
+            }
+
+            double distance = centerPos.distSqr(targetPos);
+            double maxDistanceSquared = RADIUS * RADIUS;
+            double normalizedDistance = Math.sqrt(distance) / RADIUS;
+            double replacementChance = 1.0 - normalizedDistance;
+
+            if (random.nextDouble() < replacementChance) {
+                BlockState crystalState = RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get().defaultBlockState();
+
+                if (crystalState.hasProperty(BlockStateProperties.FACING)) {
+                    crystalState = crystalState.setValue(BlockStateProperties.FACING, attachmentDirection.getOpposite());
+                }
+
+                level.setBlockAndUpdate(targetPos, crystalState);
+
+                spawnCrystalPlacementParticles(level, targetPos);
+
+                successfulConversions++;
+            }
+        }
+    }
+
+    private Direction findAttachmentDirection(Level level, BlockPos airPos) {
+        for (Direction direction : Direction.values()) {
+            BlockPos neighborPos = airPos.relative(direction);
+            BlockState neighborState = level.getBlockState(neighborPos);
+
+            if (neighborState.isSolidRender(level, neighborPos) && !neighborState.isAir()) {
+                return direction;
+            }
+        }
+        return null;
+    }
+
+    private BlockPos generateRandomPositionInSphere(BlockPos center, double radius) {
+        double x, y, z;
+        do {
+            x = (random.nextDouble() * 2.0 - 1.0) * radius;
+            y = (random.nextDouble() * 2.0 - 1.0) * radius;
+            z = (random.nextDouble() * 2.0 - 1.0) * radius;
+        } while (x * x + y * y + z * z > radius * radius);
+
+        return center.offset((int) Math.round(x), (int) Math.round(y), (int) Math.round(z));
+    }
+
+    private void spawnCrystalPlacementParticles(ServerLevel level, BlockPos pos) {
+        for (int i = 0; i < 5; i++) {
+            double offsetX = (random.nextDouble() - 0.5) * 0.6;
+            double offsetY = (random.nextDouble() - 0.5) * 0.6;
+            double offsetZ = (random.nextDouble() - 0.5) * 0.6;
+
+            level.sendParticles(
+                    ParticleTypes.GLOW,
+                    pos.getX() + 0.5 + offsetX,
+                    pos.getY() + 0.5 + offsetY,
+                    pos.getZ() + 0.5 + offsetZ,
+                    1,
+                    0, 0, 0,
+                    0.05
+            );
+        }
     }
 
 
