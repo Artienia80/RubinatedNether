@@ -273,18 +273,14 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		setChanged();
 	}
 
+	// Replace the extractFuel() method in BrazierBlockEntity.java with this:
+
 	public ItemStack extractFuel() {
 		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
 
-		if (remainingFuelSeconds > secondsPerLevel * 9) {
-			remainingFuelSeconds = 0;
-			setChanged();
-			return new ItemStack(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem(), 1);
-		} else if (remainingFuelSeconds >= secondsPerLevel * 9) {
-			remainingFuelSeconds -= secondsPerLevel * 9;
-			setChanged();
-			return new ItemStack(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem(), 1);
-		} else if (remainingFuelSeconds >= secondsPerLevel) {
+		// Ruby blocks can only be extracted with buckets now
+		// Shovels can only extract individual rubies or nuggets
+		if (remainingFuelSeconds >= secondsPerLevel) {
 			remainingFuelSeconds -= secondsPerLevel;
 			setChanged();
 			return new ItemStack(RNItems.MOLTEN_RUBY.get(), 1);

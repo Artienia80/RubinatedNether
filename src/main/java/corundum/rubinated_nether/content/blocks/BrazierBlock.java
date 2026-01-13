@@ -17,6 +17,7 @@ import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
@@ -101,7 +102,6 @@ public class BrazierBlock extends BaseEntityBlock {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        // Molten Ruby Block - only fits in empty brazier
         if (stack.is(RNTags.Items.GREAT_BRAZIER_FUEL)) {
             if (!level.isClientSide) {
                 int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
@@ -116,7 +116,23 @@ public class BrazierBlock extends BaseEntityBlock {
                     level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
 
                     if (!player.isCreative()) {
-                        stack.shrink(1);
+                        // Check if this is a bucket item
+                        if (stack.is(RNItems.MOLTEN_RUBY_BUCKET.get())) {
+                            // Replace bucket with empty bucket in the same slot
+                            stack.shrink(1);
+                            if (stack.isEmpty()) {
+                                player.setItemInHand(hand, new ItemStack(Items.BUCKET));
+                            } else {
+                                // If there were multiple buckets, give back the empty bucket
+                                ItemStack emptyBucket = new ItemStack(Items.BUCKET);
+                                if (!player.getInventory().add(emptyBucket)) {
+                                    player.drop(emptyBucket, false);
+                                }
+                            }
+                        } else {
+                            // For non-bucket items (Molten Ruby Block), just shrink
+                            stack.shrink(1);
+                        }
                     }
                     return ItemInteractionResult.sidedSuccess(level.isClientSide);
                 } else if (brazier.getRemainingFuelSeconds() + (secondsPerLevel * 9) <= maxSeconds) {
@@ -128,7 +144,23 @@ public class BrazierBlock extends BaseEntityBlock {
                     level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
 
                     if (!player.isCreative()) {
-                        stack.shrink(1);
+                        // Check if this is a bucket item
+                        if (stack.is(RNItems.MOLTEN_RUBY_BUCKET.get())) {
+                            // Replace bucket with empty bucket in the same slot
+                            stack.shrink(1);
+                            if (stack.isEmpty()) {
+                                player.setItemInHand(hand, new ItemStack(Items.BUCKET));
+                            } else {
+                                // If there were multiple buckets, give back the empty bucket
+                                ItemStack emptyBucket = new ItemStack(Items.BUCKET);
+                                if (!player.getInventory().add(emptyBucket)) {
+                                    player.drop(emptyBucket, false);
+                                }
+                            }
+                        } else {
+                            // For non-bucket items (Molten Ruby Block), just shrink
+                            stack.shrink(1);
+                        }
                     }
                     return ItemInteractionResult.sidedSuccess(level.isClientSide);
                 }
@@ -232,6 +264,51 @@ public class BrazierBlock extends BaseEntityBlock {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
+        // Bucket - extract ruby block (scoops ALL fuel out)
+        if (stack.getItem() instanceof BucketItem && stack.is(Items.BUCKET)) {
+            if (currentLevel > 0) {
+                if (!level.isClientSide) {
+                    int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+                    int oldFuelSeconds = brazier.getRemainingFuelSeconds();
+
+                    // Check if there's at least 9 levels worth of fuel
+                    if (oldFuelSeconds >= secondsPerLevel * 9) {
+                        // Bucket scoops out ALL fuel (destroys any bonus fuel)
+                        brazier.setFuelForLevel(0);
+
+                        // Update visual level to 0
+                        level.setBlock(pos, state.setValue(LEVEL, 0), 3);
+
+                        // Clear all effects immediately since brazier is now empty
+                        int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+                        AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
+                        Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
+                                .and(EntitySelector.NO_SPECTATORS);
+
+                        for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
+                            if (serverPlayer.hasEffect(RNEffects.BRAZIER_POWER)) {
+                                serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
+                            }
+                        }
+
+                        // Consume bucket and give molten ruby bucket
+                        if (!player.isCreative()) {
+                            stack.shrink(1);
+                        }
+
+                        ItemStack moltenRubyBucket = new ItemStack(RNItems.MOLTEN_RUBY_BUCKET.get(), 1);
+                        if (!player.getInventory().add(moltenRubyBucket)) {
+                            player.drop(moltenRubyBucket, false);
+                        }
+
+                        level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    }
+                }
+                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            }
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+
         // Shovel - extract fuel (gives ruby or nuggets based on remaining time)
         if (stack.getItem() instanceof net.minecraft.world.item.ShovelItem) {
             if (currentLevel > 0) {
@@ -244,21 +321,11 @@ public class BrazierBlock extends BaseEntityBlock {
                     ItemStack extracted = brazier.extractFuel();
 
                     if (!extracted.isEmpty()) {
-                        boolean shouldClearEffects = false;
                         int secondsRemoved;
 
-                        if (extracted.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
-                            // Ruby block was extracted
-                            // Check if it had bonus fuel (more than 9 rubies worth)
-                            if (oldFuelSeconds > secondsPerLevel * 9) {
-                                // Had bonus fuel - clear all effects immediately
-                                shouldClearEffects = true;
-                                secondsRemoved = oldFuelSeconds - brazier.getRemainingFuelSeconds();
-                            } else {
-                                // Normal 9 ruby removal
-                                secondsRemoved = secondsPerLevel * 9;
-                            }
-                        } else if (extracted.is(RNItems.MOLTEN_RUBY.get())) {
+                        // Note: extractFuel() should now never return a ruby block
+                        // since those must be extracted with a bucket
+                        if (extracted.is(RNItems.MOLTEN_RUBY.get())) {
                             secondsRemoved = secondsPerLevel;
                         } else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET.get())) {
                             int secondsPerNugget = secondsPerLevel / 9;
@@ -269,9 +336,7 @@ public class BrazierBlock extends BaseEntityBlock {
 
                         // Calculate durability damage
                         int baseDamage;
-                        if (extracted.is(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem())) {
-                            baseDamage = 81; // 9 rubies * 9
-                        } else if (extracted.is(RNItems.MOLTEN_RUBY.get())) {
+                        if (extracted.is(RNItems.MOLTEN_RUBY.get())) {
                             baseDamage = 9;
                         } else if (extracted.is(RNItems.MOLTEN_RUBY_NUGGET.get())) {
                             baseDamage = extracted.getCount();
@@ -295,21 +360,8 @@ public class BrazierBlock extends BaseEntityBlock {
                         int newLevel = brazier.calculateLevelFromFuel();
                         level.setBlock(pos, state.setValue(LEVEL, newLevel), 3);
 
-                        // Update effects based on whether we should clear or just update amplifiers
-                        if (shouldClearEffects) {
-                            // Clear all effects immediately (ruby block with bonus was removed)
-                            int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-                            AABB area = new AABB(x, y, z, x + 1, y + 1, z + 1).inflate(RNConfig.brazierEffectRange);
-                            Predicate<Entity> selector = EntitySelector.withinDistance(x + 0.5, y + 0.5, z + 0.5, RNConfig.brazierEffectRange)
-                                    .and(EntitySelector.NO_SPECTATORS);
-
-                            for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
-                                if (serverPlayer.hasEffect(RNEffects.BRAZIER_POWER)) {
-                                    serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
-                                }
-                            }
-                        } else if (newLevel != oldLevel) {
-                            // Level changed - update amplifiers
+                        // Update effects if level changed
+                        if (newLevel != oldLevel) {
                             brazier.updateEffectAmplifiersForLevelChange(level, pos, newLevel);
                         }
 
