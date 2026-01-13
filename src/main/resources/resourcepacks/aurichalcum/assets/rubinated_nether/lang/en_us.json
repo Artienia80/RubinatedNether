@@ -140,6 +140,8 @@
   "item.rubinated_nether.waxed_corroded_bronze_laser": "Waxed Corroded Aurichalcum Laser",
   "item.rubinated_nether.waxed_tarnished_bronze_laser": "Waxed Tarnished Aurichalcum Laser",
   "item.rubinated_nether.waxed_crystallized_bronze_laser": "Waxed Crystallized Aurichalcum Laser",
+  "block.rubinated_nether.crystallized_bronze_crystal": "Crystallized Aurichalcum",
+  "block.rubinated_nether.crystallized_bronze_cluster": "Crystallized Aurichalcum",
   "item.rubinated_nether.bronze_rod": "Aurichalcum Rod",
   "item.rubinated_nether.bronze_powder": "Aurichalcum Powder",
   "item.rubinated_nether.bronze_scrap": "Aurichalcum Scrap",

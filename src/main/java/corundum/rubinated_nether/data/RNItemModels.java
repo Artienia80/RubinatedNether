@@ -206,6 +206,7 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.BRONZE_POWDER,
 				RNItems.BRONZE_SCRAP,
 				RNItems.BRONZE_SHOT,
+				RNItems.CRYSTALLIZED_BRONZE_SHOT,
 				RNItems.RITUAL_OFFERING,
 				RNItems.COGWHEEL,
 				RNItems.WINDING_KEY,

@@ -3,8 +3,13 @@ package corundum.rubinated_nether.content;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
+import corundum.rubinated_nether.content.entity.CrystallizedBronzeShotProjectileEntity;
 import corundum.rubinated_nether.content.entity.client.BronzeModel;
 import corundum.rubinated_nether.content.entity.client.BronzeRenderer;
+import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileModel;
+import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileRenderer;
+import corundum.rubinated_nether.content.entity.client.CrystallizedBronzeShotProjectileModel;
+import corundum.rubinated_nether.content.entity.client.CrystallizedBronzeShotProjectileRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -20,8 +25,8 @@ import java.util.function.Supplier;
 @EventBusSubscriber(modid = RubinatedNether.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class RNEntityCreator {
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(
-		BuiltInRegistries.ENTITY_TYPE, 
-		RubinatedNether.MODID
+			BuiltInRegistries.ENTITY_TYPE,
+			RubinatedNether.MODID
 	);
 
 	public static final Supplier<EntityType<BronzeShotProjectileEntity>> BRONZE_SHOT = registerEntity(
@@ -29,6 +34,13 @@ public class RNEntityCreator {
 			EntityType.Builder.<BronzeShotProjectileEntity>of(BronzeShotProjectileEntity::new, MobCategory.MISC)
 					.sized(0.5F, 0.5F)
 	);
+
+	public static final Supplier<EntityType<CrystallizedBronzeShotProjectileEntity>> CRYSTALLIZED_BRONZE_SHOT = registerEntity(
+			"crystallized_bronze_shot",
+			EntityType.Builder.<CrystallizedBronzeShotProjectileEntity>of(CrystallizedBronzeShotProjectileEntity::new, MobCategory.MISC)
+					.sized(0.5F, 0.5F)
+	);
+
 	public static final Supplier<EntityType<BronzeEntity>> BRONZE = registerEntity(
 			"bronze",
 			EntityType.Builder.of(BronzeEntity::new, MobCategory.MONSTER)
@@ -55,6 +67,8 @@ public class RNEntityCreator {
 	public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event)
 	{
 		event.registerEntityRenderer(RNEntityCreator.BRONZE.get(), BronzeRenderer::new);
+		event.registerEntityRenderer(RNEntityCreator.BRONZE_SHOT.get(), BronzeShotProjectileRenderer::new);
+		event.registerEntityRenderer(RNEntityCreator.CRYSTALLIZED_BRONZE_SHOT.get(), CrystallizedBronzeShotProjectileRenderer::new);
 	}
 
 	// LAYERS
@@ -63,5 +77,7 @@ public class RNEntityCreator {
 	public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event)
 	{
 		event.registerLayerDefinition(RNModelLayers.BRONZE, BronzeModel::createBodyLayer);
+		event.registerLayerDefinition(BronzeShotProjectileModel.LAYER_LOCATION, BronzeShotProjectileModel::createBodyLayer);
+		event.registerLayerDefinition(CrystallizedBronzeShotProjectileModel.LAYER_LOCATION, CrystallizedBronzeShotProjectileModel::createBodyLayer);
 	}
 }

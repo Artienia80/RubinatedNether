@@ -92,6 +92,11 @@ public class RNItems {
 		() -> new BronzeShotItem(new Item.Properties())
 	);
 
+	public static final DeferredItem<Item> CRYSTALLIZED_BRONZE_SHOT = ITEMS.register(
+			"crystallized_bronze_shot",
+			() -> new CrystallizedBronzeShotItem(new Item.Properties())
+	);
+
 	public static final DeferredItem<Item> BRONZE_SPAWN_EGG = ITEMS.register("bronze_spawn_egg",
 			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.UNAFFECTED,
 					0xbf8142, 0x76422c, new Item.Properties()));
