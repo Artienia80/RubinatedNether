@@ -250,6 +250,7 @@
   "item.rubinated_nether.bronze_scrap": "Bronze Scrap",
 
   "item.rubinated_nether.bronze_shot": "Bronze Shot",
+  "item.rubinated_nether.crystallized_bronze_shot": "Crystallized Bronze Shot",
 
   "item.rubinated_nether.bronze_drill": "Bronze Drill",
 
@@ -337,6 +338,9 @@
   "item.rubinated_nether.corroded_bronze_spawn_egg": "Corroded Bronze Spawn Egg",
   "item.rubinated_nether.tarnished_bronze_spawn_egg": "Tarnished Bronze Spawn Egg",
   "item.rubinated_nether.crystallized_bronze_spawn_egg": "Crystallized Bronze Spawn Egg",
+
+  "item.rubinated_nether.molten_ruby_bucket": "Bucket of Molten Ruby",
+
 
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Obtain Bleeding Obsidian",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Blood For The Blood God!",

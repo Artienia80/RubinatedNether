@@ -3,8 +3,10 @@ package corundum.rubinated_nether.content;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.items.*;
 import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SolidBucketItem;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -116,6 +118,15 @@ public class RNItems {
 	public static final DeferredItem<Item> CRYSTALLIZED_BRONZE_SPAWN_EGG = ITEMS.register("crystallized_bronze_spawn_egg",
 			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.CRYSTALLIZED,
 					0xACD1B0, 0x738E79, new Item.Properties()));
+
+	public static final DeferredItem<Item> MOLTEN_RUBY_BUCKET = ITEMS.register(
+			"molten_ruby_bucket",
+			() -> new SolidBucketItem(
+					RNBlocks.MOLTEN_RUBY_BLOCK.get(),
+					SoundEvents.BUCKET_EMPTY_LAVA,
+					new Item.Properties().stacksTo(1)
+			)
+	);
 
 	//Not Actual Items
 
