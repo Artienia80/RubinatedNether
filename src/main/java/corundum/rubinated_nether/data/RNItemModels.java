@@ -195,7 +195,7 @@ public class RNItemModels extends ItemModelProvider {
 		// Basic items
 		basicItems(
 
-				RNBlocks.RUNESTONE,
+                RNBlocks.RUNESTONE,
 				RNItems.RUBY_LENS,
 				RNItems.RUBY,
 				RNItems.MOLTEN_RUBY,
@@ -212,8 +212,8 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.WINDING_KEY,
 				RNItems.RUNE,
 				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
-				RNItems.MOLTEN_RUBY_BUCKET
-
+				RNItems.MOLTEN_RUBY_BUCKET,
+				RNItems.COGS_BANNER_PATTERN.get()
 		);
 
 		// Runes

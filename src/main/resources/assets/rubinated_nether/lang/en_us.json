@@ -341,6 +341,26 @@
 
   "item.rubinated_nether.molten_ruby_bucket": "Molten Ruby Bucket",
 
+  "item.rubinated_nether.cogs_banner_pattern": "Banner Pattern",
+  "item.rubinated_nether.cogs_banner_pattern.desc": "Cogs",
+  "block.rubinated_nether.banner.cogs": "Cogs",
+  "block.rubinated_nether.banner.cogs.black": "Black Cogs",
+  "block.rubinated_nether.banner.cogs.blue": "Blue Cogs",
+  "block.rubinated_nether.banner.cogs.brown": "Brown Cogs",
+  "block.rubinated_nether.banner.cogs.cyan": "Cyan Cogs",
+  "block.rubinated_nether.banner.cogs.gray": "Gray Cogs",
+  "block.rubinated_nether.banner.cogs.green": "Green Cogs",
+  "block.rubinated_nether.banner.cogs.light_blue": "Light Blue Cogs",
+  "block.rubinated_nether.banner.cogs.light_gray": "Light Gray Cogs",
+  "block.rubinated_nether.banner.cogs.lime": "Lime Cogs",
+  "block.rubinated_nether.banner.cogs.magenta": "Magenta Cogs",
+  "block.rubinated_nether.banner.cogs.orange": "Orange Cogs",
+  "block.rubinated_nether.banner.cogs.pink": "Pink Cogs",
+  "block.rubinated_nether.banner.cogs.purple": "Purple Cogs",
+  "block.rubinated_nether.banner.cogs.red": "Red Cogs",
+  "block.rubinated_nether.banner.cogs.white": "White Cogs",
+  "block.rubinated_nether.banner.cogs.yellow": "Yellow Cogs",
+
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Obtain Bleeding Obsidian",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Blood For The Blood God!",
 

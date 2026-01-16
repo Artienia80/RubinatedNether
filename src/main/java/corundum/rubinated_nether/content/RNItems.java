@@ -4,9 +4,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.items.*;
 import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SolidBucketItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -14,6 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.function.Supplier;
 
 public class RNItems {
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(RubinatedNether.MODID);
@@ -47,7 +46,17 @@ public class RNItems {
 	public static final DeferredItem<RuneItem> KENODOXIA_RUNE = makeRune(Rubination.KENODOXIA);
 	public static final DeferredItem<RuneItem> PHILARGYRIA_RUNE = makeRune(Rubination.PHILARGYRIA);
 
+	//Banner Patterns
 
+	public static final Supplier<Item> COGS_BANNER_PATTERN = ITEMS.register(
+			"cogs_banner_pattern",
+			() -> new BannerPatternItem(
+					RNBannerPatterns.COGS_PATTERN,
+					new Item.Properties()
+							.stacksTo(1)
+							.rarity(Rarity.UNCOMMON)
+			)
+	);
 	public static final DeferredItem<Item> BRONZE_DRILL = ITEMS.register(
 			"bronze_drill",
 			() -> new DrillItem(
