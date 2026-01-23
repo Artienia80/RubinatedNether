@@ -113,7 +113,8 @@ public class RNItemTags extends ItemTagsProvider {
 		);
 
 		this.tag(RNTags.Items.GREAT_BRAZIER_FUEL).add(
-				RNBlocks.MOLTEN_RUBY_BLOCK.asItem()
+				RNBlocks.MOLTEN_RUBY_BLOCK.asItem(),
+				RNItems.MOLTEN_RUBY_BUCKET.asItem()
 		);
 
 		this.tag(RNTags.Items.OFFERING_BRAZIER_ITEM).add(

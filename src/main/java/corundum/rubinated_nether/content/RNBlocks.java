@@ -25,7 +25,7 @@ public class RNBlocks {
 	public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(RubinatedNether.MODID);
 
 	public static final DeferredBlock<Block> NETHER_RUBY_ORE = registerBlockAndItem(
-		"nether_ruby_ore", 
+		"nether_ruby_ore",
 		() -> new DropExperienceBlock(
 			UniformInt.of(3, 6),
 			Block.Properties.ofFullCopy(Blocks.NETHERRACK)
@@ -35,7 +35,7 @@ public class RNBlocks {
 	);
 
 	public static final DeferredBlock<Block> RUBINATED_BLACKSTONE = registerBlockAndItem(
-		"rubinated_blackstone", 
+		"rubinated_blackstone",
 		() -> new DropExperienceBlock(
 			UniformInt.of(0, 1), // TODO: Figure out actual values
 			Block.Properties.ofFullCopy(Blocks.GILDED_BLACKSTONE)
@@ -49,13 +49,13 @@ public class RNBlocks {
 				.ofFullCopy(Blocks.MAGMA_BLOCK)
 				.strength(2.0F)
 				.requiresCorrectToolForDrops(),
-			
+
 			UniformInt.of(4, 8)
 		)
 	);
 
 	public static final DeferredBlock<Block> RUBY_BLOCK = registerBlockAndItem(
-		"ruby_block", 
+		"ruby_block",
 		() -> new Block(
 			Block.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK)
 				.mapColor(MapColor.FIRE)
@@ -64,14 +64,14 @@ public class RNBlocks {
 
 	public static final DeferredBlock<RotatedPillarBlock> MOLTEN_RUBY_BLOCK = registerBlockAndItem(
 			"molten_ruby_block",
-			() -> new RotatedPillarBlock(
+			() -> new MoltenRubyBlock(
 					Block.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK)
 							.lightLevel($ -> 10)
 			)
 	);
 
 	public static final DeferredBlock<Block> BLEEDING_OBSIDIAN = registerBlockAndItem(
-		"bleeding_obsidian", 
+		"bleeding_obsidian",
 		() -> new Block(Block.Properties.ofFullCopy(Blocks.CRYING_OBSIDIAN))
 	);
 
@@ -206,9 +206,9 @@ public class RNBlocks {
 		)
 	);
 	public static final DeferredBlock<IronBarsBlock> RUBY_GLASS_PANE = registerBlockAndItem(
-		"ruby_glass_pane", 
+		"ruby_glass_pane",
 		() -> new StainedGlassPaneBlock(
-			DyeColor.RED, 
+			DyeColor.RED,
 			Block.Properties.ofFullCopy(RUBY_GLASS.get())
 		)
 	);
@@ -220,9 +220,9 @@ public class RNBlocks {
 		)
 	);
 	public static final DeferredBlock<IronBarsBlock> ORNATE_RUBY_GLASS_PANE = registerBlockAndItem(
-		"ornate_ruby_glass_pane", 
+		"ornate_ruby_glass_pane",
 		() -> new StainedGlassPaneBlock(
-			DyeColor.RED, 
+			DyeColor.RED,
 			Block.Properties.ofFullCopy(RUBY_GLASS.get())
 		)
 	);
@@ -236,9 +236,9 @@ public class RNBlocks {
 		)
 	);
 	public static final DeferredBlock<IronBarsBlock> MOLTEN_RUBY_GLASS_PANE = registerBlockAndItem(
-		"molten_ruby_glass_pane", 
+		"molten_ruby_glass_pane",
 		() -> new StainedGlassPaneBlock(
-			DyeColor.RED, 
+			DyeColor.RED,
 			Block.Properties.ofFullCopy(MOLTEN_RUBY_GLASS.get())
 		)
 	);
@@ -392,7 +392,7 @@ public class RNBlocks {
 	);
 
 	public static final DeferredBlock<Block> FREEZER = registerBlockAndItem(
-		"freezer", 
+		"freezer",
 		() -> new FreezerBlock(
 			BlockBehaviour.Properties
 				.ofFullCopy(Blocks.COPPER_BLOCK)
@@ -1263,7 +1263,7 @@ public class RNBlocks {
 		var register = BLOCKS.register(name, block);
 
 		RNItems.ITEMS.registerSimpleBlockItem(
-			name, 
+			name,
 			register
 		);
 

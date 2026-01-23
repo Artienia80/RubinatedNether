@@ -3,8 +3,8 @@ package corundum.rubinated_nether.content;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.items.*;
 import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -12,6 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.function.Supplier;
 
 public class RNItems {
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(RubinatedNether.MODID);
@@ -45,7 +46,17 @@ public class RNItems {
 	public static final DeferredItem<RuneItem> KENODOXIA_RUNE = makeRune(Rubination.KENODOXIA);
 	public static final DeferredItem<RuneItem> PHILARGYRIA_RUNE = makeRune(Rubination.PHILARGYRIA);
 
+	//Banner Patterns
 
+	public static final Supplier<Item> COGS_BANNER_PATTERN = ITEMS.register(
+			"cogs_banner_pattern",
+			() -> new BannerPatternItem(
+					RNBannerPatterns.COGS_PATTERN,
+					new Item.Properties()
+							.stacksTo(1)
+							.rarity(Rarity.UNCOMMON)
+			)
+	);
 	public static final DeferredItem<Item> BRONZE_DRILL = ITEMS.register(
 			"bronze_drill",
 			() -> new DrillItem(
@@ -92,6 +103,11 @@ public class RNItems {
 		() -> new BronzeShotItem(new Item.Properties())
 	);
 
+	public static final DeferredItem<Item> CRYSTALLIZED_BRONZE_SHOT = ITEMS.register(
+			"crystallized_bronze_shot",
+			() -> new CrystallizedBronzeShotItem(new Item.Properties())
+	);
+
 	public static final DeferredItem<Item> BRONZE_SPAWN_EGG = ITEMS.register("bronze_spawn_egg",
 			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.UNAFFECTED,
 					0xbf8142, 0x76422c, new Item.Properties()));
@@ -111,6 +127,15 @@ public class RNItems {
 	public static final DeferredItem<Item> CRYSTALLIZED_BRONZE_SPAWN_EGG = ITEMS.register("crystallized_bronze_spawn_egg",
 			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.CRYSTALLIZED,
 					0xACD1B0, 0x738E79, new Item.Properties()));
+
+	public static final DeferredItem<Item> MOLTEN_RUBY_BUCKET = ITEMS.register(
+			"molten_ruby_bucket",
+			() -> new SolidBucketItem(
+					RNBlocks.MOLTEN_RUBY_BLOCK.get(),
+					SoundEvents.BUCKET_EMPTY_LAVA,
+					new Item.Properties().stacksTo(1)
+			)
+	);
 
 	//Not Actual Items
 
