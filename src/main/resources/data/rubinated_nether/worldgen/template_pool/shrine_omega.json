@@ -1,0 +1,15 @@
+{
+  "name": "rubinated_nether:shrine_omega",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "rubinated_nether:main/four_way",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}
