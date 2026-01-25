@@ -46,17 +46,28 @@ public class RNItems {
 	public static final DeferredItem<RuneItem> KENODOXIA_RUNE = makeRune(Rubination.KENODOXIA);
 	public static final DeferredItem<RuneItem> PHILARGYRIA_RUNE = makeRune(Rubination.PHILARGYRIA);
 
-	//Banner Patterns
+	public static final Supplier<Item> COGS_BANNER_PATTERN = registerBannerPattern(RNBannerPatterns.COGS);
+	public static final Supplier<Item> RUNE_TOOL_BANNER_PATTERN = registerBannerPattern(RNBannerPatterns.RUNE_TOOL);
+	public static final Supplier<Item> RUNE_ARMOR_BANNER_PATTERN = registerBannerPattern(RNBannerPatterns.RUNE_ARMOR);
+	public static final Supplier<Item> RUNE_WEAPON_BANNER_PATTERN = registerBannerPattern(RNBannerPatterns.RUNE_WEAPON);
+	public static final Supplier<Item> RUNE_BOW_BANNER_PATTERN = registerBannerPattern(RNBannerPatterns.RUNE_BOW);
+	public static final Supplier<Item> RUNE_CROSSBOW_BANNER_PATTERN = registerBannerPattern(RNBannerPatterns.RUNE_CROSSBOW);
+	public static final Supplier<Item> RUNE_MACE_BANNER_PATTERN = registerBannerPattern(RNBannerPatterns.RUNE_MACE);
+	public static final Supplier<Item> RUNE_TRIDENT_BANNER_PATTERN = registerBannerPattern(RNBannerPatterns.RUNE_TRIDENT);
 
-	public static final Supplier<Item> COGS_BANNER_PATTERN = ITEMS.register(
-			"cogs_banner_pattern",
-			() -> new BannerPatternItem(
-					RNBannerPatterns.COGS_PATTERN,
-					new Item.Properties()
-							.stacksTo(1)
-							.rarity(Rarity.UNCOMMON)
-			)
-	);
+	private static Supplier<Item> registerBannerPattern(RNBannerPatterns.BannerPatternEntry entry) {
+		String name = entry.key().location().getPath() + "_banner_pattern";
+		return ITEMS.register(
+				name,
+				() -> new BannerPatternItem(
+						entry.tag(),
+						new Item.Properties()
+								.stacksTo(1)
+								.rarity(Rarity.UNCOMMON)
+				)
+		);
+	}
+
 	public static final DeferredItem<Item> BRONZE_DRILL = ITEMS.register(
 			"bronze_drill",
 			() -> new DrillItem(

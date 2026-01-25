@@ -40,8 +40,8 @@ public class Datagen {
 		datagen.addProvider(event.includeServer(), new RNRecipeProvider(output, lookupProvider));
 		datagen.addProvider(event.includeServer(), new RNAdvancements(output, lookupProvider, fileHelper));
 
+		datagen.addProvider(event.includeServer(), new RNBannerPatterns.Provider(output));
 
-		// Tags
 		var blockTags = new RNBlockTags(output, lookupProvider, fileHelper);
 
 		datagen.addProvider(event.includeClient(), blockTags);
@@ -61,7 +61,6 @@ public class Datagen {
 		datagen.addProvider(event.includeClient(), new RNEnchantmentTags(output, lookupProvider, fileHelper));
 		datagen.addProvider(event.includeClient(), new RNLanguage(output));
 
-		// Worldgen + Banner Patterns
 		datagen.addProvider(
 				event.includeClient(),
 				new DatapackBuiltinEntriesProvider(
@@ -73,13 +72,15 @@ public class Datagen {
 								.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RNBiomeModifiers::bootstap)
 								.add(Registries.JUKEBOX_SONG, RNJukeboxSongs::bootstap)
 								.add(Registries.BANNER_PATTERN, context -> {
-									context.register(
-											RNBannerPatterns.COGS_KEY,
-											new BannerPattern(
-													RubinatedNether.id("cogs"),
-													"block.rubinated_nether.banner.cogs"
-											)
-									);
+									for (var entry : RNBannerPatterns.BANNER_PATTERN_ENTRIES) {
+										context.register(
+												entry.key(),
+												new BannerPattern(
+														RubinatedNether.id(entry.key().location().getPath()), // Add the namespace here
+														entry.translationKey()
+												)
+										);
+									}
 								}),
 						Collections.singleton(RubinatedNether.MODID)
 				)

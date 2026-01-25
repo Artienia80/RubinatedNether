@@ -213,7 +213,15 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.RUNE,
 				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
 				RNItems.MOLTEN_RUBY_BUCKET,
-				RNItems.COGS_BANNER_PATTERN.get()
+
+				RNItems.COGS_BANNER_PATTERN.get(),
+				RNItems.RUNE_TOOL_BANNER_PATTERN.get(),
+				RNItems.RUNE_ARMOR_BANNER_PATTERN.get(),
+				RNItems.RUNE_WEAPON_BANNER_PATTERN.get(),
+				RNItems.RUNE_BOW_BANNER_PATTERN.get(),
+				RNItems.RUNE_CROSSBOW_BANNER_PATTERN.get(),
+				RNItems.RUNE_MACE_BANNER_PATTERN.get(),
+				RNItems.RUNE_TRIDENT_BANNER_PATTERN.get()
 		);
 
 		// Runes
