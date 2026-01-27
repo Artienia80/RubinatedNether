@@ -4,6 +4,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.items.*;
 import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
@@ -76,29 +77,29 @@ public class RNItems {
 	);
 
 	public static final DeferredItem<Item> RUBY_LENS = ITEMS.register(
-		"ruby_lens", 
-		() -> new RubyLensItem(
-			new Item.Properties()
-				.stacksTo(1)
-		)
+			"ruby_lens",
+			() -> new RubyLensItem(
+					new Item.Properties()
+							.stacksTo(1)
+			)
 	);
 
 	public static final DeferredItem<Item> MUSIC_DISC_SHIMMER = ITEMS.registerSimpleItem(
-		"music_disc_shimmer", 
-		new Item.Properties()
-			.stacksTo(1)
-			.rarity(RNRarity.RUBINATED_NETHER_RUBY.get())
-			.jukeboxPlayable(RNJukeboxSongs.SHIMMER)
+			"music_disc_shimmer",
+			new Item.Properties()
+					.stacksTo(1)
+					.rarity(RNRarity.RUBINATED_NETHER_RUBY.get())
+					.jukeboxPlayable(RNJukeboxSongs.SHIMMER)
 	);
 
 	public static final DeferredItem<BlockItem> FROSTED_ICE = ITEMS.registerSimpleBlockItem(
-		"frosted_ice",
-		() -> Blocks.FROSTED_ICE
+			"frosted_ice",
+			() -> Blocks.FROSTED_ICE
 	);
 
 	public static final DeferredItem<BlockItem> POWDER_SNOW = ITEMS.registerSimpleBlockItem(
-		"powder_snow", 
-		() -> Blocks.POWDER_SNOW
+			"powder_snow",
+			() -> Blocks.POWDER_SNOW
 	);
 
 	public static final DeferredItem<Item> BRONZE_ROD = basicItem("bronze_rod");
@@ -110,8 +111,8 @@ public class RNItems {
 	public static final DeferredItem<Item> WINDING_KEY = basicItem("winding_key");
 
 	public static final DeferredItem<Item> BRONZE_SHOT = ITEMS.register(
-		"bronze_shot",
-		() -> new BronzeShotItem(new Item.Properties())
+			"bronze_shot",
+			() -> new BronzeShotItem(new Item.Properties())
 	);
 
 	public static final DeferredItem<Item> CRYSTALLIZED_BRONZE_SHOT = ITEMS.register(
@@ -158,8 +159,8 @@ public class RNItems {
 
 	public static DeferredItem<Item> basicItem(String name) {
 		return ITEMS.registerSimpleItem(
-			name, 
-			new Item.Properties()
+				name,
+				new Item.Properties()
 		);
 	}
 
@@ -174,9 +175,40 @@ public class RNItems {
 		String name = rubination.name().toLowerCase(Locale.ROOT);
 		String tooltipKey = "tooltip.rune." + name;
 
+		// Get the corresponding banner pattern based on the rubination's item tag
+		RNBannerPatterns.BannerPatternEntry bannerPattern = getBannerPatternForRubination(rubination);
+
 		return ITEMS.register(
 				rubination.name().toLowerCase(Locale.ROOT).concat("_rune"), // Converts name to lowercase
-				() -> new RuneItem(new Item.Properties().stacksTo(1).rarity(RNRarity.RUBINATED_NETHER_RUBY.get()), rubination, tooltipKey)
+				() -> new RuneItem(
+						rubination,
+						tooltipKey,
+						bannerPattern,
+						new Item.Properties().stacksTo(1).rarity(RNRarity.RUBINATED_NETHER_RUBY.get())
+				)
 		);
+	}
+
+	private static RNBannerPatterns.BannerPatternEntry getBannerPatternForRubination(Rubination rubination) {
+		TagKey<Item> itemTag = rubination.getItemTag();
+
+		if (itemTag == RNTags.Items.RUBINATION_TOOL) {
+			return RNBannerPatterns.RUNE_TOOL;
+		} else if (itemTag == RNTags.Items.RUBINATION_WEAPON) {
+			return RNBannerPatterns.RUNE_WEAPON;
+		} else if (itemTag == RNTags.Items.RUBINATION_ARMOR) {
+			return RNBannerPatterns.RUNE_ARMOR;
+		} else if (itemTag == RNTags.Items.RUBINATION_BOW) {
+			return RNBannerPatterns.RUNE_BOW;
+		} else if (itemTag == RNTags.Items.RUBINATION_CROSSBOW) {
+			return RNBannerPatterns.RUNE_CROSSBOW;
+		} else if (itemTag == RNTags.Items.RUBINATION_TRIDENT) {
+			return RNBannerPatterns.RUNE_TRIDENT;
+		} else if (itemTag == RNTags.Items.RUBINATION_MACE) {
+			return RNBannerPatterns.RUNE_MACE;
+		}
+
+		// Default to RUNE_TOOL if no match
+		return RNBannerPatterns.RUNE_TOOL;
 	}
 }
