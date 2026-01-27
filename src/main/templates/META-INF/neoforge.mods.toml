@@ -25,7 +25,7 @@ enumExtensions = "META-INF/enumextensions.json"
 	modId="neoforge"
 	type="required"
 	versionRange="${neo_version_range}"
-	ordering="NONE"
+	ordering="AFTER"
 	side="BOTH"
 
 [[dependencies.rubinated_nether]]

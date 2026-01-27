@@ -170,7 +170,7 @@ public class RNCreativeTabs {
 								RNItems.PHILARGYRIA_RUNE,
 
 								RNItems.COGS_BANNER_PATTERN.get(),
-								
+
 								RNItems.RUNE_TOOL_BANNER_PATTERN.get(),
 								RNItems.RUNE_ARMOR_BANNER_PATTERN.get(),
 								RNItems.RUNE_WEAPON_BANNER_PATTERN.get(),
