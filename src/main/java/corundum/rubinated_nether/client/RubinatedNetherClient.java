@@ -1,8 +1,6 @@
 package corundum.rubinated_nether.client;
 
-import corundum.rubinated_nether.client.particles.RubinationAltarParticle;
-import corundum.rubinated_nether.client.particles.RubyAuraParticle;
-import corundum.rubinated_nether.client.particles.RubySpiritParticle;
+import corundum.rubinated_nether.client.particles.BloodDripParticle;
 import corundum.rubinated_nether.client.render.entity.RubyLensModel;
 import corundum.rubinated_nether.client.render.entity.RubyLensRenderLayer;
 import corundum.rubinated_nether.content.RNParticleTypes;
@@ -22,9 +20,13 @@ public class RubinatedNetherClient {
 	public static final int WHITE = 0xFFFFFFFF;
 
 	public static void client(IEventBus bussin) {
-		bussin.addListener(RubinatedNetherClient::registerParticleProviders);
 		bussin.addListener(RubinatedNetherClient::registerEntityLayers);
 		bussin.addListener(RubinatedNetherClient::registeModelLayers);
+		bussin.addListener(RubinatedNetherClient::registerParticleProviders);
+	}
+
+	public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
+		event.registerSpriteSet(RNParticleTypes.BLOOD_DRIP.get(), BloodDripParticle.Provider::new);
 	}
 
 	public static void registeModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -52,28 +54,5 @@ public class RubinatedNetherClient {
 		PlayerRenderer slimSkin = event.getSkin(Model.SLIM);
 		defaultSkin.addLayer(new RubyLensRenderLayer<>(defaultSkin, models, defaultSkin.getModel()));
 		slimSkin.addLayer(new RubyLensRenderLayer<>(slimSkin, models, slimSkin.getModel()));
-	}
-
-	public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
-		System.out.println("=================================================");
-		System.out.println("REGISTERING PARTICLE PROVIDERS");
-		System.out.println("=================================================");
-
-		System.out.println("Registering RUBY_AURA...");
-		event.registerSpriteSet(RNParticleTypes.RUBY_AURA.get(), RubyAuraParticle.Provider::new);
-
-		System.out.println("Registering RUBY_SPIRIT...");
-		System.out.println("Particle type: " + RNParticleTypes.RUBY_SPIRIT.get());
-		event.registerSpriteSet(RNParticleTypes.RUBY_SPIRIT.get(), RubySpiritParticle.Provider::new);
-
-		System.out.println("Registering RUBINATE...");
-		event.registerSpriteSet(RNParticleTypes.RUBINATE.get(), RubinationAltarParticle.Provider::new);
-
-		System.out.println("Registering BRONZE_SCRAPE...");
-		event.registerSpriteSet(RNParticleTypes.BRONZE_SCRAPE.get(), RubinationAltarParticle.Provider::new);
-
-		System.out.println("=================================================");
-		System.out.println("PARTICLE PROVIDER REGISTRATION COMPLETE");
-		System.out.println("=================================================");
 	}
 }

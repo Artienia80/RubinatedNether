@@ -8,6 +8,7 @@ public class RNConfig extends MidnightConfig {
 	public static final String COFFER = "coffer";
 	public static final String ALTAR = "altar";
 	public static final String CLIENT = "client";
+	public static final String CAULDRON = "cauldron";
 
 	/* -- Brazier -- */
 
@@ -124,6 +125,14 @@ public class RNConfig extends MidnightConfig {
 	)
 	public static int cofferStackMultiplier = 4;
 
+	/* -- Cauldron -- */
+
+	@Entry(category = CAULDRON)
+	public static int moltenRubyCauldronAverageMinutes = 30;
+
+	@Entry(category = CAULDRON)
+	public static boolean moltenRubyCauldronNetherOnly = true;
+
 	/* -- Client -- */
 
 	@Entry(
@@ -153,10 +162,16 @@ public class RNConfig extends MidnightConfig {
 	}
 
 	/**
-	 * Calculates total burn time for a full brazier (9 levels).
-	 * @return total minutes (default: 180 = 3 hours)
+	 * Calculates the probability per tick for cauldron filling.
+	 * Checks happen every 20 ticks, so this returns the chance per check.
+	 * @return probability (0.0 to 1.0)
 	 */
-	public static int getBrazierFullBurnTimeMinutes() {
-		return brazierMinutesPerLevel * 9;
+	public static double getMoltenRubyCauldronFillProbability() {
+		// Convert minutes to ticks: minutes * 60 seconds * 20 ticks/second
+		int totalTicks = moltenRubyCauldronAverageMinutes * 60 * 20;
+		// We check every 20 ticks, so divide by 20
+		int checksNeeded = totalTicks / 20;
+		// Probability per check is 1/checksNeeded
+		return 1.0 / checksNeeded;
 	}
 }

@@ -43,6 +43,17 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.MOLTEN_RUBY_BLOCK.get());
 		this.dropSelf(RNBlocks.BLEEDING_OBSIDIAN.get());
 
+		this.add(
+				RNBlocks.MOLTEN_RUBY_CAULDRON.get(),
+				(block) -> {
+					return LootTable.lootTable()
+							.withPool(
+									LootPool.lootPool()
+											.add(LootItem.lootTableItem(net.minecraft.world.level.block.Blocks.CAULDRON))
+							);
+				}
+		);
+
 		this.waxableDrop(RNBlocks.BRONZE_LANTERN);
 		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_LANTERN);
 		this.waxableDrop(RNBlocks.CORRODED_BRONZE_LANTERN);
@@ -253,7 +264,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		);
 
 		this.add(
-			RNBlocks.RUBINATED_BLACKSTONE.get(), 
+			RNBlocks.RUBINATED_BLACKSTONE.get(),
 			(block) -> {
 				return LootTable.lootTable()
 					.withPool(

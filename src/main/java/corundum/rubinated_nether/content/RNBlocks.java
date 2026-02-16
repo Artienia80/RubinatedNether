@@ -71,8 +71,16 @@ public class RNBlocks {
 	);
 
 	public static final DeferredBlock<Block> BLEEDING_OBSIDIAN = registerBlockAndItem(
-		"bleeding_obsidian",
-		() -> new Block(Block.Properties.ofFullCopy(Blocks.CRYING_OBSIDIAN))
+			"bleeding_obsidian",
+			() -> new BleedingObsidianBlock(Block.Properties.ofFullCopy(Blocks.CRYING_OBSIDIAN))
+	);
+
+	public static final DeferredBlock<Block> MOLTEN_RUBY_CAULDRON = registerBlockAndItem(
+			"molten_ruby_cauldron",
+			() -> new MoltenRubyCauldronBlock(
+					Block.Properties.ofFullCopy(Blocks.LAVA_CAULDRON)
+							.lightLevel($ -> 10)
+			)
 	);
 
 	public static final DeferredBlock<Block> BRONZE_CHANDELIER = registerWaxableBlock(

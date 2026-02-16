@@ -32,4 +32,9 @@ public final class RNParticleTypes {
 	public static final Supplier<SimpleParticleType> BRONZE_SCRAPE = PARTICLES.register(
 			"bronze_scrape", () -> new SimpleParticleType(true));
 
+	public static final Supplier<SimpleParticleType> BLOOD_DRIP = PARTICLES.register(
+			"blood_drip",
+			() -> new SimpleParticleType(false)
+	);
+
 }

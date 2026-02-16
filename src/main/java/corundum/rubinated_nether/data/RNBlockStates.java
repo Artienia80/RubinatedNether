@@ -37,6 +37,18 @@ public class RNBlockStates extends BlockStateProvider {
 		this.simpleBlock(RNBlocks.BLEEDING_OBSIDIAN.get());
 
 		this.simpleBlock(
+				RNBlocks.MOLTEN_RUBY_CAULDRON.get(),
+				this.models()
+						.withExistingParent("molten_ruby_cauldron", mcLoc("block/template_cauldron_full"))
+						.texture("particle", modLoc("block/molten_ruby_block_end"))
+						.texture("content", modLoc("block/molten_ruby_block_end"))
+						.texture("inside", mcLoc("block/cauldron_inner"))
+						.texture("top", mcLoc("block/cauldron_top"))
+						.texture("bottom", mcLoc("block/cauldron_bottom"))
+						.texture("side", mcLoc("block/cauldron_side"))
+		);
+
+		this.simpleBlock(
 				RNBlocks.RUBINATION_ALTAR.get(),
 				this.models()
 						.withExistingParent("rubination_altar", this.modLoc("block/rubination_altar_base"))
