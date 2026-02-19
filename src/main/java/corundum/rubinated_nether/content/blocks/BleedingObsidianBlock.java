@@ -1,17 +1,20 @@
 package corundum.rubinated_nether.content.blocks;
 
+import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNParticleTypes;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 public class BleedingObsidianBlock extends Block {
 
@@ -80,8 +83,28 @@ public class BleedingObsidianBlock extends Block {
                         if (cauldronState.is(Blocks.CAULDRON)) {
                             level.setBlockAndUpdate(cauldronPos, RNBlocks.MOLTEN_RUBY_CAULDRON.get().defaultBlockState());
                             level.levelEvent(1046, cauldronPos, 0);
+                            grantBloodDrippingAdvancement(level, cauldronPos);
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private void grantBloodDrippingAdvancement(ServerLevel level, BlockPos cauldronPos) {
+        var advancementHolder = level.getServer().getAdvancements()
+                .get(RubinatedNether.id("blood_dripping"));
+
+        if (advancementHolder == null) return;
+
+        Vec3 cauldronCenter = Vec3.atCenterOf(cauldronPos);
+
+        for (ServerPlayer player : level.getPlayers(
+                p -> p.distanceToSqr(cauldronCenter) < 8 * 8)) {
+            var progress = player.getAdvancements().getOrStartProgress(advancementHolder);
+            if (!progress.isDone()) {
+                for (String criterion : progress.getRemainingCriteria()) {
+                    player.getAdvancements().award(advancementHolder, criterion);
                 }
             }
         }

@@ -47,6 +47,20 @@ public class RNAdvancements extends AdvancementProvider {
 					.addCriterion("bleeding_obsidian", InventoryChangeTrigger.TriggerInstance.hasItems(RNBlocks.BLEEDING_OBSIDIAN.get()))
 					.save(consumer, RubinatedNether.id( "obtain_bleeding_obsidian"), existingFileHelper);
 
+			AdvancementHolder blooddripping = Advancement.Builder.advancement()
+					.parent(bleedingObsidian)
+					.display(RNBlocks.MOLTEN_RUBY_CAULDRON.get(),
+							Component.translatable("advancements.rubinated_nether.blood_dripping.title"),
+							Component.translatable("advancements.rubinated_nether.blood_dripping.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("blood_dripping"), existingFileHelper);
+
 			AdvancementHolder freezer = Advancement.Builder.advancement()
 					.parent(AdvancementSubProvider.createPlaceholder("nether/root"))
 					.display(RNBlocks.FREEZER.get(),

@@ -1,0 +1,43 @@
+{
+  "parent": "rubinated_nether:obtain_bleeding_obsidian",
+  "criteria": {
+    "impossible": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "position": {
+                  "y": {
+                    "max": -250314.0
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.blood_dripping.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:molten_ruby_cauldron"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.blood_dripping.title"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
