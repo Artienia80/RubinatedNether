@@ -8,6 +8,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
@@ -17,10 +18,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class RNItemTags extends ItemTagsProvider {
 	public RNItemTags(
-		PackOutput output, 
-		CompletableFuture<HolderLookup.Provider> registries, 
-		CompletableFuture<TagLookup<Block>> blockTags, 
-		ExistingFileHelper helper
+			PackOutput output,
+			CompletableFuture<HolderLookup.Provider> registries,
+			CompletableFuture<TagLookup<Block>> blockTags,
+			ExistingFileHelper helper
 	) {
 		super(output, registries, blockTags, RubinatedNether.MODID, helper);
 	}
@@ -52,16 +53,13 @@ public class RNItemTags extends ItemTagsProvider {
 				RNItems.PHILARGYRIA_RUNE.asItem()
 		);
 
-		this.tag(RNTags.Items.RUBINATION_TOOL).addTag(Tags.Items.MINING_TOOL_TOOLS); //Included bc tag only has pickaxes
+		this.tag(RNTags.Items.RUBINATION_TOOL).addTag(Tags.Items.MINING_TOOL_TOOLS);
 
-		// this.tag(RNTags.Items.RUBINATION_WEAPON).addTag(Tags.Items.MELEE_WEAPON_TOOLS);
-		// Intentionally OMMITTED due to tag including Tridents and Mace.
-
-		this.tag(RNTags.Items.RUBINATION_ARMOR).addTag(Tags.Items.ARMORS); //Included for backup
-		this.tag(RNTags.Items.RUBINATION_BOW).addTag(Tags.Items.TOOLS_BOW); //Included for backup
-		this.tag(RNTags.Items.RUBINATION_CROSSBOW).addTag(Tags.Items.TOOLS_CROSSBOW); //Included for backup
-		this.tag(RNTags.Items.RUBINATION_TRIDENT).add(Items.TRIDENT); //Added for trident
-		this.tag(RNTags.Items.RUBINATION_MACE).add(Items.MACE); //Added for mace
+		this.tag(RNTags.Items.RUBINATION_ARMOR).addTag(Tags.Items.ARMORS);
+		this.tag(RNTags.Items.RUBINATION_BOW).addTag(Tags.Items.TOOLS_BOW);
+		this.tag(RNTags.Items.RUBINATION_CROSSBOW).addTag(Tags.Items.TOOLS_CROSSBOW);
+		this.tag(RNTags.Items.RUBINATION_TRIDENT).add(Items.TRIDENT);
+		this.tag(RNTags.Items.RUBINATION_MACE).add(Items.MACE);
 
 		this.tag(RNTags.Items.RUBINATION_TOOL).addTags(net.minecraft.tags.ItemTags.AXES);
 		this.tag(RNTags.Items.RUBINATION_TOOL).add(
@@ -103,7 +101,6 @@ public class RNItemTags extends ItemTagsProvider {
 				.addTag(RNTags.Items.RUBINATION_TRIDENT)
 				.addTag(RNTags.Items.RUBINATION_MACE);
 
-		// Brazier fuel tags
 		this.tag(RNTags.Items.SMALL_BRAZIER_FUEL).add(
 				RNItems.MOLTEN_RUBY_NUGGET.asItem()
 		);
@@ -121,7 +118,6 @@ public class RNItemTags extends ItemTagsProvider {
 				RNItems.BRONZE_ROD.asItem()
 		);
 
-		// Altar Offering tags
 		this.tag(RNTags.Items.ALTAR_OFFERING_ITEM).add(
 				RNItems.RITUAL_OFFERING.asItem()
 		);
@@ -133,5 +129,33 @@ public class RNItemTags extends ItemTagsProvider {
 		this.tag(RNTags.Items.ALTAR_RUBINATION_ITEM).add(
 				RNItems.COGWHEEL.asItem()
 		);
+
+		this.tag(ItemTags.TRIM_MATERIALS)
+				.add(RNItems.BRONZE_SCRAP.asItem());
+
+		this.tag(ItemTags.TRIM_TEMPLATES)
+				.add(
+						RNItems.GREED_RUNE.asItem(),
+						RNItems.GLUTTONY_RUNE.asItem(),
+						RNItems.SLOTH_RUNE.asItem(),
+						RNItems.WRATH_RUNE.asItem(),
+						RNItems.ENVY_RUNE.asItem(),
+						RNItems.VAINGLORY_RUNE.asItem(),
+						RNItems.PRIDE_RUNE.asItem(),
+						RNItems.ACEDIA_RUNE.asItem(),
+						RNItems.LUXURIA_RUNE.asItem(),
+						RNItems.INSIDIAE_RUNE.asItem(),
+						RNItems.SUPERBIA_RUNE.asItem(),
+						RNItems.TRISTIA_RUNE.asItem(),
+						RNItems.STUDIOSE_RUNE.asItem(),
+						RNItems.ARDENTER_RUNE.asItem(),
+						RNItems.NIMIS_RUNE.asItem(),
+						RNItems.IRA_RUNE.asItem(),
+						RNItems.INVIDIA_RUNE.asItem(),
+						RNItems.GULA_RUNE.asItem(),
+						RNItems.IGNAVIA_RUNE.asItem(),
+						RNItems.KENODOXIA_RUNE.asItem(),
+						RNItems.PHILARGYRIA_RUNE.asItem()
+				);
 	}
 }

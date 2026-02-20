@@ -12,6 +12,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
@@ -459,6 +460,28 @@ public class RNRecipeProvider extends RecipeProvider {
 				.group(getItemName(RNBlocks.WAXED_OXIDIZED_COPPER_LASER))
 				.unlockedBy(getHasName(RNBlocks.OXIDIZED_COPPER_LASER), has(RNBlocks.OXIDIZED_COPPER_LASER))
 				.save(recipeOutput, getConversionRecipeName(RNBlocks.WAXED_OXIDIZED_COPPER_LASER, Items.HONEYCOMB));
+
+		trimSmithing(recipeOutput, RNItems.GREED_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "greed_rune"));
+		trimSmithing(recipeOutput, RNItems.GLUTTONY_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "gluttony_rune"));
+		trimSmithing(recipeOutput, RNItems.SLOTH_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "sloth_rune"));
+		trimSmithing(recipeOutput, RNItems.WRATH_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "wrath_rune"));
+		trimSmithing(recipeOutput, RNItems.ENVY_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "envy_rune"));
+		trimSmithing(recipeOutput, RNItems.VAINGLORY_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "vainglory_rune"));
+		trimSmithing(recipeOutput, RNItems.PRIDE_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "pride_rune"));
+		trimSmithing(recipeOutput, RNItems.ACEDIA_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "acedia_rune"));
+		trimSmithing(recipeOutput, RNItems.LUXURIA_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "luxuria_rune"));
+		trimSmithing(recipeOutput, RNItems.INSIDIAE_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "insidiae_rune"));
+		trimSmithing(recipeOutput, RNItems.SUPERBIA_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "superbia_rune"));
+		trimSmithing(recipeOutput, RNItems.TRISTIA_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "tristia_rune"));
+		trimSmithing(recipeOutput, RNItems.STUDIOSE_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "studiose_rune"));
+		trimSmithing(recipeOutput, RNItems.ARDENTER_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "ardenter_rune"));
+		trimSmithing(recipeOutput, RNItems.NIMIS_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "nimis_rune"));
+		trimSmithing(recipeOutput, RNItems.IRA_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "ira_rune"));
+		trimSmithing(recipeOutput, RNItems.INVIDIA_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "invidia_rune"));
+		trimSmithing(recipeOutput, RNItems.GULA_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "gula_rune"));
+		trimSmithing(recipeOutput, RNItems.IGNAVIA_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "ignavia_rune"));
+		trimSmithing(recipeOutput, RNItems.KENODOXIA_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "kenodoxia_rune"));
+		trimSmithing(recipeOutput, RNItems.PHILARGYRIA_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "philargyria_rune"));
 
 	}
 

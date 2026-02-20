@@ -2,6 +2,8 @@ package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBannerPatterns;
+import corundum.rubinated_nether.content.trim.RNTrimMaterials;
+import corundum.rubinated_nether.content.trim.RNTrimPatterns;
 import corundum.rubinated_nether.data.registries.RNBiomeModifiers;
 import corundum.rubinated_nether.data.registries.RNConfiguredFeatures;
 import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
@@ -71,12 +73,14 @@ public class Datagen {
 								.add(Registries.PLACED_FEATURE, RNPlacedFeatures::bootstap)
 								.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RNBiomeModifiers::bootstap)
 								.add(Registries.JUKEBOX_SONG, RNJukeboxSongs::bootstap)
+								.add(Registries.TRIM_MATERIAL, RNTrimMaterials::bootstrap)
+								.add(Registries.TRIM_PATTERN, RNTrimPatterns::bootstrap)
 								.add(Registries.BANNER_PATTERN, context -> {
 									for (var entry : RNBannerPatterns.BANNER_PATTERN_ENTRIES) {
 										context.register(
 												entry.key(),
 												new BannerPattern(
-														RubinatedNether.id(entry.key().location().getPath()), // Add the namespace here
+														RubinatedNether.id(entry.key().location().getPath()),
 														entry.translationKey()
 												)
 										);
@@ -86,7 +90,6 @@ public class Datagen {
 				)
 		);
 
-		// Loot
 		datagen.addProvider(
 				event.includeServer(),
 				new LootTableProvider(
