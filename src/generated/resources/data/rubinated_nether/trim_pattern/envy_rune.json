@@ -1,0 +1,8 @@
+{
+  "asset_id": "rubinated_nether:rune_weapon",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.rubinated_nether.envy_rune"
+  },
+  "template_item": "rubinated_nether:envy_rune"
+}

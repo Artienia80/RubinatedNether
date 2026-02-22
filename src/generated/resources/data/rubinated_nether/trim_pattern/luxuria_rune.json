@@ -1,0 +1,8 @@
+{
+  "asset_id": "rubinated_nether:rune_armor",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.rubinated_nether.luxuria_rune"
+  },
+  "template_item": "rubinated_nether:luxuria_rune"
+}

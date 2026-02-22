@@ -1,0 +1,8 @@
+{
+  "asset_id": "rubinated_nether:rune_mace",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.rubinated_nether.kenodoxia_rune"
+  },
+  "template_item": "rubinated_nether:kenodoxia_rune"
+}

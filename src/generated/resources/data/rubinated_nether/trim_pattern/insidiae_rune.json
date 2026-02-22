@@ -1,0 +1,8 @@
+{
+  "asset_id": "rubinated_nether:rune_bow",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.rubinated_nether.insidiae_rune"
+  },
+  "template_item": "rubinated_nether:insidiae_rune"
+}

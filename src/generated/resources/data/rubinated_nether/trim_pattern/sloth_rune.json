@@ -1,0 +1,8 @@
+{
+  "asset_id": "rubinated_nether:rune_tool",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.rubinated_nether.sloth_rune"
+  },
+  "template_item": "rubinated_nether:sloth_rune"
+}
