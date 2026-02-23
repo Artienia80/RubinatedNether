@@ -40,7 +40,13 @@ public class Datagen {
 		datagen.addProvider(event.includeClient(), new RNItemModels(output, fileHelper));
 
 		datagen.addProvider(event.includeServer(), new RNRecipeProvider(output, lookupProvider));
-		datagen.addProvider(event.includeServer(), new RNAdvancements(output, lookupProvider, fileHelper));
+
+		// Create datapack provider first so advancements can use its patched lookup,
+		// which includes custom banner patterns, trim patterns, etc.
+		var datapackProvider = new RNDatapackProvider(output, lookupProvider);
+		datagen.addProvider(event.includeServer(), datapackProvider);
+
+		datagen.addProvider(event.includeServer(), new RNAdvancements(output, datapackProvider.getRegistryProvider(), fileHelper));
 
 		datagen.addProvider(event.includeServer(), new RNBannerPatterns.Provider(output));
 
@@ -55,10 +61,7 @@ public class Datagen {
 		datagen.addProvider(event.includeClient(), new RNEnchantmentTags(output, lookupProvider, fileHelper));
 		datagen.addProvider(event.includeClient(), new RNLanguage(output));
 
-		datagen.addProvider(event.includeServer(), new RNDatapackProvider(output, lookupProvider));
-
-
-		datagen.addProvider(event.includeServer(), new LootTableProvider( output, Set.of(),
-				List.of(new SubProviderEntry( RNBlockLoot::new, LootContextParamSets.BLOCK)), event.getLookupProvider()));
+		datagen.addProvider(event.includeServer(), new LootTableProvider(output, Set.of(),
+				List.of(new SubProviderEntry(RNBlockLoot::new, LootContextParamSets.BLOCK)), event.getLookupProvider()));
 	}
 }

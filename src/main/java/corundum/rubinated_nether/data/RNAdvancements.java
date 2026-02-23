@@ -1,8 +1,10 @@
 package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.RNBannerPatterns;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.trim.RNTrimPatterns;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -11,11 +13,23 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.armortrim.ArmorTrim;
+import net.minecraft.world.item.armortrim.TrimMaterial;
+import net.minecraft.world.item.armortrim.TrimMaterials;
+import net.minecraft.world.item.armortrim.TrimPattern;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatternLayers;
 import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
@@ -35,6 +49,20 @@ public class RNAdvancements extends AdvancementProvider {
 		@SuppressWarnings("unused")
 		@Override
 		public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer, ExistingFileHelper existingFileHelper) {
+
+			HolderGetter<BannerPattern> bannerPatterns = provider.lookupOrThrow(Registries.BANNER_PATTERN);
+			ItemStack rubinatedBannerDisplay = new ItemStack(Items.BLACK_BANNER);
+			rubinatedBannerDisplay.set(DataComponents.BANNER_PATTERNS,
+					new BannerPatternLayers.Builder()
+							.add(bannerPatterns.getOrThrow(RNBannerPatterns.RUNE_ARMOR.key()), DyeColor.RED)
+							.build());
+
+			HolderGetter<TrimPattern> trimPatterns = provider.lookupOrThrow(Registries.TRIM_PATTERN);
+			HolderGetter<TrimMaterial> trimMaterials = provider.lookupOrThrow(Registries.TRIM_MATERIAL);
+			ItemStack rubinatedTrimDisplay = new ItemStack(Items.NETHERITE_CHESTPLATE);
+			rubinatedTrimDisplay.set(DataComponents.TRIM, new ArmorTrim(
+					trimMaterials.getOrThrow(TrimMaterials.REDSTONE),
+					trimPatterns.getOrThrow(RNTrimPatterns.STUDIOSE_RUNE)));
 
 			AdvancementHolder bleedingObsidian = Advancement.Builder.advancement()
 					.parent(AdvancementSubProvider.createPlaceholder("nether/obtain_crying_obsidian"))
@@ -298,6 +326,34 @@ public class RNAdvancements extends AdvancementProvider {
 									LocationPredicate.Builder.location()
 											.setY(MinMaxBounds.Doubles.atMost(-250314))))
 					.save(consumer, RubinatedNether.id("rubinate_item"), existingFileHelper);
+
+			AdvancementHolder rubinatedBanner = Advancement.Builder.advancement()
+					.parent(rubinateItem)
+					.display(rubinatedBannerDisplay,
+							Component.translatable("advancements.rubinated_nether.rubinated_banner.title"),
+							Component.translatable("advancements.rubinated_nether.rubinated_banner.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("rubinated_banner"), existingFileHelper);
+
+			AdvancementHolder rubinatedTrim = Advancement.Builder.advancement()
+					.parent(rubinateItem)
+					.display(rubinatedTrimDisplay,
+							Component.translatable("advancements.rubinated_nether.rubinated_trim.title"),
+							Component.translatable("advancements.rubinated_nether.rubinated_trim.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("impossible",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("rubinated_trim"), existingFileHelper);
 
 			AdvancementHolder heavyBurden = Advancement.Builder.advancement()
 					.parent(enterShrine)
