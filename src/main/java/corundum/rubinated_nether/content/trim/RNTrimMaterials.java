@@ -20,7 +20,9 @@ public class RNTrimMaterials {
             ResourceKey.create(Registries.TRIM_MATERIAL, ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "bronze"));
 
     public static void bootstrap(BootstrapContext<TrimMaterial> context) {
+        System.out.println("[RNTrimMaterials] bootstrap() called!");
         register(context, BRONZE, RNItems.BRONZE_SCRAP.get(), Style.EMPTY.withColor(TextColor.parseColor("#bf8142").getOrThrow()), 0.5F);
+        System.out.println("[RNTrimMaterials] Registered BRONZE trim material with index 0.5");
     }
 
     private static void register(BootstrapContext<TrimMaterial> context, ResourceKey<TrimMaterial> trimKey, Item item,

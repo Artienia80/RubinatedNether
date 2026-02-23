@@ -11,6 +11,7 @@ import corundum.rubinated_nether.content.enchantment.RNEnchantmentEffects;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
+import corundum.rubinated_nether.content.trim.RNTrimMaterials;
 import corundum.rubinated_nether.data.Datagen;
 import corundum.rubinated_nether.event.RNAnvilRepairHandler;
 import corundum.rubinated_nether.event.RNBronzeDiseasedHeartHandler;
@@ -63,8 +64,10 @@ public class RubinatedNether {
     public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
         LOGGER.info("Rubinating all over your Nether...");
 
+        System.out.println("[RN DEBUG] BRONZE trim material key: " + RNTrimMaterials.BRONZE.location());
+
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::addPackFinders); // Add this line
+        modEventBus.addListener(this::addPackFinders);
 
         modEventBus.addListener(Datagen::datagen);
         modEventBus.addListener(DatapackRegistry::datapackRegistry);
@@ -162,7 +165,6 @@ public class RubinatedNether {
 
     public void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            // Initialize molten ruby cauldron interactions
             RNCauldronInteraction.bootStrap();
         });
     }

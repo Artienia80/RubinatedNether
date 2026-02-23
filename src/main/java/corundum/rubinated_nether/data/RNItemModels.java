@@ -25,7 +25,6 @@ public class RNItemModels extends ItemModelProvider {
 		trimMaterials.put(TrimMaterials.IRON, 0.2F);
 		trimMaterials.put(TrimMaterials.NETHERITE, 0.3F);
 		trimMaterials.put(TrimMaterials.REDSTONE, 0.4F);
-		trimMaterials.put(RNTrimMaterials.BRONZE, 0.5F);
 		trimMaterials.put(TrimMaterials.COPPER, 0.5F);
 		trimMaterials.put(TrimMaterials.GOLD, 0.6F);
 		trimMaterials.put(TrimMaterials.EMERALD, 0.7F);

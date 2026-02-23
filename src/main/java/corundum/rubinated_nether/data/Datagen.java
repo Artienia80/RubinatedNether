@@ -48,61 +48,17 @@ public class Datagen {
 
 		datagen.addProvider(event.includeClient(), blockTags);
 
-		datagen.addProvider(
-				event.includeClient(),
-				new RNItemTags(
-						output,
-						lookupProvider,
-						blockTags.contentsGetter(),
-						fileHelper
-				)
-		);
+		datagen.addProvider(event.includeClient(), new RNItemTags(output, lookupProvider, blockTags.contentsGetter(), fileHelper));
 
 		datagen.addProvider(event.includeClient(), new RNFluidTags(output, lookupProvider, fileHelper));
 		datagen.addProvider(event.includeClient(), new RNEntityTags(output, lookupProvider, fileHelper));
 		datagen.addProvider(event.includeClient(), new RNEnchantmentTags(output, lookupProvider, fileHelper));
 		datagen.addProvider(event.includeClient(), new RNLanguage(output));
 
-		datagen.addProvider(
-				event.includeClient(),
-				new DatapackBuiltinEntriesProvider(
-						output,
-						lookupProvider,
-						new RegistrySetBuilder()
-								.add(Registries.CONFIGURED_FEATURE, RNConfiguredFeatures::bootstap)
-								.add(Registries.PLACED_FEATURE, RNPlacedFeatures::bootstap)
-								.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RNBiomeModifiers::bootstap)
-								.add(Registries.JUKEBOX_SONG, RNJukeboxSongs::bootstap)
-								.add(Registries.TRIM_MATERIAL, RNTrimMaterials::bootstrap)
-								.add(Registries.TRIM_PATTERN, RNTrimPatterns::bootstrap)
-								.add(Registries.BANNER_PATTERN, context -> {
-									for (var entry : RNBannerPatterns.BANNER_PATTERN_ENTRIES) {
-										context.register(
-												entry.key(),
-												new BannerPattern(
-														RubinatedNether.id(entry.key().location().getPath()),
-														entry.translationKey()
-												)
-										);
-									}
-								}),
-						Collections.singleton(RubinatedNether.MODID)
-				)
-		);
+		datagen.addProvider(event.includeServer(), new RNDatapackProvider(output, lookupProvider));
 
-		datagen.addProvider(
-				event.includeServer(),
-				new LootTableProvider(
-						output,
-						Set.of(),
-						List.of(
-								new SubProviderEntry(
-										RNBlockLoot::new,
-										LootContextParamSets.BLOCK
-								)
-						),
-						event.getLookupProvider()
-				)
-		);
+
+		datagen.addProvider(event.includeServer(), new LootTableProvider( output, Set.of(),
+				List.of(new SubProviderEntry( RNBlockLoot::new, LootContextParamSets.BLOCK)), event.getLookupProvider()));
 	}
 }

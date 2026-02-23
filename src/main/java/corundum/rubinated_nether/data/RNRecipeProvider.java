@@ -461,6 +461,8 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNBlocks.OXIDIZED_COPPER_LASER), has(RNBlocks.OXIDIZED_COPPER_LASER))
 				.save(recipeOutput, getConversionRecipeName(RNBlocks.WAXED_OXIDIZED_COPPER_LASER, Items.HONEYCOMB));
 
+		trimSmithing(recipeOutput, RNItems.BRONZE_SCRAP.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "bronze_scrap_trim"));
+
 		trimSmithing(recipeOutput, RNItems.GREED_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "greed_rune"));
 		trimSmithing(recipeOutput, RNItems.GLUTTONY_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "gluttony_rune"));
 		trimSmithing(recipeOutput, RNItems.SLOTH_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "sloth_rune"));
