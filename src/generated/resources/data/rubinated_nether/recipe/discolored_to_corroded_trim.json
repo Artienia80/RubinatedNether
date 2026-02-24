@@ -1,0 +1,5 @@
+{
+  "type": "rubinated_nether:bronze_trim_upgrade",
+  "input_material": "rubinated_nether:discolored_bronze",
+  "output_material": "rubinated_nether:corroded_bronze"
+}

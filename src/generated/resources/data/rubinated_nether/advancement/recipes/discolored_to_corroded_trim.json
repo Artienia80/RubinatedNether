@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bronze_scrap": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:bronze_scrap"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_bronze_scrap"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "rubinated_nether:discolored_to_corroded_trim"
+    ]
+  },
+  "sends_telemetry_event": true
+}

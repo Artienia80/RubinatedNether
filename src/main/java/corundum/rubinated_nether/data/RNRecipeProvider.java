@@ -4,6 +4,12 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
+import corundum.rubinated_nether.content.trim.RNBronzeTrimTarnishRecipe;
+import corundum.rubinated_nether.content.trim.RNTrimMaterials;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -12,10 +18,12 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -461,8 +469,6 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNBlocks.OXIDIZED_COPPER_LASER), has(RNBlocks.OXIDIZED_COPPER_LASER))
 				.save(recipeOutput, getConversionRecipeName(RNBlocks.WAXED_OXIDIZED_COPPER_LASER, Items.HONEYCOMB));
 
-		trimSmithing(recipeOutput, RNItems.BRONZE_SCRAP.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "bronze_scrap_trim"));
-
 		trimSmithing(recipeOutput, RNItems.GREED_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "greed_rune"));
 		trimSmithing(recipeOutput, RNItems.GLUTTONY_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "gluttony_rune"));
 		trimSmithing(recipeOutput, RNItems.SLOTH_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "sloth_rune"));
@@ -485,7 +491,14 @@ public class RNRecipeProvider extends RecipeProvider {
 		trimSmithing(recipeOutput, RNItems.KENODOXIA_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "kenodoxia_rune"));
 		trimSmithing(recipeOutput, RNItems.PHILARGYRIA_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "philargyria_rune"));
 
-	}
+		trimSmithing(recipeOutput, RNItems.BRONZE_SCRAP.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "bronze_scrap_trim"));
+		bronzeTrimTarnish(recipeOutput, RNTrimMaterials.BRONZE,            RNTrimMaterials.DISCOLORED_BRONZE, "bronze_to_discolored_trim");
+		bronzeTrimTarnish(recipeOutput, RNTrimMaterials.DISCOLORED_BRONZE, RNTrimMaterials.CORRODED_BRONZE,   "discolored_to_corroded_trim");
+		bronzeTrimTarnish(recipeOutput, RNTrimMaterials.CORRODED_BRONZE,   RNTrimMaterials.TARNISHED_BRONZE,  "corroded_to_tarnished_trim");
+		trimSmithing(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get().asItem(),
+				ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "crystallized_bronze_trim"));
+
+		}
 
 	private void twoByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
@@ -606,6 +619,22 @@ public class RNRecipeProvider extends RecipeProvider {
 		}
 	}
 
+	private void bronzeTrimTarnish(RecipeOutput recipeOutput,
+								   ResourceKey<TrimMaterial> inputMaterial,
+								   ResourceKey<TrimMaterial> outputMaterial,
+								   String id) {
+		ResourceLocation recipeId = RubinatedNether.id(id);
+		recipeOutput.accept(
+				recipeId,
+				new RNBronzeTrimTarnishRecipe(inputMaterial, outputMaterial),
+				Advancement.Builder.advancement()
+						.parent(ResourceLocation.withDefaultNamespace("recipes/root"))
+						.addCriterion("has_bronze_scrap", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.BRONZE_SCRAP))
+						.rewards(AdvancementRewards.Builder.recipe(recipeId))
+						.requirements(AdvancementRequirements.Strategy.OR)
+						.build(RubinatedNether.id("recipes/" + id)));
+	}
+
 	private boolean isBronzeBlock(ItemLike input) {
 		String inputName = input.asItem().toString();
 		return inputName.contains("bronze_block") ||
@@ -655,8 +684,6 @@ public class RNRecipeProvider extends RecipeProvider {
 			wax(recipeOutput, tarnishedBlock);
 		}
 	}
-
-
 
 	private void laser(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike laser, boolean isCopper) {
 		ItemLike scrapOrIngot = isCopper ? Items.COPPER_INGOT : RNItems.BRONZE_SCRAP;

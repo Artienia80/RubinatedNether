@@ -1,0 +1,9 @@
+{
+  "asset_name": "tarnished_bronze",
+  "description": {
+    "color": "#6F4A4F",
+    "translate": "trim_material.rubinated_nether.tarnished_bronze"
+  },
+  "ingredient": "rubinated_nether:bronze_scrap",
+  "item_model_index": 0.3
+}

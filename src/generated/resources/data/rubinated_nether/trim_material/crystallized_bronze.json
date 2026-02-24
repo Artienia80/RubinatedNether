@@ -1,0 +1,9 @@
+{
+  "asset_name": "crystallized_bronze",
+  "description": {
+    "color": "#ACD1B0",
+    "translate": "trim_material.rubinated_nether.crystallized_bronze"
+  },
+  "ingredient": "rubinated_nether:crystallized_bronze_crystal",
+  "item_model_index": 0.1
+}

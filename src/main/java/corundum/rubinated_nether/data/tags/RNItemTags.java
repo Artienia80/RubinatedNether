@@ -131,7 +131,9 @@ public class RNItemTags extends ItemTagsProvider {
 		);
 
 		this.tag(ItemTags.TRIM_MATERIALS)
-				.add(RNItems.BRONZE_SCRAP.asItem());
+				.add(
+					RNItems.BRONZE_SCRAP.asItem(),
+					RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.asItem());
 
 		this.tag(ItemTags.TRIM_TEMPLATES)
 				.add(

@@ -520,6 +520,10 @@
   "block.rubinated_nether.banner.rune_trident.yellow": "Yellow Fuscinae",
 
   "trim_material.rubinated_nether.bronze": "Bronze Material",
+  "trim_material.rubinated_nether.discolored_bronze": "Discolored Bronze Material",
+  "trim_material.rubinated_nether.corroded_bronze": "Corroded Bronze Material",
+  "trim_material.rubinated_nether.tarnished_bronze": "Tarnished Bronze Material",
+  "trim_material.rubinated_nether.crystallized_bronze": "Crystallized Bronze Material",
 
   "trim_pattern.rubinated_nether.sloth_rune": "Instrumenta Armor Trim",
   "trim_pattern.rubinated_nether.gluttony_rune": "Instrumenta Armor Trim",

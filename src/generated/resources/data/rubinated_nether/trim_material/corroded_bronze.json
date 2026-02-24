@@ -1,0 +1,9 @@
+{
+  "asset_name": "corroded_bronze",
+  "description": {
+    "color": "#B25B4E",
+    "translate": "trim_material.rubinated_nether.corroded_bronze"
+  },
+  "ingredient": "rubinated_nether:bronze_scrap",
+  "item_model_index": 0.4
+}
