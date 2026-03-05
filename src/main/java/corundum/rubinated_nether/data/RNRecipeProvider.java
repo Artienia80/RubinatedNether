@@ -13,23 +13,24 @@ import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.armortrim.TrimMaterial;
+import net.minecraft.world.item.crafting.CookingBookCategory;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
+
+import static net.minecraft.data.recipes.SimpleCookingRecipeBuilder.blasting;
+import static net.minecraft.data.recipes.SimpleCookingRecipeBuilder.smelting;
 
 
 public class RNRecipeProvider extends RecipeProvider {
@@ -498,7 +499,26 @@ public class RNRecipeProvider extends RecipeProvider {
 		trimSmithing(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get().asItem(),
 				ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "crystallized_bronze_trim"));
 
-		}
+		freezing(recipeOutput, Blocks.MAGMA_BLOCK,			RNBlocks.SOAKSTONE,       400,  1.0f);
+		freezing(recipeOutput, Blocks.POWDER_SNOW,			Blocks.SNOW_BLOCK,        600,  1.0f);
+		freezing(recipeOutput, Items.MAGMA_CREAM,			Items.SLIME_BALL,         400,  1.0f);
+		freezing(recipeOutput, RNItems.MOLTEN_RUBY,			RNItems.RUBY,             400,  1.0f);
+		freezing(recipeOutput, Items.POWDER_SNOW_BUCKET,	Blocks.POWDER_SNOW,     300,  0.0f);
+		freezing(recipeOutput, Blocks.ICE,					Blocks.PACKED_ICE,        4800, 1.0f);
+		freezing(recipeOutput, Items.LAVA_BUCKET,			Blocks.OBSIDIAN,          400,  1.0f);
+		freezing(recipeOutput, Blocks.FROSTED_ICE,			Blocks.ICE,               2400, 1.0f);
+		freezing(recipeOutput, Items.WATER_BUCKET,			Blocks.FROSTED_ICE,     4800, 1.0f);
+		freezing(recipeOutput, Blocks.SNOW_BLOCK,			Blocks.FROSTED_ICE,     1200, 1.0f);
+		freezing(recipeOutput, Blocks.BLUE_ICE,				RNBlocks.DRY_ICE,         19200,1.0f);
+		freezing(recipeOutput, RNItems.BRONZE_ROD,			Items.BREEZE_ROD,         400,  1.0f);
+		freezing(recipeOutput, Blocks.PACKED_ICE,			Blocks.BLUE_ICE,          9600, 1.0f);
+
+		smelting(recipeOutput, RNItems.BRONZE_ROD, Items.BLAZE_ROD,   0.7f, 200);
+		blasting(recipeOutput, RNItems.BRONZE_ROD, Items.BLAZE_ROD,   0.7f, 100);
+		smelting(recipeOutput, RNItems.RUBY,       RNItems.MOLTEN_RUBY, 0.7f, 200);
+		blasting(recipeOutput, RNItems.RUBY,       RNItems.MOLTEN_RUBY, 0.7f, 100);
+
+	}
 
 	private void twoByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
@@ -944,5 +964,28 @@ public class RNRecipeProvider extends RecipeProvider {
 					count
 			);
 		}
+	}
+
+	private void freezing(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int cookingTime, float xp) {
+		String inputName = getItemName(input);
+		String outputName = getItemName(output);
+		ResourceLocation id = RubinatedNether.id(outputName + "_from_freezing_" + inputName);
+		RNFreezingRecipeBuilder.freezing(Ingredient.of(input), output, xp, cookingTime)
+				.unlockedBy(getHasName(input), has(input))
+				.save(recipeOutput, id);
+	}
+
+	private void smelting(RecipeOutput recipeOutput, ItemLike input, ItemLike output, float xp, int cookingTime) {
+		String id = getItemName(output) + "_from_smelting_" + getItemName(input);
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(input), RecipeCategory.MISC, output, xp, cookingTime)
+				.unlockedBy(getHasName(input), has(input))
+				.save(recipeOutput, ResourceLocation.withDefaultNamespace(id));
+	}
+
+	private void blasting(RecipeOutput recipeOutput, ItemLike input, ItemLike output, float xp, int cookingTime) {
+		String id = getItemName(output) + "_from_blasting_" + getItemName(input);
+		SimpleCookingRecipeBuilder.blasting(Ingredient.of(input), RecipeCategory.MISC, output, xp, cookingTime)
+				.unlockedBy(getHasName(input), has(input))
+				.save(recipeOutput, ResourceLocation.withDefaultNamespace(id));
 	}
 }

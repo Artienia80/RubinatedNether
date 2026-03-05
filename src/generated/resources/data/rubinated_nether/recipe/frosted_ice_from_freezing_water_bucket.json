@@ -1,12 +1,13 @@
 {
   "type": "rubinated_nether:freezing",
   "category": "freezable_misc",
-  "cookingtime": 400,
+  "cookingtime": 4800,
   "experience": 1.0,
   "ingredient": {
-    "item": "minecraft:magma_block"
+    "item": "minecraft:water_bucket"
   },
   "result": {
-    "id": "rubinated_nether:soakstone"
+    "count": 1,
+    "id": "rubinated_nether:frosted_ice"
   }
 }

@@ -1,12 +1,13 @@
 {
   "type": "rubinated_nether:freezing",
   "category": "freezable_misc",
-  "cookingtime": 2400,
+  "cookingtime": 1200,
   "experience": 1.0,
   "ingredient": {
-    "item": "rubinated_nether:frosted_ice"
+    "item": "minecraft:snow_block"
   },
   "result": {
-    "id": "minecraft:ice"
+    "count": 1,
+    "id": "rubinated_nether:frosted_ice"
   }
 }

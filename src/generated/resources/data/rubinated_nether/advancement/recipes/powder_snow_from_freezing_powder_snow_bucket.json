@@ -1,0 +1,31 @@
+{
+  "criteria": {
+    "has_powder_snow_bucket": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:powder_snow_bucket"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "rubinated_nether:powder_snow_from_freezing_powder_snow_bucket"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_powder_snow_bucket",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "rubinated_nether:powder_snow_from_freezing_powder_snow_bucket"
+    ]
+  }
+}

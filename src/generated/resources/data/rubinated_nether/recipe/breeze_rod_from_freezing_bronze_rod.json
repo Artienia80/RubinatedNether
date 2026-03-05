@@ -1,12 +1,13 @@
 {
   "type": "rubinated_nether:freezing",
   "category": "freezable_misc",
-  "cookingtime": 1200,
+  "cookingtime": 400,
   "experience": 1.0,
   "ingredient": {
-    "item": "minecraft:snow_block"
+    "item": "rubinated_nether:bronze_rod"
   },
   "result": {
-    "id": "rubinated_nether:frosted_ice"
+    "count": 1,
+    "id": "minecraft:breeze_rod"
   }
 }

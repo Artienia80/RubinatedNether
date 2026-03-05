@@ -1,12 +1,13 @@
 {
   "type": "rubinated_nether:freezing",
   "category": "freezable_misc",
-  "cookingtime": 19200,
+  "cookingtime": 400,
   "experience": 1.0,
   "ingredient": {
-    "item": "minecraft:blue_ice"
+    "item": "minecraft:lava_bucket"
   },
   "result": {
-    "id": "rubinated_nether:dry_ice"
+    "count": 1,
+    "id": "minecraft:obsidian"
   }
 }

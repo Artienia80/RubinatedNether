@@ -4,9 +4,10 @@
   "cookingtime": 400,
   "experience": 1.0,
   "ingredient": {
-    "item": "rubinated_nether:bronze_rod"
+    "item": "rubinated_nether:molten_ruby"
   },
   "result": {
-    "id": "minecraft:breeze_rod"
+    "count": 1,
+    "id": "rubinated_nether:ruby"
   }
 }

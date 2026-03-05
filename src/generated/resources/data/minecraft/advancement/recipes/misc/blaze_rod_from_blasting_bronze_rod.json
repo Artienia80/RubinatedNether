@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bronze_rod": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:bronze_rod"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:blaze_rod_from_blasting_bronze_rod"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_bronze_rod"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:blaze_rod_from_blasting_bronze_rod"
+    ]
+  }
+}
