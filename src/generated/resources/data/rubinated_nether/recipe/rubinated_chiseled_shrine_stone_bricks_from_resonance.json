@@ -1,0 +1,15 @@
+{
+  "type": "rubinated_nether:resonance",
+  "ingredient": {
+    "item": "rubinated_nether:chiseled_shrine_stone_bricks"
+  },
+  "key": {
+    "attempts": 300,
+    "radius": 20.0
+  },
+  "offering": {
+    "attempts": 150
+  },
+  "require_shrine_stone_neighbor": true,
+  "result": "rubinated_nether:rubinated_chiseled_shrine_stone_bricks"
+}

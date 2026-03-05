@@ -132,8 +132,8 @@ public class RNItemTags extends ItemTagsProvider {
 
 		this.tag(ItemTags.TRIM_MATERIALS)
 				.add(
-					RNItems.BRONZE_SCRAP.asItem(),
-					RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.asItem());
+						RNItems.BRONZE_SCRAP.asItem(),
+						RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.asItem());
 
 		this.tag(ItemTags.TRIM_TEMPLATES)
 				.add(
@@ -159,5 +159,139 @@ public class RNItemTags extends ItemTagsProvider {
 						RNItems.KENODOXIA_RUNE.asItem(),
 						RNItems.PHILARGYRIA_RUNE.asItem()
 				);
+
+		this.tag(RNTags.Items.SHRINE_STONE_CANDIDATE).add(
+				Items.STONE,
+				Items.DEEPSLATE,
+				Items.BLACKSTONE,
+				Items.ANDESITE,
+				Items.DIORITE,
+				Items.GRANITE,
+				Items.TUFF
+		);
+
+		this.tag(RNTags.Items.SHRINE_STONE_STAIRS_CANDIDATE).add(
+				Items.STONE_STAIRS,
+				Items.BLACKSTONE_STAIRS,
+				Items.ANDESITE_STAIRS,
+				Items.DIORITE_STAIRS,
+				Items.GRANITE_STAIRS,
+				Items.TUFF_STAIRS
+		);
+
+		this.tag(RNTags.Items.SHRINE_STONE_SLAB_CANDIDATE).add(
+				Items.STONE_SLAB,
+				Items.BLACKSTONE_SLAB,
+				Items.ANDESITE_SLAB,
+				Items.DIORITE_SLAB,
+				Items.GRANITE_SLAB,
+				Items.TUFF_SLAB
+		);
+
+		this.tag(RNTags.Items.SHRINE_STONE_WALL_CANDIDATE).add(
+				Items.BLACKSTONE_WALL,
+				Items.ANDESITE_WALL,
+				Items.DIORITE_WALL,
+				Items.GRANITE_WALL,
+				Items.TUFF_WALL
+		);
+
+		this.tag(RNTags.Items.POLISHED_SHRINE_STONE_CANDIDATE).add(
+				Items.SMOOTH_STONE,
+				Items.POLISHED_DEEPSLATE,
+				Items.POLISHED_BLACKSTONE,
+				Items.POLISHED_ANDESITE,
+				Items.POLISHED_DIORITE,
+				Items.POLISHED_GRANITE,
+				Items.POLISHED_TUFF
+		);
+
+		this.tag(RNTags.Items.POLISHED_SHRINE_STONE_STAIRS_CANDIDATE).add(
+				Items.POLISHED_DEEPSLATE_STAIRS,
+				Items.POLISHED_BLACKSTONE_STAIRS,
+				Items.POLISHED_ANDESITE_STAIRS,
+				Items.POLISHED_DIORITE_STAIRS,
+				Items.POLISHED_GRANITE_STAIRS,
+				Items.POLISHED_TUFF_STAIRS
+		);
+
+		this.tag(RNTags.Items.POLISHED_SHRINE_STONE_SLAB_CANDIDATE).add(
+				Items.SMOOTH_STONE_SLAB,
+				Items.POLISHED_DEEPSLATE_SLAB,
+				Items.POLISHED_BLACKSTONE_SLAB,
+				Items.POLISHED_ANDESITE_SLAB,
+				Items.POLISHED_DIORITE_SLAB,
+				Items.POLISHED_GRANITE_SLAB,
+				Items.POLISHED_TUFF_SLAB
+		);
+
+		this.tag(RNTags.Items.POLISHED_SHRINE_STONE_WALL_CANDIDATE).add(
+				Items.POLISHED_DEEPSLATE_WALL,
+				Items.POLISHED_BLACKSTONE_WALL,
+				Items.POLISHED_TUFF_WALL
+		);
+
+		// No vanilla blocks, this is for modcompat
+		this.tag(RNTags.Items.SHRINE_STONE_PILLAR_CANDIDATE);
+
+		this.tag(RNTags.Items.CHISELED_SHRINE_STONE_BRICKS_CANDIDATE).add(
+				Items.CHISELED_STONE_BRICKS,
+				Items.CHISELED_DEEPSLATE,
+				Items.CHISELED_POLISHED_BLACKSTONE,
+				Items.CHISELED_TUFF,
+				Items.CHISELED_TUFF_BRICKS
+		);
+
+		this.tag(RNTags.Items.SHRINE_STONE_BRICKS_CANDIDATE).add(
+				Items.STONE_BRICKS,
+				Items.MOSSY_STONE_BRICKS,
+				Items.CRACKED_STONE_BRICKS,
+				Items.DEEPSLATE_BRICKS,
+				Items.CRACKED_DEEPSLATE_BRICKS,
+				Items.POLISHED_BLACKSTONE_BRICKS,
+				Items.CRACKED_POLISHED_BLACKSTONE_BRICKS,
+				Items.TUFF_BRICKS
+		);
+
+		this.tag(RNTags.Items.SHRINE_STONE_BRICKS_STAIRS_CANDIDATE).add(
+				Items.STONE_BRICK_STAIRS,
+				Items.MOSSY_STONE_BRICK_STAIRS,
+				Items.DEEPSLATE_BRICK_STAIRS,
+				Items.POLISHED_BLACKSTONE_BRICK_STAIRS,
+				Items.TUFF_BRICK_STAIRS
+		);
+
+		this.tag(RNTags.Items.SHRINE_STONE_BRICKS_SLAB_CANDIDATE).add(
+				Items.STONE_BRICK_SLAB,
+				Items.MOSSY_STONE_BRICK_SLAB,
+				Items.DEEPSLATE_BRICK_SLAB,
+				Items.POLISHED_BLACKSTONE_BRICK_SLAB,
+				Items.TUFF_BRICK_SLAB
+		);
+
+		this.tag(RNTags.Items.SHRINE_STONE_BRICKS_WALL_CANDIDATE).add(
+				Items.STONE_BRICK_WALL,
+				Items.MOSSY_STONE_BRICK_WALL,
+				Items.DEEPSLATE_BRICK_WALL,
+				Items.POLISHED_BLACKSTONE_BRICK_WALL,
+				Items.TUFF_BRICK_WALL
+		);
+
+		this.tag(RNTags.Items.SHRINE_STONE_TILES_CANDIDATE).add(
+				Items.DEEPSLATE_TILES,
+				Items.CRACKED_DEEPSLATE_TILES
+		);
+
+		this.tag(RNTags.Items.SHRINE_STONE_TILES_STAIRS_CANDIDATE).add(
+				Items.DEEPSLATE_TILE_STAIRS
+		);
+
+		this.tag(RNTags.Items.SHRINE_STONE_TILES_SLAB_CANDIDATE).add(
+				Items.DEEPSLATE_TILE_SLAB
+		);
+
+		this.tag(RNTags.Items.SHRINE_STONE_TILES_WALL_CANDIDATE).add(
+				Items.DEEPSLATE_TILE_WALL
+		);
 	}
 }

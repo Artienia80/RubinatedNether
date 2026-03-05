@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.recipe.FreezingRecipe;
+import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -18,4 +19,7 @@ public class RNRecipes {
 		"freezing", 
 		() -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "freezing"))
 		);
+
+	public static final DeferredHolder<RecipeType<?>, RecipeType<ResonanceRecipe>> RESONANCE =
+			RECIPE_TYPES.register("resonance", RecipeType::simple);
 }

@@ -5,6 +5,8 @@ import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNRecipes;
 import corundum.rubinated_nether.content.recipe.JEI.FreezerRecipeCategory;
+import corundum.rubinated_nether.content.recipe.JEI.ResonanceRecipeCategory;
+import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -26,6 +28,9 @@ import java.util.Objects;
 
 @JeiPlugin
 public class RNJeiPlugin implements IModPlugin {
+
+	private List<ResonanceRecipe> resonanceRecipes = List.of();
+
 	@Override
 	public ResourceLocation getPluginUid() {
 		return ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "jei");
@@ -34,12 +39,20 @@ public class RNJeiPlugin implements IModPlugin {
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration) {
 		RubinatedNether.LOGGER.info("Rubinating your JEI");
-		registration.addRecipeCategories(new FreezerRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+
+		var man = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
+		resonanceRecipes = man.getAllRecipesFor(RNRecipes.RESONANCE.get())
+				.stream().map(RecipeHolder::value).toList();
+
+		// Resonance first, then Freezing
+		registration.addRecipeCategories(
+				new ResonanceRecipeCategory(registration.getJeiHelpers().getGuiHelper(), resonanceRecipes),
+				new FreezerRecipeCategory(registration.getJeiHelpers().getGuiHelper())
+		);
 	}
 
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
-		// woman next
 		var man = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
 
 		registration.addRecipes(
@@ -47,7 +60,8 @@ public class RNJeiPlugin implements IModPlugin {
 				man.getAllRecipesFor(RNRecipes.FREEZING.get()).stream().map(RecipeHolder::value).toList()
 		);
 
-		// Register ruby repair recipes for ALL damageable items
+		registration.addRecipes(ResonanceRecipeCategory.RECIPE_TYPE, resonanceRecipes);
+
 		var rubyRepairRecipes = generateRubyRepairRecipes(
 				registration.getVanillaRecipeFactory(),
 				registration.getIngredientManager()
@@ -61,6 +75,10 @@ public class RNJeiPlugin implements IModPlugin {
 				new ItemStack(RNBlocks.FREEZER.get()),
 				FreezerRecipeCategory.RECIPE_TYPE
 		);
+		registration.addRecipeCatalyst(
+				new ItemStack(RNBlocks.RUBINATION_ALTAR.get()),
+				ResonanceRecipeCategory.RECIPE_TYPE
+		);
 	}
 
 	private List<IJeiAnvilRecipe> generateRubyRepairRecipes(
@@ -70,7 +88,6 @@ public class RNJeiPlugin implements IModPlugin {
 		var recipes = new ArrayList<IJeiAnvilRecipe>();
 		var ruby = new ItemStack(RNItems.RUBY.get());
 
-		// Get ALL item stacks and filter for damageable ones
 		ingredientManager.getAllItemStacks()
 				.stream()
 				.filter(ItemStack::isDamageableItem)
@@ -90,20 +107,16 @@ public class RNJeiPlugin implements IModPlugin {
 			ItemStack baseItem,
 			ItemStack ruby) {
 
-		// Create a damaged version (75% damaged)
 		var damagedItem = baseItem.copy();
 		var maxDamage = damagedItem.getMaxDamage();
 		damagedItem.setDamageValue((int)(maxDamage * 0.75));
 
-		// Calculate repair amount: 100 + 5% of max durability
 		var repairAmount = 100 + (int)(maxDamage * 0.05);
 
-		// Create output (repaired version)
 		var repairedItem = damagedItem.copy();
 		var newDamage = Math.max(0, damagedItem.getDamageValue() - repairAmount);
 		repairedItem.setDamageValue(newDamage);
 
-		// Create recipe ID
 		var itemId = BuiltInRegistries.ITEM.getKey(baseItem.getItem());
 		var uid = ResourceLocation.fromNamespaceAndPath(
 				RubinatedNether.MODID,

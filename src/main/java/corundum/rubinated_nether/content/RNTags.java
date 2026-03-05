@@ -97,10 +97,33 @@ public final class RNTags {
 		public static final TagKey<Item> GREAT_BRAZIER_FUEL = createTag(Registries.ITEM, "great_brazier_fuel");
 		public static final TagKey<Item> OFFERING_BRAZIER_ITEM = createTag(Registries.ITEM, "offering_brazier_item");
 
-
 		public static final TagKey<Item> ALTAR_OFFERING_ITEM = createTag(Registries.ITEM, "altar_offering_item");
 		public static final TagKey<Item> ALTAR_INSCRIPTION_ITEM = createTag(Registries.ITEM, "altar_inscription_item");
 		public static final TagKey<Item> ALTAR_RUBINATION_ITEM = createTag(Registries.ITEM, "altar_rubination_item");
+
+		public static final TagKey<Item> SHRINE_STONE_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_candidate");
+		public static final TagKey<Item> SHRINE_STONE_STAIRS_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_stairs_candidate");
+		public static final TagKey<Item> SHRINE_STONE_SLAB_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_slab_candidate");
+		public static final TagKey<Item> SHRINE_STONE_WALL_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_wall_candidate");
+
+		public static final TagKey<Item> POLISHED_SHRINE_STONE_CANDIDATE = createTag(Registries.ITEM, "polished_shrine_stone_candidate");
+		public static final TagKey<Item> POLISHED_SHRINE_STONE_STAIRS_CANDIDATE = createTag(Registries.ITEM, "polished_shrine_stone_stairs_candidate");
+		public static final TagKey<Item> POLISHED_SHRINE_STONE_SLAB_CANDIDATE = createTag(Registries.ITEM, "polished_shrine_stone_slab_candidate");
+		public static final TagKey<Item> POLISHED_SHRINE_STONE_WALL_CANDIDATE = createTag(Registries.ITEM, "polished_shrine_stone_wall_candidate");
+
+		public static final TagKey<Item> SHRINE_STONE_PILLAR_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_pillar_candidate");
+
+		public static final TagKey<Item> CHISELED_SHRINE_STONE_BRICKS_CANDIDATE = createTag(Registries.ITEM, "chiseled_shrine_stone_bricks_candidate");
+
+		public static final TagKey<Item> SHRINE_STONE_BRICKS_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_bricks_candidate");
+		public static final TagKey<Item> SHRINE_STONE_BRICKS_STAIRS_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_bricks_stairs_candidate");
+		public static final TagKey<Item> SHRINE_STONE_BRICKS_SLAB_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_bricks_slab_candidate");
+		public static final TagKey<Item> SHRINE_STONE_BRICKS_WALL_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_bricks_wall_candidate");
+
+		public static final TagKey<Item> SHRINE_STONE_TILES_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_tiles_candidate");
+		public static final TagKey<Item> SHRINE_STONE_TILES_STAIRS_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_tiles_stairs_candidate");
+		public static final TagKey<Item> SHRINE_STONE_TILES_SLAB_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_tiles_slab_candidate");
+		public static final TagKey<Item> SHRINE_STONE_TILES_WALL_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_tiles_wall_candidate");
 
 	}
 

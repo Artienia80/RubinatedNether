@@ -1,0 +1,15 @@
+{
+  "type": "rubinated_nether:resonance",
+  "ingredient": {
+    "item": "rubinated_nether:shrine_stone_pillar"
+  },
+  "key": {
+    "attempts": 300,
+    "radius": 20.0
+  },
+  "offering": {
+    "attempts": 150
+  },
+  "require_shrine_stone_neighbor": true,
+  "result": "rubinated_nether:rubinated_shrine_stone_pillar"
+}

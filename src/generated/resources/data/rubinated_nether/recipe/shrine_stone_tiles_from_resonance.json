@@ -1,0 +1,12 @@
+{
+  "type": "rubinated_nether:resonance",
+  "ingredient": {
+    "tag": "rubinated_nether:shrine_stone_tiles_candidate"
+  },
+  "key": {
+    "attempts": 5000,
+    "radius": 20.0
+  },
+  "offering": {},
+  "result": "rubinated_nether:shrine_stone_tiles"
+}

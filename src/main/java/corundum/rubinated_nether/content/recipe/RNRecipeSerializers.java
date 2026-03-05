@@ -22,4 +22,7 @@ public class RNRecipeSerializers {
 			"bronze_trim_upgrade",
 			RNBronzeTrimTarnishRecipe.Serializer::new
 	);
+
+	public static final DeferredHolder<RecipeSerializer<?>, ResonanceRecipeSerializer> RESONANCE =
+			RECIPE_SERIALIZERS.register("resonance", ResonanceRecipeSerializer::new);
 }

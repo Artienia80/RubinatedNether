@@ -3,7 +3,9 @@ package corundum.rubinated_nether.data;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
+import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
 import corundum.rubinated_nether.content.trim.RNBronzeTrimTarnishRecipe;
 import corundum.rubinated_nether.content.trim.RNTrimMaterials;
 import net.minecraft.advancements.Advancement;
@@ -26,6 +28,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
+import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
@@ -518,6 +521,117 @@ public class RNRecipeProvider extends RecipeProvider {
 		smelting(recipeOutput, RNItems.RUBY,       RNItems.MOLTEN_RUBY, 0.7f, 200);
 		blasting(recipeOutput, RNItems.RUBY,       RNItems.MOLTEN_RUBY, 0.7f, 100);
 
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE,
+				Ingredient.of(RNTags.Items.SHRINE_STONE_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE_STAIRS,
+				Ingredient.of(RNTags.Items.SHRINE_STONE_STAIRS_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE_SLAB,
+				Ingredient.of(RNTags.Items.SHRINE_STONE_SLAB_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE_WALL,
+				Ingredient.of(RNTags.Items.SHRINE_STONE_WALL_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.POLISHED_SHRINE_STONE,
+				Ingredient.of(RNTags.Items.POLISHED_SHRINE_STONE_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.POLISHED_SHRINE_STONE_STAIRS,
+				Ingredient.of(RNTags.Items.POLISHED_SHRINE_STONE_STAIRS_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.POLISHED_SHRINE_STONE_SLAB,
+				Ingredient.of(RNTags.Items.POLISHED_SHRINE_STONE_SLAB_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.POLISHED_SHRINE_STONE_WALL,
+				Ingredient.of(RNTags.Items.POLISHED_SHRINE_STONE_WALL_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE_PILLAR,
+				Ingredient.of(RNTags.Items.SHRINE_STONE_PILLAR_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE_BRICKS,
+				Ingredient.of(RNTags.Items.SHRINE_STONE_BRICKS_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE_BRICKS_STAIRS,
+				Ingredient.of(RNTags.Items.SHRINE_STONE_BRICKS_STAIRS_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE_BRICKS_SLAB,
+				Ingredient.of(RNTags.Items.SHRINE_STONE_BRICKS_SLAB_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE_BRICKS_WALL,
+				Ingredient.of(RNTags.Items.SHRINE_STONE_BRICKS_WALL_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
+				Ingredient.of(RNTags.Items.CHISELED_SHRINE_STONE_BRICKS_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE_TILES,
+				Ingredient.of(RNTags.Items.SHRINE_STONE_TILES_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE_TILES_STAIRS,
+				Ingredient.of(RNTags.Items.SHRINE_STONE_TILES_STAIRS_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE_TILES_SLAB,
+				Ingredient.of(RNTags.Items.SHRINE_STONE_TILES_SLAB_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE_TILES_WALL,
+				Ingredient.of(RNTags.Items.SHRINE_STONE_TILES_WALL_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+
+		resonance(recipeOutput, RNBlocks.RUBINATED_SHRINE_STONE_BRICKS,
+				Ingredient.of(RNBlocks.SHRINE_STONE_BRICKS),
+				new ResonanceRecipe.TriggerData(10, 150),
+				new ResonanceRecipe.TriggerData(20, 300), true);
+
+		resonance(recipeOutput, RNBlocks.RUBINATED_SHRINE_STONE_TILES,
+				Ingredient.of(RNBlocks.SHRINE_STONE_TILES),
+				new ResonanceRecipe.TriggerData(10, 150),
+				new ResonanceRecipe.TriggerData(20, 300), true);
+
+		resonance(recipeOutput, RNBlocks.RUBINATED_SHRINE_STONE_PILLAR,
+				Ingredient.of(RNBlocks.SHRINE_STONE_PILLAR),
+				new ResonanceRecipe.TriggerData(10, 150),
+				new ResonanceRecipe.TriggerData(20, 300), true);
+
+		resonance(recipeOutput, RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS,
+				Ingredient.of(RNBlocks.CHISELED_SHRINE_STONE_BRICKS),
+				new ResonanceRecipe.TriggerData(10, 150),
+				new ResonanceRecipe.TriggerData(20, 300), true);
+
 	}
 
 	private void twoByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
@@ -987,5 +1101,18 @@ public class RNRecipeProvider extends RecipeProvider {
 		SimpleCookingRecipeBuilder.blasting(Ingredient.of(input), RecipeCategory.MISC, output, xp, cookingTime)
 				.unlockedBy(getHasName(input), has(input))
 				.save(recipeOutput, ResourceLocation.withDefaultNamespace(id));
+	}
+
+	private void resonance(RecipeOutput recipeOutput, ItemLike result, Ingredient ingredient,
+						   @Nullable ResonanceRecipe.TriggerData offering,
+						   @Nullable ResonanceRecipe.TriggerData key,
+						   boolean shrineStoneNeighbor) {
+		String id = getItemName(result) + "_from_resonance";
+		var builder = RNResonanceRecipeBuilder.resonance(ingredient, result)
+				.unlockedBy(getHasName(result), has(result));
+		if (offering != null) builder.offering(offering.radius(), offering.attempts());
+		if (key != null)      builder.key(key.radius(), key.attempts());
+		if (shrineStoneNeighbor) builder.requireShrineStoneNeighbor();
+		builder.save(recipeOutput, RubinatedNether.id(id));
 	}
 }
