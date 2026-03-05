@@ -169,15 +169,15 @@ public class RNCreativeTabs {
 								RNItems.KENODOXIA_RUNE,
 								RNItems.PHILARGYRIA_RUNE,
 
-								RNItems.COGS_BANNER_PATTERN.get(),
+								RNItems.COGS_BANNER_PATTERN.get()
 
-								RNItems.RUNE_TOOL_BANNER_PATTERN.get(),
-								RNItems.RUNE_ARMOR_BANNER_PATTERN.get(),
-								RNItems.RUNE_WEAPON_BANNER_PATTERN.get(),
-								RNItems.RUNE_BOW_BANNER_PATTERN.get(),
-								RNItems.RUNE_CROSSBOW_BANNER_PATTERN.get(),
-								RNItems.RUNE_MACE_BANNER_PATTERN.get(),
-								RNItems.RUNE_TRIDENT_BANNER_PATTERN.get()
+//								RNItems.RUNE_TOOL_BANNER_PATTERN.get(),
+//								RNItems.RUNE_ARMOR_BANNER_PATTERN.get(),
+//								RNItems.RUNE_WEAPON_BANNER_PATTERN.get(),
+//								RNItems.RUNE_BOW_BANNER_PATTERN.get(),
+//								RNItems.RUNE_CROSSBOW_BANNER_PATTERN.get(),
+//								RNItems.RUNE_MACE_BANNER_PATTERN.get(),
+//								RNItems.RUNE_TRIDENT_BANNER_PATTERN.get()
 						);
 					})
 					.build()

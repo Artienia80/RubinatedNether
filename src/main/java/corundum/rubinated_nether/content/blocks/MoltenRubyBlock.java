@@ -41,22 +41,24 @@ public class MoltenRubyBlock extends RotatedPillarBlock implements BucketPickup 
 
     @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        if (shouldConvertToBleedingObsidian(level, pos)) {
-            convertToBleedingObsidian(level, pos);
-        }
+        checkInteractions(level, pos);
     }
 
     @Override
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, net.minecraft.world.level.block.Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        if (shouldConvertToBleedingObsidian(level, pos)) {
-            convertToBleedingObsidian(level, pos);
-        }
+        checkInteractions(level, pos);
     }
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        checkInteractions(level, pos);
+    }
+
+    private void checkInteractions(Level level, BlockPos pos) {
         if (shouldConvertToBleedingObsidian(level, pos)) {
             convertToBleedingObsidian(level, pos);
+        } else {
+            tryConvertFlowingWaterToShrine(level, pos);
         }
     }
 
@@ -64,7 +66,7 @@ public class MoltenRubyBlock extends RotatedPillarBlock implements BucketPickup 
         for (Direction direction : Direction.values()) {
             BlockPos neighborPos = pos.relative(direction);
             FluidState fluidState = level.getFluidState(neighborPos);
-            if (fluidState.is(FluidTags.WATER)) {
+            if (fluidState.is(FluidTags.WATER) && (fluidState.isSource() || direction == Direction.UP)) {
                 return true;
             }
         }
@@ -74,5 +76,16 @@ public class MoltenRubyBlock extends RotatedPillarBlock implements BucketPickup 
     private void convertToBleedingObsidian(Level level, BlockPos pos) {
         level.setBlock(pos, RNBlocks.BLEEDING_OBSIDIAN.get().defaultBlockState(), 3);
         level.levelEvent(1501, pos, 0);
+    }
+
+    private void tryConvertFlowingWaterToShrine(Level level, BlockPos pos) {
+        for (Direction direction : Direction.values()) {
+            BlockPos neighborPos = pos.relative(direction);
+            FluidState fluidState = level.getFluidState(neighborPos);
+            if (fluidState.is(FluidTags.WATER) && !fluidState.isSource()) {
+                level.setBlock(neighborPos, RNBlocks.SHRINE_STONE.get().defaultBlockState(), 3);
+                level.levelEvent(1501, neighborPos, 0);
+            }
+        }
     }
 }

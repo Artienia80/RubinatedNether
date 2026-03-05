@@ -17,10 +17,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(targets = "net.minecraft.world.inventory.LoomMenu$6")
 public class LoomMenuMixin {
 
-    // EXTREMELY FUCKED UP WAY TO SOLVE THIS - BUT MOJANG MADE ONTAKE ANONYMOUS!
-    // Either I am a dumb fuck or mojang is, this is the only way i could figure this out
-    // this hacky bullshit can break at basically any second, implement this in a better way ASAP!
-    // TODO: Rewrite this cursed hell of an implementation as soon as humanly possible.
     @Shadow
     private LoomMenu this$0;
 
@@ -42,9 +38,7 @@ public class LoomMenuMixin {
                 }
             }
 
-            if (!player.isCreative()) {
-                patternSlot.set(new ItemStack(RNItems.RUNE.get()));
-            }
+            patternSlot.set(new ItemStack(RNItems.RUNE.get()));
         }
     }
 }

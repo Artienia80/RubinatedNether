@@ -16,9 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(SmithingMenu.class)
 public class SmithingMenuMixin {
 
-    // This is fucking stupid but it works, alr?
-    // im trying my best man
-
     @Unique
     private boolean runeWasInTemplateSlot = false;
 
@@ -43,7 +40,6 @@ public class SmithingMenuMixin {
 
     @Inject(method = "onTake", at = @At("TAIL"))
     private void restoreBlankRune(Player player, ItemStack stack, CallbackInfo ci) {
-        if (player.isCreative()) return;
         if (runeWasInTemplateSlot) {
             SmithingMenu menu = (SmithingMenu)(Object)this;
             menu.getSlot(SmithingMenu.TEMPLATE_SLOT).set(new ItemStack(RNItems.RUNE.get()));
