@@ -685,6 +685,10 @@
 
   "rubinated_nether.midnightconfig.rubyLensOpacity": "Ruby Lens Opacity",
   "rubinated_nether.midnightconfig.bronzeDiseasedOverlayOpacity": "Bronze Diseased Overlay Opacity",
+  "rubinated_nether.midnightconfig.tabDisplay": "Display Rubinated Nether in Creative Tabs",
+  "rubinated_nether.midnightconfig.enum.TabDisplay.MODDED_ONLY": "Seperate Mod Tabs",
+  "rubinated_nether.midnightconfig.enum.TabDisplay.VANILLA_ONLY": "Merged into Vanilla Tabs",
+  "rubinated_nether.midnightconfig.enum.TabDisplay.BOTH": "Both Tabs",
 
   "resourcepack.rubinated_nether.simple_freezer": "§4Simplified Freezer Model",
   "resourcepack.rubinated_nether.aurichalcum": "§4Bronze No More!",

@@ -119,6 +119,13 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.SHRINE_STONE_TILES_WALL
 		);
 
+		stonecutterList(
+				recipeOutput,
+				RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
+
+				RNItems.RUNE
+		);
+
 		Bronzecutter(recipeOutput, RNBlocks.BRONZE_BLOCK,
 				RNBlocks.CHISELED_BRONZE,
 				RNBlocks.CUT_BRONZE_BRICKS,

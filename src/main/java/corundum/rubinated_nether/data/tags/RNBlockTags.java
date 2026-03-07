@@ -360,12 +360,21 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get()
 				);
 
+		this.tag(RNTags.Blocks.SPRINGS).add(
+				RNBlocks.BRONZE_SPRING.get(),
+				RNBlocks.DISCOLORED_BRONZE_SPRING.get(),
+				RNBlocks.CORRODED_BRONZE_SPRING.get(),
+				RNBlocks.TARNISHED_BRONZE_SPRING.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get()
+		);
+
 
 		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(Tags.Blocks.GLASS_BLOCKS_CHEAP);
 		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(Tags.Blocks.GLASS_PANES);
 		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(RNTags.Blocks.RUBY_GLASS);
 		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(RNTags.Blocks.RUBY_GLASS_PANES);
 		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(RNTags.Blocks.GRATES);
+		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(RNTags.Blocks.SPRINGS);
 
 		this.tag(RNTags.Blocks.LASER_TRANSPARENT).add(
 				Blocks.IRON_BARS

@@ -151,6 +151,15 @@ public class RNConfig extends MidnightConfig {
 	)
 	public static float bronzeDiseasedOverlayOpacity = 1f;
 
+	public enum TabDisplay {
+		BOTH,
+		VANILLA_ONLY,
+		MODDED_ONLY
+	}
+
+	@Entry(category = CLIENT)
+	public static TabDisplay tabDisplay = TabDisplay.BOTH;
+
 	/* -- Calculated Values -- */
 
 	/**
