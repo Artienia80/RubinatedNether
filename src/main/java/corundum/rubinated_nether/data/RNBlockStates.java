@@ -126,6 +126,35 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 
 		this.simpleBlock(RNBlocks.SHRINE_STONE.get());
+		this.slabBlock(
+				RNBlocks.SHRINE_STONE_SLAB.get(),
+				modLoc("block/shrine_stone"),
+				modLoc("block/shrine_stone")
+		);
+		this.stairsBlock(
+				RNBlocks.SHRINE_STONE_STAIRS.get(),
+				modLoc("block/shrine_stone")
+		);
+		this.wallBlock(
+				RNBlocks.SHRINE_STONE_WALL.get(),
+				modLoc("block/shrine_stone")
+		);
+
+		this.simpleBlock(RNBlocks.COBBLED_SHRINE_STONE.get());
+		this.slabBlock(
+				RNBlocks.COBBLED_SHRINE_STONE_SLAB.get(),
+				modLoc("block/cobbled_shrine_stone"),
+				modLoc("block/cobbled_shrine_stone")
+		);
+		this.stairsBlock(
+				RNBlocks.COBBLED_SHRINE_STONE_STAIRS.get(),
+				modLoc("block/cobbled_shrine_stone")
+		);
+		this.wallBlock(
+				RNBlocks.COBBLED_SHRINE_STONE_WALL.get(),
+				modLoc("block/cobbled_shrine_stone")
+		);
+
 		this.simpleBlock(RNBlocks.POLISHED_SHRINE_STONE.get());
 		this.slabBlock(
 				RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(),
@@ -136,17 +165,12 @@ public class RNBlockStates extends BlockStateProvider {
 				RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
 				modLoc("block/polished_shrine_stone")
 		);
-		this.stairsBlock(
-				RNBlocks.SHRINE_STONE_STAIRS.get(),
-				modLoc("block/shrine_stone")
-		);
 		this.wallBlock(
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.get(),
 				modLoc("block/polished_shrine_stone")
 		);
 
 		this.simpleBlock(RNBlocks.SHRINE_STONE_TILES.get());
-
 		this.slabBlock(
 				RNBlocks.SHRINE_STONE_TILES_SLAB.get(),
 				modLoc("block/shrine_stone_tiles"),
@@ -164,10 +188,6 @@ public class RNBlockStates extends BlockStateProvider {
 		this.wallBlock(
 				RNBlocks.SHRINE_STONE_TILES_WALL.get(),
 				modLoc("block/shrine_stone_tiles")
-		);
-		this.wallBlock(
-				RNBlocks.SHRINE_STONE_WALL.get(),
-				modLoc("block/shrine_stone")
 		);
 
 		this.axisBlock(RNBlocks.SHRINE_STONE_PILLAR.get());

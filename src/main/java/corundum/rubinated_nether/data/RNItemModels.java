@@ -57,6 +57,9 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.SHRINE_STONE,
 				RNBlocks.SHRINE_STONE_STAIRS,
 				RNBlocks.SHRINE_STONE_SLAB,
+				RNBlocks.COBBLED_SHRINE_STONE,
+				RNBlocks.COBBLED_SHRINE_STONE_STAIRS,
+				RNBlocks.COBBLED_SHRINE_STONE_SLAB,
 				RNBlocks.POLISHED_SHRINE_STONE_SLAB,
 				RNBlocks.POLISHED_SHRINE_STONE,
 				RNBlocks.POLISHED_SHRINE_STONE_STAIRS,
@@ -192,6 +195,10 @@ public class RNItemModels extends ItemModelProvider {
 		wallInventory(
 				RNBlocks.SHRINE_STONE_WALL.getId().toString(),
 				modLoc("block/shrine_stone")
+		);
+		wallInventory(
+				RNBlocks.COBBLED_SHRINE_STONE_WALL.getId().toString(),
+				modLoc("block/cobbled_shrine_stone")
 		);
 		wallInventory(
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.getId().toString(),

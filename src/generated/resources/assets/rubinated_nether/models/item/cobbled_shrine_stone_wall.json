@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "rubinated_nether:block/cobbled_shrine_stone"
+  }
+}
