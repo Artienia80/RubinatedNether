@@ -17,7 +17,6 @@
   "block.rubinated_nether.bleeding_obsidian": "Bleeding Obsidian",
   "block.rubinated_nether.molten_ruby_cauldron": "Cauldron with Molten Ruby",
 
-
   "block.rubinated_nether.freezer": "Freezer",
 
   "block.rubinated_nether.lava_lamp": "Molten Ruby Lava Lamp",
@@ -37,6 +36,11 @@
   "block.rubinated_nether.shrine_stone_slab": "Shrine Stone Slab",
   "block.rubinated_nether.shrine_stone_stairs": "Shrine Stone Stairs",
   "block.rubinated_nether.shrine_stone_wall": "Shrine Stone Wall",
+
+  "block.rubinated_nether.cobbled_shrine_stone": "Cobbled Shrine Stone",
+  "block.rubinated_nether.cobbled_shrine_stone_slab": "Cobbled Shrine Stone Slab",
+  "block.rubinated_nether.cobbled_shrine_stone_stairs": "Cobbled Shrine Stone Stairs",
+  "block.rubinated_nether.cobbled_shrine_stone_wall": "Cobbled Shrine Stone Wall",
 
   "block.rubinated_nether.polished_shrine_stone": "Polished Shrine Stone",
   "block.rubinated_nether.polished_shrine_stone_slab": "Polished Shrine Stone Slab",

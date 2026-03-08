@@ -52,6 +52,11 @@ public class RNRecipeProvider extends RecipeProvider {
 			RNBlocks.SHRINE_STONE_STAIRS,
 			RNBlocks.SHRINE_STONE_WALL,
 
+			RNBlocks.COBBLED_SHRINE_STONE,
+			RNBlocks.COBBLED_SHRINE_STONE_SLAB,
+			RNBlocks.COBBLED_SHRINE_STONE_STAIRS,
+			RNBlocks.COBBLED_SHRINE_STONE_WALL,
+
 			RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
 
 			RNBlocks.SHRINE_STONE_BRICKS_SLAB,
@@ -70,6 +75,34 @@ public class RNRecipeProvider extends RecipeProvider {
 			RNBlocks.POLISHED_SHRINE_STONE,
 
 			RNBlocks.SHRINE_STONE_PILLAR
+		);
+
+		stonecutterList(
+				recipeOutput,
+				RNBlocks.COBBLED_SHRINE_STONE,
+
+				RNBlocks.COBBLED_SHRINE_STONE_SLAB,
+				RNBlocks.COBBLED_SHRINE_STONE_STAIRS,
+				RNBlocks.COBBLED_SHRINE_STONE_WALL,
+
+				RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
+
+				RNBlocks.SHRINE_STONE_BRICKS_SLAB,
+				RNBlocks.SHRINE_STONE_BRICKS_STAIRS,
+				RNBlocks.SHRINE_STONE_BRICKS_WALL,
+				RNBlocks.SHRINE_STONE_BRICKS,
+
+				RNBlocks.SHRINE_STONE_TILES_SLAB,
+				RNBlocks.SHRINE_STONE_TILES_STAIRS,
+				RNBlocks.SHRINE_STONE_TILES_WALL,
+				RNBlocks.SHRINE_STONE_TILES,
+
+				RNBlocks.POLISHED_SHRINE_STONE_SLAB,
+				RNBlocks.POLISHED_SHRINE_STONE_STAIRS,
+				RNBlocks.POLISHED_SHRINE_STONE_WALL,
+				RNBlocks.POLISHED_SHRINE_STONE,
+
+				RNBlocks.SHRINE_STONE_PILLAR
 		);
 
 		stonecutterList(
@@ -176,6 +209,19 @@ public class RNRecipeProvider extends RecipeProvider {
 		);
 
 		stairsAndSlab(
+				recipeOutput,
+				RNBlocks.COBBLED_SHRINE_STONE,
+				RNBlocks.COBBLED_SHRINE_STONE_STAIRS,
+				RNBlocks.COBBLED_SHRINE_STONE_SLAB
+		);
+
+		wall(
+				recipeOutput,
+				RNBlocks.COBBLED_SHRINE_STONE,
+				RNBlocks.COBBLED_SHRINE_STONE_WALL
+		);
+
+		stairsAndSlab(
 			recipeOutput,
 			RNBlocks.POLISHED_SHRINE_STONE,
 			RNBlocks.POLISHED_SHRINE_STONE_STAIRS,
@@ -216,7 +262,7 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		twoByTwo(
 			recipeOutput,
-			RNBlocks.SHRINE_STONE,
+			RNBlocks.COBBLED_SHRINE_STONE,
 			RNBlocks.POLISHED_SHRINE_STONE,
 			4
 		);
@@ -522,6 +568,7 @@ public class RNRecipeProvider extends RecipeProvider {
 		freezing(recipeOutput, Blocks.BLUE_ICE,				RNBlocks.DRY_ICE,         19200,1.0f);
 		freezing(recipeOutput, RNItems.BRONZE_ROD,			Items.BREEZE_ROD,         400,  1.0f);
 		freezing(recipeOutput, Blocks.PACKED_ICE,			Blocks.BLUE_ICE,          9600, 1.0f);
+		freezing(recipeOutput, RNBlocks.COBBLED_SHRINE_STONE, RNBlocks.SHRINE_STONE, 400, 1.0f);
 
 		smelting(recipeOutput, RNItems.BRONZE_ROD, Items.BLAZE_ROD,   0.7f, 200);
 		blasting(recipeOutput, RNItems.BRONZE_ROD, Items.BLAZE_ROD,   0.7f, 100);
@@ -545,6 +592,26 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE_WALL,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_WALL_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.COBBLED_SHRINE_STONE,
+				Ingredient.of(RNTags.Items.COBBLED_SHRINE_STONE_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.COBBLED_SHRINE_STONE_STAIRS,
+				Ingredient.of(RNTags.Items.COBBLED_SHRINE_STONE_STAIRS_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.COBBLED_SHRINE_STONE_SLAB,
+				Ingredient.of(RNTags.Items.COBBLED_SHRINE_STONE_SLAB_CANDIDATE),
+				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.COBBLED_SHRINE_STONE_WALL,
+				Ingredient.of(RNTags.Items.COBBLED_SHRINE_STONE_WALL_CANDIDATE),
 				new ResonanceRecipe.TriggerData(10, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 

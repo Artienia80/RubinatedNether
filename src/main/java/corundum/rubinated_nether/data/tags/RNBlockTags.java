@@ -54,6 +54,11 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.SHRINE_STONE_SLAB.get(),
 				RNBlocks.SHRINE_STONE_WALL.get(),
 
+				RNBlocks.COBBLED_SHRINE_STONE.get(),
+				RNBlocks.COBBLED_SHRINE_STONE_STAIRS.get(),
+				RNBlocks.COBBLED_SHRINE_STONE_SLAB.get(),
+				RNBlocks.COBBLED_SHRINE_STONE_WALL.get(),
+
 				RNBlocks.POLISHED_SHRINE_STONE.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(),
@@ -187,6 +192,11 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.SHRINE_STONE_STAIRS.get(),
 				RNBlocks.SHRINE_STONE_SLAB.get(),
 				RNBlocks.SHRINE_STONE_WALL.get(),
+
+				RNBlocks.COBBLED_SHRINE_STONE.get(),
+				RNBlocks.COBBLED_SHRINE_STONE_STAIRS.get(),
+				RNBlocks.COBBLED_SHRINE_STONE_SLAB.get(),
+				RNBlocks.COBBLED_SHRINE_STONE_WALL.get(),
 
 				RNBlocks.POLISHED_SHRINE_STONE.get(),
 				RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),

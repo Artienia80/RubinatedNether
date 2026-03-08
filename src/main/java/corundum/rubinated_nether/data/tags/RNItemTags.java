@@ -196,6 +196,26 @@ public class RNItemTags extends ItemTagsProvider {
 				Items.TUFF_WALL
 		);
 
+		this.tag(RNTags.Items.COBBLED_SHRINE_STONE_CANDIDATE).add(
+				Items.COBBLESTONE,
+				Items.COBBLED_DEEPSLATE
+		);
+
+		this.tag(RNTags.Items.COBBLED_SHRINE_STONE_STAIRS_CANDIDATE).add(
+				Items.COBBLESTONE_STAIRS,
+				Items.COBBLED_DEEPSLATE_STAIRS
+		);
+
+		this.tag(RNTags.Items.COBBLED_SHRINE_STONE_SLAB_CANDIDATE).add(
+				Items.COBBLESTONE_SLAB,
+				Items.COBBLED_DEEPSLATE_SLAB
+		);
+
+		this.tag(RNTags.Items.COBBLED_SHRINE_STONE_WALL_CANDIDATE).add(
+				Items.COBBLESTONE_WALL,
+				Items.COBBLED_DEEPSLATE_WALL
+		);
+
 		this.tag(RNTags.Items.POLISHED_SHRINE_STONE_CANDIDATE).add(
 				Items.SMOOTH_STONE,
 				Items.POLISHED_DEEPSLATE,

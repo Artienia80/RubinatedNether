@@ -84,6 +84,11 @@ public final class RNTags {
 		public static final TagKey<Item> SHRINE_STONE_SLAB_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_slab_candidate");
 		public static final TagKey<Item> SHRINE_STONE_WALL_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_wall_candidate");
 
+		public static final TagKey<Item> COBBLED_SHRINE_STONE_CANDIDATE = createTag(Registries.ITEM, "cobbled_shrine_stone_candidate");
+		public static final TagKey<Item> COBBLED_SHRINE_STONE_STAIRS_CANDIDATE = createTag(Registries.ITEM, "cobbled_shrine_stone_stairs_candidate");
+		public static final TagKey<Item> COBBLED_SHRINE_STONE_SLAB_CANDIDATE = createTag(Registries.ITEM, "cobbled_shrine_stone_slab_candidate");
+		public static final TagKey<Item> COBBLED_SHRINE_STONE_WALL_CANDIDATE = createTag(Registries.ITEM, "cobbled_shrine_stone_wall_candidate");
+
 		public static final TagKey<Item> POLISHED_SHRINE_STONE_CANDIDATE = createTag(Registries.ITEM, "polished_shrine_stone_candidate");
 		public static final TagKey<Item> POLISHED_SHRINE_STONE_STAIRS_CANDIDATE = createTag(Registries.ITEM, "polished_shrine_stone_stairs_candidate");
 		public static final TagKey<Item> POLISHED_SHRINE_STONE_SLAB_CANDIDATE = createTag(Registries.ITEM, "polished_shrine_stone_slab_candidate");
