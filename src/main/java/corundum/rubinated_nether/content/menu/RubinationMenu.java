@@ -314,10 +314,10 @@ public class RubinationMenu extends AbstractContainerMenu {
         int newDuration;
         if (currentBlessing != null) {
             newDuration = currentBlessing.getDuration() + durationTicks;
-            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, newDuration, 0, false, true, true));
+            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, newDuration, 0, false, false, true));
         } else {
             newDuration = durationTicks;
-            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, durationTicks, 0, false, true, true));
+            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, durationTicks, 0, false, false, true));
         }
 
         // Check if duration exceeds Threshold, by default 5h:20m (384000 ticks) (64 Offerings)
