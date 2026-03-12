@@ -18,6 +18,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -54,25 +55,25 @@ public class RNGameBusEvents {
 		var source = event.getSource();
 
 		if (!source.is(RNDamageTypes.CHANDELIER)) return;
-        if (!(source.getDirectEntity() instanceof FallingBlockEntity fallingBlock)) return;
+		if (!(source.getDirectEntity() instanceof FallingBlockEntity fallingBlock)) return;
 
-        BlockState blockState = fallingBlock.getBlockState();
-        if (!(blockState.getBlock() instanceof ChandelierBlock chandelier)) return;
+		BlockState blockState = fallingBlock.getBlockState();
+		if (!(blockState.getBlock() instanceof ChandelierBlock chandelier)) return;
 
-        TarnishStage tarnishStage = chandelier.getAge();
-        if (tarnishStage != TarnishStage.CRYSTALLIZED) return;
+		TarnishStage tarnishStage = chandelier.getAge();
+		if (tarnishStage != TarnishStage.CRYSTALLIZED) return;
 
-        entity.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 72000, 0));
+		entity.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 72000, 0));
 	}
 
-    @SubscribeEvent
-    public static void changeBronzeSize(EntityEvent.Size event) {
-        if (!(event.getEntity() instanceof BronzeEntity bronzeEntity)) return;
+	@SubscribeEvent
+	public static void changeBronzeSize(EntityEvent.Size event) {
+		if (!(event.getEntity() instanceof BronzeEntity bronzeEntity)) return;
 
-        event.setNewSize(bronzeEntity.isBurrowed() ?
-                EntityDimensions.fixed(0.35F, 0.375F) :
-                EntityDimensions.scalable(0.7F, 1.4F));
-    }
+		event.setNewSize(bronzeEntity.isBurrowed() ?
+				EntityDimensions.fixed(0.35F, 0.375F) :
+				EntityDimensions.scalable(0.7F, 1.4F));
+	}
 
 	@SubscribeEvent
 	public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
@@ -81,24 +82,21 @@ public class RNGameBusEvents {
 
 		if (!(itemStack.getItem() instanceof DrillItem drillItem)) return;
 
-        var currentTick = player.level().getGameTime();
-        var playerId = player.getUUID();
-        lastMiningTick.put(playerId, currentTick);
+		var currentTick = player.level().getGameTime();
+		var playerId = player.getUUID();
+		lastMiningTick.put(playerId, currentTick);
 
-        // Retrieve current counter
-        var tag = drillItem.getNBT();
-        var ticksUsed = tag.getInt("ticksUsed");
+		var tag = drillItem.getNBT();
+		var ticksUsed = tag.getInt("ticksUsed");
 
-        // Calculate multiplier
-        var multiplier = 1.0f + ((float) ticksUsed / DrillItem.MAX_USE_TICKS) *
-                (DrillItem.MAX_MULTIPLIER_BOOST - 1.0f);
+		var multiplier = 1.0f + ((float) ticksUsed / DrillItem.MAX_USE_TICKS) *
+				(DrillItem.MAX_MULTIPLIER_BOOST - 1.0f);
 
-        // Increment ticksUsed but cap at MAX_USE_TICKS
-        if (ticksUsed < DrillItem.MAX_USE_TICKS) {
-            tag.putInt("ticksUsed", ticksUsed + 1);
-        }
+		if (ticksUsed < DrillItem.MAX_USE_TICKS) {
+			tag.putInt("ticksUsed", ticksUsed + 1);
+		}
 
-        event.setNewSpeed(event.getNewSpeed() * multiplier);
+		event.setNewSpeed(event.getNewSpeed() * multiplier);
 	}
 
 	@SubscribeEvent
@@ -110,43 +108,37 @@ public class RNGameBusEvents {
 
 		if (!(stack.getItem() instanceof DrillItem drill)) return;
 
-        CompoundTag tag = drill.getNBT();
-        if (tag == null) return;
+		CompoundTag tag = drill.getNBT();
+		if (tag == null) return;
 
-        // Log multiplier every 2 seconds (40 ticks)
-        if (!lastLoggedTick.containsKey(playerId) || currentTick - lastLoggedTick.get(playerId) >= 40) {
-            var ticksUsed = tag.getInt("ticksUsed");
-            var multiplier = 1.0f + ((float) ticksUsed / DrillItem.MAX_USE_TICKS) *
-                    (DrillItem.MAX_MULTIPLIER_BOOST - 1.0f);
-            lastLoggedTick.put(playerId, currentTick);
-        }
+		var ticksUsed = tag.getInt("ticksUsed");
+		var multiplier = 1.0f + ((float) ticksUsed / DrillItem.MAX_USE_TICKS) *
+				(DrillItem.MAX_MULTIPLIER_BOOST - 1.0f);
+		player.displayClientMessage(Component.literal(String.format("%.2f", multiplier)), true);
 
-        // Handle multiplier decay when stopping
-        if (!lastMiningTick.containsKey(playerId)) return;
+		if (!lastMiningTick.containsKey(playerId)) return;
 
-        var lastTick = lastMiningTick.get(playerId);
+		var lastTick = lastMiningTick.get(playerId);
 
-        if (currentTick - lastTick <= 20) return;
+		if (currentTick - lastTick <= 20) return;
 
-        if (!decayTicks.containsKey(playerId)) {
-            decayTicks.put(playerId, 0);
-        }
+		if (!decayTicks.containsKey(playerId)) {
+			decayTicks.put(playerId, 0);
+		}
 
-        int decayCount = decayTicks.get(playerId);
+		int decayCount = decayTicks.get(playerId);
 
-        if (currentTick % 20 != 0) return;
+		if (currentTick % 20 != 0) return;
 
-        var ticksUsed = tag.getInt("ticksUsed");
+		if (ticksUsed > 0) {
+			var reduction = (int) Math.ceil(ticksUsed * 0.25);
+			tag.putInt("ticksUsed", Math.max(ticksUsed - reduction, 0));
+		} else {
+			lastMiningTick.remove(playerId);
+			decayTicks.remove(playerId);
+		}
 
-        if (ticksUsed > 0) {
-            var reduction = (int) Math.ceil(ticksUsed * 0.25);
-            tag.putInt("ticksUsed", Math.max(ticksUsed - reduction, 0));
-        } else {
-            lastMiningTick.remove(playerId);
-            decayTicks.remove(playerId);
-        }
-
-        decayTicks.put(playerId, decayCount + 1);
+		decayTicks.put(playerId, decayCount + 1);
 	}
 
 	@SubscribeEvent
