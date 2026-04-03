@@ -1,11 +1,29 @@
 {
-  "name": "rubinated_nether:shrine_main",
-  "fallback": "rubinated_nether:fallback_shrine_omega",
+  "name": "rubinated_nether:fallback_shrine_gamma",
+  "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
-        "location": "rubinated_nether:start/tower",
+        "location": "rubinated_nether:alpha/room/through/easy",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "location": "rubinated_nether:alpha/room/through/medium",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "location": "rubinated_nether:alpha/room/through/hard",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -14,25 +32,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "rubinated_nether:start/rubination_altar",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 1,
-      "element": {
-        "location": "rubinated_nether:start/corridor",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 1,
-      "element": {
-        "location": "rubinated_nether:start/four_way",
+        "location": "rubinated_nether:main/cap",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

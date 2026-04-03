@@ -1,6 +1,6 @@
 {
   "name": "rubinated_nether:shrine_omega",
-  "fallback": "minecraft:empty",
+  "fallback": "rubinated_nether:fallback_shrine_omega",
   "elements": [
     {
       "weight": 1,
