@@ -3,6 +3,7 @@ package corundum.rubinated_nether.event;
 import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNDamageTypes;
+import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.ChandelierBlock;
@@ -64,23 +65,20 @@ public class RNCommonEvents {
 
 		if (!(itemStack.getItem() instanceof DrillItem drillItem)) return;
 
-        var modified = drillItem.calcModifier(event.getOriginalSpeed());
-        if (modified != event.getOriginalSpeed()) {
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("New Speed: " + modified));
-            event.setNewSpeed(drillItem.calcModifier(event.getOriginalSpeed()));
-        }
+        var modified = drillItem.calcModifier(itemStack, event.getOriginalSpeed());
+        if (modified != event.getOriginalSpeed())
+            event.setNewSpeed(modified);
 	}
 
     @SubscribeEvent
     public static void onBlockBreaking(PlayerInteractEvent.LeftClickBlock event) {
-        if(!(event.getItemStack().getItem() instanceof DrillItem drillItem)) return;
+        if(!(event.getItemStack().getItem() instanceof DrillItem)) return;
 
-        if(event.getLevel().isClientSide())
-            switch (event.getAction()) {
-                case START,
-                     STOP -> {}
-                case ABORT -> drillItem.currentMultiplier = 1.0f;
-                case CLIENT_HOLD -> drillItem.currentMultiplier += 0.1f;
+        if(!event.getLevel().isClientSide())
+            if(Boolean.FALSE.equals(event.getItemStack().get(RNDataComponents.IS_COMBO))) {
+                if (event.getAction().equals(PlayerInteractEvent.LeftClickBlock.Action.START)) {
+                    event.getItemStack().set(RNDataComponents.IS_COMBO, true);
+                }
             }
     }
 
