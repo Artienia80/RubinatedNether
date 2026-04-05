@@ -3,9 +3,11 @@ package corundum.rubinated_nether.content;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.items.*;
 import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.Unbreakable;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -71,7 +73,11 @@ public class RNItems {
 	public static final DeferredItem<Item> BRONZE_DRILL = ITEMS.register(
 			"bronze_drill",
 			() -> new DrillItem(
-					new Item.Properties().stacksTo(1)
+					new Item.Properties()
+                            .stacksTo(1)
+                            .component(DataComponents.UNBREAKABLE, new Unbreakable(false))
+                            .component(RNDataComponents.IS_COMBO, false)
+                            .component(RNDataComponents.DRILL_MULTIPLIER, 1.0f)
 			)
 	);
 

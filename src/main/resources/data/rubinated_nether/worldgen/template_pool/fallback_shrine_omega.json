@@ -1,11 +1,11 @@
 {
-  "name": "rubinated_nether:shrine_beta",
-  "fallback": "rubinated_nether:fallback_shrine_beta",
+  "name": "rubinated_nether:fallback_shrine_omega",
+  "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 5,
+      "weight": 1,
       "element": {
-        "location": "rubinated_nether:main/four_way",
+        "location": "rubinated_nether:main/cap",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

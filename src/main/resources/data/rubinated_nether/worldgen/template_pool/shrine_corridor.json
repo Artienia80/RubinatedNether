@@ -1,9 +1,9 @@
 {
   "name": "rubinated_nether:shrine_corridor",
-  "fallback": "minecraft:empty",
+  "fallback": "rubinated_nether:fallback_shrine_omega",
   "elements": [
     {
-      "weight": 50,
+      "weight": 35,
       "element": {
         "location": "rubinated_nether:alpha/corridor/bronze_laser",
         "processors": "minecraft:empty",
@@ -12,7 +12,7 @@
       }
     },
   	{	
-      "weight": 50,
+      "weight": 35,
       "element": {
         "location": "rubinated_nether:alpha/corridor/copper_laser",
         "processors": "minecraft:empty",
