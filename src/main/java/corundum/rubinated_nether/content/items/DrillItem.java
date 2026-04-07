@@ -19,6 +19,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.context.UseOnContext;
@@ -32,28 +33,40 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class DrillItem extends PickShovelItem {
     public static final int RESET_THRESHOLD_TICKS = 60;
-    public static final float MAX_BOOST_VALUE = 10.f;
+    public static final float MAX_BOOST_VALUE = 50.f;
 
-	public DrillItem(Properties properties) {
-		super(RNTiers.BRONZE, properties);
-	}
+    public DrillItem(Properties properties) {
+        super(RNTiers.BRONZE, properties);
+    }
 
     @Override
-	public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity miningEntity) {
-		if (!level.isClientSide() && state.is(RNBlocks.MOLTEN_RUBY_ORE.get())) {
-			int count = 3 + level.random.nextInt(2); // 3-4 items
-			ItemStack drops = new ItemStack(RNItems.MOLTEN_RUBY.get(), count);
-			Block.popResource(level, pos, drops);
-		}
+    public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity miningEntity) {
+        if (!level.isClientSide() && state.is(RNBlocks.MOLTEN_RUBY_ORE.get())) {
+            int count = 3 + level.random.nextInt(2); // 3-4 items
+            ItemStack drops = new ItemStack(RNItems.MOLTEN_RUBY.get(), count);
+            Block.popResource(level, pos, drops);
+        }
 
         if (!level.isClientSide() && Boolean.TRUE.equals(stack.get(RNDataComponents.IS_COMBO))) {
             stack.set(RNDataComponents.LAST_TICK, level.getGameTime());
         }
         return super.mineBlock(stack, level, state, pos, miningEntity);
-	}
+    }
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+        // Client-side: show action bar message while combo is active and drill is held
+        if (level.isClientSide() && isSelected && entity instanceof Player player) {
+            if (Boolean.TRUE.equals(stack.get(RNDataComponents.IS_COMBO))) {
+                float multiplier = stack.get(RNDataComponents.DRILL_MULTIPLIER);
+                player.displayClientMessage(
+                        Component.literal("Drill Combo: x" + String.format("%.1f", multiplier)),
+                        true // true = action bar (above hotbar), not chat
+                );
+            }
+        }
+
+        // Server-side: manage combo state and multiplier
         try {
             if (!level.isClientSide() && stack.has(RNDataComponents.LAST_TICK)) {
                 if (Boolean.TRUE.equals(stack.get(RNDataComponents.IS_COMBO))) {
@@ -88,25 +101,25 @@ public class DrillItem extends PickShovelItem {
         return slotChanged || oldStack.getItem() != newStack.getItem();
     }
 
-	@Override
-	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		return true;
-	}
+    @Override
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        return true;
+    }
 
-	@Override
-	public boolean isDamageable(ItemStack stack) {
-		return false;
-	}
+    @Override
+    public boolean isDamageable(ItemStack stack) {
+        return false;
+    }
 
-	@Override
-	public boolean isEnchantable(ItemStack stack) {
-		return false;
-	}
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return false;
+    }
 
-	@Override
-	public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-		return false;
-	}
+    @Override
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        return false;
+    }
 
     public float calcModifier(ItemStack stack, double baseValue) {
         return (float) (baseValue * stack.get(RNDataComponents.DRILL_MULTIPLIER));
