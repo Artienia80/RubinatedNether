@@ -66,21 +66,9 @@ public class RNCommonEvents {
 		if (!(itemStack.getItem() instanceof DrillItem drillItem)) return;
 
         var modified = drillItem.calcModifier(itemStack, event.getOriginalSpeed());
-        if (modified != event.getOriginalSpeed())
+        if (modified > event.getOriginalSpeed())
             event.setNewSpeed(modified);
 	}
-
-    @SubscribeEvent
-    public static void onBlockBreaking(PlayerInteractEvent.LeftClickBlock event) {
-        if(!(event.getItemStack().getItem() instanceof DrillItem)) return;
-
-        if(!event.getLevel().isClientSide())
-            if(Boolean.FALSE.equals(event.getItemStack().get(RNDataComponents.IS_COMBO))) {
-                if (event.getAction().equals(PlayerInteractEvent.LeftClickBlock.Action.START)) {
-                    event.getItemStack().set(RNDataComponents.IS_COMBO, true);
-                }
-            }
-    }
 
 	@SubscribeEvent
 	public static void freezerFuel(ServerAboutToStartEvent event) {
