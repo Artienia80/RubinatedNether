@@ -46,8 +46,7 @@ public class DrillItem extends PickShovelItem {
         if (level.isClientSide() && isSelected && entity instanceof Player player) {
             int multiplier = getCurrentBlockCombo(stack);
             player.displayClientMessage(
-                    Component.literal(String.format("Drill Combo: %d", multiplier)),
-                    true // true = action bar (above hotbar), not chat
+                    Component.literal(String.format("Drill Combo: %d", multiplier)), true
             );
         }
 
