@@ -4,21 +4,15 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.TarnishStage;
-import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -33,22 +27,12 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBronze {
-    public static final MapCodec<BronzeSpringBlock> CODEC = RecordCodecBuilder.mapCodec(
-            instance -> instance.group(
-                    TarnishStage.CODEC.fieldOf("tarnishing_state").forGetter(BronzeSpringBlock::getAge),
-                    propertiesCodec()
-            ).apply(instance, BronzeSpringBlock::new)
-    );
-
+public class BronzeSpringBlock extends DirectionalBlock{
     public static final BooleanProperty EXTENDED = BlockStateProperties.EXTENDED;
-    public static final BooleanProperty WAXED = TarnishingBronze.WAXED;
 
     private static final double BASE_LAUNCH_VELOCITY = 0.5;
     private static final double CRYSTALLIZED_DETECTION_RANGE = 0.3; // blocks in front of spring
@@ -72,20 +56,26 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     private static final VoxelShape SQUISHED_EAST = Block.box(0, 2, 2, 16, 14, 14);
     private static final VoxelShape EXTENDED_EAST = Block.box(0, 2, 2, 24, 14, 14);
 
-    private final TarnishStage tarnishStage;
+    public static final MapCodec<TarnishingBronzeSpringBlock> CODEC = RecordCodecBuilder.mapCodec(
+            instance -> instance.group(
+                    TarnishStage.CODEC.fieldOf("tarnishing_state").forGetter(TarnishingBronzeSpringBlock::getAge),
+                    propertiesCodec()
+            ).apply(instance, TarnishingBronzeSpringBlock::new)
+    );
+
+    protected final TarnishStage tarnishStage;
 
     public BronzeSpringBlock(TarnishStage tarnishStage, BlockBehaviour.Properties properties) {
         super(properties);
         this.tarnishStage = tarnishStage;
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.UP)
-                .setValue(EXTENDED, false)
-                .setValue(WAXED, false));
+                .setValue(EXTENDED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, EXTENDED, WAXED);
+        builder.add(FACING, EXTENDED);
     }
 
     @Override
@@ -125,8 +115,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
 
             BlockState placementState = this.defaultBlockState()
                     .setValue(FACING, facing)
-                    .setValue(EXTENDED, hasSignal && canExtend)
-                    .setValue(WAXED, false);
+                    .setValue(EXTENDED, hasSignal && canExtend);
 
             // Schedule ticking for crystallized springs
             if (tarnishStage == TarnishStage.CRYSTALLIZED && !level.isClientSide()) {
@@ -139,8 +128,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         // Allow placement even if blocked, but always compressed
         BlockState placementState = this.defaultBlockState()
                 .setValue(FACING, facing)
-                .setValue(EXTENDED, false)
-                .setValue(WAXED, false);
+                .setValue(EXTENDED, false);
 
         // Schedule ticking for crystallized springs
         if (tarnishStage == TarnishStage.CRYSTALLIZED && !level.isClientSide()) {
@@ -192,15 +180,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         return hasSupport;
     }
 
-    private int getContractionDelay(BlockState state) {
-        return switch (tarnishStage) {
-            case UNAFFECTED -> 10;
-            case DISCOLORED -> 15;
-            case CORRODED -> 20;
-            case TARNISHED -> 40;
-            case CRYSTALLIZED -> 5;
-        };
-    }
+
 
     @Override
     public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
@@ -246,6 +226,17 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
                 level.scheduleTick(pos, this, getContractionDelay(state));
             }
         }
+    }
+
+
+    private int getContractionDelay(BlockState state) {
+        return switch (tarnishStage) {
+            case UNAFFECTED -> 10;
+            case DISCOLORED -> 15;
+            case CORRODED -> 20;
+            case TARNISHED -> 40;
+            case CRYSTALLIZED -> 5;
+        };
     }
 
     @Override
@@ -538,67 +529,6 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         }
     }
 
-    @Override
-    public boolean isRandomlyTicking(BlockState state) {
-        return !state.getValue(WAXED) && TarnishingBronze.canCrystallize(this);
-    }
-
-    @Override
-    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (state.getValue(WAXED)) return;
-        this.changeOverTime(state, level, pos, random);
-    }
-
-    @Override
-    public TarnishStage getAge() {
-        return tarnishStage;
-    }
-
-    @Override
-    protected ItemInteractionResult useItemOn(
-            ItemStack stack,
-            BlockState state,
-            Level level,
-            BlockPos pos,
-            Player player,
-            InteractionHand hand,
-            BlockHitResult hitResult
-    ) {
-        return waxing(
-                stack,
-                state,
-                level,
-                pos,
-                player,
-                hand,
-                hitResult
-        )
-                ? ItemInteractionResult.SUCCESS
-                : super.useItemOn(
-                stack,
-                state,
-                level,
-                pos,
-                player,
-                hand,
-                hitResult
-        );
-    }
-
-    @Override
-    public ItemStack getCloneItemStack(
-            BlockState state,
-            HitResult target,
-            LevelReader level,
-            BlockPos pos,
-            Player player
-    ) {
-        return new ItemStack(
-                state.getValue(WAXED)
-                        ? BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(this)))
-                        : this
-        );
-    }
 
     @Override
     protected MapCodec<? extends BronzeSpringBlock> codec() {

@@ -1,7 +1,7 @@
 package corundum.rubinated_nether.content.items;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.blocks.TarnishingBronze;
+import corundum.rubinated_nether.content.blocks.bases.TarnishingBronze;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -16,16 +16,6 @@ import java.util.Map;
 public class WaxableBlockItem extends BlockItem {
 	public WaxableBlockItem(DeferredBlock<?> block, Item.Properties properties) {
 		super(block.get(), properties);
-	}
-
-	@Override
-	protected BlockState getPlacementState(BlockPlaceContext context) {
-		var state = super.getPlacementState(context);
-
-		if (state != null)
-			return state.setValue(TarnishingBronze.WAXED, true);
-
-		return state;
 	}
 
 	@Override

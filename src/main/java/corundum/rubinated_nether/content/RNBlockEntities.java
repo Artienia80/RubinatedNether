@@ -5,6 +5,7 @@ import corundum.rubinated_nether.client.render.BronzeLaserRenderer;
 import corundum.rubinated_nether.client.render.CofferRenderer;
 import corundum.rubinated_nether.client.render.CopperLaserRenderer;
 import corundum.rubinated_nether.content.blocks.ChandelierBlock;
+import corundum.rubinated_nether.content.blocks.TarnishingChandelierBlock;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.BronzeLaserBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
@@ -97,10 +98,10 @@ public class RNBlockEntities {
 			).build(null)
 	);
 
-	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ChandelierBlock.ChandelierBlockEntity>> CHANDELIER = BLOCK_ENTITY_TYPES.register(
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TarnishingChandelierBlock.ChandelierBlockEntity>> CHANDELIER = BLOCK_ENTITY_TYPES.register(
 			"chandelier",
 			() -> BlockEntityType.Builder.of(
-					ChandelierBlock.ChandelierBlockEntity::new,
+                    TarnishingChandelierBlock.ChandelierBlockEntity::new,
 					RNBlocks.BRONZE_CHANDELIER.get(),
 					RNBlocks.DISCOLORED_BRONZE_CHANDELIER.get(),
 					RNBlocks.CORRODED_BRONZE_CHANDELIER.get(),

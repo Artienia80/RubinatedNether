@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.blocks;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.content.RNBlockEntities;
+import corundum.rubinated_nether.content.blocks.bases.AbstractLaserBlock;
 import corundum.rubinated_nether.content.blocks.entities.CopperLaserBlockEntity;
 import corundum.rubinated_nether.utils.BEBlock;
 import corundum.rubinated_nether.utils.ShapeUtils;
@@ -39,7 +40,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class CopperLaserBlock extends DirectionalBlock implements BEBlock<CopperLaserBlockEntity>, WeatheringCopper {
+public class CopperLaserBlock extends AbstractLaserBlock implements BEBlock<CopperLaserBlockEntity>, WeatheringCopper {
 
 	public static final MapCodec<CopperLaserBlock> CODEC = RecordCodecBuilder.mapCodec(
 			instance -> instance.group(
@@ -48,52 +49,12 @@ public class CopperLaserBlock extends DirectionalBlock implements BEBlock<Copper
 			).apply(instance, CopperLaserBlock::new)
 	);
 
-	public static final Map<Direction, VoxelShape> SHAPES = ShapeUtils.allDirections(Shapes.or(
-			box(0, 0, 0, 16, 6, 16),
-			box(2, 0, 2, 14, 16, 14)
-	));
-
-	public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
-	public static final EnumProperty<LaserMode> MODE = EnumProperty.create("mode", LaserMode.class);
-
 	private final WeatherState weatherState;
-
-
-	public enum LaserMode implements StringRepresentable {
-		SPECTRUM("spectrum"), // Blocks + Entities
-		ULTRAVIOLET("uv"),    // Blocks Only
-		INFRARED("ir");       // Entities Only
-
-		private final String name;
-		LaserMode(String name) { this.name = name; }
-
-		@Override public String getSerializedName() { return this.name; }
-
-		public LaserMode cycle() {
-			return switch (this) {
-				case SPECTRUM -> ULTRAVIOLET;
-				case ULTRAVIOLET -> INFRARED;
-				case INFRARED -> SPECTRUM;
-			};
-		}
-
-		public boolean detectsBlocks() { return this == SPECTRUM || this == ULTRAVIOLET; }
-		public boolean detectsEntities() { return this == SPECTRUM || this == INFRARED; }
-	}
 
 	public CopperLaserBlock(WeatherState state, BlockBehaviour.Properties props) {
 		super(props);
 		this.weatherState = state;
-		this.registerDefaultState(this.defaultBlockState()
-				.setValue(FACING, Direction.NORTH)
-				.setValue(POWER, 0)
-				.setValue(MODE, LaserMode.SPECTRUM)
-		);
-	}
 
-	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(FACING, POWER, MODE);
 	}
 
 	@Override
@@ -106,40 +67,6 @@ public class CopperLaserBlock extends DirectionalBlock implements BEBlock<Copper
 		return CopperLaserBlockEntity.class;
 	}
 
-	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		return SHAPES.get(state.getValue(FACING));
-	}
-
-	@Nullable
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
-	}
-
-	@Override
-	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-		ItemStack heldItem = player.getMainHandItem();
-
-		// Check for honeycomb or axe - let Minecraft's default behavior handle both (highest priority)
-		if (heldItem.is(net.minecraft.world.item.Items.HONEYCOMB) || heldItem.is(net.minecraft.tags.ItemTags.AXES)) {
-			// PASS allows Minecraft's default copper interaction logic to run
-			// This handles waxing, unwaxing, and scraping in the correct order
-			return InteractionResult.PASS;
-		}
-
-		// Only do mode switching if no special items are held (lowest priority)
-		LaserMode nextMode = state.getValue(MODE).cycle();
-		float pitch = switch (nextMode) {
-			case SPECTRUM -> 0.6f;
-			case ULTRAVIOLET -> 0.7f;
-			case INFRARED -> 0.5f;
-		};
-
-		level.playLocalSound(pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.5f, pitch, true);
-		level.setBlockAndUpdate(pos, state.setValue(MODE, nextMode));
-		return InteractionResult.sidedSuccess(level.isClientSide);
-	}
 
 	// ---- WeatheringCopper Implementation ----
 	@Override
@@ -155,39 +82,6 @@ public class CopperLaserBlock extends DirectionalBlock implements BEBlock<Copper
 	@Override
 	protected boolean isRandomlyTicking(BlockState state) {
 		return WeatheringCopper.getNext(state.getBlock()).isPresent();
-	}
-
-	@Override
-	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
-		return new ItemStack(this);
-	}
-
-	// ---- Redstone Logic ----
-	@Override
-	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-		BlockEntity be = level.getBlockEntity(pos);
-		if(!(be instanceof CopperLaserBlockEntity laser)) return;
-		level.setBlockAndUpdate(pos, state.setValue(POWER, laser.getPowerLevel()));
-
-		Direction direction = state.getValue(FACING);
-		BlockPos blockPos = pos.relative(direction.getOpposite());
-		level.neighborChanged(blockPos, this, pos);
-		level.updateNeighborsAtExceptFromFacing(blockPos, this, direction);
-	}
-
-	@Override
-	public int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-		return getSignal(state, level, pos, direction);
-	}
-
-	@Override
-	public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-		return state.getValue(FACING) == direction ? state.getValue(POWER) : 0;
-	}
-
-	@Override
-	public boolean isSignalSource(BlockState state) {
-		return true;
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package corundum.rubinated_nether.content.blocks;
+package corundum.rubinated_nether.content.blocks.bases;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -35,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class TarnishingBronzeLampBlock extends RotatedPillarBlock implements TarnishingBronze {
+public class TarnishingBronzeLampBlock extends BronzeLampBlock implements TarnishingBronze {
 	public static final MapCodec<TarnishingBronzeLampBlock> CODEC = RecordCodecBuilder.mapCodec(
 			blockInstance -> blockInstance.group(
 							TarnishStage.CODEC
@@ -44,10 +44,6 @@ public class TarnishingBronzeLampBlock extends RotatedPillarBlock implements Tar
 							propertiesCodec()
 					)
 					.apply(blockInstance, TarnishingBronzeLampBlock::new)
-	);
-
-	protected static final Map<Direction.Axis, VoxelShape> AXIS_SHAPES = ShapeUtils.allAxis(
-			Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D)
 	);
 
 	private final TarnishStage tarnishStage;
@@ -63,54 +59,11 @@ public class TarnishingBronzeLampBlock extends RotatedPillarBlock implements Tar
 	) {
 		super(properties);
 		this.tarnishStage = tarnishStage;
-		registerDefaultState(defaultBlockState().setValue(WAXED, false));
-	}
-
-	@Override
-	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
-		builder.add(WAXED);
-		super.createBlockStateDefinition(builder);
-	}
-
-	@Override
-	public VoxelShape getShape(
-			BlockState state,
-			BlockGetter view,
-			BlockPos pos,
-			CollisionContext context
-	) {
-		return AXIS_SHAPES.get(state.getValue(AXIS));
-	}
-
-	@Override
-	public void playerDestroy(
-			Level level,
-			Player player,
-			BlockPos pos,
-			BlockState state,
-			@Nullable BlockEntity blockEntity,
-			ItemStack tool
-	) {
-		super.playerDestroy(level, player, pos, state, blockEntity, tool);
-
-		if(level.getRandom().nextInt(1_000_000) == 0)
-			level.setBlockAndUpdate(pos, Blocks.LAVA.defaultBlockState());
 	}
 
 	@Override
 	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-		if (state.getValue(WAXED))
-			return;
-
-		boolean hasCatalystNearby = BlockPos.betweenClosedStream(
-						pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
-				)
-				.anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
-
-		if (hasCatalystNearby)
-			this.getCrystallized(state).ifPresent(blockState -> level.setBlockAndUpdate(pos, blockState));
-		else
-			this.changeOverTime(state, level, pos, random);
+		this.onTarnishTick(state, level, pos, random);
 	}
 
 	@Override
@@ -120,51 +73,5 @@ public class TarnishingBronzeLampBlock extends RotatedPillarBlock implements Tar
 
 	public TarnishStage getAge() {
 		return this.tarnishStage;
-	}
-
-	@Override
-	protected ItemInteractionResult useItemOn(
-			ItemStack stack,
-			BlockState state,
-			Level level,
-			BlockPos pos,
-			Player player,
-			InteractionHand hand,
-			BlockHitResult hitResult
-	) {
-		return waxing(
-				stack,
-				state,
-				level,
-				pos,
-				player,
-				hand,
-				hitResult
-		)
-				? ItemInteractionResult.SUCCESS
-				: super.useItemOn(
-				stack,
-				state,
-				level,
-				pos,
-				player,
-				hand,
-				hitResult
-		);
-	}
-
-	@Override
-	public ItemStack getCloneItemStack(
-			BlockState state,
-			HitResult target,
-			LevelReader level,
-			BlockPos pos,
-			Player player
-	) {
-		return new ItemStack(
-				state.getValue(WAXED)
-						? BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(this)))
-						: this
-		);
 	}
 }

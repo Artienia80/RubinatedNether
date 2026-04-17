@@ -1,4 +1,4 @@
-package corundum.rubinated_nether.content.blocks;
+package corundum.rubinated_nether.content.blocks.bases;
 
 import com.google.common.base.Suppliers;
 import com.google.common.collect.BiMap;
@@ -6,11 +6,14 @@ import com.google.common.collect.ImmutableBiMap;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNDataMaps;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -30,7 +33,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
-	public static final BooleanProperty WAXED = BooleanProperty.create("waxed");
+    //TODO: This ABSOLUTELY needs to be changed. Tarnish States should be tied to blocks themselves.
 
 	Supplier<BiMap<Block, Block>> NEXT_BY_BLOCK = Suppliers.memoize(
 			() -> ImmutableBiMap.<Block, Block>builder()
@@ -179,6 +182,18 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 
 	Map<Block, Block> INVERSE_TARNISHABLES_DATAMAP = Collections.unmodifiableMap(INVERSE_TARNISHABLES_DATAMAP_INTERNAL);
 
+    default void onTarnishTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        boolean hasCatalystNearby = BlockPos.betweenClosedStream(
+                        pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
+                )
+                .anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
+
+        if (hasCatalystNearby)
+            this.getCrystallized(state).ifPresent(blockState -> level.setBlockAndUpdate(pos, blockState));
+        else
+            this.changeOverTime(state, level, pos, random);
+    }
+
 	static Block getPreviousTarnishStage(Block block) {
 		return INVERSE_TARNISHABLES_DATAMAP.containsKey(block) ? INVERSE_TARNISHABLES_DATAMAP.get(block) : TarnishingBronze.PREVIOUS_BY_BLOCK.get().get(block);
 	}
@@ -243,74 +258,5 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 	@Override
 	default float getChanceModifier() {
 		return this.getAge() == TarnishStage.UNAFFECTED ? 0.75F : 1.0F;
-	}
-
-	default boolean waxing(
-			ItemStack stack,
-			BlockState state,
-			Level level,
-			BlockPos pos,
-			Player player,
-			InteractionHand hand,
-			BlockHitResult hitResult
-	) {
-		var waxed = state.getValue(WAXED);
-
-		if (stack.is(ItemTags.AXES)) {
-			if (!waxed && getPrevious(state).isEmpty())
-				return false;
-
-			stack.hurtAndBreak(1, player, null);
-			level.playSound(player, pos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1F, 1F);
-
-			if (waxed) {
-				level.setBlock(pos, state.setValue(WAXED, false), 2);
-				level.levelEvent(player, 3004, pos, 0);
-			} else {
-				level.setBlock(pos, getPrevious(state).get(), 2);
-				level.levelEvent(player, 3005, pos, 0);
-
-				if (!level.isClientSide() && level.random.nextFloat() < 0.50f) {
-					ItemEntity bronzeDrop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-							new ItemStack(RNItems.BRONZE_POWDER.get()));
-					bronzeDrop.setDefaultPickUpDelay();
-					level.addFreshEntity(bronzeDrop);
-				}
-			}
-
-			return true;
-		}
-
-		if (stack.is(RNItems.BRONZE_POWDER.get())) {
-			var nextState = getNext(state);
-			if (nextState.isPresent()) {
-				level.setBlock(pos, nextState.get(), 2);
-
-				if (!player.isCreative()) {
-					stack.shrink(1);
-				}
-
-				level.playSound(player, pos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1F, 0.8F);
-				level.levelEvent(player, 3005, pos, 0);
-
-
-				return true;
-			}
-			return false;
-		}
-
-		if (stack.is(Items.HONEYCOMB) && !waxed) {
-			level.setBlock(pos, state.setValue(WAXED, true), 2);
-
-			if (!player.isCreative())
-				stack.shrink(1);
-
-			level.playSound(player, pos, SoundEvents.HONEYCOMB_WAX_ON, SoundSource.BLOCKS, 1F, 1F);
-			level.levelEvent(player, 3003, pos, 0);
-
-			return true;
-		}
-
-		return false;
 	}
 }

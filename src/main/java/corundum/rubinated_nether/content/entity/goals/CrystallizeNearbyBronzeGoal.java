@@ -1,7 +1,7 @@
 package corundum.rubinated_nether.content.entity.goals;
 
 import corundum.rubinated_nether.content.TarnishStage;
-import corundum.rubinated_nether.content.blocks.TarnishingBronze;
+import corundum.rubinated_nether.content.blocks.bases.TarnishingBronze;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;

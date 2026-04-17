@@ -3,6 +3,7 @@ package corundum.rubinated_nether.data;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.blocks.*;
+import corundum.rubinated_nether.content.blocks.bases.SixWayPillarBlock;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

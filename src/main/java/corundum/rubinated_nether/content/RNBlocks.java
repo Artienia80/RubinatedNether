@@ -2,6 +2,15 @@ package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.blocks.*;
+import corundum.rubinated_nether.content.blocks.bases.SixWayPillarBlock;
+import corundum.rubinated_nether.content.blocks.bases.TarnishingBronzeBlock;
+import corundum.rubinated_nether.content.blocks.bases.TarnishingBronzeBulbBlock;
+import corundum.rubinated_nether.content.blocks.bases.TarnishingBronzeChainBlock;
+import corundum.rubinated_nether.content.blocks.bases.TarnishingBronzeLampBlock;
+import corundum.rubinated_nether.content.blocks.bases.TarnishingBronzeLanternBlock;
+import corundum.rubinated_nether.content.blocks.bases.TarnishingBronzeSlabBlock;
+import corundum.rubinated_nether.content.blocks.bases.TarnishingBronzeStairBlock;
+import corundum.rubinated_nether.content.blocks.bases.TarnishingPillarBlock;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -866,7 +875,7 @@ public class RNBlocks {
 
 	public static final DeferredBlock<Block> BRONZE_GRATE = registerWaxableBlock(
 			"bronze_grate",
-			() -> new BronzeGrateBlock(
+			() -> new TarnishingBronzeGrateBlock(
 					TarnishStage.UNAFFECTED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
@@ -882,7 +891,7 @@ public class RNBlocks {
 
 	public static final DeferredBlock<Block> DISCOLORED_BRONZE_GRATE = registerWaxableBlock(
 			"discolored_bronze_grate",
-			() -> new BronzeGrateBlock(
+			() -> new TarnishingBronzeGrateBlock(
 					TarnishStage.DISCOLORED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
@@ -898,7 +907,7 @@ public class RNBlocks {
 
 	public static final DeferredBlock<Block> CORRODED_BRONZE_GRATE = registerWaxableBlock(
 			"corroded_bronze_grate",
-			() -> new BronzeGrateBlock(
+			() -> new TarnishingBronzeGrateBlock(
 					TarnishStage.CORRODED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
@@ -914,7 +923,7 @@ public class RNBlocks {
 
 	public static final DeferredBlock<Block> TARNISHED_BRONZE_GRATE = registerWaxableBlock(
 			"tarnished_bronze_grate",
-			() -> new BronzeGrateBlock(
+			() -> new TarnishingBronzeGrateBlock(
 					TarnishStage.TARNISHED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)
@@ -931,7 +940,7 @@ public class RNBlocks {
 
 	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_GRATE = registerWaxableBlock(
 			"crystallized_bronze_grate",
-			() -> new BronzeGrateBlock(
+			() -> new TarnishingBronzeGrateBlock(
 					TarnishStage.CRYSTALLIZED,
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.GOLD)

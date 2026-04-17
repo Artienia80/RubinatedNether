@@ -3,7 +3,7 @@ package corundum.rubinated_nether.data.sub_providers;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.blocks.TarnishingBronze;
+import corundum.rubinated_nether.content.blocks.bases.TarnishingBronze;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;

@@ -1,4 +1,4 @@
-package corundum.rubinated_nether.content.blocks;
+package corundum.rubinated_nether.content.blocks.bases;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -37,67 +37,22 @@ public class TarnishingBronzeLanternBlock extends LanternBlock implements Tarnis
     );
     private final TarnishStage tarnishStage;
 
-    // Remove the codec() override method entirely
-
     public TarnishingBronzeLanternBlock(TarnishStage tarnishStage, BlockBehaviour.Properties properties) {
         super(properties);
         this.tarnishStage = tarnishStage;
         this.registerDefaultState(defaultBlockState()
-                .setValue(WAXED, false)
                 .setValue(HANGING, false)
                 .setValue(WATERLOGGED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(WAXED, HANGING, WATERLOGGED);
+        builder.add(HANGING, WATERLOGGED);
     }
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (state.getValue(WAXED))
-            return;
-
-        boolean hasCatalystNearby = BlockPos.betweenClosedStream(
-                        pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
-                )
-                .anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
-
-        if (hasCatalystNearby)
-            this.getCrystallized(state).ifPresent(blockState -> level.setBlockAndUpdate(pos, blockState));
-        else
-            this.changeOverTime(state, level, pos, random);
-    }
-
-    @Override
-    protected ItemInteractionResult useItemOn(
-            ItemStack stack,
-            BlockState state,
-            Level level,
-            BlockPos pos,
-            Player player,
-            InteractionHand hand,
-            BlockHitResult hitResult
-    ) {
-        return waxing(
-                stack,
-                state,
-                level,
-                pos,
-                player,
-                hand,
-                hitResult
-        )
-                ? ItemInteractionResult.SUCCESS
-                : super.useItemOn(
-                stack,
-                state,
-                level,
-                pos,
-                player,
-                hand,
-                hitResult
-        );
+        this.onTarnishTick(state, level, pos, random);
     }
 
     @Override
@@ -107,20 +62,5 @@ public class TarnishingBronzeLanternBlock extends LanternBlock implements Tarnis
 
     public TarnishStage getAge() {
         return this.tarnishStage;
-    }
-
-    @Override
-    public ItemStack getCloneItemStack(
-            BlockState state,
-            HitResult target,
-            LevelReader level,
-            BlockPos pos,
-            Player player
-    ) {
-        return new ItemStack(
-                state.getValue(WAXED)
-                        ? BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(this)))
-                        : this
-        );
     }
 }

@@ -1,4 +1,4 @@
-package corundum.rubinated_nether.content.blocks;
+package corundum.rubinated_nether.content.blocks.bases;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
