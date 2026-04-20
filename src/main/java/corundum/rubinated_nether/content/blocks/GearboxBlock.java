@@ -6,6 +6,7 @@ import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.entities.GearboxBlockEntity;
 import corundum.rubinated_nether.utils.BEBlock;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -49,10 +50,12 @@ public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<Gearb
             ).apply(instance, GearboxBlock::new)
     );
 
+    public static final int MAX_CRANK = 15;
+
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
-    public static final IntegerProperty CRANK_LEVEL = IntegerProperty.create("crank_level", 0, 10);
+    public static final IntegerProperty CRANK_LEVEL = BlockStateProperties.LEVEL;
 
     public GearboxBlock(TarnishStage stage, Properties properties) {
         super(stage, properties);
@@ -105,27 +108,47 @@ public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<Gearb
                 .setValue(CRANK_LEVEL, 0);
     }
 
-/*
+
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        super.tick(state, level, pos, random);
-        if(level.getGameTime() % 20 == 0) {
-            int crankCount = state.getValue(CRANK_LEVEL);
-            if (crankCount > 0 && crankCount < 10) {
-                state.setValue(CRANK_LEVEL, Mth.clamp(crankCount - 1, 0, 10));
-            } else if (crankCount == 10) {
-                state.setValue(CRANK_LEVEL, 0);
-                state.setValue(LIT, true);
-            }
+        int crankCount = state.getValue(CRANK_LEVEL);
+        if (crankCount > 0 && crankCount < MAX_CRANK) {
+            decreaseCrankLevel(level, state, pos);
+        } else if (crankCount == MAX_CRANK) {
+            state = state.setValue(CRANK_LEVEL, 0);
+            state = state.setValue(LIT, true);
+            level.setBlock(pos, state, 3);
         }
+        super.tick(state, level, pos, random);
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        state.setValue(CRANK_LEVEL, Mth.clamp(state.getValue(CRANK_LEVEL) + 1, 0, 10));
-        return InteractionResult.SUCCESS;
+        if(!level.isClientSide() && this.isCrankable(state)) {
+            increaseCrankLevel(level, state, pos);
+            return InteractionResult.sidedSuccess(level.isClientSide());
+        }
+        return super.useWithoutItem(state, level, pos, player, hitResult);
     }
-*/
+
+    private boolean isCrankable(BlockState state) {
+        return !state.getValue(LIT);
+    }
+
+    private static void increaseCrankLevel(Level level, BlockState state, BlockPos pos) {
+        state = state.setValue(CRANK_LEVEL, Mth.clamp(state.getValue(CRANK_LEVEL) + 1, 0, MAX_CRANK));
+        level.setBlock(pos, state, 3);
+        level.scheduleTick(pos, state.getBlock(), 20);
+        System.out.println("Current State: " + state.getValue(CRANK_LEVEL));
+    }
+
+    private static void decreaseCrankLevel(Level level, BlockState state, BlockPos pos) {
+        state = state.setValue(CRANK_LEVEL, Mth.clamp(state.getValue(CRANK_LEVEL) - 1, 0, MAX_CRANK));
+        level.setBlock(pos, state, 3);
+        level.scheduleTick(pos, state.getBlock(), 20);
+        System.out.println("Current State: " + state.getValue(CRANK_LEVEL));
+    }
+
 
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
         if (level instanceof ServerLevel serverlevel) {
