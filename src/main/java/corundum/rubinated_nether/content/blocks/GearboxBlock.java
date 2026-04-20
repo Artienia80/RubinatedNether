@@ -20,6 +20,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Spawner;
 import net.minecraft.world.level.block.Block;
@@ -181,5 +182,9 @@ public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<Gearb
     public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(itemStack, tooltipContext, components, tooltipFlag);
         Spawner.appendHoverText(itemStack, components, "spawn_data");
+    }
+
+    public static boolean noViewBlocking(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+        return false;
     }
 }

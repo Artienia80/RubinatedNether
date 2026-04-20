@@ -1295,7 +1295,9 @@ public class RNBlocks {
             "gearbox",
             () -> new GearboxBlock(
                     TarnishStage.UNAFFECTED,
-                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get()).noOcclusion()
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get())
+                            .isViewBlocking(GearboxBlock::noViewBlocking)
+                            .noOcclusion()
             )
     );
 
@@ -1303,7 +1305,9 @@ public class RNBlocks {
             "discolored_gearbox",
             () -> new GearboxBlock(
                     TarnishStage.DISCOLORED,
-                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get())
+                            .isViewBlocking(GearboxBlock::noViewBlocking)
+                            .noOcclusion()
             )
     );
 
@@ -1311,7 +1315,9 @@ public class RNBlocks {
             "corroded_gearbox",
             () -> new GearboxBlock(
                     TarnishStage.CORRODED,
-                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get()).noOcclusion()
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get())
+                            .isViewBlocking(GearboxBlock::noViewBlocking)
+                            .noOcclusion()
             )
     );
 
@@ -1320,7 +1326,9 @@ public class RNBlocks {
             "tarnished_gearbox",
             () -> new GearboxBlock(
                     TarnishStage.TARNISHED,
-                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get())
+                            .isViewBlocking(GearboxBlock::noViewBlocking)
+                            .noOcclusion()
             )
     );
 
@@ -1329,7 +1337,9 @@ public class RNBlocks {
             "crystallized_gearbox",
             () -> new GearboxBlock(
                     TarnishStage.CRYSTALLIZED,
-                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get())
+                            .isViewBlocking(GearboxBlock::noViewBlocking)
+                            .noOcclusion()
             )
     );
 
