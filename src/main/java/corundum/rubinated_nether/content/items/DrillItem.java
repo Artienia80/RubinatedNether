@@ -4,36 +4,20 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNItems;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponentType;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
-
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class DrillItem extends PickShovelItem {
-    public static final int RESET_THRESHOLD_TICKS = 60;
-    public static final float MAX_BOOST_VALUE = 50.f;
+    public static final int RESET_THRESHOLD_TICKS = 40;
+    public static final int MAX_BOOST_VALUE = 50;
 
     public DrillItem(Properties properties) {
         super(RNTiers.BRONZE, properties);
@@ -47,46 +31,35 @@ public class DrillItem extends PickShovelItem {
             Block.popResource(level, pos, drops);
         }
 
-        if (!level.isClientSide() && Boolean.TRUE.equals(stack.get(RNDataComponents.IS_COMBO))) {
+        if (!level.isClientSide()) {
+            this.boostMultiplier(stack);
             stack.set(RNDataComponents.LAST_TICK, level.getGameTime());
         }
         return super.mineBlock(stack, level, state, pos, miningEntity);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+        // Is this just for debugging purposes??
         // Client-side: show action bar message while combo is active and drill is held
         if (level.isClientSide() && isSelected && entity instanceof Player player) {
-            if (Boolean.TRUE.equals(stack.get(RNDataComponents.IS_COMBO))) {
-                float multiplier = stack.get(RNDataComponents.DRILL_MULTIPLIER);
-                player.displayClientMessage(
-                        Component.literal("Drill Combo: x" + String.format("%.1f", multiplier)),
-                        true // true = action bar (above hotbar), not chat
-                );
-            }
+            int multiplier = getCurrentBlockCombo(stack);
+            player.displayClientMessage(
+                    Component.literal(String.format("Drill Combo: %d", multiplier)),
+                    true // true = action bar (above hotbar), not chat
+            );
         }
 
         // Server-side: manage combo state and multiplier
-        try {
-            if (!level.isClientSide() && stack.has(RNDataComponents.LAST_TICK)) {
-                if (Boolean.TRUE.equals(stack.get(RNDataComponents.IS_COMBO))) {
-                    this.boostMultiplier(stack);
+        if (!level.isClientSide() && stack.has(RNDataComponents.LAST_TICK)) {
+            // NullPointerException suppressed, as component is clearly checked
+            long ticksPassed = level.getGameTime() - stack.get(RNDataComponents.LAST_TICK);
 
-                    long ticksPassed = level.getGameTime() - stack.get(RNDataComponents.LAST_TICK);
-
-                    if (ticksPassed > RESET_THRESHOLD_TICKS) {
-                        stack.set(RNDataComponents.IS_COMBO, false);
-                        stack.set(RNDataComponents.DRILL_MULTIPLIER, 1.0f);
-                        stack.remove(RNDataComponents.LAST_TICK);
-                    }
-                } else {
-                    stack.remove(RNDataComponents.LAST_TICK);
-                }
+            if (ticksPassed > RESET_THRESHOLD_TICKS) {
+                stack.set(RNDataComponents.BLOCKS_BROKEN, 0);
+                stack.remove(RNDataComponents.LAST_TICK);
             }
-        } catch (NullPointerException e) {
-            RubinatedNether.LOGGER.warn("Drill DataComponents somehow broke???", e);
-            stack.set(RNDataComponents.IS_COMBO, false);
-            stack.set(RNDataComponents.DRILL_MULTIPLIER, 1.0f);
         }
         super.inventoryTick(stack, level, entity, slotId, isSelected);
     }
@@ -122,10 +95,15 @@ public class DrillItem extends PickShovelItem {
     }
 
     public float calcModifier(ItemStack stack, double baseValue) {
-        return (float) (baseValue * stack.get(RNDataComponents.DRILL_MULTIPLIER));
+        int res = getCurrentBlockCombo(stack);
+        return res > 0 ? (float) (baseValue * res) : (float) baseValue;
     }
 
     public void boostMultiplier(ItemStack stack) {
-        stack.set(RNDataComponents.DRILL_MULTIPLIER, Mth.clamp(stack.get(RNDataComponents.DRILL_MULTIPLIER) + 0.1f, 1.0f, MAX_BOOST_VALUE));
+        stack.set(RNDataComponents.BLOCKS_BROKEN, Mth.clamp(getCurrentBlockCombo(stack) + 1, 0, MAX_BOOST_VALUE));
+    }
+
+    private int getCurrentBlockCombo(ItemStack stack) {
+        return stack.getOrDefault(RNDataComponents.BLOCKS_BROKEN, 0);
     }
 }

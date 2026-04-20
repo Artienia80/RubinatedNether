@@ -76,8 +76,7 @@ public class RNItems {
 					new Item.Properties()
                             .stacksTo(1)
                             .component(DataComponents.UNBREAKABLE, new Unbreakable(false))
-                            .component(RNDataComponents.IS_COMBO, false)
-                            .component(RNDataComponents.DRILL_MULTIPLIER, 1.0f)
+                            .component(RNDataComponents.BLOCKS_BROKEN, 0)
 			)
 	);
 
