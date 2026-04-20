@@ -8,8 +8,14 @@ import corundum.rubinated_nether.content.blocks.entities.GearboxBlockEntity;
 import corundum.rubinated_nether.utils.BEBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -42,11 +48,15 @@ public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<Gearb
     );
 
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public GearboxBlock(TarnishStage stage, Properties properties) {
         super(stage, properties);
-        this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(LIT, false);
+        this.defaultBlockState()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(LIT, false)
+                .setValue(POWERED, false);
     }
 
     public MapCodec<GearboxBlock> codec() {
@@ -78,26 +88,35 @@ public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<Gearb
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LIT);
+        builder.add(FACING, LIT, POWERED);
         super.createBlockStateDefinition(builder);
     }
 
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(LIT, context.getLevel().hasNeighborSignal(context.getClickedPos()))
-                .setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState()
+                .setValue(LIT, context.getLevel().hasNeighborSignal(context.getClickedPos()))
+                .setValue(FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
     }
 
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-        if (!level.isClientSide) {
-            boolean flag = state.getValue(LIT);
-            if (flag != level.hasNeighborSignal(pos)) {
-                if (flag) {
-                    level.scheduleTick(pos, this, 4);
-                } else {
-                    level.setBlock(pos, state.cycle(LIT), 2);
-                }
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+        if (level instanceof ServerLevel serverlevel) {
+            this.checkAndFlip(state, serverlevel, pos);
+        }
+
+    }
+
+    public void checkAndFlip(BlockState state, ServerLevel level, BlockPos pos) {
+        boolean flag = level.hasNeighborSignal(pos);
+        if (flag != state.getValue(POWERED)) {
+            BlockState blockstate = state;
+            if (!(Boolean)state.getValue(POWERED)) {
+                blockstate = state.cycle(LIT);
+                //TODO: Same sound, but different registration to be made
+                level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS);
             }
+            level.setBlock(pos, blockstate.setValue(POWERED, flag), 3);
         }
 
     }
@@ -128,6 +147,35 @@ public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<Gearb
     @Nullable
     protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> serverType, BlockEntityType<E> clientType, BlockEntityTicker<? super E> ticker) {
         return clientType == serverType ? (BlockEntityTicker<A>) ticker : null;
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if(state.getValue(LIT)) {
+            switch(state.getValue(FACING)) {
+                case NORTH,
+                     SOUTH -> {
+                    level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                            pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() - 0.2,
+                            0.0, 0.02D, -0.01);
+
+                    level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                            pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 1.2,
+                            0.0, 0.02D, 0.01);
+                }
+                case WEST,
+                     EAST -> {
+                    level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                            pos.getX() - 0.2, pos.getY() + 0.5, pos.getZ() + 0.5,
+                            -0.01, 0.02D, 0.0);
+
+                    level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                            pos.getX() + 1.2, pos.getY() + 0.5, pos.getZ() + 0.5,
+                            0.01, 0.02D, 0.0);
+                }
+            }
+        }
+        super.animateTick(state, level, pos, random);
     }
 
     public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {

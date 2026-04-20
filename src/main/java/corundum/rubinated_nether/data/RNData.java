@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-public class Datagen {
+public class RNData {
 	public static void datagen(final GatherDataEvent event) {
 		DataGenerator datagen = event.getGenerator();
 		ExistingFileHelper fileHelper = event.getExistingFileHelper();
