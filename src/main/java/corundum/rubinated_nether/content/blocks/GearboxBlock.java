@@ -8,13 +8,14 @@ import corundum.rubinated_nether.content.blocks.entities.GearboxBlockEntity;
 import corundum.rubinated_nether.utils.BEBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,14 +29,14 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -51,13 +52,15 @@ public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<Gearb
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
+    public static final IntegerProperty CRANK_LEVEL = IntegerProperty.create("crank_level", 0, 10);
 
     public GearboxBlock(TarnishStage stage, Properties properties) {
         super(stage, properties);
         this.defaultBlockState()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(LIT, false)
-                .setValue(POWERED, false);
+                .setValue(POWERED, false)
+                .setValue(CRANK_LEVEL, 0);
     }
 
     public MapCodec<GearboxBlock> codec() {
@@ -89,7 +92,7 @@ public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<Gearb
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LIT, POWERED);
+        builder.add(FACING, LIT, POWERED, CRANK_LEVEL);
         super.createBlockStateDefinition(builder);
     }
 
@@ -98,14 +101,36 @@ public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<Gearb
         return this.defaultBlockState()
                 .setValue(LIT, context.getLevel().hasNeighborSignal(context.getClickedPos()))
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                .setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
+                .setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()))
+                .setValue(CRANK_LEVEL, 0);
     }
+
+/*
+    @Override
+    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        super.tick(state, level, pos, random);
+        if(level.getGameTime() % 20 == 0) {
+            int crankCount = state.getValue(CRANK_LEVEL);
+            if (crankCount > 0 && crankCount < 10) {
+                state.setValue(CRANK_LEVEL, Mth.clamp(crankCount - 1, 0, 10));
+            } else if (crankCount == 10) {
+                state.setValue(CRANK_LEVEL, 0);
+                state.setValue(LIT, true);
+            }
+        }
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        state.setValue(CRANK_LEVEL, Mth.clamp(state.getValue(CRANK_LEVEL) + 1, 0, 10));
+        return InteractionResult.SUCCESS;
+    }
+*/
 
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
         if (level instanceof ServerLevel serverlevel) {
             this.checkAndFlip(state, serverlevel, pos);
         }
-
     }
 
     public void checkAndFlip(BlockState state, ServerLevel level, BlockPos pos) {
@@ -119,36 +144,8 @@ public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<Gearb
             }
             level.setBlock(pos, blockstate.setValue(POWERED, flag), 3);
         }
-
     }
 
-    @Nullable
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> entityType) {
-        BlockEntityTicker<T> ticker;
-        if (level instanceof ServerLevel serverlevel) {
-            ticker = createTickerHelper(entityType, BlockEntityType.TRIAL_SPAWNER,
-                    (sLevel, sBlockPos, sBlockState, sEntity) ->
-                            sEntity.getTrialSpawner().tickServer(
-                                    serverlevel, sBlockPos,
-                                    sBlockState.getOptionalValue(BlockStateProperties.OMINOUS).orElse(false)
-                            )
-            );
-        } else {
-            ticker = createTickerHelper(entityType, BlockEntityType.TRIAL_SPAWNER,
-                    (cLevel, cBlockPos, cBlockState, cEntity) ->
-                            cEntity.getTrialSpawner().tickClient(
-                                    cLevel, cBlockPos,
-                                    cBlockState.getOptionalValue(BlockStateProperties.OMINOUS).orElse(false)
-                            )
-            );
-        }
-        return ticker;
-    }
-
-    @Nullable
-    protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> serverType, BlockEntityType<E> clientType, BlockEntityTicker<? super E> ticker) {
-        return clientType == serverType ? (BlockEntityTicker<A>) ticker : null;
-    }
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
