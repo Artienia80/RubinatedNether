@@ -122,6 +122,14 @@ public class RNCreativeTabs {
 								RNBlocks.WAXED_WEATHERED_COPPER_LASER,
 								RNBlocks.WAXED_OXIDIZED_COPPER_LASER
 						);
+                        addItems(
+                                output,
+                                RNBlocks.GEARBOX,
+                                RNBlocks.DISCOLORED_GEARBOX,
+                                RNBlocks.CORRODED_GEARBOX,
+                                RNBlocks.TARNISHED_GEARBOX,
+                                RNBlocks.CRYSTALLIZED_GEARBOX
+                        );
 						addItems(
 								output,
 								RNItems.RUNE,

@@ -79,6 +79,7 @@ public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<Gearb
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, LIT);
+        super.createBlockStateDefinition(builder);
     }
 
     @Nullable

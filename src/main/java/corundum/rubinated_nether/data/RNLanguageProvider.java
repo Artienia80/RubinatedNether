@@ -15,11 +15,11 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public class RNLanguage implements DataProvider {
+public class RNLanguageProvider implements DataProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private final PackOutput output;
 
-    public RNLanguage(PackOutput output) {
+    public RNLanguageProvider(PackOutput output) {
         this.output = output;
     }
 

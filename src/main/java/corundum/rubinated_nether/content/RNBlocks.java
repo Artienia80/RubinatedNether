@@ -1299,6 +1299,41 @@ public class RNBlocks {
             )
     );
 
+    public static final DeferredBlock<GearboxBlock> DISCOLORED_GEARBOX = registerWaxableBlock(
+            "discolored_gearbox",
+            () -> new GearboxBlock(
+                    TarnishStage.DISCOLORED,
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
+            )
+    );
+
+    public static final DeferredBlock<GearboxBlock> CORRODED_GEARBOX = registerWaxableBlock(
+            "corroded_gearbox",
+            () -> new GearboxBlock(
+                    TarnishStage.CORRODED,
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get()).noOcclusion()
+            )
+    );
+
+
+    public static final DeferredBlock<GearboxBlock> TARNISHED_GEARBOX = registerWaxableBlock(
+            "tarnished_gearbox",
+            () -> new GearboxBlock(
+                    TarnishStage.TARNISHED,
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
+            )
+    );
+
+
+    public static final DeferredBlock<GearboxBlock> CRYSTALLIZED_GEARBOX = registerWaxableBlock(
+            "crystallized_gearbox",
+            () -> new GearboxBlock(
+                    TarnishStage.CRYSTALLIZED,
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
+            )
+    );
+
+
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);
 

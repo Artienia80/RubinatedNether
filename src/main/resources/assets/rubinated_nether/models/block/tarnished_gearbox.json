@@ -1,0 +1,13 @@
+{
+  "parent": "rubinated_nether:block/gearbox",
+  "textures": {
+    "2": "rubinated_nether:block/gearbox/gearbox_bottom",
+    "3": "rubinated_nether:block/gearbox/gearbox_top",
+    "4": "rubinated_nether:block/gearbox/gearbox_crank",
+    "5": "rubinated_nether:block/gearbox/gearbox_gear_2",
+    "6": "rubinated_nether:block/gearbox/gearbox_side",
+    "7": "rubinated_nether:block/gearbox/gearbox_side_alt",
+    "8": "rubinated_nether:block/gearbox/gearbox_gear_1",
+    "particle": "rubinated_nether:block/gearbox/gearbox_side"
+  }
+}

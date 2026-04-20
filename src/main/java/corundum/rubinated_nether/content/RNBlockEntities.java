@@ -132,7 +132,11 @@ public class RNBlockEntities {
             "gearbox",
             () -> BlockEntityType.Builder.of(
                     GearboxBlockEntity::new,
-                    RNBlocks.GEARBOX.get()
+                    RNBlocks.GEARBOX.get(),
+                    RNBlocks.DISCOLORED_GEARBOX.get(),
+                    RNBlocks.CORRODED_GEARBOX.get(),
+                    RNBlocks.TARNISHED_GEARBOX.get(),
+                    RNBlocks.CRYSTALLIZED_GEARBOX.get()
             ).build(
                     Util.fetchChoiceType(References.BLOCK_ENTITY, "gearbox")
             )

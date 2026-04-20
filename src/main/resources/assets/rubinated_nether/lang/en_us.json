@@ -250,6 +250,12 @@
   "block.rubinated_nether.crystallized_bronze_crystal": "Crystallized Bronze",
   "block.rubinated_nether.crystallized_bronze_cluster": "Crystallized Bronze",
 
+  "block.rubinated_nether.gearbox": "Gearbox",
+  "block.rubinated_nether.discolored_gearbox": "Discolored Gearbox",
+  "block.rubinated_nether.corroded_gearbox": "Corroded Gearbox",
+  "block.rubinated_nether.tarnished_gearbox": "Tarnished Gearbox",
+  "block.rubinated_nether.crystallized_gearbox": "Crystallized Gearbox",
+
 
   "item.rubinated_nether.bronze_rod": "Bronze Rod",
   "item.rubinated_nether.bronze_powder": "Bronze Powder",
