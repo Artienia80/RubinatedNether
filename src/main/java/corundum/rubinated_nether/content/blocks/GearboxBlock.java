@@ -42,7 +42,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<GearboxBlockEntity> {
+public class GearboxBlock extends TarnishingBronzeBlock {
     public static final MapCodec<GearboxBlock> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
                     TarnishStage.CODEC.fieldOf("tarnishing_state").forGetter(GearboxBlock::getAge),
@@ -71,18 +71,8 @@ public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<Gearb
     }
 
     @Override
-    protected RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
-    }
-
-    @Override
-    public BlockEntityType<? extends GearboxBlockEntity> getBlockEntityType() {
-        return RNBlockEntities.GEARBOX.get();
-    }
-
-    @Override
-    public Class<? extends GearboxBlockEntity> getBlockEntityClass() {
-        return GearboxBlockEntity.class;
+    public RenderShape getRenderShape(BlockState pState) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
     protected BlockState rotate(BlockState state, Rotation rotation) {
@@ -198,11 +188,6 @@ public class GearboxBlock extends TarnishingBronzeBlock implements BEBlock<Gearb
             }
             level.setBlock(pos, blockstate.setValue(POWERED, flag), 3);
         }
-    }
-
-    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {
-        super.appendHoverText(itemStack, tooltipContext, components, tooltipFlag);
-        Spawner.appendHoverText(itemStack, components, "spawn_data");
     }
 
     public static boolean noViewBlocking(BlockState _1, BlockGetter _2, BlockPos _3) {

@@ -5,6 +5,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.client.render.BronzeLaserRenderer;
 import corundum.rubinated_nether.client.render.CofferRenderer;
 import corundum.rubinated_nether.client.render.CopperLaserRenderer;
+import corundum.rubinated_nether.client.render.GearboxRenderer;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.RNEntityCreator;
@@ -46,6 +47,10 @@ public class RNClientEvents {
 		);
         event.registerLayerDefinition(RNModelLayers.COFFER,
                 CofferRenderer::createSingleBodyLayer
+        );
+
+        event.registerLayerDefinition(RNModelLayers.COFFER,
+                GearboxRenderer::createSingleBodyLayer
         );
     }
 

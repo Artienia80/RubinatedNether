@@ -1,68 +1,68 @@
 {
   "variants": {
     "facing=east,lit=false,powered=false": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/gearbox",
       "y": 90
     },
     "facing=east,lit=true,powered=false": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/gearbox",
       "y": 90
     },
     "facing=north,lit=false,powered=false": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/gearbox",
       "y": 0
     },
     "facing=north,lit=true,powered=false": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/gearbox",
       "y": 0
     },
     "facing=south,lit=false,powered=false": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/gearbox",
       "y": 180
     },
     "facing=south,lit=true,powered=false": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/gearbox",
       "y": 180
     },
     "facing=west,lit=false,powered=false": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/gearbox",
       "y": 270
     },
     "facing=west,lit=true,powered=false": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/gearbox",
       "y": 270
     },
 
     "facing=east,lit=false,powered=true": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/gearbox",
       "y": 90
     },
     "facing=east,lit=true,powered=true": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/gearbox",
       "y": 90
     },
     "facing=north,lit=false,powered=true": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/gearbox",
       "y": 0
     },
     "facing=north,lit=true,powered=true": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/gearbox",
       "y": 0
     },
     "facing=south,lit=false,powered=true": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/gearbox",
       "y": 180
     },
     "facing=south,lit=true,powered=true": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/gearbox",
       "y": 180
     },
     "facing=west,lit=false,powered=true": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/gearbox",
       "y": 270
     },
     "facing=west,lit=true,powered=true": {
-      "model": "rubinated_nether:block/gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/gearbox",
       "y": 270
     }
   }

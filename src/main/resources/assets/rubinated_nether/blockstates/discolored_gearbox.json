@@ -1,70 +1,69 @@
 {
   "variants": {
     "facing=east,lit=false,powered=false": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/discolored_gearbox",
       "y": 90
     },
     "facing=east,lit=true,powered=false": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/discolored_gearbox",
       "y": 90
     },
     "facing=north,lit=false,powered=false": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/discolored_gearbox",
       "y": 0
     },
     "facing=north,lit=true,powered=false": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/discolored_gearbox",
       "y": 0
     },
     "facing=south,lit=false,powered=false": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/discolored_gearbox",
       "y": 180
     },
     "facing=south,lit=true,powered=false": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/discolored_gearbox",
       "y": 180
     },
     "facing=west,lit=false,powered=false": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/discolored_gearbox",
       "y": 270
     },
     "facing=west,lit=true,powered=false": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/discolored_gearbox",
       "y": 270
     },
 
     "facing=east,lit=false,powered=true": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/discolored_gearbox",
       "y": 90
     },
     "facing=east,lit=true,powered=true": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/discolored_gearbox",
       "y": 90
     },
     "facing=north,lit=false,powered=true": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/discolored_gearbox",
       "y": 0
     },
     "facing=north,lit=true,powered=true": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/discolored_gearbox",
       "y": 0
     },
     "facing=south,lit=false,powered=true": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/discolored_gearbox",
       "y": 180
     },
     "facing=south,lit=true,powered=true": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/discolored_gearbox",
       "y": 180
     },
     "facing=west,lit=false,powered=true": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/discolored_gearbox",
       "y": 270
     },
     "facing=west,lit=true,powered=true": {
-      "model": "rubinated_nether:block/discolored_gearbox",
+      "model": "rubinated_nether:block/gearbox/animated/discolored_gearbox",
       "y": 270
     }
   }
 }
-      
