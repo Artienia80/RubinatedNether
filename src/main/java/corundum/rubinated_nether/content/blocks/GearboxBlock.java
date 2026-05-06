@@ -183,7 +183,7 @@ public class GearboxBlock extends TarnishingBronzeBlock {
             BlockState blockstate = state;
             if (!(Boolean)state.getValue(POWERED)) {
                 blockstate = state.cycle(LIT);
-                //TODO: Same sound, but different registration to be made
+                //TODO: Same sound, but different registry
                 level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS);
             }
             level.setBlock(pos, blockstate.setValue(POWERED, flag), 3);

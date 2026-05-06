@@ -34,7 +34,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class CofferRenderer implements BlockEntityRenderer<CofferBlockEntity> {
-    public static final ResourceLocation COFFER_TEXTURE = RubinatedNether.id("textures/block/shrine_stone_coffer.png");
+    public static final ResourceLocation COFFER_TEXTURE = RubinatedNether.id("textures/entity/coffer/shrine_stone_coffer.png");
 
     private static final String BOTTOM = "bottom";
     private static final String LID = "lid";
