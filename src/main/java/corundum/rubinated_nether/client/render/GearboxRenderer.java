@@ -7,7 +7,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNModelLayers;
 import corundum.rubinated_nether.content.blocks.GearboxBlock;
-import corundum.rubinated_nether.content.blocks.entities.GearboxBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.gearbox.GearboxBlockEntity;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -19,14 +19,10 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -79,17 +75,16 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
             poseStack.mulPose(Axis.YP.rotationDegrees(-dir));
             poseStack.translate(-0.5F, -0.5F, -0.5F);
 
+            VertexConsumer consumer = (f ? ANIM_BODY_TEX : BODY_TEX).buffer(multiBufferSource, RenderType::entityCutoutNoCull);
 
-            this.render(level, partialTick, poseStack, multiBufferSource, this.crank, this.body, packedLight, packedOverlay, f);
+            this.crank.yRot = f ? (level.getGameTime() + partialTick) * 0.05f : this.calcAngle(blockstate);
+            this.crank.render(poseStack, consumer, packedLight, packedOverlay);
+            this.body.render(poseStack, consumer, packedLight, packedOverlay);
             poseStack.popPose();
         }
     }
 
-    private void render(Level level, float partialTick, PoseStack poseStack, MultiBufferSource source, ModelPart crank, ModelPart body, int packedLight, int packedOverlay, boolean f) {
-        VertexConsumer consumer = (f ? ANIM_BODY_TEX : BODY_TEX).buffer(source, RenderType::entityCutoutNoCull);
-
-        crank.yRot = f ? (level.getGameTime() + partialTick) * 0.05f : this.crank.yRot;
-        crank.render(poseStack, consumer, packedLight, packedOverlay);
-        body.render(poseStack, consumer, packedLight, packedOverlay);
+    private float calcAngle(BlockState state) {
+        return (float) state.getValue(GearboxBlock.CRANK_LEVEL) / 3;
     }
 }

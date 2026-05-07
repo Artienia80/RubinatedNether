@@ -2,15 +2,10 @@ package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.TarnishStage;
-import corundum.rubinated_nether.content.blocks.entities.GearboxBlockEntity;
-import corundum.rubinated_nether.utils.BEBlock;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -18,19 +13,14 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.Spawner;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -39,8 +29,6 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public class GearboxBlock extends TarnishingBronzeBlock {
     public static final MapCodec<GearboxBlock> CODEC = RecordCodecBuilder.mapCodec(
@@ -159,8 +147,8 @@ public class GearboxBlock extends TarnishingBronzeBlock {
     private static void increaseCrankLevel(Level level, BlockState state, BlockPos pos) {
         state = state.setValue(CRANK_LEVEL, Mth.clamp(state.getValue(CRANK_LEVEL) + 1, 0, MAX_CRANK));
         level.setBlock(pos, state, 3);
-        level.playSound(null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 1.0F, 1.0F);
-        level.scheduleTick(pos, state.getBlock(), 20);
+        level.playSound(null, pos, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.scheduleTick(pos, state.getBlock(), 40);
     }
 
     private static void decreaseCrankLevel(Level level, BlockState state, BlockPos pos) {

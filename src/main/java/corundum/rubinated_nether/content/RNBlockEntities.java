@@ -1,27 +1,19 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.client.render.BronzeLaserRenderer;
-import corundum.rubinated_nether.client.render.CofferRenderer;
-import corundum.rubinated_nether.client.render.CopperLaserRenderer;
 import corundum.rubinated_nether.content.blocks.ChandelierBlock;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.BronzeLaserBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.CopperLaserBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
-import corundum.rubinated_nether.content.blocks.entities.GearboxBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.gearbox.GearboxBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RubinationAltarBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
-import corundum.rubinated_nether.content.entity.client.BronzeModel;
-import corundum.rubinated_nether.content.entity.client.BronzeRenderer;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterMaterialAtlasesEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
