@@ -8,9 +8,6 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.trialspawner.PlayerDetector;
-import net.minecraft.world.level.block.entity.trialspawner.TrialSpawner;
-import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerConfig;
-import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerData;
 import net.neoforged.neoforge.common.extensions.IOwnedSpawner;
 import org.jetbrains.annotations.Nullable;
 

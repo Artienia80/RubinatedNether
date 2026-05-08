@@ -8,8 +8,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Spawner;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
@@ -31,6 +36,6 @@ public class ActiveGearboxBlock extends GearboxBlock implements BEBlock<GearboxB
 
     public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(itemStack, tooltipContext, components, tooltipFlag);
-        Spawner.appendHoverText(itemStack, components, "spawn_data");
+        Spawner.appendHoverText(itemStack, components, "SpawnData");
     }
 }
