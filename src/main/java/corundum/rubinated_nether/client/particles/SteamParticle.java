@@ -17,9 +17,17 @@ public class SteamParticle extends TextureSheetParticle {
         this.yd = ySpeed;
         this.zd = zSpeed;
 
+        this.friction = 0.975f;
+
         float speed = (float) Math.sqrt(xSpeed * xSpeed + ySpeed * ySpeed + zSpeed * zSpeed);
 
-        int travelTicks = speed > 0 ? (int)(1.0f / (1.0f - 0.96f) * (1 - (float)Math.pow(0.96, 60))) : 60;
+        // With friction 0.975, max distance = speed / (1 - 0.975) = speed * 40
+        // initialSpeed = signal / 40, so max distance = (signal / 40) * 40 = signal blocks
+        // Ticks until speed decays to ~0.01: 0.975^n = 0.01 / speed
+        int travelTicks = speed > 0
+                ? Math.max(30, (int)(Math.log(0.01 / speed) / Math.log(0.975)) + 10)
+                : 80;
+
         this.fadeStartTick = (int)(travelTicks * 0.5f);
         this.lifetime = travelTicks;
 
@@ -28,7 +36,6 @@ public class SteamParticle extends TextureSheetParticle {
 
         this.scale(3.0f);
         this.gravity = 0.0f;
-        this.friction = 0.96f;
     }
 
     @Override

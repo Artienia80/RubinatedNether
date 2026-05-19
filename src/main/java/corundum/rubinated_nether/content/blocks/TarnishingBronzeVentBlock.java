@@ -126,7 +126,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
 
         double initialSpeed = signal / 40.0;
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 20; i++) {
             Vec3 spread = perpendicularSpread(facing, random, 0.4);
             double vx = dx * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
             double vy = dy * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
