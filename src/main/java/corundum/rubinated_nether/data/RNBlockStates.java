@@ -329,6 +329,14 @@ public class RNBlockStates extends BlockStateProvider {
         crystalBlockState(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get(), "crystallized_bronze_crystal");
         crystalBlockState(RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get(), "crystallized_bronze_cluster");
 
+		subfolder("bronze/bronze_vent/",
+				(rloc, name, block) -> ventBlock(block, rloc),
+				RNBlocks.BRONZE_VENT,
+				RNBlocks.DISCOLORED_BRONZE_VENT,
+				RNBlocks.CORRODED_BRONZE_VENT,
+				RNBlocks.TARNISHED_BRONZE_VENT,
+				RNBlocks.CRYSTALLIZED_BRONZE_VENT
+		);
 
 	}
 
@@ -1068,6 +1076,50 @@ public class RNBlockStates extends BlockStateProvider {
         .face(Direction.EAST).uvs(0, 5, 16, 11).texture("#3").end()
         .face(Direction.WEST).uvs(0, 5, 16, 11).texture("#3").end()
         .end();
+	}
+
+	public void ventBlock(DeferredBlock<?> block, String texturePath) {
+		var name = BuiltInRegistries.BLOCK.getKey(block.get()).getPath();
+
+		var model = models().getBuilder(name)
+				.parent(models().getExistingFile(mcLoc("block/block")))
+				.texture("front", modLoc(texturePath + "_front"))
+				.texture("back", modLoc(texturePath + "_back"))
+				.texture("side", modLoc(texturePath + "_side"))
+				.texture("particle", modLoc(texturePath + "_front"))
+				.element()
+				.from(0, 0, 0).to(16, 16, 16)
+				.face(Direction.UP).uvs(0, 0, 16, 16).texture("#front").end()
+				.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#back").end()
+				.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#side").end()
+				.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#side").end()
+				.face(Direction.EAST).uvs(0, 0, 16, 16).texture("#side").end()
+				.face(Direction.WEST).uvs(0, 0, 16, 16).texture("#side").end()
+				.end();
+
+		getVariantBuilder(block.get()).forAllStates(state -> {
+			Direction facing = state.getValue(BlockStateProperties.FACING);
+
+			int rotationX = switch (facing) {
+				case UP -> 0;
+				case DOWN -> 180;
+				default -> 90;
+			};
+
+			int rotationY = switch (facing) {
+				case NORTH -> 0;
+				case SOUTH -> 180;
+				case EAST -> 90;
+				case WEST -> 270;
+				default -> 0;
+			};
+
+			return ConfiguredModel.builder()
+					.modelFile(model)
+					.rotationX(rotationX)
+					.rotationY(rotationY)
+					.build();
+		});
 	}
 
 

@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.client;
 
 import corundum.rubinated_nether.client.particles.BloodDripParticle;
+import corundum.rubinated_nether.client.particles.SteamParticle;
 import corundum.rubinated_nether.client.render.entity.RubyLensModel;
 import corundum.rubinated_nether.client.render.entity.RubyLensRenderLayer;
 import corundum.rubinated_nether.content.RNParticleTypes;
@@ -27,6 +28,8 @@ public class RubinatedNetherClient {
 
 	public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
 		event.registerSpriteSet(RNParticleTypes.BLOOD_DRIP.get(), BloodDripParticle.Provider::new);
+		event.registerSpriteSet(RNParticleTypes.STEAM.get(), SteamParticle.Provider::new);
+
 	}
 
 	public static void registeModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {

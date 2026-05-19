@@ -211,6 +211,12 @@ public class RNBlockLoot extends BlockLootSubProvider {
         this.waxableDrop(RNBlocks.TARNISHED_GEARBOX);
         this.waxableDrop(RNBlocks.CRYSTALLIZED_GEARBOX);
 
+		this.waxableDrop(RNBlocks.BRONZE_VENT);
+		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_VENT);
+		this.waxableDrop(RNBlocks.CORRODED_BRONZE_VENT);
+		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_VENT);
+		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_VENT);
+
 		this.dropSelf(RNBlocks.COPPER_LASER.get());
 		this.dropSelf(RNBlocks.EXPOSED_COPPER_LASER.get());
 		this.dropSelf(RNBlocks.WEATHERED_COPPER_LASER.get());

@@ -1,0 +1,47 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "rubinated_nether:bronze_vent",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "waxed": "true"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "rubinated_nether:waxed_bronze_vent"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "block": "rubinated_nether:bronze_vent",
+            "condition": "minecraft:block_state_property",
+            "properties": {
+              "waxed": "true"
+            }
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "rubinated_nether:bronze_vent"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "rubinated_nether:blocks/bronze_vent"
+}

@@ -144,7 +144,13 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.DISCOLORED_BRONZE_LASER,
 				RNBlocks.CORRODED_BRONZE_LASER,
 				RNBlocks.TARNISHED_BRONZE_LASER,
-				RNBlocks.CRYSTALLIZED_BRONZE_LASER
+				RNBlocks.CRYSTALLIZED_BRONZE_LASER,
+
+				RNBlocks.BRONZE_VENT,
+				RNBlocks.DISCOLORED_BRONZE_VENT,
+				RNBlocks.CORRODED_BRONZE_VENT,
+				RNBlocks.TARNISHED_BRONZE_VENT,
+				RNBlocks.CRYSTALLIZED_BRONZE_VENT
 		);
 
 		customItemTextures("item/bronze/bronze_chandelier",
