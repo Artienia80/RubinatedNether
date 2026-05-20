@@ -41,7 +41,6 @@ public class RubinatedNetherClient {
 	public static final int WHITE = 0xFFFFFFFF;
 
 	private static final VoxelShape SMOKE_SEGMENT_BASE = Shapes.box(0.3, 0, 0.3, 0.7, 1, 0.7);
-	private static final double CRYSTALLIZED_DETECTION_RANGE = 15.0;
 
 	public static void client(IEventBus bussin) {
 		bussin.addListener(RubinatedNetherClient::registerEntityLayers);
@@ -175,14 +174,14 @@ public class RubinatedNetherClient {
 			RandomSource random = level.getRandom();
 
 			if (ventBlock.getAge() == TarnishStage.CRYSTALLIZED) {
-				AABB detectionBox = buildDetectionAABB(pos, facing, (int) CRYSTALLIZED_DETECTION_RANGE);
+				AABB detectionBox = buildDetectionAABB(pos, facing, (int) RNConfig.crystallizedVentRange);
 				List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, detectionBox);
 				if (entities.isEmpty()) return;
 
-				int smokeRange = calculateSmokeRange(level, pos, facing, (int) CRYSTALLIZED_DETECTION_RANGE);
+				int smokeRange = calculateSmokeRange(level, pos, facing, (int) RNConfig.crystallizedVentRange);
 				if (smokeRange <= 0) return;
 
-				spawnSteamParticles(level, pos, facing, smokeRange, CRYSTALLIZED_DETECTION_RANGE / 40.0, random);
+				spawnSteamParticles(level, pos, facing, smokeRange, RNConfig.crystallizedVentRange / 40.0, random);
 				return;
 			}
 

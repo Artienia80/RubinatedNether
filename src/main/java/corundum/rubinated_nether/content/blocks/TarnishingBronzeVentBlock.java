@@ -6,6 +6,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
+import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -48,7 +49,6 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
     );
 
     private static final VoxelShape SMOKE_SEGMENT_BASE = Shapes.box(0.3, 0, 0.3, 0.7, 1, 0.7);
-    private static final double CRYSTALLIZED_DETECTION_RANGE = 15.0;
 
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty WAXED = TarnishingBronze.WAXED;
@@ -149,13 +149,14 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
 
     private void checkAndFireCrystallized(BlockState state, ServerLevel level, BlockPos pos) {
         Direction facing = state.getValue(FACING);
-        AABB detectionBox = buildDetectionAABB(pos, facing, (int) CRYSTALLIZED_DETECTION_RANGE);
+        int range = RNConfig.crystallizedVentRange;
+        AABB detectionBox = buildDetectionAABB(pos, facing, range);
 
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, detectionBox);
         if (entities.isEmpty()) return;
 
-        int smokeRange = calculateSmokeRange(level, pos, facing, (int) CRYSTALLIZED_DETECTION_RANGE);
-        dealSteamDamage(level, pos, facing, (int) CRYSTALLIZED_DETECTION_RANGE, smokeRange);
+        int smokeRange = calculateSmokeRange(level, pos, facing, range);
+        dealSteamDamage(level, pos, facing, range, smokeRange);
     }
 
     private AABB buildDetectionAABB(BlockPos pos, Direction facing, int range) {
@@ -224,10 +225,10 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, steamBox);
 
         for (LivingEntity entity : entities) {
-            int dist = distanceAlongFacing(pos, entity.blockPosition(), facing);
+            double dist = exactDistanceAlongFacing(pos, entity.position(), facing);
             if (dist < 0 || dist >= smokeRange) continue;
 
-            float damage = (signal - dist) / 3.0f;
+            float damage = (float) (signal - dist) / 3.0f;
             if (damage > 0) {
                 entity.hurt(level.damageSources().inFire(), damage);
             }
@@ -270,6 +271,14 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
             case TARNISHED    -> 0.056;
             case CRYSTALLIZED -> 0.0;
         };
+    }
+
+    private double exactDistanceAlongFacing(BlockPos ventPos, Vec3 entityPos, Direction facing) {
+        double ex = entityPos.x - (ventPos.getX() + 0.5);
+        double ey = entityPos.y - (ventPos.getY() + 0.5);
+        double ez = entityPos.z - (ventPos.getZ() + 0.5);
+        double projection = ex * facing.getStepX() + ey * facing.getStepY() + ez * facing.getStepZ();
+        return projection - 1.0;
     }
 
     private int distanceAlongFacing(BlockPos ventPos, BlockPos entityPos, Direction facing) {

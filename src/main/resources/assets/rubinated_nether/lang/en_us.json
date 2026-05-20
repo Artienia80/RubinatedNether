@@ -705,6 +705,9 @@
   "rubinated_nether.midnightconfig.moltenRubyCauldronAverageMinutes": "Average Fill Time",
   "rubinated_nether.midnightconfig.moltenRubyCauldronNetherOnly": "Nether-Only Bleeding",
 
+  "rubinated_nether.midnightconfig.ventSmokeParticleMultiplier": "Bronze Vent Particle Count",
+  "rubinated_nether.midnightconfig.crystallizedVentRange": "Crzstallized Bronze Vent Range",
+
   "rubinated_nether.midnightconfig.rubyLensOpacity": "Ruby Lens Opacity",
   "rubinated_nether.midnightconfig.bronzeDiseasedOverlayOpacity": "Bronze Diseased Overlay Opacity",
   "rubinated_nether.midnightconfig.tabDisplay": "Display Rubinated Nether in Creative Tabs",

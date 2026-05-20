@@ -144,6 +144,15 @@ public class RNConfig extends MidnightConfig {
 	)
 	public static float ventSmokeParticleMultiplier = 1.0f;
 
+	@Entry(
+			category = VENT,
+			isSlider = true,
+			min = 1,
+			max = 15
+	)
+	public static int crystallizedVentRange = 3;
+
+
 
 	/* -- Client -- */
 

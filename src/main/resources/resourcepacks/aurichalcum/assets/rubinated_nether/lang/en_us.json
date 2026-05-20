@@ -186,5 +186,7 @@
   "death.attack.bronze_diseased.player": "%1$s crystallized due to aurichalcum disease whilst fighting %2$s",
   "rubinated_nether.midnightconfig.bronzeDiseasedWeakness": "Aurichalcum Diseased Grants Weakness",
   "rubinated_nether.midnightconfig.bronzeDiseasedWeaknessStrength": "Aurichalcum Diseased Weakness Strength",
+  "rubinated_nether.midnightconfig.ventSmokeParticleMultiplier": "Aurichalcum Vent Particle Count",
+  "rubinated_nether.midnightconfig.crystallizedVentRange": "Crzstallized Aurichalcum Vent Range",
   "rubinated_nether.midnightconfig.bronzeDiseasedOverlayOpacity": "Aurichalcum Diseased Overlay Opacity"
 }
