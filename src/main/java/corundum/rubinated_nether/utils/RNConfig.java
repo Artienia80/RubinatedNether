@@ -9,6 +9,7 @@ public class RNConfig extends MidnightConfig {
 	public static final String ALTAR = "altar";
 	public static final String CLIENT = "client";
 	public static final String CAULDRON = "cauldron";
+	public static final String VENT = "vent";
 
 	/* -- Brazier -- */
 
@@ -132,6 +133,17 @@ public class RNConfig extends MidnightConfig {
 
 	@Entry(category = CAULDRON)
 	public static boolean moltenRubyCauldronNetherOnly = true;
+
+	/* -- Vent -- */
+
+	@Entry(
+			category = VENT,
+			isSlider = true,
+			min = 0f,
+			max = 5f
+	)
+	public static float ventSmokeParticleMultiplier = 1.0f;
+
 
 	/* -- Client -- */
 

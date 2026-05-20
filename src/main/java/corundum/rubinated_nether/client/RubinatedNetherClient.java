@@ -7,6 +7,7 @@ import corundum.rubinated_nether.client.render.entity.RubyLensRenderLayer;
 import corundum.rubinated_nether.content.RNParticleTypes;
 import corundum.rubinated_nether.content.blocks.TarnishingBronzeVentBlock;
 import corundum.rubinated_nether.mixin.accessors.EntityRenderDispatcherAccessor;
+import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -79,7 +80,11 @@ public class RubinatedNetherClient {
 			double dz = facing.getStepZ();
 			double initialSpeed = signal / 40.0;
 
-			for (int i = 0; i < 2; i++) {
+			double rawCount = RNConfig.ventSmokeParticleMultiplier;
+			int baseCount = (int) rawCount;
+			if (random.nextDouble() < (rawCount - baseCount)) baseCount++;
+
+			for (int i = 0; i < baseCount; i++) {
 				Vec3 spread = new Vec3(
 						facing.getAxis() != Direction.Axis.X ? (random.nextDouble() - 0.5) * 0.8 : 0,
 						facing.getAxis() != Direction.Axis.Y ? (random.nextDouble() - 0.5) * 0.8 : 0,

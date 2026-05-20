@@ -1,8 +1,18 @@
 package corundum.rubinated_nether.client.particles;
 
+import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SteamParticle extends TextureSheetParticle {
 
@@ -21,9 +31,6 @@ public class SteamParticle extends TextureSheetParticle {
 
         float speed = (float) Math.sqrt(xSpeed * xSpeed + ySpeed * ySpeed + zSpeed * zSpeed);
 
-        // With friction 0.975, max distance = speed / (1 - 0.975) = speed * 40
-        // initialSpeed = signal / 40, so max distance = (signal / 40) * 40 = signal blocks
-        // Ticks until speed decays to ~0.01: 0.975^n = 0.01 / speed
         int travelTicks = speed > 0
                 ? Math.max(30, (int)(Math.log(0.01 / speed) / Math.log(0.975)) + 10)
                 : 80;
@@ -40,12 +47,76 @@ public class SteamParticle extends TextureSheetParticle {
 
     @Override
     public void tick() {
-        super.tick();
+        this.xo = this.x;
+        this.yo = this.y;
+        this.zo = this.z;
+
+        if (this.age++ >= this.lifetime) {
+            this.remove();
+            return;
+        }
 
         if (age >= fadeStartTick) {
             float fadeFraction = (float)(age - fadeStartTick) / (lifetime - fadeStartTick);
             this.alpha = initialAlpha * (1.0f - fadeFraction);
         }
+
+        this.yd -= 0.04 * (double)this.gravity;
+        this.moveWithPassthrough(this.xd, this.yd, this.zd);
+        this.xd *= this.friction;
+        this.yd *= this.friction;
+        this.zd *= this.friction;
+    }
+
+
+    private void moveWithPassthrough(double dx, double dy, double dz) {
+        if (dx == 0 && dy == 0 && dz == 0) return;
+
+        AABB box = this.getBoundingBox();
+        Vec3 movement = collideSteam(new Vec3(dx, dy, dz), box);
+
+        double mx = movement.x;
+        double my = movement.y;
+        double mz = movement.z;
+
+        if (mx != 0 || my != 0 || mz != 0) {
+            this.setBoundingBox(box.move(mx, my, mz));
+            this.setLocationFromBoundingbox();
+        }
+
+        this.onGround = dy != my && dy < 0;
+
+        if (dx != mx) this.xd = 0;
+        if (dy != my) this.yd = 0;
+        if (dz != mz) this.zd = 0;
+    }
+
+    private Vec3 collideSteam(Vec3 movement, AABB box) {
+        double dx = movement.x;
+        double dy = movement.y;
+        double dz = movement.z;
+
+        AABB swept = box.expandTowards(dx, dy, dz);
+
+        java.util.List<VoxelShape> shapes = new java.util.ArrayList<>();
+        for (BlockPos pos : BlockPos.betweenClosed(
+                Mth.floor(swept.minX - 1), Mth.floor(swept.minY - 1), Mth.floor(swept.minZ - 1),
+                Mth.ceil(swept.maxX + 1),  Mth.ceil(swept.maxY + 1),  Mth.ceil(swept.maxZ + 1)
+        )) {
+            BlockState state = this.level.getBlockState(pos);
+            if (state.is(RNTags.Blocks.SMOKE_PASSTHROUGH)) continue;
+
+            VoxelShape shape = state.getCollisionShape(this.level, pos, CollisionContext.empty());
+            if (!shape.isEmpty()) {
+                shapes.add(shape.move(pos.getX(), pos.getY(), pos.getZ()));
+            }
+        }
+
+        dy = Shapes.collide(Direction.Axis.Y, box, shapes, dy);
+        dx = Shapes.collide(Direction.Axis.X, box.move(0, dy, 0), shapes, dx);
+        dz = Shapes.collide(Direction.Axis.Z, box.move(0, dy, 0), shapes, dz);
+
+        return new Vec3(dx, dy, dz);
     }
 
     @Override

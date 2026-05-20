@@ -4,11 +4,12 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNParticleTypes;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
+import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -32,6 +33,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 
@@ -43,6 +47,8 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
                     propertiesCodec()
             ).apply(instance, TarnishingBronzeVentBlock::new)
     );
+
+    private static final VoxelShape SMOKE_SEGMENT_BASE = Shapes.box(0.3, 0, 0.3, 0.7, 1, 0.7);
 
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty WAXED = TarnishingBronze.WAXED;
@@ -105,50 +111,55 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!state.getValue(POWERED)) return;
 
-        dealSteamDamage(level, pos, state.getValue(FACING), state.getValue(SIGNAL_STRENGTH));
+        Direction facing = state.getValue(FACING);
+        int signal = state.getValue(SIGNAL_STRENGTH);
+        int smokeRange = calculateSmokeRange(level, pos, facing, signal);
+
+        dealSteamDamage(level, pos, facing, signal, smokeRange);
         level.scheduleTick(pos, this, 20);
     }
 
-    @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        if (!state.getValue(POWERED)) return;
+    private int calculateSmokeRange(Level level, BlockPos pos, Direction facing, int maxRange) {
+        BlockPos.MutableBlockPos cursor = pos.mutable();
 
-        int signal = state.getValue(SIGNAL_STRENGTH);
-        Direction facing = state.getValue(FACING);
+        for (int i = 0; i < maxRange; i++) {
+            cursor.move(facing);
+            BlockState state = level.getBlockState(cursor);
 
-        double ox = pos.getX() + 0.5;
-        double oy = pos.getY() + 0.5;
-        double oz = pos.getZ() + 0.5;
+            if (state.is(RNTags.Blocks.SMOKE_PASSTHROUGH)) continue;
 
-        double dx = facing.getStepX();
-        double dy = facing.getStepY();
-        double dz = facing.getStepZ();
+            VoxelShape smokeColumn = rotateSmokeShape(facing);
+            VoxelShape collision = Shapes.join(
+                    state.getCollisionShape(level, cursor),
+                    smokeColumn,
+                    BooleanOp.AND
+            );
 
-        double initialSpeed = signal / 40.0;
-
-        for (int i = 0; i < 20; i++) {
-            Vec3 spread = perpendicularSpread(facing, random, 0.4);
-            double vx = dx * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
-            double vy = dy * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
-            double vz = dz * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
-
-            level.addParticle(RNParticleTypes.STEAM.get(), true,
-                    ox + dx + spread.x,
-                    oy + dy + spread.y,
-                    oz + dz + spread.z,
-                    vx, vy, vz);
+            if (!collision.isEmpty()) {
+                return i + 1;
+            }
         }
+
+        return maxRange;
     }
 
-    private void dealSteamDamage(ServerLevel level, BlockPos pos, Direction facing, int signal) {
-        if (signal <= 0) return;
+    private VoxelShape rotateSmokeShape(Direction facing) {
+        return switch (facing.getAxis()) {
+            case Z -> SMOKE_SEGMENT_BASE;
+            case X -> Shapes.box(0, 0.3, 0.3, 1, 0.7, 0.7);
+            case Y -> Shapes.box(0.3, 0.3, 0, 0.7, 0.7, 1);
+        };
+    }
 
-        AABB steamBox = buildSteamAABB(pos, facing, signal);
+    private void dealSteamDamage(ServerLevel level, BlockPos pos, Direction facing, int signal, int smokeRange) {
+        if (signal <= 0 || smokeRange <= 0) return;
+
+        AABB steamBox = buildSteamAABB(pos, facing, smokeRange);
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, steamBox);
 
         for (LivingEntity entity : entities) {
             int dist = distanceAlongFacing(pos, entity.blockPosition(), facing);
-            if (dist < 0 || dist >= signal) continue;
+            if (dist < 0 || dist >= smokeRange) continue;
 
             float damage = (signal - dist) / 3.0f;
             if (damage > 0) {

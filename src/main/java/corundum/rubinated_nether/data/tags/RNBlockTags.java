@@ -406,6 +406,37 @@ public class RNBlockTags extends BlockTagsProvider {
 		this.tag(RNTags.Blocks.SILLY_LASER).addTag(RNTags.Blocks.RUBY_GLASS);
 		this.tag(RNTags.Blocks.SILLY_LASER).addTag(RNTags.Blocks.RUBY_GLASS_PANES);
 
+		this.tag(RNTags.Blocks.SMOKE_PASSTHROUGH).add(
+				Blocks.AIR,
+				Blocks.WATER,
+				Blocks.LAVA,
+				Blocks.SHORT_GRASS,
+				Blocks.FERN,
+				Blocks.DEAD_BUSH,
+				Blocks.SEAGRASS,
+				Blocks.TALL_SEAGRASS,
+				Blocks.FIRE,
+				Blocks.SOUL_FIRE,
+				Blocks.SNOW,
+				Blocks.VINE,
+				Blocks.GLOW_LICHEN,
+				Blocks.LIGHT,
+				Blocks.TALL_GRASS,
+				Blocks.LARGE_FERN,
+				Blocks.STRUCTURE_VOID,
+				Blocks.VOID_AIR,
+				Blocks.CAVE_AIR,
+				Blocks.BUBBLE_COLUMN,
+				Blocks.WARPED_ROOTS,
+				Blocks.NETHER_SPROUTS,
+				Blocks.CRIMSON_ROOTS,
+				Blocks.HANGING_ROOTS,
+				Blocks.IRON_BARS
+		);
+
+		this.tag(RNTags.Blocks.SMOKE_PASSTHROUGH)
+				.addTag(RNTags.Blocks.GRATES);
+
 		this.tag(RNTags.Blocks.MINEABLE_WITH_DRILL).addTags(
 				BlockTags.MINEABLE_WITH_PICKAXE,
 				BlockTags.MINEABLE_WITH_SHOVEL
