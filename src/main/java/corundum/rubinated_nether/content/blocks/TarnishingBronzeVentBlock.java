@@ -3,11 +3,9 @@ package corundum.rubinated_nether.content.blocks;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNParticleTypes;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
-import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,6 +13,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -49,12 +48,14 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
     );
 
     private static final VoxelShape SMOKE_SEGMENT_BASE = Shapes.box(0.3, 0, 0.3, 0.7, 1, 0.7);
+    private static final double CRYSTALLIZED_DETECTION_RANGE = 15.0;
 
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty WAXED = TarnishingBronze.WAXED;
     public static final IntegerProperty SIGNAL_STRENGTH = IntegerProperty.create("signal_strength", 0, 15);
 
     private final TarnishStage tarnishStage;
+    private int damageTickCounter = 0;
 
     public TarnishingBronzeVentBlock(TarnishStage tarnishStage, BlockBehaviour.Properties properties) {
         super(properties);
@@ -75,15 +76,22 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState()
+        BlockState placement = this.defaultBlockState()
                 .setValue(FACING, context.getClickedFace())
                 .setValue(WAXED, false);
+
+        if (tarnishStage == TarnishStage.CRYSTALLIZED && !context.getLevel().isClientSide()) {
+            context.getLevel().scheduleTick(context.getClickedPos(), this, 1);
+        }
+
+        return placement;
     }
 
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos,
                                 Block block, BlockPos fromPos, boolean isMoving) {
         if (level.isClientSide()) return;
+        if (tarnishStage == TarnishStage.CRYSTALLIZED) return;
 
         int signal = level.getBestNeighborSignal(pos);
         boolean powered = signal > 0;
@@ -92,7 +100,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
             level.setBlock(pos, state.setValue(POWERED, powered).setValue(SIGNAL_STRENGTH, signal), Block.UPDATE_ALL);
 
             if (powered && !level.getBlockTicks().hasScheduledTick(pos, this)) {
-                ((ServerLevel) level).scheduleTick(pos, this, 20);
+                ((ServerLevel) level).scheduleTick(pos, this, 1);
             }
         }
     }
@@ -100,27 +108,86 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         if (level.isClientSide()) return;
+
+        if (tarnishStage == TarnishStage.CRYSTALLIZED) {
+            if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
+                ((ServerLevel) level).scheduleTick(pos, this, 1);
+            }
+            return;
+        }
+
         int signal = level.getBestNeighborSignal(pos);
         if (signal > 0) {
             level.setBlock(pos, state.setValue(POWERED, true).setValue(SIGNAL_STRENGTH, signal), Block.UPDATE_ALL);
-            ((ServerLevel) level).scheduleTick(pos, this, 20);
+            ((ServerLevel) level).scheduleTick(pos, this, 1);
         }
     }
 
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (tarnishStage == TarnishStage.CRYSTALLIZED) {
+            checkAndFireCrystallized(state, level, pos);
+            level.scheduleTick(pos, this, 1);
+            return;
+        }
+
         if (!state.getValue(POWERED)) return;
 
         Direction facing = state.getValue(FACING);
         int signal = state.getValue(SIGNAL_STRENGTH);
         int smokeRange = calculateSmokeRange(level, pos, facing, signal);
 
-        dealSteamDamage(level, pos, facing, signal, smokeRange);
-        level.scheduleTick(pos, this, 20);
+        damageTickCounter++;
+        if (damageTickCounter >= 20) {
+            dealSteamDamage(level, pos, facing, signal, smokeRange);
+            damageTickCounter = 0;
+        }
+
+        pushEntities(level, pos, facing, signal, smokeRange);
+        level.scheduleTick(pos, this, 1);
+    }
+
+    private void checkAndFireCrystallized(BlockState state, ServerLevel level, BlockPos pos) {
+        Direction facing = state.getValue(FACING);
+        AABB detectionBox = buildDetectionAABB(pos, facing, (int) CRYSTALLIZED_DETECTION_RANGE);
+
+        List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, detectionBox);
+        if (entities.isEmpty()) return;
+
+        int smokeRange = calculateSmokeRange(level, pos, facing, (int) CRYSTALLIZED_DETECTION_RANGE);
+        dealSteamDamage(level, pos, facing, (int) CRYSTALLIZED_DETECTION_RANGE, smokeRange);
+    }
+
+    private AABB buildDetectionAABB(BlockPos pos, Direction facing, int range) {
+        double cx = pos.getX() + 0.5;
+        double cy = pos.getY() + 0.5;
+        double cz = pos.getZ() + 0.5;
+        double hw = 0.6;
+
+        double ex = facing.getStepX() * range;
+        double ey = facing.getStepY() * range;
+        double ez = facing.getStepZ() * range;
+
+        double minX = cx + Math.min(0, ex) - (facing.getAxis() != Direction.Axis.X ? hw : 0);
+        double maxX = cx + Math.max(0, ex) + (facing.getAxis() != Direction.Axis.X ? hw : 0);
+        double minY = cy + Math.min(0, ey) - (facing.getAxis() != Direction.Axis.Y ? hw : 0);
+        double maxY = cy + Math.max(0, ey) + (facing.getAxis() != Direction.Axis.Y ? hw : 0);
+        double minZ = cz + Math.min(0, ez) - (facing.getAxis() != Direction.Axis.Z ? hw : 0);
+        double maxZ = cz + Math.max(0, ez) + (facing.getAxis() != Direction.Axis.Z ? hw : 0);
+
+        if (facing.getStepX() > 0) minX += 1.0;
+        else if (facing.getStepX() < 0) maxX -= 1.0;
+        if (facing.getStepY() > 0) minY += 1.0;
+        else if (facing.getStepY() < 0) maxY -= 1.0;
+        if (facing.getStepZ() > 0) minZ += 1.0;
+        else if (facing.getStepZ() < 0) maxZ -= 1.0;
+
+        return new AABB(minX, minY, minZ, maxX, maxY, maxZ);
     }
 
     private int calculateSmokeRange(Level level, BlockPos pos, Direction facing, int maxRange) {
         BlockPos.MutableBlockPos cursor = pos.mutable();
+        VoxelShape smokeColumn = rotateSmokeShape(facing);
 
         for (int i = 0; i < maxRange; i++) {
             cursor.move(facing);
@@ -128,7 +195,6 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
 
             if (state.is(RNTags.Blocks.SMOKE_PASSTHROUGH)) continue;
 
-            VoxelShape smokeColumn = rotateSmokeShape(facing);
             VoxelShape collision = Shapes.join(
                     state.getCollisionShape(level, cursor),
                     smokeColumn,
@@ -136,7 +202,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
             );
 
             if (!collision.isEmpty()) {
-                return i + 1;
+                return i;
             }
         }
 
@@ -164,9 +230,46 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
             float damage = (signal - dist) / 3.0f;
             if (damage > 0) {
                 entity.hurt(level.damageSources().inFire(), damage);
-                entity.push(facing.getStepX() * 0.15, facing.getStepY() * 0.05, facing.getStepZ() * 0.15);
             }
         }
+    }
+
+    private void pushEntities(ServerLevel level, BlockPos pos, Direction facing, int signal, int smokeRange) {
+        double scale = getSteamFlowScale();
+        if (scale <= 0.0 || signal <= 0 || smokeRange <= 0) return;
+
+        AABB steamBox = buildSteamAABB(pos, facing, smokeRange);
+        List<Entity> entities = level.getEntities((Entity) null, steamBox, e -> !e.isSpectator());
+
+        Vec3 baseFlow = new Vec3(facing.getStepX(), facing.getStepY(), facing.getStepZ());
+
+        for (Entity entity : entities) {
+            int dist = distanceAlongFacing(pos, entity.blockPosition(), facing);
+            if (dist < 0 || dist >= smokeRange) continue;
+
+            double falloff = 1.0 - (double) dist / smokeRange;
+            Vec3 flow = baseFlow.scale(scale * falloff);
+
+            Vec3 current = entity.getDeltaMovement();
+            double minThreshold = 0.003;
+            if (Math.abs(current.x) < minThreshold && Math.abs(current.z) < minThreshold
+                    && flow.length() < minThreshold * 1.5) {
+                flow = baseFlow.normalize().scale(minThreshold * 1.5);
+            }
+
+            entity.setDeltaMovement(current.add(flow));
+            entity.hurtMarked = true;
+        }
+    }
+
+    private double getSteamFlowScale() {
+        return switch (tarnishStage) {
+            case UNAFFECTED   -> 0.0;
+            case DISCOLORED   -> 0.014;
+            case CORRODED     -> 0.028;
+            case TARNISHED    -> 0.056;
+            case CRYSTALLIZED -> 0.0;
+        };
     }
 
     private int distanceAlongFacing(BlockPos ventPos, BlockPos entityPos, Direction facing) {
