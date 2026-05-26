@@ -99,7 +99,7 @@ public class RNItems {
 			"music_disc_sinner",
 			new Item.Properties()
 					.stacksTo(1)
-					.rarity(RNRarity.RUBINATED_NETHER_RUBY.get())
+					.rarity(Rarity.RARE)
 					.jukeboxPlayable(RNJukeboxSongs.SINNER)
 	);
 
