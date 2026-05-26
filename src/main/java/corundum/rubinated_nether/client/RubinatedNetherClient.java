@@ -22,7 +22,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -41,6 +40,10 @@ public class RubinatedNetherClient {
 	public static final int WHITE = 0xFFFFFFFF;
 
 	private static final VoxelShape SMOKE_SEGMENT_BASE = Shapes.box(0.3, 0, 0.3, 0.7, 1, 0.7);
+	private static final int BACK_RANGE = 15;
+
+	// Throttle: only scan every 4 ticks
+	private static int tickCounter = 0;
 
 	public static void client(IEventBus bussin) {
 		bussin.addListener(RubinatedNetherClient::registerEntityLayers);
@@ -55,10 +58,7 @@ public class RubinatedNetherClient {
 	}
 
 	public static void registeModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-		event.registerLayerDefinition(
-				RubyLensModel.LAYER_LOCATION,
-				RubyLensModel::createBodyLayer
-		);
+		event.registerLayerDefinition(RubyLensModel.LAYER_LOCATION, RubyLensModel::createBodyLayer);
 	}
 
 	private static VoxelShape rotateSmokeShape(Direction facing) {
@@ -69,6 +69,16 @@ public class RubinatedNetherClient {
 		};
 	}
 
+	// Returns true if the immediately adjacent block fully blocks the smoke column.
+	private static boolean isFaceBlocked(BlockGetter level, BlockPos pos, Direction dir) {
+		BlockPos adj = pos.relative(dir);
+		BlockState adjState = level.getBlockState(adj);
+		if (adjState.is(RNTags.Blocks.SMOKE_PASSTHROUGH)) return false;
+		VoxelShape col = adjState.getCollisionShape(level, adj);
+		if (col.isEmpty()) return false;
+		return !Shapes.join(col, rotateSmokeShape(dir), BooleanOp.AND).isEmpty();
+	}
+
 	private static int calculateSmokeRange(BlockGetter level, BlockPos pos, Direction facing, int maxRange) {
 		BlockPos.MutableBlockPos cursor = pos.mutable();
 		VoxelShape smokeColumn = rotateSmokeShape(facing);
@@ -76,29 +86,17 @@ public class RubinatedNetherClient {
 		for (int i = 0; i < maxRange; i++) {
 			cursor.move(facing);
 			BlockState state = level.getBlockState(cursor);
-
 			if (state.is(RNTags.Blocks.SMOKE_PASSTHROUGH)) continue;
-
-			VoxelShape collision = Shapes.join(
-					state.getCollisionShape(level, cursor),
-					smokeColumn,
-					BooleanOp.AND
-			);
-
-			if (!collision.isEmpty()) {
-				return i;
-			}
+			VoxelShape collision = Shapes.join(state.getCollisionShape(level, cursor), smokeColumn, BooleanOp.AND);
+			if (!collision.isEmpty()) return i;
 		}
 
 		return maxRange;
 	}
 
 	private static AABB buildDetectionAABB(BlockPos pos, Direction facing, int range) {
-		double cx = pos.getX() + 0.5;
-		double cy = pos.getY() + 0.5;
-		double cz = pos.getZ() + 0.5;
+		double cx = pos.getX() + 0.5, cy = pos.getY() + 0.5, cz = pos.getZ() + 0.5;
 		double hw = 0.6;
-
 		double ex = facing.getStepX() * range;
 		double ey = facing.getStepY() * range;
 		double ez = facing.getStepZ() * range;
@@ -110,19 +108,16 @@ public class RubinatedNetherClient {
 		double minZ = cz + Math.min(0, ez) - (facing.getAxis() != Direction.Axis.Z ? hw : 0);
 		double maxZ = cz + Math.max(0, ez) + (facing.getAxis() != Direction.Axis.Z ? hw : 0);
 
-		if (facing.getStepX() > 0) minX += 1.0;
-		else if (facing.getStepX() < 0) maxX -= 1.0;
-		if (facing.getStepY() > 0) minY += 1.0;
-		else if (facing.getStepY() < 0) maxY -= 1.0;
-		if (facing.getStepZ() > 0) minZ += 1.0;
-		else if (facing.getStepZ() < 0) maxZ -= 1.0;
+		if (facing.getStepX() > 0) minX += 1.0; else if (facing.getStepX() < 0) maxX -= 1.0;
+		if (facing.getStepY() > 0) minY += 1.0; else if (facing.getStepY() < 0) maxY -= 1.0;
+		if (facing.getStepZ() > 0) minZ += 1.0; else if (facing.getStepZ() < 0) maxZ -= 1.0;
 
 		return new AABB(minX, minY, minZ, maxX, maxY, maxZ);
 	}
 
 	private static void spawnSteamParticles(net.minecraft.client.multiplayer.ClientLevel level,
 	                                        BlockPos pos, Direction facing, int smokeRange,
-	                                        double initialSpeed, RandomSource random) {
+	                                        double initialSpeed, double spawnOffset, RandomSource random) {
 		double ox = pos.getX() + 0.5;
 		double oy = pos.getY() + 0.5;
 		double oz = pos.getZ() + 0.5;
@@ -135,24 +130,27 @@ public class RubinatedNetherClient {
 		if (random.nextDouble() < (rawCount - baseCount)) baseCount++;
 
 		for (int i = 0; i < baseCount; i++) {
-			Vec3 spread = new Vec3(
-					facing.getAxis() != Direction.Axis.X ? (random.nextDouble() - 0.5) * 0.8 : 0,
-					facing.getAxis() != Direction.Axis.Y ? (random.nextDouble() - 0.5) * 0.8 : 0,
-					facing.getAxis() != Direction.Axis.Z ? (random.nextDouble() - 0.5) * 0.8 : 0
-			);
+			// Inline spread — avoids allocating a Vec3 per particle
+			double sx = facing.getAxis() != Direction.Axis.X ? (random.nextDouble() - 0.5) * 0.8 : 0;
+			double sy = facing.getAxis() != Direction.Axis.Y ? (random.nextDouble() - 0.5) * 0.8 : 0;
+			double sz = facing.getAxis() != Direction.Axis.Z ? (random.nextDouble() - 0.5) * 0.8 : 0;
+
 			double vx = dx * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
 			double vy = dy * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
 			double vz = dz * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
 
 			level.addParticle(RNParticleTypes.STEAM.get(), true,
-					ox + dx + spread.x,
-					oy + dy + spread.y,
-					oz + dz + spread.z,
+					ox + dx * spawnOffset + sx,
+					oy + dy * spawnOffset + sy,
+					oz + dz * spawnOffset + sz,
 					vx, vy, vz);
 		}
 	}
 
 	public static void onClientTick(ClientTickEvent.Post event) {
+		// Only run every 4 ticks — particles are smoothed by their own lifetime
+		if (++tickCounter % 4 != 0) return;
+
 		Minecraft mc = Minecraft.getInstance();
 		if (mc.level == null || mc.isPaused()) return;
 
@@ -167,6 +165,9 @@ public class RubinatedNetherClient {
 				playerPos.offset(-range, -range, -range),
 				playerPos.offset(range, range, range)
 		).forEach(pos -> {
+			// Skip unloaded chunks first — cheapest possible check
+			if (!level.hasChunkAt(pos)) return;
+
 			BlockState state = level.getBlockState(pos);
 			if (!(state.getBlock() instanceof TarnishingBronzeVentBlock ventBlock)) return;
 
@@ -174,6 +175,9 @@ public class RubinatedNetherClient {
 			RandomSource random = level.getRandom();
 
 			if (ventBlock.getAge() == TarnishStage.CRYSTALLIZED) {
+				// Early exit if front face is blocked
+				if (isFaceBlocked(level, pos, facing)) return;
+
 				AABB detectionBox = buildDetectionAABB(pos, facing, (int) RNConfig.crystallizedVentRange);
 				List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, detectionBox);
 				if (entities.isEmpty()) return;
@@ -181,17 +185,31 @@ public class RubinatedNetherClient {
 				int smokeRange = calculateSmokeRange(level, pos, facing, (int) RNConfig.crystallizedVentRange);
 				if (smokeRange <= 0) return;
 
-				spawnSteamParticles(level, pos, facing, smokeRange, RNConfig.crystallizedVentRange / 40.0, random);
+				spawnSteamParticles(level, pos, facing, smokeRange, RNConfig.crystallizedVentRange / 40.0, 1.0, random);
 				return;
 			}
 
+			// Skip unpowered vents immediately
 			if (!state.getValue(TarnishingBronzeVentBlock.POWERED)) return;
-
 			int signal = state.getValue(TarnishingBronzeVentBlock.SIGNAL_STRENGTH);
-			int smokeRange = calculateSmokeRange(level, pos, facing, signal);
-			if (smokeRange <= 0) return;
+			if (signal <= 0) return;
 
-			spawnSteamParticles(level, pos, facing, smokeRange, signal / 40.0, random);
+			// Front exhaust — skip if directly blocked
+			if (!isFaceBlocked(level, pos, facing)) {
+				int smokeRange = calculateSmokeRange(level, pos, facing, signal);
+				if (smokeRange > 0) {
+					spawnSteamParticles(level, pos, facing, smokeRange, signal / 40.0, 1.0, random);
+				}
+			}
+
+			// Back suction — skip if directly blocked
+			Direction back = facing.getOpposite();
+			if (!isFaceBlocked(level, pos, back)) {
+				int backRange = calculateSmokeRange(level, pos, back, BACK_RANGE);
+				if (backRange > 0) {
+					spawnSteamParticles(level, pos, back, backRange, -(signal / 40.0), backRange, random);
+				}
+			}
 		});
 	}
 
