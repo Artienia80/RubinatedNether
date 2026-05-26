@@ -87,6 +87,7 @@ public class RNCreativeTabs {
 								RNBlocks.DRY_ICE,
 								RNItems.RUBY_LENS,
 								RNItems.MUSIC_DISC_SHIMMER,
+								RNItems.MUSIC_DISC_SINNER,
 								RNItems.BRONZE_ROD,
 								RNItems.BRONZE_POWDER,
 								RNItems.BRONZE_SCRAP,
@@ -316,6 +317,8 @@ public class RNCreativeTabs {
 					RNItems.BRONZE_DRILL.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.MUSIC_DISC_PIGSTEP.getDefaultInstance(),
 					RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(),
+					RNItems.MUSIC_DISC_SINNER.get().getDefaultInstance(), BOTH_TABS);
 		}
 		private static void injectCombat(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.COMBAT) return;

@@ -18,6 +18,13 @@ public interface RNJukeboxSongs {
 			"shimmer"
 		)
 	);
+	public static final ResourceKey<JukeboxSong> SINNER = ResourceKey.create(
+			Registries.JUKEBOX_SONG,
+			ResourceLocation.fromNamespaceAndPath(
+					RubinatedNether.MODID,
+					"sinner"
+			)
+	);
 
 	public static void bootstap(BootstrapContext<JukeboxSong> context) {
 		context.register(
@@ -28,6 +35,15 @@ public interface RNJukeboxSongs {
 				229, 
 				13
 			)
+		);
+		context.register(
+				SINNER,
+				new JukeboxSong(
+						RNSoundEvents.MUSIC_DISC_SINNER,
+						Component.translatable(Util.makeDescriptionId("jukebox_song", SINNER.location())),
+						138,
+						14
+				)
 		);
 	}
 }
