@@ -95,6 +95,13 @@ public class RNItems {
 					.rarity(RNRarity.RUBINATED_NETHER_RUBY.get())
 					.jukeboxPlayable(RNJukeboxSongs.SHIMMER)
 	);
+	public static final DeferredItem<Item> MUSIC_DISC_SINNER = ITEMS.registerSimpleItem(
+			"music_disc_sinner",
+			new Item.Properties()
+					.stacksTo(1)
+					.rarity(Rarity.RARE)
+					.jukeboxPlayable(RNJukeboxSongs.SINNER)
+	);
 
 	public static final DeferredItem<BlockItem> FROSTED_ICE = ITEMS.registerSimpleBlockItem(
 			"frosted_ice",

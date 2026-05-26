@@ -1,0 +1,1668 @@
+{
+  "variants": {
+    "facing=down,powered=false,signal_strength=0,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=0,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=1,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=1,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=10,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=10,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=11,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=11,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=12,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=12,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=13,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=13,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=14,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=14,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=15,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=15,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=2,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=2,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=3,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=3,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=4,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=4,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=5,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=5,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=6,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=6,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=7,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=7,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=8,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=8,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=9,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=false,signal_strength=9,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=0,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=0,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=1,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=1,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=10,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=10,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=11,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=11,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=12,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=12,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=13,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=13,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=14,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=14,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=15,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=15,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=2,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=2,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=3,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=3,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=4,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=4,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=5,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=5,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=6,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=6,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=7,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=7,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=8,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=8,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=9,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=down,powered=true,signal_strength=9,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 180
+    },
+    "facing=east,powered=false,signal_strength=0,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=0,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=1,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=1,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=10,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=10,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=11,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=11,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=12,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=12,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=13,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=13,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=14,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=14,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=15,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=15,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=2,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=2,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=3,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=3,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=4,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=4,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=5,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=5,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=6,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=6,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=7,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=7,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=8,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=8,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=9,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=false,signal_strength=9,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=0,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=0,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=1,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=1,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=10,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=10,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=11,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=11,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=12,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=12,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=13,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=13,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=14,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=14,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=15,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=15,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=2,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=2,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=3,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=3,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=4,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=4,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=5,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=5,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=6,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=6,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=7,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=7,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=8,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=8,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=9,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,powered=true,signal_strength=9,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,powered=false,signal_strength=0,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=0,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=1,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=1,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=10,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=10,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=11,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=11,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=12,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=12,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=13,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=13,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=14,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=14,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=15,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=15,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=2,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=2,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=3,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=3,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=4,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=4,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=5,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=5,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=6,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=6,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=7,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=7,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=8,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=8,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=9,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=false,signal_strength=9,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=0,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=0,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=1,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=1,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=10,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=10,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=11,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=11,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=12,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=12,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=13,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=13,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=14,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=14,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=15,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=15,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=2,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=2,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=3,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=3,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=4,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=4,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=5,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=5,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=6,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=6,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=7,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=7,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=8,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=8,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=9,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=north,powered=true,signal_strength=9,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90
+    },
+    "facing=south,powered=false,signal_strength=0,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=0,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=1,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=1,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=10,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=10,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=11,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=11,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=12,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=12,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=13,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=13,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=14,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=14,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=15,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=15,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=2,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=2,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=3,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=3,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=4,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=4,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=5,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=5,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=6,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=6,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=7,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=7,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=8,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=8,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=9,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=false,signal_strength=9,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=0,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=0,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=1,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=1,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=10,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=10,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=11,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=11,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=12,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=12,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=13,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=13,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=14,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=14,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=15,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=15,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=2,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=2,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=3,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=3,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=4,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=4,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=5,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=5,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=6,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=6,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=7,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=7,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=8,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=8,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=9,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,powered=true,signal_strength=9,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,powered=false,signal_strength=0,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=0,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=1,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=1,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=10,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=10,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=11,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=11,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=12,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=12,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=13,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=13,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=14,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=14,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=15,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=15,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=2,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=2,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=3,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=3,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=4,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=4,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=5,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=5,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=6,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=6,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=7,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=7,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=8,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=8,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=9,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=false,signal_strength=9,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=0,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=0,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=1,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=1,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=10,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=10,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=11,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=11,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=12,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=12,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=13,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=13,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=14,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=14,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=15,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=15,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=2,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=2,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=3,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=3,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=4,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=4,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=5,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=5,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=6,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=6,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=7,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=7,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=8,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=8,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=9,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=up,powered=true,signal_strength=9,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent"
+    },
+    "facing=west,powered=false,signal_strength=0,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=0,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=1,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=1,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=10,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=10,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=11,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=11,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=12,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=12,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=13,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=13,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=14,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=14,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=15,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=15,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=2,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=2,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=3,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=3,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=4,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=4,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=5,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=5,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=6,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=6,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=7,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=7,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=8,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=8,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=9,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=false,signal_strength=9,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=0,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=0,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=1,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=1,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=10,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=10,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=11,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=11,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=12,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=12,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=13,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=13,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=14,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=14,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=15,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=15,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=2,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=2,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=3,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=3,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=4,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=4,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=5,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=5,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=6,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=6,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=7,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=7,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=8,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=8,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=9,waxed=false": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true,signal_strength=9,waxed=true": {
+      "model": "rubinated_nether:block/corroded_bronze_vent",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

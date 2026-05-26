@@ -1,10 +1,18 @@
 {
-  "shimmer": {
-	"sounds": [
-	  {
-		"name": "rubinated_nether:shimmer",
-		"stream": true
-	  }
-	]
-  }
+	"shimmer": {
+		"sounds": [
+			{
+				"name": "rubinated_nether:shimmer",
+				"stream": true
+			}
+		]
+	},
+	"sinner": {
+		"sounds": [
+			{
+				"name": "rubinated_nether:sinner",
+				"stream": true
+			}
+		]
+	}
 }

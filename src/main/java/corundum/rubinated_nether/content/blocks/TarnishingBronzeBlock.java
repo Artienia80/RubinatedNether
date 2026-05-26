@@ -37,7 +37,7 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 	private final TarnishStage tarnishStage;
 
 	@Override
-	public MapCodec<TarnishingBronzeBlock> codec() {
+	public MapCodec<? extends TarnishingBronzeBlock> codec() {
 		return CODEC;
 	}
 

@@ -12,6 +12,7 @@ import java.util.Set;
 public class RNModelLayers {
     private static final Set<ModelLayerLocation> ALL_MODELS = Sets.newHashSet();
     public static final ModelLayerLocation COFFER = register("coffer");
+    public static final ModelLayerLocation GEARBOX = register("gearbox");
     public static final ModelLayerLocation BRONZE = register("bronze");
 
     private static ModelLayerLocation register(String path) {

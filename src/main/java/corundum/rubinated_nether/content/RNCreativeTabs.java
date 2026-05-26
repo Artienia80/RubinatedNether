@@ -87,6 +87,7 @@ public class RNCreativeTabs {
 								RNBlocks.DRY_ICE,
 								RNItems.RUBY_LENS,
 								RNItems.MUSIC_DISC_SHIMMER,
+								RNItems.MUSIC_DISC_SINNER,
 								RNItems.BRONZE_ROD,
 								RNItems.BRONZE_POWDER,
 								RNItems.BRONZE_SCRAP,
@@ -122,6 +123,14 @@ public class RNCreativeTabs {
 								RNBlocks.WAXED_WEATHERED_COPPER_LASER,
 								RNBlocks.WAXED_OXIDIZED_COPPER_LASER
 						);
+                        addItems(
+                                output,
+                                RNBlocks.GEARBOX,
+                                RNBlocks.DISCOLORED_GEARBOX,
+                                RNBlocks.CORRODED_GEARBOX,
+                                RNBlocks.TARNISHED_GEARBOX,
+                                RNBlocks.CRYSTALLIZED_GEARBOX
+                        );
 						addItems(
 								output,
 								RNItems.RUNE,
@@ -169,6 +178,7 @@ public class RNCreativeTabs {
 								RNBlocks.BRONZE_BULB,
 								RNBlocks.BRONZE_GRATE,
 								RNBlocks.BRONZE_SPRING,
+								RNBlocks.BRONZE_VENT,
 								RNBlocks.BRONZE_LANTERN,
 								RNBlocks.BRONZE_CHAIN,
 								RNBlocks.BRONZE_CHANDELIER,
@@ -182,6 +192,7 @@ public class RNCreativeTabs {
 								RNBlocks.DISCOLORED_BRONZE_BULB,
 								RNBlocks.DISCOLORED_BRONZE_GRATE,
 								RNBlocks.DISCOLORED_BRONZE_SPRING,
+								RNBlocks.DISCOLORED_BRONZE_VENT,
 								RNBlocks.DISCOLORED_BRONZE_LANTERN,
 								RNBlocks.DISCOLORED_BRONZE_CHAIN,
 								RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
@@ -195,6 +206,7 @@ public class RNCreativeTabs {
 								RNBlocks.CORRODED_BRONZE_BULB,
 								RNBlocks.CORRODED_BRONZE_GRATE,
 								RNBlocks.CORRODED_BRONZE_SPRING,
+								RNBlocks.CORRODED_BRONZE_VENT,
 								RNBlocks.CORRODED_BRONZE_LANTERN,
 								RNBlocks.CORRODED_BRONZE_CHAIN,
 								RNBlocks.CORRODED_BRONZE_CHANDELIER,
@@ -208,6 +220,7 @@ public class RNCreativeTabs {
 								RNBlocks.TARNISHED_BRONZE_BULB,
 								RNBlocks.TARNISHED_BRONZE_GRATE,
 								RNBlocks.TARNISHED_BRONZE_SPRING,
+								RNBlocks.TARNISHED_BRONZE_VENT,
 								RNBlocks.TARNISHED_BRONZE_LANTERN,
 								RNBlocks.TARNISHED_BRONZE_CHAIN,
 								RNBlocks.TARNISHED_BRONZE_CHANDELIER,
@@ -221,6 +234,7 @@ public class RNCreativeTabs {
 								RNBlocks.CRYSTALLIZED_BRONZE_BULB,
 								RNBlocks.CRYSTALLIZED_BRONZE_GRATE,
 								RNBlocks.CRYSTALLIZED_BRONZE_SPRING,
+								RNBlocks.CRYSTALLIZED_BRONZE_VENT,
 								RNBlocks.CRYSTALLIZED_BRONZE_LANTERN,
 								RNBlocks.CRYSTALLIZED_BRONZE_CHAIN,
 								RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER,
@@ -303,6 +317,8 @@ public class RNCreativeTabs {
 					RNItems.BRONZE_DRILL.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.MUSIC_DISC_PIGSTEP.getDefaultInstance(),
 					RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(),
+					RNItems.MUSIC_DISC_SINNER.get().getDefaultInstance(), BOTH_TABS);
 		}
 		private static void injectCombat(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.COMBAT) return;
@@ -756,6 +772,27 @@ public class RNCreativeTabs {
 					getWaxed(RNBlocks.TARNISHED_BRONZE_SPRING), BOTH_TABS);
 			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_SPRING),
 					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_SPRING), BOTH_TABS);
+
+			event.insertAfter(getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_GRATE),
+					RNBlocks.BRONZE_VENT.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.BRONZE_VENT.get().asItem().getDefaultInstance(),
+					RNBlocks.DISCOLORED_BRONZE_VENT.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.DISCOLORED_BRONZE_VENT.get().asItem().getDefaultInstance(),
+					RNBlocks.CORRODED_BRONZE_VENT.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.CORRODED_BRONZE_VENT.get().asItem().getDefaultInstance(),
+					RNBlocks.TARNISHED_BRONZE_VENT.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.TARNISHED_BRONZE_VENT.get().asItem().getDefaultInstance(),
+					RNBlocks.CRYSTALLIZED_BRONZE_VENT.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.CRYSTALLIZED_BRONZE_VENT.get().asItem().getDefaultInstance(),
+					getWaxed(RNBlocks.BRONZE_VENT), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.BRONZE_VENT),
+					getWaxed(RNBlocks.DISCOLORED_BRONZE_VENT), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.DISCOLORED_BRONZE_VENT),
+					getWaxed(RNBlocks.CORRODED_BRONZE_VENT), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.CORRODED_BRONZE_VENT),
+					getWaxed(RNBlocks.TARNISHED_BRONZE_VENT), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_VENT),
+					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_VENT), BOTH_TABS);
 
 			event.insertAfter(Items.OBSERVER.getDefaultInstance(),
 					RNBlocks.WAXED_COPPER_LASER.get().asItem().getDefaultInstance(), BOTH_TABS);

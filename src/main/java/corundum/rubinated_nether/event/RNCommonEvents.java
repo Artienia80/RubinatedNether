@@ -7,6 +7,7 @@ import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.ChandelierBlock;
+import corundum.rubinated_nether.content.blocks.GearboxBlock;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import corundum.rubinated_nether.content.items.DrillItem;
@@ -25,6 +26,7 @@ import net.neoforged.neoforge.event.entity.EntityEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import org.slf4j.Logger;
 

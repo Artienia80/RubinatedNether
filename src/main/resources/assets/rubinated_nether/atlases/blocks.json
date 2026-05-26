@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "sources": [
+    {
+      "type": "directory",
+      "source": "rubinated_nether:block/gearbox",
+      "prefix": "rubinated_nether:block/gearbox/"
+    }
+  ]
+}

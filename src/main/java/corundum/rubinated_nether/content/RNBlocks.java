@@ -1291,6 +1291,99 @@ public class RNBlocks {
             )
     );
 
+    public static final DeferredBlock<GearboxBlock> GEARBOX = registerWaxableBlock(
+            "gearbox",
+            () -> new ActiveGearboxBlock(
+                    TarnishStage.UNAFFECTED,
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get())
+                            .isViewBlocking(GearboxBlock::noViewBlocking)
+                            .noOcclusion()
+            )
+    );
+
+    public static final DeferredBlock<GearboxBlock> DISCOLORED_GEARBOX = registerWaxableBlock(
+            "discolored_gearbox",
+            () -> new ActiveGearboxBlock(
+                    TarnishStage.DISCOLORED,
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get())
+                            .isViewBlocking(GearboxBlock::noViewBlocking)
+                            .noOcclusion()
+            )
+    );
+
+    public static final DeferredBlock<GearboxBlock> CORRODED_GEARBOX = registerWaxableBlock(
+            "corroded_gearbox",
+            () -> new ActiveGearboxBlock(
+                    TarnishStage.CORRODED,
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get())
+                            .isViewBlocking(GearboxBlock::noViewBlocking)
+                            .noOcclusion()
+            )
+    );
+
+
+    public static final DeferredBlock<GearboxBlock> TARNISHED_GEARBOX = registerWaxableBlock(
+            "tarnished_gearbox",
+            () -> new ActiveGearboxBlock(
+                    TarnishStage.TARNISHED,
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get())
+                            .isViewBlocking(GearboxBlock::noViewBlocking)
+                            .noOcclusion()
+            )
+    );
+
+
+    public static final DeferredBlock<GearboxBlock> CRYSTALLIZED_GEARBOX = registerWaxableBlock(
+            "crystallized_gearbox",
+            () -> new ActiveGearboxBlock(
+                    TarnishStage.CRYSTALLIZED,
+                    BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get())
+                            .isViewBlocking(GearboxBlock::noViewBlocking)
+                            .noOcclusion()
+            )
+    );
+
+	public static final DeferredBlock<Block> BRONZE_VENT = registerWaxableBlock(
+			"bronze_vent",
+			() -> new TarnishingBronzeVentBlock(
+					TarnishStage.UNAFFECTED,
+					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_VENT = registerWaxableBlock(
+			"discolored_bronze_vent",
+			() -> new TarnishingBronzeVentBlock(
+					TarnishStage.DISCOLORED,
+					BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_BRONZE_VENT = registerWaxableBlock(
+			"corroded_bronze_vent",
+			() -> new TarnishingBronzeVentBlock(
+					TarnishStage.CORRODED,
+					BlockBehaviour.Properties.ofFullCopy(CORRODED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_VENT = registerWaxableBlock(
+			"tarnished_bronze_vent",
+			() -> new TarnishingBronzeVentBlock(
+					TarnishStage.TARNISHED,
+					BlockBehaviour.Properties.ofFullCopy(TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_VENT = registerWaxableBlock(
+			"crystallized_bronze_vent",
+			() -> new TarnishingBronzeVentBlock(
+					TarnishStage.CRYSTALLIZED,
+					BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);
 

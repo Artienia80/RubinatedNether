@@ -44,6 +44,9 @@ public final class RNTags {
 
 		public static final TagKey<Block> SPRINGS = createTag(Registries.BLOCK, "springs");
 
+		public static final TagKey<Block> SMOKE_PASSTHROUGH = createTag(Registries.BLOCK, "smoke_passthrough");
+
+
 	}
 
 	public static final class Items {

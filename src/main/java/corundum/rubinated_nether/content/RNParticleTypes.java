@@ -37,4 +37,9 @@ public final class RNParticleTypes {
 			() -> new SimpleParticleType(false)
 	);
 
+	public static final Supplier<SimpleParticleType> STEAM = PARTICLES.register(
+			"steam",
+			() -> new SimpleParticleType(false)
+	);
+
 }

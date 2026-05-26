@@ -1,13 +1,15 @@
 package corundum.rubinated_nether.content.entity.goals;
 
+import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
@@ -79,15 +81,13 @@ public class DiscoloredRamGoal extends Goal {
         }
 
         if (target == null) return;
-        if(!entity.getTarnishLevel().equals(TarnishStage.DISCOLORED)) stop();
+        if (!entity.getTarnishLevel().equals(TarnishStage.DISCOLORED)) stop();
 
         switch (phase) {
             case 1:
-                // Only look at target during charge phase
                 entity.lookAt(EntityAnchorArgument.Anchor.EYES, target.position());
                 phaseTicks++;
                 if (phaseTicks >= CHARGE_TIME) {
-                    // Calculate dash direction and lock rotation before starting dash
                     dashDirection = target.position().subtract(entity.position()).normalize();
                     entity.setYRot((float) (Mth.atan2(dashDirection.z, dashDirection.x) * (180F / Math.PI)) - 90F);
                     entity.yBodyRot = entity.getYRot();
@@ -95,7 +95,6 @@ public class DiscoloredRamGoal extends Goal {
 
                     phase = 2;
                     phaseTicks = 0;
-                    // Start ram animation when beginning the dash
                     if (!entity.level().isClientSide) {
                         entity.level().broadcastEntityEvent(entity, BronzeEntity.RAM_START);
                     }
@@ -104,10 +103,7 @@ public class DiscoloredRamGoal extends Goal {
 
             case 2:
                 entity.setDeltaMovement(dashDirection.scale(RAM_SPEED));
-                // Keep rotation locked during dash - don't update it
-                // entity.setYRot and lookAt calls removed from this phase
 
-                // Check for collisions with any living entity - larger radius for better detection
                 java.util.List<net.minecraft.world.entity.LivingEntity> nearbyEntities = entity.level().getEntitiesOfClass(
                         net.minecraft.world.entity.LivingEntity.class,
                         entity.getBoundingBox().inflate(1.2),
@@ -115,31 +111,34 @@ public class DiscoloredRamGoal extends Goal {
                 );
 
                 for (net.minecraft.world.entity.LivingEntity hitEntity : nearbyEntities) {
-                    // Calculate actual distance for more accurate collision
                     double distance = entity.distanceTo(hitEntity);
 
-                    // Only process if actually close enough (within 2 blocks)
                     if (distance > 2.0) continue;
 
-                    // Check if it's a player with a shield - check if they're blocking and facing correctly
                     boolean shouldStun = false;
                     if (hitEntity instanceof Player player && player.isBlocking()) {
                         Vec3 attackDir = entity.position().subtract(player.position()).normalize();
                         Vec3 lookVec = player.getLookAngle().normalize();
                         double dot = attackDir.dot(lookVec);
 
-                        // Player is blocking and facing the attack
                         if (dot > 0.3) {
                             shouldStun = true;
                         }
                     }
 
-                    // Always deal damage - this will let shield mechanics work naturally
-                    boolean damageBlocked = hitEntity.hurt(entity.damageSources().mobAttack(entity), 6.0F);
+                    boolean damageDealt = hitEntity.hurt(entity.damageSources().mobAttack(entity), 6.0F);
 
-                    // If damage was blocked by shield and they were facing correctly, stun
+                    if (hitEntity instanceof BronzeEntity && !hitEntity.isAlive() && !entity.level().isClientSide) {
+                        ItemStack disc = new ItemStack(RNItems.MUSIC_DISC_SINNER.get());
+                        ItemEntity itemEntity = new ItemEntity(
+                                entity.level(),
+                                hitEntity.getX(), hitEntity.getY(), hitEntity.getZ(),
+                                disc
+                        );
+                        entity.level().addFreshEntity(itemEntity);
+                    }
+
                     if (shouldStun) {
-                        // Disable the shield for a period of time
                         if (hitEntity instanceof Player player) {
                             player.getCooldowns().addCooldown(player.getUseItem().getItem(), 50);
                             player.stopUsingItem();
@@ -148,15 +147,13 @@ public class DiscoloredRamGoal extends Goal {
                         return;
                     }
 
-                    // Knockback the entity if they took damage
-                    if (damageBlocked || !shouldStun) {
+                    if (damageDealt || !shouldStun) {
                         double knockbackStrength = 0.5;
                         hitEntity.knockback(knockbackStrength,
                                 -dashDirection.x,
                                 -dashDirection.z);
                     }
 
-                    // Stop the ram but don't stun (unless shield blocked it)
                     stop();
                     return;
                 }
@@ -167,7 +164,6 @@ public class DiscoloredRamGoal extends Goal {
                 }
                 break;
         }
-
     }
 
     public boolean isDashing() {
@@ -178,11 +174,9 @@ public class DiscoloredRamGoal extends Goal {
         isStunned = true;
         stunTicks = STUN_DURATION;
         entity.setDeltaMovement(Vec3.ZERO);
-        // Stop ram animation and start stun animation
         if (!entity.level().isClientSide) {
             entity.level().broadcastEntityEvent(entity, BronzeEntity.RAM_STOP); // Stop ram
             entity.level().broadcastEntityEvent(entity, BronzeEntity.STUN_START); // Start stun
-            // Play electrical malfunction sounds
             entity.level().playSound(null, entity.blockPosition(), net.minecraft.sounds.SoundEvents.BEACON_DEACTIVATE, net.minecraft.sounds.SoundSource.HOSTILE, 1.2F, 0.8F);
             entity.level().playSound(null, entity.blockPosition(), net.minecraft.sounds.SoundEvents.REDSTONE_TORCH_BURNOUT, net.minecraft.sounds.SoundSource.HOSTILE, 1.5F, 0.5F);
         }
@@ -193,7 +187,6 @@ public class DiscoloredRamGoal extends Goal {
     public void stop() {
         if (!isStunned) {
             entity.setRamCooldown(COOLDOWN);
-            // Stop ram animation when goal ends normally
             if (!entity.level().isClientSide && phase == 2) {
                 entity.level().broadcastEntityEvent(entity, BronzeEntity.RAM_STOP); // Stop ram
             }

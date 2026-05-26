@@ -5,6 +5,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.client.render.BronzeLaserRenderer;
 import corundum.rubinated_nether.client.render.CofferRenderer;
 import corundum.rubinated_nether.client.render.CopperLaserRenderer;
+import corundum.rubinated_nether.client.render.GearboxRenderer;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.RNEntityCreator;
@@ -21,6 +22,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -29,6 +32,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.client.event.TextureAtlasStitchedEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 @EventBusSubscriber(modid = RubinatedNether.MODID, value = Dist.CLIENT)
@@ -47,6 +51,10 @@ public class RNClientEvents {
         event.registerLayerDefinition(RNModelLayers.COFFER,
                 CofferRenderer::createSingleBodyLayer
         );
+
+        event.registerLayerDefinition(RNModelLayers.GEARBOX,
+                GearboxRenderer::createSingleBodyLayer
+        );
     }
 
 	@SubscribeEvent
@@ -60,6 +68,7 @@ public class RNClientEvents {
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event)
     {
         event.registerBlockEntityRenderer(RNBlockEntities.COFFER.get(), CofferRenderer::new);
+        event.registerBlockEntityRenderer(RNBlockEntities.GEARBOX.get(), GearboxRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_LASER.get(), BronzeLaserRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.COPPER_LASER.get(), CopperLaserRenderer::new);
 

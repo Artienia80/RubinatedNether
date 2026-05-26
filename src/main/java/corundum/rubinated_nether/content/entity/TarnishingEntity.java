@@ -31,8 +31,8 @@ public abstract class TarnishingEntity extends Monster {
 
     private static final EntityDataAccessor<Boolean> WAXED =
             SynchedEntityData.defineId(TarnishingEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Byte> TARNISH_STAGE =
-            SynchedEntityData.defineId(TarnishingEntity.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Integer> TARNISH_STAGE =
+            SynchedEntityData.defineId(TarnishingEntity.class, EntityDataSerializers.INT);
 
     private int tarnishTimer = 0;
 
@@ -50,7 +50,7 @@ public abstract class TarnishingEntity extends Monster {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(WAXED, false);
-        builder.define(TARNISH_STAGE, (byte) 0);
+        builder.define(TARNISH_STAGE, 0);
     }
 
     public TarnishStage getTarnishLevel() {
@@ -192,7 +192,7 @@ public abstract class TarnishingEntity extends Monster {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("Waxed", isWaxed());
-        tag.putByte("TarnishStage", this.getTarnishLevel().getId());
+        tag.putInt("TarnishStage", this.getTarnishLevel().getId());
     }
 
     @Override
