@@ -58,8 +58,6 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
 
     private static final int BACK_RANGE = 15;
 
-    // Server-side range cache: BlockPos -> [frontRange, backRange]
-    // Keyed per-position so shared block instances don't bleed state.
     private static final Map<BlockPos, int[]> rangeCache = new HashMap<>();
 
     private final TarnishStage tarnishStage;
@@ -103,18 +101,20 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
 
         int signal = level.getBestNeighborSignal(pos);
         boolean powered = signal > 0;
+        boolean signalChanged = state.getValue(POWERED) != powered || state.getValue(SIGNAL_STRENGTH) != signal;
 
-        if (state.getValue(POWERED) != powered || state.getValue(SIGNAL_STRENGTH) != signal) {
-            level.setBlock(pos, state.setValue(POWERED, powered).setValue(SIGNAL_STRENGTH, signal), Block.UPDATE_ALL);
+        if (signalChanged) {
+            state = state.setValue(POWERED, powered).setValue(SIGNAL_STRENGTH, signal);
+            level.setBlock(pos, state, Block.UPDATE_ALL);
+        }
 
-            if (powered) {
-                updateRangeCache(state.setValue(SIGNAL_STRENGTH, signal), (ServerLevel) level, pos);
-                if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
-                    ((ServerLevel) level).scheduleTick(pos, this, 1);
-                }
-            } else {
-                rangeCache.remove(pos);
+        if (powered) {
+            updateRangeCache(state, (ServerLevel) level, pos);
+            if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
+                ((ServerLevel) level).scheduleTick(pos, this, 1);
             }
+        } else {
+            rangeCache.remove(pos);
         }
     }
 
@@ -144,12 +144,10 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
         super.onRemove(state, level, pos, newState, isMoving);
     }
 
-    // Recomputes and stores front/back ranges for this position.
     private void updateRangeCache(BlockState state, ServerLevel level, BlockPos pos) {
         Direction facing = state.getValue(FACING);
         int signal = state.getValue(SIGNAL_STRENGTH);
 
-        // Skip if the block immediately in front is solid — range is 0
         int front = isFaceBlocked(level, pos, facing) ? 0
                 : calculateSmokeRange(level, pos, facing, signal);
         int back = isFaceBlocked(level, pos, facing.getOpposite()) ? 0
@@ -158,15 +156,13 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
         rangeCache.put(pos.immutable(), new int[]{front, back});
     }
 
-    // Returns true if the block adjacent in that direction would block steam entirely.
     private boolean isFaceBlocked(Level level, BlockPos pos, Direction dir) {
         BlockPos adj = pos.relative(dir);
-        BlockState adj_state = level.getBlockState(adj);
-        if (adj_state.is(RNTags.Blocks.SMOKE_PASSTHROUGH)) return false;
-        VoxelShape col = adj_state.getCollisionShape(level, adj);
+        BlockState adjState = level.getBlockState(adj);
+        if (adjState.is(RNTags.Blocks.SMOKE_PASSTHROUGH)) return false;
+        VoxelShape col = adjState.getCollisionShape(level, adj);
         if (col.isEmpty()) return false;
-        VoxelShape smoke = rotateSmokeShape(dir);
-        return !Shapes.join(col, smoke, BooleanOp.AND).isEmpty();
+        return !Shapes.join(col, rotateSmokeShape(dir), BooleanOp.AND).isEmpty();
     }
 
     @Override
@@ -177,14 +173,13 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
             return;
         }
 
-        if (!state.getValue(POWERED)) return; // no reschedule — neighborChanged will restart it
+        if (!state.getValue(POWERED)) return;
 
         double scale = getSteamFlowScale();
         int signal = state.getValue(SIGNAL_STRENGTH);
         Direction facing = state.getValue(FACING);
 
         int[] ranges = rangeCache.get(pos);
-        // Fallback: compute if cache is missing (e.g. after reload)
         if (ranges == null) {
             updateRangeCache(state, level, pos);
             ranges = rangeCache.get(pos);
@@ -225,7 +220,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
 
     private AABB buildDetectionAABB(BlockPos pos, Direction facing, int range) {
         double cx = pos.getX() + 0.5, cy = pos.getY() + 0.5, cz = pos.getZ() + 0.5;
-        double hw = 0.6;
+        double hw = 0.375;
         double ex = facing.getStepX() * range;
         double ey = facing.getStepY() * range;
         double ez = facing.getStepZ() * range;
@@ -259,11 +254,11 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
         return maxRange;
     }
 
-    private VoxelShape rotateSmokeShape(Direction facing) {
+    private static VoxelShape rotateSmokeShape(Direction facing) {
         return switch (facing.getAxis()) {
-            case Z -> SMOKE_SEGMENT_BASE;
-            case X -> Shapes.box(0, 0.3, 0.3, 1, 0.7, 0.7);
-            case Y -> Shapes.box(0.3, 0.3, 0, 0.7, 0.7, 1);
+            case Z -> Shapes.box(0.125, 0.125, 0, 0.875, 0.875, 1); // was 0.3/0.7
+            case X -> Shapes.box(0, 0.125, 0.125, 1, 0.875, 0.875);
+            case Y -> Shapes.box(0.125, 0, 0.125, 0.875, 1, 0.875);
         };
     }
 
@@ -288,6 +283,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
         for (Entity entity : entities) {
             int dist = distanceAlongFacing(pos, entity.blockPosition(), facing);
             if (dist < 0 || dist >= smokeRange) continue;
+
             double falloff = 1.0 - (double) dist / smokeRange;
             Vec3 flow = baseFlow.scale(scale * falloff);
             Vec3 current = entity.getDeltaMovement();
@@ -304,16 +300,28 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
         List<Entity> entities = level.getEntities((Entity) null, suctionBox, e -> !e.isSpectator());
         Direction facing = back.getOpposite();
         Vec3 baseFlow = new Vec3(facing.getStepX(), facing.getStepY(), facing.getStepZ());
+        boolean suckingUpward = facing == Direction.UP;
 
         for (Entity entity : entities) {
             int dist = distanceAlongFacing(pos, entity.blockPosition(), back);
             if (dist < 0 || dist >= backRange) continue;
+
             double falloff = 1.0 - (double) dist / backRange;
-            Vec3 flow = baseFlow.scale(scale * falloff);
             Vec3 current = entity.getDeltaMovement();
+            Vec3 flow = baseFlow.scale(scale * falloff);
+
+            if (suckingUpward) {
+                double gravityCancel = (scale / 0.056) * 0.10 * falloff;
+                flow = flow.add(0, gravityCancel, 0);
+                if (current.y < 0) {
+                    current = new Vec3(current.x, current.y * (1.0 - falloff * 0.4), current.z);
+                }
+            }
+
             double minT = 0.003;
             if (Math.abs(current.x) < minT && Math.abs(current.z) < minT && flow.length() < minT * 1.5)
                 flow = baseFlow.normalize().scale(minT * 1.5);
+
             entity.setDeltaMovement(current.add(flow));
             entity.hurtMarked = true;
         }
@@ -348,7 +356,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
         double ex = facing.getStepX() * range;
         double ey = facing.getStepY() * range;
         double ez = facing.getStepZ() * range;
-        double hw = 0.6;
+        double hw = 0.375;
 
         double minX = cx + Math.min(0, ex) - (facing.getAxis() != Direction.Axis.X ? hw : 0);
         double maxX = cx + Math.max(0, ex) + (facing.getAxis() != Direction.Axis.X ? hw : 0);

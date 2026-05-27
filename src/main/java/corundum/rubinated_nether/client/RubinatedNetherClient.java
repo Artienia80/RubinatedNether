@@ -41,8 +41,6 @@ public class RubinatedNetherClient {
 
 	private static final VoxelShape SMOKE_SEGMENT_BASE = Shapes.box(0.3, 0, 0.3, 0.7, 1, 0.7);
 	private static final int BACK_RANGE = 15;
-
-	// Throttle: only scan every 4 ticks
 	private static int tickCounter = 0;
 
 	public static void client(IEventBus bussin) {
@@ -63,13 +61,12 @@ public class RubinatedNetherClient {
 
 	private static VoxelShape rotateSmokeShape(Direction facing) {
 		return switch (facing.getAxis()) {
-			case Z -> SMOKE_SEGMENT_BASE;
-			case X -> Shapes.box(0, 0.3, 0.3, 1, 0.7, 0.7);
-			case Y -> Shapes.box(0.3, 0.3, 0, 0.7, 0.7, 1);
+			case Z -> Shapes.box(0.125, 0.125, 0, 0.875, 0.875, 1); // was 0.3/0.7
+			case X -> Shapes.box(0, 0.125, 0.125, 1, 0.875, 0.875);
+			case Y -> Shapes.box(0.125, 0, 0.125, 0.875, 1, 0.875);
 		};
 	}
 
-	// Returns true if the immediately adjacent block fully blocks the smoke column.
 	private static boolean isFaceBlocked(BlockGetter level, BlockPos pos, Direction dir) {
 		BlockPos adj = pos.relative(dir);
 		BlockState adjState = level.getBlockState(adj);
@@ -96,7 +93,7 @@ public class RubinatedNetherClient {
 
 	private static AABB buildDetectionAABB(BlockPos pos, Direction facing, int range) {
 		double cx = pos.getX() + 0.5, cy = pos.getY() + 0.5, cz = pos.getZ() + 0.5;
-		double hw = 0.6;
+		double hw = 0.375;
 		double ex = facing.getStepX() * range;
 		double ey = facing.getStepY() * range;
 		double ez = facing.getStepZ() * range;
@@ -130,7 +127,6 @@ public class RubinatedNetherClient {
 		if (random.nextDouble() < (rawCount - baseCount)) baseCount++;
 
 		for (int i = 0; i < baseCount; i++) {
-			// Inline spread — avoids allocating a Vec3 per particle
 			double sx = facing.getAxis() != Direction.Axis.X ? (random.nextDouble() - 0.5) * 0.8 : 0;
 			double sy = facing.getAxis() != Direction.Axis.Y ? (random.nextDouble() - 0.5) * 0.8 : 0;
 			double sz = facing.getAxis() != Direction.Axis.Z ? (random.nextDouble() - 0.5) * 0.8 : 0;
@@ -148,7 +144,6 @@ public class RubinatedNetherClient {
 	}
 
 	public static void onClientTick(ClientTickEvent.Post event) {
-		// Only run every 4 ticks — particles are smoothed by their own lifetime
 		if (++tickCounter % 4 != 0) return;
 
 		Minecraft mc = Minecraft.getInstance();
@@ -165,7 +160,6 @@ public class RubinatedNetherClient {
 				playerPos.offset(-range, -range, -range),
 				playerPos.offset(range, range, range)
 		).forEach(pos -> {
-			// Skip unloaded chunks first — cheapest possible check
 			if (!level.hasChunkAt(pos)) return;
 
 			BlockState state = level.getBlockState(pos);
@@ -175,40 +169,31 @@ public class RubinatedNetherClient {
 			RandomSource random = level.getRandom();
 
 			if (ventBlock.getAge() == TarnishStage.CRYSTALLIZED) {
-				// Early exit if front face is blocked
 				if (isFaceBlocked(level, pos, facing)) return;
-
 				AABB detectionBox = buildDetectionAABB(pos, facing, (int) RNConfig.crystallizedVentRange);
 				List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, detectionBox);
 				if (entities.isEmpty()) return;
-
 				int smokeRange = calculateSmokeRange(level, pos, facing, (int) RNConfig.crystallizedVentRange);
 				if (smokeRange <= 0) return;
-
 				spawnSteamParticles(level, pos, facing, smokeRange, RNConfig.crystallizedVentRange / 40.0, 1.0, random);
 				return;
 			}
 
-			// Skip unpowered vents immediately
 			if (!state.getValue(TarnishingBronzeVentBlock.POWERED)) return;
 			int signal = state.getValue(TarnishingBronzeVentBlock.SIGNAL_STRENGTH);
 			if (signal <= 0) return;
 
-			// Front exhaust — skip if directly blocked
 			if (!isFaceBlocked(level, pos, facing)) {
 				int smokeRange = calculateSmokeRange(level, pos, facing, signal);
-				if (smokeRange > 0) {
+				if (smokeRange > 0)
 					spawnSteamParticles(level, pos, facing, smokeRange, signal / 40.0, 1.0, random);
-				}
 			}
 
-			// Back suction — skip if directly blocked
 			Direction back = facing.getOpposite();
 			if (!isFaceBlocked(level, pos, back)) {
 				int backRange = calculateSmokeRange(level, pos, back, BACK_RANGE);
-				if (backRange > 0) {
+				if (backRange > 0)
 					spawnSteamParticles(level, pos, back, backRange, -(signal / 40.0), backRange, random);
-				}
 			}
 		});
 	}
