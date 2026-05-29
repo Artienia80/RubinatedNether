@@ -36,6 +36,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +59,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
 
     private static final int BACK_RANGE = 15;
 
-    private static final Map<BlockPos, int[]> rangeCache = new HashMap<>();
+    private static final Map<BlockPos, Pair<Integer, Integer>> rangeCache = new HashMap<>();
 
     private final TarnishStage tarnishStage;
     private int damageTickCounter = 0;
@@ -153,7 +154,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
         int back = isFaceBlocked(level, pos, facing.getOpposite()) ? 0
                 : calculateSmokeRange(level, pos, facing.getOpposite(), BACK_RANGE);
 
-        rangeCache.put(pos.immutable(), new int[]{front, back});
+        rangeCache.put(pos.immutable(), Pair.of(front, back));
     }
 
     private boolean isFaceBlocked(Level level, BlockPos pos, Direction dir) {
@@ -179,14 +180,14 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
         int signal = state.getValue(SIGNAL_STRENGTH);
         Direction facing = state.getValue(FACING);
 
-        int[] ranges = rangeCache.get(pos);
-        if (ranges == null) {
-            updateRangeCache(state, level, pos);
-            ranges = rangeCache.get(pos);
-        }
+        Pair<Integer, Integer> ranges = rangeCache.get(pos);
+//        if (ranges == null) {
+//            updateRangeCache(state, level, pos);
+//            ranges = rangeCache.get(pos);
+//        }
 
-        int smokeRange = ranges[0];
-        int backRange  = ranges[1];
+        int smokeRange = ranges.getLeft();
+        int backRange  = ranges.getRight();
 
         if (smokeRange > 0) {
             damageTickCounter++;
@@ -194,11 +195,11 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
                 dealSteamDamage(level, pos, facing, signal, smokeRange);
                 damageTickCounter = 0;
             }
-            if (scale > 0.0) pushEntities(level, pos, facing, signal, smokeRange, scale);
+            if (scale > 0.0) pushEntities(level, pos, facing, smokeRange, scale, false);
         }
 
         if (backRange > 0 && scale > 0.0) {
-            pullEntities(level, pos, facing.getOpposite(), signal, backRange, scale);
+            pushEntities(level, pos, facing.getOpposite(), backRange, scale, true);
         }
 
         level.scheduleTick(pos, this, 1);
@@ -275,30 +276,10 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
         }
     }
 
-    private void pushEntities(ServerLevel level, BlockPos pos, Direction facing, int signal, int smokeRange, double scale) {
-        AABB steamBox = buildSteamAABB(pos, facing, smokeRange);
-        List<Entity> entities = level.getEntities((Entity) null, steamBox, e -> !e.isSpectator());
-        Vec3 baseFlow = new Vec3(facing.getStepX(), facing.getStepY(), facing.getStepZ());
-
-        for (Entity entity : entities) {
-            int dist = distanceAlongFacing(pos, entity.blockPosition(), facing);
-            if (dist < 0 || dist >= smokeRange) continue;
-
-            double falloff = 1.0 - (double) dist / smokeRange;
-            Vec3 flow = baseFlow.scale(scale * falloff);
-            Vec3 current = entity.getDeltaMovement();
-            double minT = 0.003;
-            if (Math.abs(current.x) < minT && Math.abs(current.z) < minT && flow.length() < minT * 1.5)
-                flow = baseFlow.normalize().scale(minT * 1.5);
-            entity.setDeltaMovement(current.add(flow));
-            entity.hurtMarked = true;
-        }
-    }
-
-    private void pullEntities(ServerLevel level, BlockPos pos, Direction back, int signal, int backRange, double scale) {
+    private void pushEntities(ServerLevel level, BlockPos pos, Direction back, int backRange, double scale, boolean isPull) {
         AABB suctionBox = buildSteamAABB(pos, back, backRange);
         List<Entity> entities = level.getEntities((Entity) null, suctionBox, e -> !e.isSpectator());
-        Direction facing = back.getOpposite();
+        Direction facing = isPull ? back.getOpposite() : back;
         Vec3 baseFlow = new Vec3(facing.getStepX(), facing.getStepY(), facing.getStepZ());
         boolean suckingUpward = facing == Direction.UP;
 
@@ -317,7 +298,6 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
                     current = new Vec3(current.x, current.y * (1.0 - falloff * 0.4), current.z);
                 }
             }
-
             double minT = 0.003;
             if (Math.abs(current.x) < minT && Math.abs(current.z) < minT && flow.length() < minT * 1.5)
                 flow = baseFlow.normalize().scale(minT * 1.5);
