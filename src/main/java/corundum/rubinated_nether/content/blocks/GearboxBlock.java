@@ -46,6 +46,7 @@ public class GearboxBlock extends TarnishingBronzeBlock {
 
     public static final int MAX_CRANK = 15;
     public static final double PLAYER_SCAN_RADIUS = 64.0;
+    public static final double CRYSTALLIZED_TRIGGER_RADIUS = 16.0;
 
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
@@ -97,11 +98,69 @@ public class GearboxBlock extends TarnishingBronzeBlock {
     }
 
     @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        if (level instanceof ServerLevel serverLevel && !isPeaceful(level)) {
+            boolean powered = serverLevel.hasNeighborSignal(pos);
+            if (powered && !state.getValue(LIT) && !state.getValue(COOLING_DOWN)) {
+                fireLit(serverLevel, state.setValue(POWERED, true), pos);
+                serverLevel.setBlock(pos, serverLevel.getBlockState(pos).setValue(POWERED, true), 3);
+            }
+            // Crystallized gearboxes start polling immediately on placement
+            if (getAge() == TarnishStage.CRYSTALLIZED) {
+                serverLevel.scheduleTick(pos, this, 20);
+            }
+        }
+        super.onPlace(state, level, pos, oldState, movedByPiston);
+    }
+
+    private static boolean isPeaceful(Level level) {
+        return level.getDifficulty() == Difficulty.PEACEFUL;
+    }
+
+    @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!level.isClientSide()) {
+            // If the world is on peaceful, deactivate immediately
+            if (isPeaceful(level)) {
+                if (state.getValue(LIT) || state.getValue(COOLING_DOWN) || state.getValue(CRANK_LEVEL) > 0) {
+                    level.setBlock(pos, state
+                            .setValue(LIT, false)
+                            .setValue(COOLING_DOWN, false)
+                            .setValue(CRANK_LEVEL, 0), 3);
+                    if (level.getBlockEntity(pos) instanceof GearboxBlockEntity be) {
+                        be.forceReset();
+                    }
+                }
+                return;
+            }
+
             if (state.getValue(COOLING_DOWN)) {
                 super.tick(state, level, pos, random);
+                // Crystallized gearboxes keep polling even during cooldown
+                if (getAge() == TarnishStage.CRYSTALLIZED) {
+                    level.scheduleTick(pos, this, 20);
+                }
                 return;
+            }
+
+            // Crystallized gearboxes auto-trigger when a player is within 16 blocks
+            if (getAge() == TarnishStage.CRYSTALLIZED
+                    && !state.getValue(LIT)
+                    && isCrankable(state)) {
+                AABB triggerBox = AABB.ofSize(
+                        net.minecraft.world.phys.Vec3.atCenterOf(pos),
+                        CRYSTALLIZED_TRIGGER_RADIUS * 2,
+                        CRYSTALLIZED_TRIGGER_RADIUS * 2,
+                        CRYSTALLIZED_TRIGGER_RADIUS * 2
+                );
+                boolean playerNearby = !level.getEntitiesOfClass(Player.class, triggerBox).isEmpty();
+                if (playerNearby) {
+                    fireLit(level, state, pos);
+                    level.scheduleTick(pos, this, 20);
+                    return;
+                }
+                // Keep polling every second while idle
+                level.scheduleTick(pos, this, 20);
             }
 
             int crankCount = state.getValue(CRANK_LEVEL);
@@ -115,6 +174,9 @@ public class GearboxBlock extends TarnishingBronzeBlock {
     }
 
     void fireLit(ServerLevel level, BlockState state, BlockPos pos) {
+        // Never activate on peaceful
+        if (isPeaceful(level)) return;
+
         Difficulty difficulty = level.getDifficulty();
 
         int baseTotal;
@@ -159,7 +221,7 @@ public class GearboxBlock extends TarnishingBronzeBlock {
 
     public void finishCooldown(ServerLevel level, BlockState state, BlockPos pos) {
         state = state.setValue(COOLING_DOWN, false);
-        if (state.getValue(POWERED)) {
+        if (state.getValue(POWERED) && !isPeaceful(level)) {
             fireLit(level, state, pos);
         } else {
             level.setBlock(pos, state, 3);
@@ -201,7 +263,7 @@ public class GearboxBlock extends TarnishingBronzeBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide() && isCrankable(state)) {
+        if (!level.isClientSide() && isCrankable(state) && !isPeaceful(level)) {
             increaseCrankLevel(level, state, pos);
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
@@ -234,7 +296,7 @@ public class GearboxBlock extends TarnishingBronzeBlock {
     public void checkAndFlip(BlockState state, ServerLevel level, BlockPos pos) {
         boolean flag = level.hasNeighborSignal(pos);
         if (flag != state.getValue(POWERED)) {
-            if (flag && !state.getValue(LIT) && !state.getValue(COOLING_DOWN)) {
+            if (flag && !state.getValue(LIT) && !state.getValue(COOLING_DOWN) && !isPeaceful(level)) {
                 fireLit(level, state.setValue(POWERED, true), pos);
             } else {
                 level.setBlock(pos, state.setValue(POWERED, flag), 3);
