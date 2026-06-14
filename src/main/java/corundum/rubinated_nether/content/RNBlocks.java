@@ -394,7 +394,7 @@ public class RNBlocks {
 			"rubinated_chiseled_shrine_stone_bricks",
 			() -> new SixWayPillarBlock(
 					Block.Properties.ofFullCopy(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get())
-							.lightLevel($ -> 7)
+							.lightLevel($ -> 12)
 			),
 			RNRarity.RUBINATED_NETHER_RUBY.get()
 	);
@@ -402,7 +402,7 @@ public class RNBlocks {
 			"rubinated_shrine_stone_bricks",
 			() -> new Block(
 					Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_BRICKS.get())
-							.lightLevel($ -> 7)
+							.lightLevel($ -> 12)
 			),
 			RNRarity.RUBINATED_NETHER_RUBY.get()
 	);
@@ -410,7 +410,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> RUBINATED_SHRINE_STONE_TILES = registerBlockAndItemWithRarity(
 			"rubinated_shrine_stone_tiles",
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
-					.lightLevel($ -> 7)
+					.lightLevel($ -> 12)
 			),
 			RNRarity.RUBINATED_NETHER_RUBY.get()
 	);
@@ -418,7 +418,7 @@ public class RNBlocks {
 	public static final DeferredBlock<RotatedPillarBlock> RUBINATED_SHRINE_STONE_PILLAR = registerBlockAndItemWithRarity(
 			"rubinated_shrine_stone_pillar",
 			() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
-					.lightLevel($ -> 7)
+					.lightLevel($ -> 12)
 			),
 			RNRarity.RUBINATED_NETHER_RUBY.get()
 	);

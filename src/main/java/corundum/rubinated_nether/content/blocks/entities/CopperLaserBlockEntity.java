@@ -232,7 +232,7 @@ public class CopperLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		// Visual properties check
 		BlockState state = level.getBlockState(worldPosition.relative(facing));
 		silly = state.is(RNTags.Blocks.SILLY_LASER);
-		visible = silly || state.is(Tags.Blocks.GLASS_BLOCKS) || state.is(Tags.Blocks.GLASS_BLOCKS_TINTED) || state.is(Tags.Blocks.GLASS_PANES) || state.is(Blocks.IRON_BARS) || state.is(Blocks.COPPER_GRATE) || state.is(RNTags.Blocks.GRATES);
+		visible = silly || state.is(Tags.Blocks.GLASS_BLOCKS) || state.is(Tags.Blocks.GLASS_BLOCKS_TINTED) || state.is(Tags.Blocks.GLASS_PANES);
 
 		if (visible && !silly && state.getBlock() instanceof BeaconBeamBlock) {
 			DyeColor dye = ((BeaconBeamBlock) state.getBlock()).getColor();
