@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.recipe;
 
+import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNRecipes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
@@ -43,4 +44,10 @@ public class ResonanceRecipe implements Recipe<SingleRecipeInput> {
     public Optional<TriggerData> getOffering() { return offering; }
     public Optional<TriggerData> getKey() { return key; }
     public boolean requiresShrineStoneNeighbor() { return requireShrineStoneNeighbor; }
+
+    @Override
+    public ItemStack getToastSymbol() {
+        return new ItemStack(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get());
+    }
+
 }

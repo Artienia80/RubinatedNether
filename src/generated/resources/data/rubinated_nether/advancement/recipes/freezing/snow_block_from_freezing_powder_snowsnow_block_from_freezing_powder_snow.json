@@ -1,15 +1,6 @@
 {
+  "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_powder_snow": {
-      "conditions": {
-        "items": [
-          {
-            "items": "rubinated_nether:powder_snow"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "rubinated_nether:snow_block_from_freezing_powder_snow"
@@ -19,7 +10,6 @@
   },
   "requirements": [
     [
-      "has_powder_snow",
       "has_the_recipe"
     ]
   ],
