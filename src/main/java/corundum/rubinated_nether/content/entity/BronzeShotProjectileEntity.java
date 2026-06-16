@@ -176,7 +176,7 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 
 		
 		if (!this.inGround){
-			this.setBaseDamage(this.getBaseDamage() + weight);
+            this.setBaseDamage(this.getBaseDamage() + weight);
 
 			setDeltaMovement(
 				getDeltaMovement().x, 
@@ -221,14 +221,20 @@ public class BronzeShotProjectileEntity extends AbstractArrow {
 					0
 				);
 	
-				setBaseDamage(getBaseDamage() * 10);
+				this.setBaseDamage(getBaseDamage() * 10);
 			}
 		}
 
 		return true;
 	}
 
-	@Override
+    @Override
+    public void setBaseDamage(double baseDamage) {
+        if(!Double.isNaN(baseDamage) && Double.isFinite(baseDamage))
+            super.setBaseDamage(baseDamage);
+    }
+
+    @Override
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 
