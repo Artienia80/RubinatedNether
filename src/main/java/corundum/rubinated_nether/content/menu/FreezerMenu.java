@@ -47,8 +47,8 @@ public class FreezerMenu extends RecipeBookMenu<SingleRecipeInput, FreezingRecip
 	public FreezerMenu(int containerId, Inventory playerInventory) {
 		this(
 			RNMenuTypes.FREEZER_MENU.get(), 
-			RNRecipes.FREEZING.get(), 
-			RecipeBookType.FURNACE, 
+			RNRecipes.FREEZING.get(),
+            RNRecipeBookTypes.FREEZER,
 			containerId, 
 			playerInventory, 
 			new SimpleContainer(3), 
@@ -59,9 +59,9 @@ public class FreezerMenu extends RecipeBookMenu<SingleRecipeInput, FreezingRecip
 	public FreezerMenu(int containerId, Inventory playerInventory, Container freezerContainer, ContainerData data) {
 		this(
 			RNMenuTypes.FREEZER_MENU.get(), 
-			RNRecipes.FREEZING.get(), 
-			RecipeBookType.FURNACE, 
-			containerId, 
+			RNRecipes.FREEZING.get(),
+            RNRecipeBookTypes.FREEZER,
+            containerId,
 			playerInventory, 
 			freezerContainer, 
 			data
@@ -232,7 +232,7 @@ public class FreezerMenu extends RecipeBookMenu<SingleRecipeInput, FreezingRecip
 		this.getSlot(2).set(ItemStack.EMPTY);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked"})
 	@Override
 	public boolean recipeMatches(RecipeHolder recipe) {
 		return recipe.value().matches(new SingleRecipeInput(this.container.getItem(0)), this.level);

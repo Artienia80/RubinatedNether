@@ -1,15 +1,6 @@
 {
+  "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cobbled_shrine_stone": {
-      "conditions": {
-        "items": [
-          {
-            "items": "rubinated_nether:cobbled_shrine_stone"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "rubinated_nether:shrine_stone_from_freezing_cobbled_shrine_stone"
@@ -19,7 +10,6 @@
   },
   "requirements": [
     [
-      "has_cobbled_shrine_stone",
       "has_the_recipe"
     ]
   ],

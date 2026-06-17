@@ -24,8 +24,6 @@ public class FreezerScreen extends AbstractRecipeBookScreen<SingleRecipeInput, F
 		this.initScreen(20);
 	}
 
-
-
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
 		int left = this.leftPos;

@@ -1,15 +1,6 @@
 {
+  "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ice": {
-      "conditions": {
-        "items": [
-          {
-            "items": "minecraft:ice"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "rubinated_nether:packed_ice_from_freezing_ice"
@@ -19,7 +10,6 @@
   },
   "requirements": [
     [
-      "has_ice",
       "has_the_recipe"
     ]
   ],

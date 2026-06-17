@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.recipe;
 
+import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNRecipes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
@@ -33,6 +34,11 @@ public class FreezingRecipe extends AbstractCookingRecipe {
 	public RecipeSerializer<?> getSerializer() {
 		return RNRecipeSerializers.FREEZING.get();
 	}
+
+    @Override
+    public ItemStack getToastSymbol() {
+        return new ItemStack(RNBlocks.FREEZER.get());
+    }
 
 	public static class Serializer extends FreezerCookingSerializer<FreezingRecipe> {
 		public Serializer() {
