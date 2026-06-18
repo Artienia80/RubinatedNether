@@ -7,6 +7,7 @@ import corundum.rubinated_nether.content.blocks.entities.BronzeLaserBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.CopperLaserBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.VaseBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.gearbox.GearboxBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RubinationAltarBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
@@ -133,4 +134,19 @@ public class RNBlockEntities {
                     Util.fetchChoiceType(References.BLOCK_ENTITY, "gearbox")
             )
     );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<VaseBlockEntity>> BRONZE_VASE =
+            BLOCK_ENTITY_TYPES.register(
+                    "bronze_vase",
+                    () -> BlockEntityType.Builder.of(
+                            VaseBlockEntity::new,
+                            RNBlocks.BRONZE_VASE.get()
+                            //RNBlocks.DISCOLORED_BRONZE_LASER.get(),
+                            //RNBlocks.CORRODED_BRONZE_LASER.get(),
+                            //RNBlocks.TARNISHED_BRONZE_LASER.get(),
+                            //RNBlocks.CRYSTALLIZED_BRONZE_LASER.get()
+                    ).build(
+                            Util.fetchChoiceType(References.BLOCK_ENTITY, "bronze_vase")
+                    )
+            );
 }
