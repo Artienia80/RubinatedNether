@@ -37,4 +37,12 @@ public class RNMenuTypes {
 					FeatureFlags.VANILLA_SET
 			)
 	);
+
+    public static final DeferredHolder<MenuType<?>, MenuType<VaseMenu>> VASE_MENU = MENUS.register(
+            "vase_menu",
+            () -> new MenuType<>(
+                    VaseMenu::new,
+                    FeatureFlags.VANILLA_SET
+            )
+    );
 }

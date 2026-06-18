@@ -1383,6 +1383,14 @@ public class RNBlocks {
 			)
 	);
 
+    public static final DeferredBlock<Block> BRONZE_VASE = registerWaxableBlock(
+            "bronze_vase",
+            () -> new BronzeVaseBlock(
+                    TarnishStage.UNAFFECTED,
+                    BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get()).noOcclusion()
+            )
+    );
+
 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);
