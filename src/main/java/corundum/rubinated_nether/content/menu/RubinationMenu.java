@@ -67,27 +67,27 @@ public class RubinationMenu extends AbstractContainerMenu {
     public final ContainerData data;
 
     private static final List<RuneItem> ALL_RUNES = List.of(
-            (RuneItem) RNItems.GREED_RUNE.get(),
-            (RuneItem) RNItems.WRATH_RUNE.get(),
-            (RuneItem) RNItems.SLOTH_RUNE.get(),
-            (RuneItem) RNItems.GLUTTONY_RUNE.get(),
-            (RuneItem) RNItems.ENVY_RUNE.get(),
-            (RuneItem) RNItems.VAINGLORY_RUNE.get(),
-            (RuneItem) RNItems.PRIDE_RUNE.get(),
-            (RuneItem) RNItems.ACEDIA_RUNE.get(),
-            (RuneItem) RNItems.LUXURIA_RUNE.get(),
-            (RuneItem) RNItems.INSIDIAE_RUNE.get(),
-            (RuneItem) RNItems.SUPERBIA_RUNE.get(),
-            (RuneItem) RNItems.TRISTIA_RUNE.get(),
-            (RuneItem) RNItems.STUDIOSE_RUNE.get(),
-            (RuneItem) RNItems.ARDENTER_RUNE.get(),
-            (RuneItem) RNItems.NIMIS_RUNE.get(),
-            (RuneItem) RNItems.IRA_RUNE.get(),
-            (RuneItem) RNItems.INVIDIA_RUNE.get(),
-            (RuneItem) RNItems.GULA_RUNE.get(),
-            (RuneItem) RNItems.IGNAVIA_RUNE.get(),
-            (RuneItem) RNItems.KENODOXIA_RUNE.get(),
-            (RuneItem) RNItems.PHILARGYRIA_RUNE.get()
+            RNItems.GREED_RUNE.get(),
+            RNItems.WRATH_RUNE.get(),
+            RNItems.SLOTH_RUNE.get(),
+            RNItems.GLUTTONY_RUNE.get(),
+            RNItems.ENVY_RUNE.get(),
+            RNItems.VAINGLORY_RUNE.get(),
+            RNItems.PRIDE_RUNE.get(),
+            RNItems.ACEDIA_RUNE.get(),
+            RNItems.LUXURIA_RUNE.get(),
+            RNItems.INSIDIAE_RUNE.get(),
+            RNItems.SUPERBIA_RUNE.get(),
+            RNItems.TRISTIA_RUNE.get(),
+            RNItems.STUDIOSE_RUNE.get(),
+            RNItems.ARDENTER_RUNE.get(),
+            RNItems.NIMIS_RUNE.get(),
+            RNItems.IRA_RUNE.get(),
+            RNItems.INVIDIA_RUNE.get(),
+            RNItems.GULA_RUNE.get(),
+            RNItems.IGNAVIA_RUNE.get(),
+            RNItems.KENODOXIA_RUNE.get(),
+            RNItems.PHILARGYRIA_RUNE.get()
     );
 
     // Category mapping: 1-7 correspond to the 7 rubination categories
