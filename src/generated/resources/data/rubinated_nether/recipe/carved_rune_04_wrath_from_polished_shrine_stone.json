@@ -6,6 +6,7 @@
   },
   "result": {
     "components": {
+      "minecraft:custom_model_data": 2,
       "rubinated_nether:rune_carving": "wrath"
     },
     "count": 1,

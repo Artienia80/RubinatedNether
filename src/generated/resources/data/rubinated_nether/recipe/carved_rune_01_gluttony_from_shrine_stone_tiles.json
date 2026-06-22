@@ -6,6 +6,7 @@
   },
   "result": {
     "components": {
+      "minecraft:custom_model_data": 1,
       "rubinated_nether:rune_carving": "gluttony"
     },
     "count": 1,

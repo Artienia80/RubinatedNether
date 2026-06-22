@@ -6,6 +6,7 @@
   },
   "result": {
     "components": {
+      "minecraft:custom_model_data": 5,
       "rubinated_nether:rune_carving": "studiose"
     },
     "count": 1,

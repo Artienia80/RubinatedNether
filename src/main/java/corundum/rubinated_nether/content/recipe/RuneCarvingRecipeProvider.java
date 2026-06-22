@@ -1,9 +1,9 @@
 package corundum.rubinated_nether.content.recipe;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.items.Rubination;
+import corundum.rubinated_nether.content.items.RuneCarvingHelper;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
@@ -31,8 +31,7 @@ public final class RuneCarvingRecipeProvider {
     }
 
     private static void register(RecipeOutput recipeOutput, ItemLike shrineTier, Rubination rubination) {
-        ItemStack result = new ItemStack(RNItems.RUNE.get());
-        result.set(RNDataComponents.RUNE_CARVING.get(), rubination);
+        ItemStack result = RuneCarvingHelper.withCarving(new ItemStack(RNItems.RUNE.get()), rubination);
 
         String shrineTierName = itemName(shrineTier);
         int order = Rubination.carvableValues().indexOf(rubination);

@@ -6,6 +6,7 @@
   },
   "result": {
     "components": {
+      "minecraft:custom_model_data": 3,
       "rubinated_nether:rune_carving": "luxuria"
     },
     "count": 1,
