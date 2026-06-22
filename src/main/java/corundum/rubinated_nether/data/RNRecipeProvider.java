@@ -6,6 +6,7 @@ import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
+import corundum.rubinated_nether.content.recipe.RuneCarvingRecipeProvider;
 import corundum.rubinated_nether.content.trim.RNBronzeTrimTarnishRecipe;
 import corundum.rubinated_nether.content.trim.RNTrimMaterials;
 import net.minecraft.advancements.Advancement;
@@ -152,12 +153,14 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.SHRINE_STONE_TILES_WALL
 		);
 
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
-
-				RNItems.RUNE
-		);
+		RuneCarvingRecipeProvider.registerAll(recipeOutput, java.util.List.of(
+				RNBlocks.SHRINE_STONE.get(),
+				RNBlocks.COBBLED_SHRINE_STONE.get(),
+				RNBlocks.POLISHED_SHRINE_STONE.get(),
+				RNBlocks.SHRINE_STONE_BRICKS.get(),
+				RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
+				RNBlocks.SHRINE_STONE_TILES.get()
+		));
 
 		Bronzecutter(recipeOutput, RNBlocks.BRONZE_BLOCK,
 				RNBlocks.CHISELED_BRONZE,

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:stonecutting",
+  "group": "rune_carving",
+  "ingredient": {
+    "item": "rubinated_nether:shrine_stone_bricks"
+  },
+  "result": {
+    "components": {
+      "rubinated_nether:rune_carving": "greed"
+    },
+    "count": 1,
+    "id": "rubinated_nether:rune"
+  }
+}

@@ -723,6 +723,9 @@
   "resourcepack.rubinated_nether.aurichalcum": "§4Bronze No More!",
 
   "resourcepack.rubinated_nether.simple_freezer.desc": "Turns the Freezer into a cube model",
-  "resourcepack.rubinated_nether.aurichalcum.desc": "Renames 'Bronze' into 'Aurichalcum' for Modpacks"
+  "resourcepack.rubinated_nether.aurichalcum.desc": "Renames 'Bronze' into 'Aurichalcum' for Modpacks",
+
+  "item.rubinated_nether.rune.carved": "Carved Rune of %s",
+  "item.rubinated_nether.rune.carving_of": "Carving of %s"
 
 }

@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.items;
 
+import com.mojang.serialization.Codec;
 import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -17,9 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-//TODO: Add custom debuff enchants
-//TODO: Maybe add tool-tag checking here?
 
 public enum Rubination implements StringRepresentable {
 	SLOTH("sloth", Map.of("minecraft:unbreaking", 5, "minecraft:fortune", 4, "rubinated_nether:deficiency_curse", 1), RNTags.Items.RUBINATION_TOOL),
@@ -41,10 +39,13 @@ public enum Rubination implements StringRepresentable {
 	INVIDIA("invidia", Map.of("minecraft:impaling", 7, "minecraft:unbreaking", 4, "rubinated_nether:recoil_curse", 1), RNTags.Items.RUBINATION_TRIDENT),
 	GULA("gula", Map.of("minecraft:riptide", 5, "minecraft:impaling", 6, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_TRIDENT),
 	IGNAVIA("ignavia", Map.of("minecraft:unbreaking", 5, "minecraft:wind_burst", 4, "rubinated_nether:buoyancy_curse", 1), RNTags.Items.RUBINATION_MACE),
-	KENODOXIA("kenodoxia", Map.of("minecraft:density", 7, "minecraft:unbreaking", 4, "rubinated_nether:sinking_curse", 1), RNTags.Items.RUBINATION_MACE), //Sinking
+	KENODOXIA("kenodoxia", Map.of("minecraft:density", 7, "minecraft:unbreaking", 4, "rubinated_nether:sinking_curse", 1), RNTags.Items.RUBINATION_MACE),
 	PHILARGYRIA("philargyria", Map.of("minecraft:wind_burst", 5, "minecraft:density", 6, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_MACE),
 
 	EMPTY("empty", Map.of(), Tags.Items.BRICKS),;
+
+	public static final Codec<Rubination> CODEC = StringRepresentable.fromEnum(Rubination::values)
+			.orElse(Rubination.EMPTY);
 
 	private final String name;
 	private final Map<ResourceLocation, Integer> enchantmentData;
@@ -53,7 +54,6 @@ public enum Rubination implements StringRepresentable {
 	Rubination(String name, Map<String, Integer> enchantmentData, TagKey<Item> itemKey) {
 		this.name = name;
 		this.enchantmentData = enchantmentData.entrySet().stream()
-				// Parsing String to ResourceLocation for simplicity
 				.collect(Collectors.toMap(e -> ResourceLocation.parse(e.getKey()), Map.Entry::getValue));
 		this.itemKey = itemKey;
 	}
@@ -67,20 +67,31 @@ public enum Rubination implements StringRepresentable {
 		return StringUtils.capitalise(this.name);
 	}
 
-	/*
-		I didn't like doing this, but I'm forced to make it work like we want.
-		Also, I really have little experience with streams, so I had some help here.
-	*/
+	public static Rubination byNameOrEmpty(String name) {
+		for (Rubination value : values()) {
+			if (value.name.equals(name)) {
+				return value;
+			}
+		}
+		return EMPTY;
+	}
+
+	public static List<Rubination> carvableValues() {
+		return java.util.Arrays.stream(values())
+				.filter(value -> value != EMPTY)
+				.collect(Collectors.toList());
+	}
+
 	public List<EnchantmentInstance> getEnchantments(RegistryAccess registryAccess) {
 		return enchantmentData
-				.entrySet()																	 // We convert the map into a set
-				.stream()																	   // We convert the set into a stream (so we can do stuff below)
-				.map(entry -> {										// Enables us to apply a function to each element, returning new stuff
+				.entrySet()
+				.stream()
+				.map(entry -> {
 					var enchantment = registryAccess.registryOrThrow(Registries.ENCHANTMENT)
 							.getHolder(entry.getKey()).orElse(null);
 					return enchantment != null ? new EnchantmentInstance(enchantment, entry.getValue()) : null;
 				})
-				.collect(Collectors.toList());												  // The resulting list of EnchantmentInstances we got above
+				.collect(Collectors.toList());
 	}
 
 	public TagKey<Item> getItemTag() {
