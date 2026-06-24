@@ -22,20 +22,27 @@ public final class RuneCarvingRecipeProvider {
 
     private RuneCarvingRecipeProvider() {}
 
-    public static void registerAll(RecipeOutput recipeOutput, List<? extends ItemLike> shrineTiers) {
+    public static void registerShrineTiers(RecipeOutput recipeOutput, List<? extends ItemLike> shrineTiers) {
         for (ItemLike shrineTier : shrineTiers) {
+            registerBlankRuneFromShrineTier(recipeOutput, shrineTier);
+
             for (Rubination rubination : Rubination.carvableValues()) {
-                register(recipeOutput, shrineTier, rubination);
+                registerCarvedRuneFromInput(recipeOutput, shrineTier, rubination);
             }
         }
     }
 
-    private static void register(RecipeOutput recipeOutput, ItemLike shrineTier, Rubination rubination) {
-        ItemStack result = RuneCarvingHelper.withCarving(new ItemStack(RNItems.RUNE.get()), rubination);
+    public static void registerBlankRune(RecipeOutput recipeOutput) {
+        for (Rubination rubination : Rubination.carvableValues()) {
+            registerCarvedRuneFromInput(recipeOutput, RNItems.RUNE.get(), rubination);
+        }
+    }
+
+    private static void registerBlankRuneFromShrineTier(RecipeOutput recipeOutput, ItemLike shrineTier) {
+        ItemStack result = new ItemStack(RNItems.RUNE.get());
 
         String shrineTierName = itemName(shrineTier);
-        int order = Rubination.carvableValues().indexOf(rubination);
-        String recipeName = "carved_rune_" + String.format("%02d", order) + "_" + rubination.getSerializedName() + "_from_" + shrineTierName;
+        String recipeName = "carved_rune_00_blank_from_" + shrineTierName;
         ResourceLocation recipeId = RubinatedNether.id(recipeName);
 
         StonecutterRecipe recipe = new StonecutterRecipe(
@@ -49,8 +56,33 @@ public final class RuneCarvingRecipeProvider {
                 recipe,
                 Advancement.Builder.advancement()
                         .parent(ResourceLocation.withDefaultNamespace("recipes/root"))
-                        .addCriterion("has_rune", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.RUNE))
                         .addCriterion("has_" + shrineTierName, InventoryChangeTrigger.TriggerInstance.hasItems(shrineTier))
+                        .rewards(AdvancementRewards.Builder.recipe(recipeId))
+                        .requirements(AdvancementRequirements.Strategy.OR)
+                        .build(RubinatedNether.id("recipes/" + recipeName))
+        );
+    }
+
+    private static void registerCarvedRuneFromInput(RecipeOutput recipeOutput, ItemLike input, Rubination rubination) {
+        ItemStack result = RuneCarvingHelper.withCarving(new ItemStack(RNItems.RUNE.get()), rubination);
+
+        String inputName = itemName(input);
+        int order = Rubination.carvableValues().indexOf(rubination) + 1;
+        String recipeName = "carved_rune_" + String.format("%02d", order) + "_" + rubination.getSerializedName() + "_from_" + inputName;
+        ResourceLocation recipeId = RubinatedNether.id(recipeName);
+
+        StonecutterRecipe recipe = new StonecutterRecipe(
+                "rune_carving",
+                Ingredient.of(input),
+                result
+        );
+
+        recipeOutput.accept(
+                recipeId,
+                recipe,
+                Advancement.Builder.advancement()
+                        .parent(ResourceLocation.withDefaultNamespace("recipes/root"))
+                        .addCriterion("has_" + inputName, InventoryChangeTrigger.TriggerInstance.hasItems(input))
                         .rewards(AdvancementRewards.Builder.recipe(recipeId))
                         .requirements(AdvancementRequirements.Strategy.OR)
                         .build(RubinatedNether.id("recipes/" + recipeName))

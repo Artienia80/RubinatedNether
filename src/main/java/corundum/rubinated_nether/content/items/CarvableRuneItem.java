@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.items;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +22,16 @@ public class CarvableRuneItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        RuneCarvingHelper.appendCarvingTooltip(stack, tooltipComponents);
+        Rubination carving = RuneCarvingHelper.getCarving(stack);
+        if (carving == Rubination.EMPTY) return;
+
+        var level = Minecraft.getInstance().level;
+        if (level == null) return;
+
+        for (var enchant : carving.getEnchantments(level.registryAccess())) {
+            if (enchant == null) continue;
+
+            tooltipComponents.add(RuneInertEnchantmentText.getFullnameInert(enchant.enchantment, enchant.level));
+        }
     }
 }

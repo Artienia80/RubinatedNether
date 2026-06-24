@@ -153,7 +153,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.SHRINE_STONE_TILES_WALL
 		);
 
-		RuneCarvingRecipeProvider.registerAll(recipeOutput, java.util.List.of(
+		RuneCarvingRecipeProvider.registerShrineTiers(recipeOutput, java.util.List.of(
 				RNBlocks.SHRINE_STONE.get(),
 				RNBlocks.COBBLED_SHRINE_STONE.get(),
 				RNBlocks.POLISHED_SHRINE_STONE.get(),
@@ -161,6 +161,8 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
 				RNBlocks.SHRINE_STONE_TILES.get()
 		));
+
+		RuneCarvingRecipeProvider.registerBlankRune(recipeOutput);
 
 		Bronzecutter(recipeOutput, RNBlocks.BRONZE_BLOCK,
 				RNBlocks.CHISELED_BRONZE,

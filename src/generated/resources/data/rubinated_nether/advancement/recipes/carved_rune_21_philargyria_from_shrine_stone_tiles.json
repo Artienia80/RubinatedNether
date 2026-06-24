@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_shrine_stone_tiles": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:shrine_stone_tiles"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_shrine_stone_tiles"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "rubinated_nether:carved_rune_21_philargyria_from_shrine_stone_tiles"
+    ]
+  },
+  "sends_telemetry_event": true
+}

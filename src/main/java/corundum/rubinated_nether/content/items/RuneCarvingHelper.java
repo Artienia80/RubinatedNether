@@ -1,13 +1,10 @@
 package corundum.rubinated_nether.content.items;
 
 import corundum.rubinated_nether.content.RNDataComponents;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomModelData;
-
-import java.util.List;
 
 public final class RuneCarvingHelper {
 
@@ -52,16 +49,5 @@ public final class RuneCarvingHelper {
             return null;
         }
         return Component.translatable("item.rubinated_nether.rune.carved", carving.getCapitalisedName());
-    }
-
-    public static void appendCarvingTooltip(ItemStack stack, List<Component> tooltipComponents) {
-        Rubination carving = getCarving(stack);
-        if (carving == Rubination.EMPTY) {
-            return;
-        }
-        tooltipComponents.add(
-                Component.translatable("item.rubinated_nether.rune.carving_of", carving.getCapitalisedName())
-                        .withStyle(ChatFormatting.GRAY)
-        );
     }
 }

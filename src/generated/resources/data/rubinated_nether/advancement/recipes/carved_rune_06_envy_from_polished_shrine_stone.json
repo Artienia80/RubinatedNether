@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_polished_shrine_stone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:polished_shrine_stone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_polished_shrine_stone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "rubinated_nether:carved_rune_06_envy_from_polished_shrine_stone"
+    ]
+  },
+  "sends_telemetry_event": true
+}
