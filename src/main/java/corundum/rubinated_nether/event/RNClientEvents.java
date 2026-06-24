@@ -40,7 +40,7 @@ public class RNClientEvents {
 
 	@SubscribeEvent
 	public static void onClientSetup(FMLClientSetupEvent event) {
-	}
+    }
 
 	@SubscribeEvent
 	public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
