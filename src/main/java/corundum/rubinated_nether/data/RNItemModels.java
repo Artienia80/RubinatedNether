@@ -3,6 +3,7 @@ package corundum.rubinated_nether.data;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.content.trim.RNTrimMaterials;
 import net.minecraft.data.PackOutput;
@@ -16,6 +17,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class RNItemModels extends ItemModelProvider {
 
@@ -31,6 +33,18 @@ public class RNItemModels extends ItemModelProvider {
 		trimMaterials.put(TrimMaterials.DIAMOND, 0.8F);
 		trimMaterials.put(TrimMaterials.LAPIS, 0.9F);
 		trimMaterials.put(TrimMaterials.AMETHYST, 1.0F);
+	}
+
+	// Fixed CMD values per category — must be in ascending order for ≥ matching to work correctly
+	private static final Map<String, Integer> CATEGORY_CMD = new LinkedHashMap<>();
+	static {
+		CATEGORY_CMD.put("tool",     1);
+		CATEGORY_CMD.put("weapon",   2);
+		CATEGORY_CMD.put("armor",    3);
+		CATEGORY_CMD.put("bow",      4);
+		CATEGORY_CMD.put("crossbow", 5);
+		CATEGORY_CMD.put("trident",  6);
+		CATEGORY_CMD.put("mace",     7);
 	}
 
 	public RNItemModels(PackOutput output, ExistingFileHelper fileHelper) {
@@ -229,8 +243,7 @@ public class RNItemModels extends ItemModelProvider {
 
 		// Basic items
 		basicItems(
-
-                RNBlocks.RUNESTONE,
+				RNBlocks.RUNESTONE,
 				RNItems.RUBY_LENS,
 				RNItems.RUBY,
 				RNItems.MOLTEN_RUBY,
@@ -246,18 +259,10 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.RITUAL_OFFERING,
 				RNItems.COGWHEEL,
 				RNItems.WINDING_KEY,
-				RNItems.RUNE,
 				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
 				RNItems.MOLTEN_RUBY_BUCKET,
 
 				RNItems.COGS_BANNER_PATTERN.get()
-//				RNItems.RUNE_TOOL_BANNER_PATTERN.get(),
-//				RNItems.RUNE_ARMOR_BANNER_PATTERN.get(),
-//				RNItems.RUNE_WEAPON_BANNER_PATTERN.get(),
-//				RNItems.RUNE_BOW_BANNER_PATTERN.get(),
-//				RNItems.RUNE_CROSSBOW_BANNER_PATTERN.get(),
-//				RNItems.RUNE_MACE_BANNER_PATTERN.get(),
-//				RNItems.RUNE_TRIDENT_BANNER_PATTERN.get()
 		);
 
 		// Runes
@@ -286,18 +291,18 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.ARDENTER_RUNE,
 				RNItems.NIMIS_RUNE
 		);
-
 		runeItem("trident",
 				RNItems.IRA_RUNE,
 				RNItems.INVIDIA_RUNE,
 				RNItems.GULA_RUNE
 		);
-
 		runeItem("mace",
 				RNItems.IGNAVIA_RUNE,
 				RNItems.KENODOXIA_RUNE,
 				RNItems.PHILARGYRIA_RUNE
 		);
+
+		carvedRuneItem();
 
 		withExistingParent(
 				RNBlocks.BRAZIER.getId().toString(),
@@ -313,23 +318,33 @@ public class RNItemModels extends ItemModelProvider {
 		);
 	}
 
+	private void carvedRuneItem() {
+		var builder = withExistingParent(
+				RNItems.RUNE.getId().toString(),
+				mcLoc("item/generated")
+		).texture("layer0", modLoc("item/rune"));
 
+		// One override per category, in ascending CMD order (required for ≥ predicate matching)
+		for (var entry : CATEGORY_CMD.entrySet()) {
+			builder.override()
+					.predicate(mcLoc("custom_model_data"), entry.getValue())
+					.model(getExistingFile(modLoc("item/rune_" + entry.getKey() + "_carved")));
+		}
+	}
 
 	private void customItemTextures(String baseTexture, DeferredBlock<?>... blocks) {
 		for (var block : blocks) {
 			String blockName = block.getId().getPath();
 
-			var model = withExistingParent(
+			withExistingParent(
 					block.getId().toString(),
 					mcLoc("item/generated")
 			).texture("layer0", modLoc(baseTexture + "/" + blockName));
 
-
-			var waxableModel = withExistingParent(
+			withExistingParent(
 					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
 					mcLoc("item/generated")
 			).texture("layer0", modLoc(baseTexture + "/" + blockName));
-
 		}
 	}
 

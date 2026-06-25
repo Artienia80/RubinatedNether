@@ -13,11 +13,19 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.EnumMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class RNItems {
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(RubinatedNether.MODID);
+
+	private static final Map<Rubination, DeferredItem<RuneItem>> RUNE_BY_RUBINATION = new EnumMap<>(Rubination.class);
+
+	public static DeferredItem<RuneItem> getRuneFor(Rubination rubination) {
+		return RUNE_BY_RUBINATION.get(rubination);
+	}
 
 	public static final DeferredItem<Item> RUBY = basicItem("ruby");
 	public static final DeferredItem<Item> MOLTEN_RUBY = basicItem("molten_ruby");
@@ -25,7 +33,10 @@ public class RNItems {
 	public static final DeferredItem<Item> MOLTEN_RUBY_NUGGET = basicItem("molten_ruby_nugget");
 
 	// Runes
-	public static final DeferredItem<Item> RUNE = basicItem("rune");
+	public static final DeferredItem<Item> RUNE = ITEMS.register(
+			"rune",
+			() -> new CarvableRuneItem(new Item.Properties())
+	);
 	public static final DeferredItem<RuneItem> GREED_RUNE = makeRune(Rubination.GREED);
 	public static final DeferredItem<RuneItem> WRATH_RUNE = makeRune(Rubination.WRATH);
 	public static final DeferredItem<RuneItem> SLOTH_RUNE = makeRune(Rubination.SLOTH);
@@ -74,9 +85,9 @@ public class RNItems {
 			"bronze_drill",
 			() -> new DrillItem(
 					new Item.Properties()
-                            .stacksTo(1)
-                            .component(DataComponents.UNBREAKABLE, new Unbreakable(false))
-                            .component(RNDataComponents.BLOCKS_BROKEN, 0)
+							.stacksTo(1)
+							.component(DataComponents.UNBREAKABLE, new Unbreakable(false))
+							.component(RNDataComponents.BLOCKS_BROKEN, 0)
 			)
 	);
 
@@ -189,7 +200,7 @@ public class RNItems {
 		// Get the corresponding banner pattern based on the rubination's item tag
 		RNBannerPatterns.BannerPatternEntry bannerPattern = getBannerPatternForRubination(rubination);
 
-		return ITEMS.register(
+		DeferredItem<RuneItem> registered = ITEMS.register(
 				rubination.name().toLowerCase(Locale.ROOT).concat("_rune"), // Converts name to lowercase
 				() -> new RuneItem(
 						rubination,
@@ -198,6 +209,9 @@ public class RNItems {
 						new Item.Properties().stacksTo(1).rarity(RNRarity.RUBINATED_NETHER_RUBY.get())
 				)
 		);
+
+		RUNE_BY_RUBINATION.put(rubination, registered);
+		return registered;
 	}
 
 	private static RNBannerPatterns.BannerPatternEntry getBannerPatternForRubination(Rubination rubination) {

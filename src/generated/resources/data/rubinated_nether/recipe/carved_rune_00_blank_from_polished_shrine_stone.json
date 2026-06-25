@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:stonecutting",
+  "group": "rune_carving",
+  "ingredient": {
+    "item": "rubinated_nether:polished_shrine_stone"
+  },
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:rune"
+  }
+}

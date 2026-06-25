@@ -1,5 +1,49 @@
 {
   "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "rubinated_nether:item/rune_tool_carved",
+      "predicate": {
+        "minecraft:custom_model_data": 1.0
+      }
+    },
+    {
+      "model": "rubinated_nether:item/rune_weapon_carved",
+      "predicate": {
+        "minecraft:custom_model_data": 2.0
+      }
+    },
+    {
+      "model": "rubinated_nether:item/rune_armor_carved",
+      "predicate": {
+        "minecraft:custom_model_data": 3.0
+      }
+    },
+    {
+      "model": "rubinated_nether:item/rune_bow_carved",
+      "predicate": {
+        "minecraft:custom_model_data": 4.0
+      }
+    },
+    {
+      "model": "rubinated_nether:item/rune_crossbow_carved",
+      "predicate": {
+        "minecraft:custom_model_data": 5.0
+      }
+    },
+    {
+      "model": "rubinated_nether:item/rune_trident_carved",
+      "predicate": {
+        "minecraft:custom_model_data": 6.0
+      }
+    },
+    {
+      "model": "rubinated_nether:item/rune_mace_carved",
+      "predicate": {
+        "minecraft:custom_model_data": 7.0
+      }
+    }
+  ],
   "textures": {
     "layer0": "rubinated_nether:item/rune"
   }

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:stonecutting",
+  "group": "rune_carving",
+  "ingredient": {
+    "item": "rubinated_nether:cobbled_shrine_stone"
+  },
+  "result": {
+    "components": {
+      "minecraft:custom_model_data": 2,
+      "rubinated_nether:rune_carving": "vainglory"
+    },
+    "count": 1,
+    "id": "rubinated_nether:rune"
+  }
+}

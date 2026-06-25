@@ -7,6 +7,7 @@ import net.minecraft.world.item.BannerPatternItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.List;
 
@@ -40,14 +41,19 @@ public class RuneItem extends BannerPatternItem {
 			List<Component> tooltipComponents,
 			TooltipFlag tooltipFlag
 	) {
-		for(var enchant : this.getRubination().getEnchantments(Minecraft.getInstance().level.registryAccess())) {
-			stack.enchant(enchant.enchantment, enchant.level);
-		}
-
 		Component patternDesc = Component.translatable(this.getDescriptionId() + ".desc")
 				.withStyle(style -> style
 						.withColor(net.minecraft.ChatFormatting.DARK_GRAY)
 						.withItalic(true));
 		tooltipComponents.add(patternDesc);
+
+		var level = Minecraft.getInstance().level;
+		if (level == null) return;
+
+		for (var enchant : this.getRubination().getEnchantments(level.registryAccess())) {
+			if (enchant == null) continue;
+
+			tooltipComponents.add(Enchantment.getFullname(enchant.enchantment, enchant.level));
+		}
 	}
 }
