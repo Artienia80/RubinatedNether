@@ -40,7 +40,6 @@ public class RubinatedNetherClient {
 	public static final int WHITE = 0xFFFFFFFF;
 
 	private static final VoxelShape SMOKE_SEGMENT_BASE = Shapes.box(0.3, 0, 0.3, 0.7, 1, 0.7);
-	private static final int BACK_RANGE = 15;
 	private static int tickCounter = 0;
 
 	public static void client(IEventBus bussin) {
@@ -57,38 +56,6 @@ public class RubinatedNetherClient {
 
 	public static void registeModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(RubyLensModel.LAYER_LOCATION, RubyLensModel::createBodyLayer);
-	}
-
-	private static VoxelShape rotateSmokeShape(Direction facing) {
-		return switch (facing.getAxis()) {
-			case Z -> Shapes.box(0.125, 0.125, 0, 0.875, 0.875, 1); // was 0.3/0.7
-			case X -> Shapes.box(0, 0.125, 0.125, 1, 0.875, 0.875);
-			case Y -> Shapes.box(0.125, 0, 0.125, 0.875, 1, 0.875);
-		};
-	}
-
-	private static boolean isFaceBlocked(BlockGetter level, BlockPos pos, Direction dir) {
-		BlockPos adj = pos.relative(dir);
-		BlockState adjState = level.getBlockState(adj);
-		if (adjState.is(RNTags.Blocks.SMOKE_PASSTHROUGH)) return false;
-		VoxelShape col = adjState.getCollisionShape(level, adj);
-		if (col.isEmpty()) return false;
-		return !Shapes.join(col, rotateSmokeShape(dir), BooleanOp.AND).isEmpty();
-	}
-
-	private static int calculateSmokeRange(BlockGetter level, BlockPos pos, Direction facing, int maxRange) {
-		BlockPos.MutableBlockPos cursor = pos.mutable();
-		VoxelShape smokeColumn = rotateSmokeShape(facing);
-
-		for (int i = 0; i < maxRange; i++) {
-			cursor.move(facing);
-			BlockState state = level.getBlockState(cursor);
-			if (state.is(RNTags.Blocks.SMOKE_PASSTHROUGH)) continue;
-			VoxelShape collision = Shapes.join(state.getCollisionShape(level, cursor), smokeColumn, BooleanOp.AND);
-			if (!collision.isEmpty()) return i;
-		}
-
-		return maxRange;
 	}
 
 	private static AABB buildDetectionAABB(BlockPos pos, Direction facing, int range) {
@@ -113,8 +80,8 @@ public class RubinatedNetherClient {
 	}
 
 	private static void spawnSteamParticles(net.minecraft.client.multiplayer.ClientLevel level,
-	                                        BlockPos pos, Direction facing, int smokeRange,
-	                                        double initialSpeed, double spawnOffset, RandomSource random) {
+	                                        BlockPos pos, Direction facing,
+                                            double initialSpeed, double spawnOffset, RandomSource random) {
 		double ox = pos.getX() + 0.5;
 		double oy = pos.getY() + 0.5;
 		double oz = pos.getZ() + 0.5;
@@ -169,31 +136,32 @@ public class RubinatedNetherClient {
 			RandomSource random = level.getRandom();
 
 			if (ventBlock.getAge() == TarnishStage.CRYSTALLIZED) {
-				if (isFaceBlocked(level, pos, facing)) return;
-				AABB detectionBox = buildDetectionAABB(pos, facing, (int) RNConfig.crystallizedVentRange);
+				if (TarnishingBronzeVentBlock.isFaceBlocked(level, pos, facing)) return;
+				AABB detectionBox = buildDetectionAABB(pos, facing, RNConfig.crystallizedVentRange);
 				List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, detectionBox);
 				if (entities.isEmpty()) return;
-				int smokeRange = calculateSmokeRange(level, pos, facing, (int) RNConfig.crystallizedVentRange);
+				int smokeRange = TarnishingBronzeVentBlock.calculateSmokeRange(level, pos, facing, RNConfig.crystallizedVentRange);
 				if (smokeRange <= 0) return;
-				spawnSteamParticles(level, pos, facing, smokeRange, RNConfig.crystallizedVentRange / 40.0, 1.0, random);
+				spawnSteamParticles(level, pos, facing, RNConfig.crystallizedVentRange / 40.0, 1.0, random);
 				return;
 			}
 
 			if (!state.getValue(TarnishingBronzeVentBlock.POWERED)) return;
 			int signal = state.getValue(TarnishingBronzeVentBlock.SIGNAL_STRENGTH);
 			if (signal <= 0) return;
+            signal = signal + ventBlock.getAge().getId();
 
-			if (!isFaceBlocked(level, pos, facing)) {
-				int smokeRange = calculateSmokeRange(level, pos, facing, signal);
+			if (!TarnishingBronzeVentBlock.isFaceBlocked(level, pos, facing)) {
+				int smokeRange = TarnishingBronzeVentBlock.calculateSmokeRange(level, pos, facing, signal);
 				if (smokeRange > 0)
-					spawnSteamParticles(level, pos, facing, smokeRange, signal / 40.0, 1.0, random);
+					spawnSteamParticles(level, pos, facing, signal / 40.0, 1.0, random);
 			}
 
 			Direction back = facing.getOpposite();
-			if (!isFaceBlocked(level, pos, back)) {
-				int backRange = calculateSmokeRange(level, pos, back, BACK_RANGE);
+			if (!TarnishingBronzeVentBlock.isFaceBlocked(level, pos, back)) {
+				int backRange = TarnishingBronzeVentBlock.calculateSmokeRange(level, pos, back, signal);
 				if (backRange > 0)
-					spawnSteamParticles(level, pos, back, backRange, -(signal / 40.0), backRange, random);
+					spawnSteamParticles(level, pos, back, -(signal / 40.0), backRange, random);
 			}
 		});
 	}
