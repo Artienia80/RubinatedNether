@@ -33,8 +33,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	private static final ResourceLocation RUBINATION_SLOT_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_normal");
 	private static final ResourceLocation RUBINATION_SLOT_UNRUBINATED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_red");
 
-	private static final ResourceLocation UNDISCOVERED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/rune_icon_brown.png");
-	private static final ResourceLocation DISABLED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/rune_icon_gray.png");
+	private static final ResourceLocation DISABLED_RUNE = RubinatedNether.id("textures/item/rune.png");
 
 	private static final ResourceLocation RUBINATION_ALTAR_LOCATION = RubinatedNether.id("textures/gui/rubination_altar.png");
 
@@ -145,7 +144,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				guiGraphics.pose().popPose();
 
 			} else if (hasClue) {
-				// Has clue but area is not rubinated — normal slot, real rune icon, not clickable
+				// Has clue but area is not rubinated — normal slot, carved rune icon, not clickable
 				RenderSystem.enableBlend();
 				guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 21, 59);
 
@@ -170,7 +169,8 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 
 				if (hasItemButNoRubination) {
 					guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 21, 59);  // brown
-					guiGraphics.blit(UNDISCOVERED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+					String categoryName = getItemCategoryTextureName(currentItem);
+					guiGraphics.blit(RubinatedNether.id("textures/item/rune_" + categoryName + "_carved.png"), i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
 					textColor = (COLOR_ENABLED & 16711422) >> 1; // Dimmed version
 				} else {
 					guiGraphics.blitSprite(RUBINATION_SLOT_UNDISCOVERED_SPRITE, i1, j1, 21, 59);  // gray
@@ -235,6 +235,16 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 
 	private @NotNull RegistryAccess getRegistryAccess() {
 		return this.minecraft.level.registryAccess();
+	}
+
+	private static String getItemCategoryTextureName(ItemStack stack) {
+		if (stack.is(RNTags.Items.RUBINATION_WEAPON)) return "weapon";
+		if (stack.is(RNTags.Items.RUBINATION_ARMOR)) return "armor";
+		if (stack.is(RNTags.Items.RUBINATION_BOW)) return "bow";
+		if (stack.is(RNTags.Items.RUBINATION_CROSSBOW)) return "crossbow";
+		if (stack.is(RNTags.Items.RUBINATION_TRIDENT)) return "trident";
+		if (stack.is(RNTags.Items.RUBINATION_MACE)) return "mace";
+		return "tool";
 	}
 
 	private @NotNull ArrayList<Optional<Holder.Reference<Enchantment>>> getEnchantReferences(int l) {
