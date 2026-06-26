@@ -695,7 +695,7 @@
   "rubinated_nether.midnightconfig.brazierPowerDisableFireOverlay": "Brazier Power Disable Fire Overlay",
   "rubinated_nether.midnightconfig.brazierPowerLavaImmuneItems": "Brazier Power Lava-Immune Items",
 
-  "rubinated_nether.midnightconfig.altarInscriptionCost": "Altar Inscription Cost",
+  "rubinated_nether.midnightconfig.altarRubinationCost": "Altar Rubination Cost",
   "rubinated_nether.midnightconfig.altarLesserBlessingTime": "Altar Lesser Blessing Duration",
   "rubinated_nether.midnightconfig.altarGreaterBlessingTime": "Altar Greater Blessing Duration",
   "rubinated_nether.midnightconfig.altarFullBlessingThreshold": "Altar Full Blessing Threshold",

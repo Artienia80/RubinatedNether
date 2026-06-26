@@ -2,16 +2,13 @@ package corundum.rubinated_nether.content.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
-import corundum.rubinated_nether.content.RubinationConverter;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.menu.RubinationMenu;
 import corundum.rubinated_nether.utils.RubinationNames;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
@@ -34,19 +31,14 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	private static final ResourceLocation RUBINATION_SLOT_HIGHLIGHTED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_highlighted");
 	private static final ResourceLocation RUBINATION_SLOT_UNDISCOVERED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_undiscovered");
 	private static final ResourceLocation RUBINATION_SLOT_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot");
-	private static final ResourceLocation RUBINATION_SLOT_DISABLED_INSCRIPTION_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_disabled_inscription");
-	private static final ResourceLocation RUBINATION_SLOT_INSCRIPTION_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_inscription");
 	private static final ResourceLocation UNDISCOVERED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/undiscovered_rune.png");
 	private static final ResourceLocation DISABLED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/disabled_rune.png");
-	private static final ResourceLocation INSCRIPTION_DISABLED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/inscription_disabled_rune.png");
 	private static final ResourceLocation RUBINATION_ALTAR_LOCATION = RubinatedNether.id("textures/gui/rubination_altar.png");
 
 	// Font colors
 	private static final int COLOR_ENABLED = 6839882;              // Default enabled (purple-ish)
 	private static final int COLOR_HIGHLIGHTED = 16777088;         // Highlighted/hover (yellow-gold)
 	private static final int COLOR_DISABLED = 0x494949;            // Disabled dark gray
-	private static final int COLOR_INSCRIPTION_ENABLED = 0xD34343; // Inscription mode enabled (red)
-	private static final int COLOR_INSCRIPTION_DISABLED = 0x990B31; // Inscription mode disabled (dark red)
 
 	private boolean hasEnoughRubinatedBlocks = false;
 	private int tickCounter = 0;
@@ -62,21 +54,12 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 
 	private void updateRubinatedBlockStatus() {
 		if (this.minecraft.player != null && this.minecraft.level != null) {
-			BlockPos playerPos = this.minecraft.player.blockPosition();
 			if (this.minecraft.player.getAbilities().instabuild) {
 				hasEnoughRubinatedBlocks = true;
 			} else {
-				hasEnoughRubinatedBlocks = RubinationConverter.hasEnoughBlocksForInscription(this.minecraft.level, playerPos);
+				hasEnoughRubinatedBlocks = this.menu.hasEnoughRubinatedBlocks();
 			}
 		}
-	}
-
-	private boolean isInscriptionMode() {
-		ItemStack rubinatableSlot = this.menu.getSlot(0).getItem();
-		ItemStack consumableSlot = this.menu.getSlot(1).getItem();
-
-		// Inscription mode if there's a blank rune in the LEFT slot OR inscription item in RIGHT slot
-		return rubinatableSlot.is(RNItems.RUNE.get()) || consumableSlot.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM);
 	}
 
 	protected void init() {
@@ -102,7 +85,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 			var j1 = j + 16;
 			var d0 = mouseX - i1;
 			var d1 = mouseY - j1;
-			if (d0 >= 0.0 && d1 >= 0.0 && d0 < 21.0 && d1 < 59.0 && this.menu.clickMenuButton(this.minecraft.player, k)) {
+			if (d0 >= 0.0 && d1 >= 0.0 && d0 < 21.0 && d1 < 59.0) {
 				this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, k);
 				return true;
 			}
@@ -114,8 +97,6 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
 		var i = (this.width - this.imageWidth) / 2;
 		var j = (this.height - this.imageHeight) / 2;
-		var k = this.menu.getItemCount();
-		boolean inscriptionMode = isInscriptionMode();
 
 		guiGraphics.blit(RUBINATION_ALTAR_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
@@ -130,23 +111,8 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 			var formattedtext = cachedNames[l];
 			int textColor;
 
-			// Check if we can show options based on mode
-			boolean canShowOptions = false;
-
-			if (inscriptionMode) {
-				// For inscription mode: need BOTH blank rune AND inscription item AND enough blocks (or creative)
-				ItemStack rubinatableSlot = this.menu.getSlot(0).getItem();
-				ItemStack consumableSlot = this.menu.getSlot(1).getItem();
-				boolean hasBothItems = rubinatableSlot.is(RNItems.RUNE.get()) && consumableSlot.is(RNTags.Items.ALTAR_INSCRIPTION_ITEM);
-
-				canShowOptions = hasBothItems
-						&& (hasEnoughRubinatedBlocks || this.minecraft.player.getAbilities().instabuild)
-						&& this.menu.rubinationClue[l][l] != -1;
-			} else {
-				// For rubination mode: need keys (or creative)
-				canShowOptions = (k >= 1 || this.minecraft.player.getAbilities().instabuild)
-						&& this.menu.rubinationClue[l][l] != -1;
-			}
+			boolean canShowOptions = (hasEnoughRubinatedBlocks || this.minecraft.player.getAbilities().instabuild)
+					&& this.menu.rubinationClue[l][l] != -1;
 
 			if (canShowOptions) {
 				var j2 = mouseX - i1;
@@ -156,13 +122,8 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 					guiGraphics.blitSprite(RUBINATION_SLOT_HIGHLIGHTED_SPRITE, i1, j1, 21, 59);
 					textColor = COLOR_HIGHLIGHTED;
 				} else {
-					if (inscriptionMode) {
-						guiGraphics.blitSprite(RUBINATION_SLOT_INSCRIPTION_SPRITE, i1, j1, 21, 59);
-						textColor = COLOR_INSCRIPTION_ENABLED;
-					} else {
-						guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 21, 59);
-						textColor = COLOR_ENABLED;
-					}
+					guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 21, 59);
+					textColor = COLOR_ENABLED;
 				}
 
 				var result = Rubination.parseRubinationFromEnchantList(getRegistryAccess(), getEnchantReferences(l));
@@ -182,22 +143,14 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				boolean hasRubinatable = currentItem != ItemStack.EMPTY && currentItem.is(RNTags.Items.RUBINATABLE);
 				boolean hasItemButNoRubination = hasRubinatable && !hasRubinationOptions;
 
-				if (inscriptionMode) {
-					// Disabled inscription mode
-					guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_INSCRIPTION_SPRITE, i1, j1, 21, 59);
-					guiGraphics.blit(INSCRIPTION_DISABLED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
-					textColor = COLOR_INSCRIPTION_DISABLED;
+				if (hasItemButNoRubination) {
+					guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 21, 59);
+					guiGraphics.blit(UNDISCOVERED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+					textColor = (COLOR_ENABLED & 16711422) >> 1; // Dimmed version
 				} else {
-					// Disabled rubination mode
-					if (hasItemButNoRubination) {
-						guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 21, 59);
-						guiGraphics.blit(UNDISCOVERED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
-						textColor = (COLOR_ENABLED & 16711422) >> 1; // Dimmed version
-					} else {
-						guiGraphics.blitSprite(RUBINATION_SLOT_UNDISCOVERED_SPRITE, i1, j1, 21, 59);
-						guiGraphics.blit(DISABLED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
-						textColor = COLOR_DISABLED;
-					}
+					guiGraphics.blitSprite(RUBINATION_SLOT_UNDISCOVERED_SPRITE, i1, j1, 21, 59);
+					guiGraphics.blit(DISABLED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+					textColor = COLOR_DISABLED;
 				}
 
 				RenderSystem.disableBlend();
@@ -210,8 +163,6 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	}
 
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-		var flag = this.minecraft.player.getAbilities().instabuild;
-
 		super.render(guiGraphics, mouseX, mouseY, partialTick);
 		this.renderTooltip(guiGraphics, mouseX, mouseY);
 
@@ -219,7 +170,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 			var optionalList = getEnchantReferences(j);
 			var result = Rubination.parseRubinationFromEnchantList(getRegistryAccess(), optionalList);
 
-			if (this.isHovering(42 + (36 * j), 16, 21, 59, mouseX, mouseY) && (this.menu.getItemInSlot() != ItemStack.EMPTY || isInscriptionMode())) {
+			if (this.isHovering(42 + (36 * j), 16, 21, 59, mouseX, mouseY) && this.menu.getItemInSlot() != ItemStack.EMPTY) {
 				var list = new ArrayList<Component>();
 
 				if (optionalList.getFirst().isEmpty()) {
@@ -247,9 +198,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 	@Override
 	public void containerTick() {
 		super.containerTick();
-		if (isInscriptionMode()) {
-			updateRubinatedBlockStatus();
-		}
+		updateRubinatedBlockStatus();
 		tickCounter++;
 		if (tickCounter >= NAME_UPDATE_INTERVAL) {
 			tickCounter = 0;
