@@ -27,18 +27,22 @@ import java.util.Optional;
 
 @OnlyIn(Dist.CLIENT)
 public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
-	private static final ResourceLocation RUBINATION_SLOT_DISABLED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_disabled");
+	private static final ResourceLocation RUBINATION_SLOT_DISABLED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_brown");
 	private static final ResourceLocation RUBINATION_SLOT_HIGHLIGHTED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_highlighted");
-	private static final ResourceLocation RUBINATION_SLOT_UNDISCOVERED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_undiscovered");
-	private static final ResourceLocation RUBINATION_SLOT_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot");
-	private static final ResourceLocation UNDISCOVERED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/undiscovered_rune.png");
-	private static final ResourceLocation DISABLED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/disabled_rune.png");
+	private static final ResourceLocation RUBINATION_SLOT_UNDISCOVERED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_gray");
+	private static final ResourceLocation RUBINATION_SLOT_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_normal");
+	private static final ResourceLocation RUBINATION_SLOT_UNRUBINATED_SPRITE = RubinatedNether.id("rubination_altar/rubination_slot_red");
+
+	private static final ResourceLocation UNDISCOVERED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/rune_icon_brown.png");
+	private static final ResourceLocation DISABLED_RUNE = RubinatedNether.id("textures/gui/sprites/rubination_altar/rune_icon_gray.png");
+
 	private static final ResourceLocation RUBINATION_ALTAR_LOCATION = RubinatedNether.id("textures/gui/rubination_altar.png");
 
 	// Font colors
 	private static final int COLOR_ENABLED = 6839882;              // Default enabled (purple-ish)
 	private static final int COLOR_HIGHLIGHTED = 16777088;         // Highlighted/hover (yellow-gold)
 	private static final int COLOR_DISABLED = 0x494949;            // Disabled dark gray
+	private static final int COLOR_RUBINATED = 0xAA3333;           // Rubinated area, clickable (red)
 
 	private boolean hasEnoughRubinatedBlocks = false;
 	private int tickCounter = 0;
@@ -111,10 +115,15 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 			var formattedtext = cachedNames[l];
 			int textColor;
 
-			boolean canShowOptions = (hasEnoughRubinatedBlocks || this.minecraft.player.getAbilities().instabuild)
-					&& this.menu.rubinationClue[l][l] != -1;
+			boolean hasClue = this.menu.rubinationClue[l][l] != -1;
+			boolean isCreative = this.minecraft.player.getAbilities().instabuild;
+			boolean canAfford = hasEnoughRubinatedBlocks || isCreative;
 
-			if (canShowOptions) {
+			// Three states:
+			// 1. Has clue AND area is rubinated (can afford) → red slot, clickable (normal/highlighted sprite)
+			// 2. Has clue BUT area is NOT rubinated → normal slot, visible but not clickable
+			// 3. No clue → undiscovered (brown/gray sprite)
+			if (hasClue && canAfford) {
 				var j2 = mouseX - i1;
 				var k2 = mouseY - j1;
 				RenderSystem.enableBlend();
@@ -122,12 +131,11 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 					guiGraphics.blitSprite(RUBINATION_SLOT_HIGHLIGHTED_SPRITE, i1, j1, 21, 59);
 					textColor = COLOR_HIGHLIGHTED;
 				} else {
-					guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 21, 59);
-					textColor = COLOR_ENABLED;
+					guiGraphics.blitSprite(RUBINATION_SLOT_UNRUBINATED_SPRITE, i1, j1, 21, 59);
+					textColor = COLOR_RUBINATED;
 				}
 
 				var result = Rubination.parseRubinationFromEnchantList(getRegistryAccess(), getEnchantReferences(l));
-
 				guiGraphics.blit(RubinatedNether.id("textures/item/rune_" + Rubination.parseRubinationTextureName(result) + ".png"), i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
 
 				RenderSystem.disableBlend();
@@ -135,7 +143,24 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				guiGraphics.pose().translate(-1.5f, 0, 0);
 				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 8, j1 + 20, 1, textColor);
 				guiGraphics.pose().popPose();
+
+			} else if (hasClue) {
+				// Has clue but area is not rubinated — normal slot, real rune icon, not clickable
+				RenderSystem.enableBlend();
+				guiGraphics.blitSprite(RUBINATION_SLOT_SPRITE, i1, j1, 21, 59);
+
+				var result = Rubination.parseRubinationFromEnchantList(getRegistryAccess(), getEnchantReferences(l));
+				guiGraphics.blit(RubinatedNether.id("textures/item/rune_" + Rubination.parseRubinationTextureName(result) + ".png"), i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
+
+				RenderSystem.disableBlend();
+				textColor = COLOR_ENABLED;
+				guiGraphics.pose().pushPose();
+				guiGraphics.pose().translate(-1.5f, 0, 0);
+				guiGraphics.drawWordWrap(this.font, formattedtext, i1 + 8, j1 + 20, 1, textColor);
+				guiGraphics.pose().popPose();
+
 			} else {
+				// No clue — undiscovered
 				RenderSystem.enableBlend();
 				var optionalList = getEnchantReferences(l);
 				ItemStack currentItem = this.menu.getItemInSlot();
@@ -144,11 +169,11 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				boolean hasItemButNoRubination = hasRubinatable && !hasRubinationOptions;
 
 				if (hasItemButNoRubination) {
-					guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 21, 59);
+					guiGraphics.blitSprite(RUBINATION_SLOT_DISABLED_SPRITE, i1, j1, 21, 59);  // brown
 					guiGraphics.blit(UNDISCOVERED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
 					textColor = (COLOR_ENABLED & 16711422) >> 1; // Dimmed version
 				} else {
-					guiGraphics.blitSprite(RUBINATION_SLOT_UNDISCOVERED_SPRITE, i1, j1, 21, 59);
+					guiGraphics.blitSprite(RUBINATION_SLOT_UNDISCOVERED_SPRITE, i1, j1, 21, 59);  // gray
 					guiGraphics.blit(DISABLED_RUNE, i1 + 3, j1 + 2, 0.5f, 0.5f, 16, 16, 16, 16);
 					textColor = COLOR_DISABLED;
 				}
@@ -174,9 +199,11 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 				var list = new ArrayList<Component>();
 
 				if (optionalList.getFirst().isEmpty()) {
+					// No clue — obfuscated name
 					var randomName = RubinationNames.getInstance().getRandomName(this.font, 100);
 					list.add(Component.literal(randomName.getString()).withStyle(ChatFormatting.DARK_RED, ChatFormatting.OBFUSCATED));
 				} else {
+					// Has clue — show full info regardless of rubinated block count
 					list.add(Component.translatable("container." + result.getSerializedName() + ".clue").withStyle(ChatFormatting.DARK_RED));
 					for (var h = 0; h < 3; ++h) {
 						list.add(
