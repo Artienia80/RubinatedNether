@@ -2,10 +2,10 @@ package corundum.rubinated_nether.client;
 
 import corundum.rubinated_nether.client.particles.BloodDripParticle;
 import corundum.rubinated_nether.client.particles.SteamParticle;
+import corundum.rubinated_nether.client.render.RNRenderTypes;
 import corundum.rubinated_nether.client.render.entity.RubyLensModel;
 import corundum.rubinated_nether.client.render.entity.RubyLensRenderLayer;
 import corundum.rubinated_nether.content.RNParticleTypes;
-import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.TarnishingBronzeVentBlock;
 import corundum.rubinated_nether.mixin.accessors.EntityRenderDispatcherAccessor;
@@ -19,18 +19,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.shapes.BooleanOp;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
 import java.util.List;
@@ -39,14 +36,21 @@ import java.util.List;
 public class RubinatedNetherClient {
 	public static final int WHITE = 0xFFFFFFFF;
 
-	private static final VoxelShape SMOKE_SEGMENT_BASE = Shapes.box(0.3, 0, 0.3, 0.7, 1, 0.7);
+	private static final net.minecraft.world.phys.shapes.VoxelShape SMOKE_SEGMENT_BASE =
+			net.minecraft.world.phys.shapes.Shapes.box(0.3, 0, 0.3, 0.7, 1, 0.7);
 	private static int tickCounter = 0;
 
 	public static void client(IEventBus bussin) {
 		bussin.addListener(RubinatedNetherClient::registerEntityLayers);
 		bussin.addListener(RubinatedNetherClient::registeModelLayers);
 		bussin.addListener(RubinatedNetherClient::registerParticleProviders);
+		bussin.addListener(RubinatedNetherClient::registerRenderBuffers);
 		NeoForge.EVENT_BUS.addListener(RubinatedNetherClient::onClientTick);
+	}
+
+	public static void registerRenderBuffers(RegisterRenderBuffersEvent event) {
+		event.registerRenderBuffer(RNRenderTypes.RUBINATED_GLINT);
+		event.registerRenderBuffer(RNRenderTypes.RUBINATED_ENTITY_GLINT);
 	}
 
 	public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
@@ -81,7 +85,7 @@ public class RubinatedNetherClient {
 
 	private static void spawnSteamParticles(net.minecraft.client.multiplayer.ClientLevel level,
 	                                        BlockPos pos, Direction facing,
-                                            double initialSpeed, double spawnOffset, RandomSource random) {
+	                                        double initialSpeed, double spawnOffset, RandomSource random) {
 		double ox = pos.getX() + 0.5;
 		double oy = pos.getY() + 0.5;
 		double oz = pos.getZ() + 0.5;
@@ -149,7 +153,7 @@ public class RubinatedNetherClient {
 			if (!state.getValue(TarnishingBronzeVentBlock.POWERED)) return;
 			int signal = state.getValue(TarnishingBronzeVentBlock.SIGNAL_STRENGTH);
 			if (signal <= 0) return;
-            signal = signal + ventBlock.getAge().getId();
+			signal = signal + ventBlock.getAge().getId();
 
 			if (!TarnishingBronzeVentBlock.isFaceBlocked(level, pos, facing)) {
 				int smokeRange = TarnishingBronzeVentBlock.calculateSmokeRange(level, pos, facing, signal);
