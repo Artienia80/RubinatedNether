@@ -29,7 +29,6 @@ public class RubinatedNetherClient {
 		bussin.addListener(RubinatedNetherClient::registeModelLayers);
 		bussin.addListener(RubinatedNetherClient::registerParticleProviders);
 		bussin.addListener(RubinatedNetherClient::registerRenderBuffers);
-		NeoForge.EVENT_BUS.addListener(RubinatedNetherClient::onClientTick);
 	}
 
 	public static void registerRenderBuffers(RegisterRenderBuffersEvent event) {
