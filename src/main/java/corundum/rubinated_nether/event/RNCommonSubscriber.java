@@ -27,7 +27,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MaceItem;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -92,7 +91,7 @@ public class RNCommonSubscriber {
     }
 
     @SubscribeEvent
-    public static void onPreMaceEntityHurt(LivingDamageEvent.Pre event) {
+    public static void onPreSinkingCurseHurt(LivingDamageEvent.Pre event) {
         var player = event.getEntity();
         var stack = event.getSource().getWeaponItem();
         if(stack == null || !stack.is(Items.MACE)) return;
@@ -111,7 +110,7 @@ public class RNCommonSubscriber {
     }
 
     @SubscribeEvent
-    public static void onPostMaceEntityHurt(LivingDamageEvent.Pre event) {
+    public static void onPostSinkingCurseHurt(LivingDamageEvent.Pre event) {
         var player = event.getEntity();
         var stack = event.getSource().getWeaponItem();
         if(stack == null || !stack.is(Items.MACE)) return;
