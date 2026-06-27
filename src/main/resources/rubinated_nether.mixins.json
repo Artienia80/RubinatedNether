@@ -20,6 +20,7 @@
     "HopperBehaviourMixin",
     "ItemEntityMixin",
     "LevelMixin",
+    "MaceItemMixin",
     "MultishotSpreadMixin",
     "ScreenEffectRendererMixin",
     "ThornsShockwaveMixin",

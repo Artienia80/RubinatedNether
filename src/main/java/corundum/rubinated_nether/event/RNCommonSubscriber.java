@@ -69,6 +69,8 @@ public class RNCommonSubscriber {
         entity.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 72000, 0));
 	}
 
+    /*
+
     @SubscribeEvent
     public static void onLivingRavagingCurseDeath(LivingDropsEvent event) {
         if (event.getSource().getEntity() instanceof LivingEntity killer) {
@@ -108,6 +110,8 @@ public class RNCommonSubscriber {
             player.setDeltaMovement(motion);
         }
     }
+
+     */
 
     @SubscribeEvent
     public static void onPostSinkingCurseHurt(LivingDamageEvent.Pre event) {
