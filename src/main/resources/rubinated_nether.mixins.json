@@ -22,7 +22,6 @@
     "LevelMixin",
     "MaceItemMixin",
     "MultishotSpreadMixin",
-    "RavagingCurseMixin",
     "ScreenEffectRendererMixin",
     "ThornsShockwaveMixin",
     "accessors.AbstractFurnaceBlockEntityAccessor",

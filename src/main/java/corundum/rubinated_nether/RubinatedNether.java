@@ -2,7 +2,6 @@ package corundum.rubinated_nether;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.logging.LogUtils;
-import corundum.rubinated_nether.client.RubinatedNetherClient;
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.RNCauldronInteraction;
 import corundum.rubinated_nether.content.commands.RubinateCommand;
@@ -84,7 +83,6 @@ public class RubinatedNether {
         MidnightConfig.init(MODID, RNConfig.class);
 
         if (dist == Dist.CLIENT) {
-            RubinatedNetherClient.client(modEventBus);
             modEventBus.addListener(RNRecipeCategories::registerRecipeCategories);
             NeoForge.EVENT_BUS.addListener(RNBronzeDiseasedHeartHandler::onPlayerHeartType);
 
