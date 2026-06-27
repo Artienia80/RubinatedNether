@@ -3,20 +3,16 @@ package corundum.rubinated_nether.event;
 import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNDamageTypes;
-import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.ChandelierBlock;
-import corundum.rubinated_nether.content.blocks.GearboxBlock;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.enchantment.RNEnchantments;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import corundum.rubinated_nether.content.items.DrillItem;
 import corundum.rubinated_nether.misc.DatapackRegistry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityDimensions;
@@ -27,13 +23,11 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import org.slf4j.Logger;
 
 @EventBusSubscriber(modid = RubinatedNether.MODID)
-public class RNCommonEvents {
+public class RNCommonSubscriber {
 	public static final Logger LOGGER = LogUtils.getLogger();
 
 	@SubscribeEvent
