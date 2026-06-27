@@ -32,6 +32,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.level.BlockEvent;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class RubinatedNetherClient {
 		bussin.addListener(RubinatedNetherClient::registerEntityLayers);
 		bussin.addListener(RubinatedNetherClient::registeModelLayers);
 		bussin.addListener(RubinatedNetherClient::registerParticleProviders);
-		NeoForge.EVENT_BUS.addListener(RubinatedNetherClient::onClientTick);
+		//NeoForge.EVENT_BUS.addListener(RubinatedNetherClient::onClientTick);
 	}
 
 	public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
@@ -56,114 +57,6 @@ public class RubinatedNetherClient {
 
 	public static void registeModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(RubyLensModel.LAYER_LOCATION, RubyLensModel::createBodyLayer);
-	}
-
-	private static AABB buildDetectionAABB(BlockPos pos, Direction facing, int range) {
-		double cx = pos.getX() + 0.5, cy = pos.getY() + 0.5, cz = pos.getZ() + 0.5;
-		double hw = 0.375;
-		double ex = facing.getStepX() * range;
-		double ey = facing.getStepY() * range;
-		double ez = facing.getStepZ() * range;
-
-		double minX = cx + Math.min(0, ex) - (facing.getAxis() != Direction.Axis.X ? hw : 0);
-		double maxX = cx + Math.max(0, ex) + (facing.getAxis() != Direction.Axis.X ? hw : 0);
-		double minY = cy + Math.min(0, ey) - (facing.getAxis() != Direction.Axis.Y ? hw : 0);
-		double maxY = cy + Math.max(0, ey) + (facing.getAxis() != Direction.Axis.Y ? hw : 0);
-		double minZ = cz + Math.min(0, ez) - (facing.getAxis() != Direction.Axis.Z ? hw : 0);
-		double maxZ = cz + Math.max(0, ez) + (facing.getAxis() != Direction.Axis.Z ? hw : 0);
-
-		if (facing.getStepX() > 0) minX += 1.0; else if (facing.getStepX() < 0) maxX -= 1.0;
-		if (facing.getStepY() > 0) minY += 1.0; else if (facing.getStepY() < 0) maxY -= 1.0;
-		if (facing.getStepZ() > 0) minZ += 1.0; else if (facing.getStepZ() < 0) maxZ -= 1.0;
-
-		return new AABB(minX, minY, minZ, maxX, maxY, maxZ);
-	}
-
-	private static void spawnSteamParticles(net.minecraft.client.multiplayer.ClientLevel level,
-	                                        BlockPos pos, Direction facing,
-                                            double initialSpeed, double spawnOffset, RandomSource random) {
-		double ox = pos.getX() + 0.5;
-		double oy = pos.getY() + 0.5;
-		double oz = pos.getZ() + 0.5;
-		double dx = facing.getStepX();
-		double dy = facing.getStepY();
-		double dz = facing.getStepZ();
-
-		double rawCount = RNConfig.ventSmokeParticleMultiplier;
-		int baseCount = (int) rawCount;
-		if (random.nextDouble() < (rawCount - baseCount)) baseCount++;
-
-		for (int i = 0; i < baseCount; i++) {
-			double sx = facing.getAxis() != Direction.Axis.X ? (random.nextDouble() - 0.5) * 0.8 : 0;
-			double sy = facing.getAxis() != Direction.Axis.Y ? (random.nextDouble() - 0.5) * 0.8 : 0;
-			double sz = facing.getAxis() != Direction.Axis.Z ? (random.nextDouble() - 0.5) * 0.8 : 0;
-
-			double vx = dx * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
-			double vy = dy * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
-			double vz = dz * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
-
-			level.addParticle(RNParticleTypes.STEAM.get(), true,
-					ox + dx * spawnOffset + sx,
-					oy + dy * spawnOffset + sy,
-					oz + dz * spawnOffset + sz,
-					vx, vy, vz);
-		}
-	}
-
-	public static void onClientTick(ClientTickEvent.Post event) {
-		if (++tickCounter % 4 != 0) return;
-
-		Minecraft mc = Minecraft.getInstance();
-		if (mc.level == null || mc.isPaused()) return;
-
-		var level = mc.level;
-		var player = mc.player;
-		if (player == null) return;
-
-		BlockPos playerPos = player.blockPosition();
-		int range = 48;
-
-		BlockPos.betweenClosed(
-				playerPos.offset(-range, -range, -range),
-				playerPos.offset(range, range, range)
-		).forEach(pos -> {
-			if (!level.hasChunkAt(pos)) return;
-
-			BlockState state = level.getBlockState(pos);
-			if (!(state.getBlock() instanceof TarnishingBronzeVentBlock ventBlock)) return;
-
-			Direction facing = state.getValue(TarnishingBronzeVentBlock.FACING);
-			RandomSource random = level.getRandom();
-
-			if (ventBlock.getAge() == TarnishStage.CRYSTALLIZED) {
-				if (TarnishingBronzeVentBlock.isFaceBlocked(level, pos, facing)) return;
-				AABB detectionBox = buildDetectionAABB(pos, facing, RNConfig.crystallizedVentRange);
-				List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, detectionBox);
-				if (entities.isEmpty()) return;
-				int smokeRange = TarnishingBronzeVentBlock.calculateSmokeRange(level, pos, facing, RNConfig.crystallizedVentRange);
-				if (smokeRange <= 0) return;
-				spawnSteamParticles(level, pos, facing, RNConfig.crystallizedVentRange / 40.0, 1.0, random);
-				return;
-			}
-
-			if (!state.getValue(TarnishingBronzeVentBlock.POWERED)) return;
-			int signal = state.getValue(TarnishingBronzeVentBlock.SIGNAL_STRENGTH);
-			if (signal <= 0) return;
-            signal = signal + ventBlock.getAge().getId();
-
-			if (!TarnishingBronzeVentBlock.isFaceBlocked(level, pos, facing)) {
-				int smokeRange = TarnishingBronzeVentBlock.calculateSmokeRange(level, pos, facing, signal);
-				if (smokeRange > 0)
-					spawnSteamParticles(level, pos, facing, signal / 40.0, 1.0, random);
-			}
-
-			Direction back = facing.getOpposite();
-			if (!TarnishingBronzeVentBlock.isFaceBlocked(level, pos, back)) {
-				int backRange = TarnishingBronzeVentBlock.calculateSmokeRange(level, pos, back, signal);
-				if (backRange > 0)
-					spawnSteamParticles(level, pos, back, -(signal / 40.0), backRange, random);
-			}
-		});
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
