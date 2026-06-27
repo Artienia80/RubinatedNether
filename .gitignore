@@ -137,3 +137,5 @@ runs/
 /common
 /fabric
 /forge
+
+/.env
