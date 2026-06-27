@@ -14,8 +14,6 @@ public class AnvilMenuMixin {
 
     @Inject(method = "createInputSlotDefinitions", at = @At("RETURN"), cancellable = true)
     private void modifySlotDefinitions(CallbackInfoReturnable<ItemCombinerMenuSlotDefinition> cir) {
-        ItemCombinerMenuSlotDefinition original = cir.getReturnValue();
-
         ItemCombinerMenuSlotDefinition modified = ItemCombinerMenuSlotDefinition.create()
                 .withSlot(0, 27, 47, (stack) -> !stack.is(RNTags.Items.RUNES))
                 .withSlot(1, 76, 47, (stack) -> !stack.is(RNTags.Items.RUNES))

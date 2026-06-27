@@ -5,15 +5,12 @@ import corundum.rubinated_nether.misc.RNAttachments;
 import net.minecraft.client.Minecraft;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class ClientSidePayloadHandler {
+public class ServerPayloadHandler {
 
     public static void updateBronzeData(final BronzeTarnishingData data, IPayloadContext context) {
-        context.enqueueWork(() -> {
-            var entity = Minecraft.getInstance().level.getEntity(data.id());
-            if (!(entity instanceof BronzeEntity bronze))
-                return;
+        var entity = Minecraft.getInstance().level.getEntity(data.id());
+        if (!(entity instanceof BronzeEntity bronze)) return;
 
-            bronze.setData(RNAttachments.TARNISH_LEVEL, data.tarnishingLevel());
-        });
+        bronze.setData(RNAttachments.TARNISH_LEVEL.get(), data.tarnishingLevel());
     }
 }

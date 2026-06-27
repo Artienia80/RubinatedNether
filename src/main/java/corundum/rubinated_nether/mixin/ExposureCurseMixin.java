@@ -29,10 +29,10 @@ public class ExposureCurseMixin {
 
         for (EquipmentSlot slot : new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}) {
             ItemStack armorPiece = entity.getItemBySlot(slot);
-
+            
             if (!armorPiece.isEmpty() && armorPiece.getItem() instanceof ArmorItem armorItem) {
                 int baseArmorValue = armorItem.getDefense();
-                int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(exposureCurse, armorPiece);
+                int enchantmentLevel = armorPiece.getEnchantmentLevel(exposureCurse);
 
                 if (enchantmentLevel > 0) {
                     int modifiedArmor = Math.max(1, (int) Math.floor(baseArmorValue * 0.5));
