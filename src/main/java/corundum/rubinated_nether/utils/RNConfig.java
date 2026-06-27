@@ -63,7 +63,7 @@ public class RNConfig extends MidnightConfig {
 			min = 0,
 			max = 1024
 	)
-	public static int altarInscriptionCost = 100;
+	public static int altarRubinationCost = 100;
 
 	@Entry(
 			category = ALTAR,

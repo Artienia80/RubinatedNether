@@ -2,52 +2,39 @@ package corundum.rubinated_nether.client;
 
 import corundum.rubinated_nether.client.particles.BloodDripParticle;
 import corundum.rubinated_nether.client.particles.SteamParticle;
+import corundum.rubinated_nether.client.render.RNRenderTypes;
 import corundum.rubinated_nether.client.render.entity.RubyLensModel;
 import corundum.rubinated_nether.client.render.entity.RubyLensRenderLayer;
 import corundum.rubinated_nether.content.RNParticleTypes;
-import corundum.rubinated_nether.content.RNTags;
-import corundum.rubinated_nether.content.TarnishStage;
-import corundum.rubinated_nether.content.blocks.TarnishingBronzeVentBlock;
 import corundum.rubinated_nether.mixin.accessors.EntityRenderDispatcherAccessor;
-import corundum.rubinated_nether.utils.RNConfig;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin.Model;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.shapes.BooleanOp;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.level.BlockEvent;
-
-import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class RubinatedNetherClient {
 	public static final int WHITE = 0xFFFFFFFF;
 
-	private static final VoxelShape SMOKE_SEGMENT_BASE = Shapes.box(0.3, 0, 0.3, 0.7, 1, 0.7);
-	private static int tickCounter = 0;
-
 	public static void client(IEventBus bussin) {
 		bussin.addListener(RubinatedNetherClient::registerEntityLayers);
 		bussin.addListener(RubinatedNetherClient::registeModelLayers);
 		bussin.addListener(RubinatedNetherClient::registerParticleProviders);
-		//NeoForge.EVENT_BUS.addListener(RubinatedNetherClient::onClientTick);
+		bussin.addListener(RubinatedNetherClient::registerRenderBuffers);
+		NeoForge.EVENT_BUS.addListener(RubinatedNetherClient::onClientTick);
+	}
+
+	public static void registerRenderBuffers(RegisterRenderBuffersEvent event) {
+		event.registerRenderBuffer(RNRenderTypes.RUBINATED_GLINT);
+		event.registerRenderBuffer(RNRenderTypes.RUBINATED_ENTITY_GLINT);
 	}
 
 	public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
