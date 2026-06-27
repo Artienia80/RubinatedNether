@@ -9,11 +9,13 @@ import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.ChandelierBlock;
 import corundum.rubinated_nether.content.blocks.GearboxBlock;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
+import corundum.rubinated_nether.content.enchantment.RNEnchantments;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import corundum.rubinated_nether.content.items.DrillItem;
 import corundum.rubinated_nether.misc.DatapackRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -71,6 +73,17 @@ public class RNCommonEvents {
         if (modified > event.getOriginalSpeed())
             event.setNewSpeed(modified);
 	}
+
+    @SubscribeEvent
+    public static void modifyCurseBreakSpeed(PlayerEvent.BreakSpeed event) {
+        var player = event.getEntity();
+        var itemStack = player.getMainHandItem();
+        int curseLevel = itemStack.getEnchantmentLevel(player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(RNEnchantments.DEFICIENCY_CURSE));
+
+        if (curseLevel > 0) {
+            event.setNewSpeed(Math.max(0.1f, event.getOriginalSpeed() - (float) curseLevel));
+        }
+    }
 
 	@SubscribeEvent
 	public static void freezerFuel(ServerAboutToStartEvent event) {

@@ -22,7 +22,6 @@
     "LevelMixin",
     "MaceItemMixin",
     "MultishotSpreadMixin",
-    "PlayerDigSpeedMixin",
     "RavagingCurseMixin",
     "ScreenEffectRendererMixin",
     "ThornsShockwaveMixin",
