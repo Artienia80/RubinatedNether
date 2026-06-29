@@ -13,7 +13,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class RubinationNames {
-	private static final ResourceLocation ALT_FONT = RubinatedNether.id("em38");
+	private static final ResourceLocation ALT_FONT = RubinatedNether.id("rubin");
 	private static final Style ROOT_STYLE;
 	private static final RubinationNames INSTANCE;
 	private final RandomSource random = RandomSource.create();

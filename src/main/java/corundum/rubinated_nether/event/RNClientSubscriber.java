@@ -2,6 +2,7 @@ package corundum.rubinated_nether.event;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.client.render.RubinatedTextRenderer;
 import corundum.rubinated_nether.client.particles.BloodDripParticle;
 import corundum.rubinated_nether.client.particles.SteamParticle;
 import corundum.rubinated_nether.client.render.BronzeLaserRenderer;
@@ -34,6 +35,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -48,25 +50,21 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 @EventBusSubscriber(modid = RubinatedNether.MODID, value = Dist.CLIENT)
 public class RNClientSubscriber {
 
-	@SubscribeEvent
-	public static void onClientSetup(FMLClientSetupEvent event) {
+    @SubscribeEvent
+    public static void onClientSetup(FMLClientSetupEvent event) {
+        IEventBus modBus = net.neoforged.fml.ModLoadingContext.get().getActiveContainer().getEventBus();
+        RubinatedTextRenderer.register(modBus);
     }
 
-	@SubscribeEvent
-	public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-		event.registerLayerDefinition(
-			BronzeShotProjectileModel.LAYER_LOCATION, 
-			BronzeShotProjectileModel::createBodyLayer
-		);
-        event.registerLayerDefinition(RNModelLayers.COFFER,
-                CofferRenderer::createSingleBodyLayer
+    @SubscribeEvent
+    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(
+                BronzeShotProjectileModel.LAYER_LOCATION,
+                BronzeShotProjectileModel::createBodyLayer
         );
-
-        event.registerLayerDefinition(RNModelLayers.GEARBOX,
-                GearboxRenderer::createSingleBodyLayer
-        );
+        event.registerLayerDefinition(RNModelLayers.COFFER, CofferRenderer::createSingleBodyLayer);
+        event.registerLayerDefinition(RNModelLayers.GEARBOX, GearboxRenderer::createSingleBodyLayer);
         event.registerLayerDefinition(RubyLensModel.LAYER_LOCATION, RubyLensModel::createBodyLayer);
-
     }
 
     @SubscribeEvent
@@ -90,21 +88,19 @@ public class RNClientSubscriber {
         slimSkin.addLayer(new RubyLensRenderLayer<>(slimSkin, models, slimSkin.getModel()));
     }
 
-	@SubscribeEvent
-	public static void registerMenuScreens(RegisterMenuScreensEvent event) {
-		event.register(RNMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
-		event.register(RNMenuTypes.RUBINATION_MENU.get(), RubinationScreen::new);
-		event.register(RNMenuTypes.COFFER_MENU.get(), CofferScreen::new);
-	}
+    @SubscribeEvent
+    public static void registerMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(RNMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
+        event.register(RNMenuTypes.RUBINATION_MENU.get(), RubinationScreen::new);
+        event.register(RNMenuTypes.COFFER_MENU.get(), CofferScreen::new);
+    }
 
     @SubscribeEvent
-    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event)
-    {
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(RNBlockEntities.COFFER.get(), CofferRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.GEARBOX.get(), GearboxRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_LASER.get(), BronzeLaserRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.COPPER_LASER.get(), CopperLaserRenderer::new);
-
         event.registerEntityRenderer(RNEntityCreator.BRONZE_SHOT.get(), BronzeShotProjectileRenderer::new);
     }
 
@@ -114,20 +110,19 @@ public class RNClientSubscriber {
         event.registerRenderBuffer(RNRenderTypes.RUBINATED_ENTITY_GLINT);
     }
 
-	@SubscribeEvent
-	public static void registerOverlays(RegisterGuiLayersEvent event) {
-		Minecraft minecraft = Minecraft.getInstance();
-
-		event.registerAbove(
-			VanillaGuiLayers.DEMO_OVERLAY,
-			RubinatedNether.id("ruby_lens_overlay"),
-			(guiGraphics, deltaTracker) -> RubyLensOverlay.renderHud(new Gui(minecraft), guiGraphics)
-		);
-		event.registerBelowAll(
-				RubinatedNether.id("bronze_overlay"),
-				(guiGraphics, deltaTracker)  -> BronzeDiseasedEffectOverlay.renderHud(new Gui(minecraft), guiGraphics)
-		);
-	}
+    @SubscribeEvent
+    public static void registerOverlays(RegisterGuiLayersEvent event) {
+        Minecraft minecraft = Minecraft.getInstance();
+        event.registerAbove(
+                VanillaGuiLayers.DEMO_OVERLAY,
+                RubinatedNether.id("ruby_lens_overlay"),
+                (guiGraphics, deltaTracker) -> RubyLensOverlay.renderHud(new Gui(minecraft), guiGraphics)
+        );
+        event.registerBelowAll(
+                RubinatedNether.id("bronze_overlay"),
+                (guiGraphics, deltaTracker) -> BronzeDiseasedEffectOverlay.renderHud(new Gui(minecraft), guiGraphics)
+        );
+    }
 
     @SubscribeEvent
     public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
@@ -158,12 +153,9 @@ public class RNClientSubscriber {
     private static void blitFullScreen() {
         Minecraft mc = Minecraft.getInstance();
         GuiGraphics guiGraphics = new GuiGraphics(mc, mc.renderBuffers().bufferSource());
-
         int screenWidth = mc.getWindow().getGuiScaledWidth();
         int screenHeight = mc.getWindow().getGuiScaledHeight();
-
         guiGraphics.blit(BronzeDiseasedEffectOverlay.PARANOIA_OVERLAY, 0, 0, 0, 0.0F, 0.0F, screenWidth, screenHeight, screenWidth, screenHeight);
-
         guiGraphics.flush();
     }
 }

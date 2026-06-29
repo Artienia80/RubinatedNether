@@ -1,7 +1,11 @@
 package corundum.rubinated_nether.content.items;
 
+import corundum.rubinated_nether.client.render.RubinatedTextRenderer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -30,8 +34,19 @@ public class CarvableRuneItem extends Item {
 
         for (var enchant : carving.getEnchantments(level.registryAccess())) {
             if (enchant == null) continue;
-
             tooltipComponents.add(RuneInertEnchantmentText.getFullnameInert(enchant.enchantment, enchant.level));
         }
+    }
+
+    public static MutableComponent buildCarvedName(String rubinationName) {
+        Style baseStyle = Style.EMPTY.withColor(ChatFormatting.WHITE);
+
+        if (!RubinatedTextRenderer.useRubinatedLang()) {
+            return Component.literal("Carved Rune of " + rubinationName).withStyle(baseStyle);
+        }
+
+        return Component.empty()
+                .append(Component.literal("Carved Rune of ").withStyle(baseStyle))
+                .append(RubinatedTextRenderer.applyRubin(rubinationName).withStyle(baseStyle));
     }
 }

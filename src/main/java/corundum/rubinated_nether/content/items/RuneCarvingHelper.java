@@ -27,7 +27,7 @@ public final class RuneCarvingHelper {
             case "crossbow" -> 5;
             case "trident"  -> 6;
             case "mace"     -> 7;
-            default         -> 1; // "tool"
+            default         -> 1;
         };
     }
 
@@ -48,6 +48,6 @@ public final class RuneCarvingHelper {
         if (carving == Rubination.EMPTY) {
             return null;
         }
-        return Component.translatable("item.rubinated_nether.rune.carved", carving.getCapitalisedName());
+        return CarvableRuneItem.buildCarvedName(carving.getCapitalisedName());
     }
 }

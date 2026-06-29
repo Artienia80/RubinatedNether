@@ -283,6 +283,7 @@
   "item.rubinated_nether.bronze_drill": "Bronze Drill",
 
   "item.rubinated_nether.rune": "Rune",
+  "item.rubinated_nether.rune.carved": "Carved Rune of %s",
   "item.rubinated_nether.sloth_rune": "Rune of Sloth",
   "item.rubinated_nether.gluttony_rune": "Rune of Gluttony",
   "item.rubinated_nether.greed_rune": "Rune of Greed",
@@ -719,11 +720,11 @@
   "rubinated_nether.midnightconfig.enum.TabDisplay.VANILLA_ONLY": "Merged into Vanilla Tabs",
   "rubinated_nether.midnightconfig.enum.TabDisplay.BOTH": "Both Tabs",
 
+  "rubinated_nether.midnightconfig.rubinatedLanguage": "Obscure Rubinated Items behind Cipher",
+
   "resourcepack.rubinated_nether.simple_freezer": "§4Simplified Freezer Model",
   "resourcepack.rubinated_nether.aurichalcum": "§4Bronze No More!",
 
   "resourcepack.rubinated_nether.simple_freezer.desc": "Turns the Freezer into a cube model",
-  "resourcepack.rubinated_nether.aurichalcum.desc": "Renames 'Bronze' into 'Aurichalcum' for Modpacks",
-
-  "item.rubinated_nether.rune.carved": "Carved Rune of %s"
+  "resourcepack.rubinated_nether.aurichalcum.desc": "Renames 'Bronze' into 'Aurichalcum' for Modpacks"
 }

@@ -181,6 +181,10 @@ public class RNConfig extends MidnightConfig {
 	@Entry(category = CLIENT)
 	public static TabDisplay tabDisplay = TabDisplay.BOTH;
 
+	@Entry(category = CLIENT)
+	public static boolean rubinatedLanguage = true;
+
+
 	/* -- Calculated Values -- */
 
 	/**
