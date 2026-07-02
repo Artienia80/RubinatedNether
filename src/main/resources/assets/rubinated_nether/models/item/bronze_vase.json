@@ -1,0 +1,93 @@
+{
+  "loader": "neoforge:elements",
+  "textures": {
+    "4": "rubinated_nether:block/vase/bronze_vase_bottom",
+    "5": "rubinated_nether:block/vase/bronze_vase_head",
+    "6": "rubinated_nether:block/vase/bronze_vase_neck",
+    "7": "rubinated_nether:block/vase/bronze_vase_top",
+    "8": "rubinated_nether:block/bronze/bronze_block/bronze_block"
+  },
+  "elements": [
+    {
+      "name": "base",
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#4"},
+        "east": {"uv": [0, 0, 16, 16], "texture": "#4"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#4"},
+        "west": {"uv": [0, 0, 16, 16], "texture": "#4"},
+        "up": {"uv": [0, 0, 16, 16], "texture": "#6"},
+        "down": {"uv": [0, 0, 16, 16], "texture": "#8"}
+      }
+    },
+    {
+      "name": "lid_neck",
+      "from": [0, 16, 0],
+      "to": [16, 20, 16],
+      "faces": {
+        "north": {"uv": [0, 12, 16, 16], "texture": "#7"},
+        "east": {"uv": [0, 12, 16, 16], "texture": "#7"},
+        "south": {"uv": [0, 12, 16, 16], "texture": "#7"},
+        "west": {"uv": [0, 12, 16, 16], "texture": "#7"},
+        "up": {"uv": [0, 0, 16, 16], "texture": "#6"}
+      }
+    },
+    {
+      "name": "lid_head",
+      "from": [1, 22, 1],
+      "to": [15, 24, 15],
+      "faces": {
+        "north": {"uv": [1, 8, 15, 10], "texture": "#7"},
+        "east": {"uv": [1, 8, 15, 10], "texture": "#7"},
+        "south": {"uv": [1, 8, 15, 10], "texture": "#7"},
+        "west": {"uv": [1, 8, 15, 10], "texture": "#7"},
+        "up": {"uv": [1, 1, 15, 15], "texture": "#5"},
+        "down": {"uv": [1, 1, 15, 15], "texture": "#6"}
+      }
+    },
+    {
+      "name": "lid_rim",
+      "from": [2, 20, 2],
+      "to": [14, 22, 14],
+      "faces": {
+        "north": {"uv": [2, 10, 14, 12], "texture": "#7"},
+        "east": {"uv": [2, 10, 14, 12], "texture": "#7"},
+        "south": {"uv": [2, 10, 14, 12], "texture": "#7"},
+        "west": {"uv": [2, 10, 14, 12], "texture": "#7"}
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [75, 45, 0],
+      "translation": [0, 1.5, 0],
+      "scale": [0.35, 0.35, 0.35]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [75, 45, 0],
+      "translation": [0, 1.5, 0],
+      "scale": [0.35, 0.35, 0.35]
+    },
+    "firstperson_righthand": {
+      "rotation": [0, 45, 0],
+      "scale": [0.4, 0.4, 0.4]
+    },
+    "firstperson_lefthand": {
+      "rotation": [0, 225, 0],
+      "scale": [0.4, 0.4, 0.4]
+    },
+    "ground": {
+      "translation": [0, 3, 0],
+      "scale": [0.25, 0.25, 0.25]
+    },
+    "gui": {
+      "rotation": [30, 225, 0],
+      "translation": [0, -1.5, 0],
+      "scale": [0.46, 0.46, 0.46]
+    },
+    "fixed": {
+      "scale": [0.4, 0.4, 0.4]
+    }
+  }
+}

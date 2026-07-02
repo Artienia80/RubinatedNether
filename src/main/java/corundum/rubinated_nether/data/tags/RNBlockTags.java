@@ -168,6 +168,12 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.TARNISHED_BRONZE_VENT.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_VENT.get(),
 
+				RNBlocks.BRONZE_VASE.get(),
+				RNBlocks.DISCOLORED_BRONZE_VASE.get(),
+				RNBlocks.CORRODED_BRONZE_VASE.get(),
+				RNBlocks.TARNISHED_BRONZE_VASE.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_VASE.get(),
+
 				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get()
 
@@ -311,7 +317,13 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.DISCOLORED_BRONZE_VENT.get(),
 				RNBlocks.CORRODED_BRONZE_VENT.get(),
 				RNBlocks.TARNISHED_BRONZE_VENT.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_VENT.get()
+				RNBlocks.CRYSTALLIZED_BRONZE_VENT.get(),
+
+				RNBlocks.BRONZE_VASE.get(),
+				RNBlocks.DISCOLORED_BRONZE_VASE.get(),
+				RNBlocks.CORRODED_BRONZE_VASE.get(),
+				RNBlocks.TARNISHED_BRONZE_VASE.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_VASE.get()
 		);
 
 		this.tag(RNTags.Blocks.COLDEST_ICE).add(

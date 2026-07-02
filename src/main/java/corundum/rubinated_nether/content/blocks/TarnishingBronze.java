@@ -94,6 +94,10 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 					.put(RNBlocks.DISCOLORED_BRONZE_VENT.get(), RNBlocks.CORRODED_BRONZE_VENT.get())
 					.put(RNBlocks.CORRODED_BRONZE_VENT.get(), RNBlocks.TARNISHED_BRONZE_VENT.get())
 
+					.put(RNBlocks.BRONZE_VASE.get(), RNBlocks.DISCOLORED_BRONZE_VASE.get())
+					.put(RNBlocks.DISCOLORED_BRONZE_VASE.get(), RNBlocks.CORRODED_BRONZE_VASE.get())
+					.put(RNBlocks.CORRODED_BRONZE_VASE.get(), RNBlocks.TARNISHED_BRONZE_VASE.get())
+
 					.build()
 	);
 
@@ -176,6 +180,11 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 				map.put(RNBlocks.DISCOLORED_BRONZE_VENT.get(), RNBlocks.CRYSTALLIZED_BRONZE_VENT.get());
 				map.put(RNBlocks.CORRODED_BRONZE_VENT.get(), RNBlocks.CRYSTALLIZED_BRONZE_VENT.get());
 				map.put(RNBlocks.TARNISHED_BRONZE_VENT.get(), RNBlocks.CRYSTALLIZED_BRONZE_VENT.get());
+
+				map.put(RNBlocks.BRONZE_VASE.get(), RNBlocks.CRYSTALLIZED_BRONZE_VASE.get());
+				map.put(RNBlocks.DISCOLORED_BRONZE_VASE.get(), RNBlocks.CRYSTALLIZED_BRONZE_VASE.get());
+				map.put(RNBlocks.CORRODED_BRONZE_VASE.get(), RNBlocks.CRYSTALLIZED_BRONZE_VASE.get());
+				map.put(RNBlocks.TARNISHED_BRONZE_VASE.get(), RNBlocks.CRYSTALLIZED_BRONZE_VASE.get());
 
 				return Collections.unmodifiableMap(map);
 			}

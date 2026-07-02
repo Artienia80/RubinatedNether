@@ -135,18 +135,18 @@ public class RNBlockEntities {
             )
     );
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<VaseBlockEntity>> BRONZE_VASE =
-            BLOCK_ENTITY_TYPES.register(
-                    "bronze_vase",
-                    () -> BlockEntityType.Builder.of(
-                            VaseBlockEntity::new,
-                            RNBlocks.BRONZE_VASE.get()
-                            //RNBlocks.DISCOLORED_BRONZE_LASER.get(),
-                            //RNBlocks.CORRODED_BRONZE_LASER.get(),
-                            //RNBlocks.TARNISHED_BRONZE_LASER.get(),
-                            //RNBlocks.CRYSTALLIZED_BRONZE_LASER.get()
-                    ).build(
-                            Util.fetchChoiceType(References.BLOCK_ENTITY, "bronze_vase")
-                    )
-            );
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<VaseBlockEntity>> BRONZE_VASE =
+			BLOCK_ENTITY_TYPES.register(
+					"bronze_vase",
+					() -> BlockEntityType.Builder.of(
+							VaseBlockEntity::new,
+							RNBlocks.BRONZE_VASE.get(),
+							RNBlocks.DISCOLORED_BRONZE_VASE.get(),
+							RNBlocks.CORRODED_BRONZE_VASE.get(),
+							RNBlocks.TARNISHED_BRONZE_VASE.get(),
+							RNBlocks.CRYSTALLIZED_BRONZE_VASE.get()
+					).build(
+							Util.fetchChoiceType(References.BLOCK_ENTITY, "bronze_vase")
+					)
+			);
 }

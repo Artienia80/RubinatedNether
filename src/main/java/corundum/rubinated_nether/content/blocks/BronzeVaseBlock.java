@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.blocks;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.entities.VaseBlockEntity;
 import corundum.rubinated_nether.content.items.Rubination;
@@ -11,12 +12,16 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -63,8 +68,15 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
 
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
-    protected static final VoxelShape SHAPE_TOP = Shapes.or(Block.box(1.0, 0.0, 1.0, 15.0, 8.0, 15.0), Block.box(0.0, 8.0, 0.0, 16.0, 16.0, 16.0));
-    protected static final VoxelShape SHAPE_BOTTOM = Shapes.or(Block.box(0.0, 0.0, 0.0, 16.0, 10.0, 16.0), Block.box(1.0, 10.0, 1.0, 15.0, 16.0, 15.0));
+    // Lower half: base cube, matches bronze_vase_base.json element [0,0,0] -> [16,16,16]
+    protected static final VoxelShape SHAPE_BOTTOM = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0);
+
+    // Upper half: neck ring + waist + rim disc, matches bronze_vase_lid.json elements
+    protected static final VoxelShape SHAPE_TOP = Shapes.or(
+            Block.box(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
+            Block.box(2.0, 4.0, 2.0, 14.0, 6.0, 14.0),
+            Block.box(1.0, 6.0, 1.0, 15.0, 8.0, 15.0)
+    );
 
     public static final ResourceLocation CONTENTS = RubinatedNether.id("contents");
     private static final Component UNKNOWN_CONTENTS = Component.translatable("container.bronzeVase.unknownContents");
@@ -247,5 +259,71 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
     @Override
     public Class<? extends VaseBlockEntity> getBlockEntityClass() {
         return VaseBlockEntity.class;
+    }
+
+    // --- Tarnishing ---
+    // The vase is a two-tall (HALF) block, unlike the rest of TarnishingBronzeBlock's
+    // single-position blocks. All ticking and change-over-time logic is gated on the
+    // LOWER half and moves both halves together, so the two halves never end up on
+    // mismatched tarnish stages (canSurvive requires blockstate.is(this) for the UPPER
+    // half to stay placed). Container contents are explicitly saved and restored around
+    // the swap since the block instance changes at both positions.
+
+    @Override
+    protected boolean isRandomlyTicking(BlockState state) {
+        return state.getValue(HALF) == DoubleBlockHalf.LOWER
+                && !state.getValue(WAXED)
+                && TarnishingBronze.canCrystallize(this);
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (state.getValue(WAXED) || state.getValue(HALF) != DoubleBlockHalf.LOWER) return;
+
+        boolean hasCatalystNearby = BlockPos.betweenClosedStream(
+                pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
+        ).anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
+
+        if (hasCatalystNearby) {
+            TarnishingBronze.getCrystallized(this).ifPresent(nextBlock -> setBothHalves(level, pos, nextBlock));
+        } else {
+            this.changeOverTime(state, level, pos, random);
+        }
+    }
+
+    @Override
+    public void changeOverTime(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (random.nextFloat() >= this.getChanceModifier() / 4.0F) return;
+
+        TarnishingBronze.getNext(this).ifPresent(nextBlock -> setBothHalves(level, pos, nextBlock));
+    }
+
+    private void setBothHalves(ServerLevel level, BlockPos lowerPos, Block nextBlock) {
+        if (!(nextBlock instanceof BronzeVaseBlock)) return;
+
+        BlockPos upperPos = lowerPos.above();
+        if (!level.getBlockState(upperPos).is(this)) return;
+
+        BlockEntity oldBlockEntity = level.getBlockEntity(lowerPos);
+        NonNullList<ItemStack> savedItems = null;
+        if (oldBlockEntity instanceof Container container) {
+            savedItems = NonNullList.withSize(container.getContainerSize(), ItemStack.EMPTY);
+            for (int i = 0; i < container.getContainerSize(); i++) {
+                savedItems.set(i, container.getItem(i).copy());
+            }
+        }
+
+        level.setBlock(upperPos, nextBlock.defaultBlockState().setValue(HALF, DoubleBlockHalf.UPPER).setValue(WAXED, false), Block.UPDATE_CLIENTS);
+        level.setBlock(lowerPos, nextBlock.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(WAXED, false), Block.UPDATE_CLIENTS);
+
+        if (savedItems != null) {
+            BlockEntity newBlockEntity = level.getBlockEntity(lowerPos);
+            if (newBlockEntity instanceof Container newContainer) {
+                for (int i = 0; i < Math.min(savedItems.size(), newContainer.getContainerSize()); i++) {
+                    newContainer.setItem(i, savedItems.get(i));
+                }
+                newBlockEntity.setChanged();
+            }
+        }
     }
 }

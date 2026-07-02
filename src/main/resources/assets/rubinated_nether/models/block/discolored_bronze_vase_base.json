@@ -1,0 +1,25 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"4": "rubinated_nether:block/vase/discolored_bronze_vase_bottom",
+		"6": "rubinated_nether:block/vase/discolored_bronze_vase_neck",
+		"8": "rubinated_nether:block/bronze/bronze_block/discolored_bronze_block",
+		"particle": "#4"
+
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#6"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#8"}
+			}
+		}
+	]
+}

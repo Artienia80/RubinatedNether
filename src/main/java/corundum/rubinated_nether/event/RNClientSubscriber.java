@@ -25,6 +25,7 @@ import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.screen.CofferScreen;
 import corundum.rubinated_nether.content.screen.FreezerScreen;
 import corundum.rubinated_nether.content.screen.RubinationScreen;
+import corundum.rubinated_nether.content.screen.VaseScreen;
 import corundum.rubinated_nether.mixin.accessors.EntityRenderDispatcherAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -93,6 +94,7 @@ public class RNClientSubscriber {
         event.register(RNMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
         event.register(RNMenuTypes.RUBINATION_MENU.get(), RubinationScreen::new);
         event.register(RNMenuTypes.COFFER_MENU.get(), CofferScreen::new);
+        event.register(RNMenuTypes.VASE_MENU.get(), VaseScreen::new);
     }
 
     @SubscribeEvent

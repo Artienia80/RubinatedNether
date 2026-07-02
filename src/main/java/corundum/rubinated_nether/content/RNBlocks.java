@@ -1391,6 +1391,38 @@ public class RNBlocks {
             )
     );
 
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_VASE = registerWaxableBlock(
+			"discolored_bronze_vase.json",
+			() -> new BronzeVaseBlock(
+					TarnishStage.DISCOLORED,
+					BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_BRONZE_VASE = registerWaxableBlock(
+			"corroded_bronze_vase",
+			() -> new BronzeVaseBlock(
+					TarnishStage.CORRODED,
+					BlockBehaviour.Properties.ofFullCopy(CORRODED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_VASE = registerWaxableBlock(
+			"tarnished_bronze_vase",
+			() -> new BronzeVaseBlock(
+					TarnishStage.TARNISHED,
+					BlockBehaviour.Properties.ofFullCopy(TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_VASE = registerWaxableBlock(
+			"crystallized_bronze_vase",
+			() -> new BronzeVaseBlock(
+					TarnishStage.CRYSTALLIZED,
+					BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);
