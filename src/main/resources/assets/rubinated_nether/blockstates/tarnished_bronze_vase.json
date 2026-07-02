@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "half=lower,waxed=false": { "model": "rubinated_nether:block/tarnished_bronze_vase_base" },
-    "half=lower,waxed=true":  { "model": "rubinated_nether:block/tarnished_bronze_vase_base" },
-    "half=upper,waxed=false": { "model": "rubinated_nether:block/tarnished_bronze_vase_lid" },
-    "half=upper,waxed=true":  { "model": "rubinated_nether:block/tarnished_bronze_vase_lid" }
-  }
-}

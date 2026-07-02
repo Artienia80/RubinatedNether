@@ -1392,7 +1392,7 @@ public class RNBlocks {
     );
 
 	public static final DeferredBlock<Block> DISCOLORED_BRONZE_VASE = registerWaxableBlock(
-			"discolored_bronze_vase.json",
+			"discolored_bronze_vase",
 			() -> new BronzeVaseBlock(
 					TarnishStage.DISCOLORED,
 					BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()

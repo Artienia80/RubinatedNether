@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelBuilder;
@@ -338,6 +339,12 @@ public class RNBlockStates extends BlockStateProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_VENT
 		);
 
+		vaseBlock(RNBlocks.BRONZE_VASE, "block/bronze/bronze_vase/bronze_vase", "block/bronze/bronze_block/bronze_block");
+		vaseBlock(RNBlocks.DISCOLORED_BRONZE_VASE, "block/bronze/bronze_vase/discolored_bronze_vase", "block/bronze/bronze_block/discolored_bronze_block");
+		vaseBlock(RNBlocks.CORRODED_BRONZE_VASE, "block/bronze/bronze_vase/corroded_bronze_vase", "block/bronze/bronze_block/corroded_bronze_block");
+		vaseBlock(RNBlocks.TARNISHED_BRONZE_VASE, "block/bronze/bronze_vase/tarnished_bronze_vase", "block/bronze/bronze_block/tarnished_bronze_block");
+		vaseBlock(RNBlocks.CRYSTALLIZED_BRONZE_VASE, "block/bronze/bronze_vase/crystallized_bronze_vase", "block/bronze/bronze_block/crystallized_bronze_block");
+
 	}
 
     private void generateCrystalModels() {
@@ -573,6 +580,65 @@ public class RNBlockStates extends BlockStateProvider {
 							.modelFile(models().getExistingFile(modLoc("block/ruby_brazier_" + level)))
 							.build();
 				});
+	}
+
+	public void vaseBlock(DeferredBlock<?> block, String vaseTexturePath, String bronzeBlockTexturePath) {
+		var name = BuiltInRegistries.BLOCK.getKey(block.get()).getPath();
+
+		var baseModel = models().getBuilder(name + "_base")
+				.texture("4", modLoc(vaseTexturePath + "_bottom"))
+				.texture("6", modLoc(vaseTexturePath + "_neck"))
+				.texture("8", modLoc(bronzeBlockTexturePath))
+				.texture("particle", modLoc(vaseTexturePath + "_bottom"))
+				.element()
+				.from(0, 0, 0).to(16, 16, 16)
+				.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#4").end()
+				.face(Direction.EAST).uvs(0, 0, 16, 16).texture("#4").end()
+				.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#4").end()
+				.face(Direction.WEST).uvs(0, 0, 16, 16).texture("#4").end()
+				.face(Direction.UP).uvs(0, 0, 16, 16).texture("#6").end()
+				.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#8").end()
+				.end();
+
+		var lidModel = models().getBuilder(name + "_lid")
+				.texture("5", modLoc(vaseTexturePath + "_head"))
+				.texture("6", modLoc(vaseTexturePath + "_neck"))
+				.texture("7", modLoc(vaseTexturePath + "_top"))
+				.texture("particle", modLoc(vaseTexturePath + "_bottom"))
+				.element()
+				.from(2, 4, 2).to(14, 6, 14)
+				.rotation().angle(0).axis(Direction.Axis.Y).origin(0, -4, 0).end()
+				.face(Direction.NORTH).uvs(2, 10, 14, 12).texture("#7").end()
+				.face(Direction.EAST).uvs(2, 10, 14, 12).texture("#7").end()
+				.face(Direction.SOUTH).uvs(2, 10, 14, 12).texture("#7").end()
+				.face(Direction.WEST).uvs(2, 10, 14, 12).texture("#7").end()
+				.end()
+				.element()
+				.from(1, 6, 1).to(15, 8, 15)
+				.rotation().angle(0).axis(Direction.Axis.Y).origin(0, -2, 0).end()
+				.face(Direction.NORTH).uvs(1, 8, 15, 10).texture("#7").end()
+				.face(Direction.EAST).uvs(1, 8, 15, 10).texture("#7").end()
+				.face(Direction.SOUTH).uvs(1, 8, 15, 10).texture("#7").end()
+				.face(Direction.WEST).uvs(1, 8, 15, 10).texture("#7").end()
+				.face(Direction.UP).uvs(1, 1, 15, 15).texture("#5").end()
+				.face(Direction.DOWN).uvs(1, 1, 15, 15).texture("#6").end()
+				.end()
+				.element()
+				.from(0, 0, 0).to(16, 4, 16)
+				.rotation().angle(0).axis(Direction.Axis.Y).origin(0, -16, 0).end()
+				.face(Direction.NORTH).uvs(0, 12, 16, 16).texture("#7").end()
+				.face(Direction.EAST).uvs(0, 12, 16, 16).texture("#7").end()
+				.face(Direction.SOUTH).uvs(0, 12, 16, 16).texture("#7").end()
+				.face(Direction.WEST).uvs(0, 12, 16, 16).texture("#7").end()
+				.face(Direction.UP).uvs(0, 0, 16, 16).texture("#6").end()
+				.end();
+
+		getVariantBuilder(block.get()).forAllStates(state -> {
+			var half = state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF);
+			return ConfiguredModel.builder()
+					.modelFile(half == DoubleBlockHalf.LOWER ? baseModel : lidModel)
+					.build();
+		});
 	}
 
 	private void generateBrazierModel(int level) {

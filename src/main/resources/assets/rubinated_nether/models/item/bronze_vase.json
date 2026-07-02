@@ -1,10 +1,10 @@
 {
   "loader": "neoforge:elements",
   "textures": {
-    "4": "rubinated_nether:block/vase/bronze_vase_bottom",
-    "5": "rubinated_nether:block/vase/bronze_vase_head",
-    "6": "rubinated_nether:block/vase/bronze_vase_neck",
-    "7": "rubinated_nether:block/vase/bronze_vase_top",
+    "4": "rubinated_nether:block/bronze/bronze_vase/bronze_vase_bottom",
+    "5": "rubinated_nether:block/bronze/bronze_vase/bronze_vase_head",
+    "6": "rubinated_nether:block/bronze/bronze_vase/bronze_vase_neck",
+    "7": "rubinated_nether:block/bronze/bronze_vase/bronze_vase_top",
     "8": "rubinated_nether:block/bronze/bronze_block/bronze_block"
   },
   "elements": [

@@ -265,6 +265,14 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.COGS_BANNER_PATTERN.get()
 		);
 
+		waxableBlockItemsCopyOnly(
+				RNBlocks.BRONZE_VASE,
+				RNBlocks.DISCOLORED_BRONZE_VASE,
+				RNBlocks.CORRODED_BRONZE_VASE,
+				RNBlocks.TARNISHED_BRONZE_VASE,
+				RNBlocks.CRYSTALLIZED_BRONZE_VASE
+		);
+
 		// Runes
 		runeItem("tool",
 				RNItems.GREED_RUNE,
@@ -402,6 +410,15 @@ public class RNItemModels extends ItemModelProvider {
 	private void waxableBlockItems(DeferredBlock<?>... blocks) {
 		for (var block : blocks) {
 			simpleBlockItem(block.get());
+			withExistingParent(
+					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
+					block.getId()
+			);
+		}
+	}
+
+	private void waxableBlockItemsCopyOnly(DeferredBlock<?>... blocks) {
+		for (var block : blocks) {
 			withExistingParent(
 					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
 					block.getId()

@@ -242,6 +242,18 @@
   "item.rubinated_nether.waxed_tarnished_bronze_vent": "Waxed Tarnished Bronze Vent",
   "item.rubinated_nether.waxed_crystallized_bronze_vent": "Waxed Crystallized Bronze Vent",
 
+  "block.rubinated_nether.bronze_vase": "Bronze Vase",
+  "block.rubinated_nether.discolored_bronze_vase": "Discolored Bronze Vase",
+  "block.rubinated_nether.corroded_bronze_vase": "Corroded Bronze Vase",
+  "block.rubinated_nether.tarnished_bronze_vase": "Tarnished Bronze Vase",
+  "block.rubinated_nether.crystallized_bronze_vase": "Crystallized Bronze Vase",
+
+  "item.rubinated_nether.waxed_bronze_vase": "Waxed Bronze Vase",
+  "item.rubinated_nether.waxed_discolored_bronze_vase": "Waxed Discolored Bronze Vase",
+  "item.rubinated_nether.waxed_corroded_bronze_vase": "Waxed Corroded Bronze Vase",
+  "item.rubinated_nether.waxed_tarnished_bronze_vase": "Waxed Tarnished Bronze Vase",
+  "item.rubinated_nether.waxed_crystallized_bronze_vase": "Waxed Crystallized Bronze Vase",
+
   "block.rubinated_nether.bronze_laser": "Bronze Laser",
   "block.rubinated_nether.discolored_bronze_laser": "Discolored Bronze Laser",
   "block.rubinated_nether.corroded_bronze_laser": "Corroded Bronze Laser",
@@ -645,6 +657,7 @@
   "gui.rubinated_nether.jei.resonance": "Resonance",
 
   "container.shrine_stone_coffer": "Coffer",
+  "container.bronzeVase": "Bronze Vase",
 
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
 
