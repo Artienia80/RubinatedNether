@@ -30,12 +30,12 @@ public class VaseMenu extends AbstractContainerMenu {
         }
 
         for(int i1 = 0; i1 < 3; ++i1) {
-            for(int k1 = 0; k1 < 3; ++k1) {
-                this.addSlot(new Slot(playerInventory, k1 + i1 * 3 + 3, 8 + k1 * 18, 84 + i1 * 18));
+            for(int k1 = 0; k1 < 9; ++k1) {
+                this.addSlot(new Slot(playerInventory, k1 + i1 * 9 + 9, 8 + k1 * 18, 84 + i1 * 18));
             }
         }
 
-        for(int j1 = 0; j1 < 3; ++j1) {
+        for(int j1 = 0; j1 < 9; ++j1) {
             this.addSlot(new Slot(playerInventory, j1, 8 + j1 * 18, 142));
         }
 

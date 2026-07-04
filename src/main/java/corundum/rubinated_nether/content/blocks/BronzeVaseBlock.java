@@ -3,10 +3,10 @@ package corundum.rubinated_nether.content.blocks;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.entities.VaseBlockEntity;
-import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.utils.BEBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -15,7 +15,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -34,8 +33,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.BlockGetter;
@@ -124,34 +121,35 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
             Holder<Enchantment> holder = registry.getHolderOrThrow(Enchantments.SILK_TOUCH);
 
             if (blockentity instanceof VaseBlockEntity vase) {
-                if ((player.isCreative() && !vase.isEmpty()) || enchantments.getLevel(holder) > 0) {
-                    //preventDropFromBottomPart(level, pos, state, player);
-                    ItemStack itemstack = new ItemStack(RNBlocks.BRONZE_VASE.asItem());
-                    itemstack.applyComponents(blockentity.collectComponents());
-                    ItemEntity itementity = new ItemEntity(level, (double)pos.getX() + (double)0.5F, (double)pos.getY() + (double)0.5F, (double)pos.getZ() + (double)0.5F, itemstack);
-                    itementity.setDefaultPickUpDelay();
-                    level.addFreshEntity(itementity);
-                } /*else {
-                    vase.unpackLootTable(player);
-                }*/
+                if(enchantments.getLevel(holder) <= 0 && !player.isCreative()) {
+                    preventDrops(level, pos, player);
+                    for(int i=0; i < 8; i++){
+                        ItemStack itemstack = new ItemStack(RNItems.BRONZE_SCRAP.asItem());
+                        ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + (double) 0.5F, (double) pos.getY() + (double) 0.5F, (double) pos.getZ() + (double) 0.5F, itemstack);
+                        itementity.setDefaultPickUpDelay();
+                        level.addFreshEntity(itementity);
+                    }
+                } else {
+                    if (!vase.isEmpty()) {
+                        ItemStack itemstack = new ItemStack(RNBlocks.BRONZE_VASE.asItem());
+                        itemstack.applyComponents(blockentity.collectComponents());
+                        ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + (double) 0.5F, (double) pos.getY() + (double) 0.5F, (double) pos.getZ() + (double) 0.5F, itemstack);
+                        itementity.setDefaultPickUpDelay();
+                        level.addFreshEntity(itementity);
+                    }
+                    preventDrops(level, pos, player);
+                }
             }
         }
 
         return super.playerWillDestroy(level, pos, state, player);
     }
 
-    protected static void preventDropFromBottomPart(Level level, BlockPos pos, BlockState state, Player player) {
-        DoubleBlockHalf doubleblockhalf = state.getValue(HALF);
-        if (doubleblockhalf == DoubleBlockHalf.UPPER) {
-            BlockPos blockpos = pos.below();
-            BlockState blockstate = level.getBlockState(blockpos);
-            if (blockstate.is(state.getBlock()) && blockstate.getValue(HALF) == DoubleBlockHalf.LOWER) {
-                BlockState blockstate1 = blockstate.getFluidState().is(Fluids.WATER) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
-                level.setBlock(blockpos, blockstate1, 35);
-                level.levelEvent(player, 2001, blockpos, Block.getId(blockstate));
-            }
-        }
-
+    protected static void preventDrops(Level level, BlockPos pos, Player player) {
+        BlockState blockstate = level.getBlockState(pos);
+        BlockState blockstate1 = blockstate.getFluidState().is(Fluids.WATER) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
+        level.setBlock(pos, blockstate1, 35);
+        level.levelEvent(player, 2001, pos, Block.getId(blockstate));
     }
 
     @Nullable
