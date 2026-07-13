@@ -12,6 +12,7 @@ import corundum.rubinated_nether.content.effect.renderer.BronzeDiseasedEffectOve
 import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileModel;
 import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileRenderer;
 import corundum.rubinated_nether.content.gui.RubyLensOverlay;
+import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.screen.CofferScreen;
 import corundum.rubinated_nether.content.screen.FreezerScreen;
@@ -28,6 +29,9 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -37,6 +41,7 @@ import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.neoforged.neoforge.registries.DeferredBlock;
 
 @EventBusSubscriber(modid = RubinatedNether.MODID, value = Dist.CLIENT)
 public class RNClientSubscriber {
@@ -166,13 +171,23 @@ public class RNClientSubscriber {
             }
         };
 
-        event.registerItem(vaseExtensions,
-                RNBlocks.BRONZE_VASE.get().asItem(),
-                RNBlocks.DISCOLORED_BRONZE_VASE.get().asItem(),
-                RNBlocks.CORRODED_BRONZE_VASE.get().asItem(),
-                RNBlocks.TARNISHED_BRONZE_VASE.get().asItem(),
-                RNBlocks.CRYSTALLIZED_BRONZE_VASE.get().asItem()
-        );
+        DeferredBlock<?>[] vaseBlocks = new DeferredBlock<?>[] {
+                RNBlocks.BRONZE_VASE,
+                RNBlocks.DISCOLORED_BRONZE_VASE,
+                RNBlocks.CORRODED_BRONZE_VASE,
+                RNBlocks.TARNISHED_BRONZE_VASE,
+                RNBlocks.CRYSTALLIZED_BRONZE_VASE
+        };
+
+        for (DeferredBlock<?> vaseBlock : vaseBlocks) {
+            // Non-waxed
+            event.registerItem(vaseExtensions, vaseBlock.get().asItem());
+
+            // Waxed counterpart ("waxed_" + path, per WaxableBlockItem.getWaxableItem)
+            ResourceLocation waxedId = RubinatedNether.id(WaxableBlockItem.getWaxableItem(vaseBlock));
+            Item waxedItem = BuiltInRegistries.ITEM.get(waxedId);
+            event.registerItem(vaseExtensions, waxedItem);
+        }
     }
 
     @SubscribeEvent

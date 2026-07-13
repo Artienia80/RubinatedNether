@@ -17,16 +17,22 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -63,10 +69,8 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
 
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
-    // Lower half: base cube, matches bronze_vase_base.json element [0,0,0] -> [16,16,16]
     protected static final VoxelShape SHAPE_BOTTOM = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0);
 
-    // Upper half: neck ring + waist + rim disc, matches bronze_vase_lid.json elements
     protected static final VoxelShape SHAPE_TOP = Shapes.or(
             Block.box(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
             Block.box(2.0, 4.0, 2.0, 14.0, 6.0, 14.0),
@@ -197,15 +201,18 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
 
         return super.getDrops(state, params);
     }
-
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+         if (newState.getBlock() instanceof BronzeVaseBlock) {
+            super.onRemove(state, level, pos, newState, isMoving);
+            return;
+        }
+
         BlockEntity blockentity = level.getBlockEntity(pos);
         if (blockentity instanceof VaseBlockEntity) {
             Containers.dropContentsOnDestroy(state, newState, level, pos);
         }
         super.onRemove(state, level, pos, newState, isMoving);
     }
-
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
@@ -215,13 +222,90 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
             pos = getCorrectBlockPos(pos, state);
             if (level.getBlockEntity(pos) instanceof VaseBlockEntity vase) {
                 player.openMenu(vase);
-                //player.awardStat(Stats.OPEN_SHULKER_BOX);
                 PiglinAi.angerNearbyPiglins(player, true);
                 return InteractionResult.CONSUME;
             } else {
                 return InteractionResult.PASS;
             }
         }
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+                                              Player player, InteractionHand hand, BlockHitResult hitResult) {
+        return vaseWaxing(stack, state, level, pos, player)
+                ? ItemInteractionResult.SUCCESS
+                : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    private boolean vaseWaxing(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player) {
+        BlockPos lowerPos = getCorrectBlockPos(pos, state);
+        BlockState lowerState = level.getBlockState(lowerPos);
+        boolean waxed = lowerState.getValue(WAXED);
+
+        if (stack.is(ItemTags.AXES)) {
+            if (!waxed && TarnishingBronze.getPrevious(lowerState.getBlock()).isEmpty())
+                return false;
+
+            stack.hurtAndBreak(1, player, null);
+            level.playSound(player, lowerPos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1F, 1F);
+
+            if (waxed) {
+                setWaxedBothHalves(level, lowerPos, false);
+                level.levelEvent(player, 3004, lowerPos, 0);
+            } else {
+                Block previousBlock = TarnishingBronze.getPrevious(lowerState.getBlock()).get();
+                setBothHalves(level, lowerPos, previousBlock);
+                level.levelEvent(player, 3005, lowerPos, 0);
+
+                if (!level.isClientSide() && level.random.nextFloat() < 0.50f) {
+                    ItemEntity bronzeDrop = new ItemEntity(level, lowerPos.getX() + 0.5, lowerPos.getY() + 0.5, lowerPos.getZ() + 0.5,
+                            new ItemStack(RNItems.BRONZE_POWDER.get()));
+                    bronzeDrop.setDefaultPickUpDelay();
+                    level.addFreshEntity(bronzeDrop);
+                }
+            }
+            return true;
+        }
+
+        if (stack.is(RNItems.BRONZE_POWDER.get())) {
+            var nextBlock = TarnishingBronze.getNext(lowerState.getBlock());
+            if (nextBlock.isPresent()) {
+                setBothHalves(level, lowerPos, nextBlock.get());
+
+                if (!player.isCreative())
+                    stack.shrink(1);
+
+                level.playSound(player, lowerPos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1F, 0.8F);
+                level.levelEvent(player, 3005, lowerPos, 0);
+                return true;
+            }
+            return false;
+        }
+
+        if (stack.is(Items.HONEYCOMB) && !waxed) {
+            setWaxedBothHalves(level, lowerPos, true);
+
+            if (!player.isCreative())
+                stack.shrink(1);
+
+            level.playSound(player, lowerPos, SoundEvents.HONEYCOMB_WAX_ON, SoundSource.BLOCKS, 1F, 1F);
+            level.levelEvent(player, 3003, lowerPos, 0);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void setWaxedBothHalves(Level level, BlockPos lowerPos, boolean waxed) {
+        BlockPos upperPos = lowerPos.above();
+        BlockState lowerState = level.getBlockState(lowerPos);
+        BlockState upperState = level.getBlockState(upperPos);
+
+        if (!(lowerState.getBlock() instanceof BronzeVaseBlock) || !(upperState.getBlock() instanceof BronzeVaseBlock)) return;
+
+        level.setBlock(lowerPos, lowerState.setValue(WAXED, waxed), Block.UPDATE_CLIENTS);
+        level.setBlock(upperPos, upperState.setValue(WAXED, waxed), Block.UPDATE_CLIENTS);
     }
 
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
@@ -260,14 +344,6 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
         return VaseBlockEntity.class;
     }
 
-    // --- Tarnishing ---
-    // The vase is a two-tall (HALF) block, unlike the rest of TarnishingBronzeBlock's
-    // single-position blocks. All ticking and change-over-time logic is gated on the
-    // LOWER half and moves both halves together, so the two halves never end up on
-    // mismatched tarnish stages (canSurvive requires blockstate.is(this) for the UPPER
-    // half to stay placed). Container contents are explicitly saved and restored around
-    // the swap since the block instance changes at both positions.
-
     @Override
     protected boolean isRandomlyTicking(BlockState state) {
         return state.getValue(HALF) == DoubleBlockHalf.LOWER
@@ -297,7 +373,7 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
         TarnishingBronze.getNext(this).ifPresent(nextBlock -> setBothHalves(level, pos, nextBlock));
     }
 
-    private void setBothHalves(ServerLevel level, BlockPos lowerPos, Block nextBlock) {
+    private void setBothHalves(Level level, BlockPos lowerPos, Block nextBlock) {
         if (!(nextBlock instanceof BronzeVaseBlock)) return;
 
         BlockPos upperPos = lowerPos.above();
@@ -305,24 +381,30 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
 
         BlockEntity oldBlockEntity = level.getBlockEntity(lowerPos);
         NonNullList<ItemStack> savedItems = null;
-        if (oldBlockEntity instanceof Container container) {
-            savedItems = NonNullList.withSize(container.getContainerSize(), ItemStack.EMPTY);
-            for (int i = 0; i < container.getContainerSize(); i++) {
-                savedItems.set(i, container.getItem(i).copy());
+        VaseEngraving savedEngraving = null;
+
+        if (oldBlockEntity instanceof VaseBlockEntity oldVase) {
+            savedItems = NonNullList.withSize(oldVase.getContainerSize(), ItemStack.EMPTY);
+            for (int i = 0; i < oldVase.getContainerSize(); i++) {
+                savedItems.set(i, oldVase.getItem(i).copy());
             }
+            savedEngraving = oldVase.getEngraving();
         }
 
         level.setBlock(upperPos, nextBlock.defaultBlockState().setValue(HALF, DoubleBlockHalf.UPPER).setValue(WAXED, false), Block.UPDATE_CLIENTS);
         level.setBlock(lowerPos, nextBlock.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(WAXED, false), Block.UPDATE_CLIENTS);
 
-        if (savedItems != null) {
-            BlockEntity newBlockEntity = level.getBlockEntity(lowerPos);
-            if (newBlockEntity instanceof Container newContainer) {
-                for (int i = 0; i < Math.min(savedItems.size(), newContainer.getContainerSize()); i++) {
-                    newContainer.setItem(i, savedItems.get(i));
+        BlockEntity newBlockEntity = level.getBlockEntity(lowerPos);
+        if (newBlockEntity instanceof VaseBlockEntity newVase) {
+            if (savedItems != null) {
+                for (int i = 0; i < Math.min(savedItems.size(), newVase.getContainerSize()); i++) {
+                    newVase.setItem(i, savedItems.get(i));
                 }
-                newBlockEntity.setChanged();
             }
+            if (savedEngraving != null) {
+                newVase.setEngraving(savedEngraving);
+            }
+            newVase.setChanged();
         }
     }
 }

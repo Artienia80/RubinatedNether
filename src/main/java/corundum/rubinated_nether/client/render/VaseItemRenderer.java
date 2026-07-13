@@ -1,6 +1,5 @@
 package corundum.rubinated_nether.client.render;
 
-import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import corundum.rubinated_nether.RubinatedNether;
@@ -24,6 +23,7 @@ public class VaseItemRenderer extends BlockEntityWithoutLevelRenderer {
     public static final VaseItemRenderer INSTANCE = new VaseItemRenderer();
 
     private static final float EPS = 0.002f;
+    private static final String WAXED_PREFIX = "waxed_";
 
     private VaseItemRenderer() {
         super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
@@ -33,13 +33,22 @@ public class VaseItemRenderer extends BlockEntityWithoutLevelRenderer {
     public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack poseStack,
                              MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
+
+        // Waxed vase items (e.g. "waxed_bronze_vase") share the same base cube model
+        // as their non-waxed counterpart ("bronze_vase"), so strip the prefix before
+        // looking up the "_base" model — only one _base model is generated per tarnish stage.
+        String path = itemId.getPath();
+        if (path.startsWith(WAXED_PREFIX)) {
+            path = path.substring(WAXED_PREFIX.length());
+        }
+
         ModelResourceLocation baseModelLoc =
-                ModelResourceLocation.standalone(RubinatedNether.id("item/" + itemId.getPath() + "_base"));
+                ModelResourceLocation.standalone(RubinatedNether.id("item/" + path + "_base"));
 
         BakedModel baseModel = Minecraft.getInstance().getModelManager().getModel(baseModelLoc);
 
         poseStack.pushPose();
-        poseStack.translate(0.5, 0.5, 0.5); // cancel the extra -0.5 that render() re-applies below
+        poseStack.translate(0.5, 0.5, 0.5); // cancel the extra -0.5 that render() re-applies internally
         Minecraft.getInstance().getItemRenderer()
                 .render(stack, displayContext, false, poseStack, bufferSource, packedLight, packedOverlay, baseModel);
         poseStack.popPose();
