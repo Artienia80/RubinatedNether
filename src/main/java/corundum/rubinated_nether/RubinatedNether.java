@@ -64,8 +64,6 @@ public class RubinatedNether {
     public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
         LOGGER.info("Rubinating all over your Nether...");
 
-        System.out.println("[RN DEBUG] BRONZE trim material key: " + RNTrimMaterials.BRONZE.location());
-
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addPackFinders);
 
@@ -165,6 +163,7 @@ public class RubinatedNether {
     public void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             RNCauldronInteraction.bootStrap();
+            corundum.rubinated_nether.content.trim.VaseEngravingMaterial.bootstrap();
         });
     }
 

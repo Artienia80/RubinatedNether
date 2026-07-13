@@ -1,0 +1,36 @@
+{
+  "sources": [
+    {
+      "type": "paletted_permutations",
+      "textures": [
+        "rubinated_nether:trims/models/vase/rune_tool",
+        "rubinated_nether:trims/models/vase/rune_weapon",
+        "rubinated_nether:trims/models/vase/rune_armor",
+        "rubinated_nether:trims/models/vase/rune_bow",
+        "rubinated_nether:trims/models/vase/rune_crossbow",
+        "rubinated_nether:trims/models/vase/rune_trident",
+        "rubinated_nether:trims/models/vase/rune_mace"
+      ],
+      "palette_key": "rubinated_nether:trims/color_palettes/base",
+      "permutations": {
+        "bronze": "rubinated_nether:trims/color_palettes/bronze",
+        "discolored_bronze": "rubinated_nether:trims/color_palettes/discolored_bronze",
+        "corroded_bronze": "rubinated_nether:trims/color_palettes/corroded_bronze",
+        "tarnished_bronze": "rubinated_nether:trims/color_palettes/tarnished_bronze",
+        "crystallized_bronze": "rubinated_nether:trims/color_palettes/crystallized_bronze",
+        "ruby": "rubinated_nether:trims/color_palettes/ruby",
+        "molten_ruby": "rubinated_nether:trims/color_palettes/molten_ruby",
+        "redstone": "minecraft:trims/color_palettes/redstone",
+        "copper": "minecraft:trims/color_palettes/copper",
+        "gold": "minecraft:trims/color_palettes/gold",
+        "iron": "minecraft:trims/color_palettes/iron",
+        "diamond": "minecraft:trims/color_palettes/diamond",
+        "netherite": "minecraft:trims/color_palettes/netherite",
+        "quartz": "minecraft:trims/color_palettes/quartz",
+        "emerald": "minecraft:trims/color_palettes/emerald",
+        "lapis": "minecraft:trims/color_palettes/lapis",
+        "amethyst": "minecraft:trims/color_palettes/amethyst"
+      }
+    }
+  ]
+}

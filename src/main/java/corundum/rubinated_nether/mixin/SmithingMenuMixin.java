@@ -1,8 +1,10 @@
 package corundum.rubinated_nether.mixin;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.items.RuneItem;
+import corundum.rubinated_nether.content.items.Rubination;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.SmithingMenu;
@@ -17,14 +19,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class SmithingMenuMixin {
 
     @Unique
-    private boolean runeWasInTemplateSlot = false;
+    private Rubination capturedRubination = null;
 
     @Inject(method = "onTake", at = @At("HEAD"))
     private void captureTemplate(Player player, ItemStack stack, CallbackInfo ci) {
         SmithingMenu menu = (SmithingMenu)(Object)this;
-        runeWasInTemplateSlot = menu.getSlot(SmithingMenu.TEMPLATE_SLOT).getItem().getItem() instanceof RuneItem;
+        ItemStack templateStack = menu.getSlot(SmithingMenu.TEMPLATE_SLOT).getItem();
 
-        if (runeWasInTemplateSlot && player instanceof ServerPlayer serverPlayer) {
+        capturedRubination = templateStack.getItem() instanceof RuneItem runeItem
+                ? runeItem.getRubination()
+                : null;
+
+        if (capturedRubination != null && player instanceof ServerPlayer serverPlayer) {
             var advancementHolder = serverPlayer.server.getAdvancements()
                     .get(RubinatedNether.id("rubinated_trim"));
             if (advancementHolder != null) {
@@ -39,11 +45,13 @@ public class SmithingMenuMixin {
     }
 
     @Inject(method = "onTake", at = @At("TAIL"))
-    private void restoreBlankRune(Player player, ItemStack stack, CallbackInfo ci) {
-        if (runeWasInTemplateSlot) {
+    private void restoreCarvedRune(Player player, ItemStack stack, CallbackInfo ci) {
+        if (capturedRubination != null) {
             SmithingMenu menu = (SmithingMenu)(Object)this;
-            menu.getSlot(SmithingMenu.TEMPLATE_SLOT).set(new ItemStack(RNItems.RUNE.get()));
-            runeWasInTemplateSlot = false;
+            ItemStack carved = new ItemStack(RNItems.RUNE.get());
+            carved.set(RNDataComponents.RUNE_CARVING.get(), capturedRubination);
+            menu.getSlot(SmithingMenu.TEMPLATE_SLOT).set(carved);
+            capturedRubination = null;
         }
     }
 }

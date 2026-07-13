@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content;
 import com.mojang.serialization.Codec;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.items.Rubination;
+import corundum.rubinated_nether.content.trim.VaseEngraving;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -23,5 +24,11 @@ public class RNDataComponents {
             () -> DataComponentType.<Rubination>builder()
                     .persistent(Rubination.CODEC)
                     .networkSynchronized(ByteBufCodecs.STRING_UTF8.map(Rubination::byNameOrEmpty, Rubination::getSerializedName))
+                    .build());
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<VaseEngraving>> VASE_ENGRAVING = DATA_COMPONENTS.register("vase_engraving",
+            () -> DataComponentType.<VaseEngraving>builder()
+                    .persistent(VaseEngraving.CODEC)
+                    .networkSynchronized(VaseEngraving.STREAM_CODEC)
                     .build());
 }

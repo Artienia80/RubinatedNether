@@ -53,6 +53,9 @@ public class RNItemTags extends ItemTagsProvider {
 				RNItems.PHILARGYRIA_RUNE.asItem()
 		);
 
+		this.tag(RNTags.Items.RUBINATION_RUNES).addTag(RNTags.Items.RUNES);
+
+
 		this.tag(RNTags.Items.RUBINATION_TOOL).addTag(Tags.Items.MINING_TOOL_TOOLS);
 
 		this.tag(RNTags.Items.RUBINATION_ARMOR).addTag(Tags.Items.ARMORS);
@@ -313,5 +316,21 @@ public class RNItemTags extends ItemTagsProvider {
 		this.tag(RNTags.Items.SHRINE_STONE_TILES_WALL_CANDIDATE).add(
 				Items.DEEPSLATE_TILE_WALL
 		);
+
+		this.tag(RNTags.Items.VASES).add(
+				RNBlocks.BRONZE_VASE.asItem(),
+				RNBlocks.DISCOLORED_BRONZE_VASE.asItem(),
+				RNBlocks.CORRODED_BRONZE_VASE.asItem(),
+				RNBlocks.TARNISHED_BRONZE_VASE.asItem(),
+				RNBlocks.CRYSTALLIZED_BRONZE_VASE.asItem()
+		);
+		this.tag(RNTags.Items.VASE_ENGRAVING_MATERIALS)
+				.addTag(ItemTags.TRIM_MATERIALS)
+				.add(
+						RNItems.BRONZE_SCRAP.asItem(),
+						RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.asItem(),
+						RNItems.RUBY.asItem(),
+						RNItems.MOLTEN_RUBY.asItem()
+				);
 	}
 }

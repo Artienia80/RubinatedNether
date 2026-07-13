@@ -69,6 +69,7 @@ public class RubinatedTextRenderer {
     }
 
     private static void onRegisterReloadListeners(RegisterClientReloadListenersEvent event) {
+        event.registerReloadListener(VaseEngravingAtlas.INSTANCE);
         event.registerReloadListener(new SimplePreparableReloadListener<Void>() {
             @Override
             protected Void prepare(ResourceManager resourceManager, ProfilerFiller profiler) {

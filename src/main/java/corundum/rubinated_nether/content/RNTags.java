@@ -111,6 +111,10 @@ public final class RNTags {
 		public static final TagKey<Item> SHRINE_STONE_TILES_SLAB_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_tiles_slab_candidate");
 		public static final TagKey<Item> SHRINE_STONE_TILES_WALL_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_tiles_wall_candidate");
 
+		public static final TagKey<Item> RUBINATION_RUNES = createTag(Registries.ITEM, "rubination_runes");
+		public static final TagKey<Item> VASES = createTag(Registries.ITEM, "vases");
+		public static final TagKey<Item> VASE_ENGRAVING_MATERIALS = createTag(Registries.ITEM, "vase_engraving_materials");
+
 	}
 
 	public static final class Enchantments {

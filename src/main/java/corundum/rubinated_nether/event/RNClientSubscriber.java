@@ -2,14 +2,9 @@ package corundum.rubinated_nether.event;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.client.render.RubinatedTextRenderer;
+import corundum.rubinated_nether.client.render.*;
 import corundum.rubinated_nether.client.particles.BloodDripParticle;
 import corundum.rubinated_nether.client.particles.SteamParticle;
-import corundum.rubinated_nether.client.render.BronzeLaserRenderer;
-import corundum.rubinated_nether.client.render.CofferRenderer;
-import corundum.rubinated_nether.client.render.CopperLaserRenderer;
-import corundum.rubinated_nether.client.render.GearboxRenderer;
-import corundum.rubinated_nether.client.render.RNRenderTypes;
 import corundum.rubinated_nether.client.render.entity.RubyLensModel;
 import corundum.rubinated_nether.client.render.entity.RubyLensRenderLayer;
 import corundum.rubinated_nether.content.RNBlockEntities;
@@ -40,12 +35,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
-import net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 @EventBusSubscriber(modid = RubinatedNether.MODID, value = Dist.CLIENT)
@@ -103,7 +93,13 @@ public class RNClientSubscriber {
         event.registerBlockEntityRenderer(RNBlockEntities.GEARBOX.get(), GearboxRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_LASER.get(), BronzeLaserRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.COPPER_LASER.get(), CopperLaserRenderer::new);
+        event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_VASE.get(), VaseBlockEntityRenderer::new);
         event.registerEntityRenderer(RNEntityCreator.BRONZE_SHOT.get(), BronzeShotProjectileRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerReloadListeners(RegisterClientReloadListenersEvent event) {
+        event.registerReloadListener(VaseEngravingAtlas.INSTANCE);
     }
 
     @SubscribeEvent
