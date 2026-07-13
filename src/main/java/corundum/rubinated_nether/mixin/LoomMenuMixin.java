@@ -2,6 +2,7 @@ package corundum.rubinated_nether.mixin;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.items.RuneCarvingHelper;
 import corundum.rubinated_nether.content.items.RuneItem;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +25,7 @@ public class LoomMenuMixin {
     private void onLoomTake(Player player, ItemStack stack, CallbackInfo ci) {
         Slot patternSlot = this.this$0.getPatternSlot();
         ItemStack pattern = patternSlot.getItem();
-        if (pattern.getItem() instanceof RuneItem) {
+        if (pattern.getItem() instanceof RuneItem runeItem) {
             if (player instanceof ServerPlayer serverPlayer) {
                 var advancementHolder = serverPlayer.server.getAdvancements()
                         .get(RubinatedNether.id("rubinated_banner"));
@@ -38,7 +39,8 @@ public class LoomMenuMixin {
                 }
             }
 
-            patternSlot.set(new ItemStack(RNItems.RUNE.get()));
+            ItemStack carved = RuneCarvingHelper.withCarving(new ItemStack(RNItems.RUNE.get()), runeItem.getRubination());
+            patternSlot.set(carved);
         }
     }
 }

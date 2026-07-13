@@ -6,12 +6,17 @@ import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.content.trim.RNTrimMaterials;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -265,6 +270,12 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.COGS_BANNER_PATTERN.get()
 		);
 
+		vaseItemModel(RNBlocks.BRONZE_VASE, "block/bronze/bronze_vase/bronze_vase", "block/bronze/bronze_block/bronze_block");
+		vaseItemModel(RNBlocks.DISCOLORED_BRONZE_VASE, "block/bronze/bronze_vase/discolored_bronze_vase", "block/bronze/bronze_block/discolored_bronze_block");
+		vaseItemModel(RNBlocks.CORRODED_BRONZE_VASE, "block/bronze/bronze_vase/corroded_bronze_vase", "block/bronze/bronze_block/corroded_bronze_block");
+		vaseItemModel(RNBlocks.TARNISHED_BRONZE_VASE, "block/bronze/bronze_vase/tarnished_bronze_vase", "block/bronze/bronze_block/tarnished_bronze_block");
+		vaseItemModel(RNBlocks.CRYSTALLIZED_BRONZE_VASE, "block/bronze/bronze_vase/crystallized_bronze_vase", "block/bronze/bronze_block/crystallized_bronze_block");
+
 		waxableBlockItemsCopyOnly(
 				RNBlocks.BRONZE_VASE,
 				RNBlocks.DISCOLORED_BRONZE_VASE,
@@ -434,4 +445,75 @@ public class RNItemModels extends ItemModelProvider {
 			);
 		}
 	}
+
+
+	private void vaseItemModel(DeferredBlock<?> vaseBlock, String vaseTexturePath, String bronzeBlockTexturePath) {
+		String name = vaseBlock.getId().getPath();
+
+		ItemModelBuilder base = getBuilder(name + "_base")
+				.texture("4", modLoc(vaseTexturePath + "_bottom"))
+				.texture("5", modLoc(vaseTexturePath + "_head"))
+				.texture("6", modLoc(vaseTexturePath + "_neck"))
+				.texture("7", modLoc(vaseTexturePath + "_top"))
+				.texture("8", modLoc(bronzeBlockTexturePath))
+				.texture("particle", modLoc(vaseTexturePath + "_bottom"));
+
+		base.element()
+				.from(0, 0, 0).to(16, 16, 16)
+				.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#4").end()
+				.face(Direction.EAST).uvs(0, 0, 16, 16).texture("#4").end()
+				.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#4").end()
+				.face(Direction.WEST).uvs(0, 0, 16, 16).texture("#4").end()
+				.face(Direction.UP).uvs(0, 0, 16, 16).texture("#6").end()
+				.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#8").end()
+				.end();
+
+		base.element()
+				.from(0, 16, 0).to(16, 20, 16)
+				.face(Direction.NORTH).uvs(0, 12, 16, 16).texture("#7").end()
+				.face(Direction.EAST).uvs(0, 12, 16, 16).texture("#7").end()
+				.face(Direction.SOUTH).uvs(0, 12, 16, 16).texture("#7").end()
+				.face(Direction.WEST).uvs(0, 12, 16, 16).texture("#7").end()
+				.face(Direction.UP).uvs(0, 0, 16, 16).texture("#6").end()
+				.end();
+
+		base.element()
+				.from(1, 22, 1).to(15, 24, 15)
+				.face(Direction.NORTH).uvs(1, 8, 15, 10).texture("#7").end()
+				.face(Direction.EAST).uvs(1, 8, 15, 10).texture("#7").end()
+				.face(Direction.SOUTH).uvs(1, 8, 15, 10).texture("#7").end()
+				.face(Direction.WEST).uvs(1, 8, 15, 10).texture("#7").end()
+				.face(Direction.UP).uvs(1, 1, 15, 15).texture("#5").end()
+				.face(Direction.DOWN).uvs(1, 1, 15, 15).texture("#6").end()
+				.end();
+
+		base.element()
+				.from(2, 20, 2).to(14, 22, 14)
+				.face(Direction.NORTH).uvs(2, 10, 14, 12).texture("#7").end()
+				.face(Direction.EAST).uvs(2, 10, 14, 12).texture("#7").end()
+				.face(Direction.SOUTH).uvs(2, 10, 14, 12).texture("#7").end()
+				.face(Direction.WEST).uvs(2, 10, 14, 12).texture("#7").end()
+				.end();
+
+		ItemModelBuilder wrapper = getBuilder(name)
+				.parent(new ModelFile.UncheckedModelFile(mcLoc("builtin/entity")))
+				.texture("particle", modLoc(vaseTexturePath + "_bottom"));
+
+		wrapper.transforms()
+				.transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
+				.rotation(75, 45, 0).translation(0, 1.5f, 0).scale(0.35f, 0.35f, 0.35f).end()
+				.transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
+				.rotation(75, 45, 0).translation(0, 1.5f, 0).scale(0.35f, 0.35f, 0.35f).end()
+				.transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
+				.rotation(0, 45, 0).scale(0.4f, 0.4f, 0.4f).end()
+				.transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
+				.rotation(0, 225, 0).scale(0.4f, 0.4f, 0.4f).end()
+				.transform(ItemDisplayContext.GROUND)
+				.translation(0, 3, 0).scale(0.25f, 0.25f, 0.25f).end()
+				.transform(ItemDisplayContext.GUI)
+				.rotation(30, 225, 0).translation(0, -1.5f, 0).scale(0.46f, 0.46f, 0.46f).end()
+				.transform(ItemDisplayContext.FIXED)
+				.scale(0.4f, 0.4f, 0.4f).end();
+	}
+
 }

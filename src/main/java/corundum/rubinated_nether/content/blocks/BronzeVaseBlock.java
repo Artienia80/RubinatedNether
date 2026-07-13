@@ -1,12 +1,10 @@
 package corundum.rubinated_nether.content.blocks;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNBlockEntities;
-import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.RNTags;
-import corundum.rubinated_nether.content.TarnishStage;
+import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.entities.VaseBlockEntity;
+import corundum.rubinated_nether.content.trim.VaseEngraving;
+import corundum.rubinated_nether.content.trim.VaseEngravingTooltip;
 import corundum.rubinated_nether.utils.BEBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -228,6 +226,10 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
 
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+
+        VaseEngraving engraving = stack.get(RNDataComponents.VASE_ENGRAVING.get());
+        VaseEngravingTooltip.appendHoverText(engraving, context.registries(), tooltipComponents);
+
         if (stack.has(DataComponents.CONTAINER_LOOT)) {
             tooltipComponents.add(UNKNOWN_CONTENTS);
         }
@@ -246,7 +248,6 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
         if (j - i > 0) {
             tooltipComponents.add(Component.translatable("container.bronzeVase.more", j - i).withStyle(ChatFormatting.ITALIC));
         }
-
     }
 
     @Override

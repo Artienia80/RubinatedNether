@@ -1,8 +1,8 @@
 package corundum.rubinated_nether.mixin;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.items.RuneCarvingHelper;
 import corundum.rubinated_nether.content.items.RuneItem;
 import corundum.rubinated_nether.content.items.Rubination;
 import net.minecraft.server.level.ServerPlayer;
@@ -48,8 +48,7 @@ public class SmithingMenuMixin {
     private void restoreCarvedRune(Player player, ItemStack stack, CallbackInfo ci) {
         if (capturedRubination != null) {
             SmithingMenu menu = (SmithingMenu)(Object)this;
-            ItemStack carved = new ItemStack(RNItems.RUNE.get());
-            carved.set(RNDataComponents.RUNE_CARVING.get(), capturedRubination);
+            ItemStack carved = RuneCarvingHelper.withCarving(new ItemStack(RNItems.RUNE.get()), capturedRubination);
             menu.getSlot(SmithingMenu.TEMPLATE_SLOT).set(carved);
             capturedRubination = null;
         }

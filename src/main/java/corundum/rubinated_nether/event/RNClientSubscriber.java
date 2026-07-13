@@ -7,11 +7,7 @@ import corundum.rubinated_nether.client.particles.BloodDripParticle;
 import corundum.rubinated_nether.client.particles.SteamParticle;
 import corundum.rubinated_nether.client.render.entity.RubyLensModel;
 import corundum.rubinated_nether.client.render.entity.RubyLensRenderLayer;
-import corundum.rubinated_nether.content.RNBlockEntities;
-import corundum.rubinated_nether.content.RNEffects;
-import corundum.rubinated_nether.content.RNEntityCreator;
-import corundum.rubinated_nether.content.RNModelLayers;
-import corundum.rubinated_nether.content.RNParticleTypes;
+import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.effect.renderer.BronzeDiseasedEffectOverlay;
 import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileModel;
 import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileRenderer;
@@ -27,15 +23,19 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 @EventBusSubscriber(modid = RubinatedNether.MODID, value = Dist.CLIENT)
@@ -155,5 +155,33 @@ public class RNClientSubscriber {
         int screenHeight = mc.getWindow().getGuiScaledHeight();
         guiGraphics.blit(BronzeDiseasedEffectOverlay.PARANOIA_OVERLAY, 0, 0, 0, 0.0F, 0.0F, screenWidth, screenHeight, screenWidth, screenHeight);
         guiGraphics.flush();
+    }
+
+    @SubscribeEvent
+    public static void registerItemExtensions(RegisterClientExtensionsEvent event) {
+        IClientItemExtensions vaseExtensions = new IClientItemExtensions() {
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return VaseItemRenderer.INSTANCE;
+            }
+        };
+
+        event.registerItem(vaseExtensions,
+                RNBlocks.BRONZE_VASE.get().asItem(),
+                RNBlocks.DISCOLORED_BRONZE_VASE.get().asItem(),
+                RNBlocks.CORRODED_BRONZE_VASE.get().asItem(),
+                RNBlocks.TARNISHED_BRONZE_VASE.get().asItem(),
+                RNBlocks.CRYSTALLIZED_BRONZE_VASE.get().asItem()
+        );
+    }
+
+    @SubscribeEvent
+    public static void registerAdditionalModels(ModelEvent.RegisterAdditional event) {
+        for (String name : new String[]{
+                "bronze_vase", "discolored_bronze_vase", "corroded_bronze_vase",
+                "tarnished_bronze_vase", "crystallized_bronze_vase"
+        }) {
+            event.register(ModelResourceLocation.standalone(RubinatedNether.id("item/" + name + "_base")));
+        }
     }
 }
