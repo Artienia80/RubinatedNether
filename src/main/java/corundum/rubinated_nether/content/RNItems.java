@@ -171,6 +171,15 @@ public class RNItems {
 			)
 	);
 
+	public static final DeferredItem<Item> POCKETWATCH = ITEMS.register(
+			"pocketwatch",
+			() -> new PocketwatchItem(
+					new Item.Properties()
+							.stacksTo(1)
+							.component(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.EMPTY)
+			)
+	);
+
 	//Not Actual Items
 
 	public static final DeferredItem<Item> BLESSED_ICON = ITEMS.register("blessed_icon",

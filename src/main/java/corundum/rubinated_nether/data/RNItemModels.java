@@ -322,6 +322,7 @@ public class RNItemModels extends ItemModelProvider {
 		);
 
 		carvedRuneItem();
+		pocketwatchItem();
 
 		withExistingParent(
 				RNBlocks.BRAZIER.getId().toString(),
@@ -443,6 +444,23 @@ public class RNItemModels extends ItemModelProvider {
 					item.getId().toString(),
 					mcLoc("item/template_spawn_egg")
 			);
+		}
+	}
+
+	private void pocketwatchItem() {
+		var base = withExistingParent(
+				RNItems.POCKETWATCH.getId().toString(),
+				mcLoc("item/generated")
+		).texture("layer0", modLoc("item/pocketwatch_0"));
+
+		for (int frame = 1; frame <= 15; frame++) {
+			ItemModelBuilder frameModel = getBuilder("pocketwatch_" + frame)
+					.parent(new ModelFile.UncheckedModelFile(mcLoc("item/generated")))
+					.texture("layer0", modLoc("item/pocketwatch_" + frame));
+
+			base.override()
+					.predicate(mcLoc("custom_model_data"), frame)
+					.model(frameModel);
 		}
 	}
 

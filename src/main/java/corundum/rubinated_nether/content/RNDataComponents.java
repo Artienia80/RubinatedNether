@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content;
 
 import com.mojang.serialization.Codec;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.items.PocketwatchData;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.trim.VaseEngraving;
 import net.minecraft.core.component.DataComponentType;
@@ -30,5 +31,11 @@ public class RNDataComponents {
             () -> DataComponentType.<VaseEngraving>builder()
                     .persistent(VaseEngraving.CODEC)
                     .networkSynchronized(VaseEngraving.STREAM_CODEC)
+                    .build());
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<PocketwatchData>> POCKETWATCH_DATA = DATA_COMPONENTS.register("pocketwatch_data",
+            () -> DataComponentType.<PocketwatchData>builder()
+                    .persistent(PocketwatchData.CODEC)
+                    .networkSynchronized(PocketwatchData.STREAM_CODEC)
                     .build());
 }

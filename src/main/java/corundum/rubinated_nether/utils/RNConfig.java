@@ -10,6 +10,7 @@ public class RNConfig extends MidnightConfig {
 	public static final String CLIENT = "client";
 	public static final String CAULDRON = "cauldron";
 	public static final String VENT = "vent";
+	public static final String POCKETWATCH = "pocketwatch";
 
 	/* -- Brazier -- */
 
@@ -184,6 +185,13 @@ public class RNConfig extends MidnightConfig {
 	@Entry(category = CLIENT)
 	public static boolean rubinatedLanguage = true;
 
+	@Entry(
+			category = POCKETWATCH,
+			isSlider = true,
+			min = 0,
+			max = 60
+	)
+	public static int pocketwatchStopLockMinutes = 15;
 
 	/* -- Calculated Values -- */
 

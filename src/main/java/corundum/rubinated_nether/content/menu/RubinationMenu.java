@@ -1,11 +1,10 @@
 package corundum.rubinated_nether.content.menu;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.RNEffects;
-import corundum.rubinated_nether.content.RNRarity;
-import corundum.rubinated_nether.content.RubinationConverter;
+import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.RubinationAltarBlock;
+import corundum.rubinated_nether.content.items.PocketwatchData;
+import corundum.rubinated_nether.content.items.PocketwatchItem;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneItem;
 import corundum.rubinated_nether.utils.RNConfig;
@@ -175,19 +174,41 @@ public class RubinationMenu extends AbstractContainerMenu {
     }
 
     public static void BlessPlayer(Player player, int durationTicks) {
-        MobEffectInstance currentBlessing = player.getEffect(RNEffects.BLESSED);
+        List<ItemStack> pocketwatches = PocketwatchItem.findPocketwatches(player);
 
-        int newDuration;
-        if (currentBlessing != null) {
-            newDuration = currentBlessing.getDuration() + durationTicks;
-            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, newDuration, 0, false, false, true));
-        } else {
-            newDuration = durationTicks;
-            player.addEffect(new MobEffectInstance(RNEffects.BLESSED, durationTicks, 0, false, false, true));
+        if (pocketwatches.isEmpty()) {
+            return;
         }
 
-        // Check if duration exceeds Threshold, by default 5h:20m (384000 ticks) (64 Offerings)
-        if (newDuration >= RNConfig.altarFullBlessingThreshold*60*20 && player instanceof ServerPlayer serverPlayer) {
+        int share = durationTicks / pocketwatches.size();
+        int remainder = durationTicks % pocketwatches.size();
+        long gameTime = player.level().getGameTime();
+        long thresholdTicks = RNConfig.altarFullBlessingThreshold * 60L * 20L;
+        boolean reachedThreshold = false;
+
+        for (int i = 0; i < pocketwatches.size(); i++) {
+            ItemStack watch = pocketwatches.get(i);
+            PocketwatchData data = watch.getOrDefault(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.EMPTY);
+            int addition = share + (i == 0 ? remainder : 0);
+            boolean ticking = PocketwatchItem.isEffectivelyTicking(data, gameTime);
+            int newAmount = PocketwatchItem.getRemainingTicks(data, gameTime) + addition;
+
+            if (ticking) {
+                watch.set(RNDataComponents.POCKETWATCH_DATA, new PocketwatchData(newAmount, true, gameTime));
+                player.removeEffect(RNEffects.BLESSED);
+                player.addEffect(new MobEffectInstance(RNEffects.BLESSED, newAmount, 0, false, false, true));
+            } else {
+                watch.set(RNDataComponents.POCKETWATCH_DATA, new PocketwatchData(newAmount, false, 0L));
+            }
+
+            PocketwatchItem.syncModelFrame(watch, gameTime);
+
+            if (newAmount >= thresholdTicks) {
+                reachedThreshold = true;
+            }
+        }
+
+        if (reachedThreshold && player instanceof ServerPlayer serverPlayer) {
             AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
                     .get(RubinatedNether.id("divine_favor"));
 
@@ -201,7 +222,6 @@ public class RubinationMenu extends AbstractContainerMenu {
             }
         }
     }
-
     public boolean hasEnoughRubinatedBlocks() {
         return hasEnoughRubinatedBlocks;
     }
