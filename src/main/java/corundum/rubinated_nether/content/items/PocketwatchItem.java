@@ -37,11 +37,11 @@ public class PocketwatchItem extends Item {
         }
 
         long gameTime = level.getGameTime();
+        long lockTicks = RNConfig.pocketwatchStopLockMinutes * 60L * 20L;
         PocketwatchData data = stack.getOrDefault(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.EMPTY);
 
         if (isEffectivelyTicking(data, gameTime)) {
             long elapsed = gameTime - data.startedAtGameTime();
-            long lockTicks = RNConfig.pocketwatchStopLockMinutes * 60L * 20L;
 
             if (elapsed < lockTicks) {
                 player.displayClientMessage(Component.translatable("message.rubinated_nether.pocketwatch_locked"), true);
@@ -74,6 +74,7 @@ public class PocketwatchItem extends Item {
 
         stack.set(RNDataComponents.POCKETWATCH_DATA, new PocketwatchData(available, true, gameTime));
         player.addEffect(new MobEffectInstance(RNEffects.BLESSED, available, 0, false, false, true));
+        player.getCooldowns().addCooldown(this, (int) lockTicks);
         syncModelFrame(stack, gameTime);
         level.playSound(null, player.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1.0F);
         return InteractionResultHolder.success(stack);
@@ -82,17 +83,7 @@ public class PocketwatchItem extends Item {
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
         if (!level.isClientSide()) {
-            long gameTime = level.getGameTime();
-
-            if (entity instanceof Player player) {
-                PocketwatchData data = stack.getOrDefault(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.EMPTY);
-                if (isEffectivelyTicking(data, gameTime) && !player.hasEffect(RNEffects.BLESSED)) {
-                    int remaining = getRemainingTicks(data, gameTime);
-                    player.addEffect(new MobEffectInstance(RNEffects.BLESSED, remaining, 0, false, false, true));
-                }
-            }
-
-            syncModelFrame(stack, gameTime);
+            syncModelFrame(stack, level.getGameTime());
         }
         super.inventoryTick(stack, level, entity, slotId, isSelected);
     }

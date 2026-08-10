@@ -29,9 +29,12 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -41,6 +44,8 @@ import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
 @EventBusSubscriber(modid = RubinatedNether.MODID, value = Dist.CLIENT)
@@ -197,6 +202,37 @@ public class RNClientSubscriber {
                 "tarnished_bronze_vase", "crystallized_bronze_vase"
         }) {
             event.register(ModelResourceLocation.standalone(RubinatedNether.id("item/" + name + "_base")));
+        }
+    }
+
+    @SubscribeEvent
+    public static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar("1");
+        registrar.playToClient(
+                PocketwatchSavePayload.TYPE,
+                PocketwatchSavePayload.STREAM_CODEC,
+                (payload, context) -> context.enqueueWork(RNClientSubscriber::handlePocketwatchSave)
+        );
+    }
+
+    private static void handlePocketwatchSave() {
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer player = minecraft.player;
+
+        if (player == null) {
+            return;
+        }
+
+        minecraft.gameRenderer.displayItemActivation(new ItemStack(RNItems.POCKETWATCH.get()));
+        player.playSound(SoundEvents.ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
+
+        for (int i = 0; i < 20; i++) {
+            double offsetX = (player.getRandom().nextDouble() - 0.5) * 1.5;
+            double offsetY = player.getRandom().nextDouble() * 2.0;
+            double offsetZ = (player.getRandom().nextDouble() - 0.5) * 1.5;
+            player.level().addParticle(ParticleTypes.ENCHANT,
+                    player.getX() + offsetX, player.getY() + offsetY, player.getZ() + offsetZ,
+                    0.0, 0.0, 0.0);
         }
     }
 }
