@@ -133,11 +133,18 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
                     }
                 } else {
                     if (!vase.isEmpty()) {
-                        ItemStack itemstack = new ItemStack(RNBlocks.BRONZE_VASE.asItem());
+                        ItemStack itemstack = new ItemStack(this.asItem());
+                        RubinatedNether.LOGGER.warn("Vase drop item: {}", itemstack.getItem());
                         itemstack.applyComponents(blockentity.collectComponents());
                         ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + (double) 0.5F, (double) pos.getY() + (double) 0.5F, (double) pos.getZ() + (double) 0.5F, itemstack);
                         itementity.setDefaultPickUpDelay();
                         level.addFreshEntity(itementity);
+                        // The contents are already baked into itemstack's CONTAINER component above.
+                        // Empty the block entity now so onRemove()'s Containers.dropContentsOnDestroy()
+                        // (triggered by preventDrops() below) doesn't spill the same items a second time.
+                        for (int i = 0; i < vase.getContainerSize(); i++) {
+                            vase.setItem(i, ItemStack.EMPTY);
+                        }
                     }
                     preventDrops(level, pos, player);
                 }

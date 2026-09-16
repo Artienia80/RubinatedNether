@@ -14,7 +14,6 @@ public final class VaseEngravingTooltip {
 
     private VaseEngravingTooltip() {}
 
-    // Fallback descriptions for palettes with no backing TrimMaterial registry entry.
     private static final Map<String, Component> CUSTOM_MATERIAL_DESCRIPTIONS = Map.of(
             "ruby", Component.translatable("vase_engraving_material.rubinated_nether.ruby")
                     .withStyle(Style.EMPTY.withColor(TextColor.parseColor("#C62B3B").getOrThrow())),
@@ -40,13 +39,15 @@ public final class VaseEngravingTooltip {
                             .filter(holder -> holder.value().assetName().equals(material.paletteName()))
                             .findFirst());
             if (found.isPresent()) {
-                return found.get().value().description();
+                Component source = found.get().value().description();
+                return source.plainCopy().withStyle(source.getStyle());
             }
         }
 
-        return CUSTOM_MATERIAL_DESCRIPTIONS.getOrDefault(
+        Component custom = CUSTOM_MATERIAL_DESCRIPTIONS.getOrDefault(
                 material.paletteName(),
                 Component.literal(material.paletteName())
         );
+        return custom.plainCopy().withStyle(custom.getStyle());
     }
 }

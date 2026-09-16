@@ -691,6 +691,10 @@
 
   "container.shrine_stone_coffer": "Coffer",
   "container.bronzeVase": "Bronze Vase",
+  "container.bronzeVase.itemCount": "%s x%s",
+  "container.bronzeVase.more": "and %s more",
+  "container.bronzeVase.unknownContents": "???",
+
 
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
 
