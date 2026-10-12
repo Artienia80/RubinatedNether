@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "rubinated_nether:item/bronze_chainsaw"
+  }
+}

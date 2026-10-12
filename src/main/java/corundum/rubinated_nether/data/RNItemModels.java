@@ -3,6 +3,7 @@ package corundum.rubinated_nether.data;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.items.PocketwatchItem;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.content.trim.RNTrimMaterials;
@@ -465,6 +466,14 @@ public class RNItemModels extends ItemModelProvider {
 					.predicate(mcLoc("custom_model_data"), frame)
 					.model(frameModel);
 		}
+
+		ItemModelBuilder brokenModel = getBuilder("pocketwatch_broken")
+				.parent(new ModelFile.UncheckedModelFile(mcLoc("item/generated")))
+				.texture("layer0", modLoc("item/pocketwatch_broken"));
+
+		base.override()
+				.predicate(mcLoc("custom_model_data"), PocketwatchItem.BROKEN_MODEL_VALUE)
+				.model(brokenModel);
 	}
 
 

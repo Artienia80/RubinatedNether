@@ -2,11 +2,12 @@ package corundum.rubinated_nether.event;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNDataComponents;
-import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.items.PocketwatchData;
 import corundum.rubinated_nether.content.items.PocketwatchItem;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
@@ -36,16 +37,15 @@ public class PocketwatchDeathHandler {
             int remaining = PocketwatchItem.getRemainingTicks(data, gameTime);
 
             if (remaining > thresholdTicks) {
-                int newRemaining = (int) (remaining - thresholdTicks);
-                watch.set(RNDataComponents.POCKETWATCH_DATA, new PocketwatchData(newRemaining, true, gameTime));
+                watch.set(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.BROKEN);
 
                 event.setCanceled(true);
                 player.setHealth(1.0F);
                 player.removeAllEffects();
-                player.addEffect(new MobEffectInstance(RNEffects.BLESSED, newRemaining, 0, false, false, true));
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
                 player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
                 player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
+                player.level().playSound(null, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1.0F, 0.8F);
                 net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(player, PocketwatchSavePayload.INSTANCE);
             } else {
                 watch.set(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.EMPTY);

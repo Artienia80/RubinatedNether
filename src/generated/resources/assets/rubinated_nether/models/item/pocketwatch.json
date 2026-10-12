@@ -90,6 +90,12 @@
       "predicate": {
         "minecraft:custom_model_data": 15.0
       }
+    },
+    {
+      "model": "rubinated_nether:item/pocketwatch_broken",
+      "predicate": {
+        "minecraft:custom_model_data": 16.0
+      }
     }
   ],
   "textures": {

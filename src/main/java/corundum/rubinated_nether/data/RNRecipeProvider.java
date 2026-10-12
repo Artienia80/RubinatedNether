@@ -2,8 +2,10 @@ package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.items.PocketwatchData;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
 import corundum.rubinated_nether.content.recipe.RuneCarvingRecipeProvider;
@@ -28,6 +30,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 
 import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
@@ -745,6 +748,13 @@ public class RNRecipeProvider extends RecipeProvider {
 				Ingredient.of(RNBlocks.CHISELED_SHRINE_STONE_BRICKS),
 				new ResonanceRecipe.TriggerData(10, 150),
 				new ResonanceRecipe.TriggerData(20, 300), true);
+
+
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, RNItems.POCKETWATCH.get())
+				.requires(DataComponentIngredient.of(false, RNDataComponents.POCKETWATCH_DATA.get(), PocketwatchData.BROKEN, RNItems.POCKETWATCH.get()))
+				.requires(RNBlocks.GEARBOX.get())
+				.unlockedBy("has_broken_pocketwatch", has(RNItems.POCKETWATCH.get()))
+				.save(recipeOutput, RubinatedNether.MODID + ":pocketwatch_repair");
 
 	}
 

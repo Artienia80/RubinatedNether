@@ -223,7 +223,7 @@ public class RNClientSubscriber {
             return;
         }
 
-        minecraft.gameRenderer.displayItemActivation(new ItemStack(RNItems.POCKETWATCH.get()));
+        PocketwatchSaveAnimation.start();
         player.playSound(SoundEvents.ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
 
         for (int i = 0; i < 20; i++) {

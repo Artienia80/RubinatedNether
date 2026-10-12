@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.items;
 
 import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNEffects;
+import corundum.rubinated_nether.content.RNRarity;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.level.Level;
@@ -23,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PocketwatchItem extends Item {
+
+    public static final int BROKEN_MODEL_VALUE = 16;
 
     public PocketwatchItem(Properties properties) {
         super(properties);
@@ -39,6 +43,11 @@ public class PocketwatchItem extends Item {
         long gameTime = level.getGameTime();
         long lockTicks = RNConfig.pocketwatchStopLockMinutes * 60L * 20L;
         PocketwatchData data = stack.getOrDefault(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.EMPTY);
+
+        if (data.broken()) {
+            player.displayClientMessage(Component.translatable("message.rubinated_nether.pocketwatch_broken"), true);
+            return InteractionResultHolder.fail(stack);
+        }
 
         if (isEffectivelyTicking(data, gameTime)) {
             long elapsed = gameTime - data.startedAtGameTime();
@@ -89,10 +98,29 @@ public class PocketwatchItem extends Item {
     }
 
     @Override
+    public boolean isFoil(ItemStack stack) {
+        PocketwatchData data = stack.getOrDefault(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.EMPTY);
+        if (data.broken()) {
+            return false;
+        }
+        Rarity rarity = stack.getOrDefault(DataComponents.RARITY, Rarity.COMMON);
+        return rarity.equals(RNRarity.RUBINATED_NETHER_RUBY.get()) || super.isFoil(stack);
+    }
+
+    @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
 
         PocketwatchData data = stack.getOrDefault(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.EMPTY);
+
+        if (data.broken()) {
+            tooltipComponents.add(Component.translatable("item.rubinated_nether.pocketwatch.tooltip.broken")
+                    .withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
+            tooltipComponents.add(Component.translatable("item.rubinated_nether.pocketwatch.tooltip.broken_repair")
+                    .withStyle(ChatFormatting.DARK_GRAY));
+            return;
+        }
+
         Level level = context.level();
         long gameTime = level != null ? level.getGameTime() : data.startedAtGameTime();
 
@@ -111,9 +139,18 @@ public class PocketwatchItem extends Item {
 
     public static void syncModelFrame(ItemStack stack, long gameTime) {
         PocketwatchData data = stack.getOrDefault(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.EMPTY);
-        int currentTicks = getRemainingTicks(data, gameTime);
-        long thresholdTicks = RNConfig.altarFullBlessingThreshold * 60L * 20L;
-        int frame = (int) Math.min(15, (currentTicks * 16L) / thresholdTicks);
+
+        int frame;
+        boolean charged;
+        if (data.broken()) {
+            frame = BROKEN_MODEL_VALUE;
+            charged = false;
+        } else {
+            int currentTicks = getRemainingTicks(data, gameTime);
+            long thresholdTicks = RNConfig.altarFullBlessingThreshold * 60L * 20L;
+            frame = (int) Math.min(15, (currentTicks * 16L) / thresholdTicks);
+            charged = currentTicks >= thresholdTicks;
+        }
 
         CustomModelData existing = stack.get(DataComponents.CUSTOM_MODEL_DATA);
         int existingValue = existing != null ? existing.value() : -1;
@@ -121,9 +158,28 @@ public class PocketwatchItem extends Item {
         if (existingValue != frame) {
             stack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(frame));
         }
+
+        syncRarity(stack, charged);
+    }
+
+    private static void syncRarity(ItemStack stack, boolean rubinated) {
+        Rarity current = stack.getOrDefault(DataComponents.RARITY, Rarity.COMMON);
+        Rarity rubin = RNRarity.RUBINATED_NETHER_RUBY.get();
+
+        if (rubinated) {
+            if (!current.equals(rubin)) {
+                stack.set(DataComponents.RARITY, rubin);
+            }
+        } else if (current.equals(rubin)) {
+            Rarity base = stack.getItem().components().getOrDefault(DataComponents.RARITY, Rarity.COMMON);
+            stack.set(DataComponents.RARITY, base);
+        }
     }
 
     public static int getRemainingTicks(PocketwatchData data, long gameTime) {
+        if (data.broken()) {
+            return 0;
+        }
         if (!data.ticking()) {
             return Math.max(0, data.storedTicks());
         }
@@ -132,7 +188,7 @@ public class PocketwatchItem extends Item {
     }
 
     public static boolean isEffectivelyTicking(PocketwatchData data, long gameTime) {
-        return data.ticking() && getRemainingTicks(data, gameTime) > 0;
+        return !data.broken() && data.ticking() && getRemainingTicks(data, gameTime) > 0;
     }
 
     public static List<ItemStack> findPocketwatches(Player player) {
