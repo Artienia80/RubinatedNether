@@ -3,11 +3,14 @@ package corundum.rubinated_nether.content.blocks;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNParticleTypes;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
+import corundum.rubinated_nether.utils.BEBlock;
 import corundum.rubinated_nether.utils.RNConfig;
+import corundum.rubinated_nether.utils.TickableBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -18,6 +21,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +31,8 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -45,8 +51,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
-public class TarnishingBronzeVentBlock extends DirectionalBlock implements TarnishingBronze {
+public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlock<TarnishingBronzeVentBlock.VentBlockEntity>, TarnishingBronze {
 
     public static final MapCodec<TarnishingBronzeVentBlock> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
@@ -61,8 +68,13 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
     public static final BooleanProperty WAXED = TarnishingBronze.WAXED;
     public static final IntegerProperty SIGNAL_STRENGTH = IntegerProperty.create("signal_strength", 0, 15);
 
+    private static final double GEYSER_IMPULSE = 0.2;
+    private static final double GEYSER_BASE_MAX_SPEED = 0.3;
+    private static final double GEYSER_MAX_SPEED_PER_BLOCK = 0.1;
+    private static final double ANTI_GRAVITY_LIFT = 0.10;
+    private static final Predicate<Entity> LAUNCH_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isAlive);
+
     private final TarnishStage tarnishStage;
-    private int damageTickCounter = 0;
 
     public TarnishingBronzeVentBlock(TarnishStage tarnishStage, BlockBehaviour.Properties properties) {
         super(properties);
@@ -153,11 +165,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
         }
 
         if (!state.getValue(POWERED)) return;
-
-
-
-        double scale = getSteamFlowScale();
-        if (scale <= 0) return;
+        if (getLaunchImpulse() <= 0) return;
 
         int signalRange = state.getValue(SIGNAL_STRENGTH);
         Direction facing = state.getValue(FACING);
@@ -166,21 +174,8 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
         int front = result.getLeft();
         int back = result.getRight();
 
-        if(scale > 0) {
-            if (front > 0) {
-                if (checkMagmaBlock(level, pos, facing.getOpposite(), back)) {
-                    damageTickCounter++;
-                    if (damageTickCounter >= 20) {
-                        dealSteamDamage(level, pos, facing, signalRange, front);
-                        damageTickCounter = 0;
-                    }
-                }
-                applyForceToEntities(level, pos, facing, front, scale, false);
-            }
-
-            if (back > 0) {
-                applyForceToEntities(level, pos, facing.getOpposite(), back, scale, true);
-            }
+        if (front > 0 && checkMagmaBlock(level, pos, facing.getOpposite(), back) && isDamageTick(level, pos)) {
+            dealSteamDamage(level, pos, facing, signalRange, front);
         }
 
         level.scheduleTick(pos, this, 1);
@@ -342,44 +337,76 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
         }
     }
 
-    private void applyForceToEntities(ServerLevel level, BlockPos pos, Direction direction, int smokeRange, double scale, boolean isPull) {
-        AABB steamBox = buildDetectionAABB(pos, direction, smokeRange);
-        List<Entity> entities = level.getEntities((Entity) null, steamBox, e -> !e.isSpectator());
-        Direction facing =  isPull ? direction.getOpposite() : direction;
-        Vec3 baseFlow = new Vec3(facing.getStepX(), facing.getStepY(), facing.getStepZ());
-        boolean suckingUpward = facing.equals(Direction.UP);
+
+    static void launchTick(Level level, BlockPos pos, BlockState state) {
+        if (!(state.getBlock() instanceof TarnishingBronzeVentBlock vent)) return;
+        if (!state.getValue(POWERED)) return;
+
+        double impulse = vent.getLaunchImpulse();
+        if (impulse <= 0) return;
+
+        Direction facing = state.getValue(FACING);
+        var ranges = vent.getRanges(level, pos, state);
+
+        if (ranges.getLeft() > 0)
+            launchColumn(level, pos, facing, facing, ranges.getLeft(), impulse);
+        if (ranges.getRight() > 0)
+            launchColumn(level, pos, facing.getOpposite(), facing, ranges.getRight(), impulse);
+    }
+
+
+    private static void launchColumn(Level level, BlockPos pos, Direction column, Direction flow, int range, double impulse) {
+        Vec3 columnDir = Vec3.atLowerCornerOf(column.getNormal());
+        AABB box = new AABB(pos.relative(column)).expandTowards(columnDir.scale(range - 1));
+        List<Entity> entities = level.getEntitiesOfClass(Entity.class, box, LAUNCH_PREDICATE);
+        if (entities.isEmpty()) return;
+
+        Vec3 flowDir = Vec3.atLowerCornerOf(flow.getNormal());
+        double strength = impulse / GEYSER_IMPULSE;
+        double maxSpeed = (GEYSER_BASE_MAX_SPEED + range * GEYSER_MAX_SPEED_PER_BLOCK) * strength;
+
+        Vec3 push = flowDir.scale(impulse);
+        if (flow == Direction.UP) push = push.add(0, ANTI_GRAVITY_LIFT * strength, 0);
 
         for (Entity entity : entities) {
-            int dist = distanceAlongFacing(pos, entity.blockPosition(), direction);
-            if (dist < 0 || dist >= smokeRange) continue;
+            if (flow == Direction.UP) cushionFall(entity);
 
-            double falloff = 1.0 - (double) dist / smokeRange;
-            Vec3 current = entity.getDeltaMovement();
-            Vec3 flow = baseFlow.scale(scale * falloff);
+            if (!isSimulatedHere(level, entity)) continue;
+            if (entity instanceof Player player && player.getAbilities().flying) continue;
+            if (entity.isPassenger() || entity.getType().is(RNTags.EntityTypes.NOT_AFFECTED_BY_VENTS)) continue;
+            if (entity.getDeltaMovement().dot(flowDir) >= maxSpeed) continue;
 
-            if (suckingUpward) {
-                double gravityCancel = (scale / 0.056) * 0.10 * falloff;
-                flow = flow.add(0, gravityCancel, 0);
-                if (current.y < 0) {
-                    current = new Vec3(current.x, current.y * (1.0 - falloff * 0.4), current.z);
-                }
-            }
+            entity.addDeltaMovement(push);
 
-            double minT = 0.003;
-            if (Math.abs(current.x) < minT && Math.abs(current.z) < minT && flow.length() < minT * 1.5)
-                flow = baseFlow.normalize().scale(minT * 1.5);
-            entity.setDeltaMovement(current.add(flow));
-            entity.hurtMarked = true;
+            if (!level.isClientSide) entity.hurtMarked = true;
         }
     }
 
-    private double getSteamFlowScale() {
+    private static boolean isSimulatedHere(Level level, Entity entity) {
+        if (entity instanceof Player player)
+            return level.isClientSide && player.isLocalPlayer();
+        if (entity.getControllingPassenger() instanceof Player rider)
+            return level.isClientSide && rider.isLocalPlayer();
+        return !level.isClientSide;
+    }
+
+    private static void cushionFall(Entity entity) {
+        if (entity.getDeltaMovement().y > -0.5 && entity.fallDistance > 1.0F) {
+            entity.fallDistance = 1.0F;
+        }
+    }
+
+    private static boolean isDamageTick(Level level, BlockPos pos) {
+        return Math.floorMod(level.getGameTime() + pos.hashCode(), 20L) == 0;
+    }
+
+    private double getLaunchImpulse() {
         return switch (tarnishStage) {
             case UNAFFECTED,
                  CRYSTALLIZED -> 0.0;
-            case DISCOLORED   -> 0.014;
-            case CORRODED     -> 0.028;
-            case TARNISHED    -> 0.056;
+            case DISCOLORED   -> GEYSER_IMPULSE * 0.25;
+            case CORRODED     -> GEYSER_IMPULSE * 0.5;
+            case TARNISHED    -> GEYSER_IMPULSE;
         };
     }
 
@@ -425,4 +452,29 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements Tarni
 
     @Override
     protected MapCodec<? extends TarnishingBronzeVentBlock> codec() { return CODEC; }
+
+    @Override
+    public BlockEntityType<? extends VentBlockEntity> getBlockEntityType() {
+        return RNBlockEntities.BRONZE_VENT.get();
+    }
+
+    @Override
+    public Class<? extends VentBlockEntity> getBlockEntityClass() {
+        return VentBlockEntity.class;
+    }
+
+
+    public static class VentBlockEntity extends BlockEntity implements TickableBlockEntity {
+        public VentBlockEntity(BlockPos pos, BlockState state) {
+            super(RNBlockEntities.BRONZE_VENT.get(), pos, state);
+        }
+
+        @Override
+        public void tick(boolean clientSide) {
+            if (this.level != null) launchTick(this.level, this.worldPosition, this.getBlockState());
+        }
+
+        @Override
+        public void tick() {}
+    }
 }

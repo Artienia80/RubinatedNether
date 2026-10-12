@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.blocks.ChandelierBlock;
+import corundum.rubinated_nether.content.blocks.TarnishingBronzeVentBlock;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.BronzeLaserBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
@@ -147,6 +148,21 @@ public class RNBlockEntities {
 							RNBlocks.CRYSTALLIZED_BRONZE_VASE.get()
 					).build(
 							Util.fetchChoiceType(References.BLOCK_ENTITY, "bronze_vase")
+					)
+			);
+
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TarnishingBronzeVentBlock.VentBlockEntity>> BRONZE_VENT =
+			BLOCK_ENTITY_TYPES.register(
+					"bronze_vent",
+					() -> BlockEntityType.Builder.of(
+							TarnishingBronzeVentBlock.VentBlockEntity::new,
+							RNBlocks.BRONZE_VENT.get(),
+							RNBlocks.DISCOLORED_BRONZE_VENT.get(),
+							RNBlocks.CORRODED_BRONZE_VENT.get(),
+							RNBlocks.TARNISHED_BRONZE_VENT.get(),
+							RNBlocks.CRYSTALLIZED_BRONZE_VENT.get()
+					).build(
+							Util.fetchChoiceType(References.BLOCK_ENTITY, "bronze_vent")
 					)
 			);
 }

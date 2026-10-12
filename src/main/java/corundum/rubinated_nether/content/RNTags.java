@@ -5,6 +5,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
@@ -115,6 +116,10 @@ public final class RNTags {
 		public static final TagKey<Item> VASES = createTag(Registries.ITEM, "vases");
 		public static final TagKey<Item> VASE_ENGRAVING_MATERIALS = createTag(Registries.ITEM, "vase_engraving_materials");
 
+	}
+
+	public static final class EntityTypes {
+		public static final TagKey<EntityType<?>> NOT_AFFECTED_BY_VENTS = createTag(Registries.ENTITY_TYPE, "not_affected_by_vents");
 	}
 
 	public static final class Enchantments {
