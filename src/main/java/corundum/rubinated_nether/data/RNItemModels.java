@@ -245,6 +245,9 @@ public class RNItemModels extends ItemModelProvider {
 
 		// Handheld items
 		handheldItem(RNItems.BRONZE_DRILL, "item/bronze_drill");
+		handheldItem(RNItems.BRONZE_JACKHAMMER, "item/bronze_jackhammer");
+		handheldItem(RNItems.BRONZE_CHAINSAW, "item/bronze_chainsaw");
+
 
 		// Basic items
 		basicItems(

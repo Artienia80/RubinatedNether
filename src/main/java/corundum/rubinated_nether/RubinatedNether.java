@@ -7,6 +7,8 @@ import corundum.rubinated_nether.content.RNCauldronInteraction;
 import corundum.rubinated_nether.content.commands.RubinateCommand;
 import corundum.rubinated_nether.content.RNCapabilities;
 import corundum.rubinated_nether.content.enchantment.RNEnchantmentEffects;
+import corundum.rubinated_nether.content.items.ChainsawItem;
+import corundum.rubinated_nether.content.items.JackhammerHandler;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
@@ -66,6 +68,7 @@ public class RubinatedNether {
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addPackFinders);
+        NeoForge.EVENT_BUS.addListener(ChainsawItem::onEntityTick);
 
         modEventBus.addListener(RNData::datagen);
         modEventBus.addListener(DatapackRegistry::datapackRegistry);

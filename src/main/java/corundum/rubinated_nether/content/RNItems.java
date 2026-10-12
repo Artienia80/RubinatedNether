@@ -91,6 +91,26 @@ public class RNItems {
 			)
 	);
 
+	public static final DeferredItem<Item> BRONZE_JACKHAMMER = ITEMS.register(
+			"bronze_jackhammer",
+			() -> new JackhammerItem(
+					RNTiers.BRONZE,
+					new Item.Properties()
+							.stacksTo(1)
+							.component(DataComponents.UNBREAKABLE, new Unbreakable(false))
+			)
+	);
+
+	public static final DeferredItem<Item> BRONZE_CHAINSAW = ITEMS.register(
+			"bronze_chainsaw",
+			() -> new ChainsawItem(
+					new Item.Properties()
+							.stacksTo(1)
+							.attributes(AxeItem.createAttributes(RNTiers.BRONZE, 5.0F, -3.0F))
+							.component(DataComponents.UNBREAKABLE, new Unbreakable(false))
+			)
+	);
+
 	public static final DeferredItem<Item> RUBY_LENS = ITEMS.register(
 			"ruby_lens",
 			() -> new RubyLensItem(
