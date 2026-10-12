@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
 	id 'io.github.0ffz.github-packages' version '[1,2)'
     id 'net.neoforged.moddev' version '1.0.23'
+    id "me.modmuss50.mod-publish-plugin" version "2.1.1"
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -161,4 +162,25 @@ idea {
 		downloadSources = true
 		downloadJavadoc = true
 	}
+}
+
+publishMods {
+    changelog = "# Markdown changelog content"
+    type = STABLE
+
+    file = jar.archiveFile
+
+    curseforge {
+        projectId = "1096362"
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        minecraftVersions.add("1.21.1")
+        client = true
+        server = true
+    }
+
+    modrinth {
+        accessToken = providers.environmentVariable("MODRINTH_API_KEY")
+        projectId = "tn8wGyDx"
+        minecraftVersions.add("1.21.1")
+    }
 }

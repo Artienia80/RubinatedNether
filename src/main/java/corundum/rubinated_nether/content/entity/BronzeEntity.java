@@ -19,11 +19,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -36,14 +38,23 @@ import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.pathfinder.PathFinder;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.neoforge.entity.PartEntity;
 
 import java.util.ArrayList;
@@ -108,6 +119,11 @@ public class BronzeEntity extends TarnishingEntity {
         this.subEntities = new BronzePart[]{this.bodyPart, this.keyPart};
         this.setId(ENTITY_COUNTER.getAndAdd(this.subEntities.length + 1) + 1);
 
+        // Lava / fire: don't avoid them in pathfinding (default malus for lava is -1 = never path)
+        this.setPathfindingMalus(PathType.LAVA, 0.0F);
+        this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
+        this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
+
         this.setTarnishLevel(TarnishStage.UNAFFECTED);
     }
 
@@ -119,14 +135,75 @@ public class BronzeEntity extends TarnishingEntity {
                 .add(Attributes.ATTACK_DAMAGE, 4.0);
     }
 
+    // ------------------------------------------------------------------
+    // Lava walking
+    // ------------------------------------------------------------------
+
+    @Override
+    public boolean canStandOnFluid(FluidState fluidState) {
+        return fluidState.is(FluidTags.LAVA);
+    }
+
+    @Override
+    public boolean fireImmune() {
+        return true; // otherwise they take lava/fire damage while standing on it
+    }
+
+    private void floatOnLava() {
+        if (this.isInLava()) {
+            CollisionContext ctx = CollisionContext.of(this);
+            if (ctx.isAbove(LiquidBlock.STABLE_SHAPE, this.blockPosition(), true)
+                    && !this.level().getFluidState(this.blockPosition().above()).is(FluidTags.LAVA)) {
+                this.setOnGround(true);
+            } else {
+                this.setDeltaMovement(this.getDeltaMovement().scale(0.5).add(0.0, 0.05, 0.0));
+            }
+        }
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        return new BronzePathNavigation(this, level);
+    }
+
+    static class BronzePathNavigation extends GroundPathNavigation {
+        BronzePathNavigation(Mob mob, Level level) {
+            super(mob, level);
+        }
+
+        @Override
+        protected PathFinder createPathFinder(int maxVisitedNodes) {
+            this.nodeEvaluator = new WalkNodeEvaluator();
+            return new PathFinder(this.nodeEvaluator, maxVisitedNodes);
+        }
+
+        @Override
+        protected boolean hasValidPathType(PathType type) {
+            return type == PathType.LAVA
+                    || type == PathType.DAMAGE_FIRE
+                    || type == PathType.DANGER_FIRE
+                    || super.hasValidPathType(type);
+        }
+
+        @Override
+        public boolean isStableDestination(BlockPos pos) {
+            return this.level.getBlockState(pos).is(Blocks.LAVA) || super.isStableDestination(pos);
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Goals
+    // ------------------------------------------------------------------
+
     @Override
     protected void registerGoals() {
         // base
         this.goalSelector.addGoal(0, new FloatGoal(this){
             public boolean canUse() {
-                return (BronzeEntity.this.getTarnishLevel().equals(TarnishStage.UNAFFECTED) ||
-                        BronzeEntity.this.getTarnishLevel().equals(TarnishStage.DISCOLORED) ||
-                        BronzeEntity.this.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED)) &&
+                return !BronzeEntity.this.isInLava() &&
+                        (BronzeEntity.this.getTarnishLevel().equals(TarnishStage.UNAFFECTED) ||
+                                BronzeEntity.this.getTarnishLevel().equals(TarnishStage.DISCOLORED) ||
+                                BronzeEntity.this.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED)) &&
                         super.canUse();
             }
         });
@@ -324,6 +401,7 @@ public class BronzeEntity extends TarnishingEntity {
     @Override
     public void tick() {
         super.tick();
+        floatOnLava();
         setupAnimationStates();
 
         // Spawn particles when stunned
@@ -791,7 +869,7 @@ public class BronzeEntity extends TarnishingEntity {
 
     @Override
     public float getWalkTargetValue(BlockPos pos, LevelReader level) {
-        return level.getBlockState(pos).isAir() ? 10.0F : 0.0F;
+        return (level.getBlockState(pos).isAir() || level.getFluidState(pos).is(FluidTags.LAVA)) ? 10.0F : 0.0F;
     }
 
 

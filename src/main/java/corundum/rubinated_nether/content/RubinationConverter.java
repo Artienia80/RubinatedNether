@@ -1,12 +1,8 @@
 package corundum.rubinated_nether.content;
 
-import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -137,7 +133,7 @@ public class RubinationConverter {
     }
 
     public static boolean hasEnoughBlocksForInscription(Level level, BlockPos centerPos, int radius) {
-        return countRubinatedBlocks(level, centerPos, radius) >= RNConfig.altarInscriptionCost;
+        return countRubinatedBlocks(level, centerPos, radius) >= RNConfig.altarRubinationCost;
     }
 
     public static boolean hasEnoughBlocksForInscription(Level level, BlockPos centerPos) {

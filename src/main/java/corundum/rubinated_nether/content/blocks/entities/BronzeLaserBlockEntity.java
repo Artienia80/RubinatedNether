@@ -157,7 +157,6 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 
 		if(powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
 			if (level != null && !level.isClientSide) {
-				System.out.println("POWER CHANGED: " + getBlockState().getValue(BronzeLaserBlock.POWER) + " -> " + powerLevel + ", SCHEDULING TICK");
 			}
 			level.scheduleTick(getBlockPos(), getBlockState().getBlock(), 2);
 		}
@@ -206,7 +205,7 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		// Visual properties check
 		BlockState state = level.getBlockState(worldPosition.relative(facing));
 		silly = state.is(RNTags.Blocks.SILLY_LASER);
-		visible = silly || state.is(Tags.Blocks.GLASS_BLOCKS) || state.is(Tags.Blocks.GLASS_BLOCKS_TINTED) || state.is(Tags.Blocks.GLASS_PANES) || state.is(Blocks.IRON_BARS) || state.is(Blocks.COPPER_GRATE) || state.is(RNTags.Blocks.GRATES);
+		visible = silly || state.is(Tags.Blocks.GLASS_BLOCKS) || state.is(Tags.Blocks.GLASS_BLOCKS_TINTED) || state.is(Tags.Blocks.GLASS_PANES);
 
 		if (visible && !silly && state.getBlock() instanceof BeaconBeamBlock) {
 			DyeColor dye = ((BeaconBeamBlock) state.getBlock()).getColor();
@@ -237,7 +236,6 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 			powerLevel = Mth.clamp(powerLevel, 0, 15);
 			if (powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
 				if (level != null && !level.isClientSide) {
-					System.out.println("UV POWER CHANGED: " + getBlockState().getValue(BronzeLaserBlock.POWER) + " -> " + powerLevel + ", SCHEDULING TICK");
 				}
 				level.scheduleTick(getBlockPos(), getBlockState().getBlock(), 2);
 			}
@@ -317,7 +315,6 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 
 	public int getPowerLevel() {
 		if (level != null && !level.isClientSide) {
-			System.out.println("GET POWER LEVEL CALLED: returning " + powerLevel);
 		}
 		return powerLevel;
 	}

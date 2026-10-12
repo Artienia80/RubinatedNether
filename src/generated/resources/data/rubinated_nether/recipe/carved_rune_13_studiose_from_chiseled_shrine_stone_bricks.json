@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:stonecutting",
+  "group": "rune_carving",
+  "ingredient": {
+    "item": "rubinated_nether:chiseled_shrine_stone_bricks"
+  },
+  "result": {
+    "components": {
+      "minecraft:custom_model_data": 5,
+      "rubinated_nether:rune_carving": "studiose"
+    },
+    "count": 1,
+    "id": "rubinated_nether:rune"
+  }
+}

@@ -238,7 +238,12 @@ public class RNCreativeTabs {
 								RNBlocks.CRYSTALLIZED_BRONZE_LANTERN,
 								RNBlocks.CRYSTALLIZED_BRONZE_CHAIN,
 								RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER,
-								RNBlocks.CRYSTALLIZED_BRONZE_LAMP
+								RNBlocks.CRYSTALLIZED_BRONZE_LAMP,
+								RNBlocks.BRONZE_VASE,
+								RNBlocks.DISCOLORED_BRONZE_VASE,
+								RNBlocks.CORRODED_BRONZE_VASE,
+								RNBlocks.TARNISHED_BRONZE_VASE,
+								RNBlocks.CRYSTALLIZED_BRONZE_VASE
 						);
 					})
 					.build()
@@ -498,6 +503,27 @@ public class RNCreativeTabs {
 					getWaxed(RNBlocks.TARNISHED_BRONZE_BULB), BOTH_TABS);
 			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_BULB),
 					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_BULB), BOTH_TABS);
+
+			event.insertAfter(Items.DECORATED_POT.getDefaultInstance(),
+					RNBlocks.BRONZE_VASE.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.BRONZE_VASE.get().asItem().getDefaultInstance(),
+					RNBlocks.DISCOLORED_BRONZE_VASE.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.DISCOLORED_BRONZE_VASE.get().asItem().getDefaultInstance(),
+					RNBlocks.CORRODED_BRONZE_VASE.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.CORRODED_BRONZE_VASE.get().asItem().getDefaultInstance(),
+					RNBlocks.TARNISHED_BRONZE_VASE.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.TARNISHED_BRONZE_VASE.get().asItem().getDefaultInstance(),
+					RNBlocks.CRYSTALLIZED_BRONZE_VASE.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.CRYSTALLIZED_BRONZE_VASE.get().asItem().getDefaultInstance(),
+					getWaxed(RNBlocks.BRONZE_VASE), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.BRONZE_VASE),
+					getWaxed(RNBlocks.DISCOLORED_BRONZE_VASE), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.DISCOLORED_BRONZE_VASE),
+					getWaxed(RNBlocks.CORRODED_BRONZE_VASE), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.CORRODED_BRONZE_VASE),
+					getWaxed(RNBlocks.TARNISHED_BRONZE_VASE), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_VASE),
+					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_VASE), BOTH_TABS);
 		}
 		private static void injectBuildingBlocks(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.BUILDING_BLOCKS) return;

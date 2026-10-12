@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.recipe;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.trim.RNBronzeTrimTarnishRecipe;
+import corundum.rubinated_nether.content.trim.VaseEngravingRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -22,6 +23,9 @@ public class RNRecipeSerializers {
 			"bronze_trim_upgrade",
 			RNBronzeTrimTarnishRecipe.Serializer::new
 	);
+
+	public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<VaseEngravingRecipe>> VASE_ENGRAVING =
+			RECIPE_SERIALIZERS.register("vase_engraving", VaseEngravingRecipe.Serializer::new);
 
 	public static final DeferredHolder<RecipeSerializer<?>, ResonanceRecipeSerializer> RESONANCE =
 			RECIPE_SERIALIZERS.register("resonance", ResonanceRecipeSerializer::new);

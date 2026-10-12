@@ -44,7 +44,7 @@ public class TarnishingBronzeBlock extends Block implements TarnishingBronze {
 	public TarnishingBronzeBlock(TarnishStage tarnishStage, BlockBehaviour.Properties properties) {
 		super(properties);
 		this.tarnishStage = tarnishStage;
-		this.registerDefaultState(defaultBlockState().setValue(WAXED, false));
+		this.registerDefaultState(this.stateDefinition.any().setValue(WAXED, false));
 	}
 
 	@Override

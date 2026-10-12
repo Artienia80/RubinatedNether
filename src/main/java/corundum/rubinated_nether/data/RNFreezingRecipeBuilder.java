@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.recipe.RNBookCategory;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -16,12 +17,16 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class RNFreezingRecipeBuilder implements RecipeBuilder {
     private final ItemStack result;
     private final Ingredient ingredient;
     private final float experience;
     private final int cookingTime;
-    private final Advancement.Builder advancement = Advancement.Builder.recipeAdvancement();
+    private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
+
     @Nullable private String group;
 
     private RNFreezingRecipeBuilder(Ingredient ingredient, ItemLike result, float experience, int cookingTime) {
@@ -37,7 +42,7 @@ public class RNFreezingRecipeBuilder implements RecipeBuilder {
 
     @Override
     public RNFreezingRecipeBuilder unlockedBy(String name, net.minecraft.advancements.Criterion<?> criterion) {
-        this.advancement.addCriterion(name, criterion);
+        this.criteria.put(name, criterion);
         return this;
     }
 
@@ -54,7 +59,9 @@ public class RNFreezingRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput output, ResourceLocation id) {
-        this.advancement
+        this.ensureValid(id);
+
+        var builder = output.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
                 .rewards(AdvancementRewards.Builder.recipe(id))
                 .requirements(AdvancementRequirements.Strategy.OR);
@@ -69,7 +76,13 @@ public class RNFreezingRecipeBuilder implements RecipeBuilder {
                         this.experience,
                         this.cookingTime
                 ),
-                this.advancement.build(id.withPrefix("recipes/"))
+                builder.build(id.withPrefix("recipes/freezing/" + id.getPath()))
         );
+    }
+
+    private void ensureValid(ResourceLocation id) {
+        if (this.criteria.isEmpty()) {
+            throw new IllegalStateException("No way of obtaining recipe " + id);
+        }
     }
 }

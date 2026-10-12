@@ -1,0 +1,6 @@
+{
+  "type": "rubinated_nether:vase_engraving",
+  "template": { "tag": "rubinated_nether:rubination_runes" },
+  "base": { "tag": "rubinated_nether:vases" },
+  "addition": { "tag": "rubinated_nether:vase_engraving_materials" }
+}

@@ -7,6 +7,8 @@ import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
+import corundum.rubinated_nether.content.items.Rubination;
+import corundum.rubinated_nether.content.items.RuneCarvingHelper;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -215,6 +217,48 @@ public class BrazierBlock extends BaseEntityBlock {
                     }
                 }
                 return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            }
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+
+        if (stack.is(RNItems.RUNE.get()) && RuneCarvingHelper.isCarved(stack)) {
+            if (!level.isClientSide) {
+                int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
+
+                if (brazier.getRemainingFuelSeconds() > secondsPerLevel) {
+                    Rubination carving = RuneCarvingHelper.getCarving(stack);
+                    var runeItem = RNItems.getRuneFor(carving);
+
+                    if (runeItem != null) {
+                        int oldLevel = currentLevel;
+
+                        brazier.addFuel(-1);
+
+                        int newLevel = brazier.calculateLevelFromFuel();
+                        level.setBlock(pos, state.setValue(LEVEL, newLevel), 3);
+
+                        if (newLevel != oldLevel) {
+                            brazier.updateEffectAmplifiersForLevelChange(level, pos, newLevel);
+                        }
+
+                        if (!player.isCreative()) {
+                            stack.shrink(1);
+                        }
+
+                        ItemStack resultRune = new ItemStack(runeItem.get(), 1);
+                        if (!player.getInventory().add(resultRune)) {
+                            player.drop(resultRune, false);
+                        }
+
+                        level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 1.2F);
+
+                        return ItemInteractionResult.sidedSuccess(false);
+                    }
+                }
+            } else {
+                if (currentLevel > 1) {
+                    return ItemInteractionResult.sidedSuccess(true);
+                }
             }
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }

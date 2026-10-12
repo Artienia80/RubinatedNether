@@ -1,0 +1,203 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#8"
+        },
+        "east": {
+          "texture": "#4"
+        },
+        "north": {
+          "texture": "#4"
+        },
+        "south": {
+          "texture": "#4"
+        },
+        "up": {
+          "texture": "#6"
+        },
+        "west": {
+          "texture": "#4"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#7",
+          "uv": [
+            0.0,
+            12.0,
+            16.0,
+            16.0
+          ]
+        },
+        "north": {
+          "texture": "#7",
+          "uv": [
+            0.0,
+            12.0,
+            16.0,
+            16.0
+          ]
+        },
+        "south": {
+          "texture": "#7",
+          "uv": [
+            0.0,
+            12.0,
+            16.0,
+            16.0
+          ]
+        },
+        "up": {
+          "texture": "#6"
+        },
+        "west": {
+          "texture": "#7",
+          "uv": [
+            0.0,
+            12.0,
+            16.0,
+            16.0
+          ]
+        }
+      },
+      "from": [
+        0,
+        16,
+        0
+      ],
+      "to": [
+        16,
+        20,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#6"
+        },
+        "east": {
+          "texture": "#7",
+          "uv": [
+            1.0,
+            8.0,
+            15.0,
+            10.0
+          ]
+        },
+        "north": {
+          "texture": "#7",
+          "uv": [
+            1.0,
+            8.0,
+            15.0,
+            10.0
+          ]
+        },
+        "south": {
+          "texture": "#7",
+          "uv": [
+            1.0,
+            8.0,
+            15.0,
+            10.0
+          ]
+        },
+        "up": {
+          "texture": "#5"
+        },
+        "west": {
+          "texture": "#7",
+          "uv": [
+            1.0,
+            8.0,
+            15.0,
+            10.0
+          ]
+        }
+      },
+      "from": [
+        1,
+        22,
+        1
+      ],
+      "to": [
+        15,
+        24,
+        15
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#7",
+          "uv": [
+            2.0,
+            10.0,
+            14.0,
+            12.0
+          ]
+        },
+        "north": {
+          "texture": "#7",
+          "uv": [
+            2.0,
+            10.0,
+            14.0,
+            12.0
+          ]
+        },
+        "south": {
+          "texture": "#7",
+          "uv": [
+            2.0,
+            10.0,
+            14.0,
+            12.0
+          ]
+        },
+        "west": {
+          "texture": "#7",
+          "uv": [
+            2.0,
+            10.0,
+            14.0,
+            12.0
+          ]
+        }
+      },
+      "from": [
+        2,
+        20,
+        2
+      ],
+      "to": [
+        14,
+        22,
+        14
+      ]
+    }
+  ],
+  "textures": {
+    "4": "rubinated_nether:block/bronze/bronze_vase/bronze_vase_bottom",
+    "5": "rubinated_nether:block/bronze/bronze_vase/bronze_vase_head",
+    "6": "rubinated_nether:block/bronze/bronze_vase/bronze_vase_neck",
+    "7": "rubinated_nether:block/bronze/bronze_vase/bronze_vase_top",
+    "8": "rubinated_nether:block/bronze/bronze_block/bronze_block",
+    "particle": "rubinated_nether:block/bronze/bronze_vase/bronze_vase_bottom"
+  }
+}

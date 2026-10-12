@@ -2,10 +2,13 @@ package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.items.PocketwatchData;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
+import corundum.rubinated_nether.content.recipe.RuneCarvingRecipeProvider;
 import corundum.rubinated_nether.content.trim.RNBronzeTrimTarnishRecipe;
 import corundum.rubinated_nether.content.trim.RNTrimMaterials;
 import net.minecraft.advancements.Advancement;
@@ -27,6 +30,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 
 import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
@@ -152,12 +156,16 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.SHRINE_STONE_TILES_WALL
 		);
 
-		stonecutterList(
-				recipeOutput,
-				RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
+		RuneCarvingRecipeProvider.registerShrineTiers(recipeOutput, java.util.List.of(
+				RNBlocks.SHRINE_STONE.get(),
+				RNBlocks.COBBLED_SHRINE_STONE.get(),
+				RNBlocks.POLISHED_SHRINE_STONE.get(),
+				RNBlocks.SHRINE_STONE_BRICKS.get(),
+				RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
+				RNBlocks.SHRINE_STONE_TILES.get()
+		));
 
-				RNItems.RUNE
-		);
+		RuneCarvingRecipeProvider.registerBlankRune(recipeOutput);
 
 		Bronzecutter(recipeOutput, RNBlocks.BRONZE_BLOCK,
 				RNBlocks.CHISELED_BRONZE,
@@ -178,7 +186,7 @@ public class RNRecipeProvider extends RecipeProvider {
 		tarnish(recipeOutput, this::bulb, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_BULB);
 		tarnish(recipeOutput, this::chandelier, RNBlocks.BRONZE_LANTERN, RNBlocks.BRONZE_GRATE, RNBlocks.BRONZE_CHANDELIER);
 
-		tarnish(recipeOutput, (output, input, result) -> laser(output, input, result, false),
+		tarnish(recipeOutput, (output, input, lesser, result) -> laser(output, input, lesser, result, false),
 				RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_LASER);
 
 		tarnish(recipeOutput, (output, input, result) -> grate(output, input, result, 4),
@@ -193,6 +201,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.BRONZE_BLOCK, RNBlocks.CUT_BRONZE_PILLAR);
 
 		tarnish(recipeOutput, this::spring, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_SPRING);
+		tarnish(recipeOutput, this::vent, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_VENT);
 
 
 		stairsAndSlab(
@@ -356,10 +365,24 @@ public class RNRecipeProvider extends RecipeProvider {
 				8
 		);
 
+		twoByTwo(
+				recipeOutput,
+				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
+				RNItems.CRYSTALLIZED_BRONZE_SHOT,
+				8
+		);
+
 		threeByThree(
 				recipeOutput,
 				RNItems.BRONZE_SCRAP,
 				RNBlocks.BRONZE_BLOCK,
+				1
+		);
+
+		threeByThree(
+				recipeOutput,
+				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
+				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
 				1
 		);
 
@@ -462,6 +485,16 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY), has(RNItems.MOLTEN_RUBY))
 				.save(recipeOutput);
 
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CRYSTALLIZED_BRONZE_LANTERN, 1)
+				.define('X', RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL)
+				.define('O', RNItems.MOLTEN_RUBY)
+				.pattern("XXX")
+				.pattern("XOX")
+				.pattern("XXX")
+				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL), has(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL))
+				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY), has(RNItems.MOLTEN_RUBY))
+				.save(recipeOutput);
+
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.BRONZE_CHAIN, 1)
 				.define('X', RNItems.BRONZE_POWDER)
 				.define('O', RNItems.BRONZE_SCRAP)
@@ -470,6 +503,16 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern(" X ")
 				.unlockedBy(getHasName(RNItems.BRONZE_POWDER), has(RNItems.BRONZE_POWDER))
 				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CRYSTALLIZED_BRONZE_CHAIN, 1)
+				.define('X', RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL)
+				.define('O', RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL)
+				.pattern(" X ")
+				.pattern(" O ")
+				.pattern(" X ")
+				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL), has(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL))
+				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL), has(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL))
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNItems.RUBY_LENS, 1)
@@ -706,6 +749,13 @@ public class RNRecipeProvider extends RecipeProvider {
 				new ResonanceRecipe.TriggerData(10, 150),
 				new ResonanceRecipe.TriggerData(20, 300), true);
 
+
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, RNItems.POCKETWATCH.get())
+				.requires(DataComponentIngredient.of(false, RNDataComponents.POCKETWATCH_DATA.get(), PocketwatchData.BROKEN, RNItems.POCKETWATCH.get()))
+				.requires(RNBlocks.GEARBOX.get())
+				.unlockedBy("has_broken_pocketwatch", has(RNItems.POCKETWATCH.get()))
+				.save(recipeOutput, RubinatedNether.MODID + ":pocketwatch_repair");
+
 	}
 
 	private void twoByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
@@ -805,6 +855,18 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 	}
 
+	private void vent(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike vent) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, vent, 1)
+				.define('X', RNItems.BRONZE_ROD)
+				.define('O', blockInput)
+				.pattern("OXO")
+				.pattern("XXX")
+				.pattern("OXO")
+				.unlockedBy(getHasName(RNItems.BRONZE_ROD), has(RNItems.BRONZE_ROD))
+				.unlockedBy(getHasName(blockInput), has(blockInput))
+				.save(recipeOutput);
+	}
+
 	private void stonecutterList(RecipeOutput recipeOutput, ItemLike input, ItemLike... outputs) {
 		for (ItemLike output : outputs) {
 			var count = 1;
@@ -852,6 +914,12 @@ public class RNRecipeProvider extends RecipeProvider {
 				inputName.contains("crystallized_bronze_block");
 	}
 
+	private ItemLike lesserBronzeFor(String prefix) {
+		return "CRYSTALLIZED_".equals(prefix)
+				? RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL
+				: RNItems.BRONZE_SCRAP;
+	}
+
 	public static ItemLike waxed(Supplier<? extends Block> block) {
 		return BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(block.get())));
 	}
@@ -882,6 +950,8 @@ public class RNRecipeProvider extends RecipeProvider {
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_CHAIN);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LASER);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_SPRING);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_VENT);
+
 	}
 
 	private void waxAllTarnishVariants(RecipeOutput recipeOutput, Supplier<? extends Block> baseBlock) {
@@ -894,7 +964,11 @@ public class RNRecipeProvider extends RecipeProvider {
 	}
 
 	private void laser(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike laser, boolean isCopper) {
-		ItemLike scrapOrIngot = isCopper ? Items.COPPER_INGOT : RNItems.BRONZE_SCRAP;
+		laser(recipeOutput, blockInput, RNItems.BRONZE_SCRAP, laser, isCopper);
+	}
+
+	private void laser(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike lesserBronze, ItemLike laser, boolean isCopper) {
+		ItemLike scrapOrIngot = isCopper ? Items.COPPER_INGOT : lesserBronze;
 		ItemLike glowOrQuartz = isCopper ? Items.QUARTZ : Items.GLOWSTONE;
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, laser, 1)
@@ -928,9 +1002,9 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 	}
 
-	private void lamp(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike lamp) {
+	private void lamp(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike lesserBronze, ItemLike lamp) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, lamp, 3)
-				.define('X', RNItems.BRONZE_SCRAP)
+				.define('X', lesserBronze)
 				.define('A', blockInput)
 				.define('O', RNBlocks.MOLTEN_RUBY_BLOCK)
 				.define('I', RNBlocks.RUBY_GLASS_PANE)
@@ -939,7 +1013,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern("XAX")
 				.unlockedBy(getHasName(RNBlocks.RUBY_GLASS_PANE), has(RNBlocks.RUBY_GLASS_PANE))
 				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY), has(RNItems.MOLTEN_RUBY))
-				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
+				.unlockedBy(getHasName(lesserBronze), has(lesserBronze))
 				.unlockedBy(getHasName(blockInput), has(blockInput))
 				.save(recipeOutput);
 	}
@@ -1007,6 +1081,38 @@ public class RNRecipeProvider extends RecipeProvider {
 					(Supplier<? extends Block>) baseInput1,
 					(Supplier<? extends Block>) baseInput2,
 					(Supplier<? extends Block>) baseResult);
+		}
+	}
+
+	private void tarnish(RecipeOutput recipeOutput, RecipeGeneratorWithExtra generator,
+	                     ItemLike baseInput, ItemLike baseResult) {
+		String inputName = getFieldName(baseInput);
+		String resultName = getFieldName(baseResult);
+
+		for (String prefix : TARNISH_PREFIXES) {
+			ItemLike input = getBlockByName(prefix + inputName);
+			ItemLike result = getBlockByName(prefix + resultName);
+			ItemLike lesserBronze = lesserBronzeFor(prefix);
+			generator.generate(recipeOutput, input, lesserBronze, result);
+		}
+
+		if (baseInput instanceof Supplier) {
+			tarnishWaxed(recipeOutput, generator, (Supplier<? extends Block>) baseInput, (Supplier<? extends Block>) baseResult);
+		}
+	}
+
+	private void tarnishWaxed(RecipeOutput recipeOutput, RecipeGeneratorWithExtra generator,
+	                          Supplier<? extends Block> baseInput, Supplier<? extends Block> baseResult) {
+		String inputName = getFieldNameFromSupplier(baseInput);
+		String resultName = getFieldNameFromSupplier(baseResult);
+
+		for (String prefix : TARNISH_PREFIXES) {
+			Supplier<? extends Block> input = getBlockByName(prefix + inputName);
+			Supplier<? extends Block> result = getBlockByName(prefix + resultName);
+			ItemLike waxedInput = waxed(input);
+			ItemLike waxedResult = waxed(result);
+			ItemLike lesserBronze = lesserBronzeFor(prefix);
+			generator.generate(recipeOutput, waxedInput, lesserBronze, waxedResult);
 		}
 	}
 

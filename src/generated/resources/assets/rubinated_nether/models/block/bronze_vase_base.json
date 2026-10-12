@@ -1,0 +1,42 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#8"
+        },
+        "east": {
+          "texture": "#4"
+        },
+        "north": {
+          "texture": "#4"
+        },
+        "south": {
+          "texture": "#4"
+        },
+        "up": {
+          "texture": "#6"
+        },
+        "west": {
+          "texture": "#4"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "textures": {
+    "4": "rubinated_nether:block/bronze/bronze_vase/bronze_vase_bottom",
+    "6": "rubinated_nether:block/bronze/bronze_vase/bronze_vase_neck",
+    "8": "rubinated_nether:block/bronze/bronze_block/bronze_block",
+    "particle": "rubinated_nether:block/bronze/bronze_vase/bronze_vase_bottom"
+  }
+}

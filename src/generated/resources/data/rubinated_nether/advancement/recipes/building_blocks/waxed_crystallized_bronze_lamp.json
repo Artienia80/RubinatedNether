@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bronze_scrap": {
+    "has_crystallized_bronze_crystal": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:bronze_scrap"
+            "items": "rubinated_nether:crystallized_bronze_crystal"
           }
         ]
       },
@@ -53,7 +53,7 @@
       "has_the_recipe",
       "has_ruby_glass_pane",
       "has_molten_ruby",
-      "has_bronze_scrap",
+      "has_crystallized_bronze_crystal",
       "has_waxed_crystallized_bronze_block"
     ]
   ],

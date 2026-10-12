@@ -3,19 +3,27 @@ package corundum.rubinated_nether.data;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.items.PocketwatchItem;
+import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.content.trim.RNTrimMaterials;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class RNItemModels extends ItemModelProvider {
 
@@ -31,6 +39,18 @@ public class RNItemModels extends ItemModelProvider {
 		trimMaterials.put(TrimMaterials.DIAMOND, 0.8F);
 		trimMaterials.put(TrimMaterials.LAPIS, 0.9F);
 		trimMaterials.put(TrimMaterials.AMETHYST, 1.0F);
+	}
+
+	// Fixed CMD values per category — must be in ascending order for ≥ matching to work correctly
+	private static final Map<String, Integer> CATEGORY_CMD = new LinkedHashMap<>();
+	static {
+		CATEGORY_CMD.put("tool",     1);
+		CATEGORY_CMD.put("weapon",   2);
+		CATEGORY_CMD.put("armor",    3);
+		CATEGORY_CMD.put("bow",      4);
+		CATEGORY_CMD.put("crossbow", 5);
+		CATEGORY_CMD.put("trident",  6);
+		CATEGORY_CMD.put("mace",     7);
 	}
 
 	public RNItemModels(PackOutput output, ExistingFileHelper fileHelper) {
@@ -226,11 +246,13 @@ public class RNItemModels extends ItemModelProvider {
 
 		// Handheld items
 		handheldItem(RNItems.BRONZE_DRILL, "item/bronze_drill");
+		handheldItem(RNItems.BRONZE_JACKHAMMER, "item/bronze_jackhammer");
+		handheldItem(RNItems.BRONZE_CHAINSAW, "item/bronze_chainsaw");
+
 
 		// Basic items
 		basicItems(
-
-                RNBlocks.RUNESTONE,
+				RNBlocks.RUNESTONE,
 				RNItems.RUBY_LENS,
 				RNItems.RUBY,
 				RNItems.MOLTEN_RUBY,
@@ -246,18 +268,24 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.RITUAL_OFFERING,
 				RNItems.COGWHEEL,
 				RNItems.WINDING_KEY,
-				RNItems.RUNE,
 				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
 				RNItems.MOLTEN_RUBY_BUCKET,
 
 				RNItems.COGS_BANNER_PATTERN.get()
-//				RNItems.RUNE_TOOL_BANNER_PATTERN.get(),
-//				RNItems.RUNE_ARMOR_BANNER_PATTERN.get(),
-//				RNItems.RUNE_WEAPON_BANNER_PATTERN.get(),
-//				RNItems.RUNE_BOW_BANNER_PATTERN.get(),
-//				RNItems.RUNE_CROSSBOW_BANNER_PATTERN.get(),
-//				RNItems.RUNE_MACE_BANNER_PATTERN.get(),
-//				RNItems.RUNE_TRIDENT_BANNER_PATTERN.get()
+		);
+
+		vaseItemModel(RNBlocks.BRONZE_VASE, "block/bronze/bronze_vase/bronze_vase", "block/bronze/bronze_block/bronze_block");
+		vaseItemModel(RNBlocks.DISCOLORED_BRONZE_VASE, "block/bronze/bronze_vase/discolored_bronze_vase", "block/bronze/bronze_block/discolored_bronze_block");
+		vaseItemModel(RNBlocks.CORRODED_BRONZE_VASE, "block/bronze/bronze_vase/corroded_bronze_vase", "block/bronze/bronze_block/corroded_bronze_block");
+		vaseItemModel(RNBlocks.TARNISHED_BRONZE_VASE, "block/bronze/bronze_vase/tarnished_bronze_vase", "block/bronze/bronze_block/tarnished_bronze_block");
+		vaseItemModel(RNBlocks.CRYSTALLIZED_BRONZE_VASE, "block/bronze/bronze_vase/crystallized_bronze_vase", "block/bronze/bronze_block/crystallized_bronze_block");
+
+		waxableBlockItemsCopyOnly(
+				RNBlocks.BRONZE_VASE,
+				RNBlocks.DISCOLORED_BRONZE_VASE,
+				RNBlocks.CORRODED_BRONZE_VASE,
+				RNBlocks.TARNISHED_BRONZE_VASE,
+				RNBlocks.CRYSTALLIZED_BRONZE_VASE
 		);
 
 		// Runes
@@ -286,18 +314,19 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.ARDENTER_RUNE,
 				RNItems.NIMIS_RUNE
 		);
-
 		runeItem("trident",
 				RNItems.IRA_RUNE,
 				RNItems.INVIDIA_RUNE,
 				RNItems.GULA_RUNE
 		);
-
 		runeItem("mace",
 				RNItems.IGNAVIA_RUNE,
 				RNItems.KENODOXIA_RUNE,
 				RNItems.PHILARGYRIA_RUNE
 		);
+
+		carvedRuneItem();
+		pocketwatchItem();
 
 		withExistingParent(
 				RNBlocks.BRAZIER.getId().toString(),
@@ -313,23 +342,33 @@ public class RNItemModels extends ItemModelProvider {
 		);
 	}
 
+	private void carvedRuneItem() {
+		var builder = withExistingParent(
+				RNItems.RUNE.getId().toString(),
+				mcLoc("item/generated")
+		).texture("layer0", modLoc("item/rune"));
 
+		// One override per category, in ascending CMD order (required for ≥ predicate matching)
+		for (var entry : CATEGORY_CMD.entrySet()) {
+			builder.override()
+					.predicate(mcLoc("custom_model_data"), entry.getValue())
+					.model(getExistingFile(modLoc("item/rune_" + entry.getKey() + "_carved")));
+		}
+	}
 
 	private void customItemTextures(String baseTexture, DeferredBlock<?>... blocks) {
 		for (var block : blocks) {
 			String blockName = block.getId().getPath();
 
-			var model = withExistingParent(
+			withExistingParent(
 					block.getId().toString(),
 					mcLoc("item/generated")
 			).texture("layer0", modLoc(baseTexture + "/" + blockName));
 
-
-			var waxableModel = withExistingParent(
+			withExistingParent(
 					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
 					mcLoc("item/generated")
 			).texture("layer0", modLoc(baseTexture + "/" + blockName));
-
 		}
 	}
 
@@ -394,6 +433,15 @@ public class RNItemModels extends ItemModelProvider {
 		}
 	}
 
+	private void waxableBlockItemsCopyOnly(DeferredBlock<?>... blocks) {
+		for (var block : blocks) {
+			withExistingParent(
+					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
+					block.getId()
+			);
+		}
+	}
+
 	private void spawnEggItems(DeferredItem<?>... items) {
 		for (var item : items) {
 			withExistingParent(
@@ -402,4 +450,100 @@ public class RNItemModels extends ItemModelProvider {
 			);
 		}
 	}
+
+	private void pocketwatchItem() {
+		var base = withExistingParent(
+				RNItems.POCKETWATCH.getId().toString(),
+				mcLoc("item/generated")
+		).texture("layer0", modLoc("item/pocketwatch_0"));
+
+		for (int frame = 1; frame <= 15; frame++) {
+			ItemModelBuilder frameModel = getBuilder("pocketwatch_" + frame)
+					.parent(new ModelFile.UncheckedModelFile(mcLoc("item/generated")))
+					.texture("layer0", modLoc("item/pocketwatch_" + frame));
+
+			base.override()
+					.predicate(mcLoc("custom_model_data"), frame)
+					.model(frameModel);
+		}
+
+		ItemModelBuilder brokenModel = getBuilder("pocketwatch_broken")
+				.parent(new ModelFile.UncheckedModelFile(mcLoc("item/generated")))
+				.texture("layer0", modLoc("item/pocketwatch_broken"));
+
+		base.override()
+				.predicate(mcLoc("custom_model_data"), PocketwatchItem.BROKEN_MODEL_VALUE)
+				.model(brokenModel);
+	}
+
+
+	private void vaseItemModel(DeferredBlock<?> vaseBlock, String vaseTexturePath, String bronzeBlockTexturePath) {
+		String name = vaseBlock.getId().getPath();
+
+		ItemModelBuilder base = getBuilder(name + "_base")
+				.texture("4", modLoc(vaseTexturePath + "_bottom"))
+				.texture("5", modLoc(vaseTexturePath + "_head"))
+				.texture("6", modLoc(vaseTexturePath + "_neck"))
+				.texture("7", modLoc(vaseTexturePath + "_top"))
+				.texture("8", modLoc(bronzeBlockTexturePath))
+				.texture("particle", modLoc(vaseTexturePath + "_bottom"));
+
+		base.element()
+				.from(0, 0, 0).to(16, 16, 16)
+				.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#4").end()
+				.face(Direction.EAST).uvs(0, 0, 16, 16).texture("#4").end()
+				.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#4").end()
+				.face(Direction.WEST).uvs(0, 0, 16, 16).texture("#4").end()
+				.face(Direction.UP).uvs(0, 0, 16, 16).texture("#6").end()
+				.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#8").end()
+				.end();
+
+		base.element()
+				.from(0, 16, 0).to(16, 20, 16)
+				.face(Direction.NORTH).uvs(0, 12, 16, 16).texture("#7").end()
+				.face(Direction.EAST).uvs(0, 12, 16, 16).texture("#7").end()
+				.face(Direction.SOUTH).uvs(0, 12, 16, 16).texture("#7").end()
+				.face(Direction.WEST).uvs(0, 12, 16, 16).texture("#7").end()
+				.face(Direction.UP).uvs(0, 0, 16, 16).texture("#6").end()
+				.end();
+
+		base.element()
+				.from(1, 22, 1).to(15, 24, 15)
+				.face(Direction.NORTH).uvs(1, 8, 15, 10).texture("#7").end()
+				.face(Direction.EAST).uvs(1, 8, 15, 10).texture("#7").end()
+				.face(Direction.SOUTH).uvs(1, 8, 15, 10).texture("#7").end()
+				.face(Direction.WEST).uvs(1, 8, 15, 10).texture("#7").end()
+				.face(Direction.UP).uvs(1, 1, 15, 15).texture("#5").end()
+				.face(Direction.DOWN).uvs(1, 1, 15, 15).texture("#6").end()
+				.end();
+
+		base.element()
+				.from(2, 20, 2).to(14, 22, 14)
+				.face(Direction.NORTH).uvs(2, 10, 14, 12).texture("#7").end()
+				.face(Direction.EAST).uvs(2, 10, 14, 12).texture("#7").end()
+				.face(Direction.SOUTH).uvs(2, 10, 14, 12).texture("#7").end()
+				.face(Direction.WEST).uvs(2, 10, 14, 12).texture("#7").end()
+				.end();
+
+		ItemModelBuilder wrapper = getBuilder(name)
+				.parent(new ModelFile.UncheckedModelFile(mcLoc("builtin/entity")))
+				.texture("particle", modLoc(vaseTexturePath + "_bottom"));
+
+		wrapper.transforms()
+				.transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
+				.rotation(75, 45, 0).translation(0, 1.5f, 0).scale(0.35f, 0.35f, 0.35f).end()
+				.transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
+				.rotation(75, 45, 0).translation(0, 1.5f, 0).scale(0.35f, 0.35f, 0.35f).end()
+				.transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
+				.rotation(0, 45, 0).scale(0.4f, 0.4f, 0.4f).end()
+				.transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
+				.rotation(0, 225, 0).scale(0.4f, 0.4f, 0.4f).end()
+				.transform(ItemDisplayContext.GROUND)
+				.translation(0, 3, 0).scale(0.25f, 0.25f, 0.25f).end()
+				.transform(ItemDisplayContext.GUI)
+				.rotation(30, 225, 0).translation(0, -1.5f, 0).scale(0.46f, 0.46f, 0.46f).end()
+				.transform(ItemDisplayContext.FIXED)
+				.scale(0.4f, 0.4f, 0.4f).end();
+	}
+
 }

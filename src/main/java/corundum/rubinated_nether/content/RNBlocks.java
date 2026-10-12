@@ -394,7 +394,7 @@ public class RNBlocks {
 			"rubinated_chiseled_shrine_stone_bricks",
 			() -> new SixWayPillarBlock(
 					Block.Properties.ofFullCopy(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get())
-							.lightLevel($ -> 7)
+							.lightLevel($ -> 12)
 			),
 			RNRarity.RUBINATED_NETHER_RUBY.get()
 	);
@@ -402,7 +402,7 @@ public class RNBlocks {
 			"rubinated_shrine_stone_bricks",
 			() -> new Block(
 					Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_BRICKS.get())
-							.lightLevel($ -> 7)
+							.lightLevel($ -> 12)
 			),
 			RNRarity.RUBINATED_NETHER_RUBY.get()
 	);
@@ -410,7 +410,7 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> RUBINATED_SHRINE_STONE_TILES = registerBlockAndItemWithRarity(
 			"rubinated_shrine_stone_tiles",
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
-					.lightLevel($ -> 7)
+					.lightLevel($ -> 12)
 			),
 			RNRarity.RUBINATED_NETHER_RUBY.get()
 	);
@@ -418,7 +418,7 @@ public class RNBlocks {
 	public static final DeferredBlock<RotatedPillarBlock> RUBINATED_SHRINE_STONE_PILLAR = registerBlockAndItemWithRarity(
 			"rubinated_shrine_stone_pillar",
 			() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
-					.lightLevel($ -> 7)
+					.lightLevel($ -> 12)
 			),
 			RNRarity.RUBINATED_NETHER_RUBY.get()
 	);
@@ -1378,6 +1378,46 @@ public class RNBlocks {
 	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_VENT = registerWaxableBlock(
 			"crystallized_bronze_vent",
 			() -> new TarnishingBronzeVentBlock(
+					TarnishStage.CRYSTALLIZED,
+					BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+    public static final DeferredBlock<Block> BRONZE_VASE = registerWaxableBlock(
+            "bronze_vase",
+            () -> new BronzeVaseBlock(
+                    TarnishStage.UNAFFECTED,
+                    BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get()).noOcclusion()
+            )
+    );
+
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_VASE = registerWaxableBlock(
+			"discolored_bronze_vase",
+			() -> new BronzeVaseBlock(
+					TarnishStage.DISCOLORED,
+					BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_BRONZE_VASE = registerWaxableBlock(
+			"corroded_bronze_vase",
+			() -> new BronzeVaseBlock(
+					TarnishStage.CORRODED,
+					BlockBehaviour.Properties.ofFullCopy(CORRODED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_VASE = registerWaxableBlock(
+			"tarnished_bronze_vase",
+			() -> new BronzeVaseBlock(
+					TarnishStage.TARNISHED,
+					BlockBehaviour.Properties.ofFullCopy(TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_VASE = registerWaxableBlock(
+			"crystallized_bronze_vase",
+			() -> new BronzeVaseBlock(
 					TarnishStage.CRYSTALLIZED,
 					BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
 			)

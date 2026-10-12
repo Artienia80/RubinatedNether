@@ -19,19 +19,9 @@ public class RNRenderTypes extends RenderType {
 			Runnable setupState,
 			Runnable clearState
 	) {
-		super(
-				name,
-				format,
-				mode,
-				bufferSize,
-				affectsCrumbling,
-				sortOnUpload,
-				setupState,
-				clearState
-		);
+		super(name, format, mode, bufferSize, affectsCrumbling, sortOnUpload, setupState, clearState);
 	}
 
-	// Bronze laser render types (existing)
 	public static final RenderType LASER_BEAM = createRenderType(
 			"laser_beam",
 			BronzeLaserRenderer.LASER_TEXTURE
@@ -42,7 +32,6 @@ public class RNRenderTypes extends RenderType {
 			BronzeLaserRenderer.LASER_TEXTURE_GREYSCALE
 	);
 
-	// Copper laser render types (new)
 	public static final RenderType COPPER_LASER_BEAM = createRenderType(
 			"copper_laser_beam",
 			CopperLaserRenderer.LASER_TEXTURE
@@ -51,6 +40,50 @@ public class RNRenderTypes extends RenderType {
 	public static final RenderType COPPER_LASER_BEAM_GRAYSCALE = createRenderType(
 			"copper_laser_beam_grayscale",
 			CopperLaserRenderer.LASER_TEXTURE_GREYSCALE
+	);
+
+	private static final ResourceLocation RUBINATED_GLINT_ITEM_TEXTURE =
+			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/misc/rubinated_glint_item.png");
+
+	private static final ResourceLocation RUBINATED_GLINT_ENTITY_TEXTURE =
+			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/misc/rubinated_glint_entity.png");
+
+	public static final RenderType RUBINATED_GLINT = RenderType.create(
+			"rubinated_nether:rubinated_glint",
+			DefaultVertexFormat.POSITION_TEX,
+			VertexFormat.Mode.QUADS,
+			SMALL_BUFFER_SIZE,
+			false,
+			false,
+			CompositeState.builder()
+					.setShaderState(RENDERTYPE_GLINT_SHADER)
+					.setTextureState(new TextureStateShard(RUBINATED_GLINT_ITEM_TEXTURE, true, false))
+					.setWriteMaskState(COLOR_WRITE)
+					.setCullState(NO_CULL)
+					.setDepthTestState(EQUAL_DEPTH_TEST)
+					.setTransparencyState(GLINT_TRANSPARENCY)
+					.setTexturingState(GLINT_TEXTURING)
+					.setLayeringState(NO_LAYERING)
+					.createCompositeState(false)
+	);
+
+	public static final RenderType RUBINATED_ENTITY_GLINT = RenderType.create(
+			"rubinated_nether:rubinated_entity_glint",
+			DefaultVertexFormat.POSITION_TEX,
+			VertexFormat.Mode.QUADS,
+			SMALL_BUFFER_SIZE,
+			false,
+			false,
+			CompositeState.builder()
+					.setShaderState(RENDERTYPE_ARMOR_ENTITY_GLINT_SHADER)
+					.setTextureState(new TextureStateShard(RUBINATED_GLINT_ENTITY_TEXTURE, true, false))
+					.setWriteMaskState(COLOR_WRITE)
+					.setCullState(NO_CULL)
+					.setDepthTestState(EQUAL_DEPTH_TEST)
+					.setTransparencyState(GLINT_TRANSPARENCY)
+					.setTexturingState(ENTITY_GLINT_TEXTURING)
+					.setLayeringState(VIEW_OFFSET_Z_LAYERING)
+					.createCompositeState(false)
 	);
 
 	private static RenderType createRenderType(String name, ResourceLocation texture) {
@@ -65,7 +98,6 @@ public class RNRenderTypes extends RenderType {
 						.setShaderState(new ShaderStateShard(GameRenderer::getRendertypeBeaconBeamShader))
 						.setTextureState(new TextureStateShard(texture, false, false))
 						.setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
-
 						.setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
 						.setCullState(RenderStateShard.CULL)
 						.setLightmapState(RenderStateShard.NO_LIGHTMAP)

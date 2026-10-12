@@ -16,6 +16,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BaseSpawner;
@@ -43,7 +44,7 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
     // All bronzes ever spawned this run — tracked for cooldown condition
     private final List<UUID> allSpawnedBronzes = new ArrayList<>();
 
-    // Cooldown state — now waits for all bronzes to die rather than a timer
+    // Cooldown state — waits for all bronzes to die rather than a timer
     private boolean coolingDown = false;
 
     private final BaseSpawner spawner = new BaseSpawner() {
@@ -86,9 +87,26 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
         this.setChanged();
     }
 
+    public void forceReset() {
+        this.spawning = false;
+        this.coolingDown = false;
+        this.totalBronzes = 0;
+        this.bronzesSpawned = 0;
+        this.waveTimer = 0;
+        this.aliveWaveBronzes.clear();
+        this.allSpawnedBronzes.clear();
+        this.setChanged();
+    }
+
     @Override
     public void tick() {
         if (!(level instanceof ServerLevel serverLevel)) return;
+
+        // Safety net: if peaceful sneaks through, abort everything
+        if (serverLevel.getDifficulty() == Difficulty.PEACEFUL && (spawning || coolingDown)) {
+            forceReset();
+            return;
+        }
 
         // Cooldown: wait for all spawned bronzes to die or despawn
         if (coolingDown) {

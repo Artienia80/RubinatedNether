@@ -17,11 +17,11 @@ import net.minecraft.world.level.block.Block;
 import java.util.function.IntFunction;
 
 public enum TarnishStage {
-    UNAFFECTED((int) 0,"unaffected", 0.25D, 20.0, 5.0, 0.0, 1200),
-    DISCOLORED((int) 1, "discolored", 0.20D, 20.0, 10.0, 8.0, 1600),
-    CORRODED((int) 2, "corroded", 0.15D, 20.0, 15.0, 16.0, 2000),
-    TARNISHED((int) 3, "tarnished", 0.10D, 20.0, 10.0, 20.0, 2400),
-    CRYSTALLIZED((int) 4, "crystallized", 0.32D, 8.0, 4.0, 0.0, -1);
+    UNAFFECTED(0,"unaffected", 0.25D, 20.0, 5.0, 0.0, 1200),
+    DISCOLORED(1, "discolored", 0.20D, 20.0, 10.0, 8.0, 1600),
+    CORRODED(2, "corroded", 0.15D, 20.0, 15.0, 16.0, 2000),
+    TARNISHED(3, "tarnished", 0.10D, 20.0, 10.0, 20.0, 2400),
+    CRYSTALLIZED(4, "crystallized", 0.32D, 8.0, 4.0, 0.0, -1);
 
     public static final IntFunction<TarnishStage> BY_ID = ByIdMap.continuous(TarnishStage::getId, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
 

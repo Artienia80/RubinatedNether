@@ -1,7 +1,6 @@
 package corundum.rubinated_nether.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import corundum.rubinated_nether.client.RubinatedNetherClient;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
@@ -9,6 +8,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.LivingEntity;
 
+import java.awt.*;
 import java.util.Map;
 
 /**
@@ -26,8 +26,8 @@ public abstract class RubyLensRenderer {
 				poseStack, 
 				multiBufferSource.getBuffer(model.renderType(RubyLensRenderLayer.RUBY_LENS_TEXTURE)), 
 				light, 
-				OverlayTexture.NO_OVERLAY, 
-				RubinatedNetherClient.WHITE
+				OverlayTexture.NO_OVERLAY,
+                Color.WHITE.getRGB()
 			);
 		}
 	}

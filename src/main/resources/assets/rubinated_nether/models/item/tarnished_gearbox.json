@@ -1,0 +1,6 @@
+{
+  "parent": "rubinated_nether:item/gearbox",
+  "textures": {
+    "texture": "rubinated_nether:block/gearbox/tarnished_gearbox"
+  }
+}

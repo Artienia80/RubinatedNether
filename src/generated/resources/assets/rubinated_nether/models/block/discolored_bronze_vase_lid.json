@@ -1,0 +1,124 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "east": {
+          "texture": "#7"
+        },
+        "north": {
+          "texture": "#7"
+        },
+        "south": {
+          "texture": "#7"
+        },
+        "west": {
+          "texture": "#7"
+        }
+      },
+      "from": [
+        2,
+        4,
+        2
+      ],
+      "rotation": {
+        "angle": 0.0,
+        "axis": "y",
+        "origin": [
+          0,
+          -4,
+          0
+        ]
+      },
+      "to": [
+        14,
+        6,
+        14
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#6"
+        },
+        "east": {
+          "texture": "#7"
+        },
+        "north": {
+          "texture": "#7"
+        },
+        "south": {
+          "texture": "#7"
+        },
+        "up": {
+          "texture": "#5"
+        },
+        "west": {
+          "texture": "#7"
+        }
+      },
+      "from": [
+        1,
+        6,
+        1
+      ],
+      "rotation": {
+        "angle": 0.0,
+        "axis": "y",
+        "origin": [
+          0,
+          -2,
+          0
+        ]
+      },
+      "to": [
+        15,
+        8,
+        15
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#7"
+        },
+        "north": {
+          "texture": "#7"
+        },
+        "south": {
+          "texture": "#7"
+        },
+        "up": {
+          "texture": "#6"
+        },
+        "west": {
+          "texture": "#7"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "rotation": {
+        "angle": 0.0,
+        "axis": "y",
+        "origin": [
+          0,
+          -16,
+          0
+        ]
+      },
+      "to": [
+        16,
+        4,
+        16
+      ]
+    }
+  ],
+  "textures": {
+    "5": "rubinated_nether:block/bronze/bronze_vase/discolored_bronze_vase_head",
+    "6": "rubinated_nether:block/bronze/bronze_vase/discolored_bronze_vase_neck",
+    "7": "rubinated_nether:block/bronze/bronze_vase/discolored_bronze_vase_top",
+    "particle": "rubinated_nether:block/bronze/bronze_vase/discolored_bronze_vase_bottom"
+  }
+}

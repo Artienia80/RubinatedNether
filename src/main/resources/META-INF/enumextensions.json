@@ -38,7 +38,7 @@
       "name": "RUBINATED_NETHER_BRONZE_DISEASED",
       "constructor": "(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/resources/ResourceLocation;)V",
       "parameters": {
-        "class": "corundum/rubinated_nether/content/RNEnumExtensions",
+        "class": "corundum/rubinated_nether/client/RNClientEnumExtensions",
         "field": "BRONZE_DISEASED_HEART_PROXY"
       }
     }

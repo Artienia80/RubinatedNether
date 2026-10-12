@@ -4,6 +4,9 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "mixins": [
+    "GuiMixin",
+    "HumanoidArmorLayerMixin",
+    "ItemRendererMixin",
     "LoomMenuMixin",
     "SmithingMenuMixin",
     "PointedDripstoneBlockMixin",
@@ -20,8 +23,6 @@
     "LevelMixin",
     "MaceItemMixin",
     "MultishotSpreadMixin",
-    "PlayerDigSpeedMixin",
-    "RavagingCurseMixin",
     "ScreenEffectRendererMixin",
     "ThornsShockwaveMixin",
     "accessors.AbstractFurnaceBlockEntityAccessor",

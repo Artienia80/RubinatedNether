@@ -2,12 +2,14 @@ package corundum.rubinated_nether;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.logging.LogUtils;
-import corundum.rubinated_nether.client.RubinatedNetherClient;
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.RNCauldronInteraction;
 import corundum.rubinated_nether.content.commands.RubinateCommand;
+import corundum.rubinated_nether.content.commands.StopwatchCommand;
 import corundum.rubinated_nether.content.RNCapabilities;
 import corundum.rubinated_nether.content.enchantment.RNEnchantmentEffects;
+import corundum.rubinated_nether.content.items.ChainsawItem;
+import corundum.rubinated_nether.content.items.JackhammerHandler;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
@@ -65,10 +67,9 @@ public class RubinatedNether {
     public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {
         LOGGER.info("Rubinating all over your Nether...");
 
-        System.out.println("[RN DEBUG] BRONZE trim material key: " + RNTrimMaterials.BRONZE.location());
-
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addPackFinders);
+        NeoForge.EVENT_BUS.addListener(ChainsawItem::onEntityTick);
 
         modEventBus.addListener(RNData::datagen);
         modEventBus.addListener(DatapackRegistry::datapackRegistry);
@@ -84,7 +85,6 @@ public class RubinatedNether {
         MidnightConfig.init(MODID, RNConfig.class);
 
         if (dist == Dist.CLIENT) {
-            RubinatedNetherClient.client(modEventBus);
             modEventBus.addListener(RNRecipeCategories::registerRecipeCategories);
             NeoForge.EVENT_BUS.addListener(RNBronzeDiseasedHeartHandler::onPlayerHeartType);
 
@@ -167,11 +167,13 @@ public class RubinatedNether {
     public void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             RNCauldronInteraction.bootStrap();
+            corundum.rubinated_nether.content.trim.VaseEngravingMaterial.bootstrap();
         });
     }
 
     public void registerCommands(RegisterCommandsEvent event) {
         RubinateCommand.register(event.getDispatcher());
+        StopwatchCommand.register(event.getDispatcher());
     }
 
     public static ResourceLocation id(String s) {

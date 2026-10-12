@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "type": "neoforge:components",
+      "components": {
+        "rubinated_nether:pocketwatch_data": {
+          "broken": true,
+          "started_at_game_time": 0,
+          "stored_ticks": 0,
+          "ticking": false
+        }
+      },
+      "items": "rubinated_nether:pocketwatch"
+    },
+    {
+      "item": "rubinated_nether:gearbox"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:pocketwatch"
+  }
+}

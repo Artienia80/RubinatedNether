@@ -2,7 +2,6 @@ package corundum.rubinated_nether.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.client.RubinatedNetherClient;
 import corundum.rubinated_nether.content.RNItems;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
@@ -14,6 +13,8 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+
+import java.awt.*;
 
 public class RubyLensRenderLayer<T extends LivingEntity, M extends EntityModel<T> & HeadedModel> extends RenderLayer<T, M> {
 
@@ -36,8 +37,8 @@ public class RubyLensRenderLayer<T extends LivingEntity, M extends EntityModel<T
 				poseStack, 
 				buffer.getBuffer(lensModel.renderType(RUBY_LENS_TEXTURE)), 
 				packedLight, 
-				OverlayTexture.NO_OVERLAY, 
-				RubinatedNetherClient.WHITE
+				OverlayTexture.NO_OVERLAY,
+                Color.WHITE.getRGB()
 			);
 		}
 	}

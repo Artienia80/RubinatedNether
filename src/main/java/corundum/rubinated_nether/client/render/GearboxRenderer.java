@@ -93,7 +93,7 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
             poseStack.mulPose(Axis.YP.rotationDegrees(-dir));
             poseStack.translate(-0.5F, -0.5F, -0.5F);
 
-            TarnishStage stage = ((TarnishingBronze) gearboxBlock).getAge();
+            TarnishStage stage = gearboxBlock.getAge();
             Material tex = (lit ? ANIM_BODY_TEXTURES : BODY_TEXTURES).getOrDefault(stage, BODY_TEXTURES.get(TarnishStage.UNAFFECTED));
             VertexConsumer consumer = tex.buffer(multiBufferSource, RenderType::entityCutoutNoCull);
 
