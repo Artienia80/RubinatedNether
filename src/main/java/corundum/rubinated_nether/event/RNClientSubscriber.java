@@ -223,6 +223,7 @@ public class RNClientSubscriber {
             return;
         }
 
+        PocketwatchSaveAnimation.debug("handler reached");
         PocketwatchSaveAnimation.start();
         player.playSound(SoundEvents.ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
 
@@ -234,5 +235,6 @@ public class RNClientSubscriber {
                     player.getX() + offsetX, player.getY() + offsetY, player.getZ() + offsetZ,
                     0.0, 0.0, 0.0);
         }
+        PocketwatchSaveAnimation.debug("baseline enchant particles spawned around player");
     }
 }

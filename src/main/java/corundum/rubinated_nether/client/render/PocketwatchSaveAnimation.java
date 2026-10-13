@@ -7,13 +7,19 @@ import corundum.rubinated_nether.content.items.PocketwatchItem;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomModelData;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -30,10 +36,14 @@ public class PocketwatchSaveAnimation {
     private static final int REWIND_START = 10;
     private static final int BREAK_TICK = 35;
     private static final int FADE_START = 46;
-    private static final int FULL_FRAME = 15;
+    private static final int FULL_FRAME = 0;
     private static final int FRAME_COUNT = 16;
     private static final int REWIND_LOOPS = 6;
-    private static final int REWIND_STEPS = FULL_FRAME + FRAME_COUNT * (REWIND_LOOPS - 1);
+    private static final int REWIND_STEPS = FRAME_COUNT * REWIND_LOOPS;
+
+    private static final ParticleOptions GLYPH_PARTICLE = ParticleTypes.ENCHANT;
+
+    private static boolean loggedSpawn = false;
 
     private static int age = -1;
     private static ItemStack stack = ItemStack.EMPTY;
@@ -44,6 +54,16 @@ public class PocketwatchSaveAnimation {
         shownFrame = -1;
         applyFrame(FULL_FRAME);
         age = 0;
+        loggedSpawn = false;
+        debug("animation started, particle setting: " + Minecraft.getInstance().options.particles().get());
+    }
+
+    public static void debug(String message) {
+        RubinatedNether.LOGGER.info("[PW debug] {}", message);
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player != null) {
+            player.displayClientMessage(Component.literal("[PW debug] " + message), false);
+        }
     }
 
     private static void applyFrame(int frame) {
@@ -67,12 +87,57 @@ public class PocketwatchSaveAnimation {
             return;
         }
         age++;
+
+        if (age >= FLOAT_IN_END && age < BREAK_TICK) {
+            spawnGlyphs(age >= (REWIND_START + BREAK_TICK) / 2 ? 3 : 2, false);
+        }
+
         if (age == BREAK_TICK) {
+            debug("break tick reached");
             Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.GLASS_BREAK, 0.9F, 1.0F));
+            spawnGlyphs(36, true);
         }
         if (age > DURATION) {
             age = -1;
             stack = ItemStack.EMPTY;
+        }
+    }
+
+    private static void spawnGlyphs(int count, boolean burst) {
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer player = minecraft.player;
+        ClientLevel level = minecraft.level;
+        if (player == null || level == null) {
+            return;
+        }
+
+        Vec3 look = player.getLookAngle();
+        Vec3 right = look.cross(new Vec3(0.0, 1.0, 0.0));
+        if (right.lengthSqr() < 1.0E-4) {
+            right = new Vec3(1.0, 0.0, 0.0);
+        }
+        right = right.normalize();
+        Vec3 up = right.cross(look).normalize();
+        Vec3 center = player.getEyePosition().add(look.scale(2.5));
+
+        if (!loggedSpawn) {
+            loggedSpawn = true;
+            debug("spawning glyphs, eye=" + player.getEyePosition() + " center=" + center);
+        }
+
+        for (int i = 0; i < count; i++) {
+            double angle = level.getRandom().nextDouble() * Math.PI * 2.0;
+            double distance = burst
+                    ? 1.3 + level.getRandom().nextDouble() * 1.1
+                    : 1.1 + level.getRandom().nextDouble() * 0.6;
+            Vec3 offset = right.scale(Math.cos(angle) * distance).add(up.scale(Math.sin(angle) * distance));
+
+            if (burst) {
+                Vec3 end = center.add(offset);
+                level.addParticle(GLYPH_PARTICLE, end.x, end.y, end.z, -offset.x, -offset.y, -offset.z);
+            } else {
+                level.addParticle(GLYPH_PARTICLE, center.x, center.y, center.z, offset.x, offset.y, offset.z);
+            }
         }
     }
 

@@ -301,6 +301,8 @@
   "message.rubinated_nether.pocketwatch_empty": "The pocketwatch is empty.",
   "message.rubinated_nether.pocketwatch_locked": "The pocketwatch needs more time before it can be stopped.",
   "message.rubinated_nether.pocketwatch_already_ticking": "Another pocketwatch is already ticking.",
+  "item.rubinated_nether.pocketwatch.tooltip.broken": "Broken",
+
 
   "item.rubinated_nether.rune": "Rune",
   "item.rubinated_nether.rune.carved": "Carved Rune of %s",
