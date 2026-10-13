@@ -2,9 +2,8 @@ package corundum.rubinated_nether.event;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.client.particles.*;
 import corundum.rubinated_nether.client.render.*;
-import corundum.rubinated_nether.client.particles.BloodDripParticle;
-import corundum.rubinated_nether.client.particles.SteamParticle;
 import corundum.rubinated_nether.client.render.entity.RubyLensModel;
 import corundum.rubinated_nether.client.render.entity.RubyLensRenderLayer;
 import corundum.rubinated_nether.content.*;
@@ -136,6 +135,11 @@ public class RNClientSubscriber {
     public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(RNParticleTypes.BLOOD_DRIP.get(), BloodDripParticle.Provider::new);
         event.registerSpriteSet(RNParticleTypes.STEAM.get(), SteamParticle.Provider::new);
+        event.registerSpriteSet(RNParticleTypes.RUBY_AURA.get(), RubyAuraParticle.Provider::new);
+        event.registerSpriteSet(RNParticleTypes.RUBY_SPIRIT.get(), RubySpiritParticle.Provider::new);
+        event.registerSpriteSet(RNParticleTypes.RUBINATE.get(), RubinationAltarParticle.Provider::new);
+        event.registerSpriteSet(RNParticleTypes.BRONZE_SCRAPE.get(), RubinationAltarParticle.Provider::new);
+        event.registerSpriteSet(RNParticleTypes.RUBIN_GLYPH.get(), RubinGlyphParticle.Provider::new);
     }
 
     @SubscribeEvent
@@ -227,14 +231,5 @@ public class RNClientSubscriber {
         PocketwatchSaveAnimation.start();
         player.playSound(SoundEvents.ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
 
-        for (int i = 0; i < 20; i++) {
-            double offsetX = (player.getRandom().nextDouble() - 0.5) * 1.5;
-            double offsetY = player.getRandom().nextDouble() * 2.0;
-            double offsetZ = (player.getRandom().nextDouble() - 0.5) * 1.5;
-            player.level().addParticle(ParticleTypes.ENCHANT,
-                    player.getX() + offsetX, player.getY() + offsetY, player.getZ() + offsetZ,
-                    0.0, 0.0, 0.0);
-        }
-        PocketwatchSaveAnimation.debug("baseline enchant particles spawned around player");
     }
 }

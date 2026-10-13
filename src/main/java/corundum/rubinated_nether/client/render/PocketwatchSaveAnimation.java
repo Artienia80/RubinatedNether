@@ -3,6 +3,7 @@ package corundum.rubinated_nether.client.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNParticleTypes;
 import corundum.rubinated_nether.content.items.PocketwatchItem;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -10,8 +11,9 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
@@ -20,6 +22,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -41,9 +44,12 @@ public class PocketwatchSaveAnimation {
     private static final int REWIND_LOOPS = 6;
     private static final int REWIND_STEPS = FRAME_COUNT * REWIND_LOOPS;
 
-    private static final ParticleOptions GLYPH_PARTICLE = ParticleTypes.ENCHANT;
-
-    private static boolean loggedSpawn = false;
+    private static final int GLYPH_COUNT = 300;
+    private static final double GLYPH_MIN_RADIUS = 3.0;
+    private static final double GLYPH_MAX_RADIUS = 5.0;
+    private static final double SPIRIT_RADIUS = 4.0;
+    private static final int SPIRITS_PER_TICK = 3;
+    private static final double SPIRIT_RISE_SPEED = 0.03;
 
     private static int age = -1;
     private static ItemStack stack = ItemStack.EMPTY;
@@ -54,8 +60,7 @@ public class PocketwatchSaveAnimation {
         shownFrame = -1;
         applyFrame(FULL_FRAME);
         age = 0;
-        loggedSpawn = false;
-        debug("animation started, particle setting: " + Minecraft.getInstance().options.particles().get());
+        debug("animation started");
     }
 
     public static void debug(String message) {
@@ -88,14 +93,17 @@ public class PocketwatchSaveAnimation {
         }
         age++;
 
-        if (age >= FLOAT_IN_END && age < BREAK_TICK) {
-            spawnGlyphs(age >= (REWIND_START + BREAK_TICK) / 2 ? 3 : 2, false);
+        if (age == 1) {
+            spawnGlyphSphere();
+        }
+
+        if (age >= 1 && age < BREAK_TICK) {
+            spawnSpirits(SPIRITS_PER_TICK);
         }
 
         if (age == BREAK_TICK) {
             debug("break tick reached");
             Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.GLASS_BREAK, 0.9F, 1.0F));
-            spawnGlyphs(36, true);
         }
         if (age > DURATION) {
             age = -1;
@@ -103,7 +111,8 @@ public class PocketwatchSaveAnimation {
         }
     }
 
-    private static void spawnGlyphs(int count, boolean burst) {
+    /** Rubin script glyphs: start at the player, shoot out to random points on a sphere of radius 3-5. */
+    private static void spawnGlyphSphere() {
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
         ClientLevel level = minecraft.level;
@@ -111,33 +120,66 @@ public class PocketwatchSaveAnimation {
             return;
         }
 
-        Vec3 look = player.getLookAngle();
-        Vec3 right = look.cross(new Vec3(0.0, 1.0, 0.0));
-        if (right.lengthSqr() < 1.0E-4) {
-            right = new Vec3(1.0, 0.0, 0.0);
-        }
-        right = right.normalize();
-        Vec3 up = right.cross(look).normalize();
-        Vec3 center = player.getEyePosition().add(look.scale(2.5));
+        Vec3 origin = player.position().add(0.0, player.getBbHeight() * 0.5, 0.0);
 
-        if (!loggedSpawn) {
-            loggedSpawn = true;
-            debug("spawning glyphs, eye=" + player.getEyePosition() + " center=" + center);
+        for (int i = 0; i < GLYPH_COUNT; i++) {
+            double theta = level.getRandom().nextDouble() * Math.PI * 2.0;
+            double cosPhi = level.getRandom().nextDouble() * 2.0 - 1.0;
+            double sinPhi = Math.sqrt(1.0 - cosPhi * cosPhi);
+            double radius = GLYPH_MIN_RADIUS + level.getRandom().nextDouble() * (GLYPH_MAX_RADIUS - GLYPH_MIN_RADIUS);
+
+            double ox = sinPhi * Math.cos(theta) * radius;
+            double oy = cosPhi * radius;
+            double oz = sinPhi * Math.sin(theta) * radius;
+
+            // velocity = target offset from the origin (see RubinGlyphParticle)
+            spawnParticle(RNParticleTypes.RUBIN_GLYPH.get(), origin.x, origin.y, origin.z, ox, oy, oz);
+        }
+    }
+
+    /** Ruby Spirit particles: appear on the ground around the player and rise slowly. */
+    private static void spawnSpirits(int count) {
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer player = minecraft.player;
+        ClientLevel level = minecraft.level;
+        if (player == null || level == null) {
+            return;
         }
 
         for (int i = 0; i < count; i++) {
             double angle = level.getRandom().nextDouble() * Math.PI * 2.0;
-            double distance = burst
-                    ? 1.3 + level.getRandom().nextDouble() * 1.1
-                    : 1.1 + level.getRandom().nextDouble() * 0.6;
-            Vec3 offset = right.scale(Math.cos(angle) * distance).add(up.scale(Math.sin(angle) * distance));
-
-            if (burst) {
-                Vec3 end = center.add(offset);
-                level.addParticle(GLYPH_PARTICLE, end.x, end.y, end.z, -offset.x, -offset.y, -offset.z);
-            } else {
-                level.addParticle(GLYPH_PARTICLE, center.x, center.y, center.z, offset.x, offset.y, offset.z);
+            double distance = SPIRIT_RADIUS * Math.sqrt(level.getRandom().nextDouble());
+            double x = player.getX() + Math.cos(angle) * distance;
+            double z = player.getZ() + Math.sin(angle) * distance;
+            double y = groundY(level, x, player.getY(), z);
+            if (Double.isNaN(y)) {
+                continue;
             }
+            spawnParticle(RNParticleTypes.RUBY_SPIRIT.get(), x, y + 0.05, z, 0.0, SPIRIT_RISE_SPEED, 0.0);
+        }
+    }
+
+    // Scans down from just above the player's feet for the top of the first collidable block.
+    private static double groundY(ClientLevel level, double x, double startY, double z) {
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(Mth.floor(x), Mth.floor(startY) + 1, Mth.floor(z));
+        if (!level.getBlockState(pos).getCollisionShape(level, pos).isEmpty()) {
+            return Double.NaN;
+        }
+        for (int i = 0; i < 12; i++) {
+            pos.move(Direction.DOWN);
+            VoxelShape shape = level.getBlockState(pos).getCollisionShape(level, pos);
+            if (!shape.isEmpty()) {
+                return pos.getY() + shape.max(Direction.Axis.Y);
+            }
+        }
+        return Double.NaN;
+    }
+
+    // Same call the Brazier uses for Ruby Spirit; goes straight to the particle engine.
+    private static void spawnParticle(ParticleOptions type, double x, double y, double z, double vx, double vy, double vz) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc != null && mc.particleEngine != null) {
+            mc.particleEngine.createParticle(type, x, y, z, vx, vy, vz);
         }
     }
 

@@ -189,22 +189,26 @@ public class PocketwatchItem extends Item {
         return !data.broken() && data.ticking() && getRemainingTicks(data, gameTime) > 0;
     }
 
+    /** Working pocketwatches only: broken ones are skipped, as if they weren't in the inventory. */
     public static List<ItemStack> findPocketwatches(Player player) {
         List<ItemStack> result = new ArrayList<>();
 
         for (ItemStack stack : player.getInventory().items) {
-            if (stack.getItem() instanceof PocketwatchItem) {
-                result.add(stack);
-            }
+            addIfUsable(stack, result);
         }
 
         for (ItemStack stack : player.getInventory().offhand) {
-            if (stack.getItem() instanceof PocketwatchItem) {
-                result.add(stack);
-            }
+            addIfUsable(stack, result);
         }
 
         return result;
+    }
+
+    private static void addIfUsable(ItemStack stack, List<ItemStack> result) {
+        if (stack.getItem() instanceof PocketwatchItem
+                && !stack.getOrDefault(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.EMPTY).broken()) {
+            result.add(stack);
+        }
     }
 
     private static boolean hasAnotherTickingPocketwatch(Player player, ItemStack excluded, long gameTime) {
