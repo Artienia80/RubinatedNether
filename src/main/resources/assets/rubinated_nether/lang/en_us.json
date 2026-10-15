@@ -284,6 +284,16 @@
   "block.rubinated_nether.tarnished_gearbox": "Tarnished Gearbox",
   "block.rubinated_nether.crystallized_gearbox": "Crystallized Gearbox",
 
+  "block.rubinated_nether.music_box": "Music Box",
+  "block.rubinated_nether.discolored_music_box": "Discolored Music Box",
+  "block.rubinated_nether.corroded_music_box": "Corroded Music Box",
+  "block.rubinated_nether.tarnished_music_box": "Tarnished Music Box",
+  "block.rubinated_nether.crystallized_music_box": "Crystallized Music Box",
+  "item.rubinated_nether.waxed_music_box": "Waxed Music Box",
+  "item.rubinated_nether.waxed_discolored_music_box": "Waxed Discolored Music Box",
+  "item.rubinated_nether.waxed_corroded_music_box": "Waxed Corroded Music Box",
+  "item.rubinated_nether.waxed_tarnished_music_box": "Waxed Tarnished Music Box",
+  "item.rubinated_nether.waxed_crystallized_music_box": "Waxed Crystallized Music Box",
 
   "item.rubinated_nether.bronze_rod": "Bronze Rod",
   "item.rubinated_nether.bronze_powder": "Bronze Powder",
@@ -293,6 +303,8 @@
   "item.rubinated_nether.crystallized_bronze_shot": "Crystallized Bronze Shot",
 
   "item.rubinated_nether.bronze_drill": "Bronze Drill",
+  "item.rubinated_nether.bronze_jackhammer": "Bronze Jackhammer",
+  "item.rubinated_nether.bronze_chainsaw": "Bronze Chainsaw",
 
   "item.rubinated_nether.pocketwatch": "Pocketwatch",
   "item.rubinated_nether.pocketwatch.tooltip.status": "%s - %s%% Blessed",

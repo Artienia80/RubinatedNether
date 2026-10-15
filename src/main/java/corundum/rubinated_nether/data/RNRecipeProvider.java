@@ -756,6 +756,42 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy("has_broken_pocketwatch", has(RNItems.POCKETWATCH.get()))
 				.save(recipeOutput, RubinatedNether.MODID + ":pocketwatch_repair");
 
+		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, RNItems.BRONZE_DRILL, 1)
+				.define('X', RNItems.BRONZE_SCRAP)
+				.define('G', RNTags.Items.GEARBOXES)
+				.define('N', Items.NETHERITE_INGOT)
+				.pattern(" X ")
+				.pattern("XGX")
+				.pattern(" N ")
+				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
+				.unlockedBy("has_gearbox", has(RNTags.Items.GEARBOXES))
+				.unlockedBy("has_netherite_ingot", has(Items.NETHERITE_INGOT))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, RNItems.BRONZE_CHAINSAW, 1)
+				.define('X', RNItems.BRONZE_SCRAP)
+				.define('G', RNTags.Items.GEARBOXES)
+				.define('N', Items.NETHERITE_INGOT)
+				.pattern("X X")
+				.pattern("XGX")
+				.pattern(" N ")
+				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
+				.unlockedBy("has_gearbox", has(RNTags.Items.GEARBOXES))
+				.unlockedBy("has_netherite_ingot", has(Items.NETHERITE_INGOT))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, RNItems.BRONZE_JACKHAMMER, 1)
+				.define('X', RNItems.BRONZE_SCRAP)
+				.define('G', RNTags.Items.GEARBOXES)
+				.define('N', Items.NETHERITE_INGOT)
+				.pattern("XXX")
+				.pattern(" G ")
+				.pattern(" N ")
+				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
+				.unlockedBy("has_gearbox", has(RNTags.Items.GEARBOXES))
+				.unlockedBy("has_netherite_ingot", has(Items.NETHERITE_INGOT))
+				.save(recipeOutput);
+
 	}
 
 	private void twoByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {

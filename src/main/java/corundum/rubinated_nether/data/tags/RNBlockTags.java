@@ -404,6 +404,7 @@ public class RNBlockTags extends BlockTagsProvider {
 		);
 
 
+
 		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(Tags.Blocks.GLASS_BLOCKS_CHEAP);
 		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(Tags.Blocks.GLASS_PANES);
 		this.tag(RNTags.Blocks.LASER_TRANSPARENT).addTag(RNTags.Blocks.RUBY_GLASS);

@@ -95,9 +95,12 @@ public class RNCreativeTabs {
 								RNItems.CRYSTALLIZED_BRONZE_SHOT,
 								RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
 								RNItems.BRONZE_DRILL,
+								RNItems.BRONZE_JACKHAMMER,
+								RNItems.BRONZE_CHAINSAW,
 								RNItems.RITUAL_OFFERING,
 								RNItems.WINDING_KEY,
 								RNItems.COGWHEEL,
+								RNItems.POCKETWATCH,
 								RNItems.BRONZE_SPAWN_EGG,
 								RNItems.DISCOLORED_BRONZE_SPAWN_EGG,
 								RNItems.CORRODED_BRONZE_SPAWN_EGG,
@@ -320,6 +323,10 @@ public class RNCreativeTabs {
 					RNItems.MOLTEN_RUBY_BUCKET.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.NETHERITE_HOE.getDefaultInstance(),
 					RNItems.BRONZE_DRILL.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.BRONZE_DRILL.get().getDefaultInstance(),
+					RNItems.BRONZE_CHAINSAW.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.BRONZE_CHAINSAW.get().getDefaultInstance(),
+					RNItems.BRONZE_JACKHAMMER.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.MUSIC_DISC_PIGSTEP.getDefaultInstance(),
 					RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(),
