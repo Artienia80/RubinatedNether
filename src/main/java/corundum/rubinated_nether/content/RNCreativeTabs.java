@@ -101,6 +101,7 @@ public class RNCreativeTabs {
 								RNItems.WINDING_KEY,
 								RNItems.COGWHEEL,
 								RNItems.POCKETWATCH,
+								RNItems.MUSIC_BOX,
 								RNItems.BRONZE_SPAWN_EGG,
 								RNItems.DISCOLORED_BRONZE_SPAWN_EGG,
 								RNItems.CORRODED_BRONZE_SPAWN_EGG,

@@ -10,22 +10,28 @@ import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.enchantment.RNEnchantments;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import corundum.rubinated_nether.content.items.DrillItem;
+import corundum.rubinated_nether.content.items.MusicBoxItem;
 import corundum.rubinated_nether.misc.DatapackRegistry;
+import corundum.rubinated_nether.networking.CollectDiscsPayload;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MaceItem;
+import net.minecraft.world.item.component.BundleContents;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -36,6 +42,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.slf4j.Logger;
 
 import java.util.Comparator;
@@ -44,7 +51,7 @@ import java.util.Random;
 
 @EventBusSubscriber(modid = RubinatedNether.MODID)
 public class RNCommonSubscriber {
-	public static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     private static final Vec3 SINKING_MOTION = new Vec3(0, -1.5, 0);
     private static final int BATCH_SIZE = 8;
@@ -52,12 +59,12 @@ public class RNCommonSubscriber {
     private static final float DROP_CHANCE = 0.5f;
     private static final float SKIP_CHANCE = 0.05f;
 
-	@SubscribeEvent
-	public static void onLivingHurt(LivingDamageEvent.Post event) {
-		var entity = event.getEntity();
-		var source = event.getSource();
+    @SubscribeEvent
+    public static void onLivingHurt(LivingDamageEvent.Post event) {
+        var entity = event.getEntity();
+        var source = event.getSource();
 
-		if (!source.is(RNDamageTypes.CHANDELIER)) return;
+        if (!source.is(RNDamageTypes.CHANDELIER)) return;
         if (!(source.getDirectEntity() instanceof FallingBlockEntity fallingBlock)) return;
 
         BlockState blockState = fallingBlock.getBlockState();
@@ -67,7 +74,7 @@ public class RNCommonSubscriber {
         if (tarnishStage != TarnishStage.CRYSTALLIZED) return;
 
         entity.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 72000, 0));
-	}
+    }
 
     /*
 
@@ -139,17 +146,17 @@ public class RNCommonSubscriber {
                 EntityDimensions.scalable(0.7F, 1.4F));
     }
 
-	@SubscribeEvent
-	public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
-		var player = event.getEntity();
-		var itemStack = player.getMainHandItem();
+    @SubscribeEvent
+    public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
+        var player = event.getEntity();
+        var itemStack = player.getMainHandItem();
 
-		if (!(itemStack.getItem() instanceof DrillItem drillItem)) return;
+        if (!(itemStack.getItem() instanceof DrillItem drillItem)) return;
 
         var modified = drillItem.calcModifier(itemStack, event.getOriginalSpeed());
         if (modified > event.getOriginalSpeed())
             event.setNewSpeed(modified);
-	}
+    }
 
     @SubscribeEvent
     public static void modifyCurseBreakSpeed(PlayerEvent.BreakSpeed event) {
@@ -162,23 +169,40 @@ public class RNCommonSubscriber {
         }
     }
 
-	@SubscribeEvent
-	public static void freezerFuel(ServerAboutToStartEvent event) {
-		FreezerBlockEntity.cleanFreezingTimes();
+    @SubscribeEvent
+    public static void freezerFuel(ServerAboutToStartEvent event) {
+        FreezerBlockEntity.cleanFreezingTimes();
 
-		var entries = event.getServer().registryAccess().registryOrThrow(DatapackRegistry.FREEZER_FUELS).entrySet();
-		LOGGER.info("Registered Freezer Fuels: {}", entries.size());
+        var entries = event.getServer().registryAccess().registryOrThrow(DatapackRegistry.FREEZER_FUELS).entrySet();
+        LOGGER.info("Registered Freezer Fuels: {}", entries.size());
 
-		for (var entry : entries) {
-			var x = entry.getValue();
-			var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(x.item()));
+        for (var entry : entries) {
+            var x = entry.getValue();
+            var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(x.item()));
 
-			LOGGER.info(x.toString());
-			FreezerBlockEntity.addItemFreezingTime(item, x.freezeTime());
-		}
-	}
+            LOGGER.info(x.toString());
+            FreezerBlockEntity.addItemFreezingTime(item, x.freezeTime());
+        }
+    }
 
-
+    @SubscribeEvent
+    public static void registerCollectDiscs(RegisterPayloadHandlersEvent event) {
+        event.registrar("1").playToServer(CollectDiscsPayload.TYPE, CollectDiscsPayload.CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> {
+                    Player player = ctx.player();
+                    ItemStack carried = player.containerMenu.getCarried();
+                    LOGGER.info("CollectDiscs received. menu={}, carried={}", player.containerMenu.getClass().getSimpleName(), carried);
+                    player.displayClientMessage(Component.literal("DEBUG server: menu="
+                            + player.containerMenu.getClass().getSimpleName() + ", carried=" + carried), false);
+                    if (carried.getItem() instanceof MusicBoxItem) {
+                        BundleContents before = carried.getOrDefault(DataComponents.BUNDLE_CONTENTS, BundleContents.EMPTY);
+                        MusicBoxItem.collectDiscs(carried, player.containerMenu.slots, player);
+                        BundleContents after = carried.getOrDefault(DataComponents.BUNDLE_CONTENTS, BundleContents.EMPTY);
+                        player.displayClientMessage(Component.literal("DEBUG server: box discs " + before.size() + " -> " + after.size()), false); // remove once it works
+                        player.containerMenu.broadcastChanges();
+                    }
+                }));
+    }
 
     private static void scheduleProgressiveSinkhole(ServerLevel level, BlockPos centerPos, float fallDistance) {
         BlockPos groundPos = findGroundLevel(level, centerPos);
@@ -333,4 +357,6 @@ public class RNCommonSubscriber {
 
         return null;
     }
+
+
 }

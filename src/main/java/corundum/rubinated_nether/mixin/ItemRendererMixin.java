@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.VertexMultiConsumer;
 import corundum.rubinated_nether.client.render.RNRenderTypes;
 import corundum.rubinated_nether.content.RNRarity;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.items.MusicBoxItem;
 import corundum.rubinated_nether.content.items.PocketwatchItem;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -25,7 +26,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemRenderer.class)
 public class ItemRendererMixin {
-
     @Unique
     private static final ThreadLocal<ItemStack> rubinated_nether$currentStack = ThreadLocal.withInitial(() -> ItemStack.EMPTY);
 
@@ -77,10 +77,11 @@ public class ItemRendererMixin {
         ));
     }
 
-    /** Rubinated glint for cursed items, and for pocketwatches charged to 100%+ (ruby rarity). */
     @Unique
     private static boolean rubinated_nether$usesRubinatedGlint(ItemStack stack) {
-        return rubinated_nether$hasRubinatedCurse(stack) || rubinated_nether$isChargedPocketwatch(stack);
+        return rubinated_nether$hasRubinatedCurse(stack)
+                || rubinated_nether$isChargedPocketwatch(stack)
+                || rubinated_nether$isSinnerMusicBox(stack);
     }
 
     @Unique
@@ -92,5 +93,10 @@ public class ItemRendererMixin {
     private static boolean rubinated_nether$isChargedPocketwatch(ItemStack stack) {
         return stack.getItem() instanceof PocketwatchItem
                 && stack.getOrDefault(DataComponents.RARITY, Rarity.COMMON).equals(RNRarity.RUBINATED_NETHER_RUBY.get());
+    }
+
+    @Unique
+    private static boolean rubinated_nether$isSinnerMusicBox(ItemStack stack) {
+        return stack.getItem() instanceof MusicBoxItem && MusicBoxItem.isSinnerPlaying(stack);
     }
 }

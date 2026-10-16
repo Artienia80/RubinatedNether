@@ -792,6 +792,30 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy("has_netherite_ingot", has(Items.NETHERITE_INGOT))
 				.save(recipeOutput);
 
+		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, RNItems.POCKETWATCH, 1)
+				.define('X', RNItems.BRONZE_SCRAP)
+				.define('G', RNTags.Items.GEARBOXES)
+				.define('R', RNItems.RUBY)
+				.pattern("XXX")
+				.pattern("XGX")
+				.pattern("XRX")
+				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
+				.unlockedBy("has_gearbox", has(RNTags.Items.GEARBOXES))
+				.unlockedBy("has_ruby", has(RNItems.RUBY))
+				.save(recipeOutput);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, RNItems.MUSIC_BOX, 1)
+				.define('X', RNItems.BRONZE_SCRAP)
+				.define('G', RNTags.Items.GEARBOXES)
+				.define('R', Items.DIAMOND)
+				.pattern("XXX")
+				.pattern("XGX")
+				.pattern("XDX")
+				.unlockedBy(getHasName(RNItems.BRONZE_SCRAP), has(RNItems.BRONZE_SCRAP))
+				.unlockedBy("has_gearbox", has(RNTags.Items.GEARBOXES))
+				.unlockedBy("has_diamond", has(Items.DIAMOND))
+				.save(recipeOutput);
+
 	}
 
 	private void twoByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {

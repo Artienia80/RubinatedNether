@@ -72,11 +72,11 @@
   "block.rubinated_nether.rubination_altar": "Rubination Altar",
 
   "item.rubinated_nether.music_disc_shimmer": "Rubinated Music Disc",
-  "jukebox_song.rubinated_nether.shimmer": "Quizzly - Shimmer",
+  "jukebox_song.rubinated_nether.shimmer": "Soup Can - Shimmer",
 
 
   "item.rubinated_nether.music_disc_sinner": "Music Disc",
-  "jukebox_song.rubinated_nether.sinner": "Quizzly - Sinner",
+  "jukebox_song.rubinated_nether.sinner": "Soup Can - Sinner",
 
   "block.rubinated_nether.bronze_block": "Block of Bronze",
   "block.rubinated_nether.discolored_bronze_block": "Discolored Bronze",
@@ -284,17 +284,6 @@
   "block.rubinated_nether.tarnished_gearbox": "Tarnished Gearbox",
   "block.rubinated_nether.crystallized_gearbox": "Crystallized Gearbox",
 
-  "block.rubinated_nether.music_box": "Music Box",
-  "block.rubinated_nether.discolored_music_box": "Discolored Music Box",
-  "block.rubinated_nether.corroded_music_box": "Corroded Music Box",
-  "block.rubinated_nether.tarnished_music_box": "Tarnished Music Box",
-  "block.rubinated_nether.crystallized_music_box": "Crystallized Music Box",
-  "item.rubinated_nether.waxed_music_box": "Waxed Music Box",
-  "item.rubinated_nether.waxed_discolored_music_box": "Waxed Discolored Music Box",
-  "item.rubinated_nether.waxed_corroded_music_box": "Waxed Corroded Music Box",
-  "item.rubinated_nether.waxed_tarnished_music_box": "Waxed Tarnished Music Box",
-  "item.rubinated_nether.waxed_crystallized_music_box": "Waxed Crystallized Music Box",
-
   "item.rubinated_nether.bronze_rod": "Bronze Rod",
   "item.rubinated_nether.bronze_powder": "Bronze Powder",
   "item.rubinated_nether.bronze_scrap": "Bronze Scrap",
@@ -315,6 +304,7 @@
   "message.rubinated_nether.pocketwatch_already_ticking": "Another pocketwatch is already ticking.",
   "item.rubinated_nether.pocketwatch.tooltip.broken": "Broken",
 
+  "item.rubinated_nether.music_box": "Music Box",
 
   "item.rubinated_nether.rune": "Rune",
   "item.rubinated_nether.rune.carved": "Carved Rune of %s",

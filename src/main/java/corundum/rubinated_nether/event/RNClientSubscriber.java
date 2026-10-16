@@ -11,6 +11,7 @@ import corundum.rubinated_nether.content.effect.renderer.BronzeDiseasedEffectOve
 import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileModel;
 import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileRenderer;
 import corundum.rubinated_nether.content.gui.RubyLensOverlay;
+import corundum.rubinated_nether.content.items.MusicBoxItem;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.screen.CofferScreen;
@@ -18,9 +19,12 @@ import corundum.rubinated_nether.content.screen.FreezerScreen;
 import corundum.rubinated_nether.content.screen.RubinationScreen;
 import corundum.rubinated_nether.content.screen.VaseScreen;
 import corundum.rubinated_nether.mixin.accessors.EntityRenderDispatcherAccessor;
+import corundum.rubinated_nether.networking.CollectDiscsPayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -29,6 +33,10 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.item.JukeboxSong;
+import net.minecraft.world.item.component.BundleContents;
+import net.minecraft.core.component.DataComponents;
+import corundum.rubinated_nether.content.items.MusicBoxData;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -43,13 +51,16 @@ import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @EventBusSubscriber(modid = RubinatedNether.MODID, value = Dist.CLIENT)
 public class RNClientSubscriber {
-
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         IEventBus modBus = net.neoforged.fml.ModLoadingContext.get().getActiveContainer().getEventBus();
@@ -189,10 +200,8 @@ public class RNClientSubscriber {
         };
 
         for (DeferredBlock<?> vaseBlock : vaseBlocks) {
-            // Non-waxed
             event.registerItem(vaseExtensions, vaseBlock.get().asItem());
 
-            // Waxed counterpart ("waxed_" + path, per WaxableBlockItem.getWaxableItem)
             ResourceLocation waxedId = RubinatedNether.id(WaxableBlockItem.getWaxableItem(vaseBlock));
             Item waxedItem = BuiltInRegistries.ITEM.get(waxedId);
             event.registerItem(vaseExtensions, waxedItem);
@@ -230,6 +239,105 @@ public class RNClientSubscriber {
         PocketwatchSaveAnimation.debug("handler reached");
         PocketwatchSaveAnimation.start();
         player.playSound(SoundEvents.ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
+    }
 
+    private static long musicBoxLastClick = 0;
+    private static boolean musicBoxSuppressRelease = false;
+
+    @SubscribeEvent
+    public static void onMusicBoxClick(ScreenEvent.MouseButtonPressed.Pre event) {
+        if (event.getButton() != 0 || !(event.getScreen() instanceof AbstractContainerScreen<?> screen)) {
+            return;
+        }
+        musicBoxSuppressRelease = false;
+
+        long now = System.currentTimeMillis();
+        boolean holdingBox = screen.getMenu().getCarried().getItem() instanceof MusicBoxItem;
+
+        if (holdingBox && now - musicBoxLastClick <= 300) {
+            if (screen instanceof CreativeModeInventoryScreen creative) {
+                if (!creative.isInventoryOpen()) {
+                    musicBoxLastClick = now;
+                    return;
+                }
+                collectDiscsCreative();
+            } else {
+                PacketDistributor.sendToServer(new CollectDiscsPayload());
+            }
+            musicBoxLastClick = 0;
+            musicBoxSuppressRelease = true;
+            event.setCanceled(true);
+        } else {
+            musicBoxLastClick = now;
+        }
+    }
+
+    private static long musicBoxLastAnnounced = 0;
+
+    @SubscribeEvent
+    public static void onMusicBoxNowPlaying(ClientTickEvent.Post event) {
+        Minecraft mc = Minecraft.getInstance();
+        LocalPlayer player = mc.player;
+        if (player == null || mc.level == null) {
+            musicBoxLastAnnounced = 0;
+            return;
+        }
+
+        MusicBoxData playing = null;
+        ItemStack playingBox = ItemStack.EMPTY;
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            ItemStack stack = player.getInventory().getItem(i);
+            if (!(stack.getItem() instanceof MusicBoxItem)) continue;
+            MusicBoxData data = stack.getOrDefault(RNDataComponents.MUSIC_BOX_DATA.get(), MusicBoxData.EMPTY);
+            if (data.playing()) {
+                playing = data;
+                playingBox = stack;
+                break;
+            }
+        }
+
+        if (playing == null) {
+            musicBoxLastAnnounced = 0;
+            return;
+        }
+        if (playing.songEndTick() == musicBoxLastAnnounced) return;
+        musicBoxLastAnnounced = playing.songEndTick();
+
+        BundleContents contents = playingBox.getOrDefault(DataComponents.BUNDLE_CONTENTS, BundleContents.EMPTY);
+        if (playing.current() < 0 || playing.current() >= contents.size()) return;
+        JukeboxSong.fromStack(mc.level.registryAccess(), contents.getItemUnsafe(playing.current()))
+                .ifPresent(holder -> mc.gui.setNowPlaying(holder.value().description()));
+    }
+
+    @SubscribeEvent
+    public static void onMusicBoxRelease(ScreenEvent.MouseButtonReleased.Pre event) {
+        if (musicBoxSuppressRelease && event.getButton() == 0) {
+            musicBoxSuppressRelease = false;
+            event.setCanceled(true);
+        }
+    }
+
+    private static void collectDiscsCreative() {
+        Minecraft mc = Minecraft.getInstance();
+        LocalPlayer player = mc.player;
+        if (player == null || mc.gameMode == null) return;
+
+        var menu = player.inventoryMenu;
+        ItemStack carried = menu.getCarried();
+        if (!(carried.getItem() instanceof MusicBoxItem)) return;
+
+        List<ItemStack> before = new ArrayList<>();
+        for (var slot : menu.slots) {
+            before.add(slot.getItem().copy());
+        }
+
+        MusicBoxItem.collectDiscs(carried, menu.slots, player);
+
+        for (int i = 0; i < menu.slots.size(); i++) {
+            ItemStack now = menu.slots.get(i).getItem();
+            if (!ItemStack.matches(before.get(i), now)) {
+                mc.gameMode.handleCreativeModeItemAdd(now, i);
+            }
+        }
     }
 }
