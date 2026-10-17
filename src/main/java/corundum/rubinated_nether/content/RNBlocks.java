@@ -790,7 +790,6 @@ public class RNBlocks {
 							.strength(1.0F, 6.0F)
 							.sound(SoundType.COPPER)
 							.randomTicks()
-							.isRedstoneConductor(RNBlocks::never)
 							.lightLevel(litBlockEmission(15))
 			)
 	);
