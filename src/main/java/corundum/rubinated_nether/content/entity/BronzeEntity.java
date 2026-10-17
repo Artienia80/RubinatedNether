@@ -7,7 +7,9 @@ import corundum.rubinated_nether.content.entity.goals.CrystallizedOrbitGoal;
 import corundum.rubinated_nether.content.entity.goals.DiscoloredRamGoal;
 import corundum.rubinated_nether.content.entity.goals.TarnishedShockwaveGoal;
 import corundum.rubinated_nether.content.entity.goals.UnaffectedAttackGoal;
+import corundum.rubinated_nether.content.items.MusicBoxItem;
 import net.minecraft.core.BlockPos;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -23,6 +25,9 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -195,6 +200,10 @@ public class BronzeEntity extends TarnishingEntity {
     // Goals
     // ------------------------------------------------------------------
 
+    private static final int SINNER_NOTE_INTERVAL = 8;
+    private static final double SINNER_NOTE_RANGE = 32.0D;
+    private static final int[] SINNER_NOTE_SEQUENCE = {0, 4, 7, 12, 7, 4, 9, 14, 9, 5, 12, 16, 12, 7, 4, 0};
+
     @Override
     protected void registerGoals() {
         // base
@@ -226,7 +235,7 @@ public class BronzeEntity extends TarnishingEntity {
     private void registerDiscoloredGoals() {
         this.dashGoal = new DiscoloredRamGoal(this);
         this.goalSelector.addGoal(2, this.dashGoal);
-        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Player.class, 10.0F, 1.2, 1.2) {
+        this.goalSelector.addGoal(3, new AvoidEntityGoal<Player>(this, Player.class, e -> !isSoothed(e), 10.0F, 1.2, 1.2, EntitySelector.NO_CREATIVE_OR_SPECTATOR::test) {
             public boolean canUse() {
                 return BronzeEntity.this.getTarnishLevel().equals(TarnishStage.DISCOLORED) && super.canUse();
             }
@@ -398,11 +407,45 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
 
+    public static boolean isSoothed(@Nullable Entity entity) {
+        return entity instanceof Player player && MusicBoxItem.isPlayingSinner(player);
+    }
+
+    @Override
+    public boolean canAttack(LivingEntity target) {
+        return !isSoothed(target) && super.canAttack(target);
+    }
+
+    @Override
+    public void setTarget(@Nullable LivingEntity target) {
+        super.setTarget(isSoothed(target) ? null : target);
+    }
+
+    private void spawnSinnerNotes(ServerLevel serverLevel) {
+        Player listener = serverLevel.getNearestPlayer(this.getX(), this.getY(), this.getZ(), SINNER_NOTE_RANGE, BronzeEntity::isSoothed);
+        if (listener == null) {
+            return;
+        }
+        int note = SINNER_NOTE_SEQUENCE[(this.tickCount / SINNER_NOTE_INTERVAL) % SINNER_NOTE_SEQUENCE.length];
+        serverLevel.sendParticles(ParticleTypes.NOTE, this.getX(), this.getY() + this.getBbHeight() + 0.6D, this.getZ(), 0, note / 24.0D, 0.0D, 0.0D, 1.0D);
+    }
+
     @Override
     public void tick() {
         super.tick();
         floatOnLava();
         setupAnimationStates();
+
+        if (this.level() instanceof ServerLevel serverLevel) {
+            LivingEntity currentTarget = this.getTarget();
+            if (currentTarget != null && isSoothed(currentTarget)) {
+                this.setTarget(null);
+                this.getNavigation().stop();
+            }
+            if (this.tickCount % SINNER_NOTE_INTERVAL == 0) {
+                spawnSinnerNotes(serverLevel);
+            }
+        }
 
         // Spawn particles when stunned
         if ((shockwaveGoal != null && shockwaveGoal.isStunned) || (dashGoal != null && dashGoal.isStunned())) {

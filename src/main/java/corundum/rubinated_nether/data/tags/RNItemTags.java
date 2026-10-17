@@ -163,6 +163,14 @@ public class RNItemTags extends ItemTagsProvider {
 						RNItems.PHILARGYRIA_RUNE.asItem()
 				);
 
+		this.tag(RNTags.Items.GEARBOXES).add(
+				RNBlocks.GEARBOX.asItem(),
+				RNBlocks.DISCOLORED_GEARBOX.asItem(),
+				RNBlocks.CORRODED_GEARBOX.asItem(),
+				RNBlocks.TARNISHED_GEARBOX.asItem(),
+				RNBlocks.CRYSTALLIZED_GEARBOX.asItem()
+		);
+
 		this.tag(RNTags.Items.SHRINE_STONE_CANDIDATE).add(
 				Items.STONE,
 				Items.DEEPSLATE,
@@ -332,5 +340,8 @@ public class RNItemTags extends ItemTagsProvider {
 						RNItems.RUBY.asItem(),
 						RNItems.MOLTEN_RUBY.asItem()
 				);
+
+
 	}
+
 }

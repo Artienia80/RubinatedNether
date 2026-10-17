@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content;
 
 import com.mojang.serialization.Codec;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.items.MusicBoxData;
 import corundum.rubinated_nether.content.items.PocketwatchData;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.trim.VaseEngraving;
@@ -37,5 +38,11 @@ public class RNDataComponents {
             () -> DataComponentType.<PocketwatchData>builder()
                     .persistent(PocketwatchData.CODEC)
                     .networkSynchronized(PocketwatchData.STREAM_CODEC)
+                    .build());
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<MusicBoxData>> MUSIC_BOX_DATA = DATA_COMPONENTS.register("music_box_data",
+            () -> DataComponentType.<MusicBoxData>builder()
+                    .persistent(MusicBoxData.CODEC)
+                    .networkSynchronized(MusicBoxData.STREAM_CODEC)
                     .build());
 }

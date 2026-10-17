@@ -4,13 +4,18 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexMultiConsumer;
 import corundum.rubinated_nether.client.render.RNRenderTypes;
+import corundum.rubinated_nether.content.RNRarity;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.items.MusicBoxItem;
+import corundum.rubinated_nether.content.items.PocketwatchItem;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -21,7 +26,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemRenderer.class)
 public class ItemRendererMixin {
-
     @Unique
     private static final ThreadLocal<ItemStack> rubinated_nether$currentStack = ThreadLocal.withInitial(() -> ItemStack.EMPTY);
 
@@ -50,7 +54,7 @@ public class ItemRendererMixin {
         if (!glint) return;
         ItemStack stack = rubinated_nether$currentStack.get();
         if (stack.isEmpty()) return;
-        if (!rubinated_nether$hasRubinatedCurse(stack)) return;
+        if (!rubinated_nether$usesRubinatedGlint(stack)) return;
         cir.setReturnValue(VertexMultiConsumer.create(
                 bufferSource.getBuffer(isItem ? RNRenderTypes.RUBINATED_GLINT : RNRenderTypes.RUBINATED_ENTITY_GLINT),
                 bufferSource.getBuffer(renderType)
@@ -66,7 +70,7 @@ public class ItemRendererMixin {
         if (!withGlint) return;
         ItemStack stack = rubinated_nether$currentStack.get();
         if (stack.isEmpty()) return;
-        if (!rubinated_nether$hasRubinatedCurse(stack)) return;
+        if (!rubinated_nether$usesRubinatedGlint(stack)) return;
         cir.setReturnValue(VertexMultiConsumer.create(
                 bufferSource.getBuffer(noEntity ? RNRenderTypes.RUBINATED_GLINT : RNRenderTypes.RUBINATED_ENTITY_GLINT),
                 bufferSource.getBuffer(renderType)
@@ -74,7 +78,25 @@ public class ItemRendererMixin {
     }
 
     @Unique
+    private static boolean rubinated_nether$usesRubinatedGlint(ItemStack stack) {
+        return rubinated_nether$hasRubinatedCurse(stack)
+                || rubinated_nether$isChargedPocketwatch(stack)
+                || rubinated_nether$isSinnerMusicBox(stack);
+    }
+
+    @Unique
     private static boolean rubinated_nether$hasRubinatedCurse(ItemStack stack) {
         return EnchantmentHelper.hasTag(stack, RNTags.Enchantments.RUBINATED_CURSES);
+    }
+
+    @Unique
+    private static boolean rubinated_nether$isChargedPocketwatch(ItemStack stack) {
+        return stack.getItem() instanceof PocketwatchItem
+                && stack.getOrDefault(DataComponents.RARITY, Rarity.COMMON).equals(RNRarity.RUBINATED_NETHER_RUBY.get());
+    }
+
+    @Unique
+    private static boolean rubinated_nether$isSinnerMusicBox(ItemStack stack) {
+        return stack.getItem() instanceof MusicBoxItem && MusicBoxItem.isSinnerPlaying(stack);
     }
 }

@@ -25,7 +25,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.List;
 import java.util.Locale;
 
-public class StopwatchCommand {
+public class PocketwatchCommand {
     private static final int FULL_BUFFER_TICKS = 15 * 20;
 
     private static final SimpleCommandExceptionType ERROR_NOT_HOLDING = new SimpleCommandExceptionType(
@@ -61,27 +61,27 @@ public class StopwatchCommand {
     );
 
     private static final SuggestionProvider<CommandSourceStack> LOAD_SUGGESTIONS = (context, builder) ->
-            SharedSuggestionProvider.suggest(List.of("full", "1h", "30m", "50%", "100%"), builder);
+            SharedSuggestionProvider.suggest(List.of("full"), builder);
 
     private static final SuggestionProvider<CommandSourceStack> DRAIN_SUGGESTIONS = (context, builder) ->
-            SharedSuggestionProvider.suggest(List.of("all", "1h", "30m", "50%", "100%"), builder);
+            SharedSuggestionProvider.suggest(List.of("all"), builder);
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
-                Commands.literal("stopwatch")
+                Commands.literal("pocketwatch")
                         .requires(source -> source.hasPermission(2))
                         .then(Commands.literal("load")
                                 .then(Commands.argument("amount", StringArgumentType.greedyString())
                                         .suggests(LOAD_SUGGESTIONS)
-                                        .executes(StopwatchCommand::load)))
+                                        .executes(PocketwatchCommand::load)))
                         .then(Commands.literal("drain")
                                 .then(Commands.argument("amount", StringArgumentType.greedyString())
                                         .suggests(DRAIN_SUGGESTIONS)
-                                        .executes(StopwatchCommand::drain)))
-                        .then(Commands.literal("start").executes(StopwatchCommand::start))
-                        .then(Commands.literal("stop").executes(StopwatchCommand::stop))
-                        .then(Commands.literal("break").executes(StopwatchCommand::breakWatch))
-                        .then(Commands.literal("repair").executes(StopwatchCommand::repair))
+                                        .executes(PocketwatchCommand::drain)))
+                        .then(Commands.literal("start").executes(PocketwatchCommand::start))
+                        .then(Commands.literal("stop").executes(PocketwatchCommand::stop))
+                        .then(Commands.literal("break").executes(PocketwatchCommand::breakWatch))
+                        .then(Commands.literal("repair").executes(PocketwatchCommand::repair))
         );
     }
 

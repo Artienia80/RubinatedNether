@@ -29,6 +29,11 @@ public final class RNParticleTypes {
 			() -> new SimpleParticleType(false)
 	);
 
+	public static final Supplier<SimpleParticleType> RUBIN_GLYPH = PARTICLES.register(
+			"rubin_glyph",
+			() -> new SimpleParticleType(true)
+	);
+
 	public static final Supplier<SimpleParticleType> BRONZE_SCRAPE = PARTICLES.register(
 			"bronze_scrape", () -> new SimpleParticleType(true));
 

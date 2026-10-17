@@ -72,11 +72,11 @@
   "block.rubinated_nether.rubination_altar": "Rubination Altar",
 
   "item.rubinated_nether.music_disc_shimmer": "Rubinated Music Disc",
-  "jukebox_song.rubinated_nether.shimmer": "Quizzly - Shimmer",
+  "jukebox_song.rubinated_nether.shimmer": "Soup Can - Shimmer",
 
 
   "item.rubinated_nether.music_disc_sinner": "Music Disc",
-  "jukebox_song.rubinated_nether.sinner": "Quizzly - Sinner",
+  "jukebox_song.rubinated_nether.sinner": "Soup Can - Sinner",
 
   "block.rubinated_nether.bronze_block": "Block of Bronze",
   "block.rubinated_nether.discolored_bronze_block": "Discolored Bronze",
@@ -284,7 +284,6 @@
   "block.rubinated_nether.tarnished_gearbox": "Tarnished Gearbox",
   "block.rubinated_nether.crystallized_gearbox": "Crystallized Gearbox",
 
-
   "item.rubinated_nether.bronze_rod": "Bronze Rod",
   "item.rubinated_nether.bronze_powder": "Bronze Powder",
   "item.rubinated_nether.bronze_scrap": "Bronze Scrap",
@@ -293,6 +292,8 @@
   "item.rubinated_nether.crystallized_bronze_shot": "Crystallized Bronze Shot",
 
   "item.rubinated_nether.bronze_drill": "Bronze Drill",
+  "item.rubinated_nether.bronze_jackhammer": "Bronze Jackhammer",
+  "item.rubinated_nether.bronze_chainsaw": "Bronze Chainsaw",
 
   "item.rubinated_nether.pocketwatch": "Pocketwatch",
   "item.rubinated_nether.pocketwatch.tooltip.status": "%s - %s%% Blessed",
@@ -301,6 +302,9 @@
   "message.rubinated_nether.pocketwatch_empty": "The pocketwatch is empty.",
   "message.rubinated_nether.pocketwatch_locked": "The pocketwatch needs more time before it can be stopped.",
   "message.rubinated_nether.pocketwatch_already_ticking": "Another pocketwatch is already ticking.",
+  "item.rubinated_nether.pocketwatch.tooltip.broken": "Broken",
+
+  "item.rubinated_nether.music_box": "Music Box",
 
   "item.rubinated_nether.rune": "Rune",
   "item.rubinated_nether.rune.carved": "Carved Rune of %s",

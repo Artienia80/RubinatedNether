@@ -268,6 +268,7 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.RITUAL_OFFERING,
 				RNItems.COGWHEEL,
 				RNItems.WINDING_KEY,
+				RNItems.MUSIC_BOX,
 				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
 				RNItems.MOLTEN_RUBY_BUCKET,
 

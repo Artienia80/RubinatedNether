@@ -2,6 +2,7 @@ package corundum.rubinated_nether.event;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNDataComponents;
+import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.items.PocketwatchData;
 import corundum.rubinated_nether.content.items.PocketwatchItem;
 import corundum.rubinated_nether.utils.RNConfig;
@@ -38,6 +39,9 @@ public class PocketwatchDeathHandler {
 
             if (remaining > thresholdTicks) {
                 watch.set(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.BROKEN);
+
+                // The watch is broken: drop any leftover stop-lock cooldown.
+                player.getCooldowns().removeCooldown(RNItems.POCKETWATCH.get());
 
                 event.setCanceled(true);
                 player.setHealth(1.0F);

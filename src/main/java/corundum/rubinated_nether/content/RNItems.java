@@ -7,6 +7,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.BundleContents;
 import net.minecraft.world.item.component.Unbreakable;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -197,6 +198,16 @@ public class RNItems {
 					new Item.Properties()
 							.stacksTo(1)
 							.component(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.EMPTY)
+			)
+	);
+
+	public static final DeferredItem<Item> MUSIC_BOX = ITEMS.register(
+			"music_box",
+			() -> new MusicBoxItem(
+					new Item.Properties()
+							.stacksTo(1)
+							.component(DataComponents.BUNDLE_CONTENTS, BundleContents.EMPTY)
+							.component(RNDataComponents.MUSIC_BOX_DATA, MusicBoxData.EMPTY)
 			)
 	);
 

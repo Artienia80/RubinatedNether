@@ -41,7 +41,7 @@ public interface RNJukeboxSongs {
 				new JukeboxSong(
 						RNSoundEvents.MUSIC_DISC_SINNER,
 						Component.translatable(Util.makeDescriptionId("jukebox_song", SINNER.location())),
-						163,
+						203,
 						14
 				)
 		);

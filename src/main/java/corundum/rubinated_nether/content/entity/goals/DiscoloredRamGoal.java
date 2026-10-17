@@ -43,7 +43,7 @@ public class DiscoloredRamGoal extends Goal {
         if (!entity.getTarnishLevel().equals(TarnishStage.DISCOLORED)) return false;
         if (entity.getRamCooldown() > 0) return false;
 
-        Player player = entity.level().getNearestPlayer(entity, 15);
+        Player player = entity.level().getNearestPlayer(entity.getX(), entity.getY(), entity.getZ(), 15.0, e -> !e.isSpectator() && !BronzeEntity.isSoothed(e));
         if (player != null && entity.hasLineOfSight(player) && !player.isCreative()) {
             target = player;
             return true;
@@ -61,7 +61,7 @@ public class DiscoloredRamGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return (phase > 0 || isStunned) && target != null && target.isAlive() && entity.getTarnishLevel().equals(TarnishStage.DISCOLORED);
+        return (phase > 0 || isStunned) && target != null && target.isAlive() && !BronzeEntity.isSoothed(target) && entity.getTarnishLevel().equals(TarnishStage.DISCOLORED);
     }
 
     @Override

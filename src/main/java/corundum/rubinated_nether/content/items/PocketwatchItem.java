@@ -116,8 +116,6 @@ public class PocketwatchItem extends Item {
         if (data.broken()) {
             tooltipComponents.add(Component.translatable("item.rubinated_nether.pocketwatch.tooltip.broken")
                     .withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
-            tooltipComponents.add(Component.translatable("item.rubinated_nether.pocketwatch.tooltip.broken_repair")
-                    .withStyle(ChatFormatting.DARK_GRAY));
             return;
         }
 
@@ -148,7 +146,7 @@ public class PocketwatchItem extends Item {
         } else {
             int currentTicks = getRemainingTicks(data, gameTime);
             long thresholdTicks = RNConfig.altarFullBlessingThreshold * 60L * 20L;
-            frame = (int) Math.min(15, (currentTicks * 16L) / thresholdTicks);
+            frame = (int) (((currentTicks * 16L) / thresholdTicks) % 16L);
             charged = currentTicks >= thresholdTicks;
         }
 
@@ -191,22 +189,26 @@ public class PocketwatchItem extends Item {
         return !data.broken() && data.ticking() && getRemainingTicks(data, gameTime) > 0;
     }
 
+    /** Working pocketwatches only: broken ones are skipped, as if they weren't in the inventory. */
     public static List<ItemStack> findPocketwatches(Player player) {
         List<ItemStack> result = new ArrayList<>();
 
         for (ItemStack stack : player.getInventory().items) {
-            if (stack.getItem() instanceof PocketwatchItem) {
-                result.add(stack);
-            }
+            addIfUsable(stack, result);
         }
 
         for (ItemStack stack : player.getInventory().offhand) {
-            if (stack.getItem() instanceof PocketwatchItem) {
-                result.add(stack);
-            }
+            addIfUsable(stack, result);
         }
 
         return result;
+    }
+
+    private static void addIfUsable(ItemStack stack, List<ItemStack> result) {
+        if (stack.getItem() instanceof PocketwatchItem
+                && !stack.getOrDefault(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.EMPTY).broken()) {
+            result.add(stack);
+        }
     }
 
     private static boolean hasAnotherTickingPocketwatch(Player player, ItemStack excluded, long gameTime) {

@@ -116,6 +116,9 @@ public final class RNTags {
 		public static final TagKey<Item> VASES = createTag(Registries.ITEM, "vases");
 		public static final TagKey<Item> VASE_ENGRAVING_MATERIALS = createTag(Registries.ITEM, "vase_engraving_materials");
 
+		public static final TagKey<Item> GEARBOXES = createTag(Registries.ITEM, "gearboxes");
+
+
 	}
 
 	public static final class EntityTypes {
