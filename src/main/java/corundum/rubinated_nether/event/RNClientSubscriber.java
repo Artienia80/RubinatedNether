@@ -135,7 +135,9 @@ public class RNClientSubscriber {
     @SubscribeEvent
     public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(RNParticleTypes.BLOOD_DRIP.get(), BloodDripParticle.Provider::new);
-        event.registerSpriteSet(RNParticleTypes.STEAM.get(), SteamParticle.Provider::new);
+        event.registerSpriteSet(RNParticleTypes.STEAM.get(), sprites -> new SteamParticle.Provider(sprites, SteamParticle.Tint.NEUTRAL));
+        event.registerSpriteSet(RNParticleTypes.STEAM_HOT.get(), sprites -> new SteamParticle.Provider(sprites, SteamParticle.Tint.HOT));
+        event.registerSpriteSet(RNParticleTypes.STEAM_COLD.get(), sprites -> new SteamParticle.Provider(sprites, SteamParticle.Tint.COLD));
     }
 
     @SubscribeEvent
