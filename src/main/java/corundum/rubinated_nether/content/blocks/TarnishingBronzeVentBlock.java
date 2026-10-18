@@ -14,6 +14,7 @@ import corundum.rubinated_nether.utils.TickableBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
@@ -178,40 +179,63 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
             dealSteamDamage(level, pos, facing, signalRange, front);
         }
 
+        if (front > 0 && checkIceBlock(level, pos, facing.getOpposite(), back) && isDamageTick(level, pos)) {
+            dealIceDamage(level, pos, facing, signalRange, front);
+        }
+
         level.scheduleTick(pos, this, 1);
     }
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        BlockState curState = level.getBlockState(pos);
-        if (!(curState.getBlock() instanceof TarnishingBronzeVentBlock ventBlock)) return;
+        if (!(state.getBlock() instanceof TarnishingBronzeVentBlock vent)) return;
 
-        Direction facing = curState.getValue(FACING);
+        Direction facing = state.getValue(FACING);
 
-        if (ventBlock.getAge() == TarnishStage.CRYSTALLIZED) {
+        if (vent.getAge() == TarnishStage.CRYSTALLIZED) {
             if (isFaceBlocked(level, pos, facing)) return;
-            AABB detectionBox = buildDetectionAABB(pos, facing, RNConfig.crystallizedVentRange);
-            List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, detectionBox);
-            if (entities.isEmpty()) return;
-            int smokeRange = calculateSmokeRange(level, pos, facing, RNConfig.crystallizedVentRange);
+            int range = RNConfig.crystallizedVentRange;
+            if (level.getEntitiesOfClass(LivingEntity.class, buildDetectionAABB(pos, facing, range)).isEmpty()) return;
+            int smokeRange = calculateSmokeRange(level, pos, facing, range);
             if (smokeRange <= 0) return;
-            spawnSteamParticles(level, pos, facing, RNConfig.crystallizedVentRange / 40.0, 1.0, random);
+            spawnSteamColumn(level, pos, facing, smokeRange, false, 1.5, SteamMode.HOT, random);
             return;
         }
 
-        if (!curState.getValue(POWERED)) return;
-        int signalRange = curState.getValue(SIGNAL_STRENGTH);
-        if (signalRange <= 0) return;
+        if (!state.getValue(POWERED)) return;
+        int signal = state.getValue(SIGNAL_STRENGTH);
+        if (signal <= 0) return;
 
-        var result = getRanges(level, pos, curState);
-        int front = result.getKey();
-        int back = result.getValue();
+        var ranges = vent.getRanges(level, pos, state);
+        int front = ranges.getLeft();
+        int back = ranges.getRight();
+        double density = vent.getSteamDensity(signal);
 
         if (front > 0)
-            spawnSteamParticles(level, pos, facing, signalRange / 40.0, 1.0, random);
+            spawnSteamColumn(level, pos, facing, front, false, density, vent.getSteamMode(level, pos, facing, back), random);
 
         if (back > 0)
-            spawnSteamParticles(level, pos, facing.getOpposite(), -(signalRange / 40.0), back, random);
+            spawnSteamColumn(level, pos, facing.getOpposite(), back, true, density * 0.6, SteamMode.NEUTRAL, random);
+    }
+
+    private enum SteamMode { NEUTRAL, HOT, COLD }
+
+    private SteamMode getSteamMode(Level level, BlockPos pos, Direction facing, int back) {
+        if (getLaunchImpulse() <= 0) return SteamMode.NEUTRAL;
+        if (checkMagmaBlock(level, pos, facing.getOpposite(), back)) return SteamMode.HOT;
+        if (checkIceBlock(level, pos, facing.getOpposite(), back)) return SteamMode.COLD;
+        return SteamMode.NEUTRAL;
+    }
+
+    private double getSteamDensity(int signal) {
+        double tarnish = switch (tarnishStage) {
+            case UNAFFECTED   -> 0.5;
+            case DISCOLORED   -> 0.75;
+            case CORRODED     -> 1.0;
+            case TARNISHED    -> 1.25;
+            case CRYSTALLIZED -> 1.0;
+        };
+        return tarnish * (0.6 + 0.8 * signal / 15.0);
     }
 
     private Pair<Integer, Integer> getRanges(Level level, BlockPos pos, BlockState state) {
@@ -227,35 +251,63 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         return Pair.of(front, back);
     }
 
-    private static void spawnSteamParticles(Level level,
-                                            BlockPos pos, Direction facing,
-                                            double initialSpeed, double spawnOffset, RandomSource random) {
-        double ox = pos.getX() + 0.5;
-        double oy = pos.getY() + 0.5;
-        double oz = pos.getZ() + 0.5;
-        double dx = facing.getStepX();
-        double dy = facing.getStepY();
-        double dz = facing.getStepZ();
+    private static final double STEAM_DRIFT_PER_SPEED = 40.0;
+    private static final double MOUTH_RADIUS = 0.33;
 
-        double rawCount = RNConfig.ventSmokeParticleMultiplier;
-        int baseCount = (int) rawCount;
-        if (random.nextDouble() < (rawCount - baseCount)) baseCount++;
+    private static void spawnSteamColumn(Level level, BlockPos pos, Direction column, int range,
+                                         boolean inward, double density, SteamMode mode, RandomSource random) {
+        int count = randomRound(density * RNConfig.ventSmokeParticleMultiplier, random);
+        if (count <= 0) return;
 
-        for (int i = 0; i < baseCount; i++) {
-            double sx = facing.getAxis() != Direction.Axis.X ? (random.nextDouble() - 0.5) * 0.8 : 0;
-            double sy = facing.getAxis() != Direction.Axis.Y ? (random.nextDouble() - 0.5) * 0.8 : 0;
-            double sz = facing.getAxis() != Direction.Axis.Z ? (random.nextDouble() - 0.5) * 0.8 : 0;
+        Vec3 centre = Vec3.atCenterOf(pos);
+        Vec3 axis = Vec3.atLowerCornerOf(column.getNormal());
+        Vec3[] cross = perpendiculars(column.getAxis());
 
-            double vx = dx * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
-            double vy = dy * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
-            double vz = dz * initialSpeed + (random.nextDouble() - 0.5) * 0.01;
+        var type = switch (mode) {
+            case HOT -> RNParticleTypes.STEAM_HOT.get();
+            case COLD -> RNParticleTypes.STEAM_COLD.get();
+            case NEUTRAL -> RNParticleTypes.STEAM.get();
+        };
 
-            level.addParticle(RNParticleTypes.STEAM.get(), true,
-                    ox + dx * spawnOffset + sx,
-                    oy + dy * spawnOffset + sy,
-                    oz + dz * spawnOffset + sz,
-                    vx, vy, vz);
+        for (int i = 0; i < count; i++) {
+            double angle = random.nextDouble() * Math.PI * 2.0;
+            double radius = MOUTH_RADIUS * Math.sqrt(random.nextDouble());
+            Vec3 offset = cross[0].scale(Math.cos(angle) * radius).add(cross[1].scale(Math.sin(angle) * radius));
+
+            double stagger = random.nextDouble() * 0.4;
+            double start = inward ? 0.5 + range - stagger : 0.5 + stagger;
+            double travel = Math.max(0.25, range - stagger);
+            double speed = travel / STEAM_DRIFT_PER_SPEED * (0.85 + random.nextDouble() * 0.3);
+
+            Vec3 spawn = centre.add(axis.scale(start)).add(offset);
+            Vec3 velocity = axis.scale(inward ? -speed : speed)
+                    .add((random.nextDouble() - 0.5) * 0.01, (random.nextDouble() - 0.5) * 0.01, (random.nextDouble() - 0.5) * 0.01);
+
+            level.addParticle(type, true, spawn.x, spawn.y, spawn.z, velocity.x, velocity.y, velocity.z);
         }
+
+        if (!inward && mode != SteamMode.NEUTRAL && random.nextDouble() < 0.12 * density) {
+            Vec3 mouth = centre.add(axis.scale(0.55));
+            Vec3 drift = axis.scale(0.04 + random.nextDouble() * 0.04);
+            level.addParticle(mode == SteamMode.HOT ? ParticleTypes.SMALL_FLAME : ParticleTypes.SNOWFLAKE,
+                    mouth.x + (random.nextDouble() - 0.5) * 0.4,
+                    mouth.y + (random.nextDouble() - 0.5) * 0.4,
+                    mouth.z + (random.nextDouble() - 0.5) * 0.4,
+                    drift.x, drift.y, drift.z);
+        }
+    }
+
+    private static Vec3[] perpendiculars(Direction.Axis axis) {
+        return switch (axis) {
+            case X -> new Vec3[]{ new Vec3(0, 1, 0), new Vec3(0, 0, 1) };
+            case Y -> new Vec3[]{ new Vec3(1, 0, 0), new Vec3(0, 0, 1) };
+            case Z -> new Vec3[]{ new Vec3(1, 0, 0), new Vec3(0, 1, 0) };
+        };
+    }
+
+    private static int randomRound(double value, RandomSource random) {
+        int whole = (int) value;
+        return random.nextDouble() < value - whole ? whole + 1 : whole;
     }
 
     private void checkAndFireCrystallized(BlockState state, ServerLevel level, BlockPos pos) {
@@ -316,9 +368,16 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         return state.is(Blocks.MAGMA_BLOCK);
     }
 
+    public static boolean checkIceBlock(Level level, BlockPos pos, Direction facing, int range) {
+        BlockPos.MutableBlockPos cursor = pos.mutable();
+        cursor.move(facing, range + 1);
+        BlockState state = level.getBlockState(cursor);
+        return state.is(Blocks.BLUE_ICE);
+    }
+
     private static VoxelShape rotateSmokeShape(Direction facing) {
         return switch (facing.getAxis()) {
-            case Z -> Shapes.box(0.125, 0.125, 0, 0.875, 0.875, 1); // was 0.3/0.7
+            case Z -> Shapes.box(0.125, 0.125, 0, 0.875, 0.875, 1);
             case X -> Shapes.box(0, 0.125, 0.125, 1, 0.875, 0.875);
             case Y -> Shapes.box(0.125, 0, 0.125, 0.875, 1, 0.875);
         };
@@ -334,6 +393,19 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
             if (dist < 0 || dist >= smokeRange) continue;
             float damage = (float) (signal - dist) / 3.0f;
             if (damage > 0) entity.hurt(level.damageSources().inFire(), damage);
+        }
+    }
+
+    private void dealIceDamage(ServerLevel level, BlockPos pos, Direction facing, int signal, int smokeRange) {
+        if (signal <= 0 || smokeRange <= 0) return;
+        AABB iceBox = buildDetectionAABB(pos, facing, smokeRange);
+        List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, iceBox);
+
+        for (LivingEntity entity : entities) {
+            double dist = distanceAlongFacing(pos, BlockPos.containing(entity.position()), facing);
+            if (dist < 0 || dist >= smokeRange) continue;
+            float damage = (float) (signal - dist) / 3.0f;
+            if (damage > 0) entity.hurt(level.damageSources().freeze(), damage);
         }
     }
 
