@@ -31,7 +31,7 @@ public class RuneItem extends BannerPatternItem {
 
 	@Override
 	public boolean isFoil(ItemStack stack) {
-		return false;
+		return true;
 	}
 
 	@Override

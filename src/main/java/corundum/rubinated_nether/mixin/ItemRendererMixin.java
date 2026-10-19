@@ -8,6 +8,7 @@ import corundum.rubinated_nether.content.RNRarity;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.items.MusicBoxItem;
 import corundum.rubinated_nether.content.items.PocketwatchItem;
+import corundum.rubinated_nether.content.items.RuneItem;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -80,8 +81,14 @@ public class ItemRendererMixin {
     @Unique
     private static boolean rubinated_nether$usesRubinatedGlint(ItemStack stack) {
         return rubinated_nether$hasRubinatedCurse(stack)
+                || rubinated_nether$isRune(stack)
                 || rubinated_nether$isChargedPocketwatch(stack)
                 || rubinated_nether$isSinnerMusicBox(stack);
+    }
+
+    @Unique
+    private static boolean rubinated_nether$isRune(ItemStack stack) {
+        return stack.getItem() instanceof RuneItem;
     }
 
     @Unique

@@ -23,13 +23,13 @@ import java.util.stream.Collectors;
 public enum Rubination implements StringRepresentable {
 	SLOTH("sloth", ordered("minecraft:unbreaking", 5, "minecraft:fortune", 4, "rubinated_nether:deficiency_curse", 1), RNTags.Items.RUBINATION_TOOL),
 	GLUTTONY("gluttony", ordered("minecraft:efficiency", 7, "minecraft:unbreaking", 4, "rubinated_nether:misfortune_curse", 1), RNTags.Items.RUBINATION_TOOL),
-	GREED("greed", ordered("minecraft:fortune", 5, "minecraft:efficiency", 4, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_TOOL),
+	GREED("greed", ordered("minecraft:fortune", 5, "minecraft:efficiency", 6, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_TOOL),
 	VAINGLORY("vainglory", ordered("minecraft:unbreaking", 5, "minecraft:looting", 4, "rubinated_nether:bluntness_curse", 1), RNTags.Items.RUBINATION_WEAPON),
 	WRATH("wrath", ordered("minecraft:sharpness", 7, "minecraft:unbreaking", 4, "rubinated_nether:ravaging_curse", 1), RNTags.Items.RUBINATION_WEAPON),
 	ENVY("envy", ordered("minecraft:looting", 5, "minecraft:sharpness", 6, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_WEAPON),
 	PRIDE("pride", ordered("minecraft:unbreaking", 5, "minecraft:thorns", 4, "rubinated_nether:exposure_curse", 1), RNTags.Items.RUBINATION_ARMOR),
-	ACEDIA("acedia", ordered("minecraft:protection", 7, "minecraft:unbreaking", 4, "rubinated_nether:leeching_curse", 1), RNTags.Items.RUBINATION_ARMOR),
-	LUXURIA("luxuria", ordered("minecraft:thorns", 5, "minecraft:protection", 6, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_ARMOR),
+	ACEDIA("acedia", ordered("minecraft:protection", 6, "minecraft:unbreaking", 4, "rubinated_nether:leeching_curse", 1), RNTags.Items.RUBINATION_ARMOR),
+	LUXURIA("luxuria", ordered("minecraft:thorns", 5, "minecraft:protection", 5, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_ARMOR),
 	INSIDIAE("insidiae", ordered("minecraft:unbreaking", 5, "minecraft:punch", 3, "rubinated_nether:dullness_curse", 1), RNTags.Items.RUBINATION_BOW),
 	SUPERBIA("superbia", ordered("minecraft:power", 7, "minecraft:unbreaking", 4, "rubinated_nether:hooking_curse", 1), RNTags.Items.RUBINATION_BOW),
 	TRISTIA("tristia", ordered("minecraft:punch", 4, "minecraft:power", 6, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_BOW),
@@ -42,7 +42,6 @@ public enum Rubination implements StringRepresentable {
 	IGNAVIA("ignavia", ordered("minecraft:unbreaking", 5, "minecraft:wind_burst", 4, "rubinated_nether:buoyancy_curse", 1), RNTags.Items.RUBINATION_MACE),
 	KENODOXIA("kenodoxia", ordered("minecraft:density", 7, "minecraft:unbreaking", 4, "rubinated_nether:sinking_curse", 1), RNTags.Items.RUBINATION_MACE),
 	PHILARGYRIA("philargyria", ordered("minecraft:wind_burst", 5, "minecraft:density", 6, "rubinated_nether:fragility_curse", 1), RNTags.Items.RUBINATION_MACE),
-
 	EMPTY("empty", new LinkedHashMap<>(), Tags.Items.BRICKS);
 
 	public static final Codec<Rubination> CODEC = StringRepresentable.fromEnum(Rubination::values)
