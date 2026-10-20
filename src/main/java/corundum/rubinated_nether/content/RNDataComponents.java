@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content;
 
 import com.mojang.serialization.Codec;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.items.MechanicalFuelData;
 import corundum.rubinated_nether.content.items.MusicBoxData;
 import corundum.rubinated_nether.content.items.PocketwatchData;
 import corundum.rubinated_nether.content.items.Rubination;
@@ -17,6 +18,9 @@ public class RNDataComponents {
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, RubinatedNether.MODID);
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> BLOCKS_BROKEN = DATA_COMPONENTS.register("blocks_broken",
+            () -> DataComponentType.<Integer>builder().persistent(Codec.INT).networkSynchronized(ByteBufCodecs.INT).build());
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> CHAINSAW_WINDUP = DATA_COMPONENTS.register("chainsaw_windup",
             () -> DataComponentType.<Integer>builder().persistent(Codec.INT).networkSynchronized(ByteBufCodecs.INT).build());
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Long>> LAST_TICK = DATA_COMPONENTS.register("last_tick",
@@ -44,5 +48,11 @@ public class RNDataComponents {
             () -> DataComponentType.<MusicBoxData>builder()
                     .persistent(MusicBoxData.CODEC)
                     .networkSynchronized(MusicBoxData.STREAM_CODEC)
+                    .build());
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<MechanicalFuelData>> MECHANICAL_FUEL = DATA_COMPONENTS.register("mechanical_fuel",
+            () -> DataComponentType.<MechanicalFuelData>builder()
+                    .persistent(MechanicalFuelData.CODEC)
+                    .networkSynchronized(MechanicalFuelData.STREAM_CODEC)
                     .build());
 }
