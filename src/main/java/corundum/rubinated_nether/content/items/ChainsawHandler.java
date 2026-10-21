@@ -49,7 +49,7 @@ public final class ChainsawHandler {
                 Level level = player.level();
                 BlockPos pos = event.getPos();
                 BlockState state = level.getBlockState(pos);
-                if (isHoldingChainsaw(player) && ChainsawItem.isTrunk(state) && state.getDestroySpeed(level, pos) >= 0f) {
+                if (isHoldingChainsaw(player) && ChainsawItem.isChainsawTarget(state) && state.getDestroySpeed(level, pos) >= 0f) {
                     begin(id, pos, now);
                 } else {
                     Chain chain = CHAINS.get(id);
@@ -76,7 +76,7 @@ public final class ChainsawHandler {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         if (!(event.getPlayer() instanceof ServerPlayer player)) return;
-        if (!isHoldingChainsaw(player) || !ChainsawItem.isTrunk(event.getState())) return;
+        if (!isHoldingChainsaw(player) || !ChainsawItem.isChainsawTarget(event.getState())) return;
         begin(player.getUUID(), null, player.level().getGameTime());
     }
 

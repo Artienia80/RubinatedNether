@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.content.RNDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundEvents;
@@ -11,11 +12,17 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ClickAction;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -27,18 +34,9 @@ import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import org.slf4j.Logger;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public class ChainsawItem extends AxeItem {
+public class ChainsawItem extends AxeItem implements MechanicalTool {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static final boolean DEBUG = true;
@@ -71,7 +69,7 @@ public class ChainsawItem extends AxeItem {
 
     public static final float MINING_SPEED = 8.0F;
 
-    private static boolean isChainsawTarget(BlockState state) {
+    public static boolean isChainsawTarget(BlockState state) {
         return state.is(BlockTags.MINEABLE_WITH_AXE)
                 || state.is(BlockTags.MINEABLE_WITH_HOE)
                 || state.is(BlockTags.SWORD_EFFICIENT)
@@ -97,6 +95,7 @@ public class ChainsawItem extends AxeItem {
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
+        if (!MechanicalFuel.hasFuel(stack)) return super.getDestroySpeed(stack, state); // dead: normal speed
         if (isCanopy(state)) return INSTANT_SPEED;
         if (isTrunk(state)) return windupSpeed(getWindup(stack));
         return isChainsawTarget(state) ? MINING_SPEED : super.getDestroySpeed(stack, state);
@@ -126,6 +125,55 @@ public class ChainsawItem extends AxeItem {
         super.inventoryTick(stack, level, entity, slotId, isSelected);
     }
 
+    /** Running = cutting right now, including the grace window after the last block. */
+    @Override
+    public boolean isRunning(ServerPlayer player) {
+        return ChainsawHandler.isMining(player, player.level().getGameTime());
+    }
+
+    // ---------- Fuel slot (bundle-like) ----------
+    @Override
+    public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction action, Player player) {
+        return stack.getCount() == 1 && MechanicalFuel.onStackedOnOther(stack, slot, action, player);
+    }
+
+    @Override
+    public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack other, Slot slot, ClickAction action, Player player, SlotAccess access) {
+        return stack.getCount() == 1 && MechanicalFuel.onOtherStackedOnMe(stack, other, slot, action, player, access);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, context, tooltip, flag);
+        MechanicalFuel.appendTooltip(stack, tooltip);
+    }
+
+    @Override
+    public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
+        return MechanicalFuel.tooltipImage(stack);
+    }
+
+    // Dead chainsaw: cannot start or finish breaking a block (also covers creative mode)
+    @Override
+    public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
+        return MechanicalFuel.hasFuel(player.getMainHandItem());
+    }
+
+    @Override
+    public boolean isBarVisible(ItemStack stack) {
+        return MechanicalFuel.isBarVisible(stack);
+    }
+
+    @Override
+    public int getBarWidth(ItemStack stack) {
+        return MechanicalFuel.getBarWidth(stack);
+    }
+
+    @Override
+    public int getBarColor(ItemStack stack) {
+        return MechanicalFuel.getBarColor(stack);
+    }
+
     @Override
     public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
         return oldStack.getItem() != newStack.getItem();
@@ -145,6 +193,7 @@ public class ChainsawItem extends AxeItem {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
+        if (!MechanicalFuel.hasFuel(context.getItemInHand())) return InteractionResult.PASS; // dead: no strip/till
         InteractionResult axeResult = super.useOn(context);
         if (axeResult != InteractionResult.PASS) return axeResult;
 
@@ -169,7 +218,7 @@ public class ChainsawItem extends AxeItem {
                     level.isClientSide() ? "client" : "server", state.getBlock(), isTrunk(state));
         }
 
-        if (!level.isClientSide() && isTrunk(state)) {
+        if (!level.isClientSide() && isTrunk(state) && MechanicalFuel.hasFuel(stack)) {
             fellTree(level, pos);
         }
         return super.mineBlock(stack, level, state, pos, miner);

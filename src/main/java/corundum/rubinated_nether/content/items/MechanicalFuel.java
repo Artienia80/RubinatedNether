@@ -11,11 +11,15 @@ import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.tooltip.BundleTooltip;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.BundleContents;
 
 import java.util.List;
+import java.util.Optional;
 
 public final class MechanicalFuel {
     public static final int DROPLETS_PER_NUGGET = 9;
@@ -96,12 +100,11 @@ public final class MechanicalFuel {
         ItemStack target = slot.getItem();
         if (target.isEmpty()) {
             ItemStack out = extract(tool);
-            if (!out.isEmpty()) {
-                playRemove(player);
-                ItemStack leftover = slot.safeInsert(out);
-                if (!leftover.isEmpty()) {
-                    insert(tool, leftover);
-                }
+            if (out.isEmpty()) return false; // nothing to take out: let the click behave normally
+            playRemove(player);
+            ItemStack leftover = slot.safeInsert(out);
+            if (!leftover.isEmpty()) {
+                insert(tool, leftover);
             }
             return true;
         }
@@ -120,10 +123,9 @@ public final class MechanicalFuel {
 
         if (other.isEmpty()) {
             ItemStack out = extract(tool);
-            if (!out.isEmpty()) {
-                playRemove(player);
-                access.set(out);
-            }
+            if (out.isEmpty()) return false; // nothing to take out: let the click behave normally
+            playRemove(player);
+            access.set(out);
             return true;
         }
 
@@ -139,9 +141,20 @@ public final class MechanicalFuel {
         int total = totalDroplets(tool);
         if (total <= 0) {
             tooltip.add(Component.literal("Fuel: empty").withStyle(ChatFormatting.DARK_GRAY));
+            tooltip.add(Component.literal("Right-click molten ruby onto it to fuel").withStyle(ChatFormatting.GRAY));
             return;
         }
         tooltip.add(Component.literal("Fuel: " + (total / 60) + "m " + (total % 60) + "s").withStyle(ChatFormatting.RED));
+    }
+
+    /** Vanilla bundle grid showing the stored fuel stack. Nothing to show while no whole items are stored. */
+    public static Optional<TooltipComponent> tooltipImage(ItemStack tool) {
+        MechanicalFuelData data = data(tool);
+        if (data.count() <= 0) return Optional.empty();
+
+        BundleContents.Mutable contents = new BundleContents.Mutable(BundleContents.EMPTY);
+        contents.tryInsert(new ItemStack(data.itemType(), data.count()));
+        return Optional.of(new BundleTooltip(contents.toImmutable()));
     }
 
     public static boolean isBarVisible(ItemStack tool) {

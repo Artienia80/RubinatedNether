@@ -2,10 +2,14 @@ package corundum.rubinated_nether.content.items;
 
 import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
@@ -33,6 +37,32 @@ public final class MechanicalFuelHandler {
             RUN_TICKS.put(id, ticks - MechanicalFuel.TICKS_PER_DROPLET);
             MechanicalFuel.burn(held);
         }
+    }
+
+    // ---------- Dead tool: out of fuel means it cannot break anything at all ----------
+    private static boolean isDead(Player player) {
+        ItemStack held = player.getMainHandItem();
+        return held.getItem() instanceof MechanicalTool && !MechanicalFuel.hasFuel(held);
+    }
+
+    // Cancelled break speed = no progress and no crack animation (client and server)
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+        if (isDead(event.getEntity())) event.setCanceled(true);
+    }
+
+    // Stops the start of a dig, so no tool handler begins a session
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onLeftClick(PlayerInteractEvent.LeftClickBlock event) {
+        if (event.getAction() == PlayerInteractEvent.LeftClickBlock.Action.START && isDead(event.getEntity())) {
+            event.setCanceled(true);
+        }
+    }
+
+    // Final safety net on the server: instant-break blocks, creative mode, other mods
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (isDead(event.getPlayer())) event.setCanceled(true);
     }
 
     @SubscribeEvent

@@ -97,8 +97,15 @@ public class DrillItem extends PickShovelItem {
         return false;
     }
 
-    /** Unchanged behaviour: base speed * boost level (or just base speed at level 0). */
+    /** Running = mining right now, including the grace window after the last block. */
+    @Override
+    public boolean isRunning(ServerPlayer player) {
+        return DrillHandler.isMining(player, player.level().getGameTime());
+    }
+
+    /** Base speed * boost level (or just base speed at level 0). No fuel = no boost. */
     public float calcModifier(ItemStack stack, double baseValue) {
+        if (!MechanicalFuel.hasFuel(stack)) return (float) baseValue;
         int res = getBoostLevel(stack);
         return res > 0 ? (float) (baseValue * res) : (float) baseValue;
     }

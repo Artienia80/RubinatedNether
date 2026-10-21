@@ -48,11 +48,22 @@ public final class JackhammerHandler {
 
     private JackhammerHandler() {}
 
+    /** True while a hit session is active (button held on a block). Drives fuel burn. */
+    public static boolean isHitting(ServerPlayer player) {
+        return SESSIONS.containsKey(player.getUUID());
+    }
+
+    /** Holding a jackhammer that still has fuel. Without fuel it mines like a plain pickaxe. */
+    private static boolean isPoweredJackhammer(Player player) {
+        var held = player.getMainHandItem();
+        return held.getItem() instanceof JackhammerItem && MechanicalFuel.hasFuel(held);
+    }
+
     // ---------- Disable vanilla progress so mining only happens in our hits ----------
     @SubscribeEvent
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player player = event.getEntity();
-        if (!(player.getMainHandItem().getItem() instanceof JackhammerItem)) return;
+        if (!isPoweredJackhammer(player)) return; // no fuel: vanilla mining at normal speed
         Optional<BlockPos> pos = event.getPosition();
         if (pos.isEmpty()) return;
         if (isTarget(player.level(), pos.get(), event.getState())) {
@@ -70,7 +81,7 @@ public final class JackhammerHandler {
             case START -> {
                 Level level = player.level();
                 BlockPos pos = event.getPos();
-                if (player.getMainHandItem().getItem() instanceof JackhammerItem
+                if (isPoweredJackhammer(player)
                         && isTarget(level, pos, level.getBlockState(pos))
                         && canMine(player, pos)) {
                     Direction face = event.getFace() != null ? event.getFace() : Direction.UP;
@@ -93,7 +104,7 @@ public final class JackhammerHandler {
         if (s != null) {
             Level level = player.level();
             long now = level.getGameTime();
-            if (!(player.getMainHandItem().getItem() instanceof JackhammerItem)
+            if (!isPoweredJackhammer(player)
                     || !isTarget(level, s.pos(), level.getBlockState(s.pos()))
                     || !canMine(player, s.pos())) {
                 SESSIONS.remove(id);
