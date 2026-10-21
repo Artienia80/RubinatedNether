@@ -49,7 +49,8 @@ public final class DrillHandler {
                 Level level = player.level();
                 BlockPos pos = event.getPos();
                 BlockState state = level.getBlockState(pos);
-                if (isHoldingDrill(player) && !state.isAir() && state.getDestroySpeed(level, pos) >= 0f) {
+                if (isHoldingDrill(player) && player.getMainHandItem().getItem() instanceof DrillItem drill && drill.canWorkOn(state)
+                        && !state.isAir() && state.getDestroySpeed(level, pos) >= 0f) {
                     begin(id, pos, now);
                 } else {
                     Chain chain = CHAINS.get(id);

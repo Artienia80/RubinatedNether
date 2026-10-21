@@ -728,6 +728,11 @@
   "commands.rubinate.failed.invalid": "Unknown rubination: %s",
   "commands.rubinate.success.multiple": "Applied rubination %s to %s entities",
   "commands.rubinate.success.single": "Applied rubination %s to %s's item",
+  "commands.module.failed": "Nothing changed. Targets either have no item in their hands or the module could not be applied",
+  "commands.module.failed.incompatible": "%s cannot support the %s module",
+  "commands.module.failed.invalid": "Unknown module: %s",
+  "commands.module.success.multiple": "Applied module %s to %s entities",
+  "commands.module.success.single": "Applied module %s to %s's item",
 
   "rubinated_nether.midnightconfig.category.brazier": "Brazier",
   "rubinated_nether.midnightconfig.category.chandelier": "Chandelier",
@@ -780,5 +785,8 @@
   "resourcepack.rubinated_nether.aurichalcum": "§4Bronze No More!",
 
   "resourcepack.rubinated_nether.simple_freezer.desc": "Turns the Freezer into a cube model",
-  "resourcepack.rubinated_nether.aurichalcum.desc": "Renames 'Bronze' into 'Aurichalcum' for Modpacks"
+  "resourcepack.rubinated_nether.aurichalcum.desc": "Renames 'Bronze' into 'Aurichalcum' for Modpacks",
+  "module.rubinated_nether.dampening": "Dampening",
+  "module.rubinated_nether.smelting": "Smelting",
+  "module.rubinated_nether.processing": "Processing"
 }

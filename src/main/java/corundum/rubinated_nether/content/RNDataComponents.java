@@ -8,11 +8,14 @@ import corundum.rubinated_nether.content.items.PocketwatchData;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.trim.VaseEngraving;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.List;
 
 public class RNDataComponents {
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, RubinatedNether.MODID);
@@ -54,5 +57,11 @@ public class RNDataComponents {
             () -> DataComponentType.<MechanicalFuelData>builder()
                     .persistent(MechanicalFuelData.CODEC)
                     .networkSynchronized(MechanicalFuelData.STREAM_CODEC)
+                    .build());
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<List<ResourceLocation>>> TOOL_MODULES = DATA_COMPONENTS.register("tool_modules",
+            () -> DataComponentType.<List<ResourceLocation>>builder()
+                    .persistent(ResourceLocation.CODEC.listOf())
+                    .networkSynchronized(ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()))
                     .build());
 }

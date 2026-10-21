@@ -4,6 +4,7 @@ import corundum.rubinated_nether.content.RNItemAbilities;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.RubinationConverter;
+import corundum.rubinated_nether.content.module.ToolModules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -64,9 +65,10 @@ public class PickShovelItem extends DiggerItem implements MechanicalTool {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
 		super.appendHoverText(stack, context, tooltip, flag);
 		MechanicalFuel.appendTooltip(stack, tooltip);
+		ToolModules.appendTooltip(stack, tooltip);
 	}
 
 	@Override
@@ -77,7 +79,18 @@ public class PickShovelItem extends DiggerItem implements MechanicalTool {
 	// Dead tool: cannot start or finish breaking a block (also covers creative mode)
 	@Override
 	public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
-		return MechanicalFuel.hasFuel(player.getMainHandItem());
+		return MechanicalFuel.hasFuel(player.getMainHandItem()) && canWorkOn(state);
+	}
+
+	@Override
+	public boolean canWorkOn(BlockState state) {
+		return state.is(RNTags.Blocks.MINEABLE_WITH_DRILL);
+	}
+
+	// Fuelled = rubinated glint (rendered by ItemRendererMixin)
+	@Override
+	public boolean isFoil(ItemStack stack) {
+		return MechanicalFuel.hasFuel(stack) || super.isFoil(stack);
 	}
 
 	@Override

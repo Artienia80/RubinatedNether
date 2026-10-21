@@ -6,6 +6,8 @@ import com.mojang.blaze3d.vertex.VertexMultiConsumer;
 import corundum.rubinated_nether.client.render.RNRenderTypes;
 import corundum.rubinated_nether.content.RNRarity;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.items.MechanicalFuel;
+import corundum.rubinated_nether.content.items.MechanicalTool;
 import corundum.rubinated_nether.content.items.MusicBoxItem;
 import corundum.rubinated_nether.content.items.PocketwatchItem;
 import corundum.rubinated_nether.content.items.RuneItem;
@@ -83,7 +85,8 @@ public class ItemRendererMixin {
         return rubinated_nether$hasRubinatedCurse(stack)
                 || rubinated_nether$isRune(stack)
                 || rubinated_nether$isChargedPocketwatch(stack)
-                || rubinated_nether$isSinnerMusicBox(stack);
+                || rubinated_nether$isSinnerMusicBox(stack)
+                || rubinated_nether$isFuelledMechanicalTool(stack);
     }
 
     @Unique
@@ -100,6 +103,11 @@ public class ItemRendererMixin {
     private static boolean rubinated_nether$isChargedPocketwatch(ItemStack stack) {
         return stack.getItem() instanceof PocketwatchItem
                 && stack.getOrDefault(DataComponents.RARITY, Rarity.COMMON).equals(RNRarity.RUBINATED_NETHER_RUBY.get());
+    }
+
+    @Unique
+    private static boolean rubinated_nether$isFuelledMechanicalTool(ItemStack stack) {
+        return stack.getItem() instanceof MechanicalTool && MechanicalFuel.hasFuel(stack);
     }
 
     @Unique

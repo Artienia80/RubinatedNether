@@ -3,7 +3,11 @@ package corundum.rubinated_nether.content.items;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNRarity;
+import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.module.ToolModules;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -16,6 +20,8 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.component.BundleContents;
 
 import java.util.List;
@@ -53,19 +59,32 @@ public final class MechanicalFuel {
     }
 
     public static boolean burn(ItemStack tool) {
+        return burn(tool, 1);
+    }
+
+    /** Burns up to {@code amount} droplets (stops early when the tool runs dry). Returns true if anything burned. */
+    public static boolean burn(ItemStack tool, int amount) {
         MechanicalFuelData data = data(tool);
         Item item = data.itemType();
         int count = data.count();
         int droplets = data.droplets();
+        int value = fuelValue(item);
 
-        if (droplets <= 0) {
-            int value = fuelValue(item);
-            if (count <= 0 || value <= 0) return false;
-            count--;
-            droplets = value;
+        int remaining = amount;
+        while (remaining > 0) {
+            if (droplets <= 0) {
+                if (count <= 0 || value <= 0) break;
+                count--;
+                droplets = value;
+            }
+            int used = Math.min(remaining, droplets);
+            droplets -= used;
+            remaining -= used;
         }
 
-        tool.set(RNDataComponents.MECHANICAL_FUEL, MechanicalFuelData.of(item, count, droplets - 1));
+        if (remaining == amount) return false;
+        tool.set(RNDataComponents.MECHANICAL_FUEL, MechanicalFuelData.of(item, count, droplets));
+        syncRarity(tool);
         return true;
     }
 
@@ -82,6 +101,7 @@ public final class MechanicalFuel {
 
         source.shrink(moved);
         tool.set(RNDataComponents.MECHANICAL_FUEL, MechanicalFuelData.of(item, data.count() + moved, data.droplets()));
+        syncRarity(tool);
         return moved;
     }
 
@@ -91,6 +111,7 @@ public final class MechanicalFuel {
 
         ItemStack out = new ItemStack(data.itemType(), data.count());
         tool.set(RNDataComponents.MECHANICAL_FUEL, MechanicalFuelData.of(Items.AIR, 0, data.droplets()));
+        syncRarity(tool);
         return out;
     }
 
@@ -137,6 +158,23 @@ public final class MechanicalFuel {
         return true;
     }
 
+    /**
+     * A tool with fuel wears the rubinated rarity (rubinated name colour/font, same as the charged pocketwatch);
+     * a dry tool falls back to its base rarity. Tools that were rubinated at the altar (they carry a rubinated
+     * curse) keep their permanent rubinated rarity either way.
+     */
+    public static void syncRarity(ItemStack tool) {
+        if (EnchantmentHelper.hasTag(tool, RNTags.Enchantments.RUBINATED_CURSES)) return;
+
+        Rarity rubinated = RNRarity.RUBINATED_NETHER_RUBY.get();
+        Rarity current = tool.getOrDefault(DataComponents.RARITY, Rarity.COMMON);
+        if (hasFuel(tool)) {
+            if (!current.equals(rubinated)) tool.set(DataComponents.RARITY, rubinated);
+        } else if (current.equals(rubinated)) {
+            tool.set(DataComponents.RARITY, tool.getItem().components().getOrDefault(DataComponents.RARITY, Rarity.COMMON));
+        }
+    }
+
     public static void appendTooltip(ItemStack tool, List<Component> tooltip) {
         int total = totalDroplets(tool);
         if (total <= 0) {
@@ -144,7 +182,8 @@ public final class MechanicalFuel {
             tooltip.add(Component.literal("Right-click molten ruby onto it to fuel").withStyle(ChatFormatting.GRAY));
             return;
         }
-        tooltip.add(Component.literal("Fuel: " + (total / 60) + "m " + (total % 60) + "s").withStyle(ChatFormatting.RED));
+        int seconds = total / ToolModules.dropletsPerBurn(tool); // modules make the fuel run out faster
+        tooltip.add(Component.literal("Fuel: " + (seconds / 60) + "m " + (seconds % 60) + "s").withStyle(ChatFormatting.RED));
     }
 
     /** Vanilla bundle grid showing the stored fuel stack. Nothing to show while no whole items are stored. */

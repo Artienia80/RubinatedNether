@@ -12,6 +12,7 @@
     "PointedDripstoneBlockMixin",
     "EnchantmentMixin",
     "AnvilMenuMixin",
+    "DampeningDropsMixin",
     "BlessedFortuneMixin",
     "BlessedLootingMixin",
     "CrookedShotCrossbowMixin",

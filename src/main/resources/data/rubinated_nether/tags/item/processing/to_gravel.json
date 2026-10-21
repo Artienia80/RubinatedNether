@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:stone",
+    "minecraft:mossy_cobblestone",
+    "#minecraft:stone_crafting_materials"
+  ]
+}

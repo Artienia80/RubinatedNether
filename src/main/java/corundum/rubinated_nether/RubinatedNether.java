@@ -5,6 +5,7 @@ import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.RNCauldronInteraction;
 import corundum.rubinated_nether.content.commands.PocketwatchCommand;
+import corundum.rubinated_nether.content.commands.ModuleCommand;
 import corundum.rubinated_nether.content.commands.RubinateCommand;
 import corundum.rubinated_nether.content.RNCapabilities;
 import corundum.rubinated_nether.content.enchantment.RNEnchantmentEffects;
@@ -173,6 +174,7 @@ public class RubinatedNether {
 
     public void registerCommands(RegisterCommandsEvent event) {
         RubinateCommand.register(event.getDispatcher());
+        ModuleCommand.register(event.getDispatcher());
         PocketwatchCommand.register(event.getDispatcher());
     }
 

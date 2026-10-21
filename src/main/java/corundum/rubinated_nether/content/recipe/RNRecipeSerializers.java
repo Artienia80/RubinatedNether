@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.recipe;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.module.ModuleSmithingRecipe;
 import corundum.rubinated_nether.content.trim.RNBronzeTrimTarnishRecipe;
 import corundum.rubinated_nether.content.trim.VaseEngravingRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -29,4 +30,7 @@ public class RNRecipeSerializers {
 
 	public static final DeferredHolder<RecipeSerializer<?>, ResonanceRecipeSerializer> RESONANCE =
 			RECIPE_SERIALIZERS.register("resonance", ResonanceRecipeSerializer::new);
+
+	public static final DeferredHolder<RecipeSerializer<?>, ModuleSmithingRecipe.Serializer> MODULE_APPLY =
+			RECIPE_SERIALIZERS.register("module_apply", ModuleSmithingRecipe.Serializer::new);
 }
