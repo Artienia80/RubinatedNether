@@ -62,7 +62,6 @@ public final class MechanicalFuel {
         return burn(tool, 1);
     }
 
-    /** Burns up to {@code amount} droplets (stops early when the tool runs dry). Returns true if anything burned. */
     public static boolean burn(ItemStack tool, int amount) {
         MechanicalFuelData data = data(tool);
         Item item = data.itemType();
@@ -84,8 +83,6 @@ public final class MechanicalFuel {
 
         if (remaining == amount) return false;
 
-        // Last second is partial: not enough left to pay for another tick at this rate, so the leftover is
-        // wasted now instead of leaving a tool that still looks fuelled but can only run for a fraction of a second.
         if ((long) count * value + droplets < amount) {
             count = 0;
             droplets = 0;
@@ -128,7 +125,7 @@ public final class MechanicalFuel {
         ItemStack target = slot.getItem();
         if (target.isEmpty()) {
             ItemStack out = extract(tool);
-            if (out.isEmpty()) return false; // nothing to take out: let the click behave normally
+            if (out.isEmpty()) return false;
             playRemove(player);
             ItemStack leftover = slot.safeInsert(out);
             if (!leftover.isEmpty()) {
@@ -151,7 +148,7 @@ public final class MechanicalFuel {
 
         if (other.isEmpty()) {
             ItemStack out = extract(tool);
-            if (out.isEmpty()) return false; // nothing to take out: let the click behave normally
+            if (out.isEmpty()) return false;
             playRemove(player);
             access.set(out);
             return true;
@@ -165,11 +162,6 @@ public final class MechanicalFuel {
         return true;
     }
 
-    /**
-     * A tool with fuel wears the rubinated rarity (rubinated name colour/font, same as the charged pocketwatch);
-     * a dry tool falls back to its base rarity. Tools that were rubinated at the altar (they carry a rubinated
-     * curse) keep their permanent rubinated rarity either way.
-     */
     public static void syncRarity(ItemStack tool) {
         if (EnchantmentHelper.hasTag(tool, RNTags.Enchantments.RUBINATED_CURSES)) return;
 
@@ -184,47 +176,48 @@ public final class MechanicalFuel {
 
     public static void appendTooltip(ItemStack tool, List<Component> tooltip) {
         int total = totalDroplets(tool);
+        int perSecond = ToolModules.dropletsPerBurn(tool);
         if (total <= 0) {
-            tooltip.add(Component.literal("Fuel: empty").withStyle(ChatFormatting.DARK_GRAY));
+            tooltip.add(Component.literal(" 0 Fuel").withStyle(ChatFormatting.DARK_GRAY));
+            tooltip.add(Component.literal(" " + perSecond + "/s Fuel Consumption").withStyle(ChatFormatting.DARK_GRAY));
             tooltip.add(Component.literal("Right-click molten ruby onto it to fuel").withStyle(ChatFormatting.GRAY));
             return;
         }
-        tooltip.add(Component.literal("Fuel: " + total + ", " + ToolModules.dropletsPerBurn(tool) + "/s")
-                .withStyle(RNRarity.RUBINATED_NETHER_RUBY.get().color()));
+        var color = RNRarity.RUBINATED_NETHER_RUBY.get().color();
+        tooltip.add(Component.literal(" " + total + " Fuel").withStyle(color));
+        tooltip.add(Component.literal(" " + perSecond + "/s Fuel Consumption").withStyle(color));
     }
 
+    public static Optional<TooltipComponent> tooltipImage(ItemStack tool) {
+        MechanicalFuelData data = data(tool);
+        if (data.count() <= 0) return Optional.empty();
 
-/** Vanilla bundle grid showing the stored fuel stack. Nothing to show while no whole items are stored. */
-public static Optional<TooltipComponent> tooltipImage(ItemStack tool) {
-    MechanicalFuelData data = data(tool);
-    if (data.count() <= 0) return Optional.empty();
+        BundleContents.Mutable contents = new BundleContents.Mutable(BundleContents.EMPTY);
+        contents.tryInsert(new ItemStack(data.itemType(), data.count()));
+        return Optional.of(new BundleTooltip(contents.toImmutable()));
+    }
 
-    BundleContents.Mutable contents = new BundleContents.Mutable(BundleContents.EMPTY);
-    contents.tryInsert(new ItemStack(data.itemType(), data.count()));
-    return Optional.of(new BundleTooltip(contents.toImmutable()));
-}
+    public static boolean isBarVisible(ItemStack tool) {
+        return totalDroplets(tool) > 0;
+    }
 
-public static boolean isBarVisible(ItemStack tool) {
-    return totalDroplets(tool) > 0;
-}
+    public static int getBarWidth(ItemStack tool) {
+        MechanicalFuelData data = data(tool);
+        Item item = data.count() > 0 ? data.itemType() : RNItems.MOLTEN_RUBY_NUGGET.get();
+        int stackSize = data.count() > 0 ? item.getDefaultMaxStackSize() : FALLBACK_STACK_SIZE;
+        int capacity = Math.max(1, fuelValue(item) * stackSize);
+        return Mth.clamp(Math.round(13.0F * totalDroplets(tool) / capacity), 1, 13);
+    }
 
-public static int getBarWidth(ItemStack tool) {
-    MechanicalFuelData data = data(tool);
-    Item item = data.count() > 0 ? data.itemType() : RNItems.MOLTEN_RUBY_NUGGET.get();
-    int stackSize = data.count() > 0 ? item.getDefaultMaxStackSize() : FALLBACK_STACK_SIZE;
-    int capacity = Math.max(1, fuelValue(item) * stackSize);
-    return Mth.clamp(Math.round(13.0F * totalDroplets(tool) / capacity), 1, 13);
-}
+    public static int getBarColor(ItemStack tool) {
+        return BAR_COLOR;
+    }
 
-public static int getBarColor(ItemStack tool) {
-    return BAR_COLOR;
-}
+    private static void playInsert(Player player) {
+        player.playSound(SoundEvents.BUNDLE_INSERT, 0.8F, 0.8F + player.level().getRandom().nextFloat() * 0.4F);
+    }
 
-private static void playInsert(Player player) {
-    player.playSound(SoundEvents.BUNDLE_INSERT, 0.8F, 0.8F + player.level().getRandom().nextFloat() * 0.4F);
-}
-
-private static void playRemove(Player player) {
-    player.playSound(SoundEvents.BUNDLE_REMOVE_ONE, 0.8F, 0.8F + player.level().getRandom().nextFloat() * 0.4F);
-}
+    private static void playRemove(Player player) {
+        player.playSound(SoundEvents.BUNDLE_REMOVE_ONE, 0.8F, 0.8F + player.level().getRandom().nextFloat() * 0.4F);
+    }
 }
