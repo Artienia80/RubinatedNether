@@ -110,7 +110,7 @@ public final class DrillHandler {
 
         if (holdingDrill) {
             long elapsed = chain.lastActiveTick - chain.startTick;
-            int level = (int) Math.min(DrillItem.MAX_BOOST_VALUE, elapsed / DrillItem.TICKS_PER_LEVEL);
+            int level = (int) Math.min(DrillItem.maxBoost(held), elapsed / DrillItem.ticksPerLevel(held));
             if (DrillItem.getBoostLevel(held) != level) {
                 DrillItem.setBoostLevel(held, level);
             }

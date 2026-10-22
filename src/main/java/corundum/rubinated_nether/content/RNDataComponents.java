@@ -15,7 +15,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RNDataComponents {
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, RubinatedNether.MODID);
@@ -57,6 +59,13 @@ public class RNDataComponents {
             () -> DataComponentType.<MechanicalFuelData>builder()
                     .persistent(MechanicalFuelData.CODEC)
                     .networkSynchronized(MechanicalFuelData.STREAM_CODEC)
+                    .build());
+
+    /** Level of each levelled module on a tool (module id -> level). Missing entry = level 1. */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Map<ResourceLocation, Integer>>> MODULE_LEVELS = DATA_COMPONENTS.register("module_levels",
+            () -> DataComponentType.<Map<ResourceLocation, Integer>>builder()
+                    .persistent(Codec.unboundedMap(ResourceLocation.CODEC, Codec.INT))
+                    .networkSynchronized(ByteBufCodecs.map(HashMap::new, ResourceLocation.STREAM_CODEC, ByteBufCodecs.VAR_INT))
                     .build());
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<List<ResourceLocation>>> TOOL_MODULES = DATA_COMPONENTS.register("tool_modules",

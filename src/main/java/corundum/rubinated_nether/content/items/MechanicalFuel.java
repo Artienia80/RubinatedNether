@@ -83,6 +83,13 @@ public final class MechanicalFuel {
         }
 
         if (remaining == amount) return false;
+
+        // Last second is partial: not enough left to pay for another tick at this rate, so the leftover is
+        // wasted now instead of leaving a tool that still looks fuelled but can only run for a fraction of a second.
+        if ((long) count * value + droplets < amount) {
+            count = 0;
+            droplets = 0;
+        }
         tool.set(RNDataComponents.MECHANICAL_FUEL, MechanicalFuelData.of(item, count, droplets));
         syncRarity(tool);
         return true;
@@ -182,41 +189,42 @@ public final class MechanicalFuel {
             tooltip.add(Component.literal("Right-click molten ruby onto it to fuel").withStyle(ChatFormatting.GRAY));
             return;
         }
-        int seconds = total / ToolModules.dropletsPerBurn(tool); // modules make the fuel run out faster
-        tooltip.add(Component.literal("Fuel: " + (seconds / 60) + "m " + (seconds % 60) + "s").withStyle(ChatFormatting.RED));
+        tooltip.add(Component.literal("Fuel: " + total + ", " + ToolModules.dropletsPerBurn(tool) + "/s")
+                .withStyle(RNRarity.RUBINATED_NETHER_RUBY.get().color()));
     }
 
-    /** Vanilla bundle grid showing the stored fuel stack. Nothing to show while no whole items are stored. */
-    public static Optional<TooltipComponent> tooltipImage(ItemStack tool) {
-        MechanicalFuelData data = data(tool);
-        if (data.count() <= 0) return Optional.empty();
 
-        BundleContents.Mutable contents = new BundleContents.Mutable(BundleContents.EMPTY);
-        contents.tryInsert(new ItemStack(data.itemType(), data.count()));
-        return Optional.of(new BundleTooltip(contents.toImmutable()));
-    }
+/** Vanilla bundle grid showing the stored fuel stack. Nothing to show while no whole items are stored. */
+public static Optional<TooltipComponent> tooltipImage(ItemStack tool) {
+    MechanicalFuelData data = data(tool);
+    if (data.count() <= 0) return Optional.empty();
 
-    public static boolean isBarVisible(ItemStack tool) {
-        return totalDroplets(tool) > 0;
-    }
+    BundleContents.Mutable contents = new BundleContents.Mutable(BundleContents.EMPTY);
+    contents.tryInsert(new ItemStack(data.itemType(), data.count()));
+    return Optional.of(new BundleTooltip(contents.toImmutable()));
+}
 
-    public static int getBarWidth(ItemStack tool) {
-        MechanicalFuelData data = data(tool);
-        Item item = data.count() > 0 ? data.itemType() : RNItems.MOLTEN_RUBY_NUGGET.get();
-        int stackSize = data.count() > 0 ? item.getDefaultMaxStackSize() : FALLBACK_STACK_SIZE;
-        int capacity = Math.max(1, fuelValue(item) * stackSize);
-        return Mth.clamp(Math.round(13.0F * totalDroplets(tool) / capacity), 1, 13);
-    }
+public static boolean isBarVisible(ItemStack tool) {
+    return totalDroplets(tool) > 0;
+}
 
-    public static int getBarColor(ItemStack tool) {
-        return BAR_COLOR;
-    }
+public static int getBarWidth(ItemStack tool) {
+    MechanicalFuelData data = data(tool);
+    Item item = data.count() > 0 ? data.itemType() : RNItems.MOLTEN_RUBY_NUGGET.get();
+    int stackSize = data.count() > 0 ? item.getDefaultMaxStackSize() : FALLBACK_STACK_SIZE;
+    int capacity = Math.max(1, fuelValue(item) * stackSize);
+    return Mth.clamp(Math.round(13.0F * totalDroplets(tool) / capacity), 1, 13);
+}
 
-    private static void playInsert(Player player) {
-        player.playSound(SoundEvents.BUNDLE_INSERT, 0.8F, 0.8F + player.level().getRandom().nextFloat() * 0.4F);
-    }
+public static int getBarColor(ItemStack tool) {
+    return BAR_COLOR;
+}
 
-    private static void playRemove(Player player) {
-        player.playSound(SoundEvents.BUNDLE_REMOVE_ONE, 0.8F, 0.8F + player.level().getRandom().nextFloat() * 0.4F);
-    }
+private static void playInsert(Player player) {
+    player.playSound(SoundEvents.BUNDLE_INSERT, 0.8F, 0.8F + player.level().getRandom().nextFloat() * 0.4F);
+}
+
+private static void playRemove(Player player) {
+    player.playSound(SoundEvents.BUNDLE_REMOVE_ONE, 0.8F, 0.8F + player.level().getRandom().nextFloat() * 0.4F);
+}
 }

@@ -109,7 +109,7 @@ public final class ChainsawHandler {
 
         if (holdingChainsaw) {
             long elapsed = chain.lastActiveTick - chain.startTick;
-            int level = (int) Math.min(ChainsawItem.MAX_WINDUP, elapsed / ChainsawItem.TICKS_PER_LEVEL);
+            int level = (int) Math.min(ChainsawItem.MAX_WINDUP, elapsed / ChainsawItem.ticksPerLevel(held));
             if (ChainsawItem.getWindup(held) != level) {
                 ChainsawItem.setWindup(held, level);
             }

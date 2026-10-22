@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.items;
 
 import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.content.RNDataComponents;
+import corundum.rubinated_nether.content.module.Flywheel;
 import corundum.rubinated_nether.content.module.ToolModules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -98,13 +99,22 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         if (!MechanicalFuel.hasFuel(stack)) return super.getDestroySpeed(stack, state); // dead: normal speed
         if (isCanopy(state)) return INSTANT_SPEED;
-        if (isTrunk(state)) return windupSpeed(getWindup(stack));
+        if (isTrunk(state)) {
+            int windup = getWindup(stack);
+            if (windup >= MAX_WINDUP) return INSTANT_SPEED;
+            return windupSpeed(windup) * Flywheel.peakMult(stack); // Flywheel scales the ramp curve, not the instant cut
+        }
         return isChainsawTarget(state) ? MINING_SPEED : super.getDestroySpeed(stack, state);
     }
 
     public static float windupSpeed(int level) {
         if (level >= MAX_WINDUP) return INSTANT_SPEED;
         return WINDUP_START_SPEED * (float) Math.pow(30.0, level / (double) MAX_WINDUP);
+    }
+
+    /** Ticks of continuous cutting per windup level for this stack (Flywheel scales acceleration). */
+    public static float ticksPerLevel(ItemStack stack) {
+        return TICKS_PER_LEVEL / Flywheel.accelMult(stack);
     }
 
     public static int getWindup(ItemStack stack) {
@@ -117,6 +127,7 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+        if (!level.isClientSide()) MechanicalFuel.syncRarity(stack); // heals stale rarity
         if (!level.isClientSide()
                 && entity instanceof ServerPlayer player
                 && getWindup(stack) > 0

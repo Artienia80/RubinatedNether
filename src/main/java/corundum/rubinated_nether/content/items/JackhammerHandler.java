@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.items;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.module.Flywheel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -9,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.EventPriority;
@@ -24,9 +26,9 @@ import java.util.*;
 @EventBusSubscriber(modid = RubinatedNether.MODID)
 public final class JackhammerHandler {
     // Tuning
-    public static final float HIT_PROGRESS = 0.25f;
-    public static final int TICKS_PER_HIT = 10;        // 0.5 s per hit -> 4 hits = 2 s
-    public static final float HIT_SPLASH = 0.0625f;    // 25% of a 25% hit
+    public static final float HIT_PROGRESS = 0.20f;        // default: 5 hits per block
+    public static final int TICKS_PER_HIT = 10;        // 0.5 s per hit -> 5 hits = 2.5 s
+    public static final float HIT_SPLASH = 0.0625f;    // progress each neighbour gets per hit
     public static final float BREAK_BLAST = 0.25f;
     public static final float CORNER_FACTOR = 0.5f;
     public static final float SPILL_CAP = 0.9f;
@@ -177,8 +179,12 @@ public final class JackhammerHandler {
         long now = level.getGameTime();
 
         Map<BlockPos, Spill> map = SPILL.computeIfAbsent(player.getUUID(), k -> new HashMap<>());
+        ItemStack held = player.getMainHandItem();
+        float hitProgress = Flywheel.hitProgress(held, HIT_PROGRESS);
+        float spillMult = Flywheel.spillMult(held);
+
         Spill sp = touch(map, pos, state, now);
-        sp.progress += HIT_PROGRESS; // starts from stored progress, so pre-damaged blocks need fewer hits
+        sp.progress += hitProgress; // starts from stored progress, so pre-damaged blocks need fewer hits
 
         level.playSound(null, pos, state.getSoundType().getHitSound(),
                 SoundSource.BLOCKS, 1.0f, 0.75f);
@@ -193,13 +199,13 @@ public final class JackhammerHandler {
             map.remove(pos);
             level.destroyBlockProgress(crackId(pos), pos, -1);
             SESSIONS.remove(player.getUUID()); // the client sends a new START for the next block
-            spill(player, pos, s.face(), HIT_SPLASH + BREAK_BLAST);
+            spill(player, pos, s.face(), (HIT_SPLASH + BREAK_BLAST) * spillMult);
             player.gameMode.destroyBlock(pos); // drops + durability
             return;
         }
 
         level.destroyBlockProgress(crackId(pos), pos, (int) (sp.progress * 10));
-        spill(player, pos, s.face(), HIT_SPLASH);
+        spill(player, pos, s.face(), HIT_SPLASH * spillMult);
     }
 
     // ---------- Spill: 8 neighbors in the face plane, corners get half ----------

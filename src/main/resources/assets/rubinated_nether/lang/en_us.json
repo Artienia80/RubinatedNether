@@ -788,5 +788,7 @@
   "resourcepack.rubinated_nether.aurichalcum.desc": "Renames 'Bronze' into 'Aurichalcum' for Modpacks",
   "module.rubinated_nether.dampening": "Dampening",
   "module.rubinated_nether.smelting": "Smelting",
-  "module.rubinated_nether.processing": "Processing"
+  "module.rubinated_nether.processing": "Processing",
+  "module.rubinated_nether.heavy_flywheel": "Heavy Flywheel",
+  "module.rubinated_nether.light_flywheel": "Light Flywheel"
 }

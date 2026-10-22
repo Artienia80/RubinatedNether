@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.items;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.module.Flywheel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -110,11 +111,21 @@ public class DrillItem extends PickShovelItem {
         return res > 0 ? (float) (baseValue * res) : (float) baseValue;
     }
 
+    /** Top boost level for this stack: MAX_BOOST_VALUE scaled by the Flywheel peak. */
+    public static int maxBoost(ItemStack stack) {
+        return Math.max(1, Math.round(MAX_BOOST_VALUE * Flywheel.peakMult(stack)));
+    }
+
+    /** Ticks of continuous mining per boost level for this stack (Flywheel scales acceleration). */
+    public static float ticksPerLevel(ItemStack stack) {
+        return TICKS_PER_LEVEL / Flywheel.accelMult(stack);
+    }
+
     public static int getBoostLevel(ItemStack stack) {
         return stack.getOrDefault(RNDataComponents.BLOCKS_BROKEN, 0);
     }
 
     public static void setBoostLevel(ItemStack stack, int level) {
-        stack.set(RNDataComponents.BLOCKS_BROKEN, Mth.clamp(level, 0, MAX_BOOST_VALUE));
+        stack.set(RNDataComponents.BLOCKS_BROKEN, Mth.clamp(level, 0, maxBoost(stack)));
     }
 }

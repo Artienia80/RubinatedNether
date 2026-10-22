@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -85,6 +86,13 @@ public class PickShovelItem extends DiggerItem implements MechanicalTool {
 	@Override
 	public boolean canWorkOn(BlockState state) {
 		return state.is(RNTags.Blocks.MINEABLE_WITH_DRILL);
+	}
+
+	// Keeps the rubinated rarity in step with the fuel state (also heals stacks left stale by old versions)
+	@Override
+	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+		if (!level.isClientSide()) MechanicalFuel.syncRarity(stack);
+		super.inventoryTick(stack, level, entity, slotId, isSelected);
 	}
 
 	// Fuelled = rubinated glint (rendered by ItemRendererMixin)
