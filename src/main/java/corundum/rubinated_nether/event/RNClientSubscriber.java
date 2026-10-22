@@ -185,6 +185,15 @@ public class RNClientSubscriber {
     }
 
     @SubscribeEvent
+    public static void addLegacyTooltip(net.neoforged.neoforge.event.entity.player.ItemTooltipEvent event) {
+        Item item = event.getItemStack().getItem();
+        if (item == RNBlocks.NETHER_RUBY_ORE.get().asItem() || item == RNBlocks.RUBINATED_BLACKSTONE.get().asItem()) {
+            event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.rubinated_nether.legacy")
+                    .withStyle(net.minecraft.ChatFormatting.GRAY, net.minecraft.ChatFormatting.ITALIC));
+        }
+    }
+
+    @SubscribeEvent
     public static void registerItemExtensions(RegisterClientExtensionsEvent event) {
         IClientItemExtensions vaseExtensions = new IClientItemExtensions() {
             @Override
