@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 public class RNBlockTags extends BlockTagsProvider {
 	public RNBlockTags(
 			PackOutput output,
-			CompletableFuture<HolderLookup.Provider> lookupProvider,
+			CompletableFuture<Provider> lookupProvider,
 			ExistingFileHelper existingFileHelper
 	) {
 		super(output, lookupProvider, RubinatedNether.MODID, existingFileHelper);
@@ -174,6 +174,18 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.TARNISHED_BRONZE_VASE.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_VASE.get(),
 
+				RNBlocks.GEARBOX.get(),
+				RNBlocks.DISCOLORED_GEARBOX.get(),
+				RNBlocks.CORRODED_GEARBOX.get(),
+				RNBlocks.TARNISHED_GEARBOX.get(),
+				RNBlocks.CRYSTALLIZED_GEARBOX.get(),
+
+				RNBlocks.BRONZE_LASER.get(),
+				RNBlocks.DISCOLORED_BRONZE_LASER.get(),
+				RNBlocks.CORRODED_BRONZE_LASER.get(),
+				RNBlocks.TARNISHED_BRONZE_LASER.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_LASER.get(),
+
 				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get()
 
@@ -323,7 +335,19 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.DISCOLORED_BRONZE_VASE.get(),
 				RNBlocks.CORRODED_BRONZE_VASE.get(),
 				RNBlocks.TARNISHED_BRONZE_VASE.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_VASE.get()
+				RNBlocks.CRYSTALLIZED_BRONZE_VASE.get(),
+
+				RNBlocks.GEARBOX.get(),
+				RNBlocks.DISCOLORED_GEARBOX.get(),
+				RNBlocks.CORRODED_GEARBOX.get(),
+				RNBlocks.TARNISHED_GEARBOX.get(),
+				RNBlocks.CRYSTALLIZED_GEARBOX.get(),
+
+				RNBlocks.BRONZE_LASER.get(),
+				RNBlocks.DISCOLORED_BRONZE_LASER.get(),
+				RNBlocks.CORRODED_BRONZE_LASER.get(),
+				RNBlocks.TARNISHED_BRONZE_LASER.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_LASER.get()
 		);
 
 		this.tag(RNTags.Blocks.COLDEST_ICE).add(
@@ -352,6 +376,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_LASER.get(),
+				RNBlocks.CRYSTALLIZED_GEARBOX.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_VENT.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get()

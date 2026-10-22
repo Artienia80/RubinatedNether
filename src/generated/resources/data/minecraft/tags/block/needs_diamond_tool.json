@@ -111,6 +111,16 @@
     "rubinated_nether:discolored_bronze_vase",
     "rubinated_nether:corroded_bronze_vase",
     "rubinated_nether:tarnished_bronze_vase",
-    "rubinated_nether:crystallized_bronze_vase"
+    "rubinated_nether:crystallized_bronze_vase",
+    "rubinated_nether:gearbox",
+    "rubinated_nether:discolored_gearbox",
+    "rubinated_nether:corroded_gearbox",
+    "rubinated_nether:tarnished_gearbox",
+    "rubinated_nether:crystallized_gearbox",
+    "rubinated_nether:bronze_laser",
+    "rubinated_nether:discolored_bronze_laser",
+    "rubinated_nether:corroded_bronze_laser",
+    "rubinated_nether:tarnished_bronze_laser",
+    "rubinated_nether:crystallized_bronze_laser"
   ]
 }

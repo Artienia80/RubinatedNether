@@ -10,6 +10,7 @@ import corundum.rubinated_nether.content.items.MechanicalFuel;
 import corundum.rubinated_nether.content.items.MechanicalTool;
 import corundum.rubinated_nether.content.items.MusicBoxItem;
 import corundum.rubinated_nether.content.items.PocketwatchItem;
+import corundum.rubinated_nether.content.items.RitualOfferingItem;
 import corundum.rubinated_nether.content.items.RuneItem;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -84,6 +85,7 @@ public class ItemRendererMixin {
     private static boolean rubinated_nether$usesRubinatedGlint(ItemStack stack) {
         return rubinated_nether$hasRubinatedCurse(stack)
                 || rubinated_nether$isRune(stack)
+                || rubinated_nether$isRitualOffering(stack)
                 || rubinated_nether$isChargedPocketwatch(stack)
                 || rubinated_nether$isSinnerMusicBox(stack)
                 || rubinated_nether$isFuelledMechanicalTool(stack);
@@ -92,6 +94,11 @@ public class ItemRendererMixin {
     @Unique
     private static boolean rubinated_nether$isRune(ItemStack stack) {
         return stack.getItem() instanceof RuneItem;
+    }
+
+    @Unique
+    private static boolean rubinated_nether$isRitualOffering(ItemStack stack) {
+        return stack.getItem() instanceof RitualOfferingItem;
     }
 
     @Unique

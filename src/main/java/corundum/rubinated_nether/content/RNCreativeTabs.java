@@ -1,5 +1,7 @@
 package corundum.rubinated_nether.content;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.items.Rubination;
+import corundum.rubinated_nether.content.items.RuneCarvingHelper;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -7,6 +9,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.Output;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -28,6 +31,7 @@ public class RNCreativeTabs {
 					.icon(() -> RNItems.RUBY_ICON.get().getDefaultInstance())
 					.displayItems((parameters, output) -> {
 						if (RNConfig.tabDisplay != RNConfig.TabDisplay.VANILLA_ONLY) {
+							// Ruby materials
 							addItems(
 									output,
 									RNItems.MOLTEN_RUBY,
@@ -36,6 +40,7 @@ public class RNCreativeTabs {
 									RNItems.MOLTEN_RUBY_NUGGET
 							);
 						}
+						// Ruby: ores, blocks, lens
 						addItems(
 								output,
 								RNBlocks.MOLTEN_RUBY_ORE,
@@ -44,7 +49,21 @@ public class RNCreativeTabs {
 								RNBlocks.RUBY_BLOCK,
 								RNBlocks.MOLTEN_RUBY_BLOCK,
 								RNBlocks.BLEEDING_OBSIDIAN,
-								RNBlocks.RUNESTONE,
+								RNItems.RUBY_LENS
+						);
+						// Ruby glass
+						addItems(
+								output,
+								RNBlocks.RUBY_GLASS,
+								RNBlocks.RUBY_GLASS_PANE,
+								RNBlocks.MOLTEN_RUBY_GLASS,
+								RNBlocks.MOLTEN_RUBY_GLASS_PANE,
+								RNBlocks.ORNATE_RUBY_GLASS,
+								RNBlocks.ORNATE_RUBY_GLASS_PANE
+						);
+						// Shrine stone family
+						addItems(
+								output,
 								RNBlocks.SHRINE_STONE,
 								RNBlocks.SHRINE_STONE_STAIRS,
 								RNBlocks.SHRINE_STONE_SLAB,
@@ -71,51 +90,39 @@ public class RNCreativeTabs {
 								RNBlocks.RUBINATED_SHRINE_STONE_TILES,
 								RNBlocks.RUBINATED_SHRINE_STONE_PILLAR,
 								RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS,
-								RNBlocks.SHRINE_STONE_COFFER,
-								RNBlocks.SOAKSTONE,
-								RNBlocks.RUBY_GLASS,
-								RNBlocks.RUBY_GLASS_PANE,
-								RNBlocks.MOLTEN_RUBY_GLASS,
-								RNBlocks.MOLTEN_RUBY_GLASS_PANE,
-								RNBlocks.ORNATE_RUBY_GLASS,
-								RNBlocks.ORNATE_RUBY_GLASS_PANE,
+								RNBlocks.SHRINE_STONE_COFFER
+						);
+						// Functional blocks and ice
+						addItems(
+								output,
 								RNBlocks.BRAZIER,
-								RNBlocks.RUBINATION_ALTAR,
 								RNBlocks.FREEZER,
+								RNBlocks.SOAKSTONE,
 								RNItems.POWDER_SNOW,
 								RNItems.FROSTED_ICE,
-								RNBlocks.DRY_ICE,
-								RNItems.RUBY_LENS,
-								RNItems.MUSIC_DISC_SHIMMER,
-								RNItems.MUSIC_DISC_SINNER,
+								RNBlocks.DRY_ICE
+						);
+						// Bronze materials (elemental drops first)
+						addItems(
+								output,
 								RNItems.BRONZE_ROD,
+								RNItems.WINDING_KEY,
+								RNItems.COGWHEEL,
 								RNItems.BRONZE_POWDER,
 								RNItems.BRONZE_SCRAP,
 								RNItems.BRONZE_SHOT,
 								RNItems.CRYSTALLIZED_BRONZE_SHOT,
-								RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
+								RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL
+						);
+						// Mechanical tools
+						addItems(
+								output,
 								RNItems.BRONZE_DRILL,
 								RNItems.BRONZE_JACKHAMMER,
 								RNItems.BRONZE_CHAINSAW,
-								RNItems.RITUAL_OFFERING,
-								RNItems.WINDING_KEY,
-								RNItems.COGWHEEL,
-								RNItems.POCKETWATCH,
-								RNItems.MUSIC_BOX,
-								RNItems.BRONZE_SPAWN_EGG,
-								RNItems.DISCOLORED_BRONZE_SPAWN_EGG,
-								RNItems.CORRODED_BRONZE_SPAWN_EGG,
-								RNItems.TARNISHED_BRONZE_SPAWN_EGG,
-								RNItems.CRYSTALLIZED_BRONZE_SPAWN_EGG
+								RNItems.POCKETWATCH
 						);
-						addWaxableItems(
-								output,
-								RNBlocks.BRONZE_LASER,
-								RNBlocks.DISCOLORED_BRONZE_LASER,
-								RNBlocks.CORRODED_BRONZE_LASER,
-								RNBlocks.TARNISHED_BRONZE_LASER,
-								RNBlocks.CRYSTALLIZED_BRONZE_LASER
-						);
+						// Copper lasers
 						addItems(
 								output,
 								RNBlocks.COPPER_LASER,
@@ -127,17 +134,53 @@ public class RNCreativeTabs {
 								RNBlocks.WAXED_WEATHERED_COPPER_LASER,
 								RNBlocks.WAXED_OXIDIZED_COPPER_LASER
 						);
-                        addItems(
-                                output,
-                                RNBlocks.GEARBOX,
-                                RNBlocks.DISCOLORED_GEARBOX,
-                                RNBlocks.CORRODED_GEARBOX,
-                                RNBlocks.TARNISHED_GEARBOX,
-                                RNBlocks.CRYSTALLIZED_GEARBOX
-                        );
+						// Music
 						addItems(
 								output,
-								RNItems.RUNE,
+								RNItems.MUSIC_BOX,
+								RNItems.MUSIC_DISC_SHIMMER,
+								RNItems.MUSIC_DISC_SINNER
+						);
+						// Banner pattern
+						addItems(
+								output,
+								RNItems.COGS_BANNER_PATTERN.get()
+						);
+						// Spawn eggs
+						addItems(
+								output,
+								RNItems.BRONZE_SPAWN_EGG,
+								RNItems.DISCOLORED_BRONZE_SPAWN_EGG,
+								RNItems.CORRODED_BRONZE_SPAWN_EGG,
+								RNItems.TARNISHED_BRONZE_SPAWN_EGG,
+								RNItems.CRYSTALLIZED_BRONZE_SPAWN_EGG
+						);
+					})
+					.build()
+	);
+	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> RN_RUBINATION_TAB = CREATIVE_MODE_TABS.register(
+			"rubinated_nether_rubination_tab",
+			() -> CreativeModeTab.builder()
+					.title(net.minecraft.network.chat.Component.translatable("itemGroup.rubinated_nether_rubination"))
+					.withTabsBefore(RN_GENERAL_TAB.getId())
+					.icon(() -> RNBlocks.RUBINATION_ALTAR.get().asItem().getDefaultInstance())
+					.displayItems((parameters, output) -> {
+						// Altar, runestone and offering
+						addItems(
+								output,
+								RNBlocks.RUBINATION_ALTAR,
+								RNBlocks.RUNESTONE,
+								RNItems.RITUAL_OFFERING,
+								RNItems.RUNE
+						);
+						// Carved runes (blank rune carved with each rubination)
+						for (Rubination rubination : Rubination.values()) {
+							if (rubination == Rubination.EMPTY) continue;
+							output.accept(RuneCarvingHelper.withCarving(new ItemStack(RNItems.RUNE.get()), rubination));
+						}
+						// Rubinated runes
+						addItems(
+								output,
 								RNItems.SLOTH_RUNE,
 								RNItems.GLUTTONY_RUNE,
 								RNItems.GREED_RUNE,
@@ -158,8 +201,7 @@ public class RNCreativeTabs {
 								RNItems.GULA_RUNE,
 								RNItems.IGNAVIA_RUNE,
 								RNItems.KENODOXIA_RUNE,
-								RNItems.PHILARGYRIA_RUNE,
-								RNItems.COGS_BANNER_PATTERN.get()
+								RNItems.PHILARGYRIA_RUNE
 						);
 					})
 					.build()
@@ -168,86 +210,109 @@ public class RNCreativeTabs {
 			"rubinated_nether_bronze_tab",
 			() -> CreativeModeTab.builder()
 					.title(net.minecraft.network.chat.Component.translatable("itemGroup.rubinated_nether_bronze"))
-					.withTabsBefore(RN_GENERAL_TAB.getId())
-					.icon(() -> RNItems.BRONZE_POWDER.get().getDefaultInstance())
+					.withTabsBefore(RN_RUBINATION_TAB.getId())
+					.icon(() -> RNBlocks.GEARBOX.get().asItem().getDefaultInstance())
 					.displayItems((parameters, output) -> {
+						// Building blocks
 						addWaxableItems(
 								output,
 								RNBlocks.BRONZE_BLOCK,
 								RNBlocks.CHISELED_BRONZE,
-								RNBlocks.CUT_BRONZE_PILLAR,
 								RNBlocks.CUT_BRONZE_BRICKS,
 								RNBlocks.CUT_BRONZE_BRICKS_STAIRS,
 								RNBlocks.CUT_BRONZE_BRICKS_SLAB,
+								RNBlocks.CUT_BRONZE_PILLAR,
+								RNBlocks.DISCOLORED_BRONZE_BLOCK,
+								RNBlocks.DISCOLORED_CHISELED_BRONZE,
+								RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
+								RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS,
+								RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB,
+								RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
+								RNBlocks.CORRODED_BRONZE_BLOCK,
+								RNBlocks.CORRODED_CHISELED_BRONZE,
+								RNBlocks.CORRODED_CUT_BRONZE_BRICKS,
+								RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS,
+								RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB,
+								RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
+								RNBlocks.TARNISHED_BRONZE_BLOCK,
+								RNBlocks.TARNISHED_CHISELED_BRONZE,
+								RNBlocks.TARNISHED_CUT_BRONZE_BRICKS,
+								RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS,
+								RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB,
+								RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
+								RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
+								RNBlocks.CRYSTALLIZED_CHISELED_BRONZE,
+								RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS,
+								RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS,
+								RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB,
+								RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR
+						);
+						// Lighting
+						addWaxableItems(
+								output,
+								RNBlocks.BRONZE_CHAIN,
+								RNBlocks.BRONZE_LANTERN,
+								RNBlocks.BRONZE_CHANDELIER,
+								RNBlocks.BRONZE_LAMP,
+								RNBlocks.DISCOLORED_BRONZE_CHAIN,
+								RNBlocks.DISCOLORED_BRONZE_LANTERN,
+								RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
+								RNBlocks.DISCOLORED_BRONZE_LAMP,
+								RNBlocks.CORRODED_BRONZE_CHAIN,
+								RNBlocks.CORRODED_BRONZE_LANTERN,
+								RNBlocks.CORRODED_BRONZE_CHANDELIER,
+								RNBlocks.CORRODED_BRONZE_LAMP,
+								RNBlocks.TARNISHED_BRONZE_CHAIN,
+								RNBlocks.TARNISHED_BRONZE_LANTERN,
+								RNBlocks.TARNISHED_BRONZE_CHANDELIER,
+								RNBlocks.TARNISHED_BRONZE_LAMP,
+								RNBlocks.CRYSTALLIZED_BRONZE_CHAIN,
+								RNBlocks.CRYSTALLIZED_BRONZE_LANTERN,
+								RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER,
+								RNBlocks.CRYSTALLIZED_BRONZE_LAMP
+						);
+						// Redstone
+						addWaxableItems(
+								output,
 								RNBlocks.BRONZE_BULB,
 								RNBlocks.BRONZE_GRATE,
 								RNBlocks.BRONZE_SPRING,
 								RNBlocks.BRONZE_VENT,
-								RNBlocks.BRONZE_LANTERN,
-								RNBlocks.BRONZE_CHAIN,
-								RNBlocks.BRONZE_CHANDELIER,
-								RNBlocks.BRONZE_LAMP,
-								RNBlocks.DISCOLORED_BRONZE_BLOCK,
-								RNBlocks.DISCOLORED_CHISELED_BRONZE,
-								RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR,
-								RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS,
-								RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS,
-								RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB,
+								RNBlocks.BRONZE_LASER,
 								RNBlocks.DISCOLORED_BRONZE_BULB,
 								RNBlocks.DISCOLORED_BRONZE_GRATE,
 								RNBlocks.DISCOLORED_BRONZE_SPRING,
 								RNBlocks.DISCOLORED_BRONZE_VENT,
-								RNBlocks.DISCOLORED_BRONZE_LANTERN,
-								RNBlocks.DISCOLORED_BRONZE_CHAIN,
-								RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
-								RNBlocks.DISCOLORED_BRONZE_LAMP,
-								RNBlocks.CORRODED_BRONZE_BLOCK,
-								RNBlocks.CORRODED_CHISELED_BRONZE,
-								RNBlocks.CORRODED_CUT_BRONZE_PILLAR,
-								RNBlocks.CORRODED_CUT_BRONZE_BRICKS,
-								RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS,
-								RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB,
+								RNBlocks.DISCOLORED_BRONZE_LASER,
 								RNBlocks.CORRODED_BRONZE_BULB,
 								RNBlocks.CORRODED_BRONZE_GRATE,
 								RNBlocks.CORRODED_BRONZE_SPRING,
 								RNBlocks.CORRODED_BRONZE_VENT,
-								RNBlocks.CORRODED_BRONZE_LANTERN,
-								RNBlocks.CORRODED_BRONZE_CHAIN,
-								RNBlocks.CORRODED_BRONZE_CHANDELIER,
-								RNBlocks.CORRODED_BRONZE_LAMP,
-								RNBlocks.TARNISHED_BRONZE_BLOCK,
-								RNBlocks.TARNISHED_CHISELED_BRONZE,
-								RNBlocks.TARNISHED_CUT_BRONZE_PILLAR,
-								RNBlocks.TARNISHED_CUT_BRONZE_BRICKS,
-								RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS,
-								RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB,
+								RNBlocks.CORRODED_BRONZE_LASER,
 								RNBlocks.TARNISHED_BRONZE_BULB,
 								RNBlocks.TARNISHED_BRONZE_GRATE,
 								RNBlocks.TARNISHED_BRONZE_SPRING,
 								RNBlocks.TARNISHED_BRONZE_VENT,
-								RNBlocks.TARNISHED_BRONZE_LANTERN,
-								RNBlocks.TARNISHED_BRONZE_CHAIN,
-								RNBlocks.TARNISHED_BRONZE_CHANDELIER,
-								RNBlocks.TARNISHED_BRONZE_LAMP,
-								RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
-								RNBlocks.CRYSTALLIZED_CHISELED_BRONZE,
-								RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR,
-								RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS,
-								RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS,
-								RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB,
+								RNBlocks.TARNISHED_BRONZE_LASER,
 								RNBlocks.CRYSTALLIZED_BRONZE_BULB,
 								RNBlocks.CRYSTALLIZED_BRONZE_GRATE,
 								RNBlocks.CRYSTALLIZED_BRONZE_SPRING,
 								RNBlocks.CRYSTALLIZED_BRONZE_VENT,
-								RNBlocks.CRYSTALLIZED_BRONZE_LANTERN,
-								RNBlocks.CRYSTALLIZED_BRONZE_CHAIN,
-								RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER,
-								RNBlocks.CRYSTALLIZED_BRONZE_LAMP,
+								RNBlocks.CRYSTALLIZED_BRONZE_LASER
+						);
+						// Utility
+						addWaxableItems(
+								output,
 								RNBlocks.BRONZE_VASE,
+								RNBlocks.GEARBOX,
 								RNBlocks.DISCOLORED_BRONZE_VASE,
+								RNBlocks.DISCOLORED_GEARBOX,
 								RNBlocks.CORRODED_BRONZE_VASE,
+								RNBlocks.CORRODED_GEARBOX,
 								RNBlocks.TARNISHED_BRONZE_VASE,
-								RNBlocks.CRYSTALLIZED_BRONZE_VASE
+								RNBlocks.TARNISHED_GEARBOX,
+								RNBlocks.CRYSTALLIZED_BRONZE_VASE,
+								RNBlocks.CRYSTALLIZED_GEARBOX
 						);
 					})
 					.build()
@@ -282,6 +347,10 @@ public class RNCreativeTabs {
 			event.insertAfter(Items.BREEZE_ROD.getDefaultInstance(),
 					RNItems.BRONZE_ROD.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.BRONZE_ROD.get().getDefaultInstance(),
+					RNItems.WINDING_KEY.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.WINDING_KEY.get().getDefaultInstance(),
+					RNItems.COGWHEEL.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.COGWHEEL.get().getDefaultInstance(),
 					RNItems.BRONZE_POWDER.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.BRONZE_POWDER.get().getDefaultInstance(),
 					RNItems.BRONZE_SCRAP.get().getDefaultInstance(), BOTH_TABS);
@@ -289,10 +358,6 @@ public class RNCreativeTabs {
 					RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.OMINOUS_TRIAL_KEY.getDefaultInstance(),
 					RNItems.RITUAL_OFFERING.get().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNItems.RITUAL_OFFERING.get().getDefaultInstance(),
-					RNItems.WINDING_KEY.get().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNItems.WINDING_KEY.get().getDefaultInstance(),
-					RNItems.COGWHEEL.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.FLOWER_BANNER_PATTERN.getDefaultInstance(),
 					RNItems.COGS_BANNER_PATTERN.get().getDefaultInstance(), BOTH_TABS);
 			event.accept(RNItems.RUNE.get().getDefaultInstance(), BOTH_TABS);
@@ -325,9 +390,11 @@ public class RNCreativeTabs {
 			event.insertAfter(Items.NETHERITE_HOE.getDefaultInstance(),
 					RNItems.BRONZE_DRILL.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.BRONZE_DRILL.get().getDefaultInstance(),
+					RNItems.BRONZE_JACKHAMMER.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.BRONZE_JACKHAMMER.get().getDefaultInstance(),
 					RNItems.BRONZE_CHAINSAW.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.BRONZE_CHAINSAW.get().getDefaultInstance(),
-					RNItems.BRONZE_JACKHAMMER.get().getDefaultInstance(), BOTH_TABS);
+					RNItems.POCKETWATCH.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.MUSIC_DISC_PIGSTEP.getDefaultInstance(),
 					RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(),
@@ -753,7 +820,6 @@ public class RNCreativeTabs {
 		}
 		private static void injectRedstoneBlocks(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.REDSTONE_BLOCKS) return;
-
 			event.insertAfter(Items.WAXED_OXIDIZED_COPPER_BULB.getDefaultInstance(),
 					getWaxed(RNBlocks.BRONZE_BULB), BOTH_TABS);
 			event.insertAfter(getWaxed(RNBlocks.BRONZE_BULB),

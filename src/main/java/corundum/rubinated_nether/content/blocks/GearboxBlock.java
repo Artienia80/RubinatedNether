@@ -173,6 +173,15 @@ public class GearboxBlock extends TarnishingBronzeBlock {
         super.tick(state, level, pos, random);
     }
 
+    @Override
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        // Swapping to another tarnish stage replaces the block entity, which would wipe an in-progress spawn wave
+        if (state.getValue(LIT) || state.getValue(COOLING_DOWN) || state.getValue(CRANK_LEVEL) > 0) {
+            return;
+        }
+        super.randomTick(state, level, pos, random);
+    }
+
     void fireLit(ServerLevel level, BlockState state, BlockPos pos) {
         // Never activate on peaceful
         if (isPeaceful(level)) return;

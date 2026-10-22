@@ -149,7 +149,12 @@ public class RNItems {
 	public static final DeferredItem<Item> BRONZE_POWDER = basicItem("bronze_powder");
 	public static final DeferredItem<Item> BRONZE_SCRAP = basicItem("bronze_scrap");
 
-	public static final DeferredItem<Item> RITUAL_OFFERING = basicItem("ritual_offering");
+	public static final DeferredItem<Item> RITUAL_OFFERING = ITEMS.register(
+			"ritual_offering",
+			() -> new RitualOfferingItem(
+					new Item.Properties().rarity(RNRarity.RUBINATED_NETHER_RUBY.get())
+			)
+	);
 	public static final DeferredItem<Item> COGWHEEL = basicItem("cogwheel");
 	public static final DeferredItem<Item> WINDING_KEY = basicItem("winding_key");
 

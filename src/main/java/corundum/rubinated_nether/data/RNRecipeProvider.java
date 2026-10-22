@@ -807,7 +807,7 @@ public class RNRecipeProvider extends RecipeProvider {
 		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, RNItems.MUSIC_BOX, 1)
 				.define('X', RNItems.BRONZE_SCRAP)
 				.define('G', RNTags.Items.GEARBOXES)
-				.define('R', Items.DIAMOND)
+				.define('D', Items.DIAMOND)
 				.pattern("XXX")
 				.pattern("XGX")
 				.pattern("XDX")
@@ -1011,6 +1011,7 @@ public class RNRecipeProvider extends RecipeProvider {
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LASER);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_SPRING);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_VENT);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.GEARBOX);
 
 	}
 

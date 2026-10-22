@@ -2,6 +2,7 @@
   "itemGroup.examplemod": "Rubinated Nether",
   "itemGroup.rubinated_nether_general": "Rubinated Nether - General",
   "itemGroup.rubinated_nether_bronze": "Rubinated Nether - Bronze",
+  "itemGroup.rubinated_nether_rubination": "Rubinated Nether - Rubination",
 
   "block.rubinated_nether.nether_ruby_ore": "Nether Ruby Ore",
   "block.rubinated_nether.molten_ruby_ore": "Molten Ruby Ore",
@@ -283,6 +284,11 @@
   "block.rubinated_nether.corroded_gearbox": "Corroded Gearbox",
   "block.rubinated_nether.tarnished_gearbox": "Tarnished Gearbox",
   "block.rubinated_nether.crystallized_gearbox": "Crystallized Gearbox",
+  "item.rubinated_nether.waxed_gearbox": "Waxed Gearbox",
+  "item.rubinated_nether.waxed_discolored_gearbox": "Waxed Discolored Gearbox",
+  "item.rubinated_nether.waxed_corroded_gearbox": "Waxed Corroded Gearbox",
+  "item.rubinated_nether.waxed_tarnished_gearbox": "Waxed Tarnished Gearbox",
+  "item.rubinated_nether.waxed_crystallized_gearbox": "Waxed Crystallized Gearbox",
 
   "item.rubinated_nether.bronze_rod": "Bronze Rod",
   "item.rubinated_nether.bronze_powder": "Bronze Powder",

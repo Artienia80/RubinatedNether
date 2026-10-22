@@ -94,6 +94,10 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 					.put(RNBlocks.DISCOLORED_BRONZE_VENT.get(), RNBlocks.CORRODED_BRONZE_VENT.get())
 					.put(RNBlocks.CORRODED_BRONZE_VENT.get(), RNBlocks.TARNISHED_BRONZE_VENT.get())
 
+					.put(RNBlocks.GEARBOX.get(), RNBlocks.DISCOLORED_GEARBOX.get())
+					.put(RNBlocks.DISCOLORED_GEARBOX.get(), RNBlocks.CORRODED_GEARBOX.get())
+					.put(RNBlocks.CORRODED_GEARBOX.get(), RNBlocks.TARNISHED_GEARBOX.get())
+
 					.put(RNBlocks.BRONZE_VASE.get(), RNBlocks.DISCOLORED_BRONZE_VASE.get())
 					.put(RNBlocks.DISCOLORED_BRONZE_VASE.get(), RNBlocks.CORRODED_BRONZE_VASE.get())
 					.put(RNBlocks.CORRODED_BRONZE_VASE.get(), RNBlocks.TARNISHED_BRONZE_VASE.get())
@@ -185,6 +189,11 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 				map.put(RNBlocks.DISCOLORED_BRONZE_VASE.get(), RNBlocks.CRYSTALLIZED_BRONZE_VASE.get());
 				map.put(RNBlocks.CORRODED_BRONZE_VASE.get(), RNBlocks.CRYSTALLIZED_BRONZE_VASE.get());
 				map.put(RNBlocks.TARNISHED_BRONZE_VASE.get(), RNBlocks.CRYSTALLIZED_BRONZE_VASE.get());
+
+				map.put(RNBlocks.GEARBOX.get(), RNBlocks.CRYSTALLIZED_GEARBOX.get());
+				map.put(RNBlocks.DISCOLORED_GEARBOX.get(), RNBlocks.CRYSTALLIZED_GEARBOX.get());
+				map.put(RNBlocks.CORRODED_GEARBOX.get(), RNBlocks.CRYSTALLIZED_GEARBOX.get());
+				map.put(RNBlocks.TARNISHED_GEARBOX.get(), RNBlocks.CRYSTALLIZED_GEARBOX.get());
 
 				return Collections.unmodifiableMap(map);
 			}
