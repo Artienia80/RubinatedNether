@@ -97,12 +97,12 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
-        if (!MechanicalFuel.hasFuel(stack)) return super.getDestroySpeed(stack, state); // dead: normal speed
+        if (!MechanicalFuel.hasFuel(stack)) return super.getDestroySpeed(stack, state);
         if (isCanopy(state)) return INSTANT_SPEED;
         if (isTrunk(state)) {
             int windup = getWindup(stack);
             if (windup >= MAX_WINDUP) return INSTANT_SPEED;
-            return windupSpeed(windup) * Flywheel.peakMult(stack); // Flywheel scales the ramp curve, not the instant cut
+            return windupSpeed(windup) * Flywheel.peakMult(stack);
         }
         return isChainsawTarget(state) ? MINING_SPEED : super.getDestroySpeed(stack, state);
     }
@@ -112,7 +112,6 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
         return WINDUP_START_SPEED * (float) Math.pow(30.0, level / (double) MAX_WINDUP);
     }
 
-    /** Ticks of continuous cutting per windup level for this stack (Flywheel scales acceleration). */
     public static float ticksPerLevel(ItemStack stack) {
         return TICKS_PER_LEVEL / Flywheel.accelMult(stack);
     }
@@ -127,7 +126,7 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-        if (!level.isClientSide()) MechanicalFuel.syncRarity(stack); // heals stale rarity
+        if (!level.isClientSide()) MechanicalFuel.syncRarity(stack);
         if (!level.isClientSide()
                 && entity instanceof ServerPlayer player
                 && getWindup(stack) > 0
@@ -137,13 +136,11 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
         super.inventoryTick(stack, level, entity, slotId, isSelected);
     }
 
-    /** Running = cutting right now, including the grace window after the last block. */
     @Override
     public boolean isRunning(ServerPlayer player) {
         return ChainsawHandler.isMining(player, player.level().getGameTime());
     }
 
-    // ---------- Fuel slot (bundle-like) ----------
     @Override
     public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction action, Player player) {
         return stack.getCount() == 1 && MechanicalFuel.onStackedOnOther(stack, slot, action, player);
@@ -157,6 +154,9 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
+        ToolStatsTooltip.breaking(tooltip,
+                windupSpeed(MAX_WINDUP - 1) * Flywheel.peakMult(stack),
+                20.0 / ticksPerLevel(stack));
         MechanicalFuel.appendTooltip(stack, tooltip);
         ToolModules.appendTooltip(stack, tooltip);
     }
@@ -166,7 +166,6 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
         return MechanicalFuel.tooltipImage(stack);
     }
 
-    // Dead chainsaw: cannot start or finish breaking a block (also covers creative mode)
     @Override
     public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
         return MechanicalFuel.hasFuel(player.getMainHandItem()) && canWorkOn(state);
@@ -177,7 +176,6 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
         return isChainsawTarget(state) || isTrunk(state) || isCanopy(state);
     }
 
-    // Fuelled = rubinated glint (rendered by ItemRendererMixin)
     @Override
     public boolean isFoil(ItemStack stack) {
         return MechanicalFuel.hasFuel(stack) || super.isFoil(stack);
@@ -217,7 +215,7 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        if (!MechanicalFuel.hasFuel(context.getItemInHand())) return InteractionResult.PASS; // dead: no strip/till
+        if (!MechanicalFuel.hasFuel(context.getItemInHand())) return InteractionResult.PASS;
         InteractionResult axeResult = super.useOn(context);
         if (axeResult != InteractionResult.PASS) return axeResult;
 

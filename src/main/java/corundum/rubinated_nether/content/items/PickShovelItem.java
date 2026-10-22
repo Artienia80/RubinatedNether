@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class PickShovelItem extends DiggerItem implements MechanicalTool {
+public abstract class PickShovelItem extends DiggerItem implements MechanicalTool {
 	private static final Map<Block, Block> CRACKABLES = new HashMap<>();
 
 	static {
@@ -68,9 +68,9 @@ public class PickShovelItem extends DiggerItem implements MechanicalTool {
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
 		super.appendHoverText(stack, context, tooltip, flag);
+		appendStats(stack, tooltip);
 		MechanicalFuel.appendTooltip(stack, tooltip);
-		ToolModules.appendTooltip(stack, tooltip);
-	}
+		ToolModules.appendTooltip(stack, tooltip);}
 
 	@Override
 	public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
@@ -180,4 +180,6 @@ public class PickShovelItem extends DiggerItem implements MechanicalTool {
 		var crackedBlock = CRACKABLES.get(state.getBlock());
 		return crackedBlock != null ? crackedBlock.defaultBlockState() : null;
 	}
+
+	protected abstract void appendStats(ItemStack stack, List<Component> tooltip);
 }
