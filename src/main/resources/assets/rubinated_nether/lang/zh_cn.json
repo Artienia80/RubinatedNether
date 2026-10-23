@@ -51,18 +51,18 @@
   "block.rubinated_nether.shrine_stone_tiles_slab": "神殿石瓦台阶",
   "block.rubinated_nether.shrine_stone_tiles_stairs": "神殿石瓦楼梯",
   "block.rubinated_nether.shrine_stone_tiles_wall": "神殿石瓦墙",
-  "block.rubinated_nether.rubinated_shrine_stone_tiles": "镶红宝石神殿石瓦",
+  "block.rubinated_nether.rubinated_shrine_stone_tiles": "耀红神殿石瓦",
 
   "block.rubinated_nether.shrine_stone_pillar": "神殿石柱",
-  "block.rubinated_nether.rubinated_shrine_stone_pillar": "镶红宝石神殿石柱",
+  "block.rubinated_nether.rubinated_shrine_stone_pillar": "耀红神殿石柱",
 
   "block.rubinated_nether.shrine_stone_bricks": "神殿石砖",
   "block.rubinated_nether.shrine_stone_bricks_slab": "神殿石砖台阶",
   "block.rubinated_nether.shrine_stone_bricks_stairs": "神殿石砖楼梯",
   "block.rubinated_nether.shrine_stone_bricks_wall": "神殿石砖墙",
-  "block.rubinated_nether.rubinated_shrine_stone_bricks": "镶红宝石神殿石砖",
+  "block.rubinated_nether.rubinated_shrine_stone_bricks": "耀红神殿石砖",
   "block.rubinated_nether.chiseled_shrine_stone_bricks": "雕纹神殿石砖",
-  "block.rubinated_nether.rubinated_chiseled_shrine_stone_bricks": "镶红宝石雕纹神殿石砖",
+  "block.rubinated_nether.rubinated_chiseled_shrine_stone_bricks": "耀红雕纹神殿石砖",
 
   "block.rubinated_nether.shrine_stone_coffer": "储物盒",
 
@@ -71,8 +71,12 @@
   "block.rubinated_nether.runestone": "符文石",
   "block.rubinated_nether.rubination_altar": "耀红祭坛",
 
-  "item.rubinated_nether.music_disc_shimmer": "镶红宝石音乐唱片",
+  "item.rubinated_nether.music_disc_shimmer": "耀红音乐唱片",
   "jukebox_song.rubinated_nether.shimmer": "Quizzly - Shimmer",
+
+
+  "item.rubinated_nether.music_disc_sinner": "音乐唱片",
+  "jukebox_song.rubinated_nether.sinner": "Quizzly - Sinner",
 
   "block.rubinated_nether.bronze_block": "青铜块",
   "block.rubinated_nether.discolored_bronze_block": "脱色的青铜块",
@@ -226,6 +230,30 @@
   "item.rubinated_nether.waxed_tarnished_bronze_spring": "涂蜡的褪色青铜弹簧",
   "item.rubinated_nether.waxed_crystallized_bronze_spring": "涂蜡的晶化青铜弹簧",
 
+  "block.rubinated_nether.bronze_vent": "青铜通风口",
+  "block.rubinated_nether.discolored_bronze_vent": "脱色的青铜通风口",
+  "block.rubinated_nether.corroded_bronze_vent": "腐蚀的青铜通风口",
+  "block.rubinated_nether.tarnished_bronze_vent": "褪色的青铜通风口",
+  "block.rubinated_nether.crystallized_bronze_vent": "晶化的青铜通风口",
+
+  "item.rubinated_nether.waxed_bronze_vent": "涂蜡的青铜通风口",
+  "item.rubinated_nether.waxed_discolored_bronze_vent": "涂蜡的脱色青铜通风口",
+  "item.rubinated_nether.waxed_corroded_bronze_vent": "涂蜡的腐蚀青铜通风口",
+  "item.rubinated_nether.waxed_tarnished_bronze_vent": "涂蜡的褪色青铜通风口",
+  "item.rubinated_nether.waxed_crystallized_bronze_vent": "涂蜡的晶化青铜通风口",
+
+  "block.rubinated_nether.bronze_vase": "青铜罐",
+  "block.rubinated_nether.discolored_bronze_vase": "脱色的青铜罐",
+  "block.rubinated_nether.corroded_bronze_vase": "腐蚀的青铜罐",
+  "block.rubinated_nether.tarnished_bronze_vase": "褪色的青铜罐",
+  "block.rubinated_nether.crystallized_bronze_vase": "晶化的青铜罐",
+
+  "item.rubinated_nether.waxed_bronze_vase": "涂蜡的青铜罐",
+  "item.rubinated_nether.waxed_discolored_bronze_vase": "涂蜡的脱色青铜罐",
+  "item.rubinated_nether.waxed_corroded_bronze_vase": "涂蜡的腐蚀青铜罐",
+  "item.rubinated_nether.waxed_tarnished_bronze_vase": "涂蜡的褪色青铜罐",
+  "item.rubinated_nether.waxed_crystallized_bronze_vase": "涂蜡的晶化青铜罐",
+
   "block.rubinated_nether.bronze_laser": "青铜激光器",
   "block.rubinated_nether.discolored_bronze_laser": "脱色的青铜激光器",
   "block.rubinated_nether.corroded_bronze_laser": "腐蚀的青铜激光器",
@@ -250,6 +278,12 @@
   "block.rubinated_nether.crystallized_bronze_crystal": "晶化青铜",
   "block.rubinated_nether.crystallized_bronze_cluster": "晶化青铜",
 
+  "block.rubinated_nether.gearbox": "齿轮箱",
+  "block.rubinated_nether.discolored_gearbox": "脱色的齿轮箱",
+  "block.rubinated_nether.corroded_gearbox": "腐蚀的齿轮箱",
+  "block.rubinated_nether.tarnished_gearbox": "褪色的齿轮箱",
+  "block.rubinated_nether.crystallized_gearbox": "晶化的齿轮箱",
+
 
   "item.rubinated_nether.bronze_rod": "青铜棒",
   "item.rubinated_nether.bronze_powder": "青铜粉",
@@ -260,7 +294,16 @@
 
   "item.rubinated_nether.bronze_drill": "青铜手钻",
 
+  "item.rubinated_nether.pocketwatch": "怀表",
+  "item.rubinated_nether.pocketwatch.tooltip.status": "%s - %s%% 福佑",
+  "item.rubinated_nether.pocketwatch.tooltip.ticking": "计时中",
+  "item.rubinated_nether.pocketwatch.tooltip.stopped": "停止",
+  "message.rubinated_nether.pocketwatch_empty": "怀表为空。",
+  "message.rubinated_nether.pocketwatch_locked": "停止怀表前需要再经过一段时间。",
+  "message.rubinated_nether.pocketwatch_already_ticking": "已有其他怀表在计时。",
+
   "item.rubinated_nether.rune": "符文",
+  "item.rubinated_nether.rune.carved": "刻成的%s符文",
   "item.rubinated_nether.sloth_rune": "懒惰符文",
   "item.rubinated_nether.gluttony_rune": "暴食符文",
   "item.rubinated_nether.greed_rune": "贪婪符文",
@@ -365,27 +408,27 @@
   "item.rubinated_nether.rune_mace_banner_pattern.desc": "振锤",
   "item.rubinated_nether.rune_trident_banner_pattern.desc": "叉戟",
 
-  "item.rubinated_nether.greed_rune.desc": "器物旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.sloth_rune.desc": "器物旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.gluttony_rune.desc": "器物旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.wrath_rune.desc": "刀剑旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.vainglory_rune.desc": "刀剑旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.envy_rune.desc": "刀剑旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.pride_rune.desc": "甲胄旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.acedia_rune.desc": "甲胄旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.luxuria_rune.desc": "甲胄旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.insidiae_rune.desc": "弧弓旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.superbia_rune.desc": "弧弓旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.tristia_rune.desc": "弧弓旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.studiose_rune.desc": "劲弩旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.ardenter_rune.desc": "劲弩旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.nimis_rune.desc": "劲弩旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.ira_rune.desc": "叉戟旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.invidia_rune.desc": "叉戟旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.gula_rune.desc": "叉戟旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.ignavia_rune.desc": "振锤旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.kenodoxia_rune.desc": "振锤旗帜图案与盔甲纹饰",
-  "item.rubinated_nether.philargyria_rune.desc": "振锤旗帜图案与盔甲纹饰",
+  "item.rubinated_nether.greed_rune.desc": "器物旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.sloth_rune.desc": "器物旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.gluttony_rune.desc": "器物旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.wrath_rune.desc": "刀剑旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.vainglory_rune.desc": "刀剑旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.envy_rune.desc": "刀剑旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.pride_rune.desc": "甲胄旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.acedia_rune.desc": "甲胄旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.luxuria_rune.desc": "甲胄旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.insidiae_rune.desc": "弧弓旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.superbia_rune.desc": "弧弓旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.tristia_rune.desc": "弧弓旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.studiose_rune.desc": "劲弩旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.ardenter_rune.desc": "劲弩旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.nimis_rune.desc": "劲弩旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.ira_rune.desc": "叉戟旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.invidia_rune.desc": "叉戟旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.gula_rune.desc": "叉戟旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.ignavia_rune.desc": "振锤旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.kenodoxia_rune.desc": "振锤旗帜图案、盔甲纹饰、罐体錾饰",
+  "item.rubinated_nether.philargyria_rune.desc": "振锤旗帜图案、盔甲纹饰、罐体錾饰",
 
   "block.rubinated_nether.banner.cogs.black": "黑色齿轮",
   "block.rubinated_nether.banner.cogs.blue": "蓝色齿轮",
@@ -551,6 +594,31 @@
   "trim_pattern.rubinated_nether.kenodoxia_rune": "振锤盔甲纹饰",
   "trim_pattern.rubinated_nether.philargyria_rune": "振锤盔甲纹饰",
 
+  "vase_engraving_pattern.rubinated_nether.sloth_rune": "器物錾饰",
+  "vase_engraving_pattern.rubinated_nether.gluttony_rune": "器物錾饰",
+  "vase_engraving_pattern.rubinated_nether.greed_rune": "器物錾饰",
+  "vase_engraving_pattern.rubinated_nether.wrath_rune": "刀剑錾饰",
+  "vase_engraving_pattern.rubinated_nether.vainglory_rune": "刀剑錾饰",
+  "vase_engraving_pattern.rubinated_nether.envy_rune": "刀剑錾饰",
+  "vase_engraving_pattern.rubinated_nether.pride_rune": "甲胄錾饰",
+  "vase_engraving_pattern.rubinated_nether.acedia_rune": "甲胄錾饰",
+  "vase_engraving_pattern.rubinated_nether.luxuria_rune": "甲胄錾饰",
+  "vase_engraving_pattern.rubinated_nether.insidiae_rune": "弧弓錾饰",
+  "vase_engraving_pattern.rubinated_nether.superbia_rune": "弧弓錾饰",
+  "vase_engraving_pattern.rubinated_nether.tristia_rune": "弧弓錾饰",
+  "vase_engraving_pattern.rubinated_nether.studiose_rune": "劲弩錾饰",
+  "vase_engraving_pattern.rubinated_nether.ardenter_rune": "劲弩錾饰",
+  "vase_engraving_pattern.rubinated_nether.nimis_rune": "劲弩錾饰",
+  "vase_engraving_pattern.rubinated_nether.ira_rune": "叉戟錾饰",
+  "vase_engraving_pattern.rubinated_nether.invidia_rune": "叉戟錾饰",
+  "vase_engraving_pattern.rubinated_nether.gula_rune": "叉戟錾饰",
+  "vase_engraving_pattern.rubinated_nether.ignavia_rune": "振锤錾饰",
+  "vase_engraving_pattern.rubinated_nether.kenodoxia_rune": "振锤錾饰",
+  "vase_engraving_pattern.rubinated_nether.philargyria_rune": "振锤錾饰",
+
+  "vase_engraving_material.rubinated_nether.ruby": "红宝石质",
+  "vase_engraving_material.rubinated_nether.molten_ruby": "炽融红宝石质",
+
   "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "获得流血的黑曜石",
   "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "血祭血神！",
   "advancements.rubinated_nether.blood_dripping.description": "在下界中借助滴水石锥让流血的黑曜石向炼药锅放血",
@@ -622,6 +690,11 @@
   "gui.rubinated_nether.jei.resonance": "Resonance",
 
   "container.shrine_stone_coffer": "储物盒",
+  "container.bronzeVase": "青铜罐",
+  "container.bronzeVase.itemCount": "%s x%s",
+  "container.bronzeVase.more": "还有%s项未显示...",
+  "container.bronzeVase.unknownContents": "???",
+
 
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
 
@@ -658,7 +731,7 @@
   "rubinated_nether.midnightconfig.category.coffer": "储物盒",
   "rubinated_nether.midnightconfig.category.client": "客户端",
   "rubinated_nether.midnightconfig.category.cauldron": "炼药锅",
-
+  "rubinated_nether.midnightconfig.category.vent": "通风口",
 
   "rubinated_nether.midnightconfig.chandelierDefaultDamage": "吊灯默认伤害值",
   "rubinated_nether.midnightconfig.chandelierStateMultiplierIncrease": "吊灯伤害增加倍率",
@@ -673,7 +746,7 @@
   "rubinated_nether.midnightconfig.brazierPowerDisableFireOverlay": "火盆能量禁用火焰叠加层",
   "rubinated_nether.midnightconfig.brazierPowerLavaImmuneItems": "火盆能量令物品免疫熔岩",
 
-  "rubinated_nether.midnightconfig.altarInscriptionCost": "祭坛刻印消耗",
+  "rubinated_nether.midnightconfig.altarRubinationCost": "祭坛耀红符印消耗",
   "rubinated_nether.midnightconfig.altarLesserBlessingTime": "祭坛初等祝福持续时间",
   "rubinated_nether.midnightconfig.altarGreaterBlessingTime": "祭坛高等祝福持续时间",
   "rubinated_nether.midnightconfig.altarFullBlessingThreshold": "祭坛满祝福阈值",
@@ -687,12 +760,17 @@
   "rubinated_nether.midnightconfig.moltenRubyCauldronAverageMinutes": "平均填充时间",
   "rubinated_nether.midnightconfig.moltenRubyCauldronNetherOnly": "仅在下界允许滴血",
 
+  "rubinated_nether.midnightconfig.ventSmokeParticleMultiplier": "青铜通风口粒子数量",
+  "rubinated_nether.midnightconfig.crystallizedVentRange": "晶化青铜通风口范围",
+
   "rubinated_nether.midnightconfig.rubyLensOpacity": "红宝石眼镜不透明度",
   "rubinated_nether.midnightconfig.bronzeDiseasedOverlayOpacity": "青铜疫染叠加层不透明度",
   "rubinated_nether.midnightconfig.tabDisplay": "在创造标签页中显示耀红下界内容",
   "rubinated_nether.midnightconfig.enum.TabDisplay.MODDED_ONLY": "独立模组标签页",
   "rubinated_nether.midnightconfig.enum.TabDisplay.VANILLA_ONLY": "并入原版标签页",
   "rubinated_nether.midnightconfig.enum.TabDisplay.BOTH": "两处均出现",
+
+  "rubinated_nether.midnightconfig.rubinatedLanguage": "加密耀红符印物品",
 
   "resourcepack.rubinated_nether.simple_freezer": "§4简化冷冻器模型",
   "resourcepack.rubinated_nether.aurichalcum": "§4青铜不再！",
