@@ -1,0 +1,74 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#under"
+        },
+        "east": {
+          "rotation": 90,
+          "texture": "#side",
+          "uv": [
+            0.0,
+            0.0,
+            6.0,
+            16.0
+          ]
+        },
+        "north": {
+          "rotation": 90,
+          "texture": "#side",
+          "uv": [
+            0.0,
+            0.0,
+            6.0,
+            16.0
+          ]
+        },
+        "south": {
+          "rotation": 270,
+          "texture": "#side",
+          "uv": [
+            0.0,
+            0.0,
+            6.0,
+            16.0
+          ]
+        },
+        "up": {
+          "rotation": 90,
+          "texture": "#top"
+        },
+        "west": {
+          "rotation": 270,
+          "texture": "#side",
+          "uv": [
+            0.0,
+            0.0,
+            6.0,
+            16.0
+          ]
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        6,
+        16
+      ]
+    }
+  ],
+  "gui_light": "side",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "rubinated_nether:block/laser/material/discolored_bronze_laser_front",
+    "side": "rubinated_nether:block/laser/material/discolored_bronze_laser_side",
+    "top": "rubinated_nether:block/laser/material/discolored_bronze_laser_front",
+    "under": "rubinated_nether:block/laser/material/discolored_bronze_laser_front_on"
+  }
+}

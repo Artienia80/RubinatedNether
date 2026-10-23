@@ -1189,6 +1189,46 @@ public class RNBlocks {
 			)
 	);
 
+	public static final DeferredBlock<Block> WINDER = registerWaxableBlock(
+			"winder",
+			() -> new BronzeWinderBlock(
+					TarnishStage.UNAFFECTED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> DISCOLORED_WINDER = registerWaxableBlock(
+			"discolored_winder",
+			() -> new BronzeWinderBlock(
+					TarnishStage.DISCOLORED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_WINDER = registerWaxableBlock(
+			"corroded_winder",
+			() -> new BronzeWinderBlock(
+					TarnishStage.CORRODED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_WINDER = registerWaxableBlock(
+			"tarnished_winder",
+			() -> new BronzeWinderBlock(
+					TarnishStage.TARNISHED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_WINDER = registerWaxableBlock(
+			"crystallized_winder",
+			() -> new BronzeWinderBlock(
+					TarnishStage.CRYSTALLIZED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
+			)
+	);
+
 	public static final DeferredBlock<Block> COPPER_LASER = registerBlockAndItem(
 			"copper_laser",
 			() -> new CopperLaserBlock(

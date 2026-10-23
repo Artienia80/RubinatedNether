@@ -5,6 +5,11 @@
       "type": "directory",
       "source": "rubinated_nether:block/gearbox",
       "prefix": "rubinated_nether:block/gearbox/"
+    },
+    {
+      "type": "directory",
+      "source": "entity/bronze",
+      "prefix": "entity/bronze/"
     }
   ]
 }

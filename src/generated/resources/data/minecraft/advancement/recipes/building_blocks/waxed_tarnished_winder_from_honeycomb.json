@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_tarnished_winder": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:tarnished_winder"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:waxed_tarnished_winder_from_honeycomb"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tarnished_winder"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:waxed_tarnished_winder_from_honeycomb"
+    ]
+  }
+}

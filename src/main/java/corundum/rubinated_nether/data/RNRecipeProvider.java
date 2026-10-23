@@ -200,6 +200,8 @@ public class RNRecipeProvider extends RecipeProvider {
 		tarnish(recipeOutput, (output, input, result) -> oneByTwo(output, input, result, 2),
 				RNBlocks.BRONZE_BLOCK, RNBlocks.CUT_BRONZE_PILLAR);
 
+		winder(recipeOutput);
+
 		tarnish(recipeOutput, this::spring, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_SPRING);
 		tarnish(recipeOutput, this::vent, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_VENT);
 
@@ -428,6 +430,8 @@ public class RNRecipeProvider extends RecipeProvider {
 		laser(recipeOutput, Blocks.WAXED_OXIDIZED_COPPER, RNBlocks.WAXED_OXIDIZED_COPPER_LASER, true);
 
 		generateAllWaxingRecipes(recipeOutput);
+
+		gearboxDuplication(recipeOutput);
 
 		waxRecipes(recipeOutput, FeatureFlagSet.of(FeatureFlags.VANILLA));
 
@@ -927,6 +931,30 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 	}
 
+	private void gearboxDuplication(RecipeOutput recipeOutput) {
+		for (String prefix : TARNISH_PREFIXES) {
+			Supplier<? extends Block> gearbox = getBlockByName(prefix + "GEARBOX");
+			String name = prefix.toLowerCase() + "gearbox";
+
+			gearboxCopy(recipeOutput, gearbox.get(), name + "_duplication");
+			gearboxCopy(recipeOutput, waxed(gearbox), "waxed_" + name + "_duplication");
+		}
+	}
+
+	private void gearboxCopy(RecipeOutput recipeOutput, ItemLike gearbox, String id) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, gearbox, 2)
+				.define('K', RNItems.WINDING_KEY)
+				.define('C', RNItems.COGWHEEL)
+				.define('G', gearbox)
+				.pattern(" K ")
+				.pattern("CGC")
+				.pattern(" C ")
+				.unlockedBy(getHasName(gearbox), has(gearbox))
+				.unlockedBy(getHasName(RNItems.WINDING_KEY), has(RNItems.WINDING_KEY))
+				.save(recipeOutput, RubinatedNether.id(id));
+	}
+
+
 	private void stonecutterList(RecipeOutput recipeOutput, ItemLike input, ItemLike... outputs) {
 		for (ItemLike output : outputs) {
 			var count = 1;
@@ -1012,6 +1040,7 @@ public class RNRecipeProvider extends RecipeProvider {
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_SPRING);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_VENT);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.GEARBOX);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.WINDER);
 
 	}
 
@@ -1076,6 +1105,26 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY), has(RNItems.MOLTEN_RUBY))
 				.unlockedBy(getHasName(lesserBronze), has(lesserBronze))
 				.unlockedBy(getHasName(blockInput), has(blockInput))
+				.save(recipeOutput);
+	}
+
+	private void winder(RecipeOutput recipeOutput) {
+		for (String prefix : TARNISH_PREFIXES) {
+			Supplier<? extends Block> slab = getBlockByName(prefix + "CUT_BRONZE_BRICKS_SLAB");
+			Supplier<? extends Block> winder = getBlockByName(prefix + "WINDER");
+			winderRecipe(recipeOutput, slab.get(), winder.get());
+			winderRecipe(recipeOutput, waxed(slab), waxed(winder));
+		}
+	}
+
+	private void winderRecipe(RecipeOutput recipeOutput, ItemLike slab, ItemLike winder) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, winder, 1)
+				.define('K', RNItems.WINDING_KEY)
+				.define('S', slab)
+				.pattern("K")
+				.pattern("S")
+				.unlockedBy(getHasName(RNItems.WINDING_KEY), has(RNItems.WINDING_KEY))
+				.unlockedBy(getHasName(slab), has(slab))
 				.save(recipeOutput);
 	}
 

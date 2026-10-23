@@ -173,6 +173,14 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_VENT
 		);
 
+		winderItems(
+				RNBlocks.WINDER,
+				RNBlocks.DISCOLORED_WINDER,
+				RNBlocks.CORRODED_WINDER,
+				RNBlocks.TARNISHED_WINDER,
+				RNBlocks.CRYSTALLIZED_WINDER
+		);
+
 		customItemTextures("item/bronze/bronze_chandelier",
 				RNBlocks.BRONZE_CHANDELIER,
 				RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
@@ -370,6 +378,22 @@ public class RNItemModels extends ItemModelProvider {
 					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
 					mcLoc("item/generated")
 			).texture("layer0", modLoc(baseTexture + "/" + blockName));
+		}
+	}
+
+	private void winderItems(DeferredBlock<?>... blocks) {
+		for (var block : blocks) {
+			String blockName = block.getId().getPath();
+
+			withExistingParent(
+					block.getId().toString(),
+					modLoc("block/" + blockName + "_item")
+			);
+
+			withExistingParent(
+					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
+					block.getId()
+			);
 		}
 	}
 

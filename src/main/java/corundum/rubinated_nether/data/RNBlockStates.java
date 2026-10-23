@@ -14,9 +14,12 @@ import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -323,6 +326,7 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 
 		generateBronzeLaserFamily("laser");
+		generateWinderFamily();
 		generateCopperLaserFamily("laser");
 		brazierBlock();
 
@@ -814,6 +818,170 @@ public class RNBlockStates extends BlockStateProvider {
 							.rotationY(rotationY)
 							.addModel();
 				}
+			}
+		}
+	}
+
+	private static final String[] WINDER_NAMES = {
+			"winder",
+			"discolored_winder",
+			"corroded_winder",
+			"tarnished_winder",
+			"crystallized_winder"
+	};
+
+	private static final String[] WINDER_BASE_TEXTURES = {
+			"bronze_laser",
+			"discolored_bronze_laser",
+			"corroded_bronze_laser",
+			"tarnished_bronze_laser",
+			"crystallized_bronze_laser"
+	};
+
+	private static final String[] WINDER_KEY_TEXTURES = {
+			"bronze",
+			"bronze_discolored",
+			"bronze_corroded",
+			"bronze_tarnished",
+			"bronze_crystallized"
+	};
+
+	private static final int[][] WINDER_STEM_UVS = {
+			{51, 26, 53, 31},
+			{49, 26, 51, 31},
+			{55, 26, 57, 31},
+			{53, 26, 55, 31}
+	};
+
+	private static final Direction[] WINDER_SIDES = {
+			Direction.NORTH,
+			Direction.EAST,
+			Direction.SOUTH,
+			Direction.WEST
+	};
+
+	private void generateWinderFamily() {
+		for (int i = 0; i < WINDER_NAMES.length; i++) {
+			String name = WINDER_NAMES[i];
+			String baseTexture = WINDER_BASE_TEXTURES[i];
+			String keyTexture = "entity/bronze/" + WINDER_KEY_TEXTURES[i];
+
+			try {
+				var field = RNBlocks.class.getField(name.toUpperCase());
+				DeferredBlock<?> block = (DeferredBlock<?>) field.get(null);
+
+				winderBaseModel(models().getBuilder(name + "_base"), baseTexture, false);
+				winderBaseModel(models().getBuilder(name + "_base_on"), baseTexture, true);
+				for (int position = 0; position < 16; position++) {
+					BlockModelBuilder keyModel = models().getBuilder(name + "_key_" + position)
+							.parent(models().getExistingFile(mcLoc("block/block")))
+							.texture("key", modLoc(keyTexture));
+					winderKeyElements(keyModel, position);
+				}
+
+				BlockModelBuilder itemModel = models().getBuilder(name + "_item")
+						.texture("key", modLoc(keyTexture));
+				winderBaseModel(itemModel, baseTexture, false);
+				winderKeyElements(itemModel, 0);
+
+				generateWinderBlockStates(block, name);
+			} catch (NoSuchFieldException | IllegalAccessException e) {
+				throw new RuntimeException("Could not find RNBlocks." + name.toUpperCase(), e);
+			}
+		}
+	}
+
+	private void winderBaseModel(BlockModelBuilder model, String baseTexture, boolean powered) {
+		model.parent(models().getExistingFile(mcLoc("block/block")))
+				.guiLight(BlockModel.GuiLight.SIDE)
+				.texture("top", modLoc("block/laser/material/" + baseTexture + "_front"))
+				.texture("under", modLoc("block/laser/material/" + baseTexture + (powered ? "_front_on" : "_front")))
+				.texture("side", modLoc("block/laser/material/" + baseTexture + "_side"))
+				.texture("particle", modLoc("block/laser/material/" + baseTexture + "_front"))
+				.renderType("cutout")
+				.element()
+				.from(0, 0, 0).to(16, 6, 16)
+				.face(Direction.NORTH).uvs(0, 0, 6, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#side").end()
+				.face(Direction.EAST).uvs(0, 0, 6, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#side").end()
+				.face(Direction.SOUTH).uvs(0, 0, 6, 16).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#side").end()
+				.face(Direction.WEST).uvs(0, 0, 6, 16).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#side").end()
+				.face(Direction.UP).uvs(0, 0, 16, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#top").end()
+				.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#under").end()
+				.end();
+	}
+
+	private void winderKeyElements(BlockModelBuilder model, int position) {
+		float angle = position * 22.5F;
+		int quarter = Math.round(angle / 90.0F);
+		float residual = angle - quarter * 90.0F;
+		quarter %= 4;
+		float elementAngle = 0.0F - residual;
+
+		var stem = model.element()
+				.from(7, 6, 7).to(9, 11, 9);
+		stem.rotation().angle(elementAngle).axis(Direction.Axis.Y).origin(8, 6, 8).end();
+		for (int side = 0; side < 4; side++) {
+			int[] uv = WINDER_STEM_UVS[Math.floorMod(side - quarter, 4)];
+			stem.face(WINDER_SIDES[side]).uvs(uv[0] / 4.0F, uv[1] / 4.0F, uv[2] / 4.0F, uv[3] / 4.0F).texture("#key").end();
+		}
+		stem.face(Direction.UP).uvs(51 / 4.0F, 24 / 4.0F, 53 / 4.0F, 26 / 4.0F).texture("#key").end();
+		stem.end();
+
+		boolean alongX = quarter % 2 == 0;
+		var plane = model.element();
+		if (alongX) {
+			plane.from(3, 8, 8).to(13, 12, 8);
+		} else {
+			plane.from(8, 8, 3).to(8, 12, 13);
+		}
+		plane.rotation().angle(elementAngle).axis(Direction.Axis.Y).origin(8, 6, 8).end();
+		Direction first = alongX ? Direction.NORTH : Direction.EAST;
+		Direction second = alongX ? Direction.SOUTH : Direction.WEST;
+		plane.face(first).uvs(49 / 4.0F, 14 / 4.0F, 59 / 4.0F, 18 / 4.0F).texture("#key").end();
+		plane.face(second).uvs(49 / 4.0F, 14 / 4.0F, 59 / 4.0F, 18 / 4.0F).texture("#key").end();
+		plane.end();
+	}
+
+	private void generateWinderBlockStates(DeferredBlock<?> block, String name) {
+		MultiPartBlockStateBuilder builder = getMultipartBuilder(block.get());
+		ModelFile base = models().getExistingFile(modLoc("block/" + name + "_base"));
+		ModelFile baseOn = models().getExistingFile(modLoc("block/" + name + "_base_on"));
+		Integer[] poweredLevels = new Integer[15];
+		for (int power = 1; power <= 15; power++) {
+			poweredLevels[power - 1] = power;
+		}
+
+		for (Direction facing : Direction.values()) {
+			int rotationX = switch (facing) {
+				case UP -> 0;
+				case DOWN -> 180;
+				default -> 90;
+			};
+
+			int rotationY = switch (facing) {
+				case NORTH -> 0;
+				case SOUTH -> 180;
+				case EAST -> 90;
+				case WEST -> 270;
+				default -> 0;
+			};
+
+			builder.part().modelFile(base).rotationX(rotationX).rotationY(rotationY).addModel()
+					.condition(BlockStateProperties.FACING, facing)
+					.condition(BlockStateProperties.POWER, 0)
+					.end();
+
+			builder.part().modelFile(baseOn).rotationX(rotationX).rotationY(rotationY).addModel()
+					.condition(BlockStateProperties.FACING, facing)
+					.condition(BlockStateProperties.POWER, poweredLevels)
+					.end();
+
+			for (int power = 0; power < 16; power++) {
+				ModelFile key = models().getExistingFile(modLoc("block/" + name + "_key_" + power));
+				builder.part().modelFile(key).rotationX(rotationX).rotationY(rotationY).addModel()
+						.condition(BlockStateProperties.FACING, facing)
+						.condition(BlockStateProperties.POWER, power)
+						.end();
 			}
 		}
 	}

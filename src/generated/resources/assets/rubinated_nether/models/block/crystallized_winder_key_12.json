@@ -1,0 +1,117 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "east": {
+          "texture": "#key",
+          "uv": [
+            13.75,
+            6.5,
+            14.25,
+            7.75
+          ]
+        },
+        "north": {
+          "texture": "#key",
+          "uv": [
+            12.25,
+            6.5,
+            12.75,
+            7.75
+          ]
+        },
+        "south": {
+          "texture": "#key",
+          "uv": [
+            13.25,
+            6.5,
+            13.75,
+            7.75
+          ]
+        },
+        "up": {
+          "texture": "#key",
+          "uv": [
+            12.75,
+            6.0,
+            13.25,
+            6.5
+          ]
+        },
+        "west": {
+          "texture": "#key",
+          "uv": [
+            12.75,
+            6.5,
+            13.25,
+            7.75
+          ]
+        }
+      },
+      "from": [
+        7,
+        6,
+        7
+      ],
+      "rotation": {
+        "angle": 0.0,
+        "axis": "y",
+        "origin": [
+          8,
+          6,
+          8
+        ]
+      },
+      "to": [
+        9,
+        11,
+        9
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#key",
+          "uv": [
+            12.25,
+            3.5,
+            14.75,
+            4.5
+          ]
+        },
+        "west": {
+          "texture": "#key",
+          "uv": [
+            12.25,
+            3.5,
+            14.75,
+            4.5
+          ]
+        }
+      },
+      "from": [
+        8,
+        8,
+        3
+      ],
+      "rotation": {
+        "angle": 0.0,
+        "axis": "y",
+        "origin": [
+          8,
+          6,
+          8
+        ]
+      },
+      "to": [
+        8,
+        12,
+        13
+      ]
+    }
+  ],
+  "textures": {
+    "key": "rubinated_nether:entity/bronze/bronze_crystallized"
+  }
+}

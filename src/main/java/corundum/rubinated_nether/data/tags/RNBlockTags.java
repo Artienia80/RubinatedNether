@@ -186,6 +186,12 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.TARNISHED_BRONZE_LASER.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_LASER.get(),
 
+				RNBlocks.WINDER.get(),
+				RNBlocks.DISCOLORED_WINDER.get(),
+				RNBlocks.CORRODED_WINDER.get(),
+				RNBlocks.TARNISHED_WINDER.get(),
+				RNBlocks.CRYSTALLIZED_WINDER.get(),
+
 				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get()
 
@@ -347,7 +353,13 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.DISCOLORED_BRONZE_LASER.get(),
 				RNBlocks.CORRODED_BRONZE_LASER.get(),
 				RNBlocks.TARNISHED_BRONZE_LASER.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_LASER.get()
+				RNBlocks.CRYSTALLIZED_BRONZE_LASER.get(),
+
+				RNBlocks.WINDER.get(),
+				RNBlocks.DISCOLORED_WINDER.get(),
+				RNBlocks.CORRODED_WINDER.get(),
+				RNBlocks.TARNISHED_WINDER.get(),
+				RNBlocks.CRYSTALLIZED_WINDER.get()
 		);
 
 		this.tag(RNTags.Blocks.COLDEST_ICE).add(
@@ -376,6 +388,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_LASER.get(),
+				RNBlocks.CRYSTALLIZED_WINDER.get(),
 				RNBlocks.CRYSTALLIZED_GEARBOX.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_VENT.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get(),
