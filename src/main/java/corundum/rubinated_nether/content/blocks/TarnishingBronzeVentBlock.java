@@ -14,6 +14,8 @@ import corundum.rubinated_nether.utils.TickableBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -69,13 +71,18 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
     public static final BooleanProperty WAXED = TarnishingBronze.WAXED;
     public static final IntegerProperty SIGNAL_STRENGTH = IntegerProperty.create("signal_strength", 0, 15);
 
+    public static final int DISPENSER_PULSE_TICKS = 40;
+
+    private static final int DISPENSER_PULSE_SIGNAL = 15;
+    private static final String FORCED_UNTIL_TAG = "forced_power_until";
+
     private static final double GEYSER_IMPULSE = 0.2;
     private static final double GEYSER_BASE_MAX_SPEED = 0.3;
     private static final double GEYSER_MAX_SPEED_PER_BLOCK = 0.1;
     private static final double ANTI_GRAVITY_LIFT = 0.10;
-    /** Extra projectile speed (blocks/tick) a fully powered, fully tarnished vent adds to a dispenser shot. */
+
     private static final double PROJECTILE_BOOST_AT_FULL = 2.4;
-    /** High-level sources (lava, blue ice, dry ice) deal this many times the damage of low ones. */
+
     private static final float HIGH_DAMAGE_MULTIPLIER = 2.0f;
     private static final Predicate<Entity> LAUNCH_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isAlive);
 
@@ -117,7 +124,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         if (level.isClientSide()) return;
         if (tarnishStage == TarnishStage.CRYSTALLIZED) return;
 
-        int signal = level.getBestNeighborSignal(pos);
+        int signal = effectiveSignal(level, pos);
         boolean powered = signal > 0;
         boolean signalChanged = state.getValue(POWERED) != powered || state.getValue(SIGNAL_STRENGTH) != signal;
 
@@ -144,7 +151,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
             return;
         }
 
-        int signal = level.getBestNeighborSignal(pos);
+        int signal = effectiveSignal(level, pos);
         if (signal > 0) {
             BlockState newState = state.setValue(POWERED, true).setValue(SIGNAL_STRENGTH, signal);
             level.setBlock(pos, newState, Block.UPDATE_ALL);
@@ -167,6 +174,15 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
             checkAndFireCrystallized(state, level, pos);
             level.scheduleTick(pos, this, 1);
             return;
+        }
+
+        VentBlockEntity pulseEntity = ventEntity(level, pos);
+        if (pulseEntity != null && pulseEntity.forcedUntil != 0) {
+            if (pulseEntity.forcedUntil <= level.getGameTime()) {
+                pulseEntity.forcedUntil = 0;
+                pulseEntity.setChanged();
+            }
+            state = syncPower(level, pos, state);
         }
 
         if (!state.getValue(POWERED)) return;
@@ -223,7 +239,6 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
             spawnSteamColumn(level, pos, facing.getOpposite(), back, true, density * 0.6, HeatSource.NONE, random);
     }
 
-    /** What is heating or cooling the vent from behind, and how strongly. */
     public enum HeatSource {
         NONE, HOT_LOW, HOT_HIGH, COLD_LOW, COLD_HIGH;
 
@@ -241,11 +256,6 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         return HeatSource.NONE;
     }
 
-    /**
-     * Looks behind the vent for a tagged block: the block directly behind it (this is how lava and fire,
-     * which smoke passes through, are detected) and the block the back column ends on (magma, ice...).
-     * The stronger of the two wins.
-     */
     public HeatSource getHeatSource(Level level, BlockPos pos, Direction facing, int back) {
         if (getLaunchImpulse() <= 0) return HeatSource.NONE;
 
@@ -325,7 +335,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         if (inward || source == HeatSource.NONE) return;
 
         if (!source.isHigh()) {
-            // Low: the occasional spark / snowflake right at the mouth.
+
             if (random.nextDouble() < 0.12 * density) {
                 Vec3 mouth = centre.add(axis.scale(0.55));
                 Vec3 drift = axis.scale(0.04 + random.nextDouble() * 0.04);
@@ -338,7 +348,6 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
             return;
         }
 
-        // High: a lot more of them, spread along the whole column, plus embers / frost clouds.
         int accents = randomRound(density * 1.6, random);
         for (int i = 0; i < accents; i++) {
             double along = 0.55 + random.nextDouble() * Math.max(0.3, range * 0.8);
@@ -417,7 +426,6 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         return maxRange;
     }
 
-
     private static VoxelShape rotateSmokeShape(Direction facing) {
         return switch (facing.getAxis()) {
             case Z -> Shapes.box(0.125, 0.125, 0, 0.875, 0.875, 1);
@@ -456,7 +464,6 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         }
     }
 
-
     static void launchTick(Level level, BlockPos pos, BlockState state) {
         if (!(state.getBlock() instanceof TarnishingBronzeVentBlock vent)) return;
         if (!state.getValue(POWERED)) return;
@@ -472,7 +479,6 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         if (ranges.getRight() > 0)
             launchColumn(level, pos, facing.getOpposite(), facing, ranges.getRight(), impulse);
     }
-
 
     private static void launchColumn(Level level, BlockPos pos, Direction column, Direction flow, int range, double impulse) {
         Vec3 columnDir = Vec3.atLowerCornerOf(column.getNormal());
@@ -519,15 +525,45 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         return Math.floorMod(level.getGameTime() + pos.hashCode(), 20L) == 0;
     }
 
-    /** Whether this vent is currently pushing (powered and strong enough to push at all). */
+    private static VentBlockEntity ventEntity(Level level, BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof VentBlockEntity be ? be : null;
+    }
+
+    private static int effectiveSignal(Level level, BlockPos pos) {
+        int signal = level.getBestNeighborSignal(pos);
+        VentBlockEntity be = ventEntity(level, pos);
+        boolean pulsed = be != null && be.forcedUntil > level.getGameTime();
+        return pulsed ? Math.max(signal, DISPENSER_PULSE_SIGNAL) : signal;
+    }
+
+    private static BlockState syncPower(Level level, BlockPos pos, BlockState state) {
+        int signal = effectiveSignal(level, pos);
+        boolean powered = signal > 0;
+        if (state.getValue(POWERED) != powered || state.getValue(SIGNAL_STRENGTH) != signal) {
+            state = state.setValue(POWERED, powered).setValue(SIGNAL_STRENGTH, signal);
+            level.setBlock(pos, state, Block.UPDATE_ALL);
+        }
+        return state;
+    }
+
+    public void pulseFromDispenser(Level level, BlockPos pos, BlockState state) {
+        if (level.isClientSide() || tarnishStage == TarnishStage.CRYSTALLIZED || getLaunchImpulse() <= 0) return;
+        VentBlockEntity be = ventEntity(level, pos);
+        if (be == null) return;
+
+        be.forcedUntil = level.getGameTime() + DISPENSER_PULSE_TICKS;
+        be.setChanged();
+
+        syncPower(level, pos, state);
+        if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
+            level.scheduleTick(pos, this, 1);
+        }
+    }
+
     public boolean isPushingActive(BlockState state) {
         return state.getValue(POWERED) && getLaunchImpulse() > 0;
     }
 
-    /**
-     * Speed (blocks/tick) added to a projectile a dispenser shoots through this vent. Scales with the vent's
-     * tarnish stage (its push strength) and the redstone signal reaching it.
-     */
     public double getProjectileBoost(Level level, BlockPos pos, BlockState state) {
         double strength = getLaunchImpulse() / GEYSER_IMPULSE;
         double signal = state.getValue(SIGNAL_STRENGTH) / 15.0;
@@ -597,10 +633,24 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         return VentBlockEntity.class;
     }
 
-
     public static class VentBlockEntity extends BlockEntity implements TickableBlockEntity {
+
+        private long forcedUntil;
+
         public VentBlockEntity(BlockPos pos, BlockState state) {
             super(RNBlockEntities.BRONZE_VENT.get(), pos, state);
+        }
+
+        @Override
+        protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+            super.saveAdditional(tag, registries);
+            if (forcedUntil != 0) tag.putLong(FORCED_UNTIL_TAG, forcedUntil);
+        }
+
+        @Override
+        protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+            super.loadAdditional(tag, registries);
+            forcedUntil = tag.getLong(FORCED_UNTIL_TAG);
         }
 
         @Override

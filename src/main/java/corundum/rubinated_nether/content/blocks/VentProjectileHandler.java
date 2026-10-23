@@ -5,16 +5,26 @@ import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
 import corundum.rubinated_nether.content.entity.CrystallizedBronzeShotProjectileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.dispenser.BlockSource;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.entity.projectile.ThrownEnderpearl;
 import net.minecraft.world.entity.projectile.ThrownExperienceBottle;
 import net.minecraft.world.entity.projectile.ThrownPotion;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,22 +32,15 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
-/**
- * A dispenser pointing into the BACK of a powered vent (both facing the same way) shoots its
- * projectile straight through the vent. The vent speeds the projectile up, and the faster it
- * is the harder it hits. Bronze shots fired this way can also break blocks.
- *
- * <p>Tuning (see the constants below), with a dispenser shot starting at ~1.1 blocks/tick and a
- * fully powered tarnished vent adding ~2.4: energy = SHOT_HARDNESS * speed^2, cost = 5 * hardness.
- * Glass (0.3) needs speed 1.22, dirt (0.5) 1.58, stone (1.5) 2.74, iron block (5) 5.0,
- * obsidian (50) 15.8 - basically out of reach.
- */
+import java.util.ArrayList;
+
 @EventBusSubscriber(modid = RubinatedNether.MODID)
 public final class VentProjectileHandler {
 
@@ -47,30 +50,91 @@ public final class VentProjectileHandler {
     private static final String PENDING_Y = "rubinated_vent_vy";
     private static final String PENDING_Z = "rubinated_vent_vz";
 
-    /** Damage dealt per block/tick of projectile speed. */
     private static final double DAMAGE_PER_SPEED = 1.5;
 
-    /**
-     * Innate hardness of a bronze shot. Impact energy is {@code SHOT_HARDNESS * speed^2}.
-     * Raise it to let shots punch through tougher blocks.
-     */
     private static final double SHOT_HARDNESS = 1.0;
 
-    /**
-     * Energy needed to break a block = {@code BREAK_COST_PER_HARDNESS * block hardness}.
-     * Glass (0.3) and dirt (0.5) are cheap, stone (1.5) takes a fast shot, obsidian (50) is out of reach.
-     */
     private static final double BREAK_COST_PER_HARDNESS = 5.0;
 
-    /** Speed a shot keeps at least after smashing through a block. */
     private static final double MIN_EXIT_SPEED = 0.15;
+
+    private static final double TNT_BASE_SPEED = 1.1;
 
     private VentProjectileHandler() {}
 
-    /**
-     * True if the dispenser at {@code dispenserPos} points straight into the back of a powered vent
-     * that faces the same way, i.e. it is part of the vent railgun contraption.
-     */
+    public static void registerDispenserPulse() {
+        for (var entry : new ArrayList<>(DispenserBlock.DISPENSER_REGISTRY.entrySet())) {
+            Item item = entry.getKey();
+            DispenseItemBehavior original = entry.getValue();
+            DispenserBlock.DISPENSER_REGISTRY.put(item, wrapWithPulse(original));
+        }
+
+        if (DispenserBlock.DISPENSER_REGISTRY instanceof Object2ObjectMap<Item, DispenseItemBehavior> fast) {
+            fast.defaultReturnValue(wrapWithPulse(fast.defaultReturnValue()));
+        }
+    }
+
+    private static DispenseItemBehavior wrapWithPulse(DispenseItemBehavior original) {
+        return (source, stack) -> {
+            pulseVentBehind(source);
+            return original.dispense(source, stack);
+        };
+    }
+
+    private static void pulseVentBehind(BlockSource source) {
+        BlockState dispenser = source.state();
+        if (!dispenser.is(Blocks.DISPENSER)) return;
+        Direction facing = dispenser.getValue(DispenserBlock.FACING);
+        Level level = source.level();
+        BlockPos ventPos = source.pos().relative(facing);
+        BlockState ventState = level.getBlockState(ventPos);
+        if (ventState.getBlock() instanceof TarnishingBronzeVentBlock vent
+                && ventState.getValue(TarnishingBronzeVentBlock.FACING) == facing) {
+            vent.pulseFromDispenser(level, ventPos, ventState);
+        }
+    }
+
+    public static void registerTntBehavior() {
+        DispenseItemBehavior vanilla = DispenserBlock.DISPENSER_REGISTRY.get(Items.TNT);
+        DispenseItemBehavior vent = new DefaultDispenseItemBehavior() {
+            @Override
+            protected ItemStack execute(BlockSource source, ItemStack stack) {
+                return dispenseTntThroughVent(source, stack);
+            }
+        };
+        DispenserBlock.registerBehavior(Items.TNT, (source, stack) ->
+                isVentContraption(source.level(), source.pos(), source.state())
+                        ? vent.dispense(source, stack)
+                        : vanilla.dispense(source, stack));
+    }
+
+    private static ItemStack dispenseTntThroughVent(BlockSource source, ItemStack stack) {
+        Level level = source.level();
+        BlockPos dispenserPos = source.pos();
+        Direction facing = source.state().getValue(DispenserBlock.FACING);
+        BlockPos ventPos = dispenserPos.relative(facing);
+        BlockState ventState = level.getBlockState(ventPos);
+        if (!(ventState.getBlock() instanceof TarnishingBronzeVentBlock vent)) return stack;
+
+        PrimedTnt tnt = new PrimedTnt(level, ventPos.getX() + 0.5, ventPos.getY(), ventPos.getZ() + 0.5, null);
+
+        BlockPos frontPos = ventPos.relative(facing);
+        Vec3 front = Vec3.atCenterOf(frontPos);
+        tnt.setPos(front.x, front.y - tnt.getBbHeight() / 2.0, front.z);
+        if (!level.noCollision(tnt, tnt.getBoundingBox())) {
+            tnt.setPos(ventPos.getX() + 0.5, ventPos.getY(), ventPos.getZ() + 0.5);
+        }
+
+        double speed = TNT_BASE_SPEED + vent.getProjectileBoost(level, ventPos, ventState);
+        tnt.setDeltaMovement(Vec3.atLowerCornerOf(facing.getNormal()).scale(speed));
+
+        level.addFreshEntity(tnt);
+        level.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.gameEvent(null, GameEvent.ENTITY_PLACE, ventPos);
+        stack.shrink(1);
+        return stack;
+    }
+
     public static boolean isVentContraption(Level level, BlockPos dispenserPos, BlockState dispenserState) {
         if (!dispenserState.is(Blocks.DISPENSER)) return false;
         Direction facing = dispenserState.getValue(DispenserBlock.FACING);
@@ -86,7 +150,6 @@ public final class VentProjectileHandler {
         if (level.isClientSide() || event.loadedFromDisk()) return;
         if (!(event.getEntity() instanceof Projectile projectile)) return;
 
-        // A dispenser spawns its projectile inside the block in front of it, i.e. inside the vent.
         BlockPos ventPos = projectile.blockPosition();
         BlockState ventState = level.getBlockState(ventPos);
         if (!(ventState.getBlock() instanceof TarnishingBronzeVentBlock vent)) return;
@@ -100,7 +163,6 @@ public final class VentProjectileHandler {
         Vec3 velocity = projectile.getDeltaMovement();
         if (velocity.lengthSqr() < 1.0E-6 || velocity.dot(normal) <= 0) return;
 
-        // Move the projectile to the vent's mouth, keeping its sideways offset.
         Vec3 centre = Vec3.atCenterOf(ventPos);
         Vec3 lateral = projectile.position().subtract(centre);
         lateral = lateral.subtract(normal.scale(lateral.dot(normal)));
@@ -110,7 +172,6 @@ public final class VentProjectileHandler {
         projectile.yo = mouth.y;
         projectile.zo = mouth.z;
 
-        // Speed it up by the vent's push.
         double boost = vent.getProjectileBoost(level, ventPos, ventState);
         double speed = velocity.length() + boost;
         projectile.setDeltaMovement(velocity.normalize().scale(speed));
@@ -136,7 +197,6 @@ public final class VentProjectileHandler {
         }
     }
 
-    /** Restores the velocity a shot keeps after breaking a block (see {@link #tryBreakBlock}). */
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Pre event) {
         Entity entity = event.getEntity();
@@ -152,7 +212,7 @@ public final class VentProjectileHandler {
 
     private static void applySpeedDamage(Projectile projectile, EntityHitResult hit, double speed) {
         if (projectile instanceof BronzeShotProjectileEntity || projectile instanceof CrystallizedBronzeShotProjectileEntity) {
-            // Their hit code uses the arrow base damage as-is, so make it follow the speed.
+
             AbstractArrow arrow = (AbstractArrow) projectile;
             arrow.setBaseDamage(Math.max(arrow.getBaseDamage(), speed * DAMAGE_PER_SPEED));
         } else if (projectile instanceof ThrowableProjectile
@@ -160,23 +220,18 @@ public final class VentProjectileHandler {
                 && !(projectile instanceof ThrownExperienceBottle)
                 && !(projectile instanceof ThrownEnderpearl)
                 && hit.getEntity() instanceof LivingEntity target) {
-            // Vanilla arrows already scale with speed; thrown items (snowballs, eggs...) normally do nothing.
+
             target.hurt(projectile.damageSources().thrown(projectile, projectile.getOwner()), (float) (speed * DAMAGE_PER_SPEED));
         }
     }
 
-    /**
-     * Bronze shot vs block: the shot has {@code SHOT_HARDNESS * speed^2} energy and breaking a block costs
-     * {@code BREAK_COST_PER_HARDNESS * hardness}. If it can pay, the block breaks, the leftover energy
-     * becomes the new speed and the shot flies on. Otherwise it impacts like normal.
-     */
     private static boolean tryBreakBlock(Level level, Projectile projectile, BlockHitResult hit, double speed) {
         BlockPos pos = hit.getBlockPos();
         BlockState state = level.getBlockState(pos);
         if (state.isAir()) return false;
 
         float hardness = state.getDestroySpeed(level, pos);
-        if (hardness < 0) return false; // bedrock and friends
+        if (hardness < 0) return false;
 
         double energy = SHOT_HARDNESS * speed * speed;
         double cost = BREAK_COST_PER_HARDNESS * hardness;
@@ -187,8 +242,6 @@ public final class VentProjectileHandler {
 
         level.destroyBlock(pos, true, projectile);
 
-        // Park the shot at the broken block for the rest of this tick so it can't skip over the next
-        // block, and hand its remaining velocity back at the start of the next tick.
         Vec3 resume = direction.scale(exitSpeed);
         Vec3 at = hit.getLocation().add(direction.scale(0.05));
         projectile.setPos(at.x, at.y, at.z);

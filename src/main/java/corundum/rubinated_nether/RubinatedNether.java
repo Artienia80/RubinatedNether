@@ -9,6 +9,7 @@ import corundum.rubinated_nether.content.commands.ModuleCommand;
 import corundum.rubinated_nether.content.commands.RubinateCommand;
 import corundum.rubinated_nether.content.RNCapabilities;
 import corundum.rubinated_nether.content.enchantment.RNEnchantmentEffects;
+import corundum.rubinated_nether.content.blocks.VentProjectileHandler;
 import corundum.rubinated_nether.content.items.ChainsawItem;
 import corundum.rubinated_nether.content.items.JackhammerHandler;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
@@ -34,6 +35,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -69,6 +71,7 @@ public class RubinatedNether {
         LOGGER.info("Rubinating all over your Nether...");
 
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::loadComplete);
         modEventBus.addListener(this::addPackFinders);
         NeoForge.EVENT_BUS.addListener(ChainsawItem::onEntityTick);
 
@@ -95,7 +98,7 @@ public class RubinatedNether {
 
     public void addPackFinders(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-            // Simple Freezer Pack
+
             var simpleFreezerPath = ModList.get()
                     .getModFileById(MODID)
                     .getFile()
@@ -129,7 +132,6 @@ public class RubinatedNether {
                 }
             });
 
-            // Aurichalcum Pack
             var aurichalcumPath = ModList.get()
                     .getModFileById(MODID)
                     .getFile()
@@ -169,7 +171,13 @@ public class RubinatedNether {
         event.enqueueWork(() -> {
             RNCauldronInteraction.bootStrap();
             corundum.rubinated_nether.content.trim.VaseEngravingMaterial.bootstrap();
+            VentProjectileHandler.registerTntBehavior();
         });
+    }
+
+    public void loadComplete(FMLLoadCompleteEvent event) {
+
+        event.enqueueWork(VentProjectileHandler::registerDispenserPulse);
     }
 
     public void registerCommands(RegisterCommandsEvent event) {
