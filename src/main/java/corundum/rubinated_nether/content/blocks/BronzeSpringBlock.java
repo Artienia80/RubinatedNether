@@ -1,6 +1,9 @@
 package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.TarnishStage;
@@ -39,7 +42,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBronze {
+public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBronze, SimpleWaterloggedBlock {
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final MapCodec<BronzeSpringBlock> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
                     TarnishStage.CODEC.fieldOf("tarnishing_state").forGetter(BronzeSpringBlock::getAge),
@@ -74,18 +78,19 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
 
     private final TarnishStage tarnishStage;
 
-    public BronzeSpringBlock(TarnishStage tarnishStage, BlockBehaviour.Properties properties) {
+    public BronzeSpringBlock(TarnishStage tarnishStage, Properties properties) {
         super(properties);
         this.tarnishStage = tarnishStage;
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.UP)
                 .setValue(EXTENDED, false)
-                .setValue(WAXED, false));
+                .setValue(WAXED, false)
+                .setValue(WATERLOGGED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, EXTENDED, WAXED);
+        builder.add(FACING, EXTENDED, WAXED, WATERLOGGED);
     }
 
     @Override
@@ -112,6 +117,7 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         BlockPos blockPos = context.getClickedPos();
         Level level = context.getLevel();
         BlockPos extendPos = blockPos.relative(facing);
+        boolean waterlogged = level.getFluidState(blockPos).getType() == Fluids.WATER;
 
         if (!isWithinBounds(extendPos, level)) {
             return null;
@@ -126,7 +132,8 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
             BlockState placementState = this.defaultBlockState()
                     .setValue(FACING, facing)
                     .setValue(EXTENDED, hasSignal && canExtend)
-                    .setValue(WAXED, false);
+                    .setValue(WAXED, false)
+                    .setValue(WATERLOGGED, waterlogged);
 
             // Schedule ticking for crystallized springs
             if (tarnishStage == TarnishStage.CRYSTALLIZED && !level.isClientSide()) {
@@ -140,7 +147,8 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
         BlockState placementState = this.defaultBlockState()
                 .setValue(FACING, facing)
                 .setValue(EXTENDED, false)
-                .setValue(WAXED, false);
+                .setValue(WAXED, false)
+                .setValue(WATERLOGGED, waterlogged);
 
         // Schedule ticking for crystallized springs
         if (tarnishStage == TarnishStage.CRYSTALLIZED && !level.isClientSide()) {
@@ -157,6 +165,9 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
     @Override
     protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState,
                                      LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+        if (state.getValue(WATERLOGGED))
+            level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+
         Direction springFacing = state.getValue(FACING);
 
         if (facing == springFacing) {
@@ -167,11 +178,16 @@ public class BronzeSpringBlock extends DirectionalBlock implements TarnishingBro
             }
 
             if (facingState.getBlock() instanceof BronzeSpringBlock && state.getValue(EXTENDED)) {
-                return Blocks.AIR.defaultBlockState();
+                return state.getFluidState().createLegacyBlock();
             }
         }
 
         return state;
+    }
+
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override

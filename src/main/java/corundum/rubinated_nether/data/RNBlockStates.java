@@ -519,7 +519,7 @@ public class RNBlockStates extends BlockStateProvider {
 				.renderType(mcLoc("cutout"))
 				.ao(false);
 
-		this.getVariantBuilder(spring.get()).forAllStates((state) -> {
+		this.getVariantBuilder(spring.get()).forAllStatesExcept((state) -> {
 			boolean extended = state.getValue(BlockStateProperties.EXTENDED);
 			Direction facing = state.getValue(BlockStateProperties.FACING);
 
@@ -542,7 +542,7 @@ public class RNBlockStates extends BlockStateProvider {
 					.rotationX(rotationX)
 					.rotationY(rotationY)
 					.build();
-		});
+		}, BlockStateProperties.WATERLOGGED);
 	}
 
 	public void subfolder(String folder, DeferredBlock<?>... blocks) {
@@ -637,12 +637,12 @@ public class RNBlockStates extends BlockStateProvider {
 				.face(Direction.UP).uvs(0, 0, 16, 16).texture("#6").end()
 				.end();
 
-		getVariantBuilder(block.get()).forAllStates(state -> {
+		getVariantBuilder(block.get()).forAllStatesExcept(state -> {
 			var half = state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF);
 			return ConfiguredModel.builder()
 					.modelFile(half == DoubleBlockHalf.LOWER ? baseModel : lidModel)
 					.build();
-		});
+		}, BlockStateProperties.WATERLOGGED);
 	}
 
 	private void generateBrazierModel(int level) {

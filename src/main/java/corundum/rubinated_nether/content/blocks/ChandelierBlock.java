@@ -1,6 +1,14 @@
 package corundum.rubinated_nether.content.blocks;
 
 import corundum.rubinated_nether.content.RNBlockEntities;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import corundum.rubinated_nether.utils.FallingWaterCarry;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import corundum.rubinated_nether.content.RNDamageTypes;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
@@ -32,13 +40,32 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 
-public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<ChandelierBlock.ChandelierBlockEntity>, Fallable {
+public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<ChandelierBlock.ChandelierBlockEntity>, Fallable, SimpleWaterloggedBlock {
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected static final VoxelShape SHAPE_BOTTOM = Block.box(2.0, -2.0, 2.0, 14.0, 5.0, 14.0);
     protected static final VoxelShape SHAPE_TOP = Block.box(-8.0, 5.0, -8.0, 24.0, 10.0, 24.0);
     protected static final VoxelShape SHAPE = Shapes.or(SHAPE_BOTTOM, SHAPE_TOP);
 
     public ChandelierBlock(TarnishStage tarnishStage, Properties properties) {
         super(tarnishStage, properties);
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(WATERLOGGED);
+        super.createBlockStateDefinition(builder);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        FluidState fluid = context.getLevel().getFluidState(context.getClickedPos());
+        return this.defaultBlockState().setValue(WATERLOGGED, fluid.getType() == Fluids.WATER);
+    }
+
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
@@ -48,6 +75,8 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
 
     @Override
     public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
+        if (pState.getValue(WATERLOGGED))
+            pLevel.scheduleTick(pCurrentPos, Fluids.WATER, Fluids.WATER.getTickDelay(pLevel));
         pLevel.scheduleTick(pCurrentPos, this, 2);
         return pState;
     }
@@ -70,6 +99,7 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
         if(!(blockstate.getBlock() instanceof ChandelierBlock chandelier)) return;
 
         FallingBlockEntity fallingblockentity = FallingBlockEntity.fall(pLevel, blockpos$mutableblockpos, blockstate);
+        FallingWaterCarry.pickUpWater(pLevel, pPos, blockstate, fallingblockentity);
 
         int fallDistance = Math.max(1 + pPos.getY() - blockpos$mutableblockpos.getY(), 6);
         float f = (RNConfig.chandelierStateMultiplierIncrease * (float) fallDistance) * tarnishingDamageMultiplier(chandelier.getAge());
@@ -120,6 +150,7 @@ public class ChandelierBlock extends TarnishingBronzeBlock implements BEBlock<Ch
 
     @Override
     public void onLand(Level level, BlockPos pos, BlockState fallingState, BlockState hitState, FallingBlockEntity fallingBlock) {
+        FallingWaterCarry.dropOffWater(level, pos, fallingBlock);
     }
 
     @Override

@@ -1,6 +1,12 @@
 package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
@@ -45,7 +51,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class BronzeLaserBlock extends DirectionalBlock implements BEBlock<BronzeLaserBlockEntity>, TarnishingBronze {
+public class BronzeLaserBlock extends DirectionalBlock implements BEBlock<BronzeLaserBlockEntity>, TarnishingBronze, SimpleWaterloggedBlock {
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
 	public static final MapCodec<BronzeLaserBlock> CODEC = RecordCodecBuilder.mapCodec(
 			instance -> instance.group(
@@ -86,7 +93,7 @@ public class BronzeLaserBlock extends DirectionalBlock implements BEBlock<Bronze
 		public boolean detectsEntities() { return this == SPECTRUM || this == INFRARED; }
 	}
 
-	public BronzeLaserBlock(TarnishStage state, BlockBehaviour.Properties props) {
+	public BronzeLaserBlock(TarnishStage state, Properties props) {
 		super(props);
 		this.tarnishStage = state;
 		this.registerDefaultState(this.defaultBlockState()
@@ -94,12 +101,13 @@ public class BronzeLaserBlock extends DirectionalBlock implements BEBlock<Bronze
 				.setValue(POWER, 0)
 				.setValue(MODE, LaserMode.SPECTRUM)
 				.setValue(WAXED, false)
+				.setValue(WATERLOGGED, false)
 		);
 	}
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(FACING, POWER, MODE, WAXED);
+		builder.add(FACING, POWER, MODE, WAXED, WATERLOGGED);
 	}
 
 	@Override
@@ -120,7 +128,22 @@ public class BronzeLaserBlock extends DirectionalBlock implements BEBlock<Bronze
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
+		FluidState fluid = context.getLevel().getFluidState(context.getClickedPos());
+		return defaultBlockState()
+				.setValue(FACING, context.getNearestLookingDirection().getOpposite())
+				.setValue(WATERLOGGED, fluid.getType() == Fluids.WATER);
+	}
+
+	@Override
+	protected FluidState getFluidState(BlockState state) {
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+	}
+
+	@Override
+	protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+		if (state.getValue(WATERLOGGED))
+			level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+		return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
 	}
 
 	@Override

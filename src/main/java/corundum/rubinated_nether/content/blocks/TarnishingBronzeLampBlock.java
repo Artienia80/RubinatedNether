@@ -1,6 +1,13 @@
 package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNTags;
@@ -35,7 +42,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class TarnishingBronzeLampBlock extends RotatedPillarBlock implements TarnishingBronze {
+public class TarnishingBronzeLampBlock extends RotatedPillarBlock implements TarnishingBronze, SimpleWaterloggedBlock {
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final MapCodec<TarnishingBronzeLampBlock> CODEC = RecordCodecBuilder.mapCodec(
 			blockInstance -> blockInstance.group(
 							TarnishStage.CODEC
@@ -59,17 +67,43 @@ public class TarnishingBronzeLampBlock extends RotatedPillarBlock implements Tar
 
 	public TarnishingBronzeLampBlock(
 			TarnishStage tarnishStage,
-			BlockBehaviour.Properties properties
+			Properties properties
 	) {
 		super(properties);
 		this.tarnishStage = tarnishStage;
-		registerDefaultState(defaultBlockState().setValue(WAXED, false));
+		registerDefaultState(defaultBlockState().setValue(WAXED, false).setValue(WATERLOGGED, false));
 	}
 
 	@Override
 	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
-		builder.add(WAXED);
+		builder.add(WAXED, WATERLOGGED);
 		super.createBlockStateDefinition(builder);
+	}
+
+	@Override
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		BlockState state = super.getStateForPlacement(context);
+		FluidState fluid = context.getLevel().getFluidState(context.getClickedPos());
+		return state.setValue(WATERLOGGED, fluid.getType() == Fluids.WATER);
+	}
+
+	@Override
+	protected FluidState getFluidState(BlockState state) {
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+	}
+
+	@Override
+	protected BlockState updateShape(
+			BlockState state,
+			Direction direction,
+			BlockState neighborState,
+			LevelAccessor level,
+			BlockPos pos,
+			BlockPos neighborPos
+	) {
+		if (state.getValue(WATERLOGGED))
+			level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+		return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
 	}
 
 	@Override

@@ -1386,7 +1386,7 @@ public class RNBlocks {
 			"bronze_vent",
 			() -> new TarnishingBronzeVentBlock(
 					TarnishStage.UNAFFECTED,
-					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
 			)
 	);
 
@@ -1394,7 +1394,7 @@ public class RNBlocks {
 			"discolored_bronze_vent",
 			() -> new TarnishingBronzeVentBlock(
 					TarnishStage.DISCOLORED,
-					BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get())
 			)
 	);
 
@@ -1402,7 +1402,7 @@ public class RNBlocks {
 			"corroded_bronze_vent",
 			() -> new TarnishingBronzeVentBlock(
 					TarnishStage.CORRODED,
-					BlockBehaviour.Properties.ofFullCopy(CORRODED_BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(CORRODED_BRONZE_BLOCK.get())
 			)
 	);
 
@@ -1410,7 +1410,7 @@ public class RNBlocks {
 			"tarnished_bronze_vent",
 			() -> new TarnishingBronzeVentBlock(
 					TarnishStage.TARNISHED,
-					BlockBehaviour.Properties.ofFullCopy(TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(TARNISHED_BRONZE_BLOCK.get())
 			)
 	);
 
@@ -1418,7 +1418,7 @@ public class RNBlocks {
 			"crystallized_bronze_vent",
 			() -> new TarnishingBronzeVentBlock(
 					TarnishStage.CRYSTALLIZED,
-					BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get())
 			)
 	);
 

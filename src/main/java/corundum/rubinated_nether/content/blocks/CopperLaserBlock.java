@@ -1,6 +1,12 @@
 package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.blocks.entities.CopperLaserBlockEntity;
@@ -39,7 +45,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class CopperLaserBlock extends DirectionalBlock implements BEBlock<CopperLaserBlockEntity>, WeatheringCopper {
+public class CopperLaserBlock extends DirectionalBlock implements BEBlock<CopperLaserBlockEntity>, WeatheringCopper, SimpleWaterloggedBlock {
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
 	public static final MapCodec<CopperLaserBlock> CODEC = RecordCodecBuilder.mapCodec(
 			instance -> instance.group(
@@ -81,19 +88,20 @@ public class CopperLaserBlock extends DirectionalBlock implements BEBlock<Copper
 		public boolean detectsEntities() { return this == SPECTRUM || this == INFRARED; }
 	}
 
-	public CopperLaserBlock(WeatherState state, BlockBehaviour.Properties props) {
+	public CopperLaserBlock(WeatherState state, Properties props) {
 		super(props);
 		this.weatherState = state;
 		this.registerDefaultState(this.defaultBlockState()
 				.setValue(FACING, Direction.NORTH)
 				.setValue(POWER, 0)
 				.setValue(MODE, LaserMode.SPECTRUM)
+				.setValue(WATERLOGGED, false)
 		);
 	}
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(FACING, POWER, MODE);
+		builder.add(FACING, POWER, MODE, WATERLOGGED);
 	}
 
 	@Override
@@ -114,7 +122,22 @@ public class CopperLaserBlock extends DirectionalBlock implements BEBlock<Copper
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
+		FluidState fluid = context.getLevel().getFluidState(context.getClickedPos());
+		return defaultBlockState()
+				.setValue(FACING, context.getNearestLookingDirection().getOpposite())
+				.setValue(WATERLOGGED, fluid.getType() == Fluids.WATER);
+	}
+
+	@Override
+	protected FluidState getFluidState(BlockState state) {
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+	}
+
+	@Override
+	protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+		if (state.getValue(WATERLOGGED))
+			level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+		return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
 	}
 
 	@Override

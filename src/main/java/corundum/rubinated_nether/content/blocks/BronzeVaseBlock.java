@@ -1,6 +1,10 @@
 package corundum.rubinated_nether.content.blocks;
 
 import corundum.rubinated_nether.RubinatedNether;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.entities.VaseBlockEntity;
 import corundum.rubinated_nether.content.trim.VaseEngraving;
@@ -65,7 +69,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<VaseBlockEntity> {
+public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<VaseBlockEntity>, SimpleWaterloggedBlock {
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
@@ -80,14 +85,14 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
     public static final ResourceLocation CONTENTS = RubinatedNether.id("contents");
     private static final Component UNKNOWN_CONTENTS = Component.translatable("container.bronzeVase.unknownContents");
 
-    public BronzeVaseBlock(TarnishStage tarnishStage, BlockBehaviour.Properties properties) {
+    public BronzeVaseBlock(TarnishStage tarnishStage, Properties properties) {
         super(tarnishStage, properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(WAXED, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(WAXED, false).setValue(WATERLOGGED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(HALF);
+        builder.add(HALF, WATERLOGGED);
         super.createBlockStateDefinition(builder);
     }
 
@@ -97,15 +102,29 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
 
     @Override
     protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+        if (state.getValue(WATERLOGGED))
+            level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         DoubleBlockHalf doubleblockhalf = state.getValue(HALF);
         if (facing.getAxis() != Direction.Axis.Y || doubleblockhalf == DoubleBlockHalf.LOWER != (facing == Direction.UP))
             return doubleblockhalf == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos)
-                    ? Blocks.AIR.defaultBlockState()
+                    ? state.getFluidState().createLegacyBlock()
                     : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
         else
             return facingState.getBlock() instanceof BronzeVaseBlock && facingState.getValue(HALF) != doubleblockhalf
-                    ? facingState.setValue(HALF, doubleblockhalf)
-                    : Blocks.AIR.defaultBlockState();
+                    ? facingState.setValue(HALF, doubleblockhalf).setValue(WATERLOGGED, state.getValue(WATERLOGGED))
+                    : state.getFluidState().createLegacyBlock();
+    }
+
+    // Only the lid (upper half) has a non-full shape, so only it can hold water.
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+    }
+
+    @Override
+    public boolean canPlaceLiquid(@Nullable Player player, BlockGetter level, BlockPos pos, BlockState state, Fluid fluid) {
+        return state.getValue(HALF) == DoubleBlockHalf.UPPER
+                && SimpleWaterloggedBlock.super.canPlaceLiquid(player, level, pos, state, fluid);
     }
 
     @Override
@@ -178,7 +197,8 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
 
-        level.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), 3);
+        boolean water = level.getFluidState(pos.above()).getType() == Fluids.WATER;
+        level.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER).setValue(WATERLOGGED, water), 3);
     }
 
     @Override

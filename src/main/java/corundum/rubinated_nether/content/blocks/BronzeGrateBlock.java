@@ -1,6 +1,17 @@
 package corundum.rubinated_nether.content.blocks;
 
 import corundum.rubinated_nether.RubinatedNether;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.Fallable;
+import net.minecraft.world.level.block.Block;
+import corundum.rubinated_nether.utils.FallingWaterCarry;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
@@ -28,13 +39,44 @@ import java.util.Set;
 
 import static net.minecraft.world.level.block.FallingBlock.isFree;
 
-public class BronzeGrateBlock extends TarnishingBronzeBlock {
+public class BronzeGrateBlock extends TarnishingBronzeBlock implements SimpleWaterloggedBlock, Fallable {
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final int MAX_REDSTONE_PROPAGATION = 256;
     private static final Direction[] HORIZONTAL_DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
     private static final int CASCADE_DELAY = 5; // Base delay for cascade
 
-    public BronzeGrateBlock(TarnishStage tarnishStage, BlockBehaviour.Properties properties) {
+    public BronzeGrateBlock(TarnishStage tarnishStage, Properties properties) {
         super(tarnishStage, properties);
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(WATERLOGGED);
+        super.createBlockStateDefinition(builder);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        FluidState fluid = context.getLevel().getFluidState(context.getClickedPos());
+        return this.defaultBlockState().setValue(WATERLOGGED, fluid.getType() == Fluids.WATER);
+    }
+
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+    }
+
+    @Override
+    protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        if (state.getValue(WATERLOGGED))
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+    }
+
+    @Override
+    public void onLand(Level level, BlockPos pos, BlockState fallingState, BlockState hitState, FallingBlockEntity fallingBlock) {
+        FallingWaterCarry.dropOffWater(level, pos, fallingBlock);
     }
 
     @Override
@@ -129,6 +171,7 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock {
             boolean isCrystallized = getAgeFromBlock(state) == TarnishStage.CRYSTALLIZED;
 
             FallingBlockEntity fallingBlock = FallingBlockEntity.fall(level, pos, state);
+            FallingWaterCarry.pickUpWater(level, pos, state, fallingBlock);
             this.falling(fallingBlock);
 
             // Only trigger immediate neighbors when this block falls
