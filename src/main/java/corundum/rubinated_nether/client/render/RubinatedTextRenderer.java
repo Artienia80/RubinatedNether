@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.RNRarity;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.items.RuneItem;
 import corundum.rubinated_nether.utils.RNConfig;
+import corundum.rubinated_nether.utils.RubinatedText;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.locale.Language;
@@ -33,9 +34,10 @@ import java.util.*;
 @OnlyIn(Dist.CLIENT)
 public class RubinatedTextRenderer {
 
-    public static final ResourceLocation RUBIN_FONT = RubinatedNether.id("rubin");
+    public static final ResourceLocation RUBIN_FONT = RubinatedText.RUBIN_FONT;
 
     public static void register(IEventBus modBus) {
+        RubinatedText.setClientCheck(RubinatedTextRenderer::clientShouldUseRubinatedLang);
         NeoForge.EVENT_BUS.addListener(RubinatedTextRenderer::onItemTooltip);
         modBus.addListener(RubinatedTextRenderer::onRegisterReloadListeners);
     }
@@ -81,8 +83,13 @@ public class RubinatedTextRenderer {
         });
     }
 
+    /** Common-safe entry point (kept for existing client callers). */
     public static boolean useRubinatedLang() {
-        if (!RNConfig.rubinatedLanguage) return false;
+        return RubinatedText.useRubinatedLang();
+    }
+
+    /** Client-side decision, installed into {@link RubinatedText} by {@link #register}. */
+    private static boolean clientShouldUseRubinatedLang() {
         try {
             Minecraft mc = Minecraft.getInstance();
             if (mc == null || !mc.isSameThread()) return true;
@@ -96,12 +103,7 @@ public class RubinatedTextRenderer {
     }
 
     private static String applySubs(String text) {
-        return text
-                .replaceAll("(?i)(?<=\\s|^)the(?=\\s|$)", "\u00F0")
-                .replaceAll("(?i)(?<=\\s|^)and(?=\\s|$)", "&")
-                .replace("TH", "\u00DE")
-                .replace("Th", "\u00DE")
-                .replace("th", "\u00FE");
+        return RubinatedText.applySubs(text);
     }
 
     private static void onItemTooltip(ItemTooltipEvent event) {
@@ -175,16 +177,11 @@ public class RubinatedTextRenderer {
     }
 
     public static MutableComponent applyRubin(Component component) {
-        MutableComponent result = Component.empty();
-        component.visit((style, text) -> {
-            result.append(Component.literal(applySubs(text)).withStyle(style.withFont(RUBIN_FONT)));
-            return Optional.empty();
-        }, Style.EMPTY);
-        return result;
+        return RubinatedText.applyRubin(component);
     }
 
     public static MutableComponent applyRubin(String text) {
-        return Component.literal(applySubs(text)).withStyle(Style.EMPTY.withFont(RUBIN_FONT));
+        return RubinatedText.applyRubin(text);
     }
 
     public static MutableComponent stripRubin(Component component) {

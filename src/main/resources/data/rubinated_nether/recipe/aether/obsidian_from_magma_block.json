@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "aether"
+    }
+  ],
   "type": "aether:freezing",
   "category": "freezable_blocks",
   "cookingtime": 500,
@@ -15,12 +21,6 @@
       "values": [
         "aether"
       ]
-    }
-  ],
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "aether"
     }
   ]
 }

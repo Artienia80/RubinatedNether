@@ -19,8 +19,10 @@ public interface AbstractFurnaceBlockEntityAccessor {
 	@Accessor("quickCheck")
 	RecipeManager.CachedCheck<SingleRecipeInput, ? extends AbstractCookingRecipe> rubinatedNether$getQuickCheck();
 
-	@Invoker
-	boolean callCanBurn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipe, NonNullList<ItemStack> stacks, int stackSize, AbstractFurnaceBlockEntity furnaceBlockEntity);
+	@Invoker("canBurn")
+	static boolean callCanBurn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipe, NonNullList<ItemStack> stacks, int stackSize, AbstractFurnaceBlockEntity furnaceBlockEntity) {
+		throw new AssertionError();
+	}
 
 	@Accessor("litTime")
 	int rubinatedNether$getLitTime();

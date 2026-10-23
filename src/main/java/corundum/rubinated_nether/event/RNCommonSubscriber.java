@@ -186,6 +186,17 @@ public class RNCommonSubscriber {
     }
 
     @SubscribeEvent
+    public static void registerPocketwatchSave(RegisterPayloadHandlersEvent event) {
+        // Must be registered on BOTH sides, otherwise the NeoForge handshake rejects clients
+        // ("channel is missing on the server side"). The handler body only runs on the client.
+        event.registrar("1").playToClient(
+                PocketwatchSavePayload.TYPE,
+                PocketwatchSavePayload.STREAM_CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> RNClientSubscriber.handlePocketwatchSave())
+        );
+    }
+
+    @SubscribeEvent
     public static void registerCollectDiscs(RegisterPayloadHandlersEvent event) {
         event.registrar("1").playToServer(CollectDiscsPayload.TYPE, CollectDiscsPayload.CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> {

@@ -56,7 +56,7 @@ public abstract class AbstractFreezerBlockEntity extends AbstractFurnaceBlockEnt
 			}
 
 			int i = blockEntity.getMaxStackSize();
-			if (!abstractFurnaceBlockEntityAccessor.callIsLit() && abstractFurnaceBlockEntityAccessor.callCanBurn(level.registryAccess(), recipe, abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems(), i, blockEntity)) {
+			if (!abstractFurnaceBlockEntityAccessor.callIsLit() && AbstractFurnaceBlockEntityAccessor.callCanBurn(level.registryAccess(), recipe, abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems(), i, blockEntity)) {
 				abstractFurnaceBlockEntityAccessor.rubinatedNether$setLitTime(abstractFurnaceBlockEntityAccessor.callGetBurnDuration(itemstack));
 				abstractFurnaceBlockEntityAccessor.rubinatedNether$setLitDuration(abstractFurnaceBlockEntityAccessor.rubinatedNether$getLitTime());
 				if (abstractFurnaceBlockEntityAccessor.callIsLit()) {
@@ -72,7 +72,7 @@ public abstract class AbstractFreezerBlockEntity extends AbstractFurnaceBlockEnt
 				}
 			}
 
-			if (abstractFurnaceBlockEntityAccessor.callIsLit() && abstractFurnaceBlockEntityAccessor.callCanBurn(level.registryAccess(), recipe, abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems(), i, blockEntity)) {
+			if (abstractFurnaceBlockEntityAccessor.callIsLit() && AbstractFurnaceBlockEntityAccessor.callCanBurn(level.registryAccess(), recipe, abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems(), i, blockEntity)) {
 				abstractFurnaceBlockEntityAccessor.rubinatedNether$setCookingProgress(abstractFurnaceBlockEntityAccessor.rubinatedNether$getCookingProgress() + 1);
 				if (abstractFurnaceBlockEntityAccessor.rubinatedNether$getCookingProgress() == abstractFurnaceBlockEntityAccessor.rubinatedNether$getCookingTotalTime()) {
 					abstractFurnaceBlockEntityAccessor.rubinatedNether$setCookingProgress(0);
@@ -116,7 +116,7 @@ public abstract class AbstractFreezerBlockEntity extends AbstractFurnaceBlockEnt
 	@SuppressWarnings("unchecked")
 	private boolean burn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipe, NonNullList<ItemStack> stacks, int stackSize) {
 		AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) this;
-		if (recipe != null && abstractFurnaceBlockEntityAccessor.callCanBurn(registryAccess, recipe, stacks, stackSize, this)) {
+		if (recipe != null && AbstractFurnaceBlockEntityAccessor.callCanBurn(registryAccess, recipe, stacks, stackSize, this)) {
 			ItemStack inputSlotStack = stacks.get(0);
 			ItemStack resultStack = ((Recipe<SingleRecipeInput>) recipe.value()).assemble(new SingleRecipeInput(abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems().getFirst()), registryAccess);
 			ItemStack resultSlotStack = stacks.get(2);

@@ -231,17 +231,7 @@ public class RNClientSubscriber {
         }
     }
 
-    @SubscribeEvent
-    public static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar("1");
-        registrar.playToClient(
-                PocketwatchSavePayload.TYPE,
-                PocketwatchSavePayload.STREAM_CODEC,
-                (payload, context) -> context.enqueueWork(RNClientSubscriber::handlePocketwatchSave)
-        );
-    }
-
-    private static void handlePocketwatchSave() {
+    public static void handlePocketwatchSave() {
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
 

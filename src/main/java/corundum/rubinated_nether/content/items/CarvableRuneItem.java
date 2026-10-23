@@ -1,6 +1,6 @@
 package corundum.rubinated_nether.content.items;
 
-import corundum.rubinated_nether.client.render.RubinatedTextRenderer;
+import corundum.rubinated_nether.utils.RubinatedText;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -25,7 +25,7 @@ public class CarvableRuneItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         Rubination carving = RuneCarvingHelper.getCarving(stack);
         if (carving == Rubination.EMPTY) return;
 
@@ -41,12 +41,12 @@ public class CarvableRuneItem extends Item {
     public static MutableComponent buildCarvedName(String rubinationName) {
         Style baseStyle = Style.EMPTY.withColor(ChatFormatting.WHITE);
 
-        if (!RubinatedTextRenderer.useRubinatedLang()) {
+        if (!RubinatedText.useRubinatedLang()) {
             return Component.literal("Carved Rune of " + rubinationName).withStyle(baseStyle);
         }
 
         return Component.empty()
                 .append(Component.literal("Carved Rune of ").withStyle(baseStyle))
-                .append(RubinatedTextRenderer.applyRubin(rubinationName).withStyle(baseStyle));
+                .append(RubinatedText.applyRubin(rubinationName).withStyle(baseStyle));
     }
 }

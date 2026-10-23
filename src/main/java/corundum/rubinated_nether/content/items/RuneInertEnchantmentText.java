@@ -1,6 +1,6 @@
 package corundum.rubinated_nether.content.items;
 
-import corundum.rubinated_nether.client.render.RubinatedTextRenderer;
+import corundum.rubinated_nether.utils.RubinatedText;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -40,10 +40,10 @@ public final class RuneInertEnchantmentText {
             String curseName = fullText.startsWith(prefix) ? fullText.substring(prefix.length()) : fullText;
 
             MutableComponent result;
-            if (RubinatedTextRenderer.useRubinatedLang()) {
+            if (RubinatedText.useRubinatedLang()) {
                 result = Component.empty()
                         .append(Component.literal(prefix).withStyle(baseStyle))
-                        .append(RubinatedTextRenderer.applyRubin(curseName).withStyle(baseStyle));
+                        .append(RubinatedText.applyRubin(curseName).withStyle(baseStyle));
             } else {
                 result = Component.empty()
                         .append(Component.literal(prefix).withStyle(baseStyle))

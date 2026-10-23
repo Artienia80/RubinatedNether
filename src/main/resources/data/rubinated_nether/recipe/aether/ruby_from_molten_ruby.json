@@ -1,26 +1,26 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "aether"
+    }
+  ],
   "type": "aether:freezing",
   "category": "freezable_blocks",
   "cookingtime": 500,
   "experience": 0.1,
   "ingredient": {
-	"item": "rubinated_nether:molten_ruby"
+    "item": "rubinated_nether:molten_ruby"
   },
   "result": {
     "id": "rubinated_nether:ruby"
   },
   "fabric:load_conditions": [
-	{
-	  "condition": "fabric:all_mods_loaded",
-	  "values": [
-		"aether"
-	  ]
-	}
-  ],
-  "conditions": [
-	{
-	  "type": "forge:mod_loaded",
-	  "modid": "aether"
-	}
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "aether"
+      ]
+    }
   ]
 }

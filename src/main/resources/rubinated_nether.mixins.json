@@ -4,9 +4,6 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "mixins": [
-    "GuiMixin",
-    "HumanoidArmorLayerMixin",
-    "ItemRendererMixin",
     "LoomMenuMixin",
     "SmithingMenuMixin",
     "PointedDripstoneBlockMixin",
@@ -16,25 +13,28 @@
     "BlessedFortuneMixin",
     "BlessedLootingMixin",
     "CrookedShotCrossbowMixin",
-    "EntityRenderDispatcherMixin",
     "ExposureCurseMixin",
-    "FogRendererMixin",
     "HopperBehaviourMixin",
     "ItemEntityMixin",
     "LevelMixin",
     "MaceItemMixin",
     "MultishotSpreadMixin",
-    "ScreenEffectRendererMixin",
     "ThornsShockwaveMixin",
     "accessors.AbstractFurnaceBlockEntityAccessor",
     "accessors.DoublePlantBlockAccessor",
-    "accessors.EntityRenderDispatcherAccessor",
     "accessors.LevelAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
+    "GuiMixin",
+    "HumanoidArmorLayerMixin",
+    "ItemRendererMixin",
+    "EntityRenderDispatcherMixin",
+    "FogRendererMixin",
+    "ScreenEffectRendererMixin",
+    "accessors.EntityRenderDispatcherAccessor",
     "accessors.GuiAccessor"
-	]
+  ]
 }
