@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.blocks.ChandelierBlock;
 import corundum.rubinated_nether.content.blocks.TarnishingBronzeVentBlock;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.BronzeLaserBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.BronzeWinderBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.CopperLaserBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
@@ -58,6 +59,21 @@ public class RNBlockEntities {
 					).build(
                     Util.fetchChoiceType(References.BLOCK_ENTITY, "bronze_laser")
             )
+			);
+
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BronzeWinderBlockEntity>> BRONZE_WINDER =
+			BLOCK_ENTITY_TYPES.register(
+					"bronze_winder",
+					() -> BlockEntityType.Builder.of(
+							BronzeWinderBlockEntity::new,
+							RNBlocks.WINDER.get(),
+							RNBlocks.DISCOLORED_WINDER.get(),
+							RNBlocks.CORRODED_WINDER.get(),
+							RNBlocks.TARNISHED_WINDER.get(),
+							RNBlocks.CRYSTALLIZED_WINDER.get()
+					).build(
+							Util.fetchChoiceType(References.BLOCK_ENTITY, "bronze_winder")
+					)
 			);
 
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CopperLaserBlockEntity>> COPPER_LASER =

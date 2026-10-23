@@ -4,8 +4,11 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.TarnishStage;
+import corundum.rubinated_nether.content.blocks.entities.BronzeWinderBlockEntity;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
+import corundum.rubinated_nether.utils.BEBlock;
 import corundum.rubinated_nether.utils.ShapeUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,6 +30,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -41,7 +45,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBronze {
+public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBronze, BEBlock<BronzeWinderBlockEntity> {
 
 	public static final MapCodec<BronzeWinderBlock> CODEC = RecordCodecBuilder.mapCodec(
 			instance -> instance.group(
@@ -57,6 +61,7 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 			box(3, 6, 3, 13, 12, 13)
 	));
 
+	private static final int IDLE_TICKS = 200;
 	private static final int UNAFFECTED_UNWIND_TICKS = 20;
 	private static final int DISCOLORED_UNWIND_TICKS = 40;
 	private static final int CORRODED_UNWIND_TICKS = 80;
@@ -82,6 +87,16 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 	@Override
 	protected MapCodec<? extends BronzeWinderBlock> codec() {
 		return CODEC;
+	}
+
+	@Override
+	public BlockEntityType<? extends BronzeWinderBlockEntity> getBlockEntityType() {
+		return RNBlockEntities.BRONZE_WINDER.get();
+	}
+
+	@Override
+	public Class<? extends BronzeWinderBlockEntity> getBlockEntityClass() {
+		return BronzeWinderBlockEntity.class;
 	}
 
 	@Override
@@ -139,7 +154,12 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 			int current = state.getValue(POWER);
 			int next = player.isShiftKeyDown() ? (current + 15) % 16 : (current + 1) % 16;
 			level.playSound(null, pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.5F, 0.5F + next / 30.0F);
+			BronzeWinderBlockEntity blockEntity = getBlockEntity(level, pos);
+			if (blockEntity != null) {
+				blockEntity.setLastInput(level.getGameTime());
+			}
 			setPower(level, pos, state, next);
+			scheduleIfAbsent(level, pos, IDLE_TICKS);
 		}
 		return InteractionResult.sidedSuccess(level.isClientSide());
 	}
@@ -148,7 +168,6 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 		BlockState next = state.setValue(POWER, power);
 		level.setBlock(pos, next, Block.UPDATE_ALL);
 		updateNeighbours(level, pos, next);
-		scheduleUnwind(level, pos, next);
 	}
 
 	private void updateNeighbours(Level level, BlockPos pos, BlockState state) {
@@ -156,17 +175,16 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 		level.updateNeighborsAt(pos.relative(state.getValue(FACING).getOpposite()), this);
 	}
 
-	private void scheduleUnwind(Level level, BlockPos pos, BlockState state) {
-		int delay = getUnwindTicks();
-		if (!level.isClientSide() && delay > 0 && state.getValue(POWER) > 0) {
+	private void scheduleIfAbsent(Level level, BlockPos pos, int delay) {
+		if (!level.isClientSide() && getUnwindTicks() > 0 && !level.getBlockTicks().hasScheduledTick(pos, this)) {
 			level.scheduleTick(pos, this, delay);
 		}
 	}
 
 	@Override
 	protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-		if (!oldState.is(state.getBlock())) {
-			scheduleUnwind(level, pos, state);
+		if (!oldState.is(state.getBlock()) && state.getValue(POWER) > 0) {
+			scheduleIfAbsent(level, pos, IDLE_TICKS);
 		}
 	}
 
@@ -181,8 +199,29 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 	@Override
 	protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		int power = state.getValue(POWER);
-		if (power > 0 && getUnwindTicks() > 0) {
-			setPower(level, pos, state, power - 1);
+		int unwindTicks = getUnwindTicks();
+		if (power <= 0 || unwindTicks <= 0) {
+			return;
+		}
+
+		BronzeWinderBlockEntity blockEntity = getBlockEntity(level, pos);
+		if (blockEntity != null) {
+			long now = level.getGameTime();
+			long lastInput = blockEntity.getLastInput();
+			if (lastInput < 0 || lastInput > now) {
+				lastInput = now;
+				blockEntity.setLastInput(now);
+			}
+			long remaining = lastInput + IDLE_TICKS - now;
+			if (remaining > 0) {
+				level.scheduleTick(pos, this, (int) remaining);
+				return;
+			}
+		}
+
+		setPower(level, pos, state, power - 1);
+		if (power - 1 > 0) {
+			level.scheduleTick(pos, this, unwindTicks);
 		}
 	}
 

@@ -875,7 +875,8 @@ public class RNBlockStates extends BlockStateProvider {
 				for (int position = 0; position < 16; position++) {
 					BlockModelBuilder keyModel = models().getBuilder(name + "_key_" + position)
 							.parent(models().getExistingFile(mcLoc("block/block")))
-							.texture("key", modLoc(keyTexture));
+							.texture("key", modLoc(keyTexture))
+							.renderType("cutout");
 					winderKeyElements(keyModel, position);
 				}
 

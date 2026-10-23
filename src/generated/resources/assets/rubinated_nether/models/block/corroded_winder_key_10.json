@@ -111,6 +111,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:cutout",
   "textures": {
     "key": "rubinated_nether:entity/bronze/bronze_corroded"
   }

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "sources": [
+    {
+      "type": "directory",
+      "source": "entity/bronze",
+      "prefix": "entity/bronze/"
+    }
+  ]
+}
