@@ -61,7 +61,11 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 			box(3, 6, 3, 13, 12, 13)
 	));
 
-	private static final int IDLE_TICKS = 200;
+	// how long a winder holds its charge unchanged after its last input before it starts unwinding
+	private static final int UNAFFECTED_IDLE_TICKS = 5 * 20;
+	private static final int DISCOLORED_IDLE_TICKS = 15 * 20;
+	private static final int CORRODED_IDLE_TICKS = 30 * 20;
+	private static final int TARNISHED_IDLE_TICKS = 60 * 20;
 	private static final int UNAFFECTED_UNWIND_TICKS = 20;
 	private static final int DISCOLORED_UNWIND_TICKS = 40;
 	private static final int CORRODED_UNWIND_TICKS = 80;
@@ -102,6 +106,16 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 	@Override
 	public TarnishStage getAge() {
 		return tarnishStage;
+	}
+
+	public int getIdleTicks() {
+		return switch (tarnishStage) {
+			case UNAFFECTED -> UNAFFECTED_IDLE_TICKS;
+			case DISCOLORED -> DISCOLORED_IDLE_TICKS;
+			case CORRODED -> CORRODED_IDLE_TICKS;
+			case TARNISHED -> TARNISHED_IDLE_TICKS;
+			case CRYSTALLIZED -> 0; // never unwinds, so unused
+		};
 	}
 
 	public int getUnwindTicks() {
@@ -151,6 +165,11 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 		if (!level.isClientSide()) {
+			if (getExternalSignal(level, pos, state) > 0) {
+				// held by an external signal, can't be wound by hand
+				level.playSound(null, pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.3F, 0.3F);
+				return InteractionResult.sidedSuccess(false);
+			}
 			int current = state.getValue(POWER);
 			int next = player.isShiftKeyDown() ? (current + 15) % 16 : (current + 1) % 16;
 			level.playSound(null, pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.5F, 0.5F + next / 30.0F);
@@ -159,7 +178,7 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 				blockEntity.setLastInput(level.getGameTime());
 			}
 			setPower(level, pos, state, next);
-			scheduleIfAbsent(level, pos, IDLE_TICKS);
+			scheduleIfAbsent(level, pos, getIdleTicks());
 		}
 		return InteractionResult.sidedSuccess(level.isClientSide());
 	}
@@ -181,10 +200,81 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 		}
 	}
 
+	/**
+	 * Strongest redstone signal arriving from outside. The winder reads its own output back through its support
+	 * face and through adjacent redstone dust, so those are ignored to avoid it holding itself on. Power it with
+	 * a repeater, comparator, observer, lever, powered block, etc.
+	 */
+	private int getExternalSignal(Level level, BlockPos pos, BlockState state) {
+		Direction support = state.getValue(FACING).getOpposite();
+		int best = 0;
+		for (Direction direction : Direction.values()) {
+			if (direction == support) {
+				continue;
+			}
+			BlockPos neighborPos = pos.relative(direction);
+			if (level.getBlockState(neighborPos).is(Blocks.REDSTONE_WIRE)) {
+				continue;
+			}
+			best = Math.max(best, level.getSignal(neighborPos, direction));
+			if (best >= 15) {
+				break;
+			}
+		}
+		return best;
+	}
+
+	/**
+	 * While an external signal is present the winder copies its strength and holds it. When the signal goes away
+	 * the winder keeps its last strength and unwinds normally.
+	 *
+	 * @return true if an external signal is currently holding the winder
+	 */
+	private boolean syncExternalSignal(Level level, BlockPos pos, BlockState state) {
+		BronzeWinderBlockEntity blockEntity = getBlockEntity(level, pos);
+		if (blockEntity == null) {
+			return false;
+		}
+
+		int external = getExternalSignal(level, pos, state);
+		long now = level.getGameTime();
+
+		if (external > 0) {
+			blockEntity.setExternallyLocked(true);
+			blockEntity.setLastInput(now);
+			if (state.getValue(POWER) != external) {
+				setPower(level, pos, state, external);
+			}
+			scheduleIfAbsent(level, pos, getIdleTicks());
+			return true;
+		}
+
+		if (blockEntity.isExternallyLocked()) {
+			// signal was just cut: restart the idle timer so the unwind starts from now
+			blockEntity.setExternallyLocked(false);
+			blockEntity.setLastInput(now);
+			scheduleIfAbsent(level, pos, getIdleTicks());
+		}
+		return false;
+	}
+
+	@Override
+	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+		if (!level.isClientSide()) {
+			syncExternalSignal(level, pos, state);
+		}
+	}
+
 	@Override
 	protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
 		if (!oldState.is(state.getBlock()) && state.getValue(POWER) > 0) {
-			scheduleIfAbsent(level, pos, IDLE_TICKS);
+			scheduleIfAbsent(level, pos, getIdleTicks());
+		}
+		if (!level.isClientSide() && !oldState.is(state.getBlock())
+				&& getExternalSignal(level, pos, state) > 0
+				&& !level.getBlockTicks().hasScheduledTick(pos, this)) {
+			// the block entity doesn't exist yet during onPlace, so sync on the next tick
+			level.scheduleTick(pos, this, 1);
 		}
 	}
 
@@ -198,6 +288,10 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 
 	@Override
 	protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		if (syncExternalSignal(level, pos, state)) {
+			return;
+		}
+		state = level.getBlockState(pos);
 		int power = state.getValue(POWER);
 		int unwindTicks = getUnwindTicks();
 		if (power <= 0 || unwindTicks <= 0) {
@@ -212,7 +306,7 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 				lastInput = now;
 				blockEntity.setLastInput(now);
 			}
-			long remaining = lastInput + IDLE_TICKS - now;
+			long remaining = lastInput + getIdleTicks() - now;
 			if (remaining > 0) {
 				level.scheduleTick(pos, this, (int) remaining);
 				return;
