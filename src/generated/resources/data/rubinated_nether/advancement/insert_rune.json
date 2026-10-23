@@ -1,5 +1,5 @@
 {
-  "parent": "rubinated_nether:inscribe_rune",
+  "parent": "rubinated_nether:offer_ritual_offering",
   "criteria": {
     "impossible": {
       "conditions": {

@@ -92,28 +92,6 @@ public class RubinationConverter {
             }
             return false;
         };
-
-        public static BiPredicate<Level, BlockPos> withinYRange(int minY, int maxY) {
-            return (level, pos) -> pos.getY() >= minY && pos.getY() <= maxY;
-        }
-
-        public static BiPredicate<Level, BlockPos> and(BiPredicate<Level, BlockPos>... conditions) {
-            return (level, pos) -> {
-                for (BiPredicate<Level, BlockPos> condition : conditions) {
-                    if (!condition.test(level, pos)) return false;
-                }
-                return true;
-            };
-        }
-
-        public static BiPredicate<Level, BlockPos> or(BiPredicate<Level, BlockPos>... conditions) {
-            return (level, pos) -> {
-                for (BiPredicate<Level, BlockPos> condition : conditions) {
-                    if (condition.test(level, pos)) return true;
-                }
-                return false;
-            };
-        }
     }
 
     public static int countRubinatedBlocks(Level level, BlockPos centerPos, int radius) {
@@ -132,12 +110,12 @@ public class RubinationConverter {
         return count;
     }
 
-    public static boolean hasEnoughBlocksForInscription(Level level, BlockPos centerPos, int radius) {
+    public static boolean hasEnoughRubinatedBlocks(Level level, BlockPos centerPos, int radius) {
         return countRubinatedBlocks(level, centerPos, radius) >= RNConfig.altarRubinationCost;
     }
 
-    public static boolean hasEnoughBlocksForInscription(Level level, BlockPos centerPos) {
-        return hasEnoughBlocksForInscription(level, centerPos, 20);
+    public static boolean hasEnoughRubinatedBlocks(Level level, BlockPos centerPos) {
+        return hasEnoughRubinatedBlocks(level, centerPos, 20);
     }
 
     @Nullable
@@ -147,10 +125,6 @@ public class RubinationConverter {
             return transferProperties(state, derubinatedBlock.defaultBlockState());
         }
         return null;
-    }
-
-    public static boolean canDerubinate(BlockState state) {
-        return RUBINATED_TO_NORMAL_MAP.containsKey(state.getBlock());
     }
 
     public static void derubinateBlocks(Level level, BlockPos centerPos, int radius, int amountToRemove) {

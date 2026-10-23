@@ -124,7 +124,7 @@ public class RubinationMenu extends AbstractContainerMenu {
 
     public void refreshRubinatedBlockStatus() {
         this.access.execute((level, blockPos) -> {
-            hasEnoughRubinatedBlocks = RubinationConverter.hasEnoughBlocksForInscription(level, blockPos);
+            hasEnoughRubinatedBlocks = RubinationConverter.hasEnoughRubinatedBlocks(level, blockPos);
         });
     }
 
@@ -135,7 +135,7 @@ public class RubinationMenu extends AbstractContainerMenu {
 
         ItemStack heldItem = player.getItemInHand(hand);
 
-        if (!heldItem.is(corundum.rubinated_nether.content.RNTags.Items.ALTAR_OFFERING_ITEM)) {
+        if (!heldItem.is(RNTags.Items.ALTAR_OFFERING_ITEM)) {
             return InteractionResult.PASS;
         }
 
@@ -255,8 +255,7 @@ public class RubinationMenu extends AbstractContainerMenu {
         final boolean[] success = {false};
 
         this.access.execute((level, blockPos) -> {
-            if (!isCreative && !RubinationConverter.hasEnoughBlocksForInscription(level, blockPos)) {
-                // reuses the generic "enough rubinated blocks nearby" check (see RNConfig.altarRubinationCost)
+            if (!isCreative && !RubinationConverter.hasEnoughRubinatedBlocks(level, blockPos)) {
                 return;
             }
 
@@ -328,9 +327,9 @@ public class RubinationMenu extends AbstractContainerMenu {
                 Rubination rubination = rune.getRubination();
 
                 if(stack.is(rubination.getItemTag())) {
-                    if (rubination.getItemTag().equals(corundum.rubinated_nether.content.RNTags.Items.RUBINATION_TOOL)) {
+                    if (rubination.getItemTag().equals(RNTags.Items.RUBINATION_TOOL)) {
                         toolRubinations.add(rubination);
-                    } else if (rubination.getItemTag().equals(corundum.rubinated_nether.content.RNTags.Items.RUBINATION_WEAPON)) {
+                    } else if (rubination.getItemTag().equals(RNTags.Items.RUBINATION_WEAPON)) {
                         weaponRubinations.add(rubination);
                     }
                 }

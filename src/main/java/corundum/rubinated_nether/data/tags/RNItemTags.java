@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
 public class RNItemTags extends ItemTagsProvider {
 	public RNItemTags(
 			PackOutput output,
-			CompletableFuture<HolderLookup.Provider> registries,
+			CompletableFuture<Provider> registries,
 			CompletableFuture<TagLookup<Block>> blockTags,
 			ExistingFileHelper helper
 	) {
@@ -64,7 +64,7 @@ public class RNItemTags extends ItemTagsProvider {
 		this.tag(RNTags.Items.RUBINATION_TRIDENT).add(Items.TRIDENT);
 		this.tag(RNTags.Items.RUBINATION_MACE).add(Items.MACE);
 
-		this.tag(RNTags.Items.RUBINATION_TOOL).addTags(net.minecraft.tags.ItemTags.AXES);
+		this.tag(RNTags.Items.RUBINATION_TOOL).addTags(ItemTags.AXES);
 		this.tag(RNTags.Items.RUBINATION_TOOL).add(
 				Items.WOODEN_SHOVEL,
 				Items.WOODEN_HOE,
@@ -85,7 +85,7 @@ public class RNItemTags extends ItemTagsProvider {
 				Items.NETHERITE_HOE
 		);
 
-		this.tag(RNTags.Items.RUBINATION_WEAPON).addTags(net.minecraft.tags.ItemTags.AXES);
+		this.tag(RNTags.Items.RUBINATION_WEAPON).addTags(ItemTags.AXES);
 		this.tag(RNTags.Items.RUBINATION_WEAPON).add(
 				Items.WOODEN_SWORD,
 				Items.STONE_SWORD,
@@ -123,14 +123,6 @@ public class RNItemTags extends ItemTagsProvider {
 
 		this.tag(RNTags.Items.ALTAR_OFFERING_ITEM).add(
 				RNItems.RITUAL_OFFERING.asItem()
-		);
-
-		this.tag(RNTags.Items.ALTAR_INSCRIPTION_ITEM).add(
-				RNItems.WINDING_KEY.asItem()
-		);
-
-		this.tag(RNTags.Items.ALTAR_RUBINATION_ITEM).add(
-				RNItems.COGWHEEL.asItem()
 		);
 
 		this.tag(ItemTags.TRIM_MATERIALS)
@@ -326,17 +318,19 @@ public class RNItemTags extends ItemTagsProvider {
 		);
 
 		this.tag(RNTags.Items.VASES).add(
-						RNBlocks.BRONZE_VASE.asItem(),
-						RNBlocks.DISCOLORED_BRONZE_VASE.asItem(),
-						RNBlocks.CORRODED_BRONZE_VASE.asItem(),
-						RNBlocks.TARNISHED_BRONZE_VASE.asItem(),
-						RNBlocks.CRYSTALLIZED_BRONZE_VASE.asItem()
-				)
-				.addOptional(RubinatedNether.id("waxed_bronze_vase"))
-				.addOptional(RubinatedNether.id("waxed_discolored_bronze_vase"))
-				.addOptional(RubinatedNether.id("waxed_corroded_bronze_vase"))
-				.addOptional(RubinatedNether.id("waxed_tarnished_bronze_vase"))
-				.addOptional(RubinatedNether.id("waxed_crystallized_bronze_vase"));
+				RNBlocks.BRONZE_VASE.asItem(),
+				RNBlocks.DISCOLORED_BRONZE_VASE.asItem(),
+				RNBlocks.CORRODED_BRONZE_VASE.asItem(),
+				RNBlocks.TARNISHED_BRONZE_VASE.asItem(),
+				RNBlocks.CRYSTALLIZED_BRONZE_VASE.asItem()
+		)
+		// Waxed variants are standalone items registered by registerWaxableBlock, so they must be listed too;
+		// the vase engraving recipe matches its base against this tag.
+		.addOptional(RubinatedNether.id("waxed_bronze_vase"))
+		.addOptional(RubinatedNether.id("waxed_discolored_bronze_vase"))
+		.addOptional(RubinatedNether.id("waxed_corroded_bronze_vase"))
+		.addOptional(RubinatedNether.id("waxed_tarnished_bronze_vase"))
+		.addOptional(RubinatedNether.id("waxed_crystallized_bronze_vase"));
 		this.tag(RNTags.Items.VASE_ENGRAVING_MATERIALS)
 				.addTag(ItemTags.TRIM_MATERIALS)
 				.add(

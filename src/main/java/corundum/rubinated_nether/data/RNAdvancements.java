@@ -285,22 +285,8 @@ public class RNAdvancements extends AdvancementProvider {
 											.setY(MinMaxBounds.Doubles.atMost(-250314))))
 					.save(consumer, RubinatedNether.id("divine_favor"), existingFileHelper);
 
-			AdvancementHolder inscribeRune = Advancement.Builder.advancement()
-					.parent(ritualOffering)
-					.display(RNItems.WINDING_KEY.get(),
-							Component.translatable("advancements.rubinated_nether.inscribe_rune.title"),
-							Component.translatable("advancements.rubinated_nether.inscribe_rune.description"),
-							null,
-							AdvancementType.TASK, true, true, false)
-					.requirements(AdvancementRequirements.Strategy.AND)
-					.addCriterion("impossible",
-							PlayerTrigger.TriggerInstance.located(
-									LocationPredicate.Builder.location()
-											.setY(MinMaxBounds.Doubles.atMost(-250314))))
-					.save(consumer, RubinatedNether.id("inscribe_rune"), existingFileHelper);
-
 			AdvancementHolder insertRune = Advancement.Builder.advancement()
-					.parent(inscribeRune)
+					.parent(ritualOffering)
 					.display(RNItems.PRIDE_RUNE.get(),
 							Component.translatable("advancements.rubinated_nether.insert_rune.title"),
 							Component.translatable("advancements.rubinated_nether.insert_rune.description"),
@@ -315,7 +301,7 @@ public class RNAdvancements extends AdvancementProvider {
 
 			AdvancementHolder rubinateItem = Advancement.Builder.advancement()
 					.parent(insertRune)
-					.display(RNItems.COGWHEEL.get(),
+					.display(RNItems.RUBY.get(),
 							Component.translatable("advancements.rubinated_nether.rubinate_item.title"),
 							Component.translatable("advancements.rubinated_nether.rubinate_item.description"),
 							null,
@@ -384,20 +370,20 @@ public class RNAdvancements extends AdvancementProvider {
 									RNRecipeProvider.waxed(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK)
 							).build(),
 							ItemPredicate.Builder.item().of(
-									net.minecraft.world.level.block.Blocks.COPPER_BLOCK,
-									net.minecraft.world.level.block.Blocks.WAXED_COPPER_BLOCK
+									Blocks.COPPER_BLOCK,
+									Blocks.WAXED_COPPER_BLOCK
 							).build(),
 							ItemPredicate.Builder.item().of(
-									net.minecraft.world.level.block.Blocks.EXPOSED_COPPER,
-									net.minecraft.world.level.block.Blocks.WAXED_EXPOSED_COPPER
+									Blocks.EXPOSED_COPPER,
+									Blocks.WAXED_EXPOSED_COPPER
 							).build(),
 							ItemPredicate.Builder.item().of(
-									net.minecraft.world.level.block.Blocks.WEATHERED_COPPER,
-									net.minecraft.world.level.block.Blocks.WAXED_WEATHERED_COPPER
+									Blocks.WEATHERED_COPPER,
+									Blocks.WAXED_WEATHERED_COPPER
 							).build(),
 							ItemPredicate.Builder.item().of(
-									net.minecraft.world.level.block.Blocks.OXIDIZED_COPPER,
-									net.minecraft.world.level.block.Blocks.WAXED_OXIDIZED_COPPER
+									Blocks.OXIDIZED_COPPER,
+									Blocks.WAXED_OXIDIZED_COPPER
 							).build()))
 					.save(consumer, RubinatedNether.id("heavy_burden"), existingFileHelper);
 
