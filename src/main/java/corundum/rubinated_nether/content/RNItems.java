@@ -145,7 +145,10 @@ public class RNItems {
 			() -> Blocks.POWDER_SNOW
 	);
 
-	public static final DeferredItem<Item> BRONZE_ROD = basicItem("bronze_rod");
+	public static final DeferredItem<Item> BRONZE_ROD = ITEMS.register(
+			"bronze_rod",
+			() -> new BronzeRodItem(new Item.Properties())
+	);
 	public static final DeferredItem<Item> BRONZE_POWDER = basicItem("bronze_powder");
 	public static final DeferredItem<Item> BRONZE_SCRAP = basicItem("bronze_scrap");
 

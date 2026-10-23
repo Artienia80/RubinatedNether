@@ -148,6 +148,8 @@ public class RNClientSubscriber {
         event.registerSpriteSet(RNParticleTypes.STEAM.get(), sprites -> new SteamParticle.Provider(sprites, SteamParticle.Tint.NEUTRAL));
         event.registerSpriteSet(RNParticleTypes.STEAM_HOT.get(), sprites -> new SteamParticle.Provider(sprites, SteamParticle.Tint.HOT));
         event.registerSpriteSet(RNParticleTypes.STEAM_COLD.get(), sprites -> new SteamParticle.Provider(sprites, SteamParticle.Tint.COLD));
+        event.registerSpriteSet(RNParticleTypes.STEAM_HOT_HIGH.get(), sprites -> new SteamParticle.Provider(sprites, SteamParticle.Tint.HOT_HIGH));
+        event.registerSpriteSet(RNParticleTypes.STEAM_COLD_HIGH.get(), sprites -> new SteamParticle.Provider(sprites, SteamParticle.Tint.COLD_HIGH));
         event.registerSpriteSet(RNParticleTypes.RUBY_AURA.get(), RubyAuraParticle.Provider::new);
         event.registerSpriteSet(RNParticleTypes.RUBY_SPIRIT.get(), RubySpiritParticle.Provider::new);
         event.registerSpriteSet(RNParticleTypes.RUBINATE.get(), RubinationAltarParticle.Provider::new);

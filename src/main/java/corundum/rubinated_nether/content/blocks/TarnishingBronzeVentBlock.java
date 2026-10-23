@@ -73,11 +73,15 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
     private static final double GEYSER_BASE_MAX_SPEED = 0.3;
     private static final double GEYSER_MAX_SPEED_PER_BLOCK = 0.1;
     private static final double ANTI_GRAVITY_LIFT = 0.10;
+    /** Extra projectile speed (blocks/tick) a fully powered, fully tarnished vent adds to a dispenser shot. */
+    private static final double PROJECTILE_BOOST_AT_FULL = 2.4;
+    /** High-level sources (lava, blue ice, dry ice) deal this many times the damage of low ones. */
+    private static final float HIGH_DAMAGE_MULTIPLIER = 2.0f;
     private static final Predicate<Entity> LAUNCH_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isAlive);
 
     private final TarnishStage tarnishStage;
 
-    public TarnishingBronzeVentBlock(TarnishStage tarnishStage, BlockBehaviour.Properties properties) {
+    public TarnishingBronzeVentBlock(TarnishStage tarnishStage, Properties properties) {
         super(properties);
         this.tarnishStage = tarnishStage;
         this.registerDefaultState(
@@ -175,12 +179,13 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         int front = result.getLeft();
         int back = result.getRight();
 
-        if (front > 0 && checkMagmaBlock(level, pos, facing.getOpposite(), back) && isDamageTick(level, pos)) {
-            dealSteamDamage(level, pos, facing, signalRange, front);
-        }
-
-        if (front > 0 && checkIceBlock(level, pos, facing.getOpposite(), back) && isDamageTick(level, pos)) {
-            dealIceDamage(level, pos, facing, signalRange, front);
+        HeatSource source = front > 0 ? getHeatSource(level, pos, facing, back) : HeatSource.NONE;
+        if (source != HeatSource.NONE && isDamageTick(level, pos)) {
+            if (source.isHot()) {
+                dealSteamDamage(level, pos, facing, signalRange, front, source.damageMultiplier());
+            } else {
+                dealIceDamage(level, pos, facing, signalRange, front, source.damageMultiplier());
+            }
         }
 
         level.scheduleTick(pos, this, 1);
@@ -198,7 +203,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
             if (level.getEntitiesOfClass(LivingEntity.class, buildDetectionAABB(pos, facing, range)).isEmpty()) return;
             int smokeRange = calculateSmokeRange(level, pos, facing, range);
             if (smokeRange <= 0) return;
-            spawnSteamColumn(level, pos, facing, smokeRange, false, 1.5, SteamMode.HOT, random);
+            spawnSteamColumn(level, pos, facing, smokeRange, false, 1.5, HeatSource.HOT_LOW, random);
             return;
         }
 
@@ -212,19 +217,48 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         double density = vent.getSteamDensity(signal);
 
         if (front > 0)
-            spawnSteamColumn(level, pos, facing, front, false, density, vent.getSteamMode(level, pos, facing, back), random);
+            spawnSteamColumn(level, pos, facing, front, false, density, vent.getHeatSource(level, pos, facing, back), random);
 
         if (back > 0)
-            spawnSteamColumn(level, pos, facing.getOpposite(), back, true, density * 0.6, SteamMode.NEUTRAL, random);
+            spawnSteamColumn(level, pos, facing.getOpposite(), back, true, density * 0.6, HeatSource.NONE, random);
     }
 
-    private enum SteamMode { NEUTRAL, HOT, COLD }
+    /** What is heating or cooling the vent from behind, and how strongly. */
+    public enum HeatSource {
+        NONE, HOT_LOW, HOT_HIGH, COLD_LOW, COLD_HIGH;
 
-    private SteamMode getSteamMode(Level level, BlockPos pos, Direction facing, int back) {
-        if (getLaunchImpulse() <= 0) return SteamMode.NEUTRAL;
-        if (checkMagmaBlock(level, pos, facing.getOpposite(), back)) return SteamMode.HOT;
-        if (checkIceBlock(level, pos, facing.getOpposite(), back)) return SteamMode.COLD;
-        return SteamMode.NEUTRAL;
+        public boolean isHot()  { return this == HOT_LOW || this == HOT_HIGH; }
+        public boolean isCold() { return this == COLD_LOW || this == COLD_HIGH; }
+        public boolean isHigh() { return this == HOT_HIGH || this == COLD_HIGH; }
+        public float damageMultiplier() { return isHigh() ? HIGH_DAMAGE_MULTIPLIER : 1.0f; }
+    }
+
+    private static HeatSource classify(BlockState state) {
+        if (state.is(RNTags.Blocks.VENT_HOT_HIGH))  return HeatSource.HOT_HIGH;
+        if (state.is(RNTags.Blocks.VENT_COLD_HIGH)) return HeatSource.COLD_HIGH;
+        if (state.is(RNTags.Blocks.VENT_HOT_LOW))   return HeatSource.HOT_LOW;
+        if (state.is(RNTags.Blocks.VENT_COLD_LOW))  return HeatSource.COLD_LOW;
+        return HeatSource.NONE;
+    }
+
+    /**
+     * Looks behind the vent for a tagged block: the block directly behind it (this is how lava and fire,
+     * which smoke passes through, are detected) and the block the back column ends on (magma, ice...).
+     * The stronger of the two wins.
+     */
+    public HeatSource getHeatSource(Level level, BlockPos pos, Direction facing, int back) {
+        if (getLaunchImpulse() <= 0) return HeatSource.NONE;
+
+        Direction behind = facing.getOpposite();
+        HeatSource adjacent = classify(level.getBlockState(pos.relative(behind)));
+
+        BlockState endState = level.getBlockState(pos.relative(behind, back + 1));
+        HeatSource end = endState.is(RNTags.Blocks.SMOKE_PASSTHROUGH) ? HeatSource.NONE : classify(endState);
+
+        if (end != HeatSource.NONE && (adjacent == HeatSource.NONE || (end.isHigh() && !adjacent.isHigh()))) {
+            return end;
+        }
+        return adjacent;
     }
 
     private double getSteamDensity(int signal) {
@@ -255,7 +289,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
     private static final double MOUTH_RADIUS = 0.33;
 
     private static void spawnSteamColumn(Level level, BlockPos pos, Direction column, int range,
-                                         boolean inward, double density, SteamMode mode, RandomSource random) {
+                                         boolean inward, double density, HeatSource source, RandomSource random) {
         int count = randomRound(density * RNConfig.ventSmokeParticleMultiplier, random);
         if (count <= 0) return;
 
@@ -263,10 +297,12 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         Vec3 axis = Vec3.atLowerCornerOf(column.getNormal());
         Vec3[] cross = perpendiculars(column.getAxis());
 
-        var type = switch (mode) {
-            case HOT -> RNParticleTypes.STEAM_HOT.get();
-            case COLD -> RNParticleTypes.STEAM_COLD.get();
-            case NEUTRAL -> RNParticleTypes.STEAM.get();
+        var type = switch (source) {
+            case HOT_LOW -> RNParticleTypes.STEAM_HOT.get();
+            case HOT_HIGH -> RNParticleTypes.STEAM_HOT_HIGH.get();
+            case COLD_LOW -> RNParticleTypes.STEAM_COLD.get();
+            case COLD_HIGH -> RNParticleTypes.STEAM_COLD_HIGH.get();
+            case NONE -> RNParticleTypes.STEAM.get();
         };
 
         for (int i = 0; i < count; i++) {
@@ -286,14 +322,35 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
             level.addParticle(type, true, spawn.x, spawn.y, spawn.z, velocity.x, velocity.y, velocity.z);
         }
 
-        if (!inward && mode != SteamMode.NEUTRAL && random.nextDouble() < 0.12 * density) {
-            Vec3 mouth = centre.add(axis.scale(0.55));
-            Vec3 drift = axis.scale(0.04 + random.nextDouble() * 0.04);
-            level.addParticle(mode == SteamMode.HOT ? ParticleTypes.SMALL_FLAME : ParticleTypes.SNOWFLAKE,
-                    mouth.x + (random.nextDouble() - 0.5) * 0.4,
-                    mouth.y + (random.nextDouble() - 0.5) * 0.4,
-                    mouth.z + (random.nextDouble() - 0.5) * 0.4,
-                    drift.x, drift.y, drift.z);
+        if (inward || source == HeatSource.NONE) return;
+
+        if (!source.isHigh()) {
+            // Low: the occasional spark / snowflake right at the mouth.
+            if (random.nextDouble() < 0.12 * density) {
+                Vec3 mouth = centre.add(axis.scale(0.55));
+                Vec3 drift = axis.scale(0.04 + random.nextDouble() * 0.04);
+                level.addParticle(source.isHot() ? ParticleTypes.SMALL_FLAME : ParticleTypes.SNOWFLAKE,
+                        mouth.x + (random.nextDouble() - 0.5) * 0.4,
+                        mouth.y + (random.nextDouble() - 0.5) * 0.4,
+                        mouth.z + (random.nextDouble() - 0.5) * 0.4,
+                        drift.x, drift.y, drift.z);
+            }
+            return;
+        }
+
+        // High: a lot more of them, spread along the whole column, plus embers / frost clouds.
+        int accents = randomRound(density * 1.6, random);
+        for (int i = 0; i < accents; i++) {
+            double along = 0.55 + random.nextDouble() * Math.max(0.3, range * 0.8);
+            Vec3 at = centre.add(axis.scale(along))
+                    .add(cross[0].scale((random.nextDouble() - 0.5) * 0.5))
+                    .add(cross[1].scale((random.nextDouble() - 0.5) * 0.5));
+            Vec3 drift = axis.scale(0.05 + random.nextDouble() * 0.07);
+
+            var accent = source.isHot()
+                    ? (random.nextDouble() < 0.2 ? ParticleTypes.LAVA : random.nextDouble() < 0.5 ? ParticleTypes.FLAME : ParticleTypes.SMALL_FLAME)
+                    : (random.nextDouble() < 0.2 ? ParticleTypes.CLOUD : ParticleTypes.SNOWFLAKE);
+            level.addParticle(accent, at.x, at.y, at.z, drift.x, drift.y, drift.z);
         }
     }
 
@@ -361,20 +418,6 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
     }
 
 
-    public static boolean checkMagmaBlock(Level level, BlockPos pos, Direction facing, int range) {
-        BlockPos.MutableBlockPos cursor = pos.mutable();
-        cursor.move(facing, range + 1);
-        BlockState state = level.getBlockState(cursor);
-        return state.is(Blocks.MAGMA_BLOCK);
-    }
-
-    public static boolean checkIceBlock(Level level, BlockPos pos, Direction facing, int range) {
-        BlockPos.MutableBlockPos cursor = pos.mutable();
-        cursor.move(facing, range + 1);
-        BlockState state = level.getBlockState(cursor);
-        return state.is(Blocks.BLUE_ICE);
-    }
-
     private static VoxelShape rotateSmokeShape(Direction facing) {
         return switch (facing.getAxis()) {
             case Z -> Shapes.box(0.125, 0.125, 0, 0.875, 0.875, 1);
@@ -384,6 +427,10 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
     }
 
     private void dealSteamDamage(ServerLevel level, BlockPos pos, Direction facing, int signal, int smokeRange) {
+        dealSteamDamage(level, pos, facing, signal, smokeRange, 1.0f);
+    }
+
+    private void dealSteamDamage(ServerLevel level, BlockPos pos, Direction facing, int signal, int smokeRange, float multiplier) {
         if (signal <= 0 || smokeRange <= 0) return;
         AABB steamBox = buildDetectionAABB(pos, facing, smokeRange);
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, steamBox);
@@ -391,12 +438,12 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         for (LivingEntity entity : entities) {
             double dist = distanceAlongFacing(pos, BlockPos.containing(entity.position()), facing);
             if (dist < 0 || dist >= smokeRange) continue;
-            float damage = (float) (signal - dist) / 3.0f;
+            float damage = (float) (signal - dist) / 3.0f * multiplier;
             if (damage > 0) entity.hurt(level.damageSources().inFire(), damage);
         }
     }
 
-    private void dealIceDamage(ServerLevel level, BlockPos pos, Direction facing, int signal, int smokeRange) {
+    private void dealIceDamage(ServerLevel level, BlockPos pos, Direction facing, int signal, int smokeRange, float multiplier) {
         if (signal <= 0 || smokeRange <= 0) return;
         AABB iceBox = buildDetectionAABB(pos, facing, smokeRange);
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, iceBox);
@@ -404,7 +451,7 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
         for (LivingEntity entity : entities) {
             double dist = distanceAlongFacing(pos, BlockPos.containing(entity.position()), facing);
             if (dist < 0 || dist >= smokeRange) continue;
-            float damage = (float) (signal - dist) / 3.0f;
+            float damage = (float) (signal - dist) / 3.0f * multiplier;
             if (damage > 0) entity.hurt(level.damageSources().freeze(), damage);
         }
     }
@@ -470,6 +517,21 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
 
     private static boolean isDamageTick(Level level, BlockPos pos) {
         return Math.floorMod(level.getGameTime() + pos.hashCode(), 20L) == 0;
+    }
+
+    /** Whether this vent is currently pushing (powered and strong enough to push at all). */
+    public boolean isPushingActive(BlockState state) {
+        return state.getValue(POWERED) && getLaunchImpulse() > 0;
+    }
+
+    /**
+     * Speed (blocks/tick) added to a projectile a dispenser shoots through this vent. Scales with the vent's
+     * tarnish stage (its push strength) and the redstone signal reaching it.
+     */
+    public double getProjectileBoost(Level level, BlockPos pos, BlockState state) {
+        double strength = getLaunchImpulse() / GEYSER_IMPULSE;
+        double signal = state.getValue(SIGNAL_STRENGTH) / 15.0;
+        return PROJECTILE_BOOST_AT_FULL * strength * (0.5 + 0.5 * signal);
     }
 
     private double getLaunchImpulse() {

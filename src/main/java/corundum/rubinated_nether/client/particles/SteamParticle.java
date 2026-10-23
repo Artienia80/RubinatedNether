@@ -22,8 +22,12 @@ public class SteamParticle extends TextureSheetParticle {
 
     public enum Tint {
         NEUTRAL(1.00f, 1.00f, 1.00f,   1.00f, 1.00f, 1.00f,   false),
-        HOT    (1.00f, 0.58f, 0.24f,   0.94f, 0.86f, 0.80f,   true),
-        COLD   (0.25f, 0.75f, 1.00f,   0.88f, 0.94f, 1.00f,   true);
+        // LOW: toned-down tints
+        HOT    (1.00f, 0.80f, 0.62f,   0.96f, 0.92f, 0.88f,   true),
+        COLD   (0.62f, 0.86f, 1.00f,   0.93f, 0.97f, 1.00f,   true),
+        // HIGH: the strong tints
+        HOT_HIGH (1.00f, 0.58f, 0.24f,   0.94f, 0.86f, 0.80f,   true),
+        COLD_HIGH(0.25f, 0.75f, 1.00f,   0.88f, 0.94f, 1.00f,   true);
 
         final float r0, g0, b0, r1, g1, b1;
         final boolean glows;

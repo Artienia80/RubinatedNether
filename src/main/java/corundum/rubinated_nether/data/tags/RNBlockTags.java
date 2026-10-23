@@ -475,6 +475,32 @@ public class RNBlockTags extends BlockTagsProvider {
 		this.tag(RNTags.Blocks.SMOKE_PASSTHROUGH)
 				.addTag(RNTags.Blocks.GRATES);
 
+		// Vent heat sources
+		this.tag(RNTags.Blocks.VENT_HOT_LOW).add(
+				Blocks.MAGMA_BLOCK,
+				Blocks.FIRE,
+				Blocks.SOUL_FIRE,
+				RNBlocks.MOLTEN_RUBY_ORE.get()
+		);
+
+		this.tag(RNTags.Blocks.VENT_HOT_HIGH).add(
+				Blocks.LAVA
+		);
+
+		this.tag(RNTags.Blocks.VENT_COLD_LOW).add(
+				Blocks.SNOW,
+				Blocks.SNOW_BLOCK,
+				Blocks.POWDER_SNOW,
+				Blocks.ICE,
+				Blocks.PACKED_ICE,
+				Blocks.FROSTED_ICE
+		);
+
+		this.tag(RNTags.Blocks.VENT_COLD_HIGH).add(
+				Blocks.BLUE_ICE,
+				RNBlocks.DRY_ICE.get()
+		);
+
 		this.tag(RNTags.Blocks.MINEABLE_WITH_DRILL).addTags(
 				BlockTags.MINEABLE_WITH_PICKAXE,
 				BlockTags.MINEABLE_WITH_SHOVEL

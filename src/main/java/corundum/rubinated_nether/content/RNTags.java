@@ -47,6 +47,18 @@ public final class RNTags {
 
 		public static final TagKey<Block> SMOKE_PASSTHROUGH = createTag(Registries.BLOCK, "smoke_passthrough");
 
+		/** Heat sources behind a vent: magma, fire, molten ruby ore. Low damage. */
+		public static final TagKey<Block> VENT_HOT_LOW = createTag(Registries.BLOCK, "vent_hot_low");
+
+		/** Lava directly behind a vent. High damage. */
+		public static final TagKey<Block> VENT_HOT_HIGH = createTag(Registries.BLOCK, "vent_hot_high");
+
+		/** Snow and ordinary ice behind a vent. Low damage. */
+		public static final TagKey<Block> VENT_COLD_LOW = createTag(Registries.BLOCK, "vent_cold_low");
+
+		/** Blue ice and dry ice behind a vent. High damage. */
+		public static final TagKey<Block> VENT_COLD_HIGH = createTag(Registries.BLOCK, "vent_cold_high");
+
 
 	}
 
