@@ -326,12 +326,17 @@ public class RNItemTags extends ItemTagsProvider {
 		);
 
 		this.tag(RNTags.Items.VASES).add(
-				RNBlocks.BRONZE_VASE.asItem(),
-				RNBlocks.DISCOLORED_BRONZE_VASE.asItem(),
-				RNBlocks.CORRODED_BRONZE_VASE.asItem(),
-				RNBlocks.TARNISHED_BRONZE_VASE.asItem(),
-				RNBlocks.CRYSTALLIZED_BRONZE_VASE.asItem()
-		);
+						RNBlocks.BRONZE_VASE.asItem(),
+						RNBlocks.DISCOLORED_BRONZE_VASE.asItem(),
+						RNBlocks.CORRODED_BRONZE_VASE.asItem(),
+						RNBlocks.TARNISHED_BRONZE_VASE.asItem(),
+						RNBlocks.CRYSTALLIZED_BRONZE_VASE.asItem()
+				)
+				.addOptional(RubinatedNether.id("waxed_bronze_vase"))
+				.addOptional(RubinatedNether.id("waxed_discolored_bronze_vase"))
+				.addOptional(RubinatedNether.id("waxed_corroded_bronze_vase"))
+				.addOptional(RubinatedNether.id("waxed_tarnished_bronze_vase"))
+				.addOptional(RubinatedNether.id("waxed_crystallized_bronze_vase"));
 		this.tag(RNTags.Items.VASE_ENGRAVING_MATERIALS)
 				.addTag(ItemTags.TRIM_MATERIALS)
 				.add(
