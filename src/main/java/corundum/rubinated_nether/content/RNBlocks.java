@@ -1426,7 +1426,7 @@ public class RNBlocks {
             "bronze_vase",
             () -> new BronzeVaseBlock(
                     TarnishStage.UNAFFECTED,
-                    BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get()).noOcclusion()
+                    BlockBehaviour.Properties.ofFullCopy(BRONZE_BLOCK.get())
             )
     );
 
@@ -1434,7 +1434,7 @@ public class RNBlocks {
 			"discolored_bronze_vase",
 			() -> new BronzeVaseBlock(
 					TarnishStage.DISCOLORED,
-					BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(DISCOLORED_BRONZE_BLOCK.get())
 			)
 	);
 
@@ -1442,7 +1442,7 @@ public class RNBlocks {
 			"corroded_bronze_vase",
 			() -> new BronzeVaseBlock(
 					TarnishStage.CORRODED,
-					BlockBehaviour.Properties.ofFullCopy(CORRODED_BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(CORRODED_BRONZE_BLOCK.get())
 			)
 	);
 
@@ -1450,7 +1450,7 @@ public class RNBlocks {
 			"tarnished_bronze_vase",
 			() -> new BronzeVaseBlock(
 					TarnishStage.TARNISHED,
-					BlockBehaviour.Properties.ofFullCopy(TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(TARNISHED_BRONZE_BLOCK.get())
 			)
 	);
 
@@ -1458,7 +1458,7 @@ public class RNBlocks {
 			"crystallized_bronze_vase",
 			() -> new BronzeVaseBlock(
 					TarnishStage.CRYSTALLIZED,
-					BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(CRYSTALLIZED_BRONZE_BLOCK.get())
 			)
 	);
 

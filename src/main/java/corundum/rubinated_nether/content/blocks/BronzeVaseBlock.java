@@ -115,10 +115,11 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
                     : state.getFluidState().createLegacyBlock();
     }
 
-    // Only the lid (upper half) has a non-full shape, so only it can hold water.
     @Override
     protected FluidState getFluidState(BlockState state) {
-        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+        return state.getValue(HALF) == DoubleBlockHalf.UPPER && state.getValue(WATERLOGGED)
+                ? Fluids.WATER.getSource(false)
+                : super.getFluidState(state);
     }
 
     @Override
@@ -189,7 +190,7 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
         var aboveState = level.getBlockState(abovePos);
 
         if (blockPos.getY() < level.getMaxBuildHeight() - 1 && aboveState.canBeReplaced(context))
-            return this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(WAXED, false);
+            return this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(WAXED, false).setValue(WATERLOGGED, false);
         return null;
     }
 
@@ -418,8 +419,9 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
             savedEngraving = oldVase.getEngraving();
         }
 
-        level.setBlock(upperPos, nextBlock.defaultBlockState().setValue(HALF, DoubleBlockHalf.UPPER).setValue(WAXED, false), Block.UPDATE_CLIENTS);
-        level.setBlock(lowerPos, nextBlock.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(WAXED, false), Block.UPDATE_CLIENTS);
+        boolean upperWet = level.getBlockState(upperPos).getValue(WATERLOGGED);
+        level.setBlock(upperPos, nextBlock.defaultBlockState().setValue(HALF, DoubleBlockHalf.UPPER).setValue(WAXED, false).setValue(WATERLOGGED, upperWet), Block.UPDATE_CLIENTS);
+        level.setBlock(lowerPos, nextBlock.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(WAXED, false).setValue(WATERLOGGED, false), Block.UPDATE_CLIENTS);
 
         BlockEntity newBlockEntity = level.getBlockEntity(lowerPos);
         if (newBlockEntity instanceof VaseBlockEntity newVase) {

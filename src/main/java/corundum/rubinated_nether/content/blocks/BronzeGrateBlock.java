@@ -102,7 +102,7 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock implements SimpleWat
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (level.isClientSide) return;
-        if (entity instanceof ItemEntity) return;
+        if (entity instanceof ItemEntity || entity instanceof FallingBlockEntity) return;
 
         // Don't trigger falling if a BronzeEntity is stepping on it
         if (entity instanceof BronzeEntity) return;

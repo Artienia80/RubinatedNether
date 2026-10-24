@@ -19,10 +19,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -30,13 +32,15 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GearboxBlock extends TarnishingBronzeBlock {
+public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<GearboxBlock> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
                     TarnishStage.CODEC.fieldOf("tarnishing_state").forGetter(GearboxBlock::getAge),
@@ -53,6 +57,7 @@ public class GearboxBlock extends TarnishingBronzeBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final BooleanProperty COOLING_DOWN = BooleanProperty.create("cooling_down");
     public static final IntegerProperty CRANK_LEVEL = BlockStateProperties.LEVEL;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     public GearboxBlock(TarnishStage stage, Properties properties) {
         super(stage, properties);
@@ -61,7 +66,8 @@ public class GearboxBlock extends TarnishingBronzeBlock {
                 .setValue(LIT, false)
                 .setValue(POWERED, false)
                 .setValue(COOLING_DOWN, false)
-                .setValue(CRANK_LEVEL, 0));
+                .setValue(CRANK_LEVEL, 0)
+                .setValue(WATERLOGGED, false));
     }
 
     public MapCodec<GearboxBlock> codec() {
@@ -83,7 +89,7 @@ public class GearboxBlock extends TarnishingBronzeBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LIT, POWERED, COOLING_DOWN, CRANK_LEVEL);
+        builder.add(FACING, LIT, POWERED, COOLING_DOWN, CRANK_LEVEL, WATERLOGGED);
         super.createBlockStateDefinition(builder);
     }
 
@@ -94,7 +100,20 @@ public class GearboxBlock extends TarnishingBronzeBlock {
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
                 .setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()))
                 .setValue(COOLING_DOWN, false)
-                .setValue(CRANK_LEVEL, 0);
+                .setValue(CRANK_LEVEL, 0)
+                .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+    }
+
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+    }
+
+    @Override
+    protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        if (state.getValue(WATERLOGGED))
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
 
     @Override
