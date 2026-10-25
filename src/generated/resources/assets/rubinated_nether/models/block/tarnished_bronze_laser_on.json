@@ -265,12 +265,106 @@
         16,
         13
       ]
+    },
+    {
+      "faces": {
+        "down": {
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "texture": "#1"
+        },
+        "east": {
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "rotation": 270,
+          "texture": "#1",
+          "uv": [
+            3.0,
+            3.0,
+            13.0,
+            13.0
+          ]
+        },
+        "north": {
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "rotation": 180,
+          "texture": "#1",
+          "uv": [
+            3.0,
+            3.0,
+            13.0,
+            13.0
+          ]
+        },
+        "south": {
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "texture": "#1",
+          "uv": [
+            3.0,
+            3.0,
+            13.0,
+            13.0
+          ]
+        },
+        "up": {
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "rotation": 180,
+          "texture": "#1"
+        },
+        "west": {
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          },
+          "rotation": 90,
+          "texture": "#1",
+          "uv": [
+            3.0,
+            3.0,
+            13.0,
+            13.0
+          ]
+        }
+      },
+      "from": [
+        3,
+        6,
+        3
+      ],
+      "rotation": {
+        "angle": 0.0,
+        "axis": "y",
+        "origin": [
+          8,
+          8,
+          8
+        ]
+      },
+      "to": [
+        13,
+        16,
+        13
+      ]
     }
   ],
   "gui_light": "side",
   "render_type": "minecraft:cutout",
   "textures": {
     "0": "rubinated_nether:block/laser/mode/laser_lens_on",
+    "1": "rubinated_nether:block/laser/mode/laser_lens_on_e",
     "2": "rubinated_nether:block/laser/material/tarnished_bronze_laser_front_on",
     "3": "rubinated_nether:block/laser/material/tarnished_bronze_laser_side",
     "particle": "rubinated_nether:block/laser/material/tarnished_bronze_laser_front"

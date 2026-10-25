@@ -1075,12 +1075,12 @@ public class RNBlockStates extends BlockStateProvider {
 	private void generateLaserModels(String modelBlockName, String textureBlockName) {
 		// Define all variants with their texture patterns
 		var variants = new Object[][] {
-				{"", "laser_lens", textureBlockName + "_front", textureBlockName + "_front"}, // base variant
-				{"_ir", "laser_lens_ir", textureBlockName + "_front", textureBlockName + "_front"},
-				{"_ir_on", "laser_lens_ir_on", textureBlockName + "_front_on", textureBlockName + "_front"},
-				{"_on", "laser_lens_on", textureBlockName + "_front_on", textureBlockName + "_front"},
-				{"_uv", "laser_lens_uv", textureBlockName + "_front", textureBlockName + "_front"},
-				{"_uv_on", "laser_lens_uv_on", textureBlockName + "_front_on", textureBlockName + "_front"}
+				{"", "laser_lens", textureBlockName + "_front", textureBlockName + "_front", null}, // base variant
+				{"_ir", "laser_lens_ir", textureBlockName + "_front", textureBlockName + "_front", null},
+				{"_ir_on", "laser_lens_ir_on", textureBlockName + "_front_on", textureBlockName + "_front", "laser_lens_ir_on_e"},
+				{"_on", "laser_lens_on", textureBlockName + "_front_on", textureBlockName + "_front", "laser_lens_on_e"},
+				{"_uv", "laser_lens_uv", textureBlockName + "_front", textureBlockName + "_front", null},
+				{"_uv_on", "laser_lens_uv_on", textureBlockName + "_front_on", textureBlockName + "_front", "laser_lens_uv_on_e"}
 		};
 
 		// Generate each variant
@@ -1089,13 +1089,14 @@ public class RNBlockStates extends BlockStateProvider {
 			String lensTexture = (String) variant[1];
 			String frontTexture = (String) variant[2];
 			String particleTexture = (String) variant[3];
+			String lensGlowTexture = (String) variant[4]; // null unless the laser is observing
 
-			createLaserModel(modelBlockName + suffix, lensTexture, frontTexture, textureBlockName + "_side", particleTexture);
+			createLaserModel(modelBlockName + suffix, lensTexture, frontTexture, textureBlockName + "_side", particleTexture, lensGlowTexture);
 		}
 	}
 
-	private void createLaserModel(String modelName, String lensTexture, String frontTexture, String sideTexture, String particleTexture) {
-		models().getBuilder(modelName)
+	private void createLaserModel(String modelName, String lensTexture, String frontTexture, String sideTexture, String particleTexture, String lensGlowTexture) {
+		BlockModelBuilder model = models().getBuilder(modelName)
 				.parent(models().getExistingFile(mcLoc("block/block")))
 				.guiLight(BlockModel.GuiLight.SIDE)
 				.texture("0", modLoc("block/laser/mode/" + lensTexture))
@@ -1143,6 +1144,21 @@ public class RNBlockStates extends BlockStateProvider {
 				.face(Direction.UP).uvs(3, 3, 13, 13).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).texture("#0").end()
 				.face(Direction.DOWN).uvs(3, 3, 13, 13).texture("#0").end()
 				.end();
+
+		// Element 5: emissive lens overlay, only while observing (same box as the lens, full-bright faces)
+		if (lensGlowTexture != null) {
+			model.texture("1", modLoc("block/laser/mode/" + lensGlowTexture));
+			model.element()
+					.from(3, 6, 3).to(13, 16, 13)
+					.rotation().angle(0).axis(Direction.Axis.Y).origin(8, 8, 8).end()
+					.face(Direction.NORTH).uvs(3, 3, 13, 13).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).texture("#1").emissivity(15, 15).end()
+					.face(Direction.EAST).uvs(3, 3, 13, 13).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#1").emissivity(15, 15).end()
+					.face(Direction.SOUTH).uvs(3, 3, 13, 13).texture("#1").emissivity(15, 15).end()
+					.face(Direction.WEST).uvs(3, 3, 13, 13).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#1").emissivity(15, 15).end()
+					.face(Direction.UP).uvs(3, 3, 13, 13).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).texture("#1").emissivity(15, 15).end()
+					.face(Direction.DOWN).uvs(3, 3, 13, 13).texture("#1").emissivity(15, 15).end()
+					.end();
+		}
 	}
 
 
