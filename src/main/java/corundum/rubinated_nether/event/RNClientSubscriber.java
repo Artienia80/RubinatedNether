@@ -29,6 +29,7 @@ import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -65,6 +66,13 @@ public class RNClientSubscriber {
     public static void onClientSetup(FMLClientSetupEvent event) {
         IEventBus modBus = net.neoforged.fml.ModLoadingContext.get().getActiveContainer().getEventBus();
         RubinatedTextRenderer.register(modBus);
+
+        event.enqueueWork(() -> ItemProperties.register(
+                RNItems.MUSIC_BOX.get(),
+                ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "playing"),
+                (stack, level, entity, seed) ->
+                        stack.getOrDefault(RNDataComponents.MUSIC_BOX_DATA.get(), MusicBoxData.EMPTY).playing() ? 1.0F : 0.0F
+        ));
     }
 
     @SubscribeEvent

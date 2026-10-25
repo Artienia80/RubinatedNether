@@ -276,7 +276,6 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.RITUAL_OFFERING,
 				RNItems.COGWHEEL,
 				RNItems.WINDING_KEY,
-				RNItems.MUSIC_BOX,
 				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
 				RNItems.MOLTEN_RUBY_BUCKET,
 
@@ -336,6 +335,7 @@ public class RNItemModels extends ItemModelProvider {
 
 		carvedRuneItem();
 		pocketwatchItem();
+		musicBoxItem();
 
 		withExistingParent(
 				RNBlocks.BRAZIER.getId().toString(),
@@ -474,6 +474,21 @@ public class RNItemModels extends ItemModelProvider {
 					mcLoc("item/template_spawn_egg")
 			);
 		}
+	}
+
+	private void musicBoxItem() {
+		var base = withExistingParent(
+				RNItems.MUSIC_BOX.getId().toString(),
+				mcLoc("item/generated")
+		).texture("layer0", modLoc("item/music_box"));
+
+		ItemModelBuilder playingModel = getBuilder("music_box_playing")
+				.parent(new ModelFile.UncheckedModelFile(mcLoc("item/generated")))
+				.texture("layer0", modLoc("item/music_box_playing"));
+
+		base.override()
+				.predicate(modLoc("playing"), 1.0F)
+				.model(playingModel);
 	}
 
 	private void pocketwatchItem() {

@@ -1,5 +1,13 @@
 {
   "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "rubinated_nether:item/music_box_playing",
+      "predicate": {
+        "rubinated_nether:playing": 1.0
+      }
+    }
+  ],
   "textures": {
     "layer0": "rubinated_nether:item/music_box"
   }
