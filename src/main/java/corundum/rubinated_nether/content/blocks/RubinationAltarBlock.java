@@ -96,7 +96,7 @@ public class RubinationAltarBlock extends BaseEntityBlock {
 	}
 
 	private static <T extends BlockEntity> BlockEntityTicker<T> createTicker(Level level, BlockEntityType<T> serverType, BlockEntityType<? extends RubinationAltarBlockEntity> clientType) {
-		return level.isClientSide ? createTickerHelper(serverType, clientType, RubinationAltarBlockEntity::tick) : null;
+		return createTickerHelper(serverType, clientType, RubinationAltarBlockEntity::tick);
 	}
 
 	@Override

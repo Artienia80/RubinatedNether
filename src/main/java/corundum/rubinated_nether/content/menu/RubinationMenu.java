@@ -229,7 +229,7 @@ public class RubinationMenu extends AbstractContainerMenu {
     public int countRubinatedBlocks() {
         final int[] count = {0};
         this.access.execute((level, blockPos) -> {
-            count[0] = RubinationConverter.countRubinatedBlocks(level, blockPos, 20);
+            count[0] = RubinationConverter.countRubinatedBlocks(level, blockPos, RubinationConverter.ALTAR_SCAN_RADIUS);
         });
         return count[0];
     }

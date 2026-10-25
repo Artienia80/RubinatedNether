@@ -94,6 +94,12 @@ public class RubinationConverter {
         };
     }
 
+    public static final int ALTAR_SCAN_RADIUS = 20;
+
+    public static boolean isRubinatedBlock(BlockState state) {
+        return RUBINATED_TO_NORMAL_MAP.containsKey(state.getBlock());
+    }
+
     public static int countRubinatedBlocks(Level level, BlockPos centerPos, int radius) {
         int count = 0;
         for (int x = -radius; x <= radius; x++) {
@@ -115,7 +121,7 @@ public class RubinationConverter {
     }
 
     public static boolean hasEnoughRubinatedBlocks(Level level, BlockPos centerPos) {
-        return hasEnoughRubinatedBlocks(level, centerPos, 20);
+        return hasEnoughRubinatedBlocks(level, centerPos, ALTAR_SCAN_RADIUS);
     }
 
     @Nullable
