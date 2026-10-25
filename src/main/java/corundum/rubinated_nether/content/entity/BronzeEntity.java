@@ -25,6 +25,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
@@ -375,7 +376,9 @@ public class BronzeEntity extends TarnishingEntity {
     private void setupAnimationStates() {
         if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = 80;
-            this.idleAnimationState.start(this.tickCount);
+            if (!this.ramAnimationState.isStarted()) {
+                this.idleAnimationState.start(this.tickCount);
+            }
         } else {
             --this.idleAnimationTimeout;
         }
@@ -395,6 +398,26 @@ public class BronzeEntity extends TarnishingEntity {
             idleAnimationState.startIfStopped(tickCount);
             walkAnimationState.stop();
         }
+    }
+
+    /**
+     * The server never syncs yBodyRot to clients; the client derives it itself, and vanilla's body control
+     * only turns the body once the head is ~75 degrees off. The rods are attached to the body (not the head),
+     * so during a ram the body (and rods) would barely follow the player. While the ram animation is running,
+     * lock the client's body rotation to the head rotation so the rods always point where it is facing.
+     */
+    @Override
+    protected BodyRotationControl createBodyControl() {
+        return new BodyRotationControl(this) {
+            @Override
+            public void clientTick() {
+                if (BronzeEntity.this.ramAnimationState.isStarted()) {
+                    BronzeEntity.this.yBodyRot = BronzeEntity.this.yHeadRot;
+                    return;
+                }
+                super.clientTick();
+            }
+        };
     }
 
     @Override

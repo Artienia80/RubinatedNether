@@ -3,7 +3,6 @@ package corundum.rubinated_nether.content.entity.goals;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -20,7 +19,10 @@ public class DiscoloredRamGoal extends Goal {
     private int phase = 0;
     private int phaseTicks = 0;
     private Vec3 dashDirection = Vec3.ZERO;
-    private static final int CHARGE_TIME = 20;
+    // How long it stands still with its rod out, tracking the player, before ramming (30 ticks = 1.5s)
+    private static final int AIM_TIME = 30;
+    // Max degrees per tick it can turn to keep facing the player while aiming
+    private static final float AIM_TURN_SPEED = 30.0F;
     private static final int DASH_TIME = 10;
     private static final int COOLDOWN = 80;
     private static final double RAM_SPEED = 1.2;
@@ -57,6 +59,11 @@ public class DiscoloredRamGoal extends Goal {
         phase = 1;
         phaseTicks = 0;
         entity.getNavigation().stop();
+        entity.setDeltaMovement(0, entity.getDeltaMovement().y, 0);
+        // Put the rod into ram position right away so the whole aiming phase is visibly a wind-up
+        if (!entity.level().isClientSide) {
+            entity.level().broadcastEntityEvent(entity, BronzeEntity.RAM_START);
+        }
     }
 
     @Override
@@ -81,23 +88,28 @@ public class DiscoloredRamGoal extends Goal {
         }
 
         if (target == null) return;
-        if (!entity.getTarnishLevel().equals(TarnishStage.DISCOLORED)) stop();
+        if (!entity.getTarnishLevel().equals(TarnishStage.DISCOLORED)) {
+            stop();
+            return;
+        }
 
         switch (phase) {
             case 1:
-                entity.lookAt(EntityAnchorArgument.Anchor.EYES, target.position());
+                // Stay still, keep the whole body (not just the head) turned toward the player
+                entity.getNavigation().stop();
+                entity.setDeltaMovement(0, entity.getDeltaMovement().y, 0);
+                faceTarget(AIM_TURN_SPEED);
+
                 phaseTicks++;
-                if (phaseTicks >= CHARGE_TIME) {
+                if (phaseTicks >= AIM_TIME) {
                     dashDirection = target.position().subtract(entity.position()).normalize();
-                    entity.setYRot((float) (Mth.atan2(dashDirection.z, dashDirection.x) * (180F / Math.PI)) - 90F);
-                    entity.yBodyRot = entity.getYRot();
-                    entity.yHeadRot = entity.getYRot();
+                    float yaw = (float) (Mth.atan2(dashDirection.z, dashDirection.x) * (180F / Math.PI)) - 90F;
+                    entity.setYRot(yaw);
+                    entity.yBodyRot = yaw;
+                    entity.yHeadRot = yaw;
 
                     phase = 2;
                     phaseTicks = 0;
-                    if (!entity.level().isClientSide) {
-                        entity.level().broadcastEntityEvent(entity, BronzeEntity.RAM_START);
-                    }
                 }
                 break;
 
@@ -166,6 +178,16 @@ public class DiscoloredRamGoal extends Goal {
         }
     }
 
+    private void faceTarget(float maxTurn) {
+        double dx = target.getX() - entity.getX();
+        double dz = target.getZ() - entity.getZ();
+        float targetYaw = (float) (Mth.atan2(dz, dx) * (180F / Math.PI)) - 90F;
+        float yaw = Mth.approachDegrees(entity.getYRot(), targetYaw, maxTurn);
+        entity.setYRot(yaw);
+        entity.yBodyRot = yaw;
+        entity.yHeadRot = yaw;
+    }
+
     public boolean isDashing() {
         return phase == 2;
     }
@@ -187,7 +209,7 @@ public class DiscoloredRamGoal extends Goal {
     public void stop() {
         if (!isStunned) {
             entity.setRamCooldown(COOLDOWN);
-            if (!entity.level().isClientSide && phase == 2) {
+            if (!entity.level().isClientSide && phase != 0) {
                 entity.level().broadcastEntityEvent(entity, BronzeEntity.RAM_STOP); // Stop ram
             }
         }
