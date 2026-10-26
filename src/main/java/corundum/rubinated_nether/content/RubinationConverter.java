@@ -1,8 +1,11 @@
 package corundum.rubinated_nether.content;
 
+import corundum.rubinated_nether.content.blocks.CofferBlock;
+import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -35,7 +38,8 @@ public class RubinationConverter {
             RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(), RNBlocks.SHRINE_STONE_TILES.get(),
             RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(), RNBlocks.SHRINE_STONE_PILLAR.get(),
             RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(), RNBlocks.SHRINE_STONE_BRICKS.get(),
-            RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(), RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get()
+            RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(), RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
+            RNBlocks.RUBINATED_SHRINE_STONE_COFFER.get(), RNBlocks.SHRINE_STONE_COFFER.get()
     );
 
     public static class ConversionRule {
@@ -159,8 +163,19 @@ public class RubinationConverter {
 
             if (normalBlock != null) {
                 BlockState newState = transferProperties(currentState, normalBlock.defaultBlockState());
-                level.setBlock(pos, newState, 3);
+                setBlockKeepingContents(level, pos, newState, Block.UPDATE_ALL);
             }
+        }
+    }
+
+    public static void setBlockKeepingContents(Level level, BlockPos pos, BlockState newState, int flags) {
+        CompoundTag contents = null;
+        if (newState.getBlock() instanceof CofferBlock && level.getBlockEntity(pos) instanceof CofferBlockEntity coffer) {
+            contents = coffer.extractContents(level.registryAccess());
+        }
+        level.setBlock(pos, newState, flags);
+        if (contents != null && level.getBlockEntity(pos) instanceof CofferBlockEntity target) {
+            target.insertContents(contents, level.registryAccess());
         }
     }
 
@@ -228,7 +243,7 @@ public class RubinationConverter {
 
             if (random.nextDouble() < replacementChance) {
                 BlockState newState = transferProperties(currentState, rule.getOutputBlock().defaultBlockState());
-                level.setBlockAndUpdate(targetPos, newState);
+                setBlockKeepingContents(level, targetPos, newState, Block.UPDATE_ALL);
                 playEffects(level, centerPos, targetPos, random);
             }
         }

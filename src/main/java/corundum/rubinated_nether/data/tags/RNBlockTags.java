@@ -82,6 +82,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(),
 				RNBlocks.RUNESTONE.get(),
 				RNBlocks.SHRINE_STONE_COFFER.get(),
+				RNBlocks.RUBINATED_SHRINE_STONE_COFFER.get(),
 
 				RNBlocks.BRAZIER.get(),
 				RNBlocks.RUBINATION_ALTAR.get(),
@@ -251,6 +252,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(),
 				RNBlocks.RUNESTONE.get(),
 				RNBlocks.SHRINE_STONE_COFFER.get(),
+				RNBlocks.RUBINATED_SHRINE_STONE_COFFER.get(),
 
 				RNBlocks.BRAZIER.get(),
 				RNBlocks.RUBINATION_ALTAR.get(),

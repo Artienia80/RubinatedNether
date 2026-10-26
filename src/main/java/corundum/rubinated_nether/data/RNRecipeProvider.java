@@ -753,6 +753,11 @@ public class RNRecipeProvider extends RecipeProvider {
 				new ResonanceRecipe.TriggerData(10, 150),
 				new ResonanceRecipe.TriggerData(20, 300), true);
 
+		resonance(recipeOutput, RNBlocks.RUBINATED_SHRINE_STONE_COFFER,
+				Ingredient.of(RNBlocks.SHRINE_STONE_COFFER),
+				new ResonanceRecipe.TriggerData(10, 150),
+				new ResonanceRecipe.TriggerData(20, 300), true);
+
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, RNItems.POCKETWATCH.get())
 				.requires(DataComponentIngredient.of(false, RNDataComponents.POCKETWATCH_DATA.get(), PocketwatchData.BROKEN, RNItems.POCKETWATCH.get()))

@@ -150,7 +150,7 @@ public abstract class PickShovelItem extends DiggerItem implements MechanicalToo
 		var derubinatedState = RubinationConverter.getDerubinatedVersion(blockstate);
 		if (derubinatedState != null && level.getBlockState(blockpos.above()).isAir()) {
 			if (!level.isClientSide) {
-				level.setBlock(blockpos, derubinatedState, 11);
+				RubinationConverter.setBlockKeepingContents(level, blockpos, derubinatedState, 11);
 				level.playSound(player, blockpos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
 				level.gameEvent(GameEvent.BLOCK_CHANGE, blockpos, GameEvent.Context.of(player, derubinatedState));
 

@@ -54,7 +54,7 @@ public class RNCreativeTabs {
 						// Freezer and ice
 						addItems(output, RNBlocks.FREEZER, RNItems.POWDER_SNOW, RNItems.FROSTED_ICE, RNBlocks.DRY_ICE);
 						// Coffer
-						addItems(output, RNBlocks.SHRINE_STONE_COFFER);
+						addItems(output, RNBlocks.SHRINE_STONE_COFFER, RNBlocks.RUBINATED_SHRINE_STONE_COFFER);
 						// Shrine stone family
 						addItems(
 								output,
@@ -434,6 +434,8 @@ public class RNCreativeTabs {
 					RNBlocks.FREEZER.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.BARREL.getDefaultInstance(),
 					RNBlocks.SHRINE_STONE_COFFER.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.SHRINE_STONE_COFFER.get().asItem().getDefaultInstance(),
+					RNBlocks.RUBINATED_SHRINE_STONE_COFFER.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.CHISELED_BOOKSHELF.getDefaultInstance(),
 					RNBlocks.RUNESTONE.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.CRYING_OBSIDIAN.getDefaultInstance(),

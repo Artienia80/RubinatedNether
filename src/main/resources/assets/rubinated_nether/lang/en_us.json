@@ -66,6 +66,7 @@
   "block.rubinated_nether.rubinated_chiseled_shrine_stone_bricks": "Rubinated Chiseled Shrine Stone Bricks",
 
   "block.rubinated_nether.shrine_stone_coffer": "Coffer",
+  "block.rubinated_nether.rubinated_shrine_stone_coffer": "Rubinated Coffer",
 
   "item.rubinated_nether.ruby_lens": "Ruby Lens",
 
@@ -710,6 +711,9 @@
   "gui.rubinated_nether.jei.resonance": "Resonance",
 
   "container.shrine_stone_coffer": "Coffer",
+  "container.rubinated_shrine_stone_coffer": "Rubinated Coffer",
+  "tooltip.rubinated_nether.coffer_cached": "Reserved for: %s",
+  "tooltip.rubinated_nether.coffer_cached_clear": "Right-click to clear",
   "container.bronzeVase": "Bronze Vase",
   "container.bronzeVase.itemCount": "%s x%s",
   "container.bronzeVase.more": "and %s more",

@@ -6,6 +6,7 @@ import com.mojang.math.Axis;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNModelLayers;
+import corundum.rubinated_nether.content.blocks.RubinatedCofferBlock;
 import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import net.minecraft.client.model.geom.ModelPart;
@@ -35,6 +36,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class CofferRenderer implements BlockEntityRenderer<CofferBlockEntity> {
     public static final ResourceLocation COFFER_TEXTURE = RubinatedNether.id("textures/entity/coffer/shrine_stone_coffer.png");
+    public static final ResourceLocation RUBINATED_COFFER_TEXTURE = RubinatedNether.id("textures/entity/coffer/rubinated_shrine_stone_coffer.png");
 
     private static final String BOTTOM = "bottom";
     private static final String LID = "lid";
@@ -69,7 +71,8 @@ public class CofferRenderer implements BlockEntityRenderer<CofferBlockEntity> {
             poseStack.mulPose(Axis.YP.rotationDegrees(-f));
             poseStack.translate(-0.5F, -0.5F, -0.5F);
 
-            VertexConsumer vertexconsumer = multiBufferSource.getBuffer(RenderType.entityCutout(COFFER_TEXTURE));
+            ResourceLocation texture = var12 instanceof RubinatedCofferBlock ? RUBINATED_COFFER_TEXTURE : COFFER_TEXTURE;
+            VertexConsumer vertexconsumer = multiBufferSource.getBuffer(RenderType.entityCutout(texture));
             DoubleBlockCombiner.NeighborCombineResult<? extends ChestBlockEntity> neighborcombineresult;
             neighborcombineresult = abstractchestblock.combine(blockstate, level, blockEntity.getBlockPos(), true);
             float f1 = neighborcombineresult.apply(ChestBlock.opennessCombiner(blockEntity)).get(partialTick);

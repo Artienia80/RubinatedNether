@@ -10,10 +10,13 @@ import fuzs.limitlesscontainers.api.limitlesscontainers.v1.MultipliedSlot;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 public class CofferMenu extends LimitlessContainerMenu {
+    protected static final int PLAYER_SLOTS_END = CofferBlockEntity.CONTAINER_SIZE + 36;
+
     private final MultipliedContainer container;
 
     public CofferMenu(int containerId, Inventory inventory) {
@@ -25,7 +28,11 @@ public class CofferMenu extends LimitlessContainerMenu {
     }
 
     public CofferMenu(int id, Inventory playerInv, MultipliedContainer container) {
-        super(RNMenuTypes.COFFER_MENU.get(), id);
+        this(RNMenuTypes.COFFER_MENU.get(), id, playerInv, container);
+    }
+
+    protected CofferMenu(MenuType<?> menuType, int id, Inventory playerInv, MultipliedContainer container) {
+        super(menuType, id);
         this.container = container;
         container.startOpen(playerInv.player);
 
@@ -37,7 +44,7 @@ public class CofferMenu extends LimitlessContainerMenu {
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 4; col++) {
                 int slotIndex = row * 4 + col;
-                this.addSlot(new MultipliedSlot(this.container, slotIndex, startX + col * 20, startY + row * 20));
+                this.addSlot(this.createContainerSlot(this.container, slotIndex, startX + col * 20, startY + row * 20));
             }
         }
 
@@ -57,6 +64,10 @@ public class CofferMenu extends LimitlessContainerMenu {
         }
     }
 
+    protected Slot createContainerSlot(MultipliedContainer container, int index, int x, int y) {
+        return new MultipliedSlot(container, index, x, y);
+    }
+
     public Container getContainer() {
         return this.container;
     }
@@ -69,7 +80,7 @@ public class CofferMenu extends LimitlessContainerMenu {
             ItemStack itemStack2 = slot.getItem();
             itemStack = itemStack2.copy();
             if (index < CofferBlockEntity.CONTAINER_SIZE) {
-                if (!this.moveItemStackTo(itemStack2, CofferBlockEntity.CONTAINER_SIZE, this.slots.size(), true)) {
+                if (!this.moveItemStackTo(itemStack2, CofferBlockEntity.CONTAINER_SIZE, PLAYER_SLOTS_END, true)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(itemStack2, 0, CofferBlockEntity.CONTAINER_SIZE, false)) {

@@ -125,6 +125,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 
 		this.dropSelf(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
 		this.dropSelf(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get());
+		this.dropSelf(RNBlocks.RUBINATED_SHRINE_STONE_COFFER.get());
 		this.dropSelf(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get());
 		this.dropSelf(RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get());
 		this.dropSelf(RNBlocks.RUBINATED_SHRINE_STONE_TILES.get());

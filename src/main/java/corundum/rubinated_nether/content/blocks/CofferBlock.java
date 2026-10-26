@@ -20,6 +20,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractChestBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.DoubleBlockCombiner;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -141,7 +142,7 @@ public class CofferBlock extends AbstractChestBlock<CofferBlockEntity> implement
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, WATERLOGGED);
+        builder.add(FACING, WATERLOGGED, ChestBlock.TYPE);
     }
 
     @Override

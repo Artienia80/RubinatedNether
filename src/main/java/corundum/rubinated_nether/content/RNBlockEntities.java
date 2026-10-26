@@ -12,6 +12,7 @@ import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.VaseBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.gearbox.GearboxBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RubinationAltarBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.RubinatedCofferBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -122,6 +123,16 @@ public class RNBlockEntities {
 			).build(
                     Util.fetchChoiceType(References.BLOCK_ENTITY, "coffer")
             )
+	);
+
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RubinatedCofferBlockEntity>> RUBINATED_COFFER = BLOCK_ENTITY_TYPES.register(
+			"rubinated_coffer",
+			() -> BlockEntityType.Builder.of(
+					RubinatedCofferBlockEntity::new,
+					RNBlocks.RUBINATED_SHRINE_STONE_COFFER.get()
+			).build(
+					Util.fetchChoiceType(References.BLOCK_ENTITY, "rubinated_coffer")
+			)
 	);
 
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ChandelierBlock.ChandelierBlockEntity>> CHANDELIER = BLOCK_ENTITY_TYPES.register(

@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.menu;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.menu.coffer.CofferMenu;
+import corundum.rubinated_nether.content.menu.coffer.RubinatedCofferMenu;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
@@ -34,6 +35,14 @@ public class RNMenuTypes {
 			"coffer_menu",
 			() -> new MenuType<>(
 					CofferMenu::new,
+					FeatureFlags.VANILLA_SET
+			)
+	);
+
+	public static final DeferredHolder<MenuType<?>, MenuType<RubinatedCofferMenu>> RUBINATED_COFFER_MENU = MENUS.register(
+			"rubinated_coffer_menu",
+			() -> new MenuType<>(
+					RubinatedCofferMenu::new,
 					FeatureFlags.VANILLA_SET
 			)
 	);

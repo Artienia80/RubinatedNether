@@ -23,6 +23,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.ChestLidController;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
@@ -38,7 +39,11 @@ public class CofferBlockEntity extends ChestBlockEntity implements LidBlockEntit
     private final ChestLidController chestLidController = new ChestLidController();
 
     public CofferBlockEntity(BlockPos pos, BlockState state) {
-        super(RNBlockEntities.COFFER.get(), pos, state);
+        this(RNBlockEntities.COFFER.get(), pos, state);
+    }
+
+    protected CofferBlockEntity(BlockEntityType<? extends CofferBlockEntity> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
 
         this.openersCounter = new ContainerOpenersCounter() {
             protected void onOpen(Level level, BlockPos blockPos, BlockState blockState) {
@@ -65,7 +70,7 @@ public class CofferBlockEntity extends ChestBlockEntity implements LidBlockEntit
             }
         };
 
-        this.items = NonNullList.withSize(CONTAINER_SIZE, net.minecraft.world.item.ItemStack.EMPTY);
+        this.items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
     }
 
     // Menu
@@ -108,6 +113,76 @@ public class CofferBlockEntity extends ChestBlockEntity implements LidBlockEntit
     @Override
     protected void setItems(NonNullList<ItemStack> items) {
         ContainerMenuHelper.copyItemsIntoList(items, this.items);
+    }
+
+    public CompoundTag extractContents(HolderLookup.Provider registries) {
+        CompoundTag tag = new CompoundTag();
+        LimitlessContainerUtils.saveAllItems(tag, this.items, true, registries);
+        this.items.clear();
+        return tag;
+    }
+
+    public void insertContents(CompoundTag tag, HolderLookup.Provider registries) {
+        this.items.clear();
+        LimitlessContainerUtils.loadAllItems(tag, this.items, registries);
+        this.setChanged();
+    }
+
+    protected void onSlotFilled(int slot) {
+    }
+
+    protected void onSlotEmptied(int slot, ItemStack previous) {
+    }
+
+    protected boolean canPlaceInSlot(int slot, ItemStack stack) {
+        return true;
+    }
+
+    private ItemStack snapshot(int slot) {
+        if (slot < 0 || slot >= CONTAINER_SIZE) {
+            return ItemStack.EMPTY;
+        }
+        ItemStack stack = this.items.get(slot);
+        return stack.isEmpty() ? ItemStack.EMPTY : stack.copyWithCount(1);
+    }
+
+    private void afterSlotChange(int slot, ItemStack previous) {
+        if (slot < 0 || slot >= CONTAINER_SIZE) {
+            return;
+        }
+        if (!this.items.get(slot).isEmpty()) {
+            this.onSlotFilled(slot);
+        } else if (!previous.isEmpty()) {
+            this.onSlotEmptied(slot, previous);
+        }
+    }
+
+    @Override
+    public ItemStack removeItem(int slot, int amount) {
+        ItemStack previous = this.snapshot(slot);
+        ItemStack removed = super.removeItem(slot, amount);
+        this.afterSlotChange(slot, previous);
+        return removed;
+    }
+
+    @Override
+    public ItemStack removeItemNoUpdate(int slot) {
+        ItemStack previous = this.snapshot(slot);
+        ItemStack removed = super.removeItemNoUpdate(slot);
+        this.afterSlotChange(slot, previous);
+        return removed;
+    }
+
+    @Override
+    public void setItem(int slot, ItemStack stack) {
+        ItemStack previous = this.snapshot(slot);
+        super.setItem(slot, stack);
+        this.afterSlotChange(slot, previous);
+    }
+
+    @Override
+    public boolean canPlaceItem(int slot, ItemStack stack) {
+        return this.canPlaceInSlot(slot, stack);
     }
 
     // Lid handling
@@ -164,6 +239,39 @@ public class CofferBlockEntity extends ChestBlockEntity implements LidBlockEntit
 
 
     public class CofferContainer implements ListBackedContainer, MultipliedContainer {
+
+        @Override
+        public ItemStack removeItem(int slot, int count) {
+            ItemStack previous = CofferBlockEntity.this.snapshot(slot);
+            ItemStack removed = ListBackedContainer.super.removeItem(slot, count);
+            CofferBlockEntity.this.afterSlotChange(slot, previous);
+            return removed;
+        }
+
+        @Override
+        public ItemStack removeItemNoUpdate(int slot) {
+            ItemStack previous = CofferBlockEntity.this.snapshot(slot);
+            ItemStack removed = ListBackedContainer.super.removeItemNoUpdate(slot);
+            CofferBlockEntity.this.afterSlotChange(slot, previous);
+            return removed;
+        }
+
+        @Override
+        public void setItem(int slot, ItemStack stack) {
+            ItemStack previous = CofferBlockEntity.this.snapshot(slot);
+            ListBackedContainer.super.setItem(slot, stack);
+            CofferBlockEntity.this.afterSlotChange(slot, previous);
+        }
+
+        @Override
+        public boolean canPlaceItem(int slot, ItemStack stack) {
+            return CofferBlockEntity.this.canPlaceInSlot(slot, stack);
+        }
+
+        @Override
+        public boolean stillValid(Player player) {
+            return Container.stillValidBlockEntity(CofferBlockEntity.this, player);
+        }
 
         @Override
         public void startOpen(Player player) {

@@ -16,6 +16,7 @@ import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.screen.CofferScreen;
 import corundum.rubinated_nether.content.screen.FreezerScreen;
+import corundum.rubinated_nether.content.screen.RubinatedCofferScreen;
 import corundum.rubinated_nether.content.screen.RubinationScreen;
 import corundum.rubinated_nether.content.screen.VaseScreen;
 import corundum.rubinated_nether.mixin.accessors.EntityRenderDispatcherAccessor;
@@ -112,12 +113,14 @@ public class RNClientSubscriber {
         event.register(RNMenuTypes.FREEZER_MENU.get(), FreezerScreen::new);
         event.register(RNMenuTypes.RUBINATION_MENU.get(), RubinationScreen::new);
         event.register(RNMenuTypes.COFFER_MENU.get(), CofferScreen::new);
+        event.register(RNMenuTypes.RUBINATED_COFFER_MENU.get(), RubinatedCofferScreen::new);
         event.register(RNMenuTypes.VASE_MENU.get(), VaseScreen::new);
     }
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(RNBlockEntities.COFFER.get(), CofferRenderer::new);
+        event.registerBlockEntityRenderer(RNBlockEntities.RUBINATED_COFFER.get(), CofferRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.GEARBOX.get(), GearboxRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_LASER.get(), BronzeLaserRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.COPPER_LASER.get(), CopperLaserRenderer::new);
