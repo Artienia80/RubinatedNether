@@ -41,7 +41,7 @@ import java.util.*;
 public class ChainsawItem extends AxeItem implements MechanicalTool {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     private static final String HEAVY_TAG = "rn_heavy_log";
 

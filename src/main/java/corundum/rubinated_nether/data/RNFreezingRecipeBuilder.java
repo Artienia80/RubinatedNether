@@ -41,7 +41,7 @@ public class RNFreezingRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public RNFreezingRecipeBuilder unlockedBy(String name, net.minecraft.advancements.Criterion<?> criterion) {
+    public RNFreezingRecipeBuilder unlockedBy(String name, Criterion<?> criterion) {
         this.criteria.put(name, criterion);
         return this;
     }
@@ -65,6 +65,7 @@ public class RNFreezingRecipeBuilder implements RecipeBuilder {
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
                 .rewards(AdvancementRewards.Builder.recipe(id))
                 .requirements(AdvancementRequirements.Strategy.OR);
+        this.criteria.forEach(builder::addCriterion);
 
         output.accept(
                 id,
@@ -76,7 +77,7 @@ public class RNFreezingRecipeBuilder implements RecipeBuilder {
                         this.experience,
                         this.cookingTime
                 ),
-                builder.build(id.withPrefix("recipes/freezing/" + id.getPath()))
+                builder.build(id.withPrefix("recipes/freezing/"))
         );
     }
 

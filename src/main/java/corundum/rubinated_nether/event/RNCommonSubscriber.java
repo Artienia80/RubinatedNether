@@ -121,23 +121,6 @@ public class RNCommonSubscriber {
      */
 
     @SubscribeEvent
-    public static void onPostSinkingCurseHurt(LivingDamageEvent.Pre event) {
-        var player = event.getEntity();
-        var stack = event.getSource().getWeaponItem();
-        if(stack == null || !stack.is(Items.MACE)) return;
-
-        Holder<Enchantment> sinkingCurse = player.level().registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getHolderOrThrow(RNEnchantments.SINKING_CURSE);
-
-        int enchantLevel = stack.getEnchantmentLevel(sinkingCurse);
-
-        if (enchantLevel > 0 && MaceItem.canSmashAttack(player)) {
-            scheduleProgressiveSinkhole((ServerLevel) player.level(), player.blockPosition(), player.fallDistance);
-        }
-    }
-
-    @SubscribeEvent
     public static void changeBronzeSize(EntityEvent.Size event) {
         if (!(event.getEntity() instanceof BronzeEntity bronzeEntity)) return;
 

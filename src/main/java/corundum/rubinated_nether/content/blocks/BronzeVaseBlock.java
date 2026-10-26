@@ -166,6 +166,13 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
                             vase.setItem(i, ItemStack.EMPTY);
                         }
                     }
+                    else if (vase.isEmpty() && !player.isCreative()) {
+                        // Silk Touch on an empty vase: the loot table is skipped by preventDrops(), so drop the vase itself.
+                        ItemStack itemstack = new ItemStack(this.asItem());
+                        ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + (double) 0.5F, (double) pos.getY() + (double) 0.5F, (double) pos.getZ() + (double) 0.5F, itemstack);
+                        itementity.setDefaultPickUpDelay();
+                        level.addFreshEntity(itementity);
+                    }
                     preventDrops(level, pos, player);
                 }
             }

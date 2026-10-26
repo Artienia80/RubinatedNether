@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.blocks;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNParticleTypes;
+import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -75,15 +76,20 @@ public class BleedingObsidianBlock extends Block {
                 BlockPos tipPos = findDripstoneTip(level, below, direction, 10);
 
                 if (tipPos != null) {
-                    BlockPos cauldronPos = findCauldronBelow(level, tipPos.below(), 10);
+                    BlockPos targetPos = findDripTargetBelow(level, tipPos.below(), 10);
 
-                    if (cauldronPos != null) {
-                        BlockState cauldronState = level.getBlockState(cauldronPos);
+                    if (targetPos != null) {
+                        BlockState targetState = level.getBlockState(targetPos);
 
-                        if (cauldronState.is(Blocks.CAULDRON)) {
-                            level.setBlockAndUpdate(cauldronPos, RNBlocks.MOLTEN_RUBY_CAULDRON.get().defaultBlockState());
-                            level.levelEvent(1046, cauldronPos, 0);
-                            grantBloodDrippingAdvancement(level, cauldronPos);
+                        if (targetState.is(Blocks.CAULDRON)) {
+                            level.setBlockAndUpdate(targetPos, RNBlocks.MOLTEN_RUBY_CAULDRON.get().defaultBlockState());
+                            level.levelEvent(1046, targetPos, 0);
+                            grantBloodDrippingAdvancement(level, targetPos);
+                        } else if (targetState.is(RNBlocks.BRAZIER.get())
+                                && level.getBlockEntity(targetPos) instanceof BrazierBlockEntity brazier
+                                && brazier.fillToMax()) {
+                            level.setBlock(targetPos, targetState.setValue(BrazierBlock.LEVEL, 9), 3);
+                            level.levelEvent(1046, targetPos, 0);
                         }
                     }
                 }
@@ -137,13 +143,13 @@ public class BleedingObsidianBlock extends Block {
     }
 
     @javax.annotation.Nullable
-    private BlockPos findCauldronBelow(ServerLevel level, BlockPos startPos, int maxDistance) {
+    private BlockPos findDripTargetBelow(ServerLevel level, BlockPos startPos, int maxDistance) {
         BlockPos currentPos = startPos;
 
         for (int i = 0; i < maxDistance; i++) {
             BlockState currentState = level.getBlockState(currentPos);
 
-            if (currentState.is(Blocks.CAULDRON)) {
+            if (currentState.is(Blocks.CAULDRON) || currentState.is(RNBlocks.BRAZIER.get())) {
                 return currentPos;
             }
 

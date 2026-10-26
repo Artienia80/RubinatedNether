@@ -268,6 +268,16 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		setChanged();
 	}
 
+	public boolean fillToMax() {
+		int maxSeconds = RNConfig.getBrazierSecondsPerLevel() * 9;
+		if (remainingFuelSeconds >= maxSeconds) {
+			return false;
+		}
+		remainingFuelSeconds = maxSeconds;
+		setChanged();
+		return true;
+	}
+
 	public void setFuelForLevel(int level) {
 		remainingFuelSeconds = level * RNConfig.getBrazierSecondsPerLevel();
 		setChanged();
@@ -620,9 +630,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 				}
 
 				int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
-				if (remainingFuelSeconds >= secondsPerLevel * 9) {
-					return new ItemStack(RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem(), 1);
-				} else if (remainingFuelSeconds >= secondsPerLevel) {
+				if (remainingFuelSeconds >= secondsPerLevel) {
 					return new ItemStack(RNItems.MOLTEN_RUBY.get(), 1);
 				} else if (remainingFuelSeconds > 0) {
 					int secondsPerNugget = secondsPerLevel / 9;

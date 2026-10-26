@@ -18,7 +18,6 @@ import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
 import corundum.rubinated_nether.content.trim.RNTrimMaterials;
 import corundum.rubinated_nether.data.RNData;
 import corundum.rubinated_nether.event.RNAnvilRepairHandler;
-import corundum.rubinated_nether.event.RNBronzeDiseasedHeartHandler;
 import corundum.rubinated_nether.misc.DatapackRegistry;
 import corundum.rubinated_nether.misc.RNAttachments;
 import corundum.rubinated_nether.utils.RNConfig;
@@ -90,7 +89,6 @@ public class RubinatedNether {
 
         if (dist == Dist.CLIENT) {
             modEventBus.addListener(RNRecipeCategories::registerRecipeCategories);
-            NeoForge.EVENT_BUS.addListener(RNBronzeDiseasedHeartHandler::onPlayerHeartType);
 
         }
 

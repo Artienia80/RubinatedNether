@@ -192,7 +192,7 @@ public abstract class TarnishingEntity extends Monster {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("Waxed", isWaxed());
-        tag.putInt("TarnishStage", this.getTarnishLevel().getId());
+        tag.putByte("TarnishStage", (byte) this.getTarnishLevel().getId());
     }
 
     @Override
