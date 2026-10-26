@@ -4,11 +4,8 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.CopperLaserBlock;
-import corundum.rubinated_nether.mixin.accessors.LevelAccessor;
-import corundum.rubinated_nether.utils.BlockUpdateListener;
 import corundum.rubinated_nether.utils.ShapeUtils;
 import corundum.rubinated_nether.utils.TickableBlockEntity;
-import corundum.rubinated_nether.utils.UpdateListenerHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -32,9 +29,8 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
-public class CopperLaserBlockEntity extends BlockEntity implements BlockUpdateListener, TickableBlockEntity {
+public class CopperLaserBlockEntity extends BlockEntity implements TickableBlockEntity {
 
 	// Shapes representing a 1 block long beam segment
 	private static final Map<Direction, VoxelShape> BEAM_SEGMENT_SHAPES = ShapeUtils.allDirections(
@@ -60,12 +56,6 @@ public class CopperLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 	}
 
 	@Override
-	public void setLevel(Level level) {
-		if(!hasLevel()) UpdateListenerHolder.addUpdateListener(level, this);
-		super.setLevel(level);
-	}
-
-	@Override
 	public void clientTick() {
 		handleBlockUpdate(level, worldPosition, getBlockState());
 	}
@@ -88,7 +78,7 @@ public class CopperLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 			AABB range = getLaserRangeAABB(worldPosition, facing);
 
 			MutableBoolean hasEntity = new MutableBoolean(false);
-			((LevelAccessor) level).invokeGetEntities().get(range, entity -> {
+			level.getEntities().get(range, entity -> {
 				// Calculate distance to entity along the laser's facing axis
 				double axisDistance;
 				switch (facing.getAxis()) {
@@ -193,7 +183,6 @@ public class CopperLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 	}
 
 	@SuppressWarnings({"DataFlowIssue"})
-	@Override
 	public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
 		WeatheringCopper.WeatherState weatherState = getWeatherState();
 		this.currentRange = calculateMaxRange(weatherState);
@@ -240,17 +229,6 @@ public class CopperLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 		} else {
 			color = Optional.empty();
 		}
-	}
-
-	@Override
-	public boolean shouldRemove() {
-		return this.isRemoved();
-	}
-
-	@Override
-	public Stream<BlockPos> getListenedPositions() {
-		Vec3i offset = getBlockState().getValue(CopperLaserBlock.FACING).getNormal().multiply(currentRange);
-		return BlockPos.betweenClosedStream(worldPosition, worldPosition.offset(offset));
 	}
 
 	public AABB getRenderBoundingBox() {

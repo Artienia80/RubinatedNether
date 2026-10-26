@@ -1,7 +1,6 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.content.recipe.FreezingRecipe;
-import corundum.rubinated_nether.mixin.accessors.AbstractFurnaceBlockEntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -35,48 +34,47 @@ public abstract class AbstractFreezerBlockEntity extends AbstractFurnaceBlockEnt
 	}
 
 	public static void serverTick(Level level, BlockPos pos, BlockState state, AbstractFreezerBlockEntity blockEntity) {
-		AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) blockEntity;
-		boolean flag = abstractFurnaceBlockEntityAccessor.callIsLit();
+		boolean flag = blockEntity.isLit();
 		boolean flag1 = false;
 
-		if (abstractFurnaceBlockEntityAccessor.callIsLit()) {
-			abstractFurnaceBlockEntityAccessor.rubinatedNether$setLitTime(abstractFurnaceBlockEntityAccessor.rubinatedNether$getLitTime() - 1);
+		if (blockEntity.isLit()) {
+			blockEntity.litTime--;
 		}
 
-		ItemStack itemstack = abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems().get(1);
-		ItemStack itemstack1 = abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems().get(0);
+		ItemStack itemstack = blockEntity.items.get(1);
+		ItemStack itemstack1 = blockEntity.items.get(0);
 		boolean flag2 = !itemstack1.isEmpty();
 		boolean flag3 = !itemstack.isEmpty();
-		if (abstractFurnaceBlockEntityAccessor.callIsLit() || flag3 && flag2) {
+		if (blockEntity.isLit() || flag3 && flag2) {
 			RecipeHolder<? extends AbstractCookingRecipe> recipe;
 			if (flag2) {
-				recipe = abstractFurnaceBlockEntityAccessor.rubinatedNether$getQuickCheck().getRecipeFor(new SingleRecipeInput(itemstack1), level).orElse(null);
+				recipe = blockEntity.quickCheck.getRecipeFor(new SingleRecipeInput(itemstack1), level).orElse(null);
 			} else {
 				recipe = null;
 			}
 
 			int i = blockEntity.getMaxStackSize();
-			if (!abstractFurnaceBlockEntityAccessor.callIsLit() && AbstractFurnaceBlockEntityAccessor.callCanBurn(level.registryAccess(), recipe, abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems(), i, blockEntity)) {
-				abstractFurnaceBlockEntityAccessor.rubinatedNether$setLitTime(abstractFurnaceBlockEntityAccessor.callGetBurnDuration(itemstack));
-				abstractFurnaceBlockEntityAccessor.rubinatedNether$setLitDuration(abstractFurnaceBlockEntityAccessor.rubinatedNether$getLitTime());
-				if (abstractFurnaceBlockEntityAccessor.callIsLit()) {
+			if (!blockEntity.isLit() && AbstractFurnaceBlockEntity.canBurn(level.registryAccess(), recipe, blockEntity.items, i, blockEntity)) {
+				blockEntity.litTime = blockEntity.getBurnDuration(itemstack);
+				blockEntity.litDuration = blockEntity.litTime;
+				if (blockEntity.isLit()) {
 					flag1 = true;
 					if (itemstack.hasCraftingRemainingItem())
-						abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems().set(1, itemstack.getCraftingRemainingItem());
+						blockEntity.items.set(1, itemstack.getCraftingRemainingItem());
 					else if (flag3) {
 						itemstack.shrink(1);
 						if (itemstack.isEmpty()) {
-							abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems().set(1, itemstack.getCraftingRemainingItem());
+							blockEntity.items.set(1, itemstack.getCraftingRemainingItem());
 						}
 					}
 				}
 			}
 
-			if (abstractFurnaceBlockEntityAccessor.callIsLit() && AbstractFurnaceBlockEntityAccessor.callCanBurn(level.registryAccess(), recipe, abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems(), i, blockEntity)) {
-				abstractFurnaceBlockEntityAccessor.rubinatedNether$setCookingProgress(abstractFurnaceBlockEntityAccessor.rubinatedNether$getCookingProgress() + 1);
-				if (abstractFurnaceBlockEntityAccessor.rubinatedNether$getCookingProgress() == abstractFurnaceBlockEntityAccessor.rubinatedNether$getCookingTotalTime()) {
-					abstractFurnaceBlockEntityAccessor.rubinatedNether$setCookingProgress(0);
-					abstractFurnaceBlockEntityAccessor.rubinatedNether$setCookingTotalTime(AbstractFurnaceBlockEntityAccessor.callGetTotalCookTime(level, blockEntity));
+			if (blockEntity.isLit() && AbstractFurnaceBlockEntity.canBurn(level.registryAccess(), recipe, blockEntity.items, i, blockEntity)) {
+				blockEntity.cookingProgress++;
+				if (blockEntity.cookingProgress == blockEntity.cookingTotalTime) {
+					blockEntity.cookingProgress = 0;
+					blockEntity.cookingTotalTime = AbstractFurnaceBlockEntity.getTotalCookTime(level, blockEntity);
 					if (blockEntity.burn(level.registryAccess(), recipe, blockEntity.items, i)) {
 						blockEntity.setRecipeUsed(recipe);
 					}
@@ -84,15 +82,15 @@ public abstract class AbstractFreezerBlockEntity extends AbstractFurnaceBlockEnt
 					flag1 = true;
 				}
 			} else {
-				abstractFurnaceBlockEntityAccessor.rubinatedNether$setCookingProgress(0);
+				blockEntity.cookingProgress = 0;
 			}
-		} else if (!abstractFurnaceBlockEntityAccessor.callIsLit() && abstractFurnaceBlockEntityAccessor.rubinatedNether$getCookingProgress() > 0) {
-			abstractFurnaceBlockEntityAccessor.rubinatedNether$setCookingProgress(Mth.clamp(abstractFurnaceBlockEntityAccessor.rubinatedNether$getCookingProgress() - 2, 0, abstractFurnaceBlockEntityAccessor.rubinatedNether$getCookingTotalTime()));
+		} else if (!blockEntity.isLit() && blockEntity.cookingProgress > 0) {
+			blockEntity.cookingProgress = Mth.clamp(blockEntity.cookingProgress - 2, 0, blockEntity.cookingTotalTime);
 		}
 
-		if (flag != abstractFurnaceBlockEntityAccessor.callIsLit()) {
+		if (flag != blockEntity.isLit()) {
 			flag1 = true;
-			state = state.setValue(AbstractFurnaceBlock.LIT, abstractFurnaceBlockEntityAccessor.callIsLit());
+			state = state.setValue(AbstractFurnaceBlock.LIT, blockEntity.isLit());
 			level.setBlock(pos, state, 1 | 2);
 		}
 
@@ -100,7 +98,7 @@ public abstract class AbstractFreezerBlockEntity extends AbstractFurnaceBlockEnt
 			setChanged(level, pos, state);
 		}
 
-		if (abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems().get(0).isEmpty() && abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems().get(2).isEmpty()) {
+		if (blockEntity.items.get(0).isEmpty() && blockEntity.items.get(2).isEmpty()) {
 			blockEntity.remainderItem = ItemStack.EMPTY; // Resets the remainder item variable used for hopper extraction at the end of the tick loop. This is necessary so that it actually has enough time to get extracted.
 		}
 	}
@@ -115,10 +113,9 @@ public abstract class AbstractFreezerBlockEntity extends AbstractFurnaceBlockEnt
 	 */
 	@SuppressWarnings("unchecked")
 	private boolean burn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipe, NonNullList<ItemStack> stacks, int stackSize) {
-		AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) this;
-		if (recipe != null && AbstractFurnaceBlockEntityAccessor.callCanBurn(registryAccess, recipe, stacks, stackSize, this)) {
+		if (recipe != null && AbstractFurnaceBlockEntity.canBurn(registryAccess, recipe, stacks, stackSize, this)) {
 			ItemStack inputSlotStack = stacks.get(0);
-			ItemStack resultStack = ((Recipe<SingleRecipeInput>) recipe.value()).assemble(new SingleRecipeInput(abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems().getFirst()), registryAccess);
+			ItemStack resultStack = ((Recipe<SingleRecipeInput>) recipe.value()).assemble(new SingleRecipeInput(this.items.getFirst()), registryAccess);
 			ItemStack resultSlotStack = stacks.get(2);
 
 			if (inputSlotStack.is(resultStack.getItem())) {
@@ -174,8 +171,7 @@ public abstract class AbstractFreezerBlockEntity extends AbstractFurnaceBlockEnt
 	 */
 	@Override
 	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-		AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) this;
-		Optional<NonNullList<Ingredient>> ingredient = abstractFurnaceBlockEntityAccessor.rubinatedNether$getQuickCheck().getRecipeFor(new SingleRecipeInput(abstractFurnaceBlockEntityAccessor.rubinatedNether$getItems().getFirst()), this.level).map((recipe) -> recipe.value().getIngredients());
+		Optional<NonNullList<Ingredient>> ingredient = this.quickCheck.getRecipeFor(new SingleRecipeInput(this.items.getFirst()), this.level).map((recipe) -> recipe.value().getIngredients());
 		if (this.remainderItem.isEmpty()) {
 			ingredient.ifPresent(ing -> this.remainderItem = stack.getCraftingRemainingItem()); // Stores the correlating crafting remainder item.
 		}

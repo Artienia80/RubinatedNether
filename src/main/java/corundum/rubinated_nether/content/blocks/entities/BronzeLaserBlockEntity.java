@@ -5,11 +5,8 @@ import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
-import corundum.rubinated_nether.mixin.accessors.LevelAccessor;
-import corundum.rubinated_nether.utils.BlockUpdateListener;
 import corundum.rubinated_nether.utils.ShapeUtils;
 import corundum.rubinated_nether.utils.TickableBlockEntity;
-import corundum.rubinated_nether.utils.UpdateListenerHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -33,9 +30,8 @@ import org.apache.commons.lang3.mutable.MutableDouble;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 
-public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateListener, TickableBlockEntity {
+public class BronzeLaserBlockEntity extends BlockEntity implements TickableBlockEntity {
 
 	// Shapes representing a 1 block long beam segment
 	private static final Map<Direction, VoxelShape> BEAM_SEGMENT_SHAPES = ShapeUtils.allDirections(
@@ -53,12 +49,6 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 	public BronzeLaserBlockEntity(BlockPos pos, BlockState blockState) {
 		super(RNBlockEntities.BRONZE_LASER.get(), pos, blockState);
 		this.currentRange = calculateMaxRange(getTarnishState());
-	}
-
-	@Override
-	public void setLevel(Level level) {
-		if(!hasLevel()) UpdateListenerHolder.addUpdateListener(level, this);
-		super.setLevel(level);
 	}
 
 	@Override
@@ -96,7 +86,7 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 
 			AtomicInteger entityPower = new AtomicInteger(0);
 			MutableDouble lastDistance = new MutableDouble(blockRange == -1 ? Double.MAX_VALUE : blockRange);
-			((LevelAccessor) level).invokeGetEntities().get(range, entity -> {
+			level.getEntities().get(range, entity -> {
 				// Calculate distance in blocks from laser position to entity
 				// Use the laser's facing direction to get the correct axis distance
 				double axisDistance;
@@ -163,7 +153,6 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 	}
 
 	@SuppressWarnings({"DataFlowIssue"})
-	@Override
 	public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
 		TarnishStage tarnishStage = getTarnishState();
 		this.currentRange = calculateMaxRange(tarnishStage);
@@ -241,17 +230,6 @@ public class BronzeLaserBlockEntity extends BlockEntity implements BlockUpdateLi
 			}
 		}
 		// INFRARED and SPECTRUM modes are handled in tick() due to entity detection
-	}
-
-	@Override
-	public boolean shouldRemove() {
-		return this.isRemoved();
-	}
-
-	@Override
-	public Stream<BlockPos> getListenedPositions() {
-		Vec3i offset = getBlockState().getValue(BronzeLaserBlock.FACING).getNormal().multiply(currentRange);
-		return BlockPos.betweenClosedStream(worldPosition, worldPosition.offset(offset));
 	}
 
 	// This overrides a forge thing

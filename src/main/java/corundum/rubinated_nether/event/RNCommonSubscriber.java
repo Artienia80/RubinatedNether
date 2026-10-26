@@ -20,27 +20,35 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MaceItem;
 import net.minecraft.world.item.component.BundleContents;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.level.BlockDropsEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.slf4j.Logger;
@@ -149,6 +157,42 @@ public class RNCommonSubscriber {
 
         if (curseLevel > 0) {
             event.setNewSpeed(Math.max(0.1f, event.getOriginalSpeed() - (float) curseLevel));
+        }
+    }
+
+    private static final TagKey<Block> ORES = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("c", "ores"));
+
+    /**
+     * Blessed Fortune: while Blessed, mining an ore has a chance (scaling with remaining effect time)
+     * to roll the block's loot a second time. Replaces BlessedFortuneMixin.
+     * <p>
+     * Runs first so that other BlockDropsEvent listeners also see the bonus drops, like they did when
+     * the mixin added them to NeoForge's captured drop list.
+     */
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void doubleBlessedOreDrops(BlockDropsEvent event) {
+        if (!(event.getBreaker() instanceof Player player)) return;
+
+        MobEffectInstance blessed = player.getEffect(RNEffects.BLESSED);
+        if (blessed == null || !event.getState().is(ORES)) return;
+
+        ServerLevel level = event.getLevel();
+        if (!level.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS) || level.restoringBlockSnapshots) return;
+
+        float chance = Math.min(1.0f, blessed.getDuration() / 384000.0f);
+        if (player.getRandom().nextFloat() >= chance) return;
+
+        BlockPos pos = event.getPos();
+        for (ItemStack stack : Block.getDrops(event.getState(), level, pos, event.getBlockEntity(), player, event.getTool())) {
+            if (stack.isEmpty()) continue;
+            // Same placement as Block.popResource
+            double halfHeight = EntityType.ITEM.getHeight() / 2.0;
+            double x = pos.getX() + 0.5 + Mth.nextDouble(level.random, -0.25, 0.25);
+            double y = pos.getY() + 0.5 + Mth.nextDouble(level.random, -0.25, 0.25) - halfHeight;
+            double z = pos.getZ() + 0.5 + Mth.nextDouble(level.random, -0.25, 0.25);
+            ItemEntity entity = new ItemEntity(level, x, y, z, stack);
+            entity.setDefaultPickUpDelay();
+            event.getDrops().add(entity);
         }
     }
 

@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.event;
 
+import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.client.particles.*;
@@ -19,8 +20,8 @@ import corundum.rubinated_nether.content.screen.FreezerScreen;
 import corundum.rubinated_nether.content.screen.RubinatedCofferScreen;
 import corundum.rubinated_nether.content.screen.RubinationScreen;
 import corundum.rubinated_nether.content.screen.VaseScreen;
-import corundum.rubinated_nether.mixin.accessors.EntityRenderDispatcherAccessor;
 import corundum.rubinated_nether.networking.CollectDiscsPayload;
+import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -29,6 +30,7 @@ import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -42,8 +44,11 @@ import corundum.rubinated_nether.content.items.MusicBoxData;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.FogType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -90,22 +95,48 @@ public class RNClientSubscriber {
     @SubscribeEvent
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void registerEntityLayers(EntityRenderersEvent.AddLayers event) {
-        var dispatcher = event.getContext().getEntityRenderDispatcher();
-        var renderers = ((EntityRenderDispatcherAccessor) dispatcher).getRenderers();
         var models = event.getEntityModels();
 
-        renderers.forEach((type, renderer) -> {
+        for (EntityType<?> type : event.getEntityTypes()) {
+            EntityRenderer<?> renderer = event.getRenderer((EntityType) type);
             if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer && livingRenderer.getModel() instanceof HeadedModel) {
                 livingRenderer.addLayer(new RubyLensRenderLayer(livingRenderer, models, livingRenderer.getModel()));
             }
-        });
-
-        ((EntityRenderDispatcherAccessor) dispatcher).setRenderers(renderers);
+        }
 
         PlayerRenderer defaultSkin = event.getSkin(PlayerSkin.Model.WIDE);
         PlayerRenderer slimSkin = event.getSkin(PlayerSkin.Model.SLIM);
         defaultSkin.addLayer(new RubyLensRenderLayer<>(defaultSkin, models, defaultSkin.getModel()));
         slimSkin.addLayer(new RubyLensRenderLayer<>(slimSkin, models, slimSkin.getModel()));
+    }
+
+    /**
+     * Hides the burning overlay while Brazier Power is active (replaces ScreenEffectRendererMixin).
+     */
+    @SubscribeEvent
+    public static void onRenderFireOverlay(RenderBlockScreenEffectEvent event) {
+        if (event.getOverlayType() == RenderBlockScreenEffectEvent.OverlayType.FIRE
+                && RNConfig.brazierPowerDisableFireOverlay
+                && event.getPlayer().hasEffect(RNEffects.BRAZIER_POWER)) {
+            event.setCanceled(true);
+        }
+    }
+
+    /**
+     * Brazier Power lava vision (replaces FogRendererMixin). Cancelling makes NeoForge apply the
+     * near/far/shape values stored on the event instead of vanilla's lava fog.
+     */
+    @SubscribeEvent
+    public static void onRenderFog(ViewportEvent.RenderFog event) {
+        if (!RNConfig.brazierPowerLavaVision || event.getType() != FogType.LAVA) {
+            return;
+        }
+        if (event.getCamera().getEntity() instanceof LivingEntity living && living.hasEffect(RNEffects.BRAZIER_POWER)) {
+            event.setNearPlaneDistance(RNConfig.brazierPowerViewRange);
+            event.setFarPlaneDistance(RNConfig.brazierPowerViewRange * 2);
+            event.setFogShape(FogShape.SPHERE);
+            event.setCanceled(true);
+        }
     }
 
     @SubscribeEvent

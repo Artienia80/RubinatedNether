@@ -8,7 +8,6 @@ import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneItem;
-import corundum.rubinated_nether.mixin.accessors.DoublePlantBlockAccessor;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,6 +28,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -55,7 +55,7 @@ public class RunestoneBlock extends BaseEntityBlock {
 	protected static final VoxelShape SHAPE_TOP = Shapes.or(Block.box(1.0, 0.0, 1.0, 15.0, 8.0, 15.0), Block.box(0.0, 8.0, 0.0, 16.0, 16.0, 16.0));
 	protected static final VoxelShape SHAPE_BOTTOM = Shapes.or(Block.box(0.0, 0.0, 0.0, 16.0, 10.0, 16.0), Block.box(1.0, 10.0, 1.0, 15.0, 16.0, 15.0));
 
-	public RunestoneBlock(BlockBehaviour.Properties properties) {
+	public RunestoneBlock(Properties properties) {
 		super(properties);
 		this.registerDefaultState(this.stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(HAS_RUNE, Rubination.EMPTY));
 	}
@@ -101,7 +101,7 @@ public class RunestoneBlock extends BaseEntityBlock {
 	@Override
 	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
 		if (!level.isClientSide && (player.isCreative() || !player.hasCorrectToolForDrops(state, level, pos)))
-			DoublePlantBlockAccessor.invokePreventDropFromBottomPart(level, pos, state, player);
+			DoublePlantBlock.preventDropFromBottomPart(level, pos, state, player);
 
 		return super.playerWillDestroy(level, pos, state, player);
 	}

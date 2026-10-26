@@ -10,19 +10,13 @@
     "EnchantmentMixin",
     "AnvilMenuMixin",
     "DampeningDropsMixin",
-    "BlessedFortuneMixin",
     "BlessedLootingMixin",
     "CrookedShotCrossbowMixin",
     "ExposureCurseMixin",
     "HopperBehaviourMixin",
     "ItemEntityMixin",
-    "LevelMixin",
     "MaceItemMixin",
-    "MultishotSpreadMixin",
-    "ThornsShockwaveMixin",
-    "accessors.AbstractFurnaceBlockEntityAccessor",
-    "accessors.DoublePlantBlockAccessor",
-    "accessors.LevelAccessor"
+    "ThornsShockwaveMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -31,10 +25,6 @@
     "GuiMixin",
     "HumanoidArmorLayerMixin",
     "ItemRendererMixin",
-    "EntityRenderDispatcherMixin",
-    "FogRendererMixin",
-    "ScreenEffectRendererMixin",
-    "accessors.EntityRenderDispatcherAccessor",
-    "accessors.GuiAccessor"
+    "EntityRenderDispatcherMixin"
   ]
 }
