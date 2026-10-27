@@ -40,17 +40,17 @@ public record ThornsShockwaveEffect() implements EnchantmentEntityEffect {
         Holder<Enchantment> thorns = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.THORNS);
 
         UUID victimUUID = victim.getUUID();
-        long currentTime = System.currentTimeMillis();
+        long now = level.getGameTime();
 
         Long lastShockwave = SHOCKWAVE_COOLDOWNS.get(victimUUID);
-        if (lastShockwave != null && currentTime - lastShockwave < getCooldownTime(victim, thorns)) {
+        if (lastShockwave != null && now >= lastShockwave && now - lastShockwave < getCooldownTicks(victim, thorns)) {
             return;
         }
 
         applyThornsShockwave(level, victim, thorns);
 
-        SHOCKWAVE_COOLDOWNS.put(victimUUID, currentTime);
-        cleanupOldCooldowns(currentTime);
+        SHOCKWAVE_COOLDOWNS.put(victimUUID, now);
+        cleanupOldCooldowns(now);
     }
 
     @Override
@@ -158,7 +158,7 @@ public record ThornsShockwaveEffect() implements EnchantmentEntityEffect {
         return thornsArmor;
     }
 
-    private static long getCooldownTime(LivingEntity victim, Holder<Enchantment> thorns) {
+    private static long getCooldownTicks(LivingEntity victim, Holder<Enchantment> thorns) {
         int thornsArmorCount = 0;
         int thornsVCount = 0;
 
@@ -184,11 +184,11 @@ public record ThornsShockwaveEffect() implements EnchantmentEntityEffect {
         double cooldownSeconds = (60.0 / thornsArmorCount) - (1.25 * thornsVCount);
         cooldownSeconds = Math.max(10.0, cooldownSeconds);
 
-        return (long) (cooldownSeconds * 1000);
+        return (long) (cooldownSeconds * 20);
     }
 
-    private static void cleanupOldCooldowns(long currentTime) {
-        long cutoffTime = currentTime - (5 * 60 * 1000);
-        SHOCKWAVE_COOLDOWNS.entrySet().removeIf(entry -> entry.getValue() < cutoffTime);
+    private static void cleanupOldCooldowns(long now) {
+        if (SHOCKWAVE_COOLDOWNS.size() < 32) return;
+        SHOCKWAVE_COOLDOWNS.entrySet().removeIf(entry -> now < entry.getValue() || now - entry.getValue() > 6000);
     }
 }

@@ -4,6 +4,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.CopperLaserBlock;
+import corundum.rubinated_nether.utils.BeamScanCache;
 import corundum.rubinated_nether.utils.ShapeUtils;
 import corundum.rubinated_nether.utils.TickableBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -41,9 +42,10 @@ public class CopperLaserBlockEntity extends BlockEntity implements TickableBlock
 	private int blockRange = -1;
 	private int currentRange;
 	private double rangeRemnant;
-	private boolean visible = false;
+	private int visibleStart = -1;
 	private Optional<Integer> color = Optional.empty();
 	private boolean silly = false;
+	private final BeamScanCache beamCache = new BeamScanCache();
 
 	// Timer-specific fields
 	private long obstructionStartTime = -1; // -1 means no obstruction
@@ -184,23 +186,42 @@ public class CopperLaserBlockEntity extends BlockEntity implements TickableBlock
 
 	@SuppressWarnings({"DataFlowIssue"})
 	public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
-		WeatheringCopper.WeatherState weatherState = getWeatherState();
-		this.currentRange = calculateMaxRange(weatherState);
-
+		int maxRange = calculateMaxRange(getWeatherState());
 		Direction facing = getBlockState().getValue(CopperLaserBlock.FACING);
+
+		if (beamCache.isValid(level, worldPosition, facing, maxRange)) return;
+		beamCache.begin(level, facing, maxRange);
+
+		this.currentRange = maxRange;
 
 		// BlockPos that is being checked
 		BlockPos.MutableBlockPos mutableBlockPos = worldPosition.mutable();
 
 		// Reset block range
 		blockRange = -1;
+		rangeRemnant = 0;
+		visibleStart = -1;
+		silly = false;
+		color = Optional.empty();
 
 		// Block detection for obstruction/rendering
-		for (int i = 0; i < currentRange; i++) {
+		int scanned = 0;
+		for (int i = 0; i < maxRange; i++) {
 			mutableBlockPos.move(facing);
 			int currentDistance = i + 1;
+			scanned = currentDistance;
 
 			BlockState state = level.getBlockState(mutableBlockPos);
+			beamCache.record(i, state);
+
+			if (visibleStart == -1 && isBeamMedium(state)) {
+				visibleStart = currentDistance;
+				silly = state.is(RNTags.Blocks.SILLY_LASER);
+				if (!silly && state.getBlock() instanceof BeaconBeamBlock beaconBeamBlock) {
+					DyeColor dye = beaconBeamBlock.getColor();
+					color = Optional.of(dye.getTextureDiffuseColor());
+				}
+			}
 
 			boolean blockCheck = state.is(RNTags.Blocks.LASER_NO_SIGNAL);
 			if (!blockCheck && state.is(RNTags.Blocks.LASER_TRANSPARENT)) continue;
@@ -217,18 +238,7 @@ public class CopperLaserBlockEntity extends BlockEntity implements TickableBlock
 				break;
 			}
 		}
-
-		// Visual properties check
-		BlockState state = level.getBlockState(worldPosition.relative(facing));
-		silly = state.is(RNTags.Blocks.SILLY_LASER);
-		visible = silly || state.is(Tags.Blocks.GLASS_BLOCKS) || state.is(Tags.Blocks.GLASS_BLOCKS_TINTED) || state.is(Tags.Blocks.GLASS_PANES);
-
-		if (visible && !silly && state.getBlock() instanceof BeaconBeamBlock) {
-			DyeColor dye = ((BeaconBeamBlock) state.getBlock()).getColor();
-			color = Optional.of(dye.getTextureDiffuseColor());
-		} else {
-			color = Optional.empty();
-		}
+		beamCache.finish(scanned);
 	}
 
 	public AABB getRenderBoundingBox() {
@@ -325,11 +335,21 @@ public class CopperLaserBlockEntity extends BlockEntity implements TickableBlock
 	}
 
 	public double getRenderRange() {
-		return getBlockRange() + rangeRemnant;
+		if (blockRange == -1) return getBlockRange();
+		return getBlockRange() - 1 + rangeRemnant;
+	}
+
+	private static boolean isBeamMedium(BlockState state) {
+		return state.is(RNTags.Blocks.SILLY_LASER) || state.is(Tags.Blocks.GLASS_BLOCKS)
+				|| state.is(Tags.Blocks.GLASS_BLOCKS_TINTED) || state.is(Tags.Blocks.GLASS_PANES);
 	}
 
 	public boolean alwaysVisible() {
-		return visible;
+		return visibleStart != -1;
+	}
+
+	public int getVisibleStartOffset() {
+		return visibleStart == -1 ? 0 : visibleStart - 1;
 	}
 
 	public boolean isColored() {

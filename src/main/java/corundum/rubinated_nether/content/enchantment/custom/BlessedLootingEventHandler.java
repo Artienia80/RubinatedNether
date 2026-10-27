@@ -33,7 +33,7 @@ public class BlessedLootingEventHandler {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void doubleBlessedLoot(LivingDropsEvent event) {
         if (doublingLoot || DROP_ALL_DEATH_LOOT == null) return;
 

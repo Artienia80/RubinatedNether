@@ -45,7 +45,9 @@ public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlock
 		var player = Minecraft.getInstance().player;
 		var level = Minecraft.getInstance().level;
 
-		if (blockEntity.alwaysVisible() || player.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get())) {
+		boolean hasLens = player.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get());
+
+		if (blockEntity.alwaysVisible() || hasLens) {
 
 			poseStack.pushPose();
 			poseStack.translate(0.5f, 0.5f, 0.5f);
@@ -79,6 +81,7 @@ public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlock
 			poseStack.translate(-0.5f, -0.5f, -0.5f);
 
 			var maxY = (float) (blockEntity.getRenderRange() + 1f);
+			var startY = 1f + (hasLens ? 0f : (float) blockEntity.getVisibleStartOffset());
 
 			int color;
 			boolean useGrayscale = false;
@@ -103,10 +106,12 @@ public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlock
 			// Use fallback render type if shaders in use because beacon beam broken
 			var consumer = buffer.getBuffer(getRenderType(blockEntity.isColored() || blockEntity.isSilly() || useGrayscale));
 
-			renderFace(poseStack, consumer, .4f, 1, .6f, .6f, maxY, .6f, color, lerpedTime, Direction.NORTH, blockEntity);
-			renderFace(poseStack, consumer, .6f, 1, .4f, .4f, maxY, .4f, color, lerpedTime, Direction.SOUTH, blockEntity);
-			renderFace(poseStack, consumer, .4f, 1, .4f, .4f, maxY, .6f, color, lerpedTime, Direction.EAST, blockEntity);
-			renderFace(poseStack, consumer, .6f, 1, .6f, .6f, maxY, .4f, color, lerpedTime, Direction.WEST, blockEntity);
+			if (maxY > startY + 0.001f) {
+				renderFace(poseStack, consumer, .4f, startY, .6f, .6f, maxY, .6f, color, lerpedTime, Direction.NORTH, blockEntity);
+				renderFace(poseStack, consumer, .6f, startY, .4f, .4f, maxY, .4f, color, lerpedTime, Direction.SOUTH, blockEntity);
+				renderFace(poseStack, consumer, .4f, startY, .4f, .4f, maxY, .6f, color, lerpedTime, Direction.EAST, blockEntity);
+				renderFace(poseStack, consumer, .6f, startY, .6f, .6f, maxY, .4f, color, lerpedTime, Direction.WEST, blockEntity);
+			}
 			poseStack.popPose();
 		}
 	}
@@ -126,10 +131,11 @@ public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlock
 			BronzeLaserBlockEntity blockEntity
 	) {
 		PoseStack.Pose pose = matrices.last();
+		var startV = (minY - 1f) / 15f;
 		var maxV = (maxY - 1f) / 15f;
 
-		var v0 = 1 - (ticks % 150f) / 150f;
-		var v1 = v0 + (maxV * 0.4f);
+		var v0 = 1 - (ticks % 150f) / 150f + (startV * 0.4f);
+		var v1 = 1 - (ticks % 150f) / 150f + (maxV * 0.4f);
 
 		// Get the maximum range for this laser type to calculate proper fade
 		var maxRange = (float) blockEntity.getCurrentRange();
@@ -139,22 +145,16 @@ public class BronzeLaserRenderer implements BlockEntityRenderer<BronzeLaserBlock
 		boolean isUVorIR = (mode == BronzeLaserBlock.LaserMode.ULTRAVIOLET || mode == BronzeLaserBlock.LaserMode.INFRARED);
 
 		// Calculate transparency
-		var distance = Math.min(maxRange, maxY - 1f); // Clamp to 0-maxRange
-		float alphaMultiplier;
+		float startDistance = Math.min(maxRange, minY - 1f);
+		float endDistance = Math.min(maxRange, maxY - 1f);
+		float fadeScale = isUVorIR ? 0.5f : 1f;
+		float startMultiplier = Math.max(0f, fadeScale * (1f - (startDistance / maxRange)));
+		float alphaMultiplier = Math.max(0f, fadeScale * (1f - (endDistance / maxRange)));
 
-		if (isUVorIR) {
-			// For UV/IR: Start from 50% (0.5) and end at 0%
-			alphaMultiplier = Math.max(0f, 0.5f * (1f - (distance / maxRange)));
-		} else {
-			// For other modes: Start from 100% and end at 0%
-			alphaMultiplier = Math.max(0f, 1f - (distance / maxRange));
-		}
+		var startAlpha = (int) (255 * startMultiplier);
+		var endAlpha = (int) (255 * alphaMultiplier);
 
-		var startAlpha = isUVorIR ? (int)(255 * 0.5f) : 255; // 50% for UV/IR, 100% for others
-		var endAlpha = (int)(255 * alphaMultiplier);
-
-		// Apply alpha to start color for UV/IR modes
-		var startColor = isUVorIR ? FastColor.ARGB32.color(
+		var startColor = (isUVorIR || startDistance > 0f) ? FastColor.ARGB32.color(
 				startAlpha,
 				FastColor.ARGB32.red(color),
 				FastColor.ARGB32.green(color),

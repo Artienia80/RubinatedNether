@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.BronzeLaserBlock;
+import corundum.rubinated_nether.utils.BeamScanCache;
 import corundum.rubinated_nether.utils.ShapeUtils;
 import corundum.rubinated_nether.utils.TickableBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -42,9 +43,10 @@ public class BronzeLaserBlockEntity extends BlockEntity implements TickableBlock
 	private int blockRange = -1;
 	private int currentRange;
 	private double rangeRemnant;
-	private boolean visible = false;
+	private int visibleStart = -1;
 	private Optional<Integer> color = Optional.empty();
 	private boolean silly = false;
+	private final BeamScanCache beamCache = new BeamScanCache();
 
 	public BronzeLaserBlockEntity(BlockPos pos, BlockState blockState) {
 		super(RNBlockEntities.BRONZE_LASER.get(), pos, blockState);
@@ -146,61 +148,17 @@ public class BronzeLaserBlockEntity extends BlockEntity implements TickableBlock
 		powerLevel = Mth.clamp(powerLevel, 0, 15);
 
 		if(powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
-			if (level != null && !level.isClientSide) {
-			}
 			level.scheduleTick(getBlockPos(), getBlockState().getBlock(), 2);
 		}
 	}
 
 	@SuppressWarnings({"DataFlowIssue"})
 	public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
-		TarnishStage tarnishStage = getTarnishState();
-		this.currentRange = calculateMaxRange(tarnishStage);
-
+		int maxRange = calculateMaxRange(getTarnishState());
 		Direction facing = getBlockState().getValue(BronzeLaserBlock.FACING);
-		BronzeLaserBlock.LaserMode mode = getBlockState().getValue(BronzeLaserBlock.MODE);
 
-		// BlockPos that is being checked
-		BlockPos.MutableBlockPos mutableBlockPos = worldPosition.mutable();
-
-		// Reset block range
-		blockRange = -1;
-
-		// Block detection - all modes detect blocks for obstruction/rendering
-		// Iterating the range of the Laser to check each position
-		for (int i = 0; i < currentRange; i++) {
-			mutableBlockPos.move(facing);
-			int currentDistance = i + 1; // We're now at distance i+1 from laser
-
-			BlockState state = level.getBlockState(mutableBlockPos);
-
-			boolean blockCheck = state.is(RNTags.Blocks.LASER_NO_SIGNAL);
-			if (!blockCheck && state.is(RNTags.Blocks.LASER_TRANSPARENT)) continue;
-
-			VoxelShape shape = Shapes.join(state.getCollisionShape(level, mutableBlockPos), BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND);
-
-			if(!shape.isEmpty()) {
-				if(level.isClientSide) {
-					Direction.Axis axis = facing.getAxis();
-					rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.max(axis);
-				}
-				// In case of Tinted Glass the laser range is shortened
-				if(blockCheck) this.currentRange = currentDistance;
-				blockRange = currentDistance;
-				break;
-			}
-		}
-
-		// Visual properties check
-		BlockState state = level.getBlockState(worldPosition.relative(facing));
-		silly = state.is(RNTags.Blocks.SILLY_LASER);
-		visible = silly || state.is(Tags.Blocks.GLASS_BLOCKS) || state.is(Tags.Blocks.GLASS_BLOCKS_TINTED) || state.is(Tags.Blocks.GLASS_PANES);
-
-		if (visible && !silly && state.getBlock() instanceof BeaconBeamBlock) {
-			DyeColor dye = ((BeaconBeamBlock) state.getBlock()).getColor();
-			color = Optional.of(dye.getTextureDiffuseColor());
-		} else {
-			color = Optional.empty();
+		if (!beamCache.isValid(level, worldPosition, facing, maxRange)) {
+			rescanBeam(facing, maxRange);
 		}
 
 		// Calculate power level for ULTRAVIOLET mode (blocks only)
@@ -224,12 +182,63 @@ public class BronzeLaserBlockEntity extends BlockEntity implements TickableBlock
 			// Ensure power level is within valid range
 			powerLevel = Mth.clamp(powerLevel, 0, 15);
 			if (powerLevel != getBlockState().getValue(BronzeLaserBlock.POWER)) {
-				if (level != null && !level.isClientSide) {
-				}
 				level.scheduleTick(getBlockPos(), getBlockState().getBlock(), 2);
 			}
 		}
 		// INFRARED and SPECTRUM modes are handled in tick() due to entity detection
+	}
+
+	private void rescanBeam(Direction facing, int maxRange) {
+		beamCache.begin(level, facing, maxRange);
+		this.currentRange = maxRange;
+
+		// BlockPos that is being checked
+		BlockPos.MutableBlockPos mutableBlockPos = worldPosition.mutable();
+
+		// Reset block range
+		blockRange = -1;
+		rangeRemnant = 0;
+		visibleStart = -1;
+		silly = false;
+		color = Optional.empty();
+
+		// Block detection - all modes detect blocks for obstruction/rendering
+		// Iterating the range of the Laser to check each position
+		int scanned = 0;
+		for (int i = 0; i < maxRange; i++) {
+			mutableBlockPos.move(facing);
+			int currentDistance = i + 1; // We're now at distance i+1 from laser
+			scanned = currentDistance;
+
+			BlockState state = level.getBlockState(mutableBlockPos);
+			beamCache.record(i, state);
+
+			if (visibleStart == -1 && isBeamMedium(state)) {
+				visibleStart = currentDistance;
+				silly = state.is(RNTags.Blocks.SILLY_LASER);
+				if (!silly && state.getBlock() instanceof BeaconBeamBlock beaconBeamBlock) {
+					DyeColor dye = beaconBeamBlock.getColor();
+					color = Optional.of(dye.getTextureDiffuseColor());
+				}
+			}
+
+			boolean blockCheck = state.is(RNTags.Blocks.LASER_NO_SIGNAL);
+			if (!blockCheck && state.is(RNTags.Blocks.LASER_TRANSPARENT)) continue;
+
+			VoxelShape shape = Shapes.join(state.getCollisionShape(level, mutableBlockPos), BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND);
+
+			if(!shape.isEmpty()) {
+				if(level.isClientSide) {
+					Direction.Axis axis = facing.getAxis();
+					rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.max(axis);
+				}
+				// In case of Tinted Glass the laser range is shortened
+				if(blockCheck) this.currentRange = currentDistance;
+				blockRange = currentDistance;
+				break;
+			}
+		}
+		beamCache.finish(scanned);
 	}
 
 	// This overrides a forge thing
@@ -322,11 +331,21 @@ public class BronzeLaserBlockEntity extends BlockEntity implements TickableBlock
 	}
 
 	public double getRenderRange() {
-		return getBlockRange() + rangeRemnant;
+		if (blockRange == -1) return getBlockRange();
+		return getBlockRange() - 1 + rangeRemnant;
+	}
+
+	private static boolean isBeamMedium(BlockState state) {
+		return state.is(RNTags.Blocks.SILLY_LASER) || state.is(Tags.Blocks.GLASS_BLOCKS)
+				|| state.is(Tags.Blocks.GLASS_BLOCKS_TINTED) || state.is(Tags.Blocks.GLASS_PANES);
 	}
 
 	public boolean alwaysVisible() {
-		return visible;
+		return visibleStart != -1;
+	}
+
+	public int getVisibleStartOffset() {
+		return visibleStart == -1 ? 0 : visibleStart - 1;
 	}
 
 	public boolean isColored() {
