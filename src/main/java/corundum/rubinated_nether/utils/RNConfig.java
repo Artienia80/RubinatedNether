@@ -48,6 +48,9 @@ public class RNConfig extends MidnightConfig {
 	public static boolean brazierPowerLavaHealing = true;
 
 	@Entry(category = BRAZIER)
+	public static boolean brazierPowerLavaSwimming = true;
+
+	@Entry(category = BRAZIER)
 	public static boolean brazierPowerLavaImmuneItems = true;
 
 	@Entry(category = BRAZIER)

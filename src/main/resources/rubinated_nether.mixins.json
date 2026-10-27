@@ -11,7 +11,8 @@
     "AnvilMenuMixin",
     "CrookedShotCrossbowMixin",
     "HopperBehaviourMixin",
-    "ItemEntityMixin"
+    "ItemEntityMixin",
+    "PlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
