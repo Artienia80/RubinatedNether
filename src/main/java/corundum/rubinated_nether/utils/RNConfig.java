@@ -59,6 +59,9 @@ public class RNConfig extends MidnightConfig {
 	@Entry(category = BRAZIER)
 	public static boolean brazierEffectParticles = true;
 
+	@Entry(category = BRAZIER)
+	public static boolean brazierBoundaryParticles = true;
+
 	/* -- Altar -- */
 
 	@Entry(
