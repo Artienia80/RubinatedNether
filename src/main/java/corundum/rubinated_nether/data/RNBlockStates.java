@@ -780,7 +780,7 @@ public class RNBlockStates extends BlockStateProvider {
 
 		// Order: Power (0-15) -> Mode (spectrum, uv, ir) -> Facing (down, east, north, south, up, west)
 		for (int power = 0; power <= 15; power++) {
-			for (BronzeLaserBlock.LaserMode mode : BronzeLaserBlock.LaserMode.values()) {
+			for (LaserMode mode : LaserMode.values()) {
 				for (Direction facing : Direction.values()) {
 					String modeStr = mode.getSerializedName();
 
@@ -1029,7 +1029,7 @@ public class RNBlockStates extends BlockStateProvider {
 
 		// Order: Power (0-15) -> Mode (spectrum, uv, ir) -> Facing (down, east, north, south, up, west)
 		for (int power = 0; power <= 15; power++) {
-			for (CopperLaserBlock.LaserMode mode : CopperLaserBlock.LaserMode.values()) {
+			for (LaserMode mode : LaserMode.values()) {
 				for (Direction facing : Direction.values()) {
 					String modeStr = mode.getSerializedName();
 

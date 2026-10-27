@@ -10,8 +10,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-
 /**
  * More convenient interface for making blocks with block entities
  * @param <BE> Type of the block entity
@@ -37,7 +35,7 @@ public interface BEBlock<BE extends BlockEntity> extends EntityBlock {
 	@Nullable
 	@Override
 	default <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-		if(Arrays.asList(getBlockEntityClass().getInterfaces()).contains(TickableBlockEntity.class)) {
+		if(TickableBlockEntity.class.isAssignableFrom(getBlockEntityClass())) {
 			return (beLevel, blockPos, blockState, blockEntity) -> {
 				if(!blockEntity.hasLevel()) {
 					blockEntity.setLevel(beLevel);

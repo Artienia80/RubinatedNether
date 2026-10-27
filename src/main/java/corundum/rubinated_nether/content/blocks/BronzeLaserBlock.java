@@ -23,7 +23,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -70,28 +69,6 @@ public class BronzeLaserBlock extends DirectionalBlock implements BEBlock<Bronze
 	public static final EnumProperty<LaserMode> MODE = EnumProperty.create("mode", LaserMode.class);
 
 	private final TarnishStage tarnishStage;
-
-	public enum LaserMode implements StringRepresentable {
-		SPECTRUM("spectrum"), // Blocks + Entities
-		ULTRAVIOLET("uv"),    // Blocks Only
-		INFRARED("ir");       // Entities Only
-
-		private final String name;
-		LaserMode(String name) { this.name = name; }
-
-		@Override public String getSerializedName() { return this.name; }
-
-		public LaserMode cycle() {
-			return switch (this) {
-				case SPECTRUM -> ULTRAVIOLET;
-				case ULTRAVIOLET -> INFRARED;
-				case INFRARED -> SPECTRUM;
-			};
-		}
-
-		public boolean detectsBlocks() { return this == SPECTRUM || this == ULTRAVIOLET; }
-		public boolean detectsEntities() { return this == SPECTRUM || this == INFRARED; }
-	}
 
 	public BronzeLaserBlock(TarnishStage state, Properties props) {
 		super(props);

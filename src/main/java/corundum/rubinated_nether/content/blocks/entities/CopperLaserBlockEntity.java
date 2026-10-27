@@ -1,51 +1,19 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
-import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
-import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.CopperLaserBlock;
-import corundum.rubinated_nether.utils.BeamScanCache;
-import corundum.rubinated_nether.utils.ShapeUtils;
-import corundum.rubinated_nether.utils.TickableBlockEntity;
+import corundum.rubinated_nether.content.blocks.LaserMode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BeaconBeamBlock;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.WeatheringCopper;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.shapes.BooleanOp;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.Tags;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
-import java.util.Map;
-import java.util.Optional;
-
-public class CopperLaserBlockEntity extends BlockEntity implements TickableBlockEntity {
-
-	// Shapes representing a 1 block long beam segment
-	private static final Map<Direction, VoxelShape> BEAM_SEGMENT_SHAPES = ShapeUtils.allDirections(
-			Shapes.box(.4, 0, .4, .6, 1, .6)
-	);
-
-	private int powerLevel;
-	private int blockRange = -1;
-	private int currentRange;
-	private double rangeRemnant;
-	private int visibleStart = -1;
-	private Optional<Integer> color = Optional.empty();
-	private boolean silly = false;
-	private final BeamScanCache beamCache = new BeamScanCache();
+public class CopperLaserBlockEntity extends AbstractLaserBlockEntity {
 
 	// Timer-specific fields
 	private long obstructionStartTime = -1; // -1 means no obstruction
@@ -54,43 +22,39 @@ public class CopperLaserBlockEntity extends BlockEntity implements TickableBlock
 
 	public CopperLaserBlockEntity(BlockPos pos, BlockState blockState) {
 		super(RNBlockEntities.COPPER_LASER.get(), pos, blockState);
-		this.currentRange = calculateMaxRange(getWeatherState());
 	}
 
 	@Override
-	public void clientTick() {
-		handleBlockUpdate(level, worldPosition, getBlockState());
+	public LaserMode getMode() {
+		return getBlockState().getValue(CopperLaserBlock.MODE);
+	}
+
+	@Override
+	protected int getMaxRange() {
+		return calculateMaxRange(getWeatherState());
 	}
 
 	@Override
 	public void tick() {
 		handleBlockUpdate(level, worldPosition, getBlockState());
 
-		CopperLaserBlock.LaserMode mode = getBlockState().getValue(CopperLaserBlock.MODE);
+		LaserMode mode = getMode();
 
 		boolean isCurrentlyObstructed = false;
 
 		// Check for obstruction based on mode
-		if (mode == CopperLaserBlock.LaserMode.ULTRAVIOLET) {
+		if (mode == LaserMode.ULTRAVIOLET) {
 			// UV mode: blocks only
 			isCurrentlyObstructed = blockRange != -1 && !isNoSignalBlock(blockRange);
 		} else if (mode.detectsEntities()) {
 			// SPECTRUM and INFRARED modes: check entities
-			Direction facing = getBlockState().getValue(CopperLaserBlock.FACING);
+			Direction facing = getFacing();
 			AABB range = getLaserRangeAABB(worldPosition, facing);
 
 			MutableBoolean hasEntity = new MutableBoolean(false);
 			level.getEntities().get(range, entity -> {
 				// Calculate distance to entity along the laser's facing axis
-				double axisDistance;
-				switch (facing.getAxis()) {
-					case X -> axisDistance = Math.abs(entity.getX() - (worldPosition.getX() + 0.5));
-					case Y -> axisDistance = Math.abs(entity.getY() - (worldPosition.getY() + 0.5));
-					case Z -> axisDistance = Math.abs(entity.getZ() - (worldPosition.getZ() + 0.5));
-					default -> axisDistance = 0;
-				}
-
-				double blockDistance = Math.ceil(axisDistance);
+				double blockDistance = getEntityBlockDistance(entity, facing);
 
 				hasEntity.setTrue();
 
@@ -103,7 +67,7 @@ public class CopperLaserBlockEntity extends BlockEntity implements TickableBlock
 				}
 			});
 
-			if (mode == CopperLaserBlock.LaserMode.INFRARED) {
+			if (mode == LaserMode.INFRARED) {
 				// INFRARED: entities only, but blocked by blocks
 				if (blockRange != -1 && !hasEntity.booleanValue()) {
 					// Block obstructs and no entity closer than block
@@ -178,81 +142,10 @@ public class CopperLaserBlockEntity extends BlockEntity implements TickableBlock
 		return power;
 	}
 
-	private boolean isNoSignalBlock(int range) {
-		BlockPos obstructionPos = worldPosition.relative(getBlockState().getValue(CopperLaserBlock.FACING), range);
-		BlockState obstructionState = level.getBlockState(obstructionPos);
-		return obstructionState.is(RNTags.Blocks.LASER_NO_SIGNAL);
-	}
-
+	@Override
 	@SuppressWarnings({"DataFlowIssue"})
 	public void handleBlockUpdate(Level view, BlockPos pos, BlockState bs) {
-		int maxRange = calculateMaxRange(getWeatherState());
-		Direction facing = getBlockState().getValue(CopperLaserBlock.FACING);
-
-		if (beamCache.isValid(level, worldPosition, facing, maxRange)) return;
-		beamCache.begin(level, facing, maxRange);
-
-		this.currentRange = maxRange;
-
-		// BlockPos that is being checked
-		BlockPos.MutableBlockPos mutableBlockPos = worldPosition.mutable();
-
-		// Reset block range
-		blockRange = -1;
-		rangeRemnant = 0;
-		visibleStart = -1;
-		silly = false;
-		color = Optional.empty();
-
-		// Block detection for obstruction/rendering
-		int scanned = 0;
-		for (int i = 0; i < maxRange; i++) {
-			mutableBlockPos.move(facing);
-			int currentDistance = i + 1;
-			scanned = currentDistance;
-
-			BlockState state = level.getBlockState(mutableBlockPos);
-			beamCache.record(i, state);
-
-			if (visibleStart == -1 && isBeamMedium(state)) {
-				visibleStart = currentDistance;
-				silly = state.is(RNTags.Blocks.SILLY_LASER);
-				if (!silly && state.getBlock() instanceof BeaconBeamBlock beaconBeamBlock) {
-					DyeColor dye = beaconBeamBlock.getColor();
-					color = Optional.of(dye.getTextureDiffuseColor());
-				}
-			}
-
-			boolean blockCheck = state.is(RNTags.Blocks.LASER_NO_SIGNAL);
-			if (!blockCheck && state.is(RNTags.Blocks.LASER_TRANSPARENT)) continue;
-
-			VoxelShape shape = Shapes.join(state.getCollisionShape(level, mutableBlockPos), BEAM_SEGMENT_SHAPES.get(facing), BooleanOp.AND);
-
-			if(!shape.isEmpty()) {
-				if(level.isClientSide) {
-					Direction.Axis axis = facing.getAxis();
-					rangeRemnant = facing.getAxisDirection() == Direction.AxisDirection.POSITIVE ? shape.min(axis) : 1.0 - shape.max(axis);
-				}
-				if(blockCheck) this.currentRange = currentDistance;
-				blockRange = currentDistance;
-				break;
-			}
-		}
-		beamCache.finish(scanned);
-	}
-
-	public AABB getRenderBoundingBox() {
-		Direction facing = getBlockState().getValue(CopperLaserBlock.FACING);
-		Vec3i end = facing.getNormal().multiply(currentRange + 1);
-		return new AABB(worldPosition).expandTowards(end.getX(), end.getY(), end.getZ());
-	}
-
-	private AABB getLaserRangeAABB(BlockPos worldPosition, Direction facing) {
-		int effectiveRange = (blockRange == -1) ? currentRange : Math.min(blockRange, currentRange);
-		Vec3i rangeVec = facing.getNormal().multiply(effectiveRange);
-		return new AABB(0, 0, 0, 1, 1, 1)
-				.expandTowards(rangeVec.getX(), rangeVec.getY(), rangeVec.getZ())
-				.move(worldPosition.relative(facing));
+		refreshBeam();
 	}
 
 	private WeatheringCopper.WeatherState getWeatherState() {
@@ -304,64 +197,6 @@ public class CopperLaserBlockEntity extends BlockEntity implements TickableBlock
 
 		// Recalculate power level from loaded timer
 		powerLevel = calculatePowerFromTimer();
-	}
-
-	private void grantLaserDetectionAdvancement(net.minecraft.world.entity.Entity entity) {
-		if (entity instanceof ServerPlayer serverPlayer) {
-			var advancementHolder = serverPlayer.server.getAdvancements()
-					.get(RubinatedNether.id("laser_detection"));
-
-			if (advancementHolder != null) {
-				var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
-				if (!progress.isDone()) {
-					for (String criterion : progress.getRemainingCriteria()) {
-						serverPlayer.getAdvancements().award(advancementHolder, criterion);
-					}
-				}
-			}
-		}
-	}
-
-	public int getPowerLevel() {
-		return powerLevel;
-	}
-
-	public int getBlockRange() {
-		return (blockRange == -1) ? currentRange : Mth.clamp(blockRange, 0, currentRange);
-	}
-
-	public int getCurrentRange() {
-		return currentRange;
-	}
-
-	public double getRenderRange() {
-		if (blockRange == -1) return getBlockRange();
-		return getBlockRange() - 1 + rangeRemnant;
-	}
-
-	private static boolean isBeamMedium(BlockState state) {
-		return state.is(RNTags.Blocks.SILLY_LASER) || state.is(Tags.Blocks.GLASS_BLOCKS)
-				|| state.is(Tags.Blocks.GLASS_BLOCKS_TINTED) || state.is(Tags.Blocks.GLASS_PANES);
-	}
-
-	public boolean alwaysVisible() {
-		return visibleStart != -1;
-	}
-
-	public int getVisibleStartOffset() {
-		return visibleStart == -1 ? 0 : visibleStart - 1;
-	}
-
-	public boolean isColored() {
-		return color.isPresent();
-	}
-
-	public boolean isSilly() {
-		return silly;
-	}
-
-	public Optional<Integer> getColor() {
-		return color;
 	}
 
 	public int getObstructionTimer() {
