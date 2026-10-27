@@ -3,6 +3,17 @@
   "description": {
     "translate": "enchantment.rubinated_nether.sinking_curse"
   },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "rubinated_nether:sinking_curse"
+        },
+        "enchanted": "attacker"
+      }
+    ]
+  },
   "max_cost": {
     "base": 75,
     "per_level_above_first": 25

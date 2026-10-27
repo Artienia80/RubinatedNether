@@ -9,14 +9,9 @@
     "PointedDripstoneBlockMixin",
     "EnchantmentMixin",
     "AnvilMenuMixin",
-    "DampeningDropsMixin",
-    "BlessedLootingMixin",
     "CrookedShotCrossbowMixin",
-    "ExposureCurseMixin",
     "HopperBehaviourMixin",
-    "ItemEntityMixin",
-    "MaceItemMixin",
-    "ThornsShockwaveMixin"
+    "ItemEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

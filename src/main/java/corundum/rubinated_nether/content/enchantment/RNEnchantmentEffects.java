@@ -24,6 +24,12 @@ public class RNEnchantmentEffects {
 	public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> LEECHING_CURSE =
 			ENTITY_ENCHANTMENT_EFFECTS.register("leeching_curse", () -> LeechingCurseEffect.CODEC);
 
+	public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> SINKING_CURSE =
+			ENTITY_ENCHANTMENT_EFFECTS.register("sinking_curse", () -> SinkingCurseEffect.CODEC);
+
+	public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> THORNS_SHOCKWAVE =
+			ENTITY_ENCHANTMENT_EFFECTS.register("thorns_shockwave", () -> ThornsShockwaveEffect.CODEC);
+
 	public static final Supplier<MapCodec<? extends EnchantmentValueEffect>> MISFORTUNE_CURSE =
 			VALUE_ENCHANTMENT_EFFECTS.register("misfortune_curse", () -> MisfortuneCurseEffect.CODEC);
 
