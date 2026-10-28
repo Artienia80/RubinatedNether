@@ -188,7 +188,7 @@ public class RNCreativeTabs {
 			() -> CreativeModeTab.builder()
 					.title(net.minecraft.network.chat.Component.translatable("itemGroup.rubinated_nether_bronze"))
 					.withTabsBefore(RN_RUBINATION_TAB.getId())
-					.icon(() -> RNBlocks.GEARBOX.get().asItem().getDefaultInstance())
+					.icon(() -> RNBlocks.BRONZE_GEARBOX.get().asItem().getDefaultInstance())
 					.displayItems((parameters, output) -> {
 						// One stage at a time: all unwaxed blocks of a stage, then the next stage; waxed blocks follow in the same order
 						List<ItemLike[]> stages = List.of(
@@ -207,10 +207,10 @@ public class RNCreativeTabs {
 										RNBlocks.BRONZE_GRATE,
 										RNBlocks.BRONZE_SPRING,
 										RNBlocks.BRONZE_VENT,
-										RNBlocks.WINDER,
+										RNBlocks.BRONZE_WINDER,
 										RNBlocks.BRONZE_LASER,
 										RNBlocks.BRONZE_VASE,
-										RNBlocks.GEARBOX
+										RNBlocks.BRONZE_GEARBOX
 								},
 								new ItemLike[]{
 										RNBlocks.DISCOLORED_BRONZE_BLOCK,
@@ -227,10 +227,10 @@ public class RNCreativeTabs {
 										RNBlocks.DISCOLORED_BRONZE_GRATE,
 										RNBlocks.DISCOLORED_BRONZE_SPRING,
 										RNBlocks.DISCOLORED_BRONZE_VENT,
-										RNBlocks.DISCOLORED_WINDER,
+										RNBlocks.DISCOLORED_BRONZE_WINDER,
 										RNBlocks.DISCOLORED_BRONZE_LASER,
 										RNBlocks.DISCOLORED_BRONZE_VASE,
-										RNBlocks.DISCOLORED_GEARBOX
+										RNBlocks.DISCOLORED_BRONZE_GEARBOX
 								},
 								new ItemLike[]{
 										RNBlocks.CORRODED_BRONZE_BLOCK,
@@ -247,10 +247,10 @@ public class RNCreativeTabs {
 										RNBlocks.CORRODED_BRONZE_GRATE,
 										RNBlocks.CORRODED_BRONZE_SPRING,
 										RNBlocks.CORRODED_BRONZE_VENT,
-										RNBlocks.CORRODED_WINDER,
+										RNBlocks.CORRODED_BRONZE_WINDER,
 										RNBlocks.CORRODED_BRONZE_LASER,
 										RNBlocks.CORRODED_BRONZE_VASE,
-										RNBlocks.CORRODED_GEARBOX
+										RNBlocks.CORRODED_BRONZE_GEARBOX
 								},
 								new ItemLike[]{
 										RNBlocks.TARNISHED_BRONZE_BLOCK,
@@ -267,10 +267,10 @@ public class RNCreativeTabs {
 										RNBlocks.TARNISHED_BRONZE_GRATE,
 										RNBlocks.TARNISHED_BRONZE_SPRING,
 										RNBlocks.TARNISHED_BRONZE_VENT,
-										RNBlocks.TARNISHED_WINDER,
+										RNBlocks.TARNISHED_BRONZE_WINDER,
 										RNBlocks.TARNISHED_BRONZE_LASER,
 										RNBlocks.TARNISHED_BRONZE_VASE,
-										RNBlocks.TARNISHED_GEARBOX
+										RNBlocks.TARNISHED_BRONZE_GEARBOX
 								},
 								new ItemLike[]{
 										RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
@@ -287,10 +287,10 @@ public class RNCreativeTabs {
 										RNBlocks.CRYSTALLIZED_BRONZE_GRATE,
 										RNBlocks.CRYSTALLIZED_BRONZE_SPRING,
 										RNBlocks.CRYSTALLIZED_BRONZE_VENT,
-										RNBlocks.CRYSTALLIZED_WINDER,
+										RNBlocks.CRYSTALLIZED_BRONZE_WINDER,
 										RNBlocks.CRYSTALLIZED_BRONZE_LASER,
 										RNBlocks.CRYSTALLIZED_BRONZE_VASE,
-										RNBlocks.CRYSTALLIZED_GEARBOX
+										RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX
 								}
 						);
 						for (ItemLike[] stage : stages) addItems(output, stage);
@@ -878,25 +878,25 @@ public class RNCreativeTabs {
 					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_VENT), BOTH_TABS);
 
 			event.insertAfter(getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_VENT),
-					RNBlocks.WINDER.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.WINDER.get().asItem().getDefaultInstance(),
-					RNBlocks.DISCOLORED_WINDER.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.DISCOLORED_WINDER.get().asItem().getDefaultInstance(),
-					RNBlocks.CORRODED_WINDER.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.CORRODED_WINDER.get().asItem().getDefaultInstance(),
-					RNBlocks.TARNISHED_WINDER.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.TARNISHED_WINDER.get().asItem().getDefaultInstance(),
-					RNBlocks.CRYSTALLIZED_WINDER.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.CRYSTALLIZED_WINDER.get().asItem().getDefaultInstance(),
-					getWaxed(RNBlocks.WINDER), BOTH_TABS);
-			event.insertAfter(getWaxed(RNBlocks.WINDER),
-					getWaxed(RNBlocks.DISCOLORED_WINDER), BOTH_TABS);
-			event.insertAfter(getWaxed(RNBlocks.DISCOLORED_WINDER),
-					getWaxed(RNBlocks.CORRODED_WINDER), BOTH_TABS);
-			event.insertAfter(getWaxed(RNBlocks.CORRODED_WINDER),
-					getWaxed(RNBlocks.TARNISHED_WINDER), BOTH_TABS);
-			event.insertAfter(getWaxed(RNBlocks.TARNISHED_WINDER),
-					getWaxed(RNBlocks.CRYSTALLIZED_WINDER), BOTH_TABS);
+					RNBlocks.BRONZE_WINDER.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.BRONZE_WINDER.get().asItem().getDefaultInstance(),
+					RNBlocks.DISCOLORED_BRONZE_WINDER.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.DISCOLORED_BRONZE_WINDER.get().asItem().getDefaultInstance(),
+					RNBlocks.CORRODED_BRONZE_WINDER.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.CORRODED_BRONZE_WINDER.get().asItem().getDefaultInstance(),
+					RNBlocks.TARNISHED_BRONZE_WINDER.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.TARNISHED_BRONZE_WINDER.get().asItem().getDefaultInstance(),
+					RNBlocks.CRYSTALLIZED_BRONZE_WINDER.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.CRYSTALLIZED_BRONZE_WINDER.get().asItem().getDefaultInstance(),
+					getWaxed(RNBlocks.BRONZE_WINDER), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.BRONZE_WINDER),
+					getWaxed(RNBlocks.DISCOLORED_BRONZE_WINDER), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.DISCOLORED_BRONZE_WINDER),
+					getWaxed(RNBlocks.CORRODED_BRONZE_WINDER), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.CORRODED_BRONZE_WINDER),
+					getWaxed(RNBlocks.TARNISHED_BRONZE_WINDER), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_WINDER),
+					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_WINDER), BOTH_TABS);
 
 			event.insertAfter(Items.OBSERVER.getDefaultInstance(),
 					RNBlocks.WAXED_COPPER_LASER.get().asItem().getDefaultInstance(), BOTH_TABS);

@@ -67,11 +67,11 @@ public class RNBlockEntities {
 					"bronze_winder",
 					() -> BlockEntityType.Builder.of(
 							BronzeWinderBlockEntity::new,
-							RNBlocks.WINDER.get(),
-							RNBlocks.DISCOLORED_WINDER.get(),
-							RNBlocks.CORRODED_WINDER.get(),
-							RNBlocks.TARNISHED_WINDER.get(),
-							RNBlocks.CRYSTALLIZED_WINDER.get()
+							RNBlocks.BRONZE_WINDER.get(),
+							RNBlocks.DISCOLORED_BRONZE_WINDER.get(),
+							RNBlocks.CORRODED_BRONZE_WINDER.get(),
+							RNBlocks.TARNISHED_BRONZE_WINDER.get(),
+							RNBlocks.CRYSTALLIZED_BRONZE_WINDER.get()
 					).build(
 							Util.fetchChoiceType(References.BLOCK_ENTITY, "bronze_winder")
 					)
@@ -149,17 +149,22 @@ public class RNBlockEntities {
             )
 	);
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GearboxBlockEntity>> GEARBOX = BLOCK_ENTITY_TYPES.register(
-            "gearbox",
+    // The gearbox block entity used to be registered as "gearbox"; keep old saves loading.
+    static {
+        BLOCK_ENTITY_TYPES.addAlias(RubinatedNether.id("gearbox"), RubinatedNether.id("bronze_gearbox"));
+    }
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GearboxBlockEntity>> BRONZE_GEARBOX = BLOCK_ENTITY_TYPES.register(
+            "bronze_gearbox",
             () -> BlockEntityType.Builder.of(
                     GearboxBlockEntity::new,
-                    RNBlocks.GEARBOX.get(),
-                    RNBlocks.DISCOLORED_GEARBOX.get(),
-                    RNBlocks.CORRODED_GEARBOX.get(),
-                    RNBlocks.TARNISHED_GEARBOX.get(),
-                    RNBlocks.CRYSTALLIZED_GEARBOX.get()
+                    RNBlocks.BRONZE_GEARBOX.get(),
+                    RNBlocks.DISCOLORED_BRONZE_GEARBOX.get(),
+                    RNBlocks.CORRODED_BRONZE_GEARBOX.get(),
+                    RNBlocks.TARNISHED_BRONZE_GEARBOX.get(),
+                    RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX.get()
             ).build(
-                    Util.fetchChoiceType(References.BLOCK_ENTITY, "gearbox")
+                    Util.fetchChoiceType(References.BLOCK_ENTITY, "bronze_gearbox")
             )
     );
 

@@ -26,7 +26,7 @@ public class ActiveGearboxBlock extends GearboxBlock implements BEBlock<GearboxB
 
     @Override
     public BlockEntityType<? extends GearboxBlockEntity> getBlockEntityType() {
-        return RNBlockEntities.GEARBOX.get();
+        return RNBlockEntities.BRONZE_GEARBOX.get();
     }
 
     @Override

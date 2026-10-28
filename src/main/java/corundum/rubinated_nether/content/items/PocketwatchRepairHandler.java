@@ -27,7 +27,7 @@ public class PocketwatchRepairHandler {
         ItemStack left = event.getLeft();
         ItemStack right = event.getRight();
 
-        if (!(left.getItem() instanceof PocketwatchItem) || !right.is((Predicate<Holder<Item>>) RNBlocks.GEARBOX.get())) {
+        if (!(left.getItem() instanceof PocketwatchItem) || !right.is((Predicate<Holder<Item>>) RNBlocks.BRONZE_GEARBOX.get())) {
             return;
         }
 

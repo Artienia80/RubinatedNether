@@ -1,7 +1,0 @@
-{
-  "loader": "neoforge:separate_transforms",
-  "base": {"parent": "rubinated_nether:item/gearbox_hand", "textures": {"texture": "rubinated_nether:block/gearbox/tarnished_gearbox"}},
-  "perspectives": {
-    "gui": {"parent": "rubinated_nether:item/gearbox_gui", "textures": {"texture": "rubinated_nether:block/gearbox/tarnished_gearbox"}}
-  }
-}

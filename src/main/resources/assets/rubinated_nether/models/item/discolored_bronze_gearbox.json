@@ -1,0 +1,7 @@
+{
+  "loader": "neoforge:separate_transforms",
+  "base": {"parent": "rubinated_nether:item/bronze_gearbox_hand", "textures": {"texture": "rubinated_nether:block/bronze_gearbox/discolored_bronze_gearbox"}},
+  "perspectives": {
+    "gui": {"parent": "rubinated_nether:item/bronze_gearbox_gui", "textures": {"texture": "rubinated_nether:block/bronze_gearbox/discolored_bronze_gearbox"}}
+  }
+}

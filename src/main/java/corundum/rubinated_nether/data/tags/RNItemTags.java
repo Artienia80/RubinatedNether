@@ -156,11 +156,11 @@ public class RNItemTags extends ItemTagsProvider {
 				);
 
 		this.tag(RNTags.Items.GEARBOXES).add(
-				RNBlocks.GEARBOX.asItem(),
-				RNBlocks.DISCOLORED_GEARBOX.asItem(),
-				RNBlocks.CORRODED_GEARBOX.asItem(),
-				RNBlocks.TARNISHED_GEARBOX.asItem(),
-				RNBlocks.CRYSTALLIZED_GEARBOX.asItem()
+				RNBlocks.BRONZE_GEARBOX.asItem(),
+				RNBlocks.DISCOLORED_BRONZE_GEARBOX.asItem(),
+				RNBlocks.CORRODED_BRONZE_GEARBOX.asItem(),
+				RNBlocks.TARNISHED_BRONZE_GEARBOX.asItem(),
+				RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX.asItem()
 		);
 
 		this.tag(RNTags.Items.SHRINE_STONE_CANDIDATE).add(

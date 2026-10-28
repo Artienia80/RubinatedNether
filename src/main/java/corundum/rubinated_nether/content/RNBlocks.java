@@ -1184,48 +1184,48 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> WINDER = registerWaxableBlock(
-			"winder",
+	public static final DeferredBlock<Block> BRONZE_WINDER = registerWaxableBlock(
+			"bronze_winder",
 			() -> new BronzeWinderBlock(
 					TarnishStage.UNAFFECTED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 
-	public static final DeferredBlock<Block> DISCOLORED_WINDER = registerWaxableBlock(
-			"discolored_winder",
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_WINDER = registerWaxableBlock(
+			"discolored_bronze_winder",
 			() -> new BronzeWinderBlock(
 					TarnishStage.DISCOLORED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 
-	public static final DeferredBlock<Block> CORRODED_WINDER = registerWaxableBlock(
-			"corroded_winder",
+	public static final DeferredBlock<Block> CORRODED_BRONZE_WINDER = registerWaxableBlock(
+			"corroded_bronze_winder",
 			() -> new BronzeWinderBlock(
 					TarnishStage.CORRODED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 
-	public static final DeferredBlock<Block> TARNISHED_WINDER = registerWaxableBlock(
-			"tarnished_winder",
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_WINDER = registerWaxableBlock(
+			"tarnished_bronze_winder",
 			() -> new BronzeWinderBlock(
 					TarnishStage.TARNISHED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 
-	public static final DeferredBlock<Block> CRYSTALLIZED_WINDER = registerWaxableBlock(
-			"crystallized_winder",
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_WINDER = registerWaxableBlock(
+			"crystallized_bronze_winder",
 			() -> new BronzeWinderBlock(
 					TarnishStage.CRYSTALLIZED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 
-	public static final DeferredBlock<GearboxBlock> GEARBOX = registerWaxableBlock(
-			"gearbox",
+	public static final DeferredBlock<GearboxBlock> BRONZE_GEARBOX = registerWaxableBlock(
+			"bronze_gearbox",
 			() -> new ActiveGearboxBlock(
 					TarnishStage.UNAFFECTED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get())
@@ -1234,8 +1234,8 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<GearboxBlock> DISCOLORED_GEARBOX = registerWaxableBlock(
-			"discolored_gearbox",
+	public static final DeferredBlock<GearboxBlock> DISCOLORED_BRONZE_GEARBOX = registerWaxableBlock(
+			"discolored_bronze_gearbox",
 			() -> new ActiveGearboxBlock(
 					TarnishStage.DISCOLORED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get())
@@ -1244,8 +1244,8 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<GearboxBlock> CORRODED_GEARBOX = registerWaxableBlock(
-			"corroded_gearbox",
+	public static final DeferredBlock<GearboxBlock> CORRODED_BRONZE_GEARBOX = registerWaxableBlock(
+			"corroded_bronze_gearbox",
 			() -> new ActiveGearboxBlock(
 					TarnishStage.CORRODED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get())
@@ -1254,8 +1254,8 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<GearboxBlock> TARNISHED_GEARBOX = registerWaxableBlock(
-			"tarnished_gearbox",
+	public static final DeferredBlock<GearboxBlock> TARNISHED_BRONZE_GEARBOX = registerWaxableBlock(
+			"tarnished_bronze_gearbox",
 			() -> new ActiveGearboxBlock(
 					TarnishStage.TARNISHED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get())
@@ -1264,8 +1264,8 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<GearboxBlock> CRYSTALLIZED_GEARBOX = registerWaxableBlock(
-			"crystallized_gearbox",
+	public static final DeferredBlock<GearboxBlock> CRYSTALLIZED_BRONZE_GEARBOX = registerWaxableBlock(
+			"crystallized_bronze_gearbox",
 			() -> new ActiveGearboxBlock(
 					TarnishStage.CRYSTALLIZED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get())
@@ -1273,6 +1273,18 @@ public class RNBlocks {
 							.noOcclusion()
 			)
 	);
+
+	// Winders and gearboxes used to be registered without the "bronze_" part of their id. These aliases keep
+	// blocks in existing worlds, items in inventories and structure data working under the new ids.
+	static {
+		for (String stage : new String[]{"", "discolored_", "corroded_", "tarnished_", "crystallized_"}) {
+			for (String kind : new String[]{"winder", "gearbox"}) {
+				BLOCKS.addAlias(RubinatedNether.id(stage + kind), RubinatedNether.id(stage + "bronze_" + kind));
+				RNItems.ITEMS.addAlias(RubinatedNether.id(stage + kind), RubinatedNether.id(stage + "bronze_" + kind));
+				RNItems.ITEMS.addAlias(RubinatedNether.id("waxed_" + stage + kind), RubinatedNether.id("waxed_" + stage + "bronze_" + kind));
+			}
+		}
+	}
 
 	public static final DeferredBlock<Block> BRONZE_VENT = registerWaxableBlock(
 			"bronze_vent",

@@ -823,11 +823,11 @@ public class RNBlockStates extends BlockStateProvider {
 	}
 
 	private static final String[] WINDER_NAMES = {
-			"winder",
-			"discolored_winder",
-			"corroded_winder",
-			"tarnished_winder",
-			"crystallized_winder"
+			"bronze_winder",
+			"discolored_bronze_winder",
+			"corroded_bronze_winder",
+			"tarnished_bronze_winder",
+			"crystallized_bronze_winder"
 	};
 
 	private static final String[] WINDER_BASE_TEXTURES = {

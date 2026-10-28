@@ -35,19 +35,19 @@ import java.util.Map;
 public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> {
 
     public static final Map<TarnishStage, Material> BODY_TEXTURES = Map.of(
-            TarnishStage.UNAFFECTED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/gearbox/gearbox")),
-            TarnishStage.DISCOLORED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/gearbox/discolored_gearbox")),
-            TarnishStage.CORRODED,     new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/gearbox/corroded_gearbox")),
-            TarnishStage.TARNISHED,    new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/gearbox/tarnished_gearbox")),
-            TarnishStage.CRYSTALLIZED, new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/gearbox/crystallized_gearbox"))
+            TarnishStage.UNAFFECTED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/bronze_gearbox")),
+            TarnishStage.DISCOLORED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/discolored_bronze_gearbox")),
+            TarnishStage.CORRODED,     new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/corroded_bronze_gearbox")),
+            TarnishStage.TARNISHED,    new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/tarnished_bronze_gearbox")),
+            TarnishStage.CRYSTALLIZED, new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/crystallized_bronze_gearbox"))
     );
 
     public static final Map<TarnishStage, Material> ANIM_BODY_TEXTURES = Map.of(
-            TarnishStage.UNAFFECTED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/gearbox/gearbox_anim")),
-            TarnishStage.DISCOLORED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/gearbox/discolored_gearbox_anim")),
-            TarnishStage.CORRODED,     new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/gearbox/corroded_gearbox_anim")),
-            TarnishStage.TARNISHED,    new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/gearbox/tarnished_gearbox_anim")),
-            TarnishStage.CRYSTALLIZED, new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/gearbox/crystallized_gearbox_anim"))
+            TarnishStage.UNAFFECTED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/bronze_gearbox_anim")),
+            TarnishStage.DISCOLORED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/discolored_bronze_gearbox_anim")),
+            TarnishStage.CORRODED,     new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/corroded_bronze_gearbox_anim")),
+            TarnishStage.TARNISHED,    new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/tarnished_bronze_gearbox_anim")),
+            TarnishStage.CRYSTALLIZED, new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/crystallized_bronze_gearbox_anim"))
     );
 
     private static final String BODY = "body";
@@ -56,7 +56,7 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
     private final ModelPart body;
 
     public GearboxRenderer(BlockEntityRendererProvider.Context context) {
-        ModelPart root = context.bakeLayer(RNModelLayers.GEARBOX);
+        ModelPart root = context.bakeLayer(RNModelLayers.BRONZE_GEARBOX);
         this.body = root.getChild(BODY);
         this.crank = root.getChild(CRANK);
     }
@@ -83,7 +83,7 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
         Level level = blockEntity.getLevel();
         boolean flag = level != null;
 
-        BlockState blockstate = flag ? blockEntity.getBlockState() : RNBlocks.GEARBOX.get().defaultBlockState();
+        BlockState blockstate = flag ? blockEntity.getBlockState() : RNBlocks.BRONZE_GEARBOX.get().defaultBlockState();
         Block block = blockstate.getBlock();
         if (block instanceof GearboxBlock gearboxBlock) {
             poseStack.pushPose();

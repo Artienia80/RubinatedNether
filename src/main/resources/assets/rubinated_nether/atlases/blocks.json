@@ -3,8 +3,8 @@
   "sources": [
     {
       "type": "directory",
-      "source": "rubinated_nether:block/gearbox",
-      "prefix": "rubinated_nether:block/gearbox/"
+      "source": "rubinated_nether:block/bronze_gearbox",
+      "prefix": "rubinated_nether:block/bronze_gearbox/"
     }
   ]
 }

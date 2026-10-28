@@ -72,7 +72,7 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
     };
 
     public GearboxBlockEntity(BlockPos pos, BlockState blockState) {
-        super(RNBlockEntities.GEARBOX.get(), pos, blockState);
+        super(RNBlockEntities.BRONZE_GEARBOX.get(), pos, blockState);
     }
 
     public void startSpawning(int total, int waveSize, int waveDelayTicks) {

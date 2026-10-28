@@ -174,11 +174,11 @@ public class RNItemModels extends ItemModelProvider {
 		);
 
 		winderItems(
-				RNBlocks.WINDER,
-				RNBlocks.DISCOLORED_WINDER,
-				RNBlocks.CORRODED_WINDER,
-				RNBlocks.TARNISHED_WINDER,
-				RNBlocks.CRYSTALLIZED_WINDER
+				RNBlocks.BRONZE_WINDER,
+				RNBlocks.DISCOLORED_BRONZE_WINDER,
+				RNBlocks.CORRODED_BRONZE_WINDER,
+				RNBlocks.TARNISHED_BRONZE_WINDER,
+				RNBlocks.CRYSTALLIZED_BRONZE_WINDER
 		);
 
 		customItemTextures("item/bronze/bronze_chandelier",

@@ -1,0 +1,1120 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_base",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_base_on",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_0",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_1",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_2",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_3",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_4",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "4"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_5",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_6",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "6"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_7",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_8",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "8"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_9",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "9"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_10",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "10"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_11",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "11"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_12",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "12"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_13",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "13"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_14",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "14"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_15",
+        "x": 180
+      },
+      "when": {
+        "facing": "down",
+        "power": "15"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_base"
+      },
+      "when": {
+        "facing": "up",
+        "power": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_base_on"
+      },
+      "when": {
+        "facing": "up",
+        "power": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_0"
+      },
+      "when": {
+        "facing": "up",
+        "power": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_1"
+      },
+      "when": {
+        "facing": "up",
+        "power": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_2"
+      },
+      "when": {
+        "facing": "up",
+        "power": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_3"
+      },
+      "when": {
+        "facing": "up",
+        "power": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_4"
+      },
+      "when": {
+        "facing": "up",
+        "power": "4"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_5"
+      },
+      "when": {
+        "facing": "up",
+        "power": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_6"
+      },
+      "when": {
+        "facing": "up",
+        "power": "6"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_7"
+      },
+      "when": {
+        "facing": "up",
+        "power": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_8"
+      },
+      "when": {
+        "facing": "up",
+        "power": "8"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_9"
+      },
+      "when": {
+        "facing": "up",
+        "power": "9"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_10"
+      },
+      "when": {
+        "facing": "up",
+        "power": "10"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_11"
+      },
+      "when": {
+        "facing": "up",
+        "power": "11"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_12"
+      },
+      "when": {
+        "facing": "up",
+        "power": "12"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_13"
+      },
+      "when": {
+        "facing": "up",
+        "power": "13"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_14"
+      },
+      "when": {
+        "facing": "up",
+        "power": "14"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_15"
+      },
+      "when": {
+        "facing": "up",
+        "power": "15"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_base",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_base_on",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_0",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_1",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_2",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_3",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_4",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "4"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_5",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_6",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "6"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_7",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_8",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "8"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_9",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "9"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_10",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "10"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_11",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "11"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_12",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "12"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_13",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "13"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_14",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "14"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_15",
+        "x": 90
+      },
+      "when": {
+        "facing": "north",
+        "power": "15"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_base",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_base_on",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_0",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_1",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_2",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_3",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_4",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "4"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_5",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_6",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "6"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_7",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_8",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "8"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_9",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "9"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_10",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "10"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_11",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "11"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_12",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "12"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_13",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "13"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_14",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "14"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_15",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "power": "15"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_base",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_base_on",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_0",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_1",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_2",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_3",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_4",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "4"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_5",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_6",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "6"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_7",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_8",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "8"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_9",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "9"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_10",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "10"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_11",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "11"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_12",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "12"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_13",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "13"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_14",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "14"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_15",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "power": "15"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_base",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_base_on",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_0",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_1",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_2",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_3",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_4",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "4"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_5",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_6",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "6"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_7",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_8",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "8"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_9",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "9"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_10",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "10"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_11",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "11"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_12",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "12"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_13",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "13"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_14",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "14"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/tarnished_bronze_winder_key_15",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "power": "15"
+      }
+    }
+  ]
+}

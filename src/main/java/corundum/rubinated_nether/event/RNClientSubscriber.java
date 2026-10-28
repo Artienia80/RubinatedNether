@@ -88,7 +88,7 @@ public class RNClientSubscriber {
                 BronzeShotProjectileModel::createBodyLayer
         );
         event.registerLayerDefinition(RNModelLayers.COFFER, CofferRenderer::createSingleBodyLayer);
-        event.registerLayerDefinition(RNModelLayers.GEARBOX, GearboxRenderer::createSingleBodyLayer);
+        event.registerLayerDefinition(RNModelLayers.BRONZE_GEARBOX, GearboxRenderer::createSingleBodyLayer);
         event.registerLayerDefinition(RubyLensModel.LAYER_LOCATION, RubyLensModel::createBodyLayer);
     }
 
@@ -152,7 +152,7 @@ public class RNClientSubscriber {
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(RNBlockEntities.COFFER.get(), CofferRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.RUBINATED_COFFER.get(), CofferRenderer::new);
-        event.registerBlockEntityRenderer(RNBlockEntities.GEARBOX.get(), GearboxRenderer::new);
+        event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_GEARBOX.get(), GearboxRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_LASER.get(), BronzeLaserRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.COPPER_LASER.get(), CopperLaserRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_VASE.get(), VaseBlockEntityRenderer::new);

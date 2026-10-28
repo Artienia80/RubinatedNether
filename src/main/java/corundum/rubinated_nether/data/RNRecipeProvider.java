@@ -761,7 +761,7 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, RNItems.POCKETWATCH.get())
 				.requires(DataComponentIngredient.of(false, RNDataComponents.POCKETWATCH_DATA.get(), PocketwatchData.BROKEN, RNItems.POCKETWATCH.get()))
-				.requires(RNBlocks.GEARBOX.get())
+				.requires(RNBlocks.BRONZE_GEARBOX.get())
 				.unlockedBy("has_broken_pocketwatch", has(RNItems.POCKETWATCH.get()))
 				.save(recipeOutput, RubinatedNether.MODID + ":pocketwatch_repair");
 
@@ -938,8 +938,8 @@ public class RNRecipeProvider extends RecipeProvider {
 
 	private void gearboxDuplication(RecipeOutput recipeOutput) {
 		for (String prefix : TARNISH_PREFIXES) {
-			Supplier<? extends Block> gearbox = getBlockByName(prefix + "GEARBOX");
-			String name = prefix.toLowerCase() + "gearbox";
+			Supplier<? extends Block> gearbox = getBlockByName(prefix + "BRONZE_GEARBOX");
+			String name = prefix.toLowerCase() + "bronze_gearbox";
 
 			gearboxCopy(recipeOutput, gearbox.get(), name + "_duplication");
 			gearboxCopy(recipeOutput, waxed(gearbox), "waxed_" + name + "_duplication");
@@ -1044,8 +1044,8 @@ public class RNRecipeProvider extends RecipeProvider {
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LASER);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_SPRING);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_VENT);
-		waxAllTarnishVariants(recipeOutput, RNBlocks.GEARBOX);
-		waxAllTarnishVariants(recipeOutput, RNBlocks.WINDER);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_GEARBOX);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_WINDER);
 
 	}
 
@@ -1116,7 +1116,7 @@ public class RNRecipeProvider extends RecipeProvider {
 	private void winder(RecipeOutput recipeOutput) {
 		for (String prefix : TARNISH_PREFIXES) {
 			Supplier<? extends Block> slab = getBlockByName(prefix + "CUT_BRONZE_BRICKS_SLAB");
-			Supplier<? extends Block> winder = getBlockByName(prefix + "WINDER");
+			Supplier<? extends Block> winder = getBlockByName(prefix + "BRONZE_WINDER");
 			winderRecipe(recipeOutput, slab.get(), winder.get());
 			winderRecipe(recipeOutput, waxed(slab), waxed(winder));
 		}
