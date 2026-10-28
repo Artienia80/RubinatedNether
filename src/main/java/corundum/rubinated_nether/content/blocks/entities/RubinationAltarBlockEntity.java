@@ -65,7 +65,9 @@ public class RubinationAltarBlockEntity extends BlockEntity implements Nameable 
 		boolean nowReady = RubinationConverter.hasEnoughRubinatedBlocks(level, pos);
 		if (nowReady != this.ready) {
 			this.ready = nowReady;
+			this.setChanged();
 			level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
+			level.updateNeighbourForOutputSignal(pos, state.getBlock());
 		}
 	}
 
@@ -102,20 +104,30 @@ public class RubinationAltarBlockEntity extends BlockEntity implements Nameable 
 
 	private void rescanEmitters(Level level, BlockPos center) {
 		this.emitters.clear();
-		int r = RubinationConverter.ALTAR_SCAN_RADIUS;
 		BlockPos.MutableBlockPos above = new BlockPos.MutableBlockPos();
-		for (BlockPos pos : BlockPos.betweenClosed(center.offset(-r, -r, -r), center.offset(r, r, r))) {
-			if (!RubinationConverter.isRubinatedBlock(level.getBlockState(pos))) continue;
+		RubinationConverter.forEachRubinatedBlock(level, center, RubinationConverter.ALTAR_SCAN_RADIUS, pos -> {
 			above.setWithOffset(pos, Direction.UP);
-			if (level.getBlockState(above).isFaceSturdy(level, above, Direction.DOWN)) continue;
-			this.emitters.add(pos.immutable());
-		}
+			if (!level.getBlockState(above).isFaceSturdy(level, above, Direction.DOWN)) {
+				this.emitters.add(pos.immutable());
+			}
+			return true;
+		});
 	}
 
 	@Override
 	protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
 		super.loadAdditional(tag, registries);
 		this.ready = tag.getBoolean("Ready");
+	}
+
+	@Override
+	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+		super.saveAdditional(tag, registries);
+		tag.putBoolean("Ready", this.ready);
+	}
+
+	public boolean isReady() {
+		return this.ready;
 	}
 
 	@Override

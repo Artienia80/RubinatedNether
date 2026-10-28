@@ -104,7 +104,7 @@ public class VaseBlockEntity extends RandomizableContainerBlockEntity implements
     }
 
     @Override
-    protected void applyImplicitComponents(BlockEntity.DataComponentInput componentInput) {
+    protected void applyImplicitComponents(DataComponentInput componentInput) {
         super.applyImplicitComponents(componentInput);
         this.engraving = componentInput.get(RNDataComponents.VASE_ENGRAVING.get());
     }
@@ -129,6 +129,14 @@ public class VaseBlockEntity extends RandomizableContainerBlockEntity implements
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if (this.level != null && !this.level.isClientSide) {
+            this.level.updateNeighbourForOutputSignal(this.worldPosition.above(), this.getBlockState().getBlock());
+        }
     }
 
     protected NonNullList<ItemStack> getItems() {

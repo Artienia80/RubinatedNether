@@ -86,6 +86,16 @@ public class RubinationAltarBlock extends BaseEntityBlock {
 		}
 	}
 
+	@Override
+	protected boolean hasAnalogOutputSignal(BlockState state) {
+		return true;
+	}
+
+	@Override
+	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+		return level.getBlockEntity(pos) instanceof RubinationAltarBlockEntity altar && altar.isReady() ? 15 : 0;
+	}
+
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		return new RubinationAltarBlockEntity(pos, state);
 	}

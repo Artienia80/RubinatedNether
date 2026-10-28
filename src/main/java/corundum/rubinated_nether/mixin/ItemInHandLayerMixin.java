@@ -51,9 +51,7 @@ public abstract class ItemInHandLayerMixin<T extends LivingEntity, M extends Ent
         poseStack.mulPose(Axis.ZP.rotationDegrees(45.0F));
         poseStack.scale(DowsingRods.ROD_SCALE, DowsingRods.ROD_SCALE, DowsingRods.ROD_SCALE);
         boolean arrived = DowsingClient.isArrived(player);
-        DowsingRods.setArrivalRender(arrived);
         this.itemInHandRenderer.renderItem(entity, arrived ? DowsingRods.withGlint(stack) : stack, ItemDisplayContext.NONE, left, poseStack, buffer, light);
-        DowsingRods.setArrivalRender(false);
         poseStack.popPose();
 
         ci.cancel();

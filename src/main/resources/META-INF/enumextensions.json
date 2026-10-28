@@ -41,6 +41,15 @@
         "class": "corundum/rubinated_nether/client/RNClientEnumExtensions",
         "field": "BRONZE_DISEASED_HEART_PROXY"
       }
+    },
+    {
+      "enum": "net/minecraft/client/model/HumanoidModel$ArmPose",
+      "name": "RUBINATED_NETHER_DOWSING",
+      "constructor": "(ZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
+      "parameters": {
+        "class": "corundum/rubinated_nether/client/RNClientEnumExtensions",
+        "field": "DOWSING_ARM_POSE_PROXY"
+      }
     }
   ]
 }

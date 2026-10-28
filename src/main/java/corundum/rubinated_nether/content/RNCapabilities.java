@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content;
 
+import corundum.rubinated_nether.content.blocks.entities.CofferItemHandler;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -16,6 +17,16 @@ public class RNCapabilities {
                 Capabilities.ItemHandler.BLOCK,
                 RNBlockEntities.FREEZER.get(),
                 FreezerBlockEntity::getItemHandler
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                RNBlockEntities.COFFER.get(),
+                (coffer, side) -> new CofferItemHandler(coffer)
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                RNBlockEntities.RUBINATED_COFFER.get(),
+                (coffer, side) -> new CofferItemHandler(coffer)
         );
     }
 }

@@ -92,6 +92,16 @@ public class CofferBlock extends AbstractChestBlock<CofferBlockEntity> implement
         }
     }
 
+    @Override
+    protected boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof CofferBlockEntity coffer ? coffer.getAnalogSignal() : 0;
+    }
+
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide) return InteractionResult.sidedSuccess(true);
 

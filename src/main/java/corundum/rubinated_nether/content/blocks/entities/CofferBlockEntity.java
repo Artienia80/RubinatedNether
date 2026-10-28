@@ -15,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -235,6 +236,16 @@ public class CofferBlockEntity extends ChestBlockEntity implements LidBlockEntit
     @Override
     public int getMaxStackSize(ItemStack stack) {
         return stack.getMaxStackSize() * RNConfig.cofferStackMultiplier;
+    }
+
+    public int getAnalogSignal() {
+        float fill = 0.0F;
+        for (ItemStack stack : this.items) {
+            if (!stack.isEmpty()) {
+                fill += (float) stack.getCount() / (float) this.getMaxStackSize(stack);
+            }
+        }
+        return Mth.lerpDiscrete(fill / CONTAINER_SIZE, 0, 15);
     }
 
 

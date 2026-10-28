@@ -19,6 +19,8 @@ import net.minecraft.world.level.block.JukeboxBlock;
 import net.minecraft.world.level.block.entity.JukeboxBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.chunk.LevelChunkSection;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -104,24 +106,71 @@ public class RubinationConverter {
         return RUBINATED_TO_NORMAL_MAP.containsKey(state.getBlock());
     }
 
-    public static int countRubinatedBlocks(Level level, BlockPos centerPos, int radius) {
-        int count = 0;
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
-                for (int z = -radius; z <= radius; z++) {
-                    BlockPos pos = centerPos.offset(x, y, z);
-                    Block block = level.getBlockState(pos).getBlock();
-                    if (RUBINATED_TO_NORMAL_MAP.containsKey(block)) {
-                        count++;
+    @FunctionalInterface
+    public interface RubinatedVisitor {
+        boolean visit(BlockPos.MutableBlockPos pos);
+    }
+
+    public static void forEachRubinatedBlock(Level level, BlockPos centerPos, int radius, RubinatedVisitor visitor) {
+        int minX = centerPos.getX() - radius;
+        int maxX = centerPos.getX() + radius;
+        int minZ = centerPos.getZ() - radius;
+        int maxZ = centerPos.getZ() + radius;
+        int minY = Math.max(centerPos.getY() - radius, level.getMinBuildHeight());
+        int maxY = Math.min(centerPos.getY() + radius, level.getMaxBuildHeight() - 1);
+        if (minY > maxY) return;
+
+        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+
+        for (int chunkX = minX >> 4; chunkX <= maxX >> 4; chunkX++) {
+            for (int chunkZ = minZ >> 4; chunkZ <= maxZ >> 4; chunkZ++) {
+                LevelChunk chunk = level.getChunkSource().getChunkNow(chunkX, chunkZ);
+                if (chunk == null) continue;
+
+                int fromX = Math.max(minX, chunkX << 4);
+                int toX = Math.min(maxX, (chunkX << 4) + 15);
+                int fromZ = Math.max(minZ, chunkZ << 4);
+                int toZ = Math.min(maxZ, (chunkZ << 4) + 15);
+
+                for (int sectionY = minY >> 4; sectionY <= maxY >> 4; sectionY++) {
+                    int index = chunk.getSectionIndexFromSectionY(sectionY);
+                    if (index < 0 || index >= chunk.getSectionsCount()) continue;
+
+                    LevelChunkSection section = chunk.getSection(index);
+                    if (section.hasOnlyAir() || !section.maybeHas(RubinationConverter::isRubinatedBlock)) continue;
+
+                    int fromY = Math.max(minY, sectionY << 4);
+                    int toY = Math.min(maxY, (sectionY << 4) + 15);
+
+                    for (int y = fromY; y <= toY; y++) {
+                        for (int z = fromZ; z <= toZ; z++) {
+                            for (int x = fromX; x <= toX; x++) {
+                                if (isRubinatedBlock(section.getBlockState(x & 15, y & 15, z & 15))) {
+                                    cursor.set(x, y, z);
+                                    if (!visitor.visit(cursor)) return;
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
-        return count;
+    }
+
+    public static int countRubinatedBlocks(Level level, BlockPos centerPos, int radius) {
+        int[] count = {0};
+        forEachRubinatedBlock(level, centerPos, radius, pos -> {
+            count[0]++;
+            return true;
+        });
+        return count[0];
     }
 
     public static boolean hasEnoughRubinatedBlocks(Level level, BlockPos centerPos, int radius) {
-        return countRubinatedBlocks(level, centerPos, radius) >= RNConfig.altarRubinationCost;
+        int required = Math.max(1, RNConfig.altarRubinationCost);
+        int[] count = {0};
+        forEachRubinatedBlock(level, centerPos, radius, pos -> ++count[0] < required);
+        return count[0] >= RNConfig.altarRubinationCost;
     }
 
     public static boolean hasEnoughRubinatedBlocks(Level level, BlockPos centerPos) {
@@ -141,18 +190,10 @@ public class RubinationConverter {
         if (level.isClientSide) return;
 
         List<BlockPos> rubinatedPositions = new ArrayList<>();
-
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
-                for (int z = -radius; z <= radius; z++) {
-                    BlockPos pos = centerPos.offset(x, y, z);
-                    Block block = level.getBlockState(pos).getBlock();
-                    if (RUBINATED_TO_NORMAL_MAP.containsKey(block)) {
-                        rubinatedPositions.add(pos);
-                    }
-                }
-            }
-        }
+        forEachRubinatedBlock(level, centerPos, radius, pos -> {
+            rubinatedPositions.add(pos.immutable());
+            return true;
+        });
 
         Collections.shuffle(rubinatedPositions, new Random(level.random.nextLong()));
         for (int i = 0; i < Math.min(amountToRemove, rubinatedPositions.size()); i++) {

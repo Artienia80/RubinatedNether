@@ -44,6 +44,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -221,6 +222,18 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
 
     private BlockPos getCorrectBlockPos(BlockPos pos, BlockState state) {
         return state.getValue(HALF) == DoubleBlockHalf.UPPER ? pos.below() : pos;
+    }
+
+    @Override
+    protected boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        return level.getBlockEntity(getCorrectBlockPos(pos, state)) instanceof VaseBlockEntity vase
+                ? AbstractContainerMenu.getRedstoneSignalFromContainer(vase)
+                : 0;
     }
 
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {

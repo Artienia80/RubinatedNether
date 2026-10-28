@@ -76,8 +76,6 @@ public class DowsingClientHandler {
         poseStack.scale(DowsingRods.ROD_SCALE, DowsingRods.ROD_SCALE, DowsingRods.ROD_SCALE);
 
         boolean arrived = DowsingClient.isArrived(player);
-        DowsingRods.setArrivalRender(arrived);
-
         minecraft.getItemRenderer().renderStatic(
                 player,
                 arrived ? DowsingRods.withGlint(event.getItemStack()) : event.getItemStack(),
@@ -90,8 +88,6 @@ public class DowsingClientHandler {
                 OverlayTexture.NO_OVERLAY,
                 player.getId()
         );
-
-        DowsingRods.setArrivalRender(false);
 
         poseStack.popPose();
         event.setCanceled(true);
