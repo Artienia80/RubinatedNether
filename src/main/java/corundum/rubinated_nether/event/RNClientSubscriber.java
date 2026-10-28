@@ -56,7 +56,9 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import corundum.rubinated_nether.client.DowsingArmPose;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -261,6 +263,11 @@ public class RNClientSubscriber {
             Item waxedItem = BuiltInRegistries.ITEM.get(waxedId);
             event.registerItem(vaseExtensions, waxedItem);
         }
+    }
+
+    @SubscribeEvent
+    public static void registerDowsingExtensions(RegisterClientExtensionsEvent event) {
+        event.registerItem(DowsingArmPose.EXTENSIONS, Items.BLAZE_ROD, Items.BREEZE_ROD);
     }
 
     @SubscribeEvent

@@ -64,7 +64,7 @@ public class ItemRendererMixin {
 
     @Unique
     private static boolean rubinated_nether$usesRubinatedGlint(ItemStack stack) {
-        return DowsingRods.isArrivalRender()
+        return DowsingRods.isArrivedRod(stack)
                 || rubinated_nether$hasRubinatedCurse(stack)
                 || rubinated_nether$isRune(stack)
                 || rubinated_nether$isRitualOffering(stack)

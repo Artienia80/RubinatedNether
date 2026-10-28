@@ -19,7 +19,6 @@
     "HumanoidArmorLayerMixin",
     "ItemRendererMixin",
     "EntityRenderDispatcherMixin",
-    "PlayerModelMixin",
     "ItemInHandLayerMixin"
   ]
 }
