@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.VertexMultiConsumer;
 import corundum.rubinated_nether.client.render.RNRenderTypes;
 import corundum.rubinated_nether.content.RNRarity;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.dowsing.DowsingRods;
 import corundum.rubinated_nether.content.items.MechanicalFuel;
 import corundum.rubinated_nether.content.items.MechanicalTool;
 import corundum.rubinated_nether.content.items.MusicBoxItem;
@@ -83,7 +84,8 @@ public class ItemRendererMixin {
 
     @Unique
     private static boolean rubinated_nether$usesRubinatedGlint(ItemStack stack) {
-        return rubinated_nether$hasRubinatedCurse(stack)
+        return DowsingRods.isArrivalRender()
+                || rubinated_nether$hasRubinatedCurse(stack)
                 || rubinated_nether$isRune(stack)
                 || rubinated_nether$isRitualOffering(stack)
                 || rubinated_nether$isChargedPocketwatch(stack)

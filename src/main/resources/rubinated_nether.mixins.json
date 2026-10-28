@@ -21,6 +21,8 @@
     "GuiMixin",
     "HumanoidArmorLayerMixin",
     "ItemRendererMixin",
-    "EntityRenderDispatcherMixin"
+    "EntityRenderDispatcherMixin",
+    "PlayerModelMixin",
+    "ItemInHandLayerMixin"
   ]
 }
