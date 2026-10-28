@@ -176,6 +176,24 @@ public class RunestoneBlock extends BaseEntityBlock {
 	}
 
 	@Override
+	protected boolean hasAnalogOutputSignal(BlockState state) {
+		return true;
+	}
+
+	@Override
+	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+		return switch (Rubination.parseRubinationTextureName(state.getValue(HAS_RUNE))) {
+			case "weapon" -> 2;
+			case "armor" -> 3;
+			case "bow" -> 4;
+			case "crossbow" -> 5;
+			case "trident" -> 6;
+			case "mace" -> 7;
+			default -> state.getValue(HAS_RUNE) == Rubination.EMPTY ? 0 : 1;
+		};
+	}
+
+	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new RunestoneBlockEntity(blockPos, blockState);
 	}
@@ -209,6 +227,12 @@ public class RunestoneBlock extends BaseEntityBlock {
 				.setValue(HALF, DoubleBlockHalf.UPPER), 2);
 			level.setBlock(pos.below(), state.setValue(HAS_RUNE, rubination)
 				.setValue(HALF, DoubleBlockHalf.LOWER), 2);
+		}
+
+		if (!level.isClientSide) {
+			var lowerPos = getCorrectBlockPos(pos, state);
+			level.updateNeighbourForOutputSignal(lowerPos, this);
+			level.updateNeighbourForOutputSignal(lowerPos.above(), this);
 		}
 	}
 

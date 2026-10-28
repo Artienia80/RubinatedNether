@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.BrazierBlock;
+import corundum.rubinated_nether.utils.BrazierTracker;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -36,6 +37,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 	private int remainingFuelSeconds = 0;
 	private int tickCounter = 0;
 	private boolean levelJustChanged = false;
+	private boolean trackedLit = false;
 	private ItemStack virtualSlot = ItemStack.EMPTY;
 
 	public BrazierBlockEntity(BlockPos pos, BlockState blockState) {
@@ -50,7 +52,34 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		blockEntity.clientTick(level, pos, state);
 	}
 
+	@Override
+	public void onLoad() {
+		super.onLoad();
+		if (this.level != null) {
+			this.trackedLit = this.getBlockState().getValue(BrazierBlock.LEVEL) > 0;
+			BrazierTracker.set(this.level, this.worldPosition, this.trackedLit);
+		}
+	}
+
+	@Override
+	public void setRemoved() {
+		super.setRemoved();
+		if (this.level != null) {
+			BrazierTracker.set(this.level, this.worldPosition, false);
+		}
+		this.trackedLit = false;
+	}
+
+	private void syncTracker(Level level, BlockPos pos, BlockState state) {
+		boolean lit = state.getValue(BrazierBlock.LEVEL) > 0;
+		if (lit != this.trackedLit) {
+			this.trackedLit = lit;
+			BrazierTracker.set(level, pos, lit);
+		}
+	}
+
 	private void serverTick(Level level, BlockPos pos, BlockState state) {
+		syncTracker(level, pos, state);
 		int currentLevel = state.getValue(BrazierBlock.LEVEL);
 
 		levelJustChanged = false;
@@ -170,30 +199,11 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 	}
 
 	private boolean isPlayerInRangeOfAnyBrazier(Level level, ServerPlayer player) {
-		BlockPos playerPos = player.blockPosition();
-		int searchRadius = RNConfig.brazierEffectRange + 1;
-
-		for (BlockPos pos : BlockPos.betweenClosed(
-				playerPos.offset(-searchRadius, -searchRadius, -searchRadius),
-				playerPos.offset(searchRadius, searchRadius, searchRadius))) {
-
-			BlockEntity be = level.getBlockEntity(pos);
-			if (be instanceof BrazierBlockEntity brazier) {
-				BlockState state = level.getBlockState(pos);
-				int brazierLevel = state.getValue(BrazierBlock.LEVEL);
-
-				if (brazierLevel > 0 && brazier.remainingFuelSeconds > 0) {
-					double distSq = player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-					if (distSq <= RNConfig.brazierEffectRange * RNConfig.brazierEffectRange) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
+		return BrazierTracker.anyInRange(level, player.getX(), player.getY(), player.getZ(), RNConfig.brazierEffectRange);
 	}
 
 	private void clientTick(Level level, BlockPos pos, BlockState state) {
+		syncTracker(level, pos, state);
 		if (!RNConfig.brazierEffectParticles) return;
 
 		int fillLevel = state.getValue(BrazierBlock.LEVEL);
@@ -353,31 +363,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 	}
 
 	private boolean isPlayerInRangeOfAnyBrazierExcluding(Level level, ServerPlayer player, BlockPos excludePos) {
-		BlockPos playerPos = player.blockPosition();
-		int searchRadius = RNConfig.brazierEffectRange + 1;
-
-		for (BlockPos pos : BlockPos.betweenClosed(
-				playerPos.offset(-searchRadius, -searchRadius, -searchRadius),
-				playerPos.offset(searchRadius, searchRadius, searchRadius))) {
-
-			if (pos.equals(excludePos)) {
-				continue;
-			}
-
-			BlockEntity be = level.getBlockEntity(pos);
-			if (be instanceof BrazierBlockEntity brazier) {
-				BlockState state = level.getBlockState(pos);
-				int brazierLevel = state.getValue(BrazierBlock.LEVEL);
-
-				if (brazierLevel > 0 && brazier.remainingFuelSeconds > 0) {
-					double distSq = player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-					if (distSq <= RNConfig.brazierEffectRange * RNConfig.brazierEffectRange) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
+		return BrazierTracker.anyInRange(level, player.getX(), player.getY(), player.getZ(), RNConfig.brazierEffectRange, excludePos);
 	}
 
 	private boolean isGreatFuel(ItemStack stack) {

@@ -9,6 +9,7 @@ import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneCarvingHelper;
+import corundum.rubinated_nether.utils.BrazierTracker;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -88,6 +89,7 @@ public class BrazierBlock extends BaseEntityBlock {
         super.onPlace(state, level, pos, oldState, isMoving);
 
         if (!level.isClientSide) {
+            BrazierTracker.set(level, pos, state.getValue(LEVEL) > 0);
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof BrazierBlockEntity brazier) {
                 blockEntity.setChanged();
