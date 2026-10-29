@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import org.joml.Quaternionf;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,6 +26,12 @@ public class EntityRenderDispatcherMixin {
         }
 
         if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(RNEffects.BRAZIER_POWER)) {
+            ci.cancel();
+            return;
+        }
+
+        if (entity instanceof Player player
+                && BrazierTracker.anyInRange(player.level(), player.getX(), player.getY(), player.getZ(), RNConfig.brazierEffectRange)) {
             ci.cancel();
             return;
         }

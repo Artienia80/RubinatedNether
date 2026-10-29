@@ -572,8 +572,8 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
 
     private double getLaunchImpulse() {
         return switch (tarnishStage) {
-            case UNAFFECTED,
-                 CRYSTALLIZED -> 0.0;
+            case CRYSTALLIZED -> 0.0;
+            case UNAFFECTED   -> GEYSER_IMPULSE * 0.125;
             case DISCOLORED   -> GEYSER_IMPULSE * 0.25;
             case CORRODED     -> GEYSER_IMPULSE * 0.5;
             case TARNISHED    -> GEYSER_IMPULSE;

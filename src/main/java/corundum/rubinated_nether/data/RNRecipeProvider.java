@@ -615,138 +615,138 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE_STAIRS,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_STAIRS_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE_SLAB,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_SLAB_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE_WALL,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_WALL_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.COBBLED_SHRINE_STONE,
 				Ingredient.of(RNTags.Items.COBBLED_SHRINE_STONE_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.COBBLED_SHRINE_STONE_STAIRS,
 				Ingredient.of(RNTags.Items.COBBLED_SHRINE_STONE_STAIRS_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.COBBLED_SHRINE_STONE_SLAB,
 				Ingredient.of(RNTags.Items.COBBLED_SHRINE_STONE_SLAB_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.COBBLED_SHRINE_STONE_WALL,
 				Ingredient.of(RNTags.Items.COBBLED_SHRINE_STONE_WALL_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.POLISHED_SHRINE_STONE,
 				Ingredient.of(RNTags.Items.POLISHED_SHRINE_STONE_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.POLISHED_SHRINE_STONE_STAIRS,
 				Ingredient.of(RNTags.Items.POLISHED_SHRINE_STONE_STAIRS_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.POLISHED_SHRINE_STONE_SLAB,
 				Ingredient.of(RNTags.Items.POLISHED_SHRINE_STONE_SLAB_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.POLISHED_SHRINE_STONE_WALL,
 				Ingredient.of(RNTags.Items.POLISHED_SHRINE_STONE_WALL_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE_PILLAR,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_PILLAR_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE_BRICKS,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_BRICKS_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE_BRICKS_STAIRS,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_BRICKS_STAIRS_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE_BRICKS_SLAB,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_BRICKS_SLAB_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE_BRICKS_WALL,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_BRICKS_WALL_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
 				Ingredient.of(RNTags.Items.CHISELED_SHRINE_STONE_BRICKS_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE_TILES,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_TILES_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE_TILES_STAIRS,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_TILES_STAIRS_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE_TILES_SLAB,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_TILES_SLAB_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 		resonance(recipeOutput, RNBlocks.SHRINE_STONE_TILES_WALL,
 				Ingredient.of(RNTags.Items.SHRINE_STONE_TILES_WALL_CANDIDATE),
-				new ResonanceRecipe.TriggerData(10, 2500),
+				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 
 		resonance(recipeOutput, RNBlocks.RUBINATED_SHRINE_STONE_BRICKS,
 				Ingredient.of(RNBlocks.SHRINE_STONE_BRICKS),
-				new ResonanceRecipe.TriggerData(10, 150),
+				new ResonanceRecipe.TriggerData(20, 150),
 				new ResonanceRecipe.TriggerData(20, 300), true);
 
 		resonance(recipeOutput, RNBlocks.RUBINATED_SHRINE_STONE_TILES,
 				Ingredient.of(RNBlocks.SHRINE_STONE_TILES),
-				new ResonanceRecipe.TriggerData(10, 150),
+				new ResonanceRecipe.TriggerData(20, 150),
 				new ResonanceRecipe.TriggerData(20, 300), true);
 
 		resonance(recipeOutput, RNBlocks.RUBINATED_SHRINE_STONE_PILLAR,
 				Ingredient.of(RNBlocks.SHRINE_STONE_PILLAR),
-				new ResonanceRecipe.TriggerData(10, 150),
+				new ResonanceRecipe.TriggerData(20, 150),
 				new ResonanceRecipe.TriggerData(20, 300), true);
 
 		resonance(recipeOutput, RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS,
 				Ingredient.of(RNBlocks.CHISELED_SHRINE_STONE_BRICKS),
-				new ResonanceRecipe.TriggerData(10, 150),
+				new ResonanceRecipe.TriggerData(20, 150),
 				new ResonanceRecipe.TriggerData(20, 300), true);
 
 		resonance(recipeOutput, RNBlocks.RUBINATED_SHRINE_STONE_COFFER,
 				Ingredient.of(RNBlocks.SHRINE_STONE_COFFER),
-				new ResonanceRecipe.TriggerData(10, 150),
+				new ResonanceRecipe.TriggerData(20, 150),
 				new ResonanceRecipe.TriggerData(20, 300), true);
 
 

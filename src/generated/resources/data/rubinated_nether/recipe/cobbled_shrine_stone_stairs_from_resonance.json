@@ -7,6 +7,8 @@
     "attempts": 5000,
     "radius": 20.0
   },
-  "offering": {},
+  "offering": {
+    "radius": 20.0
+  },
   "result": "rubinated_nether:cobbled_shrine_stone_stairs"
 }
