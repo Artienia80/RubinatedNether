@@ -1,0 +1,28 @@
+{
+  "parent": "rubinated_nether:placeholder/bleeding_obsidian",
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.rubinated_nether.placeholder.drawing_blood.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:molten_ruby_cauldron"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.rubinated_nether.placeholder.drawing_blood.title"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,28 @@
+{
+  "parent": "rubinated_nether:placeholder/dowsing",
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.rubinated_nether.placeholder.shrinestone.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:shrine_stone"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.rubinated_nether.placeholder.shrinestone.title"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

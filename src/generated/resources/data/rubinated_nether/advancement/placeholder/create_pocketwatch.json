@@ -1,0 +1,28 @@
+{
+  "parent": "rubinated_nether:placeholder/summon_wave",
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.rubinated_nether.placeholder.create_pocketwatch.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:clock"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.rubinated_nether.placeholder.create_pocketwatch.title"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -9,7 +9,8 @@
     "PointedDripstoneBlockMixin",
     "EnchantmentMixin",
     "ItemEntityMixin",
-    "PlayerMixin"
+    "PlayerMixin",
+    "AdvancementNodeMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -19,6 +20,7 @@
     "HumanoidArmorLayerMixin",
     "ItemRendererMixin",
     "EntityRenderDispatcherMixin",
-    "ItemInHandLayerMixin"
+    "ItemInHandLayerMixin",
+    "AdvancementWidgetMixin"
   ]
 }

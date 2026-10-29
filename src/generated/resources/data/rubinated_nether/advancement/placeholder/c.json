@@ -1,0 +1,43 @@
+{
+  "parent": "rubinated_nether:placeholder/b",
+  "criteria": {
+    "impossible": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "position": {
+                  "y": {
+                    "max": -250314.0
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.placeholder.c.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:ruby_brazier"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.placeholder.c.title"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,28 @@
+{
+  "parent": "rubinated_nether:placeholder/kill_bronze",
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.rubinated_nether.placeholder.summon_wave.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:bronze_spring"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.rubinated_nether.placeholder.summon_wave.title"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

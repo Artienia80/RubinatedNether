@@ -1,0 +1,28 @@
+{
+  "parent": "rubinated_nether:placeholder/create_pocketwatch",
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.rubinated_nether.placeholder.accumulate_blessing.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:blessed_icon"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.rubinated_nether.placeholder.accumulate_blessing.title"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

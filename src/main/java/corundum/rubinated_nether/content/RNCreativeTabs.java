@@ -32,14 +32,11 @@ public class RNCreativeTabs {
 					.icon(() -> RNItems.RUBY_ICON.get().getDefaultInstance())
 					.displayItems((parameters, output) -> {
 						boolean showItems = RNConfig.tabDisplay != RNConfig.TabDisplay.VANILLA_ONLY;
-						// Ruby + molten ruby (items keep the VANILLA_ONLY gate)
 						addItems(output, RNBlocks.RUBY_BLOCK);
 						if (showItems) addItems(output, RNItems.RUBY, RNItems.RUBY_SHARD);
 						addItems(output, RNBlocks.MOLTEN_RUBY_BLOCK);
 						if (showItems) addItems(output, RNItems.MOLTEN_RUBY, RNItems.MOLTEN_RUBY_NUGGET);
-						// Ore, obsidian, soakstone
 						addItems(output, RNBlocks.MOLTEN_RUBY_ORE, RNBlocks.BLEEDING_OBSIDIAN, RNBlocks.SOAKSTONE);
-						// Ruby glass, then panes in the same order
 						addItems(
 								output,
 								RNBlocks.RUBY_GLASS,
@@ -49,13 +46,9 @@ public class RNCreativeTabs {
 								RNBlocks.MOLTEN_RUBY_GLASS_PANE,
 								RNBlocks.ORNATE_RUBY_GLASS_PANE
 						);
-						// Brazier
 						addItems(output, RNBlocks.BRAZIER);
-						// Freezer and ice
 						addItems(output, RNBlocks.FREEZER, RNItems.POWDER_SNOW, RNItems.FROSTED_ICE, RNBlocks.DRY_ICE);
-						// Coffer
 						addItems(output, RNBlocks.SHRINE_STONE_COFFER, RNBlocks.RUBINATED_SHRINE_STONE_COFFER);
-						// Shrine stone family
 						addItems(
 								output,
 								RNBlocks.SHRINE_STONE,
@@ -85,7 +78,6 @@ public class RNCreativeTabs {
 								RNBlocks.RUBINATED_SHRINE_STONE_PILLAR,
 								RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS
 						);
-						// Bronze materials
 						addItems(
 								output,
 								RNItems.BRONZE_ROD,
@@ -97,7 +89,6 @@ public class RNCreativeTabs {
 								RNItems.CRYSTALLIZED_BRONZE_SHOT,
 								RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL
 						);
-						// Mechanical tools, music box, ruby lens
 						addItems(
 								output,
 								RNItems.BRONZE_DRILL,
@@ -107,7 +98,6 @@ public class RNCreativeTabs {
 								RNItems.MUSIC_BOX,
 								RNItems.RUBY_LENS
 						);
-						// Copper lasers
 						addItems(
 								output,
 								RNBlocks.COPPER_LASER,
@@ -119,9 +109,7 @@ public class RNCreativeTabs {
 								RNBlocks.WAXED_WEATHERED_COPPER_LASER,
 								RNBlocks.WAXED_OXIDIZED_COPPER_LASER
 						);
-						// Discs, banner pattern
 						addItems(output, RNItems.MUSIC_DISC_SHIMMER, RNItems.MUSIC_DISC_SINNER, RNItems.COGS_BANNER_PATTERN.get());
-						// Spawn eggs
 						addItems(
 								output,
 								RNItems.BRONZE_SPAWN_EGG,
@@ -130,7 +118,6 @@ public class RNCreativeTabs {
 								RNItems.TARNISHED_BRONZE_SPAWN_EGG,
 								RNItems.CRYSTALLIZED_BRONZE_SPAWN_EGG
 						);
-						// Legacy (gray italic tooltip added in RNClientSubscriber)
 						addItems(output, RNBlocks.NETHER_RUBY_ORE, RNBlocks.RUBINATED_BLACKSTONE);
 					})
 					.build()

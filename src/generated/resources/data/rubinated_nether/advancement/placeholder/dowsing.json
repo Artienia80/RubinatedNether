@@ -1,0 +1,28 @@
+{
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "rubinated_nether:textures/gui/advancements/backgrounds/rubinated_nether.png",
+    "description": {
+      "translate": "advancements.rubinated_nether.placeholder.dowsing.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:compass"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.rubinated_nether.placeholder.dowsing.title"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

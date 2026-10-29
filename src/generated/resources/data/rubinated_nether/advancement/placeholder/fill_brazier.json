@@ -1,0 +1,28 @@
+{
+  "parent": "rubinated_nether:placeholder/shrinestone",
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.rubinated_nether.placeholder.fill_brazier.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:ruby_brazier"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.rubinated_nether.placeholder.fill_brazier.title"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.RNBannerPatterns;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.trim.RNTrimPatterns;
+import corundum.rubinated_nether.utils.RNAdvancementLinks;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -20,9 +21,11 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
@@ -473,7 +476,54 @@ public class RNAdvancements extends AdvancementProvider {
 											.setY(MinMaxBounds.Doubles.atMost(-250314))))
 					.save(consumer, RubinatedNether.id("springs"), existingFileHelper);
 
+			// ---- Placeholder tab: "Rubinated Nether" (dowsing / shrine tree) ----
+			// Layout test only: every advancement completes itself right away (tick trigger, no toast / chat message) so the whole tree
+			// is visible without doing anything. Swap in the real criteria later (see placeholder()).
+			// RUBINATE_ITEM and POCKETWATCH_SAVE have two parents in the design. They only have one real parent here (the one passed in);
+			// the second line is drawn client-side and the node is centered between both parents, see RNAdvancementLinks / AdvancementWidgetMixin.
+			// Sibling order (top to bottom) is defined by RNAdvancementLinks.CHILD_ORDER, not by the order below.
+			AdvancementHolder phDowsing = Advancement.Builder.advancement()
+					.display(Items.COMPASS,
+							Component.translatable("advancements.rubinated_nether.placeholder.dowsing.title"),
+							Component.translatable("advancements.rubinated_nether.placeholder.dowsing.description"),
+							RubinatedNether.id("textures/gui/advancements/backgrounds/rubinated_nether.png"),
+							AdvancementType.TASK, false, false, false)
+					.addCriterion("tick", PlayerTrigger.TriggerInstance.tick())
+					.save(consumer, RNAdvancementLinks.DOWSING, existingFileHelper);
+
+			AdvancementHolder phShrinestone = placeholder(consumer, existingFileHelper, phDowsing, RNAdvancementLinks.SHRINESTONE, RNBlocks.SHRINE_STONE.get(), AdvancementType.TASK);
+			AdvancementHolder phFillBrazier = placeholder(consumer, existingFileHelper, phShrinestone, RNAdvancementLinks.FILL_BRAZIER, RNBlocks.BRAZIER.get(), AdvancementType.TASK);
+			AdvancementHolder phRubinatedRune = placeholder(consumer, existingFileHelper, phFillBrazier, RNAdvancementLinks.RUBINATED_RUNE, RNItems.PRIDE_RUNE.get(), AdvancementType.TASK);
+			AdvancementHolder phInsertRune = placeholder(consumer, existingFileHelper, phRubinatedRune, RNAdvancementLinks.INSERT_RUNE, RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(), AdvancementType.TASK);
+			AdvancementHolder phRubinateItem = placeholder(consumer, existingFileHelper, phInsertRune, RNAdvancementLinks.RUBINATE_ITEM, RNItems.RUBY.get(), AdvancementType.TASK);
+			AdvancementHolder phBronzeRodOffering = placeholder(consumer, existingFileHelper, phFillBrazier, RNAdvancementLinks.BRONZE_ROD_OFFERING, RNItems.BRONZE_ROD.get(), AdvancementType.TASK);
+			AdvancementHolder phGiveOffering = placeholder(consumer, existingFileHelper, phBronzeRodOffering, RNAdvancementLinks.GIVE_OFFERING, RNBlocks.RUBINATION_ALTAR.get(), AdvancementType.TASK);
+			AdvancementHolder phPocketwatchSave = placeholder(consumer, existingFileHelper, phGiveOffering, RNAdvancementLinks.POCKETWATCH_SAVE, Items.TOTEM_OF_UNDYING, AdvancementType.TASK);
+			AdvancementHolder phKillBronze = placeholder(consumer, existingFileHelper, phDowsing, RNAdvancementLinks.KILL_BRONZE, RNBlocks.BRONZE_BLOCK.get(), AdvancementType.TASK);
+			AdvancementHolder phSummonWave = placeholder(consumer, existingFileHelper, phKillBronze, RNAdvancementLinks.SUMMON_WAVE, RNBlocks.BRONZE_SPRING.get(), AdvancementType.TASK);
+			AdvancementHolder phCreatePocketwatch = placeholder(consumer, existingFileHelper, phSummonWave, RNAdvancementLinks.CREATE_POCKETWATCH, Items.CLOCK, AdvancementType.TASK);
+			AdvancementHolder phAccumulateBlessing = placeholder(consumer, existingFileHelper, phCreatePocketwatch, RNAdvancementLinks.ACCUMULATE_BLESSING, RNItems.BLESSED_ICON.get(), AdvancementType.TASK);
+			AdvancementHolder phMechanicalTools = placeholder(consumer, existingFileHelper, phSummonWave, RNAdvancementLinks.MECHANICAL_TOOLS, Items.IRON_PICKAXE, AdvancementType.TASK);
+			AdvancementHolder phSmithModule = placeholder(consumer, existingFileHelper, phMechanicalTools, RNAdvancementLinks.SMITH_MODULE, Items.SMITHING_TABLE, AdvancementType.TASK);
+			AdvancementHolder phKillVariants = placeholder(consumer, existingFileHelper, phKillBronze, RNAdvancementLinks.KILL_VARIANTS, RNBlocks.BRONZE_BLOCK.get(), AdvancementType.CHALLENGE);
+			AdvancementHolder phBleedingObsidian = placeholder(consumer, existingFileHelper, phDowsing, RNAdvancementLinks.BLEEDING_OBSIDIAN, RNBlocks.BLEEDING_OBSIDIAN.get(), AdvancementType.TASK);
+			AdvancementHolder phDrawingBlood = placeholder(consumer, existingFileHelper, phBleedingObsidian, RNAdvancementLinks.DRAWING_BLOOD, RNBlocks.MOLTEN_RUBY_CAULDRON.get(), AdvancementType.TASK);
+
 		}
+	}
+
+	/** A placeholder advancement that completes immediately. Replace the criterion with the real one when the advancement gets implemented. */
+	private static AdvancementHolder placeholder(Consumer<AdvancementHolder> consumer, ExistingFileHelper helper, AdvancementHolder parent, ResourceLocation id, ItemLike icon, AdvancementType type) {
+		String key = "advancements." + id.getNamespace() + "." + id.getPath().replace('/', '.');
+		return Advancement.Builder.advancement()
+				.parent(parent)
+				.display(icon,
+						Component.translatable(key + ".title"),
+						Component.translatable(key + ".description"),
+						null,
+						type, false, false, false)
+				.addCriterion("tick", PlayerTrigger.TriggerInstance.tick())
+				.save(consumer, id, helper);
 	}
 
 	private static ItemUsedOnLocationTrigger.TriggerInstance itemUsedOnLocationCheckAbove(LocationPredicate.Builder location, LocationPredicate.Builder above, ItemPredicate.Builder item) {
