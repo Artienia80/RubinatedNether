@@ -9,7 +9,9 @@
     "PointedDripstoneBlockMixin",
     "EnchantmentMixin",
     "ItemEntityMixin",
-    "PlayerMixin"
+    "PlayerMixin",
+    "BoatMixin",
+    "StonecutterMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1
