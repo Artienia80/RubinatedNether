@@ -9,16 +9,17 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.GrindstoneEvent;
 
-import java.util.Set;
+import java.util.List;
 
 /** Grindstone: one shrine stone tier block in EACH slot becomes a blank rune. */
 @EventBusSubscriber(modid = RubinatedNether.MODID)
 public class RuneGrindstoneHandler {
-    private static Set<Item> shrineTiers;
+    private static List<Item> shrineTiers;
 
-    private static Set<Item> shrineTiers() {
+    /** Every shrine stone tier that works in the grindstone, in tier order. */
+    public static List<Item> shrineTiers() {
         if (shrineTiers == null) {
-            shrineTiers = Set.of(
+            shrineTiers = List.of(
                     RNBlocks.SHRINE_STONE.get().asItem(),
                     RNBlocks.COBBLED_SHRINE_STONE.get().asItem(),
                     RNBlocks.POLISHED_SHRINE_STONE.get().asItem(),

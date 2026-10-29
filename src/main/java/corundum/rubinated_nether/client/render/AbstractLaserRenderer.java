@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.blocks.LaserMode;
 import corundum.rubinated_nether.content.blocks.entities.AbstractLaserBlockEntity;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -45,7 +46,6 @@ public abstract class AbstractLaserRenderer<T extends AbstractLaserBlockEntity> 
 			int packedOverlay
 	) {
 		var player = Minecraft.getInstance().player;
-		var level = Minecraft.getInstance().level;
 
 		boolean hasLens = player.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get());
 
@@ -62,7 +62,10 @@ public abstract class AbstractLaserRenderer<T extends AbstractLaserBlockEntity> 
 			tempQuat.rotationXYZ(xRot * Mth.DEG_TO_RAD, 0, zRot * Mth.DEG_TO_RAD);
 
 			// rotating animation with different speeds for UV/IR
-			var lerpedTime = Mth.lerp(partialTick, level.getGameTime(), level.getGameTime() + 1);
+			// Use a smooth client-side clock (in ticks) instead of level.getGameTime(): on a dedicated server
+			// the client's game time is only resynced by the server in coarse steps, which made the spin choppy.
+			// 7200 ticks is a whole multiple of every rotation / texture / palette period used below.
+			float lerpedTime = (float) ((Util.getMillis() % 360000L) / 50.0);
 			float angle;
 
 			LaserMode mode = blockEntity.getMode();

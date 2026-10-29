@@ -43,7 +43,8 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
 
     public static final boolean DEBUG = false;
 
-    private static final String HEAVY_TAG = "rn_heavy_log";
+    /** Entity tag on every falling block the chainsaw spawns (logs, leaves, fungus caps, shroomlight, hives). */
+    public static final String HEAVY_TAG = "rn_heavy_log";
 
     private static final int MAX_BRANCH_LOGS = 128;
 

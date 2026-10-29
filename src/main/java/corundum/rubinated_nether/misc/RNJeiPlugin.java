@@ -6,6 +6,10 @@ import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNRecipes;
 import corundum.rubinated_nether.content.recipe.JEI.FreezerRecipeCategory;
 import corundum.rubinated_nether.content.recipe.JEI.ResonanceRecipeCategory;
+import corundum.rubinated_nether.content.recipe.JEI.RuneGrindstoneCategory;
+import corundum.rubinated_nether.content.recipe.JEI.RuneGrindstoneRecipe;
+import corundum.rubinated_nether.event.RuneGrindstoneHandler;
+import net.minecraft.world.item.Items;
 import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -15,6 +19,8 @@ import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.ISubtypeRegistration;
+import corundum.rubinated_nether.content.RNDataComponents;
 import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -36,6 +42,24 @@ public class RNJeiPlugin implements IModPlugin {
 		return ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "jei");
 	}
 
+	/**
+	 * Carved runes are the plain rune item plus a carving component. Without this JEI sees one single "rune"
+	 * and hides the carved ones; with it every carving is its own entry.
+	 */
+	@Override
+			registration.registerSubtypeInterpreter(RNItems.RUNE.get(), new ISubtypeInterpreter<ItemStack>() {
+		@Override
+		public @Nullable Object getSubtypeData(ItemStack stack, UidContext context) {
+			return stack.get(RNDataComponents.RUNE_CARVING.get());
+		}
+
+		@Override
+		public String getLegacyStringSubtypeInfo(ItemStack stack, UidContext context) {
+			Rubination carving = stack.get(RNDataComponents.RUNE_CARVING.get());
+			return carving == null ? "" : carving.toString();
+		}
+	});
+
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration) {
 		RubinatedNether.LOGGER.info("Rubinating your JEI");
@@ -47,7 +71,8 @@ public class RNJeiPlugin implements IModPlugin {
 		// Resonance first, then Freezing
 		registration.addRecipeCategories(
 				new ResonanceRecipeCategory(registration.getJeiHelpers().getGuiHelper(), resonanceRecipes),
-				new FreezerRecipeCategory(registration.getJeiHelpers().getGuiHelper())
+				new FreezerRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+				new RuneGrindstoneCategory(registration.getJeiHelpers().getGuiHelper())
 		);
 	}
 
@@ -61,6 +86,14 @@ public class RNJeiPlugin implements IModPlugin {
 		);
 
 		registration.addRecipes(ResonanceRecipeCategory.RECIPE_TYPE, resonanceRecipes);
+
+		// Grindstone: any shrine stone in each slot -> blank rune (the rule lives in RuneGrindstoneHandler)
+		registration.addRecipes(
+				RuneGrindstoneCategory.RECIPE_TYPE,
+				List.of(new RuneGrindstoneRecipe(
+						RuneGrindstoneHandler.shrineTiers().stream().map(ItemStack::new).toList(),
+						new ItemStack(RNItems.RUNE.get())))
+		);
 
 		var rubyRepairRecipes = generateRubyRepairRecipes(
 				registration.getVanillaRecipeFactory(),
@@ -78,6 +111,10 @@ public class RNJeiPlugin implements IModPlugin {
 		registration.addRecipeCatalyst(
 				new ItemStack(RNBlocks.RUBINATION_ALTAR.get()),
 				ResonanceRecipeCategory.RECIPE_TYPE
+		);
+		registration.addRecipeCatalyst(
+				new ItemStack(Items.GRINDSTONE),
+				RuneGrindstoneCategory.RECIPE_TYPE
 		);
 	}
 

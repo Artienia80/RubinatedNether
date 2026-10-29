@@ -7,6 +7,7 @@ import corundum.rubinated_nether.content.blocks.entities.VaseBlockEntity;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.trim.VaseEngraving;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
@@ -36,7 +37,15 @@ public class VaseBlockEntityRenderer implements BlockEntityRenderer<VaseBlockEnt
 
         poseStack.pushPose();
         for (Direction face : new Direction[]{Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST}) {
-            drawFace(poseStack, consumer, sprite, face, packedLight, packedOverlay);
+            // The lower vase half is an opaque full cube, so the light value passed to a block entity
+            // renderer (sampled at the vase's own position) is 0 and the engraving renders black.
+            // Sample the light of the adjacent position the face is actually looking at instead.
+            int faceLight = packedLight;
+            var level = blockEntity.getLevel();
+            if (level != null) {
+                faceLight = LevelRenderer.getLightColor(level, blockEntity.getBlockPos().relative(face));
+            }
+            drawFace(poseStack, consumer, sprite, face, faceLight, packedOverlay);
         }
         poseStack.popPose();
     }

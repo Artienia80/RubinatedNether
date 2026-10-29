@@ -16,6 +16,9 @@ import corundum.rubinated_nether.misc.DatapackRegistry;
 import corundum.rubinated_nether.networking.CollectDiscsPayload;
 import corundum.rubinated_nether.networking.ConfigSync;
 import corundum.rubinated_nether.networking.ConfigSyncPayload;
+import corundum.rubinated_nether.networking.MusicBoxPlayPayload;
+import corundum.rubinated_nether.networking.MusicBoxRetargetPayload;
+import corundum.rubinated_nether.client.MusicBoxSoundInstance;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.core.BlockPos;
@@ -90,8 +93,9 @@ public class RNCommonSubscriber {
 
         if (!(itemStack.getItem() instanceof DrillItem drillItem)) return;
 
-        var modified = drillItem.calcModifier(itemStack, event.getOriginalSpeed());
-        if (modified > event.getOriginalSpeed())
+        // getNewSpeed(), not getOriginalSpeed(): haste / fatigue have already been removed from it for mechanical tools
+        var modified = drillItem.calcModifier(itemStack, event.getNewSpeed());
+        if (modified > event.getNewSpeed())
             event.setNewSpeed(modified);
     }
 
@@ -194,6 +198,16 @@ public class RNCommonSubscriber {
                         player.containerMenu.broadcastChanges();
                     }
                 }));
+    }
+
+    @SubscribeEvent
+    public static void registerMusicBoxSound(RegisterPayloadHandlersEvent event) {
+        // Both sides (see registerPocketwatchSave); the handlers only ever run on the client.
+        var registrar = event.registrar("1");
+        registrar.playToClient(MusicBoxPlayPayload.TYPE, MusicBoxPlayPayload.CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> MusicBoxSoundInstance.handlePlay(payload)));
+        registrar.playToClient(MusicBoxRetargetPayload.TYPE, MusicBoxRetargetPayload.CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> MusicBoxSoundInstance.handleRetarget(payload)));
     }
 
     @SubscribeEvent

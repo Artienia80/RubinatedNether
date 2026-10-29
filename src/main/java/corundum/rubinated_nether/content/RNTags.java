@@ -45,6 +45,9 @@ public final class RNTags {
 
 		public static final TagKey<Block> SPRINGS = createTag(Registries.BLOCK, "springs");
 
+		/** Blocks that only drop themselves to shears / silk touch. The chainsaw breaks these like an axe unless it has Dampening. */
+		public static final TagKey<Block> CHAINSAW_NO_SELF_DROP = createTag(Registries.BLOCK, "chainsaw_no_self_drop");
+
 		public static final TagKey<Block> SMOKE_PASSTHROUGH = createTag(Registries.BLOCK, "smoke_passthrough");
 
 		/** Heat sources behind a vent: magma, fire, molten ruby ore. Low damage. */

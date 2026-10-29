@@ -459,6 +459,13 @@ public class RNBlockTags extends BlockTagsProvider {
 		this.tag(RNTags.Blocks.SILLY_LASER).addTag(RNTags.Blocks.RUBY_GLASS);
 		this.tag(RNTags.Blocks.SILLY_LASER).addTag(RNTags.Blocks.RUBY_GLASS_PANES);
 
+		this.tag(RNTags.Blocks.CHAINSAW_NO_SELF_DROP)
+				.addTag(net.minecraft.tags.BlockTags.LEAVES)
+				.add(
+						Blocks.VINE,
+						Blocks.GLOW_LICHEN
+				);
+
 		this.tag(RNTags.Blocks.SMOKE_PASSTHROUGH).add(
 				Blocks.AIR,
 				Blocks.WATER,

@@ -3,6 +3,9 @@ package corundum.rubinated_nether.content.items;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.module.ToolModules;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -53,6 +56,30 @@ public final class MechanicalFuelHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         if (cannotWork(event.getEntity(), event.getState())) event.setCanceled(true);
+    }
+
+    // Mechanical tools run on their own power: Haste / Conduit Power and Mining Fatigue do not change their speed.
+    // Vanilla has already applied those multipliers to the original speed, so they are divided back out here.
+    // HIGH: runs before the normal-priority listeners that build on getNewSpeed().
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public static void ignoreHasteAndFatigue(PlayerEvent.BreakSpeed event) {
+        Player player = event.getEntity();
+        if (event.isCanceled() || !(player.getMainHandItem().getItem() instanceof MechanicalTool)) return;
+
+        float speed = event.getNewSpeed();
+        if (MobEffectUtil.hasDigSpeed(player)) {
+            speed /= 1.0F + (MobEffectUtil.getDigSpeedAmplification(player) + 1) * 0.2F;
+        }
+        MobEffectInstance fatigue = player.getEffect(MobEffects.DIG_SLOWDOWN);
+        if (fatigue != null) {
+            speed /= switch (fatigue.getAmplifier()) {
+                case 0 -> 0.3F;
+                case 1 -> 0.09F;
+                case 2 -> 0.0027F;
+                default -> 8.1E-4F;
+            };
+        }
+        event.setNewSpeed(speed);
     }
 
     // Stops the start of a dig, so no tool handler begins a session
