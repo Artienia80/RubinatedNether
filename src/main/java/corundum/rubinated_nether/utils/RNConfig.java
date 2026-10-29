@@ -3,6 +3,11 @@ package corundum.rubinated_nether.utils;
 import eu.midnightdust.lib.config.MidnightConfig;
 
 public class RNConfig extends MidnightConfig {
+	/** Marks server-authoritative gameplay fields that are synced to connected clients. */
+	@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+	@java.lang.annotation.Target(java.lang.annotation.ElementType.FIELD)
+	public @interface Synced {}
+
 	public static final String BRAZIER = "brazier";
 	public static final String CHANDELIER = "chandelier";
 	public static final String COFFER = "coffer";
@@ -20,6 +25,7 @@ public class RNConfig extends MidnightConfig {
 			min = 0,
 			max = 128
 	)
+	@Synced
 	public static int brazierEffectRange = 16;
 
 	@Entry(
@@ -28,9 +34,11 @@ public class RNConfig extends MidnightConfig {
 			min = 1,
 			max = 120
 	)
+	@Synced
 	public static int brazierMinutesPerLevel = 20;
 
 	@Entry(category = BRAZIER)
+	@Synced
 	public static boolean brazierPowerFireRes = true;
 
 	@Entry(category = BRAZIER)
@@ -45,12 +53,19 @@ public class RNConfig extends MidnightConfig {
 	public static int brazierPowerViewRange = 16;
 
 	@Entry(category = BRAZIER)
+	@Synced
 	public static boolean brazierPowerLavaHealing = true;
 
 	@Entry(category = BRAZIER)
+	@Synced
 	public static boolean brazierPowerLavaSwimming = true;
 
 	@Entry(category = BRAZIER)
+	@Synced
+	public static boolean brazierPowerBoatLava = true;
+
+	@Entry(category = BRAZIER)
+	@Synced
 	public static boolean brazierPowerLavaImmuneItems = true;
 
 	@Entry(category = BRAZIER)
@@ -70,6 +85,7 @@ public class RNConfig extends MidnightConfig {
 			min = 0,
 			max = 1024
 	)
+	@Synced
 	public static int altarRubinationCost = 100;
 
 	@Entry(
@@ -78,6 +94,7 @@ public class RNConfig extends MidnightConfig {
 			min = 0,
 			max = 20
 	)
+	@Synced
 	public static int altarLesserBlessingTime = 5;
 
 	@Entry(
@@ -86,6 +103,7 @@ public class RNConfig extends MidnightConfig {
 			min = 0,
 			max = 60
 	)
+	@Synced
 	public static int altarGreaterBlessingTime = 20;
 
 	@Entry(
@@ -94,12 +112,15 @@ public class RNConfig extends MidnightConfig {
 			min = 60,
 			max = 1440
 	)
+	@Synced
 	public static int altarFullBlessingThreshold = 320;
 
 	@Entry(category = ALTAR)
+	@Synced
 	public static boolean blessedEffectGlowing = true;
 
 	@Entry(category = ALTAR)
+	@Synced
 	public static boolean bronzeDiseasedWeakness = true;
 
 	@Entry(
@@ -108,11 +129,13 @@ public class RNConfig extends MidnightConfig {
 			min = 0,
 			max = 1
 	)
+	@Synced
 	public static float bronzeDiseasedWeaknessStrength = 0.4f;
 
 	/* -- Chandelier -- */
 
 	@Entry(category = CHANDELIER)
+	@Synced
 	public static int chandelierDefaultDamage = 400;
 
 	@Entry(
@@ -121,6 +144,7 @@ public class RNConfig extends MidnightConfig {
 			min = 0.25,
 			max = 0.5
 	)
+	@Synced
 	public static float chandelierStateMultiplierIncrease = .25F;
 
 	/* -- Coffer -- */
@@ -131,14 +155,17 @@ public class RNConfig extends MidnightConfig {
 			min = 2,
 			max = 15
 	)
+	@Synced
 	public static int cofferStackMultiplier = 4;
 
 	/* -- Cauldron -- */
 
 	@Entry(category = CAULDRON)
+	@Synced
 	public static int moltenRubyCauldronAverageMinutes = 30;
 
 	@Entry(category = CAULDRON)
+	@Synced
 	public static boolean moltenRubyCauldronNetherOnly = true;
 
 	/* -- Vent -- */
@@ -157,6 +184,7 @@ public class RNConfig extends MidnightConfig {
 			min = 1,
 			max = 15
 	)
+	@Synced
 	public static int crystallizedVentRange = 3;
 
 
@@ -197,6 +225,7 @@ public class RNConfig extends MidnightConfig {
 			min = 0,
 			max = 60
 	)
+	@Synced
 	public static int pocketwatchStopLockMinutes = 15;
 
 	/* -- Calculated Values -- */

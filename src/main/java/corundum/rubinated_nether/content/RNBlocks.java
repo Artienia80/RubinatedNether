@@ -162,7 +162,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> SHRINE_STONE = registerBlockAndItem(
+	public static final DeferredBlock<Block> SHRINE_STONE = registerShrineStoneBlockAndItem(
 			"shrine_stone",
 			() -> new Block(Block.Properties.ofFullCopy(Blocks.DEEPSLATE))
 	);
@@ -187,7 +187,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> COBBLED_SHRINE_STONE = registerBlockAndItem(
+	public static final DeferredBlock<Block> COBBLED_SHRINE_STONE = registerShrineStoneBlockAndItem(
 			"cobbled_shrine_stone",
 			() -> new Block(Block.Properties.ofFullCopy(Blocks.DEEPSLATE))
 	);
@@ -212,7 +212,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> POLISHED_SHRINE_STONE = registerBlockAndItem(
+	public static final DeferredBlock<Block> POLISHED_SHRINE_STONE = registerShrineStoneBlockAndItem(
 			"polished_shrine_stone",
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
@@ -237,7 +237,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> SHRINE_STONE_TILES = registerBlockAndItem(
+	public static final DeferredBlock<Block> SHRINE_STONE_TILES = registerShrineStoneBlockAndItem(
 			"shrine_stone_tiles",
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
@@ -267,7 +267,7 @@ public class RNBlocks {
 			() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
 
-	public static final DeferredBlock<Block> SHRINE_STONE_BRICKS = registerBlockAndItem(
+	public static final DeferredBlock<Block> SHRINE_STONE_BRICKS = registerShrineStoneBlockAndItem(
 			"shrine_stone_bricks",
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
@@ -292,7 +292,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> CHISELED_SHRINE_STONE_BRICKS = registerBlockAndItem(
+	public static final DeferredBlock<Block> CHISELED_SHRINE_STONE_BRICKS = registerShrineStoneBlockAndItem(
 			"chiseled_shrine_stone_bricks",
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
@@ -1491,6 +1491,18 @@ public class RNBlocks {
 		RNItems.ITEMS.registerSimpleBlockItem(
 				name,
 				register
+		);
+
+		return register;
+	}
+
+	/** Like registerBlockAndItem, but the item can be placed in a grindstone (see RuneGrindstoneHandler). */
+	public static <T extends Block> DeferredBlock<T> registerShrineStoneBlockAndItem(String name, Supplier<T> block) {
+		var register = BLOCKS.register(name, block);
+
+		RNItems.ITEMS.register(
+				name,
+				() -> new corundum.rubinated_nether.content.items.ShrineStoneBlockItem(register.get(), new Item.Properties())
 		);
 
 		return register;

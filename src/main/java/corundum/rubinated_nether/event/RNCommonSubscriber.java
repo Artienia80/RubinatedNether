@@ -14,6 +14,10 @@ import corundum.rubinated_nether.content.items.MusicBoxItem;
 import corundum.rubinated_nether.content.module.ToolModules;
 import corundum.rubinated_nether.misc.DatapackRegistry;
 import corundum.rubinated_nether.networking.CollectDiscsPayload;
+import corundum.rubinated_nether.networking.ConfigSync;
+import corundum.rubinated_nether.networking.ConfigSyncPayload;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -190,5 +194,22 @@ public class RNCommonSubscriber {
                         player.containerMenu.broadcastChanges();
                     }
                 }));
+    }
+
+    @SubscribeEvent
+    public static void registerConfigSync(RegisterPayloadHandlersEvent event) {
+        // Must be registered on BOTH sides (see registerPocketwatchSave).
+        event.registrar("1").playToClient(ConfigSyncPayload.TYPE, ConfigSyncPayload.CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> {
+                    // Singleplayer/LAN host shares the JVM statics with the server: nothing to apply.
+                    if (!ctx.connection().isMemoryConnection()) ConfigSync.applyOnClient(payload);
+                }));
+    }
+
+    @SubscribeEvent
+    public static void syncConfigOnLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer sp) {
+            PacketDistributor.sendToPlayer(sp, ConfigSync.snapshot());
+        }
     }
 }

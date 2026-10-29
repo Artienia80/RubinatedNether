@@ -2,7 +2,10 @@
   "type": "minecraft:stonecutting",
   "group": "rune_carving",
   "ingredient": {
-    "item": "rubinated_nether:rune"
+    "type": "neoforge:components",
+    "components": {},
+    "items": "rubinated_nether:rune",
+    "strict": true
   },
   "result": {
     "components": {
