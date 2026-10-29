@@ -2,6 +2,7 @@ package corundum.rubinated_nether.misc;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.RNCreativeTabs;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNRecipes;
 import corundum.rubinated_nether.content.recipe.JEI.FreezerRecipeCategory;
@@ -14,21 +15,27 @@ import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.recipe.vanilla.IJeiAnvilRecipe;
 import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
-import corundum.rubinated_nether.content.RNDataComponents;
 import mezz.jei.api.runtime.IIngredientManager;
+import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.neoforged.fml.loading.FMLPaths;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,21 +54,13 @@ public class RNJeiPlugin implements IModPlugin {
 	 * and hides the carved ones; with it every carving is its own entry.
 	 */
 	@Override
-			registration.registerSubtypeInterpreter(RNItems.RUNE.get(), new ISubtypeInterpreter<ItemStack>() {
-		@Override
-		public @Nullable Object getSubtypeData(ItemStack stack, UidContext context) {
-			return stack.get(RNDataComponents.RUNE_CARVING.get());
-		}
-
-		@Override
-		public String getLegacyStringSubtypeInfo(ItemStack stack, UidContext context) {
-			Rubination carving = stack.get(RNDataComponents.RUNE_CARVING.get());
-			return carving == null ? "" : carving.toString();
-		}
-	});
+	public void registerItemSubtypes(ISubtypeRegistration registration) {
+		registration.registerSubtypeInterpreter(RNItems.RUNE.get(), RuneSubtypeInterpreter.INSTANCE);
+	}
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration) {
+		arrangeCategorySortFile();
 		RubinatedNether.LOGGER.info("Rubinating your JEI");
 
 		var man = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
@@ -100,6 +99,8 @@ public class RNJeiPlugin implements IModPlugin {
 				registration.getIngredientManager()
 		);
 		registration.addRecipes(RecipeTypes.ANVIL, rubyRepairRecipes);
+
+		sortIngredientsByCreativeTabs(registration.getIngredientManager());
 	}
 
 	@Override
@@ -116,6 +117,78 @@ public class RNJeiPlugin implements IModPlugin {
 				new ItemStack(Items.GRINDSTONE),
 				RuneGrindstoneCategory.RECIPE_TYPE
 		);
+	}
+
+	@Override
+	public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+		arrangeCategorySortFile();
+	}
+
+	private static void arrangeCategorySortFile() {
+		Path path = FMLPaths.CONFIGDIR.get().resolve("jei").resolve("recipe-category-sort-order.ini");
+		if (!Files.exists(path)) {
+			return;
+		}
+		try {
+			List<String> lines = Files.readAllLines(path);
+			List<String> ours = List.of(
+					ResonanceRecipeCategory.RECIPE_TYPE.getUid().toString(),
+					FreezerRecipeCategory.RECIPE_TYPE.getUid().toString(),
+					RuneGrindstoneCategory.RECIPE_TYPE.getUid().toString()
+			);
+			List<String> tags = lines.stream().filter(line -> line.contains(":tag_recipes/")).toList();
+			List<String> arranged = new ArrayList<>(lines);
+			arranged.removeAll(tags);
+			arranged.removeAll(ours);
+			int position = 0;
+			while (position < arranged.size() && arranged.get(position).startsWith("minecraft:")) {
+				position++;
+			}
+			arranged.addAll(position, ours);
+			arranged.addAll(tags);
+			if (!arranged.equals(lines)) {
+				Files.write(path, arranged);
+			}
+		} catch (IOException e) {
+			RubinatedNether.LOGGER.error("Could not arrange the JEI category order", e);
+		}
+	}
+
+	private static void sortIngredientsByCreativeTabs(IIngredientManager ingredientManager) {
+		List<ItemStack> tabOrder = new ArrayList<>();
+		tabOrder.addAll(RNCreativeTabs.RN_GENERAL_TAB.get().getDisplayItems());
+		tabOrder.addAll(RNCreativeTabs.RN_RUBINATION_TAB.get().getDisplayItems());
+		tabOrder.addAll(RNCreativeTabs.RN_BRONZE_TAB.get().getDisplayItems());
+		if (tabOrder.isEmpty()) {
+			return;
+		}
+
+		record Entry(ItemStack stack, int position) {
+		}
+
+		List<Entry> entries = new ArrayList<>();
+		for (ItemStack stack : ingredientManager.getAllItemStacks()) {
+			if (!RubinatedNether.MODID.equals(BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace())) {
+				continue;
+			}
+			int position = tabOrder.size();
+			for (int i = 0; i < tabOrder.size(); i++) {
+				if (ItemStack.isSameItemSameComponents(stack, tabOrder.get(i))) {
+					position = i;
+					break;
+				}
+			}
+			entries.add(new Entry(stack, position));
+		}
+		if (entries.isEmpty()) {
+			return;
+		}
+
+		entries.sort(Comparator.comparingInt(Entry::position));
+		List<ItemStack> sorted = entries.stream().map(Entry::stack).toList();
+
+		ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, sorted);
+		ingredientManager.addIngredientsAtRuntime(VanillaTypes.ITEM_STACK, sorted);
 	}
 
 	private List<IJeiAnvilRecipe> generateRubyRepairRecipes(

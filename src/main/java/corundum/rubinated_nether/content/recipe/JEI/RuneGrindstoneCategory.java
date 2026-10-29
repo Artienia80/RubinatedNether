@@ -12,8 +12,6 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -25,16 +23,15 @@ public class RuneGrindstoneCategory implements IRecipeCategory<RuneGrindstoneRec
     public static final ResourceLocation UID = RubinatedNether.id("rune_grindstone");
     public static final RecipeType<RuneGrindstoneRecipe> RECIPE_TYPE = new RecipeType<>(UID, RuneGrindstoneRecipe.class);
 
-    private static final int WIDTH = 150;
-    private static final int HEIGHT = 56;
+    private static final int WIDTH = 116;
+    private static final int HEIGHT = 38;
     private static final int INPUT_X = 24;
     private static final int TOP_Y = 0;
     private static final int BOTTOM_Y = 20;
-    private static final int ARROW_X = 56;
+    private static final int ARROW_X = 58;
     private static final int ARROW_Y = 11;
     private static final int OUTPUT_X = 98;
     private static final int OUTPUT_Y = 10;
-    private static final int NOTE_Y = 44;
 
     private final IDrawableStatic background;
     private final IDrawable icon;
@@ -80,9 +77,5 @@ public class RuneGrindstoneCategory implements IRecipeCategory<RuneGrindstoneRec
         slot.draw(guiGraphics, INPUT_X, BOTTOM_Y);
         slot.draw(guiGraphics, OUTPUT_X, OUTPUT_Y);
         arrow.draw(guiGraphics, ARROW_X, ARROW_Y);
-
-        Font font = Minecraft.getInstance().font;
-        Component note = Component.translatable("gui." + RubinatedNether.MODID + ".jei.rune_grindstone.note");
-        guiGraphics.drawString(font, note, (WIDTH - font.width(note)) / 2, NOTE_Y, 0xFF808080, false);
     }
 }
