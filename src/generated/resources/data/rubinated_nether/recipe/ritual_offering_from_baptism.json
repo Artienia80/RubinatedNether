@@ -1,0 +1,10 @@
+{
+  "type": "rubinated_nether:baptism",
+  "ingredient": {
+    "tag": "rubinated_nether:offering_brazier_item"
+  },
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:ritual_offering"
+  }
+}

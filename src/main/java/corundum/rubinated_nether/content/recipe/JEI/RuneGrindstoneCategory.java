@@ -18,7 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-/** Shrine stone in both grindstone slots -> blank rune. */
+/** Shrine stone in one grindstone slot -> blank rune; in both slots -> runestone. */
 public class RuneGrindstoneCategory implements IRecipeCategory<RuneGrindstoneRecipe> {
     public static final ResourceLocation UID = RubinatedNether.id("rune_grindstone");
     public static final RecipeType<RuneGrindstoneRecipe> RECIPE_TYPE = new RecipeType<>(UID, RuneGrindstoneRecipe.class);
@@ -58,11 +58,15 @@ public class RuneGrindstoneCategory implements IRecipeCategory<RuneGrindstoneRec
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RuneGrindstoneRecipe recipe, IFocusGroup focuses) {
-        // Both slots cycle through every shrine stone tier: any of them works in either slot
-        builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X + 1, TOP_Y + 1)
-                .addItemStacks(recipe.stones());
-        builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X + 1, BOTTOM_Y + 1)
-                .addItemStacks(recipe.stones());
+        if (recipe.stoneCount() == 1) {
+            builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X + 1, OUTPUT_Y + 1)
+                    .addItemStack(recipe.stone());
+        } else {
+            builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X + 1, TOP_Y + 1)
+                    .addItemStack(recipe.stone());
+            builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X + 1, BOTTOM_Y + 1)
+                    .addItemStack(recipe.stone());
+        }
         builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X + 1, OUTPUT_Y + 1)
                 .addItemStack(recipe.output());
         builder.addSlot(RecipeIngredientRole.CATALYST, 1, OUTPUT_Y + 1)
@@ -73,8 +77,12 @@ public class RuneGrindstoneCategory implements IRecipeCategory<RuneGrindstoneRec
     public void draw(RuneGrindstoneRecipe recipe, IRecipeSlotsView recipeSlotsView,
                      GuiGraphics guiGraphics, double mouseX, double mouseY) {
         slot.draw(guiGraphics, 0, OUTPUT_Y);
-        slot.draw(guiGraphics, INPUT_X, TOP_Y);
-        slot.draw(guiGraphics, INPUT_X, BOTTOM_Y);
+        if (recipe.stoneCount() == 1) {
+            slot.draw(guiGraphics, INPUT_X, OUTPUT_Y);
+        } else {
+            slot.draw(guiGraphics, INPUT_X, TOP_Y);
+            slot.draw(guiGraphics, INPUT_X, BOTTOM_Y);
+        }
         slot.draw(guiGraphics, OUTPUT_X, OUTPUT_Y);
         arrow.draw(guiGraphics, ARROW_X, ARROW_Y);
     }

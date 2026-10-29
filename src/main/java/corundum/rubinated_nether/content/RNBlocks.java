@@ -187,7 +187,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> COBBLED_SHRINE_STONE = registerShrineStoneBlockAndItem(
+	public static final DeferredBlock<Block> COBBLED_SHRINE_STONE = registerBlockAndItem(
 			"cobbled_shrine_stone",
 			() -> new Block(Block.Properties.ofFullCopy(Blocks.DEEPSLATE))
 	);
@@ -212,7 +212,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> POLISHED_SHRINE_STONE = registerShrineStoneBlockAndItem(
+	public static final DeferredBlock<Block> POLISHED_SHRINE_STONE = registerBlockAndItem(
 			"polished_shrine_stone",
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
@@ -237,7 +237,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> SHRINE_STONE_TILES = registerShrineStoneBlockAndItem(
+	public static final DeferredBlock<Block> SHRINE_STONE_TILES = registerBlockAndItem(
 			"shrine_stone_tiles",
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
@@ -267,7 +267,7 @@ public class RNBlocks {
 			() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
 
-	public static final DeferredBlock<Block> SHRINE_STONE_BRICKS = registerShrineStoneBlockAndItem(
+	public static final DeferredBlock<Block> SHRINE_STONE_BRICKS = registerBlockAndItem(
 			"shrine_stone_bricks",
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
@@ -292,7 +292,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> CHISELED_SHRINE_STONE_BRICKS = registerShrineStoneBlockAndItem(
+	public static final DeferredBlock<Block> CHISELED_SHRINE_STONE_BRICKS = registerBlockAndItem(
 			"chiseled_shrine_stone_bricks",
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);

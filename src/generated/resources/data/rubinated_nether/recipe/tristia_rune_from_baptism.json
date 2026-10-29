@@ -1,0 +1,14 @@
+{
+  "type": "rubinated_nether:baptism",
+  "ingredient": {
+    "type": "neoforge:components",
+    "components": {
+      "rubinated_nether:rune_carving": "tristia"
+    },
+    "items": "rubinated_nether:rune"
+  },
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:tristia_rune"
+  }
+}

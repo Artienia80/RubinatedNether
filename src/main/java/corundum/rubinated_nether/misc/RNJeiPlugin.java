@@ -5,11 +5,11 @@ import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNCreativeTabs;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNRecipes;
+import corundum.rubinated_nether.content.recipe.JEI.BaptismRecipeCategory;
 import corundum.rubinated_nether.content.recipe.JEI.FreezerRecipeCategory;
 import corundum.rubinated_nether.content.recipe.JEI.ResonanceRecipeCategory;
 import corundum.rubinated_nether.content.recipe.JEI.RuneGrindstoneCategory;
 import corundum.rubinated_nether.content.recipe.JEI.RuneGrindstoneRecipe;
-import corundum.rubinated_nether.event.RuneGrindstoneHandler;
 import net.minecraft.world.item.Items;
 import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
 import mezz.jei.api.IModPlugin;
@@ -71,7 +71,8 @@ public class RNJeiPlugin implements IModPlugin {
 		registration.addRecipeCategories(
 				new ResonanceRecipeCategory(registration.getJeiHelpers().getGuiHelper(), resonanceRecipes),
 				new FreezerRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
-				new RuneGrindstoneCategory(registration.getJeiHelpers().getGuiHelper())
+				new RuneGrindstoneCategory(registration.getJeiHelpers().getGuiHelper()),
+				new BaptismRecipeCategory(registration.getJeiHelpers().getGuiHelper())
 		);
 	}
 
@@ -86,12 +87,19 @@ public class RNJeiPlugin implements IModPlugin {
 
 		registration.addRecipes(ResonanceRecipeCategory.RECIPE_TYPE, resonanceRecipes);
 
-		// Grindstone: any shrine stone in each slot -> blank rune (the rule lives in RuneGrindstoneHandler)
+		registration.addRecipes(
+				BaptismRecipeCategory.RECIPE_TYPE,
+				man.getAllRecipesFor(RNRecipes.BAPTISM.get()).stream().map(RecipeHolder::value).toList()
+		);
+
+		// Grindstone: shrine stone in one slot -> blank rune, in both slots -> runestone (rules live in RuneGrindstoneHandler)
+		ItemStack shrineStone = new ItemStack(RNBlocks.SHRINE_STONE.get());
 		registration.addRecipes(
 				RuneGrindstoneCategory.RECIPE_TYPE,
-				List.of(new RuneGrindstoneRecipe(
-						RuneGrindstoneHandler.shrineTiers().stream().map(ItemStack::new).toList(),
-						new ItemStack(RNItems.RUNE.get())))
+				List.of(
+						new RuneGrindstoneRecipe(shrineStone, 1, new ItemStack(RNItems.RUNE.get())),
+						new RuneGrindstoneRecipe(shrineStone, 2, new ItemStack(RNBlocks.RUNESTONE.get()))
+				)
 		);
 
 		var rubyRepairRecipes = generateRubyRepairRecipes(
@@ -117,6 +125,10 @@ public class RNJeiPlugin implements IModPlugin {
 				new ItemStack(Items.GRINDSTONE),
 				RuneGrindstoneCategory.RECIPE_TYPE
 		);
+		registration.addRecipeCatalyst(
+				BaptismRecipeCategory.filledBrazier(),
+				BaptismRecipeCategory.RECIPE_TYPE
+		);
 	}
 
 	@Override
@@ -134,7 +146,8 @@ public class RNJeiPlugin implements IModPlugin {
 			List<String> ours = List.of(
 					ResonanceRecipeCategory.RECIPE_TYPE.getUid().toString(),
 					FreezerRecipeCategory.RECIPE_TYPE.getUid().toString(),
-					RuneGrindstoneCategory.RECIPE_TYPE.getUid().toString()
+					RuneGrindstoneCategory.RECIPE_TYPE.getUid().toString(),
+					BaptismRecipeCategory.RECIPE_TYPE.getUid().toString()
 			);
 			List<String> tags = lines.stream().filter(line -> line.contains(":tag_recipes/")).toList();
 			List<String> arranged = new ArrayList<>(lines);

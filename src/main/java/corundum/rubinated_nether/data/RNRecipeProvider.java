@@ -6,7 +6,9 @@ import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.items.PocketwatchData;
+import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
+import corundum.rubinated_nether.content.recipe.BaptismRecipe;
 import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
 import corundum.rubinated_nether.content.recipe.RuneCarvingRecipeProvider;
 import corundum.rubinated_nether.content.trim.RNBronzeTrimTarnishRecipe;
@@ -23,6 +25,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.crafting.CookingBookCategory;
@@ -157,6 +160,13 @@ public class RNRecipeProvider extends RecipeProvider {
 		);
 
 		RuneCarvingRecipeProvider.registerBlankRune(recipeOutput);
+
+		baptism(recipeOutput, Ingredient.of(RNTags.Items.OFFERING_BRAZIER_ITEM), RNItems.RITUAL_OFFERING);
+		for (Rubination rubination : Rubination.carvableValues()) {
+			baptism(recipeOutput,
+					DataComponentIngredient.of(false, RNDataComponents.RUNE_CARVING, rubination, RNItems.RUNE.get()),
+					RNItems.getRuneFor(rubination));
+		}
 
 		Bronzecutter(recipeOutput, RNBlocks.BRONZE_BLOCK,
 				RNBlocks.CHISELED_BRONZE,
@@ -1387,6 +1397,11 @@ public class RNRecipeProvider extends RecipeProvider {
 		SimpleCookingRecipeBuilder.blasting(Ingredient.of(input), RecipeCategory.MISC, output, xp, cookingTime)
 				.unlockedBy(getHasName(input), has(input))
 				.save(recipeOutput, ResourceLocation.withDefaultNamespace(id));
+	}
+
+	private void baptism(RecipeOutput recipeOutput, Ingredient ingredient, ItemLike result) {
+		ResourceLocation id = RubinatedNether.id(getItemName(result) + "_from_baptism");
+		recipeOutput.accept(id, new BaptismRecipe(ingredient, new ItemStack(result), 1), null);
 	}
 
 	private void resonance(RecipeOutput recipeOutput, ItemLike result, Ingredient ingredient,

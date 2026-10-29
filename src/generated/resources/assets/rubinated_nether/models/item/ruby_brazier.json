@@ -1,3 +1,11 @@
 {
-  "parent": "rubinated_nether:block/ruby_brazier_0"
+  "parent": "rubinated_nether:block/ruby_brazier_0",
+  "overrides": [
+    {
+      "model": "rubinated_nether:item/ruby_brazier_filled",
+      "predicate": {
+        "minecraft:custom_model_data": 1.0
+      }
+    }
+  ]
 }

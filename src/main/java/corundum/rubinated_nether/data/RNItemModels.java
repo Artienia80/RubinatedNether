@@ -340,7 +340,9 @@ public class RNItemModels extends ItemModelProvider {
 		withExistingParent(
 				RNBlocks.BRAZIER.getId().toString(),
 				modLoc("block/ruby_brazier_0")
-		);
+		).override()
+				.predicate(mcLoc("custom_model_data"), 1)
+				.model(getExistingFile(modLoc("item/ruby_brazier_filled")));
 
 		spawnEggItems(
 				RNItems.BRONZE_SPAWN_EGG,

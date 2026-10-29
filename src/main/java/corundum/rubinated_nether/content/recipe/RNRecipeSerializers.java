@@ -31,6 +31,9 @@ public class RNRecipeSerializers {
 	public static final DeferredHolder<RecipeSerializer<?>, ResonanceRecipeSerializer> RESONANCE =
 			RECIPE_SERIALIZERS.register("resonance", ResonanceRecipeSerializer::new);
 
+	public static final DeferredHolder<RecipeSerializer<?>, BaptismRecipeSerializer> BAPTISM =
+			RECIPE_SERIALIZERS.register("baptism", BaptismRecipeSerializer::new);
+
 	public static final DeferredHolder<RecipeSerializer<?>, ModuleSmithingRecipe.Serializer> MODULE_APPLY =
 			RECIPE_SERIALIZERS.register("module_apply", ModuleSmithingRecipe.Serializer::new);
 }

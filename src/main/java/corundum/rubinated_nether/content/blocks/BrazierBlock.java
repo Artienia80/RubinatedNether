@@ -5,10 +5,10 @@ import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNRecipes;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
-import corundum.rubinated_nether.content.items.Rubination;
-import corundum.rubinated_nether.content.items.RuneCarvingHelper;
+import corundum.rubinated_nether.content.recipe.BaptismRecipe;
 import corundum.rubinated_nether.utils.BrazierTracker;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
@@ -23,6 +23,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -223,77 +225,36 @@ public class BrazierBlock extends BaseEntityBlock {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        if (stack.is(RNItems.RUNE.get()) && RuneCarvingHelper.isCarved(stack)) {
+        BaptismRecipe baptism = level.getRecipeManager()
+                .getRecipeFor(RNRecipes.BAPTISM.get(), new SingleRecipeInput(stack), level)
+                .map(RecipeHolder::value)
+                .orElse(null);
+        if (baptism != null) {
+            int fuelCost = baptism.getFuelLevels();
+
             if (!level.isClientSide) {
                 int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
 
-                if (brazier.getRemainingFuelSeconds() > secondsPerLevel) {
-                    Rubination carving = RuneCarvingHelper.getCarving(stack);
-                    var runeItem = RNItems.getRuneFor(carving);
-
-                    if (runeItem != null) {
-                        int oldLevel = currentLevel;
-
-                        brazier.addFuel(-1);
-
-                        int newLevel = brazier.calculateLevelFromFuel();
-                        level.setBlock(pos, state.setValue(LEVEL, newLevel), 3);
-
-                        if (newLevel != oldLevel) {
-                            brazier.updateEffectAmplifiersForLevelChange(level, pos, newLevel);
-                        }
-
-                        if (!player.isCreative()) {
-                            stack.shrink(1);
-                        }
-
-                        ItemStack resultRune = new ItemStack(runeItem.get(), 1);
-                        if (!player.getInventory().add(resultRune)) {
-                            player.drop(resultRune, false);
-                        }
-
-                        level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 1.2F);
-
-                        return ItemInteractionResult.sidedSuccess(false);
-                    }
-                }
-            } else {
-                if (currentLevel > 1) {
-                    return ItemInteractionResult.sidedSuccess(true);
-                }
-            }
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-
-        // Bronze Rod or Ritual Offering - convert fuel to ritual offering
-        if (stack.is(RNTags.Items.OFFERING_BRAZIER_ITEM)) {
-            if (!level.isClientSide) {
-                int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
-
-                // Check if there's more than 1 ruby's worth of fuel
-                if (brazier.getRemainingFuelSeconds() > secondsPerLevel) {
+                if (brazier.getRemainingFuelSeconds() > secondsPerLevel * fuelCost) {
                     int oldLevel = currentLevel;
 
-                    // Reduce fuel by one level
-                    brazier.addFuel(-1);
+                    ItemStack baptised = baptism.assemble(new SingleRecipeInput(stack), level.registryAccess());
 
-                    // Update visual level
+                    brazier.addFuel(-fuelCost);
+
                     int newLevel = brazier.calculateLevelFromFuel();
                     level.setBlock(pos, state.setValue(LEVEL, newLevel), 3);
 
-                    // Update effect amplifiers if level changed
                     if (newLevel != oldLevel) {
                         brazier.updateEffectAmplifiersForLevelChange(level, pos, newLevel);
                     }
 
-                    // Consume bronze rod and give ritual offering
                     if (!player.isCreative()) {
                         stack.shrink(1);
                     }
 
-                    ItemStack ritualOffering = new ItemStack(RNItems.RITUAL_OFFERING.get(), 1);
-                    if (!player.getInventory().add(ritualOffering)) {
-                        player.drop(ritualOffering, false);
+                    if (!player.getInventory().add(baptised)) {
+                        player.drop(baptised, false);
                     }
 
                     level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 1.2F);
@@ -301,9 +262,7 @@ public class BrazierBlock extends BaseEntityBlock {
                     return ItemInteractionResult.sidedSuccess(false);
                 }
             } else {
-                // Client side - return success if currentLevel > 1
-                // (visual approximation since we don't have exact fuel sync)
-                if (currentLevel > 1) {
+                if (currentLevel > fuelCost) {
                     return ItemInteractionResult.sidedSuccess(true);
                 }
             }

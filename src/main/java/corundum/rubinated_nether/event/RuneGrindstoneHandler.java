@@ -3,57 +3,47 @@ package corundum.rubinated_nether.event;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.GrindstoneEvent;
 
-import java.util.List;
-
-/** Grindstone: one shrine stone tier block in EACH slot becomes a blank rune. */
+/** Grindstone: one shrine stone in either slot becomes a blank rune; one in EACH slot becomes a runestone. */
 @EventBusSubscriber(modid = RubinatedNether.MODID)
 public class RuneGrindstoneHandler {
-    private static List<Item> shrineTiers;
-
-    /** Every shrine stone tier that works in the grindstone, in tier order. */
-    public static List<Item> shrineTiers() {
-        if (shrineTiers == null) {
-            shrineTiers = List.of(
-                    RNBlocks.SHRINE_STONE.get().asItem(),
-                    RNBlocks.COBBLED_SHRINE_STONE.get().asItem(),
-                    RNBlocks.POLISHED_SHRINE_STONE.get().asItem(),
-                    RNBlocks.SHRINE_STONE_BRICKS.get().asItem(),
-                    RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get().asItem(),
-                    RNBlocks.SHRINE_STONE_TILES.get().asItem()
-            );
-        }
-        return shrineTiers;
-    }
 
     private static boolean isShrineStone(ItemStack stack) {
-        return !stack.isEmpty() && shrineTiers().contains(stack.getItem());
+        return stack.is(RNBlocks.SHRINE_STONE.get().asItem());
     }
 
-    private static boolean isValid(ItemStack top, ItemStack bottom) {
-        return isShrineStone(top) && isShrineStone(bottom);
+    private static ItemStack result(ItemStack top, ItemStack bottom) {
+        boolean topStone = isShrineStone(top);
+        boolean bottomStone = isShrineStone(bottom);
+        if (topStone && bottomStone) {
+            return new ItemStack(RNBlocks.RUNESTONE.get());
+        }
+        if ((topStone && bottom.isEmpty()) || (bottomStone && top.isEmpty())) {
+            return new ItemStack(RNItems.RUNE.get());
+        }
+        return ItemStack.EMPTY;
     }
 
     @SubscribeEvent
     public static void onPlace(GrindstoneEvent.OnPlaceItem e) {
-        if (!isValid(e.getTopItem(), e.getBottomItem())) return;
-        e.setOutput(new ItemStack(RNItems.RUNE.get()));
+        ItemStack output = result(e.getTopItem(), e.getBottomItem());
+        if (output.isEmpty()) return;
+        e.setOutput(output);
         e.setXp(0);
     }
 
     @SubscribeEvent
     public static void onTake(GrindstoneEvent.OnTakeItem e) {
-        if (!isValid(e.getTopItem(), e.getBottomItem())) return;
+        if (result(e.getTopItem(), e.getBottomItem()).isEmpty()) return;
         e.setXp(0);
         ItemStack top = e.getTopItem().copy();
         ItemStack bottom = e.getBottomItem().copy();
-        top.shrink(1);
-        bottom.shrink(1);
+        if (!top.isEmpty()) top.shrink(1);
+        if (!bottom.isEmpty()) bottom.shrink(1);
         e.setNewTopItem(top);
         e.setNewBottomItem(bottom);
     }

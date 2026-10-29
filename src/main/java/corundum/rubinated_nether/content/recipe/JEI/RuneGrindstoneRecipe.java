@@ -2,8 +2,6 @@ package corundum.rubinated_nether.content.recipe.JEI;
 
 import net.minecraft.world.item.ItemStack;
 
-import java.util.List;
-
-/** JEI-only view of the grindstone rule: any of {@code stones} in BOTH slots gives {@code output}. */
-public record RuneGrindstoneRecipe(List<ItemStack> stones, ItemStack output) {
+/** JEI-only view of a grindstone rule: {@code stoneCount} of {@code stone} (one slot or both) gives {@code output}. */
+public record RuneGrindstoneRecipe(ItemStack stone, int stoneCount, ItemStack output) {
 }
