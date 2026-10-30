@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -841,6 +842,81 @@ public class RNBlocks {
 							.noOcclusion()
 							.isViewBlocking(RNBlocks::never)
 							.isSuffocating(RNBlocks::never)
+			)
+	);
+
+	public static final DeferredBlock<Block> BRONZE_BUTTON = registerWaxableBlock(
+			"bronze_button",
+			() -> new TarnishingBronzeButtonBlock(
+					TarnishStage.UNAFFECTED,
+					5,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.GOLD)
+							.noCollission()
+							.strength(1.0F)
+							.sound(SoundType.COPPER)
+							.pushReaction(PushReaction.DESTROY)
+							.randomTicks()
+			)
+	);
+
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_BUTTON = registerWaxableBlock(
+			"discolored_bronze_button",
+			() -> new TarnishingBronzeButtonBlock(
+					TarnishStage.DISCOLORED,
+					10,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.TERRACOTTA_PINK)
+							.noCollission()
+							.strength(2.0F)
+							.sound(SoundType.COPPER)
+							.pushReaction(PushReaction.DESTROY)
+							.randomTicks()
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_BRONZE_BUTTON = registerWaxableBlock(
+			"corroded_bronze_button",
+			() -> new TarnishingBronzeButtonBlock(
+					TarnishStage.CORRODED,
+					40,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.CRIMSON_STEM)
+							.noCollission()
+							.strength(3.0F)
+							.sound(SoundType.COPPER)
+							.pushReaction(PushReaction.DESTROY)
+							.randomTicks()
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_BUTTON = registerWaxableBlock(
+			"tarnished_bronze_button",
+			() -> new TarnishingBronzeButtonBlock(
+					TarnishStage.TARNISHED,
+					80,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.TERRACOTTA_BLACK)
+							.noCollission()
+							.strength(5.0F)
+							.sound(SoundType.COPPER)
+							.pushReaction(PushReaction.DESTROY)
+							.randomTicks()
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_BUTTON = registerWaxableBlock(
+			"crystallized_bronze_button",
+			() -> new TarnishingBronzeButtonBlock(
+					TarnishStage.CRYSTALLIZED,
+					2,
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.TERRACOTTA_WHITE)
+							.noCollission()
+							.strength(0.5F)
+							.sound(SoundType.COPPER)
+							.pushReaction(PushReaction.DESTROY)
+							.randomTicks()
 			)
 	);
 

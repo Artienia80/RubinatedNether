@@ -172,6 +172,18 @@
   "item.rubinated_nether.waxed_tarnished_bronze_grate": "Waxed Tarnished Bronze Grate",
   "item.rubinated_nether.waxed_crystallized_bronze_grate": "Waxed Crystallized Bronze Grate",
 
+  "block.rubinated_nether.bronze_button": "Bronze Button",
+  "block.rubinated_nether.discolored_bronze_button": "Discolored Bronze Button",
+  "block.rubinated_nether.corroded_bronze_button": "Corroded Bronze Button",
+  "block.rubinated_nether.tarnished_bronze_button": "Tarnished Bronze Button",
+  "block.rubinated_nether.crystallized_bronze_button": "Crystallized Bronze Button",
+
+  "item.rubinated_nether.waxed_bronze_button": "Waxed Bronze Button",
+  "item.rubinated_nether.waxed_discolored_bronze_button": "Waxed Discolored Bronze Button",
+  "item.rubinated_nether.waxed_corroded_bronze_button": "Waxed Corroded Bronze Button",
+  "item.rubinated_nether.waxed_tarnished_bronze_button": "Waxed Tarnished Bronze Button",
+  "item.rubinated_nether.waxed_crystallized_bronze_button": "Waxed Crystallized Bronze Button",
+
   "block.rubinated_nether.bronze_lantern": "Bronze Lantern",
   "block.rubinated_nether.discolored_bronze_lantern": "Discolored Bronze Lantern",
   "block.rubinated_nether.corroded_bronze_lantern": "Corroded Bronze Lantern",

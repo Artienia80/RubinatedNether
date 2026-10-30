@@ -161,6 +161,18 @@
   "item.rubinated_nether.waxed_tarnished_bronze_grate": "Grade de Bronze Manchado Encerado",
   "item.rubinated_nether.waxed_crystallized_bronze_grate": "Grade de Bronze Cristalizado Encerado",
 
+  "block.rubinated_nether.bronze_button": "Botão de Bronze",
+  "block.rubinated_nether.discolored_bronze_button": "Botão de Bronze Discolorido",
+  "block.rubinated_nether.corroded_bronze_button": "Botão de Bronze Corroído",
+  "block.rubinated_nether.tarnished_bronze_button": "Botão de Bronze Manchado",
+  "block.rubinated_nether.crystallized_bronze_button": "Botão de Bronze Cristalizado",
+
+  "item.rubinated_nether.waxed_bronze_button": "Botão de Bronze Encerado",
+  "item.rubinated_nether.waxed_discolored_bronze_button": "Botão de Bronze Discolorido Encerado",
+  "item.rubinated_nether.waxed_corroded_bronze_button": "Botão de Bronze Corroído Encerado",
+  "item.rubinated_nether.waxed_tarnished_bronze_button": "Botão de Bronze Manchado Encerado",
+  "item.rubinated_nether.waxed_crystallized_bronze_button": "Botão de Bronze Cristalizado Encerado",
+
   "block.rubinated_nether.bronze_lantern": "Lanterna de Bronze",
   "block.rubinated_nether.discolored_bronze_lantern": "Lanterna de Bronze Discolorido",
   "block.rubinated_nether.corroded_bronze_lantern": "Lanterna de Bronze Corroído",

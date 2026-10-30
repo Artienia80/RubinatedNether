@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "rubinated_nether:block/bronze/bronze_block/bronze_block"
+  }
+}

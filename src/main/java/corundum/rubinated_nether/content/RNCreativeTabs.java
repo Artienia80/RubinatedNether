@@ -208,6 +208,7 @@ public class RNCreativeTabs {
 										RNBlocks.BRONZE_SPRING,
 										RNBlocks.BRONZE_VENT,
 										RNBlocks.BRONZE_WINDER,
+										RNBlocks.BRONZE_BUTTON,
 										RNBlocks.BRONZE_LASER,
 										RNBlocks.BRONZE_VASE,
 										RNBlocks.BRONZE_GEARBOX
@@ -228,6 +229,7 @@ public class RNCreativeTabs {
 										RNBlocks.DISCOLORED_BRONZE_SPRING,
 										RNBlocks.DISCOLORED_BRONZE_VENT,
 										RNBlocks.DISCOLORED_BRONZE_WINDER,
+										RNBlocks.DISCOLORED_BRONZE_BUTTON,
 										RNBlocks.DISCOLORED_BRONZE_LASER,
 										RNBlocks.DISCOLORED_BRONZE_VASE,
 										RNBlocks.DISCOLORED_BRONZE_GEARBOX
@@ -248,6 +250,7 @@ public class RNCreativeTabs {
 										RNBlocks.CORRODED_BRONZE_SPRING,
 										RNBlocks.CORRODED_BRONZE_VENT,
 										RNBlocks.CORRODED_BRONZE_WINDER,
+										RNBlocks.CORRODED_BRONZE_BUTTON,
 										RNBlocks.CORRODED_BRONZE_LASER,
 										RNBlocks.CORRODED_BRONZE_VASE,
 										RNBlocks.CORRODED_BRONZE_GEARBOX
@@ -268,6 +271,7 @@ public class RNCreativeTabs {
 										RNBlocks.TARNISHED_BRONZE_SPRING,
 										RNBlocks.TARNISHED_BRONZE_VENT,
 										RNBlocks.TARNISHED_BRONZE_WINDER,
+										RNBlocks.TARNISHED_BRONZE_BUTTON,
 										RNBlocks.TARNISHED_BRONZE_LASER,
 										RNBlocks.TARNISHED_BRONZE_VASE,
 										RNBlocks.TARNISHED_BRONZE_GEARBOX
@@ -288,6 +292,7 @@ public class RNCreativeTabs {
 										RNBlocks.CRYSTALLIZED_BRONZE_SPRING,
 										RNBlocks.CRYSTALLIZED_BRONZE_VENT,
 										RNBlocks.CRYSTALLIZED_BRONZE_WINDER,
+										RNBlocks.CRYSTALLIZED_BRONZE_BUTTON,
 										RNBlocks.CRYSTALLIZED_BRONZE_LASER,
 										RNBlocks.CRYSTALLIZED_BRONZE_VASE,
 										RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX
@@ -801,8 +806,42 @@ public class RNCreativeTabs {
 			event.insertAfter(getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_LAMP),
 					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_BULB), BOTH_TABS);
 		}
+		private static void insertAfterFirstAvailable(BuildCreativeModeTabContentsEvent event, ItemStack stack,
+																				ItemLike... anchors) {
+			for (ItemLike anchor : anchors) {
+				try {
+					event.insertAfter(anchor.asItem().getDefaultInstance(), stack, BOTH_TABS);
+					return;
+				} catch (IllegalArgumentException ignored) {
+					// anchor is not in this tab; try the next one
+				}
+			}
+			event.accept(stack, BOTH_TABS);
+		}
 		private static void injectRedstoneBlocks(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.REDSTONE_BLOCKS) return;
+			// The redstone tab only lists a subset of vanilla buttons, so try a few anchors
+			// and fall back to appending instead of crashing the whole tab build.
+			insertAfterFirstAvailable(event, RNBlocks.BRONZE_BUTTON.get().asItem().getDefaultInstance(),
+					Items.STONE_BUTTON, Items.OAK_BUTTON, Items.POLISHED_BLACKSTONE_BUTTON, Items.LEVER);
+			event.insertAfter(RNBlocks.BRONZE_BUTTON.get().asItem().getDefaultInstance(),
+					RNBlocks.DISCOLORED_BRONZE_BUTTON.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.DISCOLORED_BRONZE_BUTTON.get().asItem().getDefaultInstance(),
+					RNBlocks.CORRODED_BRONZE_BUTTON.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.CORRODED_BRONZE_BUTTON.get().asItem().getDefaultInstance(),
+					RNBlocks.TARNISHED_BRONZE_BUTTON.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.TARNISHED_BRONZE_BUTTON.get().asItem().getDefaultInstance(),
+					RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get().asItem().getDefaultInstance(),
+					getWaxed(RNBlocks.BRONZE_BUTTON), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.BRONZE_BUTTON),
+					getWaxed(RNBlocks.DISCOLORED_BRONZE_BUTTON), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.DISCOLORED_BRONZE_BUTTON),
+					getWaxed(RNBlocks.CORRODED_BRONZE_BUTTON), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.CORRODED_BRONZE_BUTTON),
+					getWaxed(RNBlocks.TARNISHED_BRONZE_BUTTON), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_BUTTON),
+					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_BUTTON), BOTH_TABS);
 			event.insertAfter(Items.WAXED_OXIDIZED_COPPER_BULB.getDefaultInstance(),
 					getWaxed(RNBlocks.BRONZE_BULB), BOTH_TABS);
 			event.insertAfter(getWaxed(RNBlocks.BRONZE_BULB),

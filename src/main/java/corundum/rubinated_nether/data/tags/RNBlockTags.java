@@ -156,6 +156,11 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CORRODED_BRONZE_GRATE.get(),
 				RNBlocks.TARNISHED_BRONZE_GRATE.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get(),
+				RNBlocks.BRONZE_BUTTON.get(),
+				RNBlocks.DISCOLORED_BRONZE_BUTTON.get(),
+				RNBlocks.CORRODED_BRONZE_BUTTON.get(),
+				RNBlocks.TARNISHED_BRONZE_BUTTON.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get(),
 
 				RNBlocks.BRONZE_SPRING.get(),
 				RNBlocks.DISCOLORED_BRONZE_SPRING.get(),
@@ -302,6 +307,11 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CORRODED_BRONZE_GRATE.get(),
 				RNBlocks.TARNISHED_BRONZE_GRATE.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get(),
+				RNBlocks.BRONZE_BUTTON.get(),
+				RNBlocks.DISCOLORED_BRONZE_BUTTON.get(),
+				RNBlocks.CORRODED_BRONZE_BUTTON.get(),
+				RNBlocks.TARNISHED_BRONZE_BUTTON.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get(),
 
 				RNBlocks.BRONZE_LANTERN.get(),
 				RNBlocks.DISCOLORED_BRONZE_LANTERN.get(),
@@ -385,6 +395,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_BULB.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get(),
 				RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get(),
@@ -526,6 +537,14 @@ public class RNBlockTags extends BlockTagsProvider {
 		this.tag(RNTags.Blocks.MINEABLE_WITH_DRILL).addTags(
 				BlockTags.MINEABLE_WITH_PICKAXE,
 				BlockTags.MINEABLE_WITH_SHOVEL
+		);
+
+		this.tag(BlockTags.BUTTONS).add(
+				RNBlocks.BRONZE_BUTTON.get(),
+				RNBlocks.DISCOLORED_BRONZE_BUTTON.get(),
+				RNBlocks.CORRODED_BRONZE_BUTTON.get(),
+				RNBlocks.TARNISHED_BRONZE_BUTTON.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get()
 		);
 
 		this.tag(BlockTags.WALLS).add(

@@ -193,6 +193,11 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.waxableDrop(RNBlocks.CORRODED_BRONZE_GRATE);
 		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_GRATE);
 		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_GRATE);
+		this.waxableDrop(RNBlocks.BRONZE_BUTTON);
+		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_BUTTON);
+		this.waxableDrop(RNBlocks.CORRODED_BRONZE_BUTTON);
+		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_BUTTON);
+		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_BUTTON);
 
 		this.waxableDrop(RNBlocks.BRONZE_LAMP);
 		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_LAMP);

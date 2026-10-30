@@ -66,6 +66,10 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 					.put(RNBlocks.DISCOLORED_BRONZE_GRATE.get(), RNBlocks.CORRODED_BRONZE_GRATE.get())
 					.put(RNBlocks.CORRODED_BRONZE_GRATE.get(), RNBlocks.TARNISHED_BRONZE_GRATE.get())
 
+					.put(RNBlocks.BRONZE_BUTTON.get(), RNBlocks.DISCOLORED_BRONZE_BUTTON.get())
+					.put(RNBlocks.DISCOLORED_BRONZE_BUTTON.get(), RNBlocks.CORRODED_BRONZE_BUTTON.get())
+					.put(RNBlocks.CORRODED_BRONZE_BUTTON.get(), RNBlocks.TARNISHED_BRONZE_BUTTON.get())
+
 					.put(RNBlocks.BRONZE_CHAIN.get(), RNBlocks.DISCOLORED_BRONZE_CHAIN.get())
 					.put(RNBlocks.DISCOLORED_BRONZE_CHAIN.get(), RNBlocks.CORRODED_BRONZE_CHAIN.get())
 					.put(RNBlocks.CORRODED_BRONZE_CHAIN.get(), RNBlocks.TARNISHED_BRONZE_CHAIN.get())
@@ -154,6 +158,11 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 				map.put(RNBlocks.DISCOLORED_BRONZE_GRATE.get(), RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get());
 				map.put(RNBlocks.CORRODED_BRONZE_GRATE.get(), RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get());
 				map.put(RNBlocks.TARNISHED_BRONZE_GRATE.get(), RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get());
+
+				map.put(RNBlocks.BRONZE_BUTTON.get(), RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get());
+				map.put(RNBlocks.DISCOLORED_BRONZE_BUTTON.get(), RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get());
+				map.put(RNBlocks.CORRODED_BRONZE_BUTTON.get(), RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get());
+				map.put(RNBlocks.TARNISHED_BRONZE_BUTTON.get(), RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get());
 
 				map.put(RNBlocks.BRONZE_CHAIN.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get());
 				map.put(RNBlocks.DISCOLORED_BRONZE_CHAIN.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get());

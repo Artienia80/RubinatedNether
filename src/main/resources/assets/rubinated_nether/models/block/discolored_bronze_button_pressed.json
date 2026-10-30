@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button_pressed",
+  "textures": {
+    "texture": "rubinated_nether:block/bronze/bronze_block/discolored_bronze_block"
+  }
+}

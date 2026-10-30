@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "group": "waxed_crystallized_bronze_button",
+  "ingredients": [
+    {
+      "item": "rubinated_nether:waxed_crystallized_bronze_block"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "rubinated_nether:waxed_crystallized_bronze_button"
+  }
+}

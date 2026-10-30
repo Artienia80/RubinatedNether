@@ -166,6 +166,18 @@
   "item.rubinated_nether.waxed_tarnished_bronze_grate": "涂蜡的褪色青铜格栅",
   "item.rubinated_nether.waxed_crystallized_bronze_grate": "涂蜡的晶化青铜格栅",
 
+  "block.rubinated_nether.bronze_button": "青铜按钮",
+  "block.rubinated_nether.discolored_bronze_button": "脱色的青铜按钮",
+  "block.rubinated_nether.corroded_bronze_button": "腐蚀的青铜按钮",
+  "block.rubinated_nether.tarnished_bronze_button": "褪色的青铜按钮",
+  "block.rubinated_nether.crystallized_bronze_button": "晶化的青铜按钮",
+
+  "item.rubinated_nether.waxed_bronze_button": "涂蜡的青铜按钮",
+  "item.rubinated_nether.waxed_discolored_bronze_button": "涂蜡的脱色青铜按钮",
+  "item.rubinated_nether.waxed_corroded_bronze_button": "涂蜡的腐蚀青铜按钮",
+  "item.rubinated_nether.waxed_tarnished_bronze_button": "涂蜡的褪色青铜按钮",
+  "item.rubinated_nether.waxed_crystallized_bronze_button": "涂蜡的晶化青铜按钮",
+
   "block.rubinated_nether.bronze_lantern": "青铜灯笼",
   "block.rubinated_nether.discolored_bronze_lantern": "脱色的青铜灯笼",
   "block.rubinated_nether.corroded_bronze_lantern": "腐蚀的青铜灯笼",

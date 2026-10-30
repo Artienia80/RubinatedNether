@@ -174,7 +174,8 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.CUT_BRONZE_BRICKS_STAIRS,
 				RNBlocks.CUT_BRONZE_BRICKS_SLAB,
 				RNBlocks.CUT_BRONZE_PILLAR,
-				RNBlocks.BRONZE_GRATE
+				RNBlocks.BRONZE_GRATE,
+				RNBlocks.BRONZE_BUTTON
 		);
 
 		Bronzecutter(recipeOutput, RNBlocks.CUT_BRONZE_BRICKS,
@@ -205,6 +206,8 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		tarnish(recipeOutput, this::spring, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_SPRING);
 		tarnish(recipeOutput, this::vent, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_VENT);
+		tarnish(recipeOutput, (output, input, result) -> button(output, input, result, 4),
+				RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_BUTTON);
 
 
 		stairsAndSlab(
@@ -913,6 +916,14 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 	}
 
+	private void button(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, output, count)
+				.requires(input)
+				.group(getItemName(output))
+				.unlockedBy(getHasName(input), has(input))
+				.save(recipeOutput);
+	}
+
 	private void spring(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike spring) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, spring, 6)
 				.define('X', RNItems.BRONZE_ROD)
@@ -1045,6 +1056,7 @@ public class RNRecipeProvider extends RecipeProvider {
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LASER);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_SPRING);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_VENT);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_BUTTON);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_GEARBOX);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_WINDER);
 

@@ -160,6 +160,18 @@
 "item.rubinated_nether.waxed_tarnished_bronze_grate": "Viaszolt megfakult bronzrostély",
 "item.rubinated_nether.waxed_crystallized_bronze_grate": "Viaszolt kristályosodott bronzrostély",
 
+"block.rubinated_nether.bronze_button": "Bronzgomb",
+"block.rubinated_nether.discolored_bronze_button": "Elszíneződött bronzgomb",
+"block.rubinated_nether.corroded_bronze_button": "Korrodált bronzgomb",
+"block.rubinated_nether.tarnished_bronze_button": "Megfakult bronzgomb",
+"block.rubinated_nether.crystallized_bronze_button": "Kristályosodott bronzgomb",
+
+"item.rubinated_nether.waxed_bronze_button": "Viaszolt bronzgomb",
+"item.rubinated_nether.waxed_discolored_bronze_button": "Viaszolt elszíneződött bronzgomb",
+"item.rubinated_nether.waxed_corroded_bronze_button": "Viaszolt korrodált bronzgomb",
+"item.rubinated_nether.waxed_tarnished_bronze_button": "Viaszolt megfakult bronzgomb",
+"item.rubinated_nether.waxed_crystallized_bronze_button": "Viaszolt kristályosodott bronzgomb",
+
 "block.rubinated_nether.bronze_lantern": "Bronzlámpás",
 "block.rubinated_nether.discolored_bronze_lantern": "Elszíneződött bronzlámpás",
 "block.rubinated_nether.corroded_bronze_lantern": "Korrodált bronzlámpás",

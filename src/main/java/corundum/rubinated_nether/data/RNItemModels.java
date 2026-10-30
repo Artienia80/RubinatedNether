@@ -181,6 +181,14 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_WINDER
 		);
 
+		buttonItems(
+				RNBlocks.BRONZE_BUTTON,
+				RNBlocks.DISCOLORED_BRONZE_BUTTON,
+				RNBlocks.CORRODED_BRONZE_BUTTON,
+				RNBlocks.TARNISHED_BRONZE_BUTTON,
+				RNBlocks.CRYSTALLIZED_BRONZE_BUTTON
+		);
+
 		customItemTextures("item/bronze/bronze_chandelier",
 				RNBlocks.BRONZE_CHANDELIER,
 				RNBlocks.DISCOLORED_BRONZE_CHANDELIER,
@@ -380,6 +388,22 @@ public class RNItemModels extends ItemModelProvider {
 					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
 					mcLoc("item/generated")
 			).texture("layer0", modLoc(baseTexture + "/" + blockName));
+		}
+	}
+
+	private void buttonItems(DeferredBlock<?>... blocks) {
+		for (var block : blocks) {
+			String blockName = block.getId().getPath();
+
+			withExistingParent(
+					block.getId().toString(),
+					modLoc("block/" + blockName + "_inventory")
+			);
+
+			withExistingParent(
+					modLoc(WaxableBlockItem.getWaxableItem(block)).toString(),
+					modLoc("block/" + blockName + "_inventory")
+			);
 		}
 	}
 

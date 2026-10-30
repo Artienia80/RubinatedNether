@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "group": "tarnished_bronze_button",
+  "ingredients": [
+    {
+      "item": "rubinated_nether:tarnished_bronze_block"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "rubinated_nether:tarnished_bronze_button"
+  }
+}
