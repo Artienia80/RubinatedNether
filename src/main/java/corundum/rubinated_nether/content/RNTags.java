@@ -131,6 +131,8 @@ public final class RNTags {
 
 		public static final TagKey<Item> GEARBOXES = createTag(Registries.ITEM, "gearboxes");
 
+		public static final TagKey<Item> DOWSING_RODS = createTag(Registries.ITEM, "dowsing_rods");
+
 
 	}
 

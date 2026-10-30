@@ -2,12 +2,12 @@ package corundum.rubinated_nether.content.dowsing;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNRarity;
+import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
 public final class DowsingRods {
@@ -25,8 +25,7 @@ public final class DowsingRods {
     public static boolean isHolding(Player player) {
         ItemStack main = player.getMainHandItem();
         ItemStack off = player.getOffhandItem();
-        return (main.is(Items.BLAZE_ROD) && off.is(Items.BREEZE_ROD))
-                || (main.is(Items.BREEZE_ROD) && off.is(Items.BLAZE_ROD));
+        return isRod(main) && isRod(off) && main.getItem() != off.getItem();
     }
 
     public static ItemStack withGlint(ItemStack stack) {
@@ -41,6 +40,6 @@ public final class DowsingRods {
     }
 
     public static boolean isRod(ItemStack stack) {
-        return stack.is(Items.BLAZE_ROD) || stack.is(Items.BREEZE_ROD);
+        return stack.is(RNTags.Items.DOWSING_RODS);
     }
 }

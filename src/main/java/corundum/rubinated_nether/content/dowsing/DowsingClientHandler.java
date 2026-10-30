@@ -3,7 +3,10 @@ package corundum.rubinated_nether.content.dowsing;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.client.RNClientEnumExtensions;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
@@ -16,6 +19,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RenderHandEvent;
+import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 
 @EventBusSubscriber(modid = RubinatedNether.MODID, value = Dist.CLIENT)
 public class DowsingClientHandler {
@@ -36,6 +40,16 @@ public class DowsingClientHandler {
     @SubscribeEvent
     public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         DowsingClient.reset();
+    }
+
+    @SubscribeEvent
+    public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
+        if (!DowsingClient.isActive(event.getEntity())) {
+            return;
+        }
+        PlayerModel<AbstractClientPlayer> model = event.getRenderer().getModel();
+        model.rightArmPose = RNClientEnumExtensions.dowsingArmPose();
+        model.leftArmPose = RNClientEnumExtensions.dowsingArmPose();
     }
 
     @SubscribeEvent

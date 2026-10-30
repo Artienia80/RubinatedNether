@@ -340,6 +340,11 @@ public class RNItemTags extends ItemTagsProvider {
 						RNItems.MOLTEN_RUBY.asItem()
 				);
 
+		this.tag(RNTags.Items.DOWSING_RODS).add(
+				Items.BLAZE_ROD,
+				Items.BREEZE_ROD
+		);
+
 
 	}
 
