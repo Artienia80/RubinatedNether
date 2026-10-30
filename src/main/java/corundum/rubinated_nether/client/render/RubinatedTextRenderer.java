@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.RNRarity;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.items.RuneItem;
 import corundum.rubinated_nether.utils.RNConfig;
+import corundum.rubinated_nether.utils.RubinatedCurseText;
 import corundum.rubinated_nether.utils.RubinatedText;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
@@ -108,10 +109,13 @@ public class RubinatedTextRenderer {
 
     private static void onItemTooltip(ItemTooltipEvent event) {
         var stack = event.getItemStack();
-        if (!isRubinated(stack)) return;
 
         List<Component> lines = event.getToolTip();
         if (lines.isEmpty()) return;
+
+        restyleCurseLines(stack, lines);
+
+        if (!isRubinated(stack)) return;
 
         boolean useRubin = useRubinatedLang();
 
@@ -123,6 +127,35 @@ public class RubinatedTextRenderer {
 
         if (!useRubin) {
             stripRubinFromCurses(lines, stack);
+        }
+    }
+
+    /**
+     * Vanilla builds enchantment lines with {@link Enchantment#getFullname}; this rewrites the lines of Rubinated
+     * curses to {@link RubinatedCurseText#fullName} (replaces the former EnchantmentMixin). Independent of the
+     * stack's rarity, like the mixin was. Runes build their own lines through RubinatedCurseText already.
+     */
+    private static void restyleCurseLines(ItemStack stack, List<Component> lines) {
+        if (lines.size() < 2 || stack.getItem() instanceof RuneItem) return;
+
+        var enchantments = EnchantmentHelper.getEnchantmentsForCrafting(stack);
+        if (enchantments.isEmpty()) return;
+
+        Map<String, Component> styled = null;
+        for (var entry : enchantments.entrySet()) {
+            var holder = entry.getKey();
+            if (!holder.is(RNTags.Enchantments.RUBINATED_CURSES)) continue;
+            if (styled == null) styled = new HashMap<>();
+            styled.put(
+                    Enchantment.getFullname(holder, entry.getIntValue()).getString(),
+                    RubinatedCurseText.fullName(holder, entry.getIntValue())
+            );
+        }
+        if (styled == null) return;
+
+        for (int i = 1; i < lines.size(); i++) {
+            Component replacement = styled.get(lines.get(i).getString());
+            if (replacement != null) lines.set(i, replacement);
         }
     }
 
@@ -142,14 +175,14 @@ public class RubinatedTextRenderer {
             if (level != null) {
                 for (var enchant : runeItem.getRubination().getEnchantments(level.registryAccess())) {
                     if (enchant != null && enchant.enchantment.is(RNTags.Enchantments.RUBINATED_CURSES)) {
-                        texts.add(Enchantment.getFullname(enchant.enchantment, enchant.level).getString());
+                        texts.add(RubinatedCurseText.fullName(enchant.enchantment, enchant.level).getString());
                     }
                 }
             }
         } else {
             EnchantmentHelper.getEnchantmentsForCrafting(stack).entrySet().forEach(entry -> {
                 if (entry.getKey().is(RNTags.Enchantments.RUBINATED_CURSES)) {
-                    texts.add(Enchantment.getFullname(entry.getKey(), entry.getIntValue()).getString());
+                    texts.add(RubinatedCurseText.fullName(entry.getKey(), entry.getIntValue()).getString());
                 }
             });
         }

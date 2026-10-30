@@ -1,13 +1,13 @@
 package corundum.rubinated_nether.content.items;
 
 import corundum.rubinated_nether.content.RNBannerPatterns;
+import corundum.rubinated_nether.utils.RubinatedCurseText;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BannerPatternItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class RuneItem extends BannerPatternItem {
 		for (var enchant : this.getRubination().getEnchantments(level.registryAccess())) {
 			if (enchant == null) continue;
 
-			tooltipComponents.add(Enchantment.getFullname(enchant.enchantment, enchant.level));
+			tooltipComponents.add(RubinatedCurseText.fullName(enchant.enchantment, enchant.level));
 		}
 	}
 }

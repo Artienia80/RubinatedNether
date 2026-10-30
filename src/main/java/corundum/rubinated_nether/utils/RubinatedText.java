@@ -13,7 +13,7 @@ import java.util.function.BooleanSupplier;
  * Side-safe half of the Rubinated text system.
  * <p>
  * This class (and everything it imports) exists on both the client and the dedicated server, so it may be
- * referenced from common code and from common mixins (e.g. {@code EnchantmentMixin}).
+ * referenced from common code and from common mixins.
  * Anything that needs client classes lives in {@code client.render.RubinatedTextRenderer}, which installs
  * a hook here via {@link #setClientCheck(BooleanSupplier)}. On a dedicated server no hook is installed,
  * so {@link #useRubinatedLang()} simply returns false.

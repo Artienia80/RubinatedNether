@@ -18,6 +18,7 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import corundum.rubinated_nether.utils.RubinatedCurseText;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -193,7 +194,7 @@ public class RubinationScreen extends AbstractContainerScreen<RubinationMenu> {
 					list.add(useRubin ? RubinatedTextRenderer.applyRubin(clueComponent) : clueComponent);
 
 					for (var h = 0; h < 3; ++h) {
-						Component fullName = Enchantment.getFullname(
+						Component fullName = RubinatedCurseText.fullName(
 								optionalList.get(h).get(),
 								result.getEnchantments(getRegistryAccess()).get(h).level
 						);
