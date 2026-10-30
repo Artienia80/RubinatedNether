@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 
 import java.util.stream.IntStream;
 
@@ -131,20 +132,42 @@ public class VaseBlockEntity extends RandomizableContainerBlockEntity implements
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
+    private VaseBlockEntity owner() {
+        var state = this.getBlockState();
+        if (this.level == null || !state.hasProperty(BronzeVaseBlock.HALF) || state.getValue(BronzeVaseBlock.HALF) == DoubleBlockHalf.LOWER) {
+            return this;
+        }
+        return this.level.getBlockEntity(this.worldPosition.below()) instanceof VaseBlockEntity lower ? lower : this;
+    }
+
     @Override
     public void setChanged() {
         super.setChanged();
+        var owner = this.owner();
+        if (owner != this) {
+            owner.setChanged();
+        }
         if (this.level != null && !this.level.isClientSide) {
             this.level.updateNeighbourForOutputSignal(this.worldPosition.above(), this.getBlockState().getBlock());
         }
     }
 
     protected NonNullList<ItemStack> getItems() {
-        return this.itemStacks;
+        var owner = this.owner();
+        if (owner == this) {
+            return this.itemStacks;
+        }
+        owner.unpackLootTable(null);
+        return owner.itemStacks;
     }
 
     protected void setItems(NonNullList<ItemStack> items) {
-        this.itemStacks = items;
+        var owner = this.owner();
+        if (owner == this) {
+            this.itemStacks = items;
+        } else {
+            owner.itemStacks = items;
+        }
     }
 
     public int[] getSlotsForFace(Direction side) {

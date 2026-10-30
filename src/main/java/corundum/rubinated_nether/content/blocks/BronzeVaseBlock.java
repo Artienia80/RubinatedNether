@@ -256,7 +256,7 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
         }
 
         BlockEntity blockentity = level.getBlockEntity(pos);
-        if (blockentity instanceof VaseBlockEntity) {
+        if (state.getValue(HALF) == DoubleBlockHalf.LOWER && blockentity instanceof VaseBlockEntity) {
             Containers.dropContentsOnDestroy(state, newState, level, pos);
         }
         super.onRemove(state, level, pos, newState, isMoving);
