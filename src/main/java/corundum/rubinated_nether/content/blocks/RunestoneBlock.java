@@ -146,7 +146,7 @@ public class RunestoneBlock extends BaseEntityBlock {
 
 		if(level.getBlockEntity(getCorrectBlockPos(pos, state)) instanceof RunestoneBlockEntity runestoneBlockEntity) {
 			runestoneBlockEntity.popOutTheItem();
-			handleSyncRuneValue(level, pos, Rubination.EMPTY);
+			syncRuneValue(level, pos, Rubination.EMPTY);
 			level.playLocalSound(player, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
 			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
@@ -214,23 +214,20 @@ public class RunestoneBlock extends BaseEntityBlock {
 	 * <p>
 	 * The blocks NEED to be replaced to alter their values.
 	 */
-	private void handleSyncRuneValue(Level level, BlockPos pos, Rubination rubination) {
+	public void syncRuneValue(Level level, BlockPos pos, Rubination rubination) {
 		var state = level.getBlockState(pos);
+		if (!state.is(this)) return;
 
-		if(state.getValue(HALF) == DoubleBlockHalf.LOWER) {
-			level.setBlock(pos, state.setValue(HAS_RUNE, rubination)
-				.setValue(HALF, DoubleBlockHalf.LOWER), 2);
-			level.setBlock(pos.above(), state.setValue(HAS_RUNE, rubination)
-				.setValue(HALF, DoubleBlockHalf.UPPER), 2);
-		} else {
-			level.setBlock(pos, state.setValue(HAS_RUNE, rubination)
-				.setValue(HALF, DoubleBlockHalf.UPPER), 2);
-			level.setBlock(pos.below(), state.setValue(HAS_RUNE, rubination)
-				.setValue(HALF, DoubleBlockHalf.LOWER), 2);
-		}
+		var lowerPos = getCorrectBlockPos(pos, state);
+		var lower = level.getBlockState(lowerPos);
+		var upper = level.getBlockState(lowerPos.above());
+		if (!lower.is(this) || !upper.is(this)) return;
+		if (lower.getValue(HAS_RUNE) == rubination && upper.getValue(HAS_RUNE) == rubination) return;
+
+		level.setBlock(lowerPos, lower.setValue(HAS_RUNE, rubination).setValue(HALF, DoubleBlockHalf.LOWER), 2);
+		level.setBlock(lowerPos.above(), upper.setValue(HAS_RUNE, rubination).setValue(HALF, DoubleBlockHalf.UPPER), 2);
 
 		if (!level.isClientSide) {
-			var lowerPos = getCorrectBlockPos(pos, state);
 			level.updateNeighbourForOutputSignal(lowerPos, this);
 			level.updateNeighbourForOutputSignal(lowerPos.above(), this);
 		}
@@ -256,7 +253,7 @@ public class RunestoneBlock extends BaseEntityBlock {
 
 	private void setItemIntoRunestone(Level level, BlockPos pos, BlockState blockState, Player player, ItemStack stack) {
 		// Update the block state FIRST
-		handleSyncRuneValue(level, pos, ((RuneItem) stack.getItem()).getRubination());
+		syncRuneValue(level, pos, ((RuneItem) stack.getItem()).getRubination());
 
 		// NOW get the block entity (which will be the new one after the block state change)
 		var blockEntity = level.getBlockEntity(getCorrectBlockPos(pos, blockState));

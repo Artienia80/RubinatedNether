@@ -2,6 +2,9 @@ package corundum.rubinated_nether.misc;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.client.render.RubinatedTextRenderer;
+import corundum.rubinated_nether.content.RNRarity;
+import corundum.rubinated_nether.content.blocks.RunestoneBlock;
+import corundum.rubinated_nether.content.items.Rubination;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -26,7 +29,10 @@ public enum RubinatedNameProvider implements IBlockComponentProvider {
         if (stack == null || stack.isEmpty()) {
             stack = accessor.getBlock().asItem().getDefaultInstance();
         }
-        if (!RubinatedTextRenderer.isRubinated(stack)) {
+        var state = accessor.getBlockState();
+        boolean charged = state.getBlock() instanceof RunestoneBlock
+                && state.getValue(RunestoneBlock.HAS_RUNE) != Rubination.EMPTY;
+        if (!charged && !RubinatedTextRenderer.isRubinated(stack)) {
             return;
         }
 
@@ -40,7 +46,7 @@ public enum RubinatedNameProvider implements IBlockComponentProvider {
             name = RubinatedTextRenderer.restyleWithEnglishName(name, stack);
         }
 
-        Rarity rarity = stack.getOrDefault(DataComponents.RARITY, Rarity.COMMON);
+        Rarity rarity = charged ? RNRarity.RUBINATED_NETHER_RUBY.get() : stack.getOrDefault(DataComponents.RARITY, Rarity.COMMON);
         name.withStyle(rarity.getStyleModifier());
         tooltip.replace(JadeIds.CORE_OBJECT_NAME, name);
     }
