@@ -2,6 +2,7 @@ package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.content.RNBannerPatterns;
 import corundum.rubinated_nether.data.sub_providers.RNBlockLoot;
+import corundum.rubinated_nether.data.sub_providers.RNStrongboxLoot;
 import corundum.rubinated_nether.data.tags.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -49,6 +50,9 @@ public class RNData {
 		datagen.addProvider(event.includeClient(), new RNLanguageProvider(output));
 
 		datagen.addProvider(event.includeServer(), new LootTableProvider(output, Set.of(),
-				List.of(new SubProviderEntry(RNBlockLoot::new, LootContextParamSets.BLOCK)), event.getLookupProvider()));
+				List.of(
+						new SubProviderEntry(RNBlockLoot::new, LootContextParamSets.BLOCK),
+						new SubProviderEntry(RNStrongboxLoot::new, LootContextParamSets.CHEST)
+				), datapackProvider.getRegistryProvider()));
 	}
 }

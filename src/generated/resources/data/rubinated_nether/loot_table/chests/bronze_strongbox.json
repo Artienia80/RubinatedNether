@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "value": "rubinated_nether:chests/bronze_strongbox_basic",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "rubinated_nether:chests/bronze_strongbox_valuables"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "rubinated_nether:chests/bronze_strongbox"
+}
