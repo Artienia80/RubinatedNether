@@ -16,7 +16,8 @@ public class VaseScreen extends AbstractContainerScreen<VaseMenu> {
 
     public VaseScreen(VaseMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
-        ++this.imageHeight;
+        this.imageHeight = 184;
+        this.inventoryLabelY = this.imageHeight - 94;
     }
 
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {

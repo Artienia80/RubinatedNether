@@ -10,6 +10,7 @@ import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.entities.BronzeStrongboxBlockEntity;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -19,6 +20,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.ItemAbilities;
@@ -109,14 +112,13 @@ public class BronzeStrongboxBlock extends ChestBlock implements TarnishingBronze
         if (state == null) {
             return null;
         }
-        state = state.setValue(NATURAL, false);
-        if (state.getValue(TYPE) != ChestType.SINGLE) {
-            BlockState other = context.getLevel().getBlockState(context.getClickedPos().relative(getConnectedDirection(state)));
-            if (other.is(this) && other.getValue(NATURAL)) {
-                state = state.setValue(TYPE, ChestType.SINGLE);
-            }
-        }
-        return state;
+        return state.setValue(NATURAL, false).setValue(TYPE, ChestType.SINGLE);
+    }
+
+    @Override
+    @Nullable
+    public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof BronzeStrongboxBlockEntity strongbox ? strongbox : null;
     }
 
     @Override
@@ -126,7 +128,7 @@ public class BronzeStrongboxBlock extends ChestBlock implements TarnishingBronze
         }
         if (stack.canPerformAction(ItemAbilities.SHEARS_HARVEST) && state.getValue(KEY) != 0) {
             if (!level.isClientSide && level.getBlockEntity(pos) instanceof BronzeStrongboxBlockEntity strongbox) {
-                this.removeKey(state, level, pos, player, strongbox);
+                this.removeKey(state, level, pos, strongbox, hitResult.getDirection());
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -154,7 +156,7 @@ public class BronzeStrongboxBlock extends ChestBlock implements TarnishingBronze
     }
 
     /** Shears pull the key back out. In a vault (generated strongbox) the key breaks half of the time. */
-    private void removeKey(BlockState state, Level level, BlockPos pos, Player player, BronzeStrongboxBlockEntity strongbox) {
+    private void removeKey(BlockState state, Level level, BlockPos pos, BronzeStrongboxBlockEntity strongbox, Direction face) {
         ItemStack key = strongbox.takeKey();
         level.setBlock(pos, state.setValue(KEY, 0), Block.UPDATE_ALL);
         if (state.getValue(NATURAL) && level.random.nextBoolean()) {
@@ -162,7 +164,7 @@ public class BronzeStrongboxBlock extends ChestBlock implements TarnishingBronze
             return;
         }
         level.playSound(null, pos, SoundEvents.CHAIN_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
-        player.getInventory().placeItemBackInInventory(key);
+        Block.popResourceFromFace(level, pos, face, key);
     }
 
     @Override
@@ -209,13 +211,34 @@ public class BronzeStrongboxBlock extends ChestBlock implements TarnishingBronze
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (newState.getBlock() instanceof BronzeStrongboxBlock) {
-            // Tarnishing only swaps the block: keep the block entity so the contents, key and password survive.
             return;
         }
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof BronzeStrongboxBlockEntity strongbox) {
-            strongbox.dropKey(level, pos);
+        if (!state.is(newState.getBlock())) {
+            if (level.getBlockEntity(pos) instanceof BronzeStrongboxBlockEntity strongbox) {
+                strongbox.dropKey(level, pos);
+            }
+            level.removeBlockEntity(pos);
+            level.updateNeighbourForOutputSignal(pos, this);
         }
-        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
+    @Override
+    protected boolean hasAnalogOutputSignal(BlockState state) {
+        return false;
+    }
+
+    @Override
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof BronzeStrongboxBlockEntity strongbox && strongbox.hasContents()
+                && (player.isCreative() || !player.hasCorrectToolForDrops(state))) {
+            ItemStack stack = this.itemFor(state);
+            stack.applyComponents(strongbox.collectComponents());
+            strongbox.clearContents();
+            ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);
+            itemEntity.setDefaultPickUpDelay();
+            level.addFreshEntity(itemEntity);
+        }
+        return super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override
@@ -242,6 +265,10 @@ public class BronzeStrongboxBlock extends ChestBlock implements TarnishingBronze
 
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+        return this.itemFor(state);
+    }
+
+    private ItemStack itemFor(BlockState state) {
         return new ItemStack(
                 state.getValue(WAXED)
                         ? BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(this)))

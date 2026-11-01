@@ -42,7 +42,7 @@ public class SelectedItemNameHandler {
 
         if (gui.toolHighlightTimer <= 0 || stack.isEmpty()) return;
         if (mc.gameMode == null || mc.gameMode.getPlayerMode() == GameType.SPECTATOR) return;
-        boolean hiddenPassword = StrongboxPasswordText.shouldObscure(stack);
+        boolean hiddenPassword = StrongboxPasswordText.isSealed(stack);
         if (!hiddenPassword) {
             if (!RubinatedTextRenderer.useRubinatedLang()) return;
             if (!RubinatedTextRenderer.isRubinated(stack)) return;

@@ -63,6 +63,6 @@ public class AnvilMenuMixin {
         AnvilMenu menu = (AnvilMenu) (Object) this;
         String newName = this.rn$newName;
         this.rn$newName = null;
-        menu.getSlot(1).set(StrongboxLock.renamedCopy(key, newName));
+        menu.getSlot(1).set(StrongboxLock.renamedKey(key, newName));
     }
 }

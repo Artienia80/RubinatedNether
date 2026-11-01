@@ -37,6 +37,12 @@ public class RNDataComponents {
                     .networkSynchronized(ByteBufCodecs.STRING_UTF8.map(Rubination::byNameOrEmpty, Rubination::getSerializedName))
                     .build());
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> STRONGBOX_PASSWORD = DATA_COMPONENTS.register("strongbox_password",
+            () -> DataComponentType.<String>builder()
+                    .persistent(Codec.STRING)
+                    .networkSynchronized(ByteBufCodecs.STRING_UTF8)
+                    .build());
+
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<VaseEngraving>> VASE_ENGRAVING = DATA_COMPONENTS.register("vase_engraving",
             () -> DataComponentType.<VaseEngraving>builder()
                     .persistent(VaseEngraving.CODEC)

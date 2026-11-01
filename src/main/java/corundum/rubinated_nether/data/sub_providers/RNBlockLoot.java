@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.data.sub_providers;
 
+import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
@@ -405,7 +406,9 @@ public class RNBlockLoot extends BlockLootSubProvider {
 
 		var keepPassword = CopyComponentsFunction
 				.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
-				.include(DataComponents.CUSTOM_NAME);
+				.include(DataComponents.CUSTOM_NAME)
+				.include(DataComponents.CONTAINER)
+				.include(RNDataComponents.STRONGBOX_PASSWORD.get());
 
 		add(
 				block.get(),

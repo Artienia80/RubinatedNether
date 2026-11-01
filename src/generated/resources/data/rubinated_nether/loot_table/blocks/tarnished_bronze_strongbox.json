@@ -19,7 +19,9 @@
             {
               "function": "minecraft:copy_components",
               "include": [
-                "minecraft:custom_name"
+                "minecraft:custom_name",
+                "minecraft:container",
+                "rubinated_nether:strongbox_password"
               ],
               "source": "block_entity"
             }
@@ -50,7 +52,9 @@
             {
               "function": "minecraft:copy_components",
               "include": [
-                "minecraft:custom_name"
+                "minecraft:custom_name",
+                "minecraft:container",
+                "rubinated_nether:strongbox_password"
               ],
               "source": "block_entity"
             }

@@ -18,6 +18,7 @@ import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.screen.CofferScreen;
 import corundum.rubinated_nether.content.screen.FreezerScreen;
 import corundum.rubinated_nether.content.screen.RubinatedCofferScreen;
+import corundum.rubinated_nether.content.screen.StrongboxScreen;
 import corundum.rubinated_nether.content.screen.RubinationScreen;
 import corundum.rubinated_nether.content.screen.VaseScreen;
 import corundum.rubinated_nether.networking.CollectDiscsPayload;
@@ -146,6 +147,7 @@ public class RNClientSubscriber {
         event.register(RNMenuTypes.COFFER_MENU.get(), CofferScreen::new);
         event.register(RNMenuTypes.RUBINATED_COFFER_MENU.get(), RubinatedCofferScreen::new);
         event.register(RNMenuTypes.VASE_MENU.get(), VaseScreen::new);
+        event.register(RNMenuTypes.STRONGBOX_MENU.get(), StrongboxScreen::new);
     }
 
     @SubscribeEvent

@@ -1,5 +1,6 @@
 package corundum.rubinated_nether.content.menu;
 
+import corundum.rubinated_nether.content.blocks.entities.VaseBlockEntity;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,7 +11,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 public class VaseMenu extends AbstractContainerMenu {
-    private static final int CONTAINER_SIZE = 9;
+    private static final int CONTAINER_SIZE = VaseBlockEntity.CONTAINER_SIZE;
     private final Container container;
 
     public VaseMenu(int containerId, Inventory playerInventory) {
@@ -23,20 +24,20 @@ public class VaseMenu extends AbstractContainerMenu {
         this.container = container;
         container.startOpen(playerInventory.player);
 
-        for(int k = 0; k < 3; ++k) {
-            for(int l = 0; l < 3; ++l) {
-                this.addSlot(new ShulkerBoxSlot(container, l + k * 3, 62 + l * 18, 17 + k * 18));
+        for(int k = 0; k < VaseBlockEntity.ROWS; ++k) {
+            for(int l = 0; l < VaseBlockEntity.COLUMNS; ++l) {
+                this.addSlot(new ShulkerBoxSlot(container, l + k * VaseBlockEntity.COLUMNS, 53 + l * 18, 17 + k * 18));
             }
         }
 
         for(int i1 = 0; i1 < 3; ++i1) {
             for(int k1 = 0; k1 < 9; ++k1) {
-                this.addSlot(new Slot(playerInventory, k1 + i1 * 9 + 9, 8 + k1 * 18, 84 + i1 * 18));
+                this.addSlot(new Slot(playerInventory, k1 + i1 * 9 + 9, 8 + k1 * 18, 102 + i1 * 18));
             }
         }
 
         for(int j1 = 0; j1 < 9; ++j1) {
-            this.addSlot(new Slot(playerInventory, j1, 8 + j1 * 18, 142));
+            this.addSlot(new Slot(playerInventory, j1, 8 + j1 * 18, 160));
         }
 
     }

@@ -28,6 +28,7 @@ public final class StrongboxAnvilClient {
     @Nullable
     private static AnvilScreen trackedScreen;
     private static StrongboxLock.AnvilState lastState = StrongboxLock.AnvilState.FREE;
+    private static ItemStack lastLeft = ItemStack.EMPTY;
 
     private StrongboxAnvilClient() {}
 
@@ -46,11 +47,13 @@ public final class StrongboxAnvilClient {
         if (trackedScreen != screen) {
             trackedScreen = screen;
             lastState = StrongboxLock.AnvilState.FREE;
+            lastLeft = ItemStack.EMPTY;
         }
 
         StrongboxLock.AnvilState state = stateOf(screen);
         EditBox box = screen.name;
         ItemStack left = screen.getMenu().getSlot(0).getItem();
+        boolean leftChanged = !ItemStack.isSameItemSameComponents(lastLeft, left);
 
         switch (state) {
             case LOCKED -> {
@@ -62,12 +65,15 @@ public final class StrongboxAnvilClient {
             case NEEDS_KEY -> box.setEditable(false);
             case FREE -> {
                 if (lastState != StrongboxLock.AnvilState.FREE) {
-                    box.setValue(left.isEmpty() ? "" : left.getHoverName().getString());
+                    box.setValue(left.isEmpty() ? "" : StrongboxLock.editableName(left));
                     box.setEditable(!left.isEmpty());
+                } else if (leftChanged && StrongboxLock.isStrongbox(left)) {
+                    box.setValue(StrongboxLock.editableName(left));
                 }
             }
         }
         lastState = state;
+        lastLeft = left.copy();
     }
 
     // Covers the field with the greyed-out look and draws the scrambled (or plain) name in it.

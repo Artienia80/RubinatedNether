@@ -47,6 +47,14 @@ public class RNMenuTypes {
 			)
 	);
 
+    public static final DeferredHolder<MenuType<?>, MenuType<StrongboxMenu>> STRONGBOX_MENU = MENUS.register(
+            "strongbox_menu",
+            () -> new MenuType<>(
+                    StrongboxMenu::new,
+                    FeatureFlags.VANILLA_SET
+            )
+    );
+
     public static final DeferredHolder<MenuType<?>, MenuType<VaseMenu>> VASE_MENU = MENUS.register(
             "vase_menu",
             () -> new MenuType<>(

@@ -38,12 +38,13 @@ public class StrongboxAnvilHandler {
 
         // A blank name removes the password (and the key's name along with it).
         String newName = typed.isBlank() ? null : typed;
-        if (Objects.equals(newName, StrongboxLock.customName(left))) {
+        String current = StrongboxLock.password(left);
+        if (Objects.equals(newName, current) || (current == null && typed.equals(left.getHoverName().getString()))) {
             event.setCanceled(true);
             return;
         }
 
-        event.setOutput(StrongboxLock.renamedCopy(left, newName));
+        event.setOutput(StrongboxLock.withPassword(left, newName));
         event.setCost(RENAME_LEVEL_COST);
         event.setMaterialCost(0);
     }

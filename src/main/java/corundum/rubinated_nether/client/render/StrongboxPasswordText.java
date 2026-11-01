@@ -2,8 +2,8 @@ package corundum.rubinated_nether.client.render;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.blocks.BronzeStrongboxBlock;
 import corundum.rubinated_nether.utils.RubinatedText;
+import corundum.rubinated_nether.utils.StrongboxLock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -11,9 +11,9 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A strongbox item carrying a password (its custom name) hides that name: it is drawn like {@code §k} text, but in
+ * A strongbox item carrying a password is named "Sealed Strongbox" for everything but this class, which draws the password instead: like {@code §k} text, but in
  * the Rubin font, and the words keep being swapped around. Holding a Winding Key renamed to the password anywhere in
  * the inventory shows the real name again. Purely cosmetic and client side; the item's name is untouched.
  */
@@ -36,19 +36,28 @@ public final class StrongboxPasswordText {
 
     private StrongboxPasswordText() {}
 
-    /** True for a strongbox item with a password that the local player cannot read right now. */
-    public static boolean shouldObscure(ItemStack stack) {
-        if (!(stack.getItem() instanceof BlockItem blockItem) || !(blockItem.getBlock() instanceof BronzeStrongboxBlock)) {
-            return false;
-        }
-        Component name = stack.get(DataComponents.CUSTOM_NAME);
-        if (name == null || name.getString().isEmpty()) {
-            return false;
-        }
-        return !hasMatchingKey(name.getString());
+    /** True for a strongbox item that carries a password: its real name is "Sealed Strongbox", drawn differently here. */
+    public static boolean isSealed(ItemStack stack) {
+        return StrongboxLock.isStrongbox(stack) && StrongboxLock.password(stack) != null;
     }
 
-    private static boolean hasMatchingKey(String password) {
+    /** The password when the local player holds the matching key, else the scrambled name. */
+    public static MutableComponent displayName(String password) {
+        return hasMatchingKey(password) ? Component.literal(password) : obscured(password);
+    }
+
+    /** The title of the strongbox screen: the sealed title carries the password, shown only to a key holder. */
+    public static Component screenTitle(Component title) {
+        if (title.getContents() instanceof TranslatableContents contents
+                && contents.getKey().equals(StrongboxLock.SEALED_NAME_KEY)
+                && contents.getArgs().length > 0
+                && contents.getArgs()[0] instanceof String password) {
+            return displayName(password);
+        }
+        return title;
+    }
+
+    public static boolean hasMatchingKey(String password) {
         Player player = Minecraft.getInstance().player;
         if (player == null) {
             return false;
@@ -64,8 +73,11 @@ public final class StrongboxPasswordText {
 
     /** The strongbox's name as scrambled Rubin letters, with the same word lengths as the real name. */
     public static MutableComponent obscuredName(ItemStack stack) {
-        Component name = stack.get(DataComponents.CUSTOM_NAME);
-        String password = name == null ? "" : name.getString();
+        String password = StrongboxLock.password(stack);
+        return obscured(password == null ? "" : password);
+    }
+
+    public static MutableComponent obscured(String password) {
 
         long slot = Util.getMillis() / SCRAMBLE_MILLIS;
         String[] words = password.trim().split("\\s+");
@@ -94,7 +106,7 @@ public final class StrongboxPasswordText {
     /** The full name line: scrambled, italic like any custom name, in the item's rarity colour. */
     public static MutableComponent styledName(ItemStack stack) {
         return Component.empty()
-                .append(obscuredName(stack))
+                .append(displayName(StrongboxLock.password(stack)))
                 .withStyle(stack.getRarity().getStyleModifier())
                 .withStyle(ChatFormatting.ITALIC);
     }
@@ -102,7 +114,7 @@ public final class StrongboxPasswordText {
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
         List<Component> lines = event.getToolTip();
-        if (!lines.isEmpty() && shouldObscure(event.getItemStack())) {
+        if (!lines.isEmpty() && isSealed(event.getItemStack())) {
             lines.set(0, styledName(event.getItemStack()));
         }
     }

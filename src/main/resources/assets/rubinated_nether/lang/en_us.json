@@ -281,6 +281,7 @@
   "item.rubinated_nether.waxed_crystallized_bronze_strongbox": "Waxed Crystallized Bronze Strongbox",
 
   "container.bronze_strongbox": "Bronze Strongbox",
+  "container.rubinated_nether.sealed_strongbox": "Sealed Strongbox",
   "container.bronze_strongbox_locked": "Needs a Winding Key",
   "container.bronze_strongbox_wrong_key": "The key doesn't fit",
 

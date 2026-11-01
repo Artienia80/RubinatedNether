@@ -32,9 +32,9 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import java.util.stream.IntStream;
 
 public class VaseBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-    public static final int COLUMNS = 3;
-    public static final int ROWS = 3;
-    public static final int CONTAINER_SIZE = 9;
+    public static final int COLUMNS = 4;
+    public static final int ROWS = 4;
+    public static final int CONTAINER_SIZE = COLUMNS * ROWS;
     private static final int[] SLOTS = IntStream.range(0, CONTAINER_SIZE).toArray();
     private NonNullList<ItemStack> itemStacks;
 
