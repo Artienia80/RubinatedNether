@@ -281,7 +281,7 @@
   "item.rubinated_nether.waxed_crystallized_bronze_strongbox": "Waxed Crystallized Bronze Strongbox",
 
   "container.bronze_strongbox": "Bronze Strongbox",
-  "container.rubinated_nether.sealed_strongbox": "Sealed Strongbox",
+  "container.rubinated_nether.sealed_strongbox": "Sealed %2$s",
   "container.bronze_strongbox_locked": "Needs a Winding Key",
   "container.bronze_strongbox_wrong_key": "The key doesn't fit",
 
@@ -340,6 +340,7 @@
   "item.rubinated_nether.bronze_drill": "Bronze Drill",
   "item.rubinated_nether.bronze_jackhammer": "Bronze Jackhammer",
   "tooltip.rubinated_nether.legacy": "Legacy",
+  "tooltip.rubinated_nether.generated": "Generated",
 
   "item.rubinated_nether.bronze_chainsaw": "Bronze Chainsaw",
 

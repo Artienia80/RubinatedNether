@@ -10,7 +10,10 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.Output;
 import net.minecraft.world.item.CreativeModeTabs;
+import corundum.rubinated_nether.content.blocks.BronzeStrongboxBlock;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.BlockItemStateProperties;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -305,6 +308,8 @@ public class RNCreativeTabs {
 						);
 						for (ItemLike[] stage : stages) addItems(output, stage);
 						for (ItemLike[] stage : stages) addWaxedVariants(output, stage);
+						for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_BOXES) output.accept(RNCreativeTabs.generated(box.get().asItem().getDefaultInstance()));
+						for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_BOXES) output.accept(RNCreativeTabs.generated(getWaxed(box)));
 					})
 					.build()
 	);
@@ -466,6 +471,17 @@ public class RNCreativeTabs {
 					getWaxed(RNBlocks.TARNISHED_BRONZE_STRONGBOX), BOTH_TABS);
 			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_STRONGBOX),
 					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX), BOTH_TABS);
+			ItemStack previous = getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX);
+			for (DeferredBlock<?> strongbox : RNCreativeTabs.GENERATED_STRONGBOXES) {
+				ItemStack next = generated(strongbox.get().asItem().getDefaultInstance());
+				event.insertAfter(previous, next, BOTH_TABS);
+				previous = next;
+			}
+			for (DeferredBlock<?> strongbox : RNCreativeTabs.GENERATED_STRONGBOXES) {
+				ItemStack next = generated(getWaxed(strongbox));
+				event.insertAfter(previous, next, BOTH_TABS);
+				previous = next;
+			}
 			event.insertAfter(Items.CHISELED_BOOKSHELF.getDefaultInstance(),
 					RNBlocks.RUNESTONE.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.CRYING_OBSIDIAN.getDefaultInstance(),
@@ -994,6 +1010,29 @@ public class RNCreativeTabs {
 			event.insertAfter(RNItems.TARNISHED_BRONZE_SPAWN_EGG.get().getDefaultInstance(),
 					RNItems.CRYSTALLIZED_BRONZE_SPAWN_EGG.get().getDefaultInstance(), BOTH_TABS);
 		}
+	}
+	private static final DeferredBlock<?>[] GENERATED_STRONGBOXES = {
+			RNBlocks.BRONZE_STRONGBOX,
+			RNBlocks.DISCOLORED_BRONZE_STRONGBOX,
+			RNBlocks.CORRODED_BRONZE_STRONGBOX,
+			RNBlocks.TARNISHED_BRONZE_STRONGBOX,
+			RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX
+	};
+	private static final DeferredBlock<?>[] GENERATED_BOXES = {
+			RNBlocks.BRONZE_STRONGBOX,
+			RNBlocks.BRONZE_GEARBOX,
+			RNBlocks.DISCOLORED_BRONZE_STRONGBOX,
+			RNBlocks.DISCOLORED_BRONZE_GEARBOX,
+			RNBlocks.CORRODED_BRONZE_STRONGBOX,
+			RNBlocks.CORRODED_BRONZE_GEARBOX,
+			RNBlocks.TARNISHED_BRONZE_STRONGBOX,
+			RNBlocks.TARNISHED_BRONZE_GEARBOX,
+			RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX,
+			RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX
+	};
+	private static ItemStack generated(ItemStack stack) {
+		stack.set(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY.with(BronzeStrongboxBlock.NATURAL, true));
+		return stack;
 	}
 	private static ItemStack getWaxed(DeferredBlock<?> block) {
 		return BuiltInRegistries.ITEM

@@ -58,6 +58,7 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
     public static final BooleanProperty COOLING_DOWN = BooleanProperty.create("cooling_down");
     public static final IntegerProperty CRANK_LEVEL = BlockStateProperties.LEVEL;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty NATURAL = BooleanProperty.create("natural");
 
     public GearboxBlock(TarnishStage stage, Properties properties) {
         super(stage, properties);
@@ -67,7 +68,8 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
                 .setValue(POWERED, false)
                 .setValue(COOLING_DOWN, false)
                 .setValue(CRANK_LEVEL, 0)
-                .setValue(WATERLOGGED, false));
+                .setValue(WATERLOGGED, false)
+                .setValue(NATURAL, true));
     }
 
     public MapCodec<GearboxBlock> codec() {
@@ -89,7 +91,7 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LIT, POWERED, COOLING_DOWN, CRANK_LEVEL, WATERLOGGED);
+        builder.add(FACING, LIT, POWERED, COOLING_DOWN, CRANK_LEVEL, WATERLOGGED, NATURAL);
         super.createBlockStateDefinition(builder);
     }
 
@@ -101,6 +103,7 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
                 .setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()))
                 .setValue(COOLING_DOWN, false)
                 .setValue(CRANK_LEVEL, 0)
+                .setValue(NATURAL, false)
                 .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
     }
 

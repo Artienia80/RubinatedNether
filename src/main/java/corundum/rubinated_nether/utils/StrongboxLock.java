@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 
 /**
  * Side-safe helpers for strongbox passwords on items. The password lives in its own component; the strongbox's
- * official name is always "Sealed Strongbox", so no other mod ever sees the password. A Winding Key renamed to the
+ * official name is always "Sealed" plus the strongbox's own name, so no other mod ever sees the password. A Winding Key renamed to the
  * password is the key that fits. Used by the anvil rules (server and client).
  */
 public final class StrongboxLock {
@@ -21,12 +21,16 @@ public final class StrongboxLock {
 
     private StrongboxLock() {}
 
-    public static MutableComponent sealedName() {
-        return Component.translatable(SEALED_NAME_KEY);
+    public static MutableComponent sealedName(Component strongboxName) {
+        return Component.translatable(SEALED_NAME_KEY, "", strongboxName);
     }
 
-    public static MutableComponent sealedTitle(String password) {
-        return Component.translatable(SEALED_NAME_KEY, password);
+    public static MutableComponent sealedName(ItemStack stack) {
+        return sealedName(Component.translatable(stack.getItem().getDescriptionId(stack)));
+    }
+
+    public static MutableComponent sealedTitle(String password, Component strongboxName) {
+        return Component.translatable(SEALED_NAME_KEY, password, strongboxName);
     }
 
     public static boolean isStrongbox(ItemStack stack) {
@@ -77,7 +81,7 @@ public final class StrongboxLock {
             copy.remove(DataComponents.CUSTOM_NAME);
         } else {
             copy.set(RNDataComponents.STRONGBOX_PASSWORD.get(), password);
-            copy.set(DataComponents.CUSTOM_NAME, sealedName());
+            copy.set(DataComponents.CUSTOM_NAME, sealedName(stack));
         }
         return copy;
     }

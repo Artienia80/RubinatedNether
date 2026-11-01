@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNItems;
@@ -13,6 +14,7 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -151,16 +153,9 @@ public class BronzeStrongboxBlockEntity extends ChestBlockEntity {
         }
     };
 
-    /**
-     * The password of a player-placed strongbox, taken from the name the strongbox item had when it was placed.
-     * It is server-side only: it is never part of the block state or of any client sync (this block entity sends
-     * no update packet or update tag). It is the title of the container screen, which is only reachable with the
-     * matching key inserted.
-     */
     @Nullable
     private String password;
 
-    /** The winding key that is currently inserted, so it can be handed back with its name intact. */
     private ItemStack insertedKey = ItemStack.EMPTY;
 
     public BronzeStrongboxBlockEntity(BlockPos pos, BlockState state) {
@@ -258,21 +253,29 @@ public class BronzeStrongboxBlockEntity extends ChestBlockEntity {
         return Component.translatable("container.bronze_strongbox");
     }
 
-    // The password is also the name shown on the container screen.
+    private Component strongboxName() {
+        Block block = this.getBlockState().getBlock();
+        if (this.getBlockState().getValue(TarnishingBronze.WAXED)) {
+            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+            return Component.translatable("item." + id.getNamespace() + ".waxed_" + id.getPath());
+        }
+        return Component.translatable(block.getDescriptionId());
+    }
+
     @Override
     public Component getName() {
-        return this.password != null ? StrongboxLock.sealedName() : this.getDefaultName();
+        return this.password != null ? StrongboxLock.sealedName(this.strongboxName()) : this.getDefaultName();
     }
 
     @Override
     public Component getDisplayName() {
-        return this.password != null ? StrongboxLock.sealedTitle(this.password) : this.getDefaultName();
+        return this.password != null ? StrongboxLock.sealedTitle(this.password, this.strongboxName()) : this.getDefaultName();
     }
 
     @Nullable
     @Override
     public Component getCustomName() {
-        return this.password != null ? StrongboxLock.sealedName() : null;
+        return this.password != null ? StrongboxLock.sealedName(this.strongboxName()) : null;
     }
 
     @Override
@@ -285,12 +288,11 @@ public class BronzeStrongboxBlockEntity extends ChestBlockEntity {
         componentInput.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).copyInto(this.contents);
     }
 
-    // Breaking the strongbox hands the password back as the item's name.
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder components) {
         super.collectImplicitComponents(components);
         components.set(RNDataComponents.STRONGBOX_PASSWORD.get(), this.password);
-        components.set(DataComponents.CUSTOM_NAME, this.password != null ? StrongboxLock.sealedName() : null);
+        components.set(DataComponents.CUSTOM_NAME, this.password != null ? StrongboxLock.sealedName(this.strongboxName()) : null);
         if (this.hasContents()) {
             components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(this.contents));
         }
@@ -306,7 +308,6 @@ public class BronzeStrongboxBlockEntity extends ChestBlockEntity {
         return this.password != null;
     }
 
-    /** A strongbox without a password takes any winding key, one with a password only a key renamed to it. */
     public boolean acceptsKey(ItemStack key) {
         if (this.password == null) {
             return true;
@@ -320,7 +321,6 @@ public class BronzeStrongboxBlockEntity extends ChestBlockEntity {
         this.setChanged();
     }
 
-    /** Removes and returns the inserted key. Strongboxes that got their key before keys were stored get a plain one. */
     public ItemStack takeKey() {
         ItemStack key = this.insertedKey.isEmpty() ? new ItemStack(RNItems.WINDING_KEY.get()) : this.insertedKey;
         this.insertedKey = ItemStack.EMPTY;

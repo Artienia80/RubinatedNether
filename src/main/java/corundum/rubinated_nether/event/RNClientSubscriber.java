@@ -237,6 +237,23 @@ public class RNClientSubscriber {
             event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.rubinated_nether.legacy")
                     .withStyle(net.minecraft.ChatFormatting.GRAY, net.minecraft.ChatFormatting.ITALIC));
         }
+        if (isGeneratedBox(event.getItemStack())) {
+            event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.rubinated_nether.generated")
+                    .withStyle(net.minecraft.ChatFormatting.GRAY, net.minecraft.ChatFormatting.ITALIC));
+        }
+    }
+
+    private static boolean isGeneratedBox(net.minecraft.world.item.ItemStack stack) {
+        if (!(stack.getItem() instanceof net.minecraft.world.item.BlockItem blockItem)) {
+            return false;
+        }
+        net.minecraft.world.level.block.Block block = blockItem.getBlock();
+        if (!(block instanceof corundum.rubinated_nether.content.blocks.BronzeStrongboxBlock)
+                && !(block instanceof corundum.rubinated_nether.content.blocks.GearboxBlock)) {
+            return false;
+        }
+        net.minecraft.world.item.component.BlockItemStateProperties properties = stack.get(net.minecraft.core.component.DataComponents.BLOCK_STATE);
+        return properties != null && "true".equals(properties.properties().get("natural"));
     }
 
     @SubscribeEvent
