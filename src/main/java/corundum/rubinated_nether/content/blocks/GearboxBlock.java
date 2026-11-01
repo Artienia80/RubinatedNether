@@ -2,10 +2,12 @@ package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.entities.gearbox.GearboxBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -13,9 +15,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -49,6 +54,13 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
     );
 
     public static final int MAX_CRANK = 15;
+    /** While lit, the crank ratchets one notch (and clicks) every this many ticks. */
+    public static final int STEP_TICKS = 10;
+    /** How many notches make a full turn of the crank. */
+    public static final int STEPS_PER_TURN = 12;
+    /** How many ticks of each step the crank spends actually moving; it rests for the remainder. */
+    public static final float SNAP_TICKS = 3.0F;
+    public static final float KEY_BREAK_CHANCE = 0.5F;
     public static final double PLAYER_SCAN_RADIUS = 64.0;
     public static final double CRYSTALLIZED_TRIGGER_RADIUS = 16.0;
 
@@ -59,6 +71,7 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
     public static final IntegerProperty CRANK_LEVEL = BlockStateProperties.LEVEL;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final BooleanProperty NATURAL = BooleanProperty.create("natural");
+    public static final BooleanProperty BROKEN = BooleanProperty.create("broken");
 
     public GearboxBlock(TarnishStage stage, Properties properties) {
         super(stage, properties);
@@ -69,7 +82,8 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
                 .setValue(COOLING_DOWN, false)
                 .setValue(CRANK_LEVEL, 0)
                 .setValue(WATERLOGGED, false)
-                .setValue(NATURAL, true));
+                .setValue(NATURAL, true)
+                .setValue(BROKEN, false));
     }
 
     public MapCodec<GearboxBlock> codec() {
@@ -91,7 +105,7 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LIT, POWERED, COOLING_DOWN, CRANK_LEVEL, WATERLOGGED, NATURAL);
+        builder.add(FACING, LIT, POWERED, COOLING_DOWN, CRANK_LEVEL, WATERLOGGED, NATURAL, BROKEN);
         super.createBlockStateDefinition(builder);
     }
 
@@ -123,7 +137,7 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         if (level instanceof ServerLevel serverLevel && !isPeaceful(level)) {
             boolean powered = serverLevel.hasNeighborSignal(pos);
-            if (powered && !state.getValue(LIT) && !state.getValue(COOLING_DOWN)) {
+            if (powered && !state.getValue(LIT) && !state.getValue(COOLING_DOWN) && !state.getValue(BROKEN)) {
                 fireLit(serverLevel, state.setValue(POWERED, true), pos);
                 serverLevel.setBlock(pos, serverLevel.getBlockState(pos).setValue(POWERED, true), 3);
             }
@@ -186,10 +200,10 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
             }
 
             int crankCount = state.getValue(CRANK_LEVEL);
-            if (crankCount > 0 && crankCount < MAX_CRANK) {
-                decreaseCrankLevel(level, state, pos);
-            } else if (crankCount == MAX_CRANK) {
+            if (crankCount >= MAX_CRANK) {
                 fireLit(level, state, pos);
+            } else if (crankCount > 0) {
+                unwindCrank(level, state, pos);
             }
         }
         super.tick(state, level, pos, random);
@@ -252,11 +266,47 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
 
     public void finishCooldown(ServerLevel level, BlockState state, BlockPos pos) {
         state = state.setValue(COOLING_DOWN, false);
+        if (!state.getValue(NATURAL) && level.random.nextFloat() < KEY_BREAK_CHANCE) {
+            breakKey(level, state, pos);
+            return;
+        }
         if (state.getValue(POWERED) && !isPeaceful(level)) {
             fireLit(level, state, pos);
         } else {
             level.setBlock(pos, state, 3);
         }
+    }
+
+    private void breakKey(ServerLevel level, BlockState state, BlockPos pos) {
+        level.setBlock(pos, state.setValue(BROKEN, true).setValue(LIT, false).setValue(CRANK_LEVEL, 0), 3);
+        level.playSound(null, pos, SoundEvents.ITEM_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(RNItems.WINDING_KEY.get())),
+                pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 12, 0.15, 0.1, 0.15, 0.05);
+    }
+
+    private void repairKey(ServerLevel level, BlockState state, BlockPos pos, Player player, ItemStack stack) {
+        if (!player.isCreative()) {
+            stack.shrink(1);
+        }
+        boolean powered = level.hasNeighborSignal(pos);
+        state = state.setValue(BROKEN, false).setValue(POWERED, powered);
+        level.playSound(null, pos, SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
+        if (powered && !isPeaceful(level)) {
+            fireLit(level, state, pos);
+        } else {
+            level.setBlock(pos, state, 3);
+        }
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (state.getValue(BROKEN) && stack.is(RNItems.WINDING_KEY.get())) {
+            if (level instanceof ServerLevel serverLevel) {
+                repairKey(serverLevel, state, pos, player, stack);
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        }
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     @Override
@@ -294,28 +344,71 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide() && isCrankable(state) && !isPeaceful(level)) {
-            increaseCrankLevel(level, state, pos);
+        if (state.getValue(BROKEN)) {
+            if (!level.isClientSide()) {
+                level.playSound(null, pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.3F, 0.3F);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide());
+        }
+        if (level instanceof ServerLevel serverLevel && isCrankable(state) && !isPeaceful(level)) {
+            increaseCrankLevel(serverLevel, state, pos);
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
     }
 
     private boolean isCrankable(BlockState state) {
-        return !state.getValue(LIT) && !state.getValue(COOLING_DOWN);
+        return !state.getValue(LIT) && !state.getValue(COOLING_DOWN) && !state.getValue(BROKEN);
     }
 
-    private static void increaseCrankLevel(Level level, BlockState state, BlockPos pos) {
-        state = state.setValue(CRANK_LEVEL, Mth.clamp(state.getValue(CRANK_LEVEL) + 1, 0, MAX_CRANK));
+    // The crank unwinds exactly like the Bronze Winder (same per-stage idle and unwind times, shared from BronzeWinderBlock): it holds its charge until
+    // nobody has touched it for the idle time, then drops one notch per unwind interval. Every input restarts the idle time.
+    public int getIdleTicks() {
+        return BronzeWinderBlock.idleTicks(getAge());
+    }
+
+    public int getUnwindTicks() {
+        return BronzeWinderBlock.unwindTicks(getAge());
+    }
+
+    private void increaseCrankLevel(ServerLevel level, BlockState state, BlockPos pos) {
+        int next = Mth.clamp(state.getValue(CRANK_LEVEL) + 1, 0, MAX_CRANK);
+        state = state.setValue(CRANK_LEVEL, next);
         level.setBlock(pos, state, 3);
         level.playSound(null, pos, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS, 1.0F, 1.0F);
-        level.scheduleTick(pos, state.getBlock(), 40);
+        if (level.getBlockEntity(pos) instanceof GearboxBlockEntity be) {
+            be.setLastInput(level.getGameTime());
+        }
+        if (next >= MAX_CRANK) {
+            fireLit(level, state, pos);
+        } else if (getUnwindTicks() > 0 && !level.getBlockTicks().hasScheduledTick(pos, this)) {
+            level.scheduleTick(pos, this, getIdleTicks());
+        }
     }
 
-    private static void decreaseCrankLevel(Level level, BlockState state, BlockPos pos) {
-        state = state.setValue(CRANK_LEVEL, Mth.clamp(state.getValue(CRANK_LEVEL) - 1, 0, MAX_CRANK));
-        level.setBlock(pos, state, 3);
+    private void unwindCrank(ServerLevel level, BlockState state, BlockPos pos) {
+        int unwindTicks = getUnwindTicks();
+        if (unwindTicks <= 0) {
+            return;
+        }
+        if (level.getBlockEntity(pos) instanceof GearboxBlockEntity be) {
+            long now = level.getGameTime();
+            long lastInput = be.getLastInput();
+            if (lastInput < 0 || lastInput > now) {
+                lastInput = now;
+                be.setLastInput(now);
+            }
+            long remaining = lastInput + getIdleTicks() - now;
+            if (remaining > 0) {
+                level.scheduleTick(pos, this, (int) remaining);
+                return;
+            }
+        }
+        int next = Mth.clamp(state.getValue(CRANK_LEVEL) - 1, 0, MAX_CRANK);
+        level.setBlock(pos, state.setValue(CRANK_LEVEL, next), 3);
         level.playSound(null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 1.0F, 1.0F);
-        level.scheduleTick(pos, state.getBlock(), 20);
+        if (next > 0) {
+            level.scheduleTick(pos, this, unwindTicks);
+        }
     }
 
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
@@ -327,7 +420,7 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
     public void checkAndFlip(BlockState state, ServerLevel level, BlockPos pos) {
         boolean flag = level.hasNeighborSignal(pos);
         if (flag != state.getValue(POWERED)) {
-            if (flag && !state.getValue(LIT) && !state.getValue(COOLING_DOWN) && !isPeaceful(level)) {
+            if (flag && !state.getValue(LIT) && !state.getValue(COOLING_DOWN) && !state.getValue(BROKEN) && !isPeaceful(level)) {
                 fireLit(level, state.setValue(POWERED, true), pos);
             } else {
                 level.setBlock(pos, state.setValue(POWERED, flag), 3);

@@ -15,6 +15,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
@@ -46,6 +48,9 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
 
     // Cooldown state — waits for all bronzes to die rather than a timer
     private boolean coolingDown = false;
+
+    // Game time of the last crank input, so the crank only starts unwinding once nobody has touched it for the idle time (same as the winder)
+    private long lastInput = -1L;
 
     private final BaseSpawner spawner = new BaseSpawner() {
         public void broadcastEvent(Level level, BlockPos blockPos, int id) {
@@ -84,6 +89,15 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
         this.spawning = true;
         this.aliveWaveBronzes.clear();
         this.allSpawnedBronzes.clear();
+        this.setChanged();
+    }
+
+    public long getLastInput() {
+        return lastInput;
+    }
+
+    public void setLastInput(long lastInput) {
+        this.lastInput = lastInput;
         this.setChanged();
     }
 
@@ -129,6 +143,15 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
 
         BlockState state = serverLevel.getBlockState(this.worldPosition);
         if (!state.getValue(GearboxBlock.LIT)) return;
+
+        // The crank ratchets one notch per step (rendered in GearboxRenderer.litAngle), alternating a higher "tick" and a lower "tock"
+        long gameTime = serverLevel.getGameTime();
+        if (gameTime % GearboxBlock.STEP_TICKS == 0) {
+            boolean tick = (gameTime / GearboxBlock.STEP_TICKS) % 2 == 0;
+            serverLevel.playSound(null, this.worldPosition,
+                    tick ? SoundEvents.TRIPWIRE_CLICK_ON : SoundEvents.TRIPWIRE_CLICK_OFF,
+                    SoundSource.BLOCKS, 0.25F, tick ? 1.4F : 0.9F);
+        }
 
         // Prune dead bronzes from wave tracking
         aliveWaveBronzes.removeIf(uuid -> {
@@ -222,6 +245,7 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
         this.waveTimer = tag.getInt("WaveTimer");
         this.spawning = tag.getBoolean("Spawning");
         this.coolingDown = tag.getBoolean("CoolingDown");
+        this.lastInput = tag.contains("LastInput") ? tag.getLong("LastInput") : -1L;
 
         this.aliveWaveBronzes.clear();
         if (tag.contains("AliveWaveBronzes")) {
@@ -255,6 +279,7 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
         tag.putInt("WaveTimer", this.waveTimer);
         tag.putBoolean("Spawning", this.spawning);
         tag.putBoolean("CoolingDown", this.coolingDown);
+        tag.putLong("LastInput", this.lastInput);
 
         tag.putIntArray("AliveWaveBronzes", toIntArray(this.aliveWaveBronzes));
         tag.putIntArray("AllSpawnedBronzes", toIntArray(this.allSpawnedBronzes));

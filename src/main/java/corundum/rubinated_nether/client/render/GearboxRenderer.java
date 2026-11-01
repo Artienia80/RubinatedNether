@@ -68,11 +68,14 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
     private static final int[] KEY_HANDLE = {49, 14, 59, 18};
 
     private static final String BODY = "body";
+    private static final String LID = "lid";
     private final ModelPart body;
+    private final ModelPart lid;
 
     public GearboxRenderer(BlockEntityRendererProvider.Context context) {
         ModelPart root = context.bakeLayer(RNModelLayers.BRONZE_GEARBOX);
         this.body = root.getChild(BODY);
+        this.lid = root.getChild(LID);
     }
 
     public static LayerDefinition createSingleBodyLayer() {
@@ -82,8 +85,13 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
         partdefinition.addOrReplaceChild("body", CubeListBuilder.create()
                         .texOffs(0, 16).addBox(-8.0F, -8.0F, -8.0F, 16.0F, 16.0F, 16.0F, new CubeDeformation(0.0F))
                         .texOffs(0, 48).addBox(-6.0F, -6.0F, -6.0F, 12.0F, 12.0F, 12.0F, new CubeDeformation(0.0F))
-                        .texOffs(16, 0).addBox(-8.0F, 6.0F, -8.0F, 16.0F, 0.0F, 16.0F, new CubeDeformation(0.0F))
-                        .texOffs(0, 0).addBox(-8.0F, -6.0F, -8.0F, 16.0F, 0.0F, 16.0F, new CubeDeformation(0.0F)),
+                        .texOffs(16, 0).addBox(-8.0F, 6.0F, -8.0F, 16.0F, 0.0F, 16.0F, new CubeDeformation(0.0F)),
+                PartPose.offsetAndRotation(8.0F, 8.0F, 8.0F, 3.14159F, .0F, 0.0F));
+
+        // The top plate is a zero-thickness plane with a different opaque texture on each side, so it has to be backface culled (see render) or both sides
+        // z-fight. It also sits a hair outside the inner cube's top face, which would otherwise be coplanar with it.
+        partdefinition.addOrReplaceChild(LID, CubeListBuilder.create()
+                        .texOffs(0, 0).addBox(-8.0F, -6.02F, -8.0F, 16.0F, 0.0F, 16.0F, new CubeDeformation(0.0F)),
                 PartPose.offsetAndRotation(8.0F, 8.0F, 8.0F, 3.14159F, .0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 128, 128);
@@ -106,18 +114,25 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
 
             TarnishStage stage = gearboxBlock.getAge();
             Material tex = (lit ? ANIM_BODY_TEXTURES : BODY_TEXTURES).getOrDefault(stage, BODY_TEXTURES.get(TarnishStage.UNAFFECTED));
-            VertexConsumer consumer = tex.buffer(multiBufferSource, RenderType::entityCutoutNoCull);
+            // Culled on purpose: stacked gearboxes share coplanar faces (top of one, bottom of the next) and the plates are zero-thickness, which z-fight if
+            // both sides of every face are drawn.
+            VertexConsumer consumer = tex.buffer(multiBufferSource, RenderType::entityCutout);
 
-            float angle = lit ? (level.getGameTime() + partialTick) * 0.05f : this.calcAngle(blockstate);
-            this.renderKey(poseStack, multiBufferSource, stage, angle, packedLight, packedOverlay);
+            float angle = lit ? litAngle(level.getGameTime(), partialTick) : this.calcAngle(blockstate);
+            this.renderKey(poseStack, multiBufferSource, stage, angle, blockstate.getValue(GearboxBlock.BROKEN), packedLight, packedOverlay);
             this.body.render(poseStack, consumer, packedLight, packedOverlay);
+            this.lid.render(poseStack, consumer, packedLight, packedOverlay);
             poseStack.popPose();
         }
     }
 
-    private void renderKey(PoseStack poseStack, MultiBufferSource buffers, TarnishStage stage, float angle, int light, int overlay) {
+    private void renderKey(PoseStack poseStack, MultiBufferSource buffers, TarnishStage stage, float angle, boolean broken, int light, int overlay) {
+        if (broken) {
+            return;
+        }
         Material texture = KEY_TEXTURES.getOrDefault(stage, KEY_TEXTURES.get(TarnishStage.UNAFFECTED));
-        VertexConsumer consumer = texture.buffer(buffers, RenderType::entityCutoutNoCull);
+        // Backface culling is required: the handle is two coplanar quads (north and south, both at z=8), which z-fight if both are drawn from either side.
+        VertexConsumer consumer = texture.buffer(buffers, RenderType::entityCutout);
 
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.0F, 0.5F);
@@ -160,6 +175,20 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
                     .setLight(light)
                     .setNormal(pose, face.getStepX(), face.getStepY(), face.getStepZ());
         }
+    }
+
+    /**
+     * While lit the crank ratchets: it rests, snaps forward one notch with an ease-out, rests again. The step is derived from the game time so it lines up
+     * with the click the block entity plays at the start of each step.
+     */
+    private static float litAngle(long gameTime, float partialTick) {
+        long step = gameTime / GearboxBlock.STEP_TICKS;
+        float intoStep = (gameTime % GearboxBlock.STEP_TICKS) + partialTick;
+        float progress = Math.min(intoStep / GearboxBlock.SNAP_TICKS, 1.0F);
+        float eased = 1.0F - (1.0F - progress) * (1.0F - progress) * (1.0F - progress);
+        // wrapped per turn so the angle never loses float precision over long play sessions
+        float notch = Math.floorMod(step, (long) GearboxBlock.STEPS_PER_TURN) + eased;
+        return notch * ((float) (Math.PI * 2.0) / GearboxBlock.STEPS_PER_TURN);
     }
 
     private float calcAngle(BlockState state) {

@@ -115,7 +115,15 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 	}
 
 	public int getIdleTicks() {
-		return switch (tarnishStage) {
+		return idleTicks(tarnishStage);
+	}
+
+	public int getUnwindTicks() {
+		return unwindTicks(tarnishStage);
+	}
+
+	public static int idleTicks(TarnishStage stage) {
+		return switch (stage) {
 			case UNAFFECTED -> UNAFFECTED_IDLE_TICKS;
 			case DISCOLORED -> DISCOLORED_IDLE_TICKS;
 			case CORRODED -> CORRODED_IDLE_TICKS;
@@ -124,8 +132,8 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 		};
 	}
 
-	public int getUnwindTicks() {
-		return switch (tarnishStage) {
+	public static int unwindTicks(TarnishStage stage) {
+		return switch (stage) {
 			case UNAFFECTED -> UNAFFECTED_UNWIND_TICKS;
 			case DISCOLORED -> DISCOLORED_UNWIND_TICKS;
 			case CORRODED -> CORRODED_UNWIND_TICKS;
