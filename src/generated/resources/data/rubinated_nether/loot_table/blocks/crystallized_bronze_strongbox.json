@@ -1,0 +1,65 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "rubinated_nether:crystallized_bronze_strongbox",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "waxed": "true"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:custom_name"
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "rubinated_nether:waxed_crystallized_bronze_strongbox"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "block": "rubinated_nether:crystallized_bronze_strongbox",
+            "condition": "minecraft:block_state_property",
+            "properties": {
+              "waxed": "true"
+            }
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:custom_name"
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "rubinated_nether:crystallized_bronze_strongbox"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "rubinated_nether:blocks/crystallized_bronze_strongbox"
+}

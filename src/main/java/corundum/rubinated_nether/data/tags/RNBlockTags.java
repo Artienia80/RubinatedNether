@@ -180,6 +180,12 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.TARNISHED_BRONZE_VASE.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_VASE.get(),
 
+				RNBlocks.BRONZE_STRONGBOX.get(),
+				RNBlocks.DISCOLORED_BRONZE_STRONGBOX.get(),
+				RNBlocks.CORRODED_BRONZE_STRONGBOX.get(),
+				RNBlocks.TARNISHED_BRONZE_STRONGBOX.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX.get(),
+
 				RNBlocks.BRONZE_GEARBOX.get(),
 				RNBlocks.DISCOLORED_BRONZE_GEARBOX.get(),
 				RNBlocks.CORRODED_BRONZE_GEARBOX.get(),
@@ -354,6 +360,12 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CORRODED_BRONZE_VASE.get(),
 				RNBlocks.TARNISHED_BRONZE_VASE.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_VASE.get(),
+
+				RNBlocks.BRONZE_STRONGBOX.get(),
+				RNBlocks.DISCOLORED_BRONZE_STRONGBOX.get(),
+				RNBlocks.CORRODED_BRONZE_STRONGBOX.get(),
+				RNBlocks.TARNISHED_BRONZE_STRONGBOX.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX.get(),
 
 				RNBlocks.BRONZE_GEARBOX.get(),
 				RNBlocks.DISCOLORED_BRONZE_GEARBOX.get(),

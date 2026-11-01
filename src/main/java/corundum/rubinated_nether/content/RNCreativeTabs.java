@@ -211,6 +211,7 @@ public class RNCreativeTabs {
 										RNBlocks.BRONZE_BUTTON,
 										RNBlocks.BRONZE_LASER,
 										RNBlocks.BRONZE_VASE,
+										RNBlocks.BRONZE_STRONGBOX,
 										RNBlocks.BRONZE_GEARBOX
 								},
 								new ItemLike[]{
@@ -232,6 +233,7 @@ public class RNCreativeTabs {
 										RNBlocks.DISCOLORED_BRONZE_BUTTON,
 										RNBlocks.DISCOLORED_BRONZE_LASER,
 										RNBlocks.DISCOLORED_BRONZE_VASE,
+										RNBlocks.DISCOLORED_BRONZE_STRONGBOX,
 										RNBlocks.DISCOLORED_BRONZE_GEARBOX
 								},
 								new ItemLike[]{
@@ -253,6 +255,7 @@ public class RNCreativeTabs {
 										RNBlocks.CORRODED_BRONZE_BUTTON,
 										RNBlocks.CORRODED_BRONZE_LASER,
 										RNBlocks.CORRODED_BRONZE_VASE,
+										RNBlocks.CORRODED_BRONZE_STRONGBOX,
 										RNBlocks.CORRODED_BRONZE_GEARBOX
 								},
 								new ItemLike[]{
@@ -274,6 +277,7 @@ public class RNCreativeTabs {
 										RNBlocks.TARNISHED_BRONZE_BUTTON,
 										RNBlocks.TARNISHED_BRONZE_LASER,
 										RNBlocks.TARNISHED_BRONZE_VASE,
+										RNBlocks.TARNISHED_BRONZE_STRONGBOX,
 										RNBlocks.TARNISHED_BRONZE_GEARBOX
 								},
 								new ItemLike[]{
@@ -295,6 +299,7 @@ public class RNCreativeTabs {
 										RNBlocks.CRYSTALLIZED_BRONZE_BUTTON,
 										RNBlocks.CRYSTALLIZED_BRONZE_LASER,
 										RNBlocks.CRYSTALLIZED_BRONZE_VASE,
+										RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX,
 										RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX
 								}
 						);
@@ -441,6 +446,26 @@ public class RNCreativeTabs {
 					RNBlocks.SHRINE_STONE_COFFER.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNBlocks.SHRINE_STONE_COFFER.get().asItem().getDefaultInstance(),
 					RNBlocks.RUBINATED_SHRINE_STONE_COFFER.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.RUBINATED_SHRINE_STONE_COFFER.get().asItem().getDefaultInstance(),
+					RNBlocks.BRONZE_STRONGBOX.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.BRONZE_STRONGBOX.get().asItem().getDefaultInstance(),
+					RNBlocks.DISCOLORED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.DISCOLORED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(),
+					RNBlocks.CORRODED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.CORRODED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(),
+					RNBlocks.TARNISHED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.TARNISHED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(),
+					RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(),
+					getWaxed(RNBlocks.BRONZE_STRONGBOX), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.BRONZE_STRONGBOX),
+					getWaxed(RNBlocks.DISCOLORED_BRONZE_STRONGBOX), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.DISCOLORED_BRONZE_STRONGBOX),
+					getWaxed(RNBlocks.CORRODED_BRONZE_STRONGBOX), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.CORRODED_BRONZE_STRONGBOX),
+					getWaxed(RNBlocks.TARNISHED_BRONZE_STRONGBOX), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_STRONGBOX),
+					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX), BOTH_TABS);
 			event.insertAfter(Items.CHISELED_BOOKSHELF.getDefaultInstance(),
 					RNBlocks.RUNESTONE.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.CRYING_OBSIDIAN.getDefaultInstance(),

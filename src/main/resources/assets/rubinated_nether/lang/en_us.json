@@ -268,6 +268,22 @@
   "item.rubinated_nether.waxed_tarnished_bronze_vase": "Waxed Tarnished Bronze Vase",
   "item.rubinated_nether.waxed_crystallized_bronze_vase": "Waxed Crystallized Bronze Vase",
 
+  "block.rubinated_nether.bronze_strongbox": "Bronze Strongbox",
+  "block.rubinated_nether.discolored_bronze_strongbox": "Discolored Bronze Strongbox",
+  "block.rubinated_nether.corroded_bronze_strongbox": "Corroded Bronze Strongbox",
+  "block.rubinated_nether.tarnished_bronze_strongbox": "Tarnished Bronze Strongbox",
+  "block.rubinated_nether.crystallized_bronze_strongbox": "Crystallized Bronze Strongbox",
+
+  "item.rubinated_nether.waxed_bronze_strongbox": "Waxed Bronze Strongbox",
+  "item.rubinated_nether.waxed_discolored_bronze_strongbox": "Waxed Discolored Bronze Strongbox",
+  "item.rubinated_nether.waxed_corroded_bronze_strongbox": "Waxed Corroded Bronze Strongbox",
+  "item.rubinated_nether.waxed_tarnished_bronze_strongbox": "Waxed Tarnished Bronze Strongbox",
+  "item.rubinated_nether.waxed_crystallized_bronze_strongbox": "Waxed Crystallized Bronze Strongbox",
+
+  "container.bronze_strongbox": "Bronze Strongbox",
+  "container.bronze_strongbox_locked": "Needs a Winding Key",
+  "container.bronze_strongbox_wrong_key": "The key doesn't fit",
+
   "block.rubinated_nether.bronze_laser": "Bronze Laser",
   "block.rubinated_nether.discolored_bronze_laser": "Discolored Bronze Laser",
   "block.rubinated_nether.corroded_bronze_laser": "Corroded Bronze Laser",

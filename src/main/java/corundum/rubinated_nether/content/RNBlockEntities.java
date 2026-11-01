@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.blocks.ChandelierBlock;
 import corundum.rubinated_nether.content.blocks.TarnishingBronzeVentBlock;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.BronzeLaserBlockEntity;
+import corundum.rubinated_nether.content.blocks.entities.BronzeStrongboxBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.BronzeWinderBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.CopperLaserBlockEntity;
@@ -123,6 +124,20 @@ public class RNBlockEntities {
 			).build(
                     Util.fetchChoiceType(References.BLOCK_ENTITY, "coffer")
             )
+	);
+
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BronzeStrongboxBlockEntity>> BRONZE_STRONGBOX = BLOCK_ENTITY_TYPES.register(
+			"bronze_strongbox",
+			() -> BlockEntityType.Builder.of(
+					BronzeStrongboxBlockEntity::new,
+					RNBlocks.BRONZE_STRONGBOX.get(),
+					RNBlocks.DISCOLORED_BRONZE_STRONGBOX.get(),
+					RNBlocks.CORRODED_BRONZE_STRONGBOX.get(),
+					RNBlocks.TARNISHED_BRONZE_STRONGBOX.get(),
+					RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX.get()
+			).build(
+					Util.fetchChoiceType(References.BLOCK_ENTITY, "bronze_strongbox")
+			)
 	);
 
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RubinatedCofferBlockEntity>> RUBINATED_COFFER = BLOCK_ENTITY_TYPES.register(

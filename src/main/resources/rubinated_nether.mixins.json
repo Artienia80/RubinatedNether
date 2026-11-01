@@ -10,7 +10,8 @@
     "ItemEntityMixin",
     "PlayerMixin",
     "BoatMixin",
-    "StonecutterMenuMixin"
+    "StonecutterMenuMixin",
+    "AnvilMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1

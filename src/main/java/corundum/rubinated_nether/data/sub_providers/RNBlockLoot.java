@@ -7,6 +7,7 @@ import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -145,6 +147,11 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.FREEZER.get());
 		this.dropSelf(RNBlocks.BRAZIER.get());
 		this.dropSelf(RNBlocks.RUBINATION_ALTAR.get());
+		this.strongboxDrop(RNBlocks.BRONZE_STRONGBOX);
+		this.strongboxDrop(RNBlocks.DISCOLORED_BRONZE_STRONGBOX);
+		this.strongboxDrop(RNBlocks.CORRODED_BRONZE_STRONGBOX);
+		this.strongboxDrop(RNBlocks.TARNISHED_BRONZE_STRONGBOX);
+		this.strongboxDrop(RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX);
 
 		this.dropSelf(RNBlocks.SHRINE_STONE_COFFER.get());
 
@@ -379,6 +386,40 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		add(
 				block.get(),
 				fn
+		);
+	}
+
+	/** Like {@link #waxableDrop}, but the strongbox keeps its password (its custom name) when it is broken. */
+	private void strongboxDrop(DeferredBlock<?> block) {
+		var waxedCondition = LootItemBlockStatePropertyCondition
+				.hasBlockStateProperties(block.get())
+				.setProperties(
+						StatePropertiesPredicate.Builder
+								.properties()
+								.hasProperty(TarnishingBronze.WAXED, true)
+				);
+
+		var waxedItem = BuiltInRegistries.ITEM.get(
+				RubinatedNether.id(WaxableBlockItem.getWaxableItem(block))
+		);
+
+		var keepPassword = CopyComponentsFunction
+				.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+				.include(DataComponents.CUSTOM_NAME);
+
+		add(
+				block.get(),
+				LootTable.lootTable()
+						.withPool(
+								LootPool.lootPool()
+										.when(waxedCondition)
+										.add(LootItem.lootTableItem(waxedItem).apply(keepPassword))
+						)
+						.withPool(
+								LootPool.lootPool()
+										.when(waxedCondition.invert())
+										.add(LootItem.lootTableItem(block).apply(keepPassword))
+						)
 		);
 	}
 }

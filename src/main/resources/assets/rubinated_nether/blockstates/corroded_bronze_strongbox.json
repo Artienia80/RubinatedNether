@@ -1,0 +1,76 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "rubinated_nether:block/corroded_bronze_block"
+      }
+    },
+    {
+      "when": {
+        "key": "1"
+      },
+      "apply": {
+        "model": "rubinated_nether:block/corroded_bronze_strongbox_key_0"
+      }
+    },
+    {
+      "when": {
+        "key": "2"
+      },
+      "apply": {
+        "model": "rubinated_nether:block/corroded_bronze_strongbox_key_eighth"
+      }
+    },
+    {
+      "when": {
+        "key": "3"
+      },
+      "apply": {
+        "model": "rubinated_nether:block/corroded_bronze_strongbox_key_1"
+      }
+    },
+    {
+      "when": {
+        "key": "4"
+      },
+      "apply": {
+        "model": "rubinated_nether:block/corroded_bronze_strongbox_key_eighth",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "key": "5"
+      },
+      "apply": {
+        "model": "rubinated_nether:block/corroded_bronze_strongbox_key_2"
+      }
+    },
+    {
+      "when": {
+        "key": "6"
+      },
+      "apply": {
+        "model": "rubinated_nether:block/corroded_bronze_strongbox_key_eighth",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "key": "7"
+      },
+      "apply": {
+        "model": "rubinated_nether:block/corroded_bronze_strongbox_key_3"
+      }
+    },
+    {
+      "when": {
+        "key": "8"
+      },
+      "apply": {
+        "model": "rubinated_nether:block/corroded_bronze_strongbox_key_eighth",
+        "y": 270
+      }
+    }
+  ]
+}

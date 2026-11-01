@@ -2,6 +2,7 @@ package corundum.rubinated_nether.event;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.client.render.RubinatedTextRenderer;
+import corundum.rubinated_nether.client.render.StrongboxPasswordText;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
@@ -41,19 +42,27 @@ public class SelectedItemNameHandler {
 
         if (gui.toolHighlightTimer <= 0 || stack.isEmpty()) return;
         if (mc.gameMode == null || mc.gameMode.getPlayerMode() == GameType.SPECTATOR) return;
-        if (!RubinatedTextRenderer.useRubinatedLang()) return;
-        if (!RubinatedTextRenderer.isRubinated(stack)) return;
-        if (stack.has(DataComponents.CUSTOM_NAME)) return;
+        boolean hiddenPassword = StrongboxPasswordText.shouldObscure(stack);
+        if (!hiddenPassword) {
+            if (!RubinatedTextRenderer.useRubinatedLang()) return;
+            if (!RubinatedTextRenderer.isRubinated(stack)) return;
+            if (stack.has(DataComponents.CUSTOM_NAME)) return;
+        }
 
         event.setCanceled(true);
 
         GuiGraphics guiGraphics = event.getGuiGraphics();
         mc.getProfiler().push("selectedItemName");
 
-        MutableComponent name = Component.empty()
-                .append(stack.getHoverName())
-                .withStyle(stack.getRarity().getStyleModifier());
-        Component tip = stack.getHighlightTip(RubinatedTextRenderer.restyleWithEnglishName(name, stack));
+        Component tip;
+        if (hiddenPassword) {
+            tip = stack.getHighlightTip(StrongboxPasswordText.styledName(stack));
+        } else {
+            MutableComponent name = Component.empty()
+                    .append(stack.getHoverName())
+                    .withStyle(stack.getRarity().getStyleModifier());
+            tip = stack.getHighlightTip(RubinatedTextRenderer.restyleWithEnglishName(name, stack));
+        }
 
         int width = mc.font.width(tip);
         int x = (guiGraphics.guiWidth() - width) / 2;

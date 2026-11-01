@@ -1350,6 +1350,46 @@ public class RNBlocks {
 			)
 	);
 
+	public static final DeferredBlock<Block> BRONZE_STRONGBOX = registerWaxableBlock(
+			"bronze_strongbox",
+			() -> new BronzeStrongboxBlock(
+					TarnishStage.UNAFFECTED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get())
+			)
+	);
+
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_STRONGBOX = registerWaxableBlock(
+			"discolored_bronze_strongbox",
+			() -> new BronzeStrongboxBlock(
+					TarnishStage.DISCOLORED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get())
+			)
+	);
+
+	public static final DeferredBlock<Block> CORRODED_BRONZE_STRONGBOX = registerWaxableBlock(
+			"corroded_bronze_strongbox",
+			() -> new BronzeStrongboxBlock(
+					TarnishStage.CORRODED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get())
+			)
+	);
+
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_STRONGBOX = registerWaxableBlock(
+			"tarnished_bronze_strongbox",
+			() -> new BronzeStrongboxBlock(
+					TarnishStage.TARNISHED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get())
+			)
+	);
+
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_STRONGBOX = registerWaxableBlock(
+			"crystallized_bronze_strongbox",
+			() -> new BronzeStrongboxBlock(
+					TarnishStage.CRYSTALLIZED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get())
+			)
+	);
+
 	// Winders and gearboxes used to be registered without the "bronze_" part of their id. These aliases keep
 	// blocks in existing worlds, items in inventories and structure data working under the new ids.
 	static {
