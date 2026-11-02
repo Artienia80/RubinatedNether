@@ -17,18 +17,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AnvilMenu.class)
 public class AnvilMenuMixin {
-
     @Shadow
     private String itemName;
 
     @Unique
     private ItemStack rn$keyBeingRenamed = ItemStack.EMPTY;
 
-    /** The name the strongbox and its keys are being renamed to; null when the name is being removed. */
     @Unique
     private String rn$newName = null;
 
-    /** Swaps the second input slot for one that only takes keys next to a strongbox. */
     @Inject(method = "<init>(ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/inventory/ContainerLevelAccess;)V", at = @At("TAIL"))
     private void rn$useKeySlot(int containerId, Inventory inventory, ContainerLevelAccess access, CallbackInfo ci) {
         AnvilMenu menu = (AnvilMenu) (Object) this;
@@ -46,12 +43,9 @@ public class AnvilMenuMixin {
         this.rn$keyBeingRenamed = StrongboxLock.isStrongbox(left) && StrongboxLock.isKey(right)
                 ? right.copy()
                 : ItemStack.EMPTY;
-        // Taken now, from what was typed, because by the end of the take the result stack may already be
-        // moved or emptied and the input slots are cleared.
         this.rn$newName = this.itemName == null || this.itemName.isBlank() ? null : this.itemName;
     }
 
-    /** The keys are not used up: they stay in the second slot, all renamed to the strongbox's new name. */
     @Inject(method = "onTake", at = @At("TAIL"))
     private void rn$returnRenamedKey(Player player, ItemStack stack, CallbackInfo ci) {
         if (this.rn$keyBeingRenamed.isEmpty()) {

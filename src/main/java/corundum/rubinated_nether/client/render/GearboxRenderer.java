@@ -34,7 +34,6 @@ import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
 public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> {
-
     public static final Map<TarnishStage, Material> BODY_TEXTURES = Map.of(
             TarnishStage.UNAFFECTED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/bronze_gearbox")),
             TarnishStage.DISCOLORED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/discolored_bronze_gearbox")),
@@ -88,8 +87,6 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
                         .texOffs(16, 0).addBox(-8.0F, 6.0F, -8.0F, 16.0F, 0.0F, 16.0F, new CubeDeformation(0.0F)),
                 PartPose.offsetAndRotation(8.0F, 8.0F, 8.0F, 3.14159F, .0F, 0.0F));
 
-        // The top plate is a zero-thickness plane with a different opaque texture on each side, so it has to be backface culled (see render) or both sides
-        // z-fight. It also sits a hair outside the inner cube's top face, which would otherwise be coplanar with it.
         partdefinition.addOrReplaceChild(LID, CubeListBuilder.create()
                         .texOffs(0, 0).addBox(-8.0F, -6.02F, -8.0F, 16.0F, 0.0F, 16.0F, new CubeDeformation(0.0F)),
                 PartPose.offsetAndRotation(8.0F, 8.0F, 8.0F, 3.14159F, .0F, 0.0F));
@@ -114,8 +111,6 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
 
             TarnishStage stage = gearboxBlock.getAge();
             Material tex = (lit ? ANIM_BODY_TEXTURES : BODY_TEXTURES).getOrDefault(stage, BODY_TEXTURES.get(TarnishStage.UNAFFECTED));
-            // Culled on purpose: stacked gearboxes share coplanar faces (top of one, bottom of the next) and the plates are zero-thickness, which z-fight if
-            // both sides of every face are drawn.
             VertexConsumer consumer = tex.buffer(multiBufferSource, RenderType::entityCutout);
 
             float angle = lit ? litAngle(level.getGameTime(), partialTick) : this.calcAngle(blockstate);
@@ -131,7 +126,6 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
             return;
         }
         Material texture = KEY_TEXTURES.getOrDefault(stage, KEY_TEXTURES.get(TarnishStage.UNAFFECTED));
-        // Backface culling is required: the handle is two coplanar quads (north and south, both at z=8), which z-fight if both are drawn from either side.
         VertexConsumer consumer = texture.buffer(buffers, RenderType::entityCutout);
 
         poseStack.pushPose();
@@ -177,16 +171,11 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
         }
     }
 
-    /**
-     * While lit the crank ratchets: it rests, snaps forward one notch with an ease-out, rests again. The step is derived from the game time so it lines up
-     * with the click the block entity plays at the start of each step.
-     */
     private static float litAngle(long gameTime, float partialTick) {
         long step = gameTime / GearboxBlock.STEP_TICKS;
         float intoStep = (gameTime % GearboxBlock.STEP_TICKS) + partialTick;
         float progress = Math.min(intoStep / GearboxBlock.SNAP_TICKS, 1.0F);
         float eased = 1.0F - (1.0F - progress) * (1.0F - progress) * (1.0F - progress);
-        // wrapped per turn so the angle never loses float precision over long play sessions
         float notch = Math.floorMod(step, (long) GearboxBlock.STEPS_PER_TURN) + eased;
         return notch * ((float) (Math.PI * 2.0) / GearboxBlock.STEPS_PER_TURN);
     }

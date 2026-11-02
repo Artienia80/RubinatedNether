@@ -11,10 +11,6 @@ import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
 
-/**
- * The anvil's second slot. With a strongbox in the first slot it only takes winding keys and shows a key
- * as its empty-slot icon; otherwise it behaves like the normal slot.
- */
 public class StrongboxKeySlot extends Slot {
     private static final ResourceLocation EMPTY_KEY_ICON = RubinatedNether.id("item/empty_slot_key");
 

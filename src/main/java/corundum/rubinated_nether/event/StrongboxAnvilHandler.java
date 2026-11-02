@@ -9,11 +9,6 @@ import net.neoforged.neoforge.event.AnvilUpdateEvent;
 
 import java.util.Objects;
 
-/**
- * A strongbox can only be renamed in the anvil together with a winding key, and the key is renamed with it
- * (see {@code AnvilMenuMixin} for the key coming back). A strongbox that already has a password only accepts the
- * key renamed to that password.
- */
 @EventBusSubscriber(modid = RubinatedNether.MODID)
 public class StrongboxAnvilHandler {
     private static final int RENAME_LEVEL_COST = 1;
@@ -36,7 +31,6 @@ public class StrongboxAnvilHandler {
             return;
         }
 
-        // A blank name removes the password (and the key's name along with it).
         String newName = typed.isBlank() ? null : typed;
         String current = StrongboxLock.password(left);
         if (Objects.equals(newName, current) || (current == null && typed.equals(left.getHoverName().getString()))) {

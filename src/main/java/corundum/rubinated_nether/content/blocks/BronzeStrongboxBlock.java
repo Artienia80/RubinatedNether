@@ -57,7 +57,6 @@ public class BronzeStrongboxBlock extends ChestBlock implements TarnishingBronze
     public static final BooleanProperty NATURAL = BooleanProperty.create("natural");
     public static final IntegerProperty KEY = IntegerProperty.create("key", 0, 8);
 
-    /** Key states 1..KEY_POSITIONS are the key turned in steps of 1/8 of a circle; 0 means no key. */
     public static final int KEY_POSITIONS = 8;
 
     private static final int MIN_NATURAL_CRANKS = 2;
@@ -140,7 +139,6 @@ public class BronzeStrongboxBlock extends ChestBlock implements TarnishingBronze
                     return ItemInteractionResult.sidedSuccess(false);
                 }
                 if (state.getValue(NATURAL) && strongbox.getCranksRemaining() <= 0) {
-                    // Pulling a key out and putting it back must not re-roll the cranks that are left.
                     strongbox.setCranksRemaining(MIN_NATURAL_CRANKS + level.random.nextInt(MAX_NATURAL_CRANKS - MIN_NATURAL_CRANKS + 1));
                 }
                 strongbox.insertKey(stack);
@@ -155,7 +153,6 @@ public class BronzeStrongboxBlock extends ChestBlock implements TarnishingBronze
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
-    /** Shears pull the key back out. In a vault (generated strongbox) the key breaks half of the time. */
     private void removeKey(BlockState state, Level level, BlockPos pos, BronzeStrongboxBlockEntity strongbox, Direction face) {
         ItemStack key = strongbox.takeKey();
         level.setBlock(pos, state.setValue(KEY, 0), Block.UPDATE_ALL);
@@ -189,7 +186,6 @@ public class BronzeStrongboxBlock extends ChestBlock implements TarnishingBronze
             return InteractionResult.CONSUME;
         }
 
-        // A placed strongbox just opens; the key stays in until it is removed with shears.
         if (this.getMenuProvider(state, level, pos) == null) {
             return InteractionResult.CONSUME;
         }

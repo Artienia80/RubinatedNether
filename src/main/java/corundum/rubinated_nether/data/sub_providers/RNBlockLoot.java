@@ -225,11 +225,11 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_WINDER);
 		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_WINDER);
 
-        this.waxableDrop(RNBlocks.BRONZE_GEARBOX);
-        this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_GEARBOX);
-        this.waxableDrop(RNBlocks.CORRODED_BRONZE_GEARBOX);
-        this.waxableDrop(RNBlocks.TARNISHED_BRONZE_GEARBOX);
-        this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX);
+        this.gearboxDrop(RNBlocks.BRONZE_GEARBOX);
+        this.gearboxDrop(RNBlocks.DISCOLORED_BRONZE_GEARBOX);
+        this.gearboxDrop(RNBlocks.CORRODED_BRONZE_GEARBOX);
+        this.gearboxDrop(RNBlocks.TARNISHED_BRONZE_GEARBOX);
+        this.gearboxDrop(RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX);
 
 		this.waxableDrop(RNBlocks.BRONZE_VENT);
 		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_VENT);
@@ -359,6 +359,49 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		);
 	}
 
+	private void gearboxDrop(DeferredBlock<?> block) {
+		var waxedCondition = LootItemBlockStatePropertyCondition
+				.hasBlockStateProperties(block.get())
+				.setProperties(
+						StatePropertiesPredicate.Builder
+								.properties()
+								.hasProperty(TarnishingBronze.WAXED, true)
+				);
+
+		var waxedItem = BuiltInRegistries.ITEM.get(
+				RubinatedNether.id(WaxableBlockItem.getWaxableItem(block))
+		);
+
+		add(
+				block.get(),
+				LootTable.lootTable()
+						.withPool(
+								LootPool.lootPool()
+										.when(this.hasSilkTouch())
+										.when(waxedCondition)
+										.add(LootItem.lootTableItem(waxedItem))
+						)
+						.withPool(
+								LootPool.lootPool()
+										.when(this.hasSilkTouch())
+										.when(waxedCondition.invert())
+										.add(LootItem.lootTableItem(block))
+						)
+						.withPool(
+								LootPool.lootPool()
+										.when(this.hasSilkTouch().invert())
+										.add(LootItem.lootTableItem(RNItems.COGWHEEL.get())
+												.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F))))
+						)
+						.withPool(
+								LootPool.lootPool()
+										.when(this.hasSilkTouch().invert())
+										.add(LootItem.lootTableItem(RNItems.WINDING_KEY.get())
+												.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F))))
+						)
+		);
+	}
+
 	private void waxableDrop(DeferredBlock<?> block) {
 		var waxedCondition = LootItemBlockStatePropertyCondition
 				.hasBlockStateProperties(block.get())
@@ -390,7 +433,6 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		);
 	}
 
-	/** Like {@link #waxableDrop}, but the strongbox keeps its password (its custom name) when it is broken. */
 	private void strongboxDrop(DeferredBlock<?> block) {
 		var waxedCondition = LootItemBlockStatePropertyCondition
 				.hasBlockStateProperties(block.get())

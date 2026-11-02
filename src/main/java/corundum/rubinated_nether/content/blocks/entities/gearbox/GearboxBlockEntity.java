@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class GearboxBlockEntity extends BlockEntity implements Spawner, TickableBlockEntity {
-
     // Spawner state
     private int totalBronzes = 0;
     private int bronzesSpawned = 0;
@@ -49,7 +48,6 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
     // Cooldown state — waits for all bronzes to die rather than a timer
     private boolean coolingDown = false;
 
-    // Game time of the last crank input, so the crank only starts unwinding once nobody has touched it for the idle time (same as the winder)
     private long lastInput = -1L;
 
     private final BaseSpawner spawner = new BaseSpawner() {
@@ -144,7 +142,6 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
         BlockState state = serverLevel.getBlockState(this.worldPosition);
         if (!state.getValue(GearboxBlock.LIT)) return;
 
-        // The crank ratchets one notch per step (rendered in GearboxRenderer.litAngle), alternating a higher "tick" and a lower "tock"
         long gameTime = serverLevel.getGameTime();
         if (gameTime % GearboxBlock.STEP_TICKS == 0) {
             boolean tick = (gameTime / GearboxBlock.STEP_TICKS) % 2 == 0;

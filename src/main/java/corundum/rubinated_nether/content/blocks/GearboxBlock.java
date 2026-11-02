@@ -54,11 +54,8 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
     );
 
     public static final int MAX_CRANK = 15;
-    /** While lit, the crank ratchets one notch (and clicks) every this many ticks. */
     public static final int STEP_TICKS = 10;
-    /** How many notches make a full turn of the crank. */
     public static final int STEPS_PER_TURN = 12;
-    /** How many ticks of each step the crank spends actually moving; it rests for the remainder. */
     public static final float SNAP_TICKS = 3.0F;
     public static final float KEY_BREAK_CHANCE = 0.5F;
     public static final double PLAYER_SCAN_RADIUS = 64.0;
@@ -360,8 +357,6 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
         return !state.getValue(LIT) && !state.getValue(COOLING_DOWN) && !state.getValue(BROKEN);
     }
 
-    // The crank unwinds exactly like the Bronze Winder (same per-stage idle and unwind times, shared from BronzeWinderBlock): it holds its charge until
-    // nobody has touched it for the idle time, then drops one notch per unwind interval. Every input restarts the idle time.
     public int getIdleTicks() {
         return BronzeWinderBlock.idleTicks(getAge());
     }

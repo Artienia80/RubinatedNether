@@ -16,10 +16,6 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
 
 import javax.annotation.Nullable;
 
-/**
- * The anvil's name field for strongboxes: it stays greyed out until a fitting key is in the second slot, and a
- * strongbox with a password shows its name as scrambled Rubin letters (never the real name) until then.
- */
 @EventBusSubscriber(modid = RubinatedNether.MODID, value = Dist.CLIENT)
 public final class StrongboxAnvilClient {
     private static final ResourceLocation TEXT_FIELD_DISABLED = ResourceLocation.withDefaultNamespace("container/anvil/text_field_disabled");
@@ -38,7 +34,6 @@ public final class StrongboxAnvilClient {
         return StrongboxLock.anvilState(left, right);
     }
 
-    // Runs right before the screen is drawn, so the real name is never on screen, not even for a frame.
     @SubscribeEvent
     public static void onRenderPre(ScreenEvent.Render.Pre event) {
         if (!(event.getScreen() instanceof AnvilScreen screen)) {
@@ -76,7 +71,6 @@ public final class StrongboxAnvilClient {
         lastLeft = left.copy();
     }
 
-    // Covers the field with the greyed-out look and draws the scrambled (or plain) name in it.
     @SubscribeEvent
     public static void onRenderPost(ScreenEvent.Render.Post event) {
         if (!(event.getScreen() instanceof AnvilScreen screen)) {
