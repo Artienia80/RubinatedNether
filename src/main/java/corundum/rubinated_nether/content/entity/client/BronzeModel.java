@@ -162,9 +162,7 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
                 yaw = spin + Mth.TWO_PI * entity.getRodSlot(i, count, partial) - bodyYaw;
                 reach = ROD_REACH;
                 if (aiming && i == aimSlot) {
-                    float frontYaw = netHeadYaw * Mth.DEG_TO_RAD + Mth.HALF_PI;
-                    float delta = Mth.wrapDegrees((frontYaw - yaw) * Mth.RAD_TO_DEG) * Mth.DEG_TO_RAD;
-                    yaw += delta * aimBlend;
+                    // Yaw needs no extra turn: the whole ring is already rotated so this rod faces the target.
                     reach = Mth.lerp(aimBlend, ROD_REACH, FINAL_ROD_REACH);
                     pitch = Mth.clamp(headPitch * Mth.DEG_TO_RAD, -1.0F, 1.0F) * aimBlend;
                 }

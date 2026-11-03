@@ -85,10 +85,11 @@ public class BronzeEntity extends TarnishingEntity {
     private static final int MAX_RODS = 6;
     private static final double HEAD_CENTER_HEIGHT = 1.0625;
     private static final double ROD_SPAWN_DISTANCE = 1.0;
-    private static final float ROD_SHOT_SPEED = 1.8F;
+    private static final float ROD_SHOT_SPEED = 1.1F;
     private static final double ROD_ALIGN_DEGREES = 15.0;
     private static final int ROD_TRANSITION_TICKS = 10;
     private static final int ROD_AIM_BLEND_TICKS = 10;
+    private static final float ROD_AIM_CHASE = 0.3F;
     private static final int PLUMMET_MIN_TICKS = 3;
     private static final int PLUMMET_MAX_TICKS = 100;
     private static final EntityDataAccessor<Integer> ROD_COUNT =
@@ -97,6 +98,8 @@ public class BronzeEntity extends TarnishingEntity {
             SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> FIRED_ROD_SLOT =
             SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Float> ROD_SPIN =
+            SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.FLOAT);
 
     private final PathNavigation groundNavigation;
     private final MoveControl groundMoveControl;
@@ -111,6 +114,7 @@ public class BronzeEntity extends TarnishingEntity {
     private int rodTransitionFired = -1;
     private float rodSpin;
     private float rodSpinO;
+    private float rodSpinSpeed = ROD_SPIN_SPEED;
     private int rodAimTicks;
 
     // Goals
@@ -1120,7 +1124,46 @@ public class BronzeEntity extends TarnishingEntity {
             }
         } else {
             this.rodAimTicks = 0;
-            this.rodSpin += ROD_SPIN_SPEED;
+        }
+
+        if (this.level().isClientSide()) {
+            // The server owns the ring so every client sees the same pose.
+            this.rodSpin = this.entityData.get(ROD_SPIN);
+            if (Math.abs(this.rodSpin - this.rodSpinO) > 100.0F) {
+                this.rodSpinO = this.rodSpin;
+            }
+        } else if (this.isCrystallized()) {
+            this.tickRodSpinServer();
+            this.entityData.set(ROD_SPIN, this.rodSpin);
+        }
+    }
+
+    /**
+     * The ring never stops dead: while aiming it brakes over ROD_AIM_BLEND_TICKS and is turned (as a whole, so the
+     * spacing stays even) until the aimed rod points where the head looks. After a shot it accelerates back up.
+     */
+    private void tickRodSpinServer() {
+        int count = this.getRodCount();
+        boolean aiming = this.isRodAiming() && count > 1;
+
+        float step = ROD_SPIN_SPEED / ROD_AIM_BLEND_TICKS;
+        float targetSpeed = aiming ? 0.0F : ROD_SPIN_SPEED;
+        this.rodSpinSpeed += Mth.clamp(targetSpeed - this.rodSpinSpeed, -step, step);
+        this.rodSpin += this.rodSpinSpeed;
+
+        if (aiming) {
+            int slot = Mth.clamp(this.getRodAimSlot(), 0, count - 1);
+            double front = this.getYHeadRot() * Mth.DEG_TO_RAD + Mth.HALF_PI;
+            double aimedRod = this.rodSpin + Mth.TWO_PI * this.getRodSlot(slot, count, 0.0F);
+            double error = Mth.wrapDegrees((front - aimedRod) * Mth.RAD_TO_DEG) * Mth.DEG_TO_RAD;
+            float ramp = Mth.clamp((float) this.rodAimTicks / ROD_AIM_BLEND_TICKS, 0.0F, 1.0F);
+            float ease = ramp * ramp * (3.0F - 2.0F * ramp);
+            this.rodSpin += (float) (error * ROD_AIM_CHASE * ease);
+        }
+
+        if (this.rodSpin > 3000.0F) {
+            this.rodSpin -= Mth.TWO_PI * 400.0F;
+            this.rodSpinO = this.rodSpin;
         }
     }
 
@@ -1309,6 +1352,7 @@ public class BronzeEntity extends TarnishingEntity {
         builder.define(ROD_COUNT, MAX_RODS);
         builder.define(FIRED_ROD_SLOT, -1);
         builder.define(ROD_AIMING, false);
+        builder.define(ROD_SPIN, 0.0F);
     }
 
     @Override

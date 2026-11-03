@@ -274,6 +274,8 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.MOLTEN_RUBY,
 				RNItems.RUBY_SHARD,
 				RNItems.MOLTEN_RUBY_NUGGET,
+				RNItems.POMEGRANATE,
+				RNItems.RUBINATED_POMEGRANATE,
 				RNItems.MUSIC_DISC_SHIMMER,
 				RNItems.MUSIC_DISC_SINNER,
 				RNItems.BRONZE_ROD,

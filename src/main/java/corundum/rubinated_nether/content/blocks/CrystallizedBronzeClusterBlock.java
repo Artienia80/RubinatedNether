@@ -22,7 +22,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.List;
 
 public class CrystallizedBronzeClusterBlock extends CrystallizedBronzeCrystalBlock {
-    private static final int CONVERSION_RANGE = 3;
     private static final int SPREAD_CHANCE = 10;
 
     // 6 pixels wide, 7 pixels tall hitbox
@@ -52,28 +51,8 @@ public class CrystallizedBronzeClusterBlock extends CrystallizedBronzeCrystalBlo
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        convertNearbyBronze(level, pos, random);
-
         if (random.nextInt(SPREAD_CHANCE) == 0) {
             trySpreadToAdjacentBlocks(level, pos, random);
-        }
-    }
-
-    private void convertNearbyBronze(ServerLevel level, BlockPos crystalPos, RandomSource random) {
-        for (BlockPos pos : BlockPos.betweenClosed(
-                crystalPos.offset(-CONVERSION_RANGE, -CONVERSION_RANGE, -CONVERSION_RANGE),
-                crystalPos.offset(CONVERSION_RANGE, CONVERSION_RANGE, CONVERSION_RANGE)
-        )) {
-            if (pos.equals(crystalPos)) continue;
-
-            BlockState state = level.getBlockState(pos);
-
-            if (state.getBlock() instanceof TarnishingBronze && random.nextInt(20) == 0) {
-                TarnishingBronze bronze = (TarnishingBronze) state.getBlock();
-                bronze.getCrystallized(state).ifPresent(crystallized -> {
-                    level.setBlock(pos, crystallized, 3);
-                });
-            }
         }
     }
 

@@ -40,6 +40,7 @@ public class RNCreativeTabs {
 						if (showItems) addItems(output, RNItems.RUBY, RNItems.RUBY_SHARD);
 						addItems(output, RNBlocks.MOLTEN_RUBY_BLOCK);
 						if (showItems) addItems(output, RNItems.MOLTEN_RUBY, RNItems.MOLTEN_RUBY_NUGGET);
+						if (showItems) addItems(output, RNItems.POMEGRANATE, RNItems.RUBINATED_POMEGRANATE);
 						// Ore, obsidian, soakstone
 						addItems(output, RNBlocks.MOLTEN_RUBY_ORE, RNBlocks.BLEEDING_OBSIDIAN, RNBlocks.SOAKSTONE);
 						// Ruby glass, then panes in the same order
@@ -322,6 +323,7 @@ public class RNCreativeTabs {
 			if (RNConfig.tabDisplay == RNConfig.TabDisplay.MODDED_ONLY) return;
 			injectIngredients(event);
 			injectTools(event);
+			injectFood(event);
 			injectCombat(event);
 			injectNaturalBlocks(event);
 			injectBuildingBlocks(event);
@@ -395,6 +397,13 @@ public class RNCreativeTabs {
 					RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(),
 					RNItems.MUSIC_DISC_SINNER.get().getDefaultInstance(), BOTH_TABS);
+		}
+		private static void injectFood(BuildCreativeModeTabContentsEvent event) {
+			if (event.getTabKey() != CreativeModeTabs.FOOD_AND_DRINKS) return;
+			event.insertAfter(Items.APPLE.getDefaultInstance(),
+					RNItems.POMEGRANATE.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.POMEGRANATE.get().getDefaultInstance(),
+					RNItems.RUBINATED_POMEGRANATE.get().getDefaultInstance(), BOTH_TABS);
 		}
 		private static void injectCombat(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.COMBAT) return;

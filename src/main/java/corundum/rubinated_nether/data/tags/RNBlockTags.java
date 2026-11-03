@@ -424,7 +424,6 @@ public class RNBlockTags extends BlockTagsProvider {
 		this.tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).addTag(RNTags.Blocks.CRYSTALLIZED_BLOCKS);
 
 		this.tag(RNTags.Blocks.CRYSTALLIZATION_CATALYST).addTag(RNTags.Blocks.LIT_SOUL_BLOCKS);
-		this.tag(RNTags.Blocks.CRYSTALLIZATION_CATALYST).addTag(RNTags.Blocks.CRYSTALLIZED_BLOCKS);
 
 		this.tag(RNTags.Blocks.LASER_NO_SIGNAL).add(
 				Blocks.TINTED_GLASS
