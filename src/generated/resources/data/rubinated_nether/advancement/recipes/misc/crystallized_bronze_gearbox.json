@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bronze_gearbox": {
+    "has_cogwheel": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:bronze_gearbox"
+            "items": "rubinated_nether:cogwheel"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:bronze_gearbox_duplication"
+        "recipe": "rubinated_nether:crystallized_bronze_gearbox"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -31,13 +31,13 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_bronze_gearbox",
+      "has_cogwheel",
       "has_winding_key"
     ]
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:bronze_gearbox_duplication"
+      "rubinated_nether:crystallized_bronze_gearbox"
     ]
   }
 }

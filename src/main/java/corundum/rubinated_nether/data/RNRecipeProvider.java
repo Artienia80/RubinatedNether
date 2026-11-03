@@ -435,7 +435,7 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		generateAllWaxingRecipes(recipeOutput);
 
-		gearboxDuplication(recipeOutput);
+		gearboxAndStrongboxCrafting(recipeOutput);
 
 		waxRecipes(recipeOutput, FeatureFlagSet.of(FeatureFlags.VANILLA));
 
@@ -948,29 +948,43 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 	}
 
-	private void gearboxDuplication(RecipeOutput recipeOutput) {
+	private void gearboxAndStrongboxCrafting(RecipeOutput recipeOutput) {
 		for (String prefix : TARNISH_PREFIXES) {
 			Supplier<? extends Block> gearbox = getBlockByName(prefix + "BRONZE_GEARBOX");
-			String name = prefix.toLowerCase() + "bronze_gearbox";
+			Supplier<? extends Block> chiseled = getBlockByName(prefix + "CHISELED_BRONZE");
+			Supplier<? extends Block> bronzeBlock = getBlockByName(prefix + "BRONZE_BLOCK");
+			Supplier<? extends Block> strongbox = getBlockByName(prefix + "BRONZE_STRONGBOX");
 
-			gearboxCopy(recipeOutput, gearbox.get(), name + "_duplication");
-			gearboxCopy(recipeOutput, waxed(gearbox), "waxed_" + name + "_duplication");
+			gearboxRecipe(recipeOutput, gearbox.get(), chiseled.get());
+			gearboxRecipe(recipeOutput, waxed(gearbox), waxed(chiseled));
+			strongboxRecipe(recipeOutput, strongbox.get(), bronzeBlock.get());
+			strongboxRecipe(recipeOutput, waxed(strongbox), waxed(bronzeBlock));
 		}
 	}
 
-	private void gearboxCopy(RecipeOutput recipeOutput, ItemLike gearbox, String id) {
-		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, gearbox, 2)
-				.define('K', RNItems.WINDING_KEY)
+	private void gearboxRecipe(RecipeOutput recipeOutput, ItemLike gearbox, ItemLike chiseledBronze) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, gearbox, 1)
 				.define('C', RNItems.COGWHEEL)
-				.define('G', gearbox)
-				.pattern(" K ")
-				.pattern("CGC")
-				.pattern(" C ")
-				.unlockedBy(getHasName(gearbox), has(gearbox))
+				.define('K', RNItems.WINDING_KEY)
+				.define('B', chiseledBronze)
+				.pattern("CKC")
+				.pattern("CBC")
+				.pattern("CCC")
+				.unlockedBy(getHasName(RNItems.COGWHEEL), has(RNItems.COGWHEEL))
 				.unlockedBy(getHasName(RNItems.WINDING_KEY), has(RNItems.WINDING_KEY))
-				.save(recipeOutput, RubinatedNether.id(id));
+				.save(recipeOutput);
 	}
 
+	private void strongboxRecipe(RecipeOutput recipeOutput, ItemLike strongbox, ItemLike bronzeBlock) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, strongbox, 1)
+				.define('B', bronzeBlock)
+				.define('C', RNItems.COGWHEEL)
+				.pattern("BBB")
+				.pattern("BCB")
+				.pattern("BBB")
+				.unlockedBy(getHasName(RNItems.COGWHEEL), has(RNItems.COGWHEEL))
+				.save(recipeOutput);
+	}
 
 	private void stonecutterList(RecipeOutput recipeOutput, ItemLike input, ItemLike... outputs) {
 		for (ItemLike output : outputs) {

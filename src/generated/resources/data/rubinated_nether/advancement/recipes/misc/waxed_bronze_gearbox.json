@@ -1,21 +1,21 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "rubinated_nether:waxed_crystallized_bronze_gearbox_duplication"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "has_waxed_crystallized_bronze_gearbox": {
+    "has_cogwheel": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:waxed_crystallized_bronze_gearbox"
+            "items": "rubinated_nether:cogwheel"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "rubinated_nether:waxed_bronze_gearbox"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     },
     "has_winding_key": {
       "conditions": {
@@ -31,13 +31,13 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_waxed_crystallized_bronze_gearbox",
+      "has_cogwheel",
       "has_winding_key"
     ]
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:waxed_crystallized_bronze_gearbox_duplication"
+      "rubinated_nether:waxed_bronze_gearbox"
     ]
   }
 }

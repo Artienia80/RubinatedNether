@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "rubinated_nether:tarnished_bronze_block"
+    },
+    "C": {
+      "item": "rubinated_nether:cogwheel"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "BCB",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:tarnished_bronze_strongbox"
+  }
+}

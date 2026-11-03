@@ -2,23 +2,23 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
+    "B": {
+      "item": "rubinated_nether:corroded_chiseled_bronze"
+    },
     "C": {
       "item": "rubinated_nether:cogwheel"
-    },
-    "G": {
-      "item": "rubinated_nether:waxed_tarnished_bronze_gearbox"
     },
     "K": {
       "item": "rubinated_nether:winding_key"
     }
   },
   "pattern": [
-    " K ",
-    "CGC",
-    " C "
+    "CKC",
+    "CBC",
+    "CCC"
   ],
   "result": {
-    "count": 2,
-    "id": "rubinated_nether:waxed_tarnished_bronze_gearbox"
+    "count": 1,
+    "id": "rubinated_nether:corroded_bronze_gearbox"
   }
 }
