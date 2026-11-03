@@ -92,7 +92,7 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
 
         if(!entity.ramAnimationState.isStarted() && !entity.isBurrowed()
                 && !entity.crouchAnimationState.isStarted() && !entity.leapAnimationState.isStarted()
-                && !entity.diveAnimationState.isStarted())
+                && !entity.diveAnimationState.isStarted() && !entity.isCrystallized())
             this.animateWalk(BronzeAnimations.MOVE, limbSwing, limbSwingAmount, 4f, 54);
 
         this.animate(entity.idleAnimationState, BronzeAnimations.IDLE, ageInTicks, 1f);
@@ -108,6 +108,7 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
         this.animate(entity.leapAnimationState, BronzeAnimations.LEAP, ageInTicks, 1f);
         this.animate(entity.diveAnimationState, BronzeAnimations.DIVE, ageInTicks, 1f);
         this.animate(entity.slamAnimationState, BronzeAnimations.SLAM, ageInTicks, 1f);
+        this.animate(entity.flyAnimationState, BronzeAnimations.FLY, ageInTicks, 1f);
     }
 
     private void applyHeadRotation(float headYaw, float headPitch) {

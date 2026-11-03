@@ -20,6 +20,8 @@ public class CrystallizedOrbitGoal extends Goal {
     private static final double MIN_DISTANCE = 1.5;
     private static final double MAX_DISTANCE = 6.0;
     private static final double MOVE_SPEED = 0.32;
+    private static final double HOVER_HEIGHT = 2.5;
+    private static final double HOVER_CLIMB_SPEED = 0.1;
 
     public CrystallizedOrbitGoal(BronzeEntity entity) {
         this.entity = entity;
@@ -98,7 +100,8 @@ public class CrystallizedOrbitGoal extends Goal {
     }
 
     private void moveInDirection() {
-        entity.setDeltaMovement(moveDirection.scale(MOVE_SPEED));
+        double climb = Math.max(-HOVER_CLIMB_SPEED, Math.min(HOVER_CLIMB_SPEED, (target.getY() + HOVER_HEIGHT - entity.getY()) * 0.2));
+        entity.setDeltaMovement(moveDirection.scale(MOVE_SPEED).add(0.0, climb, 0.0));
 
         entity.lookAt(EntityAnchorArgument.Anchor.EYES, target.position());
     }

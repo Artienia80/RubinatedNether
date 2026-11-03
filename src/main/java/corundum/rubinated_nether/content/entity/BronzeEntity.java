@@ -27,6 +27,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
@@ -45,6 +47,7 @@ import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
@@ -74,6 +77,11 @@ public class BronzeEntity extends TarnishingEntity {
     private final BronzePart[] subEntities;
     private final BronzePart bodyPart;
     private final BronzePart keyPart;
+
+    private final PathNavigation groundNavigation;
+    private final MoveControl groundMoveControl;
+    private final PathNavigation flyingNavigation;
+    private final MoveControl flyingMoveControl;
 
     // Goals
     private TarnishedStalkGoal stalkGoal;
@@ -105,6 +113,7 @@ public class BronzeEntity extends TarnishingEntity {
     public final AnimationState leapAnimationState = new AnimationState();
     public final AnimationState slamAnimationState = new AnimationState();
     public final AnimationState diveAnimationState = new AnimationState();
+    public final AnimationState flyAnimationState = new AnimationState();
 
     public static final byte NORMAL_ATTACK_START = 61;
     public static final byte NORMAL_ATTACK_STOP = 64;
@@ -142,6 +151,11 @@ public class BronzeEntity extends TarnishingEntity {
         this.setPathfindingMalus(PathType.LAVA, 0.0F);
         this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
         this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
+
+        this.groundNavigation = this.navigation;
+        this.groundMoveControl = this.moveControl;
+        this.flyingNavigation = new FlyingPathNavigation(this, level);
+        this.flyingMoveControl = new FlyingMoveControl(this, 20, true);
 
         this.setTarnishLevel(TarnishStage.UNAFFECTED);
     }
@@ -434,6 +448,14 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     private void setupAnimationStates() {
+        if (this.isCrystallized()) {
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.flyAnimationState.startIfStopped(this.tickCount);
+            return;
+        }
+        this.flyAnimationState.stop();
+
         if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = 80;
             if (!this.ramAnimationState.isStarted() && !this.crouchAnimationState.isStarted()
@@ -520,6 +542,10 @@ public class BronzeEntity extends TarnishingEntity {
         super.tick();
         floatOnLava();
         setupAnimationStates();
+
+        if (this.isCrystallized() && !this.level().isClientSide() && this.onGround()) {
+            this.setDeltaMovement(this.getDeltaMovement().add(0.0, 0.08, 0.0));
+        }
 
         if (this.level() instanceof ServerLevel serverLevel) {
             LivingEntity currentTarget = this.getTarget();
@@ -716,7 +742,7 @@ public class BronzeEntity extends TarnishingEntity {
 
     @Override
     public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
-        if (this.getTarnishLevel().equals(TarnishStage.TARNISHED)) {
+        if (this.getTarnishLevel().equals(TarnishStage.TARNISHED) || this.isCrystallized()) {
             return false;
         }
         return super.causeFallDamage(fallDistance, multiplier, source);
@@ -1013,6 +1039,15 @@ public class BronzeEntity extends TarnishingEntity {
         super.setTarnishLevel(stage);
         this.updateAttributesForTarnish(stage);
         this.changeGoalsOnLevelChange(stage);
+        this.updateLocomotion(stage);
+    }
+
+    private void updateLocomotion(TarnishStage stage) {
+        boolean flying = stage == TarnishStage.CRYSTALLIZED;
+        this.navigation.stop();
+        this.navigation = flying ? this.flyingNavigation : this.groundNavigation;
+        this.moveControl = flying ? this.flyingMoveControl : this.groundMoveControl;
+        this.setNoGravity(flying);
     }
 
     @Override

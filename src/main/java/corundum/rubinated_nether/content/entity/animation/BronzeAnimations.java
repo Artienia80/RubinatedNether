@@ -854,6 +854,42 @@ public static final AnimationDefinition SHOCKWAVE = AnimationDefinition.Builder.
         return b.build();
     }
 
+    public static final AnimationDefinition FLY = buildFly();
+
+    private static AnimationDefinition buildFly() {
+        AnimationDefinition.Builder b = AnimationDefinition.Builder.withLength(1.5f).looping();
+        b.addAnimation("rods",
+                new AnimationChannel(AnimationChannel.Targets.POSITION,
+                        new Keyframe(0f, KeyframeAnimations.posVec(0f, 18.7f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        b.addAnimation("rods",
+                new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                        new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.LINEAR),
+                        new Keyframe(1.5f, KeyframeAnimations.degreeVec(0f, 360f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        flatRods(b, 6f, 3.384f, 30f);
+        return b.build();
+    }
+
+    private static void flatRods(AnimationDefinition.Builder builder, float radius, float shift, float yaw) {
+        for (int i = 0; i < ROD_BONES.length; i++) {
+            float side = ROD_SIDE[i];
+            builder.addAnimation(ROD_BONES[i],
+                    new AnimationChannel(AnimationChannel.Targets.POSITION,
+                            new Keyframe(0f, KeyframeAnimations.posVec(side * radius, 0f, side * shift),
+                                    AnimationChannel.Interpolations.LINEAR)));
+            builder.addAnimation(ROD_BONES[i],
+                    new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, yaw, 0f),
+                                    AnimationChannel.Interpolations.LINEAR)));
+            builder.addAnimation("cube_r" + (i + 1),
+                    new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 65f),
+                                    AnimationChannel.Interpolations.LINEAR)));
+        }
+    }
+
     public static final AnimationDefinition LEAP = buildLeap();
 
     private static AnimationDefinition buildLeap() {
