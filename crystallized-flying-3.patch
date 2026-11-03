@@ -1,0 +1,885 @@
+diff --git a/src/main/java/corundum/rubinated_nether/content/RNEntityCreator.java b/src/main/java/corundum/rubinated_nether/content/RNEntityCreator.java
+index 98f6140..4d541e1 100644
+--- a/src/main/java/corundum/rubinated_nether/content/RNEntityCreator.java
++++ b/src/main/java/corundum/rubinated_nether/content/RNEntityCreator.java
+@@ -4,6 +4,7 @@ import corundum.rubinated_nether.RubinatedNether;
+ import corundum.rubinated_nether.content.entity.BronzeEntity;
+ import corundum.rubinated_nether.content.entity.BronzeRodProjectileEntity;
+ import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
++import corundum.rubinated_nether.content.entity.CrystallizedBronzeRodProjectileEntity;
+ import corundum.rubinated_nether.content.entity.CrystallizedBronzeShotProjectileEntity;
+ import corundum.rubinated_nether.content.entity.client.BronzeModel;
+ import corundum.rubinated_nether.content.entity.client.BronzeRenderer;
+@@ -11,6 +12,7 @@ import corundum.rubinated_nether.content.entity.client.BronzeRodProjectileModel;
+ import corundum.rubinated_nether.content.entity.client.BronzeRodProjectileRenderer;
+ import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileModel;
+ import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileRenderer;
++import corundum.rubinated_nether.content.entity.client.CrystallizedBronzeRodProjectileRenderer;
+ import corundum.rubinated_nether.content.entity.client.CrystallizedBronzeShotProjectileModel;
+ import corundum.rubinated_nether.content.entity.client.CrystallizedBronzeShotProjectileRenderer;
+ import net.minecraft.core.registries.BuiltInRegistries;
+@@ -52,6 +54,14 @@ public class RNEntityCreator {
+ 					.updateInterval(20)
+ 	);
+ 
++	public static final Supplier<EntityType<CrystallizedBronzeRodProjectileEntity>> CRYSTALLIZED_BRONZE_ROD = registerEntity(
++			"crystallized_bronze_rod",
++			EntityType.Builder.<CrystallizedBronzeRodProjectileEntity>of(CrystallizedBronzeRodProjectileEntity::new, MobCategory.MISC)
++					.sized(0.5F, 0.5F)
++					.clientTrackingRange(4)
++					.updateInterval(20)
++	);
++
+ 	public static final Supplier<EntityType<BronzeEntity>> BRONZE = registerEntity(
+ 			"bronze",
+ 			EntityType.Builder.of(BronzeEntity::new, MobCategory.MONSTER)
+@@ -81,6 +91,7 @@ public class RNEntityCreator {
+ 		event.registerEntityRenderer(RNEntityCreator.BRONZE_SHOT.get(), BronzeShotProjectileRenderer::new);
+ 		event.registerEntityRenderer(RNEntityCreator.BRONZE_ROD.get(), BronzeRodProjectileRenderer::new);
+ 		event.registerEntityRenderer(RNEntityCreator.CRYSTALLIZED_BRONZE_SHOT.get(), CrystallizedBronzeShotProjectileRenderer::new);
++		event.registerEntityRenderer(RNEntityCreator.CRYSTALLIZED_BRONZE_ROD.get(), CrystallizedBronzeRodProjectileRenderer::new);
+ 	}
+ 
+ 	// LAYERS
+diff --git a/src/main/java/corundum/rubinated_nether/content/blocks/CrystalConversion.java b/src/main/java/corundum/rubinated_nether/content/blocks/CrystalConversion.java
+new file mode 100644
+index 0000000..0545181
+--- /dev/null
++++ b/src/main/java/corundum/rubinated_nether/content/blocks/CrystalConversion.java
+@@ -0,0 +1,104 @@
++package corundum.rubinated_nether.content.blocks;
++
++import net.minecraft.core.BlockPos;
++import net.minecraft.core.particles.ParticleTypes;
++import net.minecraft.nbt.CompoundTag;
++import net.minecraft.server.level.ServerLevel;
++import net.minecraft.sounds.SoundEvents;
++import net.minecraft.sounds.SoundSource;
++import net.minecraft.util.Mth;
++import net.minecraft.util.RandomSource;
++import net.minecraft.world.level.block.Block;
++import net.minecraft.world.level.block.entity.BlockEntity;
++import net.minecraft.world.level.block.state.BlockState;
++import net.minecraft.world.phys.Vec3;
++
++public final class CrystalConversion {
++    private static final double SMALL_MIN_RADIUS = 3.0;
++    private static final double SMALL_MAX_RADIUS = 4.0;
++    private static final double BIG_MIN_RADIUS = 5.0;
++    private static final double BIG_MAX_RADIUS = 7.0;
++
++    private CrystalConversion() {
++    }
++
++    public static void detonate(ServerLevel level, BlockPos center, boolean big) {
++        Vec3 at = Vec3.atCenterOf(center);
++        RandomSource random = level.getRandom();
++
++        if (big) {
++            level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, at.x, at.y, at.z, 1, 0.0, 0.0, 0.0, 0.0);
++            level.sendParticles(ParticleTypes.GLOW, at.x, at.y, at.z, 60, 2.5, 1.5, 2.5, 0.15);
++            level.playSound(null, center, SoundEvents.FIREWORK_ROCKET_LARGE_BLAST, SoundSource.HOSTILE, 3.0F, 0.7F);
++            level.playSound(null, center, SoundEvents.AMETHYST_CLUSTER_BREAK, SoundSource.HOSTILE, 3.0F, 0.6F);
++        } else {
++            level.sendParticles(ParticleTypes.EXPLOSION, at.x, at.y, at.z, 1, 0.0, 0.0, 0.0, 0.0);
++            level.sendParticles(ParticleTypes.GLOW, at.x, at.y, at.z, 25, 1.2, 0.8, 1.2, 0.1);
++            level.playSound(null, center, SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.HOSTILE, 1.5F, 0.8F + random.nextFloat() * 0.3F);
++            level.playSound(null, center, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 2.0F, 0.8F);
++        }
++
++        convertArea(level, center, big ? BIG_MIN_RADIUS : SMALL_MIN_RADIUS, big ? BIG_MAX_RADIUS : SMALL_MAX_RADIUS);
++    }
++
++    public static int convertArea(ServerLevel level, BlockPos center, double minRadius, double maxRadius) {
++        RandomSource random = level.getRandom();
++        int reach = Mth.ceil(maxRadius);
++        int converted = 0;
++        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
++
++        for (int dx = -reach; dx <= reach; dx++) {
++            for (int dy = -reach; dy <= reach; dy++) {
++                for (int dz = -reach; dz <= reach; dz++) {
++                    double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
++                    if (distance > maxRadius) {
++                        continue;
++                    }
++                    if (distance > minRadius && random.nextDouble() > (maxRadius - distance) / (maxRadius - minRadius)) {
++                        continue;
++                    }
++
++                    cursor.set(center.getX() + dx, center.getY() + dy, center.getZ() + dz);
++                    if (convertBlock(level, cursor)) {
++                        converted++;
++                        if (random.nextInt(3) == 0) {
++                            level.sendParticles(ParticleTypes.GLOW, cursor.getX() + 0.5, cursor.getY() + 0.5, cursor.getZ() + 0.5, 2, 0.3, 0.3, 0.3, 0.02);
++                        }
++                    }
++                }
++            }
++        }
++
++        return converted;
++    }
++
++    public static boolean convertBlock(ServerLevel level, BlockPos pos) {
++        BlockState state = level.getBlockState(pos);
++        Block block = state.getBlock();
++        if (!TarnishingBronze.canCrystallize(block)) {
++            return false;
++        }
++
++        BlockState converted = TarnishingBronze.getCrystallizedStage(block).withPropertiesOf(state);
++
++        BlockEntity oldEntity = level.getBlockEntity(pos);
++        CompoundTag saved = null;
++        if (oldEntity != null) {
++            saved = oldEntity.saveWithFullMetadata(level.registryAccess());
++            level.removeBlockEntity(pos);
++        }
++
++        level.setBlock(pos, converted, Block.UPDATE_ALL);
++
++        if (saved != null) {
++            BlockEntity newEntity = level.getBlockEntity(pos);
++            if (newEntity != null) {
++                newEntity.loadWithComponents(saved, level.registryAccess());
++                newEntity.setChanged();
++                level.sendBlockUpdated(pos, converted, converted, Block.UPDATE_ALL);
++            }
++        }
++
++        return true;
++    }
++}
+diff --git a/src/main/java/corundum/rubinated_nether/content/entity/BronzeEntity.java b/src/main/java/corundum/rubinated_nether/content/entity/BronzeEntity.java
+index d83aef0..c49342c 100644
+--- a/src/main/java/corundum/rubinated_nether/content/entity/BronzeEntity.java
++++ b/src/main/java/corundum/rubinated_nether/content/entity/BronzeEntity.java
+@@ -2,7 +2,13 @@ package corundum.rubinated_nether.content.entity;
+ 
+ import corundum.rubinated_nether.content.*;
+ import corundum.rubinated_nether.content.entity.goals.CorrodedHideAndAmbushGoal;
+-import corundum.rubinated_nether.content.entity.goals.CrystallizeNearbyBronzeGoal;
++import corundum.rubinated_nether.content.blocks.CrystalConversion;
++import corundum.rubinated_nether.content.entity.goals.CrystallizedRodVolleyGoal;
++import net.minecraft.nbt.CompoundTag;
++import net.minecraft.util.Mth;
++import net.minecraft.world.entity.ai.control.FlyingMoveControl;
++import net.minecraft.world.entity.ai.control.MoveControl;
++import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+ import corundum.rubinated_nether.content.entity.goals.CrystallizedOrbitGoal;
+ import corundum.rubinated_nether.content.entity.goals.DiscoloredRamGoal;
+ import corundum.rubinated_nether.content.entity.goals.TarnishedPounceGoal;
+@@ -75,6 +81,25 @@ public class BronzeEntity extends TarnishingEntity {
+     private final BronzePart bodyPart;
+     private final BronzePart keyPart;
+ 
++    public static final float ROD_SPIN_SPEED = 0.2F;
++    private static final int MAX_RODS = 6;
++    private static final double HEAD_CENTER_HEIGHT = 1.0625;
++    private static final double ROD_SPAWN_DISTANCE = 1.0;
++    private static final float ROD_SHOT_SPEED = 1.8F;
++    private static final double ROD_ALIGN_DEGREES = 15.0;
++    private static final int PLUMMET_MIN_TICKS = 3;
++    private static final int PLUMMET_MAX_TICKS = 100;
++    private static final EntityDataAccessor<Integer> ROD_COUNT =
++            SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.INT);
++
++    private final PathNavigation groundNavigation;
++    private final MoveControl groundMoveControl;
++    private final PathNavigation flyingNavigation;
++    private final MoveControl flyingMoveControl;
++    private CrystallizedRodVolleyGoal volleyGoal;
++    private boolean plummeting;
++    private int plummetTicks;
++
+     // Goals
+     private TarnishedStalkGoal stalkGoal;
+     private TarnishedPounceGoal pounceGoal;
+@@ -143,6 +168,11 @@ public class BronzeEntity extends TarnishingEntity {
+         this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
+         this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
+ 
++        this.groundNavigation = this.navigation;
++        this.groundMoveControl = this.moveControl;
++        this.flyingNavigation = new FlyingPathNavigation(this, level);
++        this.flyingMoveControl = new FlyingMoveControl(this, 20, true);
++
+         this.setTarnishLevel(TarnishStage.UNAFFECTED);
+     }
+ 
+@@ -270,7 +300,11 @@ public class BronzeEntity extends TarnishingEntity {
+ 
+     private void registerCrystallizedGoals() {
+         this.goalSelector.addGoal(4, new CrystallizedOrbitGoal(this));
+-        this.goalSelector.addGoal(1, new CrystallizeNearbyBronzeGoal(this));
++        if (this.volleyGoal != null) {
++            this.goalSelector.removeGoal(this.volleyGoal);
++        }
++        this.volleyGoal = new CrystallizedRodVolleyGoal(this);
++        this.goalSelector.addGoal(2, this.volleyGoal);
+     }
+ 
+     private void removeUnaffectedGoals() {
+@@ -313,7 +347,10 @@ public class BronzeEntity extends TarnishingEntity {
+                 return BronzeEntity.this.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED) && super.canUse();
+             }
+         });
+-        this.goalSelector.removeGoal(new CrystallizeNearbyBronzeGoal(this));
++        if (this.volleyGoal != null) {
++            this.goalSelector.removeGoal(this.volleyGoal);
++            this.volleyGoal = null;
++        }
+     }
+ 
+     private void removeAllGoals() {
+@@ -434,6 +471,12 @@ public class BronzeEntity extends TarnishingEntity {
+     }
+ 
+     private void setupAnimationStates() {
++        if (this.isCrystallized()) {
++            this.idleAnimationState.stop();
++            this.walkAnimationState.stop();
++            return;
++        }
++
+         if (this.idleAnimationTimeout <= 0) {
+             this.idleAnimationTimeout = 80;
+             if (!this.ramAnimationState.isStarted() && !this.crouchAnimationState.isStarted()
+@@ -521,6 +564,17 @@ public class BronzeEntity extends TarnishingEntity {
+         floatOnLava();
+         setupAnimationStates();
+ 
++        if (this.isCrystallized() && this.level() instanceof ServerLevel crystalLevel) {
++            if (this.plummeting) {
++                this.plummetTicks++;
++                if ((this.plummetTicks > PLUMMET_MIN_TICKS && this.onGround()) || this.plummetTicks > PLUMMET_MAX_TICKS) {
++                    this.crystalDetonation(crystalLevel);
++                }
++            } else if (this.onGround()) {
++                this.setDeltaMovement(this.getDeltaMovement().add(0.0, 0.08, 0.0));
++            }
++        }
++
+         if (this.level() instanceof ServerLevel serverLevel) {
+             LivingEntity currentTarget = this.getTarget();
+             if (currentTarget != null && isSoothed(currentTarget)) {
+@@ -716,7 +770,7 @@ public class BronzeEntity extends TarnishingEntity {
+ 
+     @Override
+     public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
+-        if (this.getTarnishLevel().equals(TarnishStage.TARNISHED)) {
++        if (this.getTarnishLevel().equals(TarnishStage.TARNISHED) || this.isCrystallized()) {
+             return false;
+         }
+         return super.causeFallDamage(fallDistance, multiplier, source);
+@@ -1010,9 +1064,124 @@ public class BronzeEntity extends TarnishingEntity {
+ 
+     @Override
+     public void setTarnishLevel(TarnishStage stage) {
++        boolean wasCrystallized = this.isCrystallized();
+         super.setTarnishLevel(stage);
+         this.updateAttributesForTarnish(stage);
+         this.changeGoalsOnLevelChange(stage);
++        if (stage == TarnishStage.CRYSTALLIZED && !wasCrystallized) {
++            this.plummeting = false;
++            this.plummetTicks = 0;
++            this.setRodCount(MAX_RODS);
++        }
++        this.updateLocomotion(stage);
++    }
++
++    private void updateLocomotion(TarnishStage stage) {
++        boolean flying = stage == TarnishStage.CRYSTALLIZED && !this.plummeting;
++        this.navigation.stop();
++        this.navigation = flying ? this.flyingNavigation : this.groundNavigation;
++        this.moveControl = flying ? this.flyingMoveControl : this.groundMoveControl;
++        this.setNoGravity(flying);
++    }
++
++    public int getRodCount() {
++        return this.entityData.get(ROD_COUNT);
++    }
++
++    public void setRodCount(int count) {
++        this.entityData.set(ROD_COUNT, Mth.clamp(count, 0, MAX_RODS));
++    }
++
++    public boolean isPlummeting() {
++        return this.plummeting;
++    }
++
++    public boolean fireRodAt(LivingEntity target) {
++        if (this.level().isClientSide() || !this.isCrystallized() || this.plummeting || this.getRodCount() <= 0) {
++            return false;
++        }
++
++        Vec3 head = this.position().add(0.0, HEAD_CENTER_HEIGHT, 0.0);
++        Vec3 aim = target.getBoundingBox().getCenter().subtract(head);
++        if (aim.lengthSqr() < 1.0E-4) {
++            return false;
++        }
++
++        int count = this.getRodCount();
++        double azimuth;
++        if (count == 1) {
++            azimuth = this.getYHeadRot() * Mth.DEG_TO_RAD + Mth.HALF_PI;
++        } else {
++            double targetAzimuth = Mth.atan2(aim.z, aim.x);
++            double spin = this.level().getGameTime() * (double) ROD_SPIN_SPEED;
++            double best = Double.MAX_VALUE;
++            azimuth = 0.0;
++            for (int slot = 0; slot < count; slot++) {
++                double slotAzimuth = spin + Mth.TWO_PI * slot / count;
++                double diff = Math.abs(Mth.wrapDegrees((slotAzimuth - targetAzimuth) * Mth.RAD_TO_DEG));
++                if (diff < best) {
++                    best = diff;
++                    azimuth = slotAzimuth;
++                }
++            }
++            if (best > ROD_ALIGN_DEGREES) {
++                return false;
++            }
++        }
++
++        Vec3 spawn = head.add(Math.cos(azimuth) * ROD_SPAWN_DISTANCE, 0.0, Math.sin(azimuth) * ROD_SPAWN_DISTANCE);
++        Vec3 direction = target.getBoundingBox().getCenter().subtract(spawn);
++        if (direction.lengthSqr() < 1.0E-4) {
++            return false;
++        }
++
++        CrystallizedBronzeRodProjectileEntity rod = new CrystallizedBronzeRodProjectileEntity(this.level(), spawn.x, spawn.y, spawn.z);
++        rod.setOwner(this);
++        rod.shoot(direction.x, direction.y, direction.z, ROD_SHOT_SPEED, 0.0F);
++        this.level().addFreshEntity(rod);
++        this.playSound(SoundEvents.AMETHYST_BLOCK_CHIME, 1.5F, 0.7F + this.random.nextFloat() * 0.3F);
++
++        int remaining = count - 1;
++        this.setRodCount(remaining);
++        if (remaining <= 0) {
++            this.startPlummet();
++        }
++        return true;
++    }
++
++    private void startPlummet() {
++        this.plummeting = true;
++        this.plummetTicks = 0;
++        this.updateLocomotion(this.getTarnishLevel());
++    }
++
++    private void crystalDetonation(ServerLevel level) {
++        BlockPos center = this.blockPosition();
++        this.plummeting = false;
++        spawnCrystalExplosionParticles(level, center);
++        CrystalConversion.detonate(level, center, true);
++        spreadCrystalizedBlocks(level, center);
++        this.hurt(this.damageSources().genericKill(), Float.MAX_VALUE);
++        if (this.isAlive()) {
++            this.discard();
++        }
++    }
++
++    @Override
++    public void addAdditionalSaveData(CompoundTag tag) {
++        super.addAdditionalSaveData(tag);
++        tag.putInt("RodCount", this.getRodCount());
++        tag.putBoolean("Plummeting", this.plummeting);
++    }
++
++    @Override
++    public void readAdditionalSaveData(CompoundTag tag) {
++        super.readAdditionalSaveData(tag);
++        if (tag.contains("RodCount")) {
++            this.setRodCount(tag.getInt("RodCount"));
++        }
++        this.plummeting = tag.getBoolean("Plummeting");
++        this.updateLocomotion(this.getTarnishLevel());
+     }
+ 
+     @Override
+@@ -1042,6 +1211,7 @@ public class BronzeEntity extends TarnishingEntity {
+         super.defineSynchedData(builder);
+         builder.define(IS_BURROWED, false);
+         builder.define(IS_DEFENDING, false);
++        builder.define(ROD_COUNT, MAX_RODS);
+     }
+ 
+     @Override
+diff --git a/src/main/java/corundum/rubinated_nether/content/entity/CrystallizedBronzeRodProjectileEntity.java b/src/main/java/corundum/rubinated_nether/content/entity/CrystallizedBronzeRodProjectileEntity.java
+new file mode 100644
+index 0000000..8704f19
+--- /dev/null
++++ b/src/main/java/corundum/rubinated_nether/content/entity/CrystallizedBronzeRodProjectileEntity.java
+@@ -0,0 +1,99 @@
++package corundum.rubinated_nether.content.entity;
++
++import corundum.rubinated_nether.content.RNEffects;
++import corundum.rubinated_nether.content.RNEntityCreator;
++import corundum.rubinated_nether.content.RNItems;
++import corundum.rubinated_nether.content.TarnishStage;
++import corundum.rubinated_nether.content.blocks.CrystalConversion;
++import net.minecraft.core.BlockPos;
++import net.minecraft.server.level.ServerLevel;
++import net.minecraft.world.effect.MobEffectInstance;
++import net.minecraft.world.entity.Entity;
++import net.minecraft.world.entity.EntityType;
++import net.minecraft.world.entity.LivingEntity;
++import net.minecraft.world.entity.projectile.AbstractArrow;
++import net.minecraft.world.item.ItemStack;
++import net.minecraft.world.level.Level;
++import net.minecraft.world.phys.BlockHitResult;
++import net.minecraft.world.phys.EntityHitResult;
++
++public class CrystallizedBronzeRodProjectileEntity extends AbstractArrow {
++    private static final float DAMAGE = 3.0F;
++    private static final int MAX_AGE = 120;
++    private static final int DISEASE_TICKS = 300;
++
++    public CrystallizedBronzeRodProjectileEntity(EntityType<? extends AbstractArrow> entityType, Level level) {
++        super(entityType, level);
++        this.init();
++    }
++
++    public CrystallizedBronzeRodProjectileEntity(Level level, double x, double y, double z) {
++        super(
++                RNEntityCreator.CRYSTALLIZED_BRONZE_ROD.get(),
++                x,
++                y,
++                z,
++                level,
++                new ItemStack(RNItems.CRYSTALLIZED_BRONZE_SHOT.get()),
++                null
++        );
++        this.init();
++    }
++
++    private void init() {
++        this.pickup = AbstractArrow.Pickup.DISALLOWED;
++        this.setNoGravity(true);
++    }
++
++    @Override
++    protected ItemStack getDefaultPickupItem() {
++        return new ItemStack(RNItems.CRYSTALLIZED_BRONZE_SHOT.get());
++    }
++
++    @Override
++    protected boolean canHitEntity(Entity entity) {
++        Entity resolved = entity instanceof BronzePart part ? part.parentMob : entity;
++        if (resolved instanceof BronzeEntity bronze && bronze.isCrystallized()) {
++            return false;
++        }
++        return super.canHitEntity(entity);
++    }
++
++    @Override
++    protected void onHitEntity(EntityHitResult result) {
++        Entity entity = result.getEntity();
++        Entity target = entity instanceof BronzePart part ? part.parentMob : entity;
++        BlockPos impact = BlockPos.containing(result.getLocation());
++
++        if (target instanceof BronzeEntity bronze) {
++            bronze.setTarnishLevel(TarnishStage.CRYSTALLIZED);
++        } else {
++            target.hurt(this.damageSources().arrow(this, this.getOwner()), DAMAGE);
++            if (target instanceof LivingEntity living) {
++                living.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, DISEASE_TICKS, 0, false, true));
++            }
++        }
++
++        this.detonate(impact);
++    }
++
++    @Override
++    protected void onHitBlock(BlockHitResult result) {
++        this.detonate(result.getBlockPos());
++    }
++
++    private void detonate(BlockPos center) {
++        if (this.level() instanceof ServerLevel serverLevel) {
++            CrystalConversion.detonate(serverLevel, center, false);
++        }
++        this.discard();
++    }
++
++    @Override
++    public void tick() {
++        super.tick();
++        if (!this.level().isClientSide() && this.tickCount > MAX_AGE) {
++            this.discard();
++        }
++    }
++}
+diff --git a/src/main/java/corundum/rubinated_nether/content/entity/client/BronzeModel.java b/src/main/java/corundum/rubinated_nether/content/entity/client/BronzeModel.java
+index b772e27..ddb8e92 100644
+--- a/src/main/java/corundum/rubinated_nether/content/entity/client/BronzeModel.java
++++ b/src/main/java/corundum/rubinated_nether/content/entity/client/BronzeModel.java
+@@ -20,12 +20,26 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
+     private final ModelPart bronze;
+     private final ModelPart head;
+     private final ModelPart windup;
++    private final ModelPart rods;
++    private final ModelPart[] rodRoots = new ModelPart[6];
++    private final ModelPart[] rodCubes = new ModelPart[6];
++
++    private static final float ROD_LIFT = 18.72F;
++    private static final float ROD_REACH = 6.2F;
++    private static final float FINAL_ROD_REACH = 5.0F;
+ 
+     public BronzeModel(ModelPart root) {
+         this.root = root.getChild("root");
+         this.bronze = this.root.getChild("bronze");
+         this.head = this.bronze.getChild("head");
+         this.windup = head.getChild("windup");
++        this.rods = this.bronze.getChild("rods");
++        for (int i = 0; i < this.rodRoots.length; i++) {
++            ModelPart rod = this.rods.getChild("rod" + (i + 1));
++            ModelPart holder = (i == 0 || i == 2) ? rod : rod.getChild("rod_" + (i + 1));
++            this.rodRoots[i] = rod;
++            this.rodCubes[i] = holder.getChild("cube_r" + (i + 1));
++        }
+     }
+ 
+     public static LayerDefinition createBodyLayer() {
+@@ -92,7 +106,7 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
+ 
+         if(!entity.ramAnimationState.isStarted() && !entity.isBurrowed()
+                 && !entity.crouchAnimationState.isStarted() && !entity.leapAnimationState.isStarted()
+-                && !entity.diveAnimationState.isStarted())
++                && !entity.diveAnimationState.isStarted() && !entity.isCrystallized())
+             this.animateWalk(BronzeAnimations.MOVE, limbSwing, limbSwingAmount, 4f, 54);
+ 
+         this.animate(entity.idleAnimationState, BronzeAnimations.IDLE, ageInTicks, 1f);
+@@ -108,6 +122,47 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
+         this.animate(entity.leapAnimationState, BronzeAnimations.LEAP, ageInTicks, 1f);
+         this.animate(entity.diveAnimationState, BronzeAnimations.DIVE, ageInTicks, 1f);
+         this.animate(entity.slamAnimationState, BronzeAnimations.SLAM, ageInTicks, 1f);
++
++        if (entity.isCrystallized()) {
++            this.applyCrystallizedRods(entity, ageInTicks, netHeadYaw, headPitch);
++        } else {
++            for (ModelPart rod : this.rodRoots) {
++                rod.visible = true;
++            }
++        }
++    }
++
++    private void applyCrystallizedRods(BronzeEntity entity, float ageInTicks, float netHeadYaw, float headPitch) {
++        int count = Mth.clamp(entity.getRodCount(), 0, this.rodRoots.length);
++        float partial = ageInTicks - entity.tickCount;
++        float bodyYaw = Mth.rotLerp(partial, entity.yBodyRotO, entity.yBodyRot) * Mth.DEG_TO_RAD;
++        float spin = (entity.level().getGameTime() + partial) * BronzeEntity.ROD_SPIN_SPEED;
++
++        this.rods.y = this.rods.getInitialPose().y - ROD_LIFT;
++
++        for (int i = 0; i < this.rodRoots.length; i++) {
++            boolean active = i < count;
++            this.rodRoots[i].visible = active;
++            if (!active) {
++                continue;
++            }
++
++            float yaw;
++            float pitch = 0.0F;
++            float reach;
++            if (count == 1) {
++                yaw = netHeadYaw * Mth.DEG_TO_RAD + Mth.HALF_PI;
++                pitch = Mth.clamp(headPitch * Mth.DEG_TO_RAD, -1.0F, 1.0F);
++                reach = FINAL_ROD_REACH;
++            } else {
++                yaw = spin + Mth.TWO_PI * i / count - bodyYaw;
++                reach = ROD_REACH;
++            }
++
++            this.rodRoots[i].yRot = yaw;
++            this.rodCubes[i].x = reach;
++            this.rodCubes[i].zRot = Mth.HALF_PI + pitch;
++        }
+     }
+ 
+     private void applyHeadRotation(float headYaw, float headPitch) {
+diff --git a/src/main/java/corundum/rubinated_nether/content/entity/client/CrystallizedBronzeRodProjectileRenderer.java b/src/main/java/corundum/rubinated_nether/content/entity/client/CrystallizedBronzeRodProjectileRenderer.java
+new file mode 100644
+index 0000000..3998f05
+--- /dev/null
++++ b/src/main/java/corundum/rubinated_nether/content/entity/client/CrystallizedBronzeRodProjectileRenderer.java
+@@ -0,0 +1,47 @@
++package corundum.rubinated_nether.content.entity.client;
++
++import com.mojang.blaze3d.vertex.PoseStack;
++import com.mojang.blaze3d.vertex.VertexConsumer;
++import com.mojang.math.Axis;
++import corundum.rubinated_nether.RubinatedNether;
++import corundum.rubinated_nether.content.entity.CrystallizedBronzeRodProjectileEntity;
++import net.minecraft.client.renderer.MultiBufferSource;
++import net.minecraft.client.renderer.entity.EntityRenderer;
++import net.minecraft.client.renderer.entity.EntityRendererProvider;
++import net.minecraft.client.renderer.entity.ItemRenderer;
++import net.minecraft.client.renderer.texture.OverlayTexture;
++import net.minecraft.resources.ResourceLocation;
++import net.minecraft.util.Mth;
++
++public class CrystallizedBronzeRodProjectileRenderer extends EntityRenderer<CrystallizedBronzeRodProjectileEntity> {
++	private static final ResourceLocation TEXTURE =
++			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/entity/bronze/bronze_crystallized.png");
++
++	private final BronzeRodProjectileModel model;
++
++	public CrystallizedBronzeRodProjectileRenderer(EntityRendererProvider.Context context) {
++		super(context);
++		this.model = new BronzeRodProjectileModel(context.bakeLayer(BronzeRodProjectileModel.LAYER_LOCATION));
++	}
++
++	@Override
++	public void render(CrystallizedBronzeRodProjectileEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
++		poseStack.pushPose();
++
++		poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) - 90.0F));
++		poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(partialTicks, entity.xRotO, entity.getXRot())));
++		poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
++
++		VertexConsumer consumer = ItemRenderer.getFoilBufferDirect(
++				buffer, this.model.renderType(TEXTURE), false, false);
++		this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
++
++		poseStack.popPose();
++		super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
++	}
++
++	@Override
++	public ResourceLocation getTextureLocation(CrystallizedBronzeRodProjectileEntity entity) {
++		return TEXTURE;
++	}
++}
+diff --git a/src/main/java/corundum/rubinated_nether/content/entity/goals/CrystallizeNearbyBronzeGoal.java b/src/main/java/corundum/rubinated_nether/content/entity/goals/CrystallizeNearbyBronzeGoal.java
+deleted file mode 100644
+index 86b38a9..0000000
+--- a/src/main/java/corundum/rubinated_nether/content/entity/goals/CrystallizeNearbyBronzeGoal.java
++++ /dev/null
+@@ -1,52 +0,0 @@
+-package corundum.rubinated_nether.content.entity.goals;
+-
+-import corundum.rubinated_nether.content.TarnishStage;
+-import corundum.rubinated_nether.content.blocks.TarnishingBronze;
+-import corundum.rubinated_nether.content.entity.BronzeEntity;
+-import net.minecraft.core.BlockPos;
+-import net.minecraft.world.entity.ai.goal.Goal;
+-import net.minecraft.world.level.Level;
+-import net.minecraft.world.level.block.Block;
+-import net.minecraft.world.level.block.state.BlockState;
+-
+-public class CrystallizeNearbyBronzeGoal extends Goal {
+-    private final BronzeEntity entity;
+-    private int cooldown;
+-
+-    public CrystallizeNearbyBronzeGoal(BronzeEntity entity) {
+-        this.entity = entity;
+-    }
+-
+-    @Override
+-    public boolean canUse() {
+-        return entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED);
+-    }
+-
+-    @Override
+-    public void tick() {
+-        if(!entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED)) stop();
+-        if (--cooldown > 0) return;
+-        cooldown = 20 + entity.getRandom().nextInt(200);
+-
+-        BlockPos origin = entity.blockPosition();
+-        Level level = entity.level();
+-
+-        for (BlockPos pos : BlockPos.betweenClosed(origin.offset(-3, -3, -3), origin.offset(3, 3, 3))) {
+-            BlockState state = level.getBlockState(pos);
+-            Block block = state.getBlock();
+-
+-            if (block instanceof TarnishingBronze tarnishing) {
+-                if (state.hasProperty(TarnishingBronze.WAXED) && state.getValue(TarnishingBronze.WAXED)) {
+-                    BlockState unwaxed = state.setValue(TarnishingBronze.WAXED, false);
+-                    level.setBlock(pos, unwaxed, 3);
+-                    return;
+-                }
+-
+-                if (!state.getValue(TarnishingBronze.WAXED) && TarnishingBronze.canCrystallize(block)) {
+-                    tarnishing.getCrystallized(state).ifPresent(newState -> level.setBlockAndUpdate(pos, newState));
+-                    return;
+-                }
+-            }
+-        }
+-    }
+-}
+diff --git a/src/main/java/corundum/rubinated_nether/content/entity/goals/CrystallizedOrbitGoal.java b/src/main/java/corundum/rubinated_nether/content/entity/goals/CrystallizedOrbitGoal.java
+index ef90686..fcf9c3d 100644
+--- a/src/main/java/corundum/rubinated_nether/content/entity/goals/CrystallizedOrbitGoal.java
++++ b/src/main/java/corundum/rubinated_nether/content/entity/goals/CrystallizedOrbitGoal.java
+@@ -20,6 +20,8 @@ public class CrystallizedOrbitGoal extends Goal {
+     private static final double MIN_DISTANCE = 1.5;
+     private static final double MAX_DISTANCE = 6.0;
+     private static final double MOVE_SPEED = 0.32;
++    private static final double HOVER_HEIGHT = 2.5;
++    private static final double HOVER_CLIMB_SPEED = 0.1;
+ 
+     public CrystallizedOrbitGoal(BronzeEntity entity) {
+         this.entity = entity;
+@@ -28,7 +30,7 @@ public class CrystallizedOrbitGoal extends Goal {
+ 
+     @Override
+     public boolean canUse() {
+-        if (!entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED)) return false;
++        if (!entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED) || entity.isPlummeting()) return false;
+ 
+         Player nearestPlayer = entity.level().getNearestPlayer(entity.getX(), entity.getY(), entity.getZ(), MAX_DISTANCE + 5, e -> !e.isSpectator() && !BronzeEntity.isSoothed(e));
+         if (nearestPlayer != null && !nearestPlayer.isCreative() && !nearestPlayer.isSpectator()) {
+@@ -41,7 +43,7 @@ public class CrystallizedOrbitGoal extends Goal {
+ 
+     @Override
+     public boolean canContinueToUse() {
+-        return entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED) && target != null && target.isAlive() && !BronzeEntity.isSoothed(target);
++        return entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED) && !entity.isPlummeting() && target != null && target.isAlive() && !BronzeEntity.isSoothed(target);
+     }
+ 
+     @Override
+@@ -98,7 +100,8 @@ public class CrystallizedOrbitGoal extends Goal {
+     }
+ 
+     private void moveInDirection() {
+-        entity.setDeltaMovement(moveDirection.scale(MOVE_SPEED));
++        double climb = Math.max(-HOVER_CLIMB_SPEED, Math.min(HOVER_CLIMB_SPEED, (target.getY() + HOVER_HEIGHT - entity.getY()) * 0.2));
++        entity.setDeltaMovement(moveDirection.scale(MOVE_SPEED).add(0.0, climb, 0.0));
+ 
+         entity.lookAt(EntityAnchorArgument.Anchor.EYES, target.position());
+     }
+diff --git a/src/main/java/corundum/rubinated_nether/content/entity/goals/CrystallizedRodVolleyGoal.java b/src/main/java/corundum/rubinated_nether/content/entity/goals/CrystallizedRodVolleyGoal.java
+new file mode 100644
+index 0000000..e016d48
+--- /dev/null
++++ b/src/main/java/corundum/rubinated_nether/content/entity/goals/CrystallizedRodVolleyGoal.java
+@@ -0,0 +1,102 @@
++package corundum.rubinated_nether.content.entity.goals;
++
++import corundum.rubinated_nether.content.entity.BronzeEntity;
++import net.minecraft.world.entity.LivingEntity;
++import net.minecraft.world.entity.ai.goal.Goal;
++import net.minecraft.world.entity.player.Player;
++
++import java.util.Comparator;
++import java.util.List;
++
++public class CrystallizedRodVolleyGoal extends Goal {
++    private static final int MIN_DELAY = 80;
++    private static final int MAX_DELAY = 220;
++    private static final double RANGE = 24.0;
++    private static final float BRONZE_TARGET_CHANCE = 0.35F;
++
++    private final BronzeEntity entity;
++    private LivingEntity target;
++    private int delay;
++
++    public CrystallizedRodVolleyGoal(BronzeEntity entity) {
++        this.entity = entity;
++        this.delay = nextDelay();
++    }
++
++    private int nextDelay() {
++        return MIN_DELAY + entity.getRandom().nextInt(MAX_DELAY - MIN_DELAY + 1);
++    }
++
++    @Override
++    public boolean canUse() {
++        return entity.isCrystallized() && !entity.isPlummeting() && entity.getRodCount() > 0;
++    }
++
++    @Override
++    public boolean canContinueToUse() {
++        return canUse();
++    }
++
++    @Override
++    public void tick() {
++        if (delay > 0) {
++            delay--;
++            return;
++        }
++
++        if (target == null || !isValid(target)) {
++            target = pickTarget();
++            if (target == null) {
++                return;
++            }
++        }
++
++        if (entity.fireRodAt(target)) {
++            target = null;
++            delay = nextDelay();
++        }
++    }
++
++    @Override
++    public void stop() {
++        target = null;
++    }
++
++    private boolean isValid(LivingEntity candidate) {
++        if (!candidate.isAlive() || entity.distanceTo(candidate) > RANGE || !entity.hasLineOfSight(candidate)) {
++            return false;
++        }
++        if (candidate instanceof Player player) {
++            return !player.isCreative() && !player.isSpectator() && !BronzeEntity.isSoothed(player);
++        }
++        if (candidate instanceof BronzeEntity bronze) {
++            return bronze != entity && !bronze.isCrystallized() && entity.getRodCount() > 1;
++        }
++        return false;
++    }
++
++    private LivingEntity pickTarget() {
++        Player player = entity.level().getNearestPlayer(
++                entity.getX(), entity.getY(), entity.getZ(), RANGE,
++                e -> !e.isSpectator() && !e.isCreative() && !BronzeEntity.isSoothed(e) && entity.hasLineOfSight(e)
++        );
++
++        BronzeEntity bronze = null;
++        if (entity.getRodCount() > 1) {
++            List<BronzeEntity> bronzes = entity.level().getEntitiesOfClass(
++                    BronzeEntity.class,
++                    entity.getBoundingBox().inflate(RANGE),
++                    other -> other != entity && !other.isCrystallized() && other.isAlive() && entity.hasLineOfSight(other)
++            );
++            bronze = bronzes.stream().min(Comparator.comparingDouble(entity::distanceToSqr)).orElse(null);
++        }
++
++        if (bronze == null) {
++            return player;
++        }
++        if (player == null) {
++            return bronze;
++        }
++        return entity.getRandom().nextFloat() < BRONZE_TARGET_CHANCE ? bronze : player;
++    }
++}
+diff --git a/src/main/resources/assets/rubinated_nether/lang/en_us.json b/src/main/resources/assets/rubinated_nether/lang/en_us.json
+index 7b06963..52e2447 100644
+--- a/src/main/resources/assets/rubinated_nether/lang/en_us.json
++++ b/src/main/resources/assets/rubinated_nether/lang/en_us.json
+@@ -756,6 +756,7 @@
+ 
+   "entity.rubinated_nether.bronze_shot": "Bronze Shot",
+   "entity.rubinated_nether.bronze_rod": "Bronze Rod",
++  "entity.rubinated_nether.crystallized_bronze_rod": "Crystallized Bronze Rod",
+ 
+   "entity.rubinated_nether.bronze.unaffected": "Bronze",
+   "entity.rubinated_nether.bronze.discolored": "Discolored Bronze",
+diff --git a/src/main/resources/resourcepacks/aurichalcum/assets/rubinated_nether/lang/en_us.json b/src/main/resources/resourcepacks/aurichalcum/assets/rubinated_nether/lang/en_us.json
+index da9f29b..3a48b50 100644
+--- a/src/main/resources/resourcepacks/aurichalcum/assets/rubinated_nether/lang/en_us.json
++++ b/src/main/resources/resourcepacks/aurichalcum/assets/rubinated_nether/lang/en_us.json
+@@ -231,6 +231,7 @@
+   "container.bronzeVase": "Aurichalcum Vase",
+   "entity.rubinated_nether.bronze_shot": "Aurichalcum Shot",
+   "entity.rubinated_nether.bronze_rod": "Aurichalcum Rod",
++  "entity.rubinated_nether.crystallized_bronze_rod": "Crystallized Aurichalcum Rod",
+   "entity.rubinated_nether.bronze.unaffected": "Aurichalcum",
+   "entity.rubinated_nether.bronze.discolored": "Discolored Aurichalcum",
+   "entity.rubinated_nether.bronze.corroded": "Corroded Aurichalcum",

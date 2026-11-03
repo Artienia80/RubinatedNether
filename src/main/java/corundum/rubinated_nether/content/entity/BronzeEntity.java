@@ -2,7 +2,13 @@ package corundum.rubinated_nether.content.entity;
 
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.entity.goals.CorrodedHideAndAmbushGoal;
-import corundum.rubinated_nether.content.entity.goals.CrystallizeNearbyBronzeGoal;
+import corundum.rubinated_nether.content.blocks.CrystalConversion;
+import corundum.rubinated_nether.content.entity.goals.CrystallizedRodVolleyGoal;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import corundum.rubinated_nether.content.entity.goals.CrystallizedOrbitGoal;
 import corundum.rubinated_nether.content.entity.goals.DiscoloredRamGoal;
 import corundum.rubinated_nether.content.entity.goals.TarnishedPounceGoal;
@@ -27,8 +33,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
-import net.minecraft.world.entity.ai.control.FlyingMoveControl;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
@@ -47,7 +51,6 @@ import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
@@ -78,10 +81,24 @@ public class BronzeEntity extends TarnishingEntity {
     private final BronzePart bodyPart;
     private final BronzePart keyPart;
 
+    public static final float ROD_SPIN_SPEED = 0.2F;
+    private static final int MAX_RODS = 6;
+    private static final double HEAD_CENTER_HEIGHT = 1.0625;
+    private static final double ROD_SPAWN_DISTANCE = 1.0;
+    private static final float ROD_SHOT_SPEED = 1.8F;
+    private static final double ROD_ALIGN_DEGREES = 15.0;
+    private static final int PLUMMET_MIN_TICKS = 3;
+    private static final int PLUMMET_MAX_TICKS = 100;
+    private static final EntityDataAccessor<Integer> ROD_COUNT =
+            SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.INT);
+
     private final PathNavigation groundNavigation;
     private final MoveControl groundMoveControl;
     private final PathNavigation flyingNavigation;
     private final MoveControl flyingMoveControl;
+    private CrystallizedRodVolleyGoal volleyGoal;
+    private boolean plummeting;
+    private int plummetTicks;
 
     // Goals
     private TarnishedStalkGoal stalkGoal;
@@ -113,7 +130,6 @@ public class BronzeEntity extends TarnishingEntity {
     public final AnimationState leapAnimationState = new AnimationState();
     public final AnimationState slamAnimationState = new AnimationState();
     public final AnimationState diveAnimationState = new AnimationState();
-    public final AnimationState flyAnimationState = new AnimationState();
 
     public static final byte NORMAL_ATTACK_START = 61;
     public static final byte NORMAL_ATTACK_STOP = 64;
@@ -284,7 +300,11 @@ public class BronzeEntity extends TarnishingEntity {
 
     private void registerCrystallizedGoals() {
         this.goalSelector.addGoal(4, new CrystallizedOrbitGoal(this));
-        this.goalSelector.addGoal(1, new CrystallizeNearbyBronzeGoal(this));
+        if (this.volleyGoal != null) {
+            this.goalSelector.removeGoal(this.volleyGoal);
+        }
+        this.volleyGoal = new CrystallizedRodVolleyGoal(this);
+        this.goalSelector.addGoal(2, this.volleyGoal);
     }
 
     private void removeUnaffectedGoals() {
@@ -327,7 +347,10 @@ public class BronzeEntity extends TarnishingEntity {
                 return BronzeEntity.this.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED) && super.canUse();
             }
         });
-        this.goalSelector.removeGoal(new CrystallizeNearbyBronzeGoal(this));
+        if (this.volleyGoal != null) {
+            this.goalSelector.removeGoal(this.volleyGoal);
+            this.volleyGoal = null;
+        }
     }
 
     private void removeAllGoals() {
@@ -451,10 +474,8 @@ public class BronzeEntity extends TarnishingEntity {
         if (this.isCrystallized()) {
             this.idleAnimationState.stop();
             this.walkAnimationState.stop();
-            this.flyAnimationState.startIfStopped(this.tickCount);
             return;
         }
-        this.flyAnimationState.stop();
 
         if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = 80;
@@ -543,8 +564,15 @@ public class BronzeEntity extends TarnishingEntity {
         floatOnLava();
         setupAnimationStates();
 
-        if (this.isCrystallized() && !this.level().isClientSide() && this.onGround()) {
-            this.setDeltaMovement(this.getDeltaMovement().add(0.0, 0.08, 0.0));
+        if (this.isCrystallized() && this.level() instanceof ServerLevel crystalLevel) {
+            if (this.plummeting) {
+                this.plummetTicks++;
+                if ((this.plummetTicks > PLUMMET_MIN_TICKS && this.onGround()) || this.plummetTicks > PLUMMET_MAX_TICKS) {
+                    this.crystalDetonation(crystalLevel);
+                }
+            } else if (this.onGround()) {
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0, 0.08, 0.0));
+            }
         }
 
         if (this.level() instanceof ServerLevel serverLevel) {
@@ -1036,18 +1064,124 @@ public class BronzeEntity extends TarnishingEntity {
 
     @Override
     public void setTarnishLevel(TarnishStage stage) {
+        boolean wasCrystallized = this.isCrystallized();
         super.setTarnishLevel(stage);
         this.updateAttributesForTarnish(stage);
         this.changeGoalsOnLevelChange(stage);
+        if (stage == TarnishStage.CRYSTALLIZED && !wasCrystallized) {
+            this.plummeting = false;
+            this.plummetTicks = 0;
+            this.setRodCount(MAX_RODS);
+        }
         this.updateLocomotion(stage);
     }
 
     private void updateLocomotion(TarnishStage stage) {
-        boolean flying = stage == TarnishStage.CRYSTALLIZED;
+        boolean flying = stage == TarnishStage.CRYSTALLIZED && !this.plummeting;
         this.navigation.stop();
         this.navigation = flying ? this.flyingNavigation : this.groundNavigation;
         this.moveControl = flying ? this.flyingMoveControl : this.groundMoveControl;
         this.setNoGravity(flying);
+    }
+
+    public int getRodCount() {
+        return this.entityData.get(ROD_COUNT);
+    }
+
+    public void setRodCount(int count) {
+        this.entityData.set(ROD_COUNT, Mth.clamp(count, 0, MAX_RODS));
+    }
+
+    public boolean isPlummeting() {
+        return this.plummeting;
+    }
+
+    public boolean fireRodAt(LivingEntity target) {
+        if (this.level().isClientSide() || !this.isCrystallized() || this.plummeting || this.getRodCount() <= 0) {
+            return false;
+        }
+
+        Vec3 head = this.position().add(0.0, HEAD_CENTER_HEIGHT, 0.0);
+        Vec3 aim = target.getBoundingBox().getCenter().subtract(head);
+        if (aim.lengthSqr() < 1.0E-4) {
+            return false;
+        }
+
+        int count = this.getRodCount();
+        double azimuth;
+        if (count == 1) {
+            azimuth = this.getYHeadRot() * Mth.DEG_TO_RAD + Mth.HALF_PI;
+        } else {
+            double targetAzimuth = Mth.atan2(aim.z, aim.x);
+            double spin = this.level().getGameTime() * (double) ROD_SPIN_SPEED;
+            double best = Double.MAX_VALUE;
+            azimuth = 0.0;
+            for (int slot = 0; slot < count; slot++) {
+                double slotAzimuth = spin + Mth.TWO_PI * slot / count;
+                double diff = Math.abs(Mth.wrapDegrees((slotAzimuth - targetAzimuth) * Mth.RAD_TO_DEG));
+                if (diff < best) {
+                    best = diff;
+                    azimuth = slotAzimuth;
+                }
+            }
+            if (best > ROD_ALIGN_DEGREES) {
+                return false;
+            }
+        }
+
+        Vec3 spawn = head.add(Math.cos(azimuth) * ROD_SPAWN_DISTANCE, 0.0, Math.sin(azimuth) * ROD_SPAWN_DISTANCE);
+        Vec3 direction = target.getBoundingBox().getCenter().subtract(spawn);
+        if (direction.lengthSqr() < 1.0E-4) {
+            return false;
+        }
+
+        CrystallizedBronzeRodProjectileEntity rod = new CrystallizedBronzeRodProjectileEntity(this.level(), spawn.x, spawn.y, spawn.z);
+        rod.setOwner(this);
+        rod.shoot(direction.x, direction.y, direction.z, ROD_SHOT_SPEED, 0.0F);
+        this.level().addFreshEntity(rod);
+        this.playSound(SoundEvents.AMETHYST_BLOCK_CHIME, 1.5F, 0.7F + this.random.nextFloat() * 0.3F);
+
+        int remaining = count - 1;
+        this.setRodCount(remaining);
+        if (remaining <= 0) {
+            this.startPlummet();
+        }
+        return true;
+    }
+
+    private void startPlummet() {
+        this.plummeting = true;
+        this.plummetTicks = 0;
+        this.updateLocomotion(this.getTarnishLevel());
+    }
+
+    private void crystalDetonation(ServerLevel level) {
+        BlockPos center = this.blockPosition();
+        this.plummeting = false;
+        spawnCrystalExplosionParticles(level, center);
+        CrystalConversion.detonate(level, center, true);
+        spreadCrystalizedBlocks(level, center);
+        this.hurt(this.damageSources().genericKill(), Float.MAX_VALUE);
+        if (this.isAlive()) {
+            this.discard();
+        }
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("RodCount", this.getRodCount());
+        tag.putBoolean("Plummeting", this.plummeting);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.contains("RodCount")) {
+            this.setRodCount(tag.getInt("RodCount"));
+        }
+        this.plummeting = tag.getBoolean("Plummeting");
+        this.updateLocomotion(this.getTarnishLevel());
     }
 
     @Override
@@ -1077,6 +1211,7 @@ public class BronzeEntity extends TarnishingEntity {
         super.defineSynchedData(builder);
         builder.define(IS_BURROWED, false);
         builder.define(IS_DEFENDING, false);
+        builder.define(ROD_COUNT, MAX_RODS);
     }
 
     @Override

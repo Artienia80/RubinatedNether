@@ -4,6 +4,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import corundum.rubinated_nether.content.entity.BronzeRodProjectileEntity;
 import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
+import corundum.rubinated_nether.content.entity.CrystallizedBronzeRodProjectileEntity;
 import corundum.rubinated_nether.content.entity.CrystallizedBronzeShotProjectileEntity;
 import corundum.rubinated_nether.content.entity.client.BronzeModel;
 import corundum.rubinated_nether.content.entity.client.BronzeRenderer;
@@ -11,6 +12,7 @@ import corundum.rubinated_nether.content.entity.client.BronzeRodProjectileModel;
 import corundum.rubinated_nether.content.entity.client.BronzeRodProjectileRenderer;
 import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileModel;
 import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileRenderer;
+import corundum.rubinated_nether.content.entity.client.CrystallizedBronzeRodProjectileRenderer;
 import corundum.rubinated_nether.content.entity.client.CrystallizedBronzeShotProjectileModel;
 import corundum.rubinated_nether.content.entity.client.CrystallizedBronzeShotProjectileRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -52,6 +54,14 @@ public class RNEntityCreator {
 					.updateInterval(20)
 	);
 
+	public static final Supplier<EntityType<CrystallizedBronzeRodProjectileEntity>> CRYSTALLIZED_BRONZE_ROD = registerEntity(
+			"crystallized_bronze_rod",
+			EntityType.Builder.<CrystallizedBronzeRodProjectileEntity>of(CrystallizedBronzeRodProjectileEntity::new, MobCategory.MISC)
+					.sized(0.5F, 0.5F)
+					.clientTrackingRange(4)
+					.updateInterval(20)
+	);
+
 	public static final Supplier<EntityType<BronzeEntity>> BRONZE = registerEntity(
 			"bronze",
 			EntityType.Builder.of(BronzeEntity::new, MobCategory.MONSTER)
@@ -81,6 +91,7 @@ public class RNEntityCreator {
 		event.registerEntityRenderer(RNEntityCreator.BRONZE_SHOT.get(), BronzeShotProjectileRenderer::new);
 		event.registerEntityRenderer(RNEntityCreator.BRONZE_ROD.get(), BronzeRodProjectileRenderer::new);
 		event.registerEntityRenderer(RNEntityCreator.CRYSTALLIZED_BRONZE_SHOT.get(), CrystallizedBronzeShotProjectileRenderer::new);
+		event.registerEntityRenderer(RNEntityCreator.CRYSTALLIZED_BRONZE_ROD.get(), CrystallizedBronzeRodProjectileRenderer::new);
 	}
 
 	// LAYERS

@@ -20,12 +20,26 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
     private final ModelPart bronze;
     private final ModelPart head;
     private final ModelPart windup;
+    private final ModelPart rods;
+    private final ModelPart[] rodRoots = new ModelPart[6];
+    private final ModelPart[] rodCubes = new ModelPart[6];
+
+    private static final float ROD_LIFT = 18.72F;
+    private static final float ROD_REACH = 6.2F;
+    private static final float FINAL_ROD_REACH = 5.0F;
 
     public BronzeModel(ModelPart root) {
         this.root = root.getChild("root");
         this.bronze = this.root.getChild("bronze");
         this.head = this.bronze.getChild("head");
         this.windup = head.getChild("windup");
+        this.rods = this.bronze.getChild("rods");
+        for (int i = 0; i < this.rodRoots.length; i++) {
+            ModelPart rod = this.rods.getChild("rod" + (i + 1));
+            ModelPart holder = (i == 0 || i == 2) ? rod : rod.getChild("rod_" + (i + 1));
+            this.rodRoots[i] = rod;
+            this.rodCubes[i] = holder.getChild("cube_r" + (i + 1));
+        }
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -108,7 +122,47 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
         this.animate(entity.leapAnimationState, BronzeAnimations.LEAP, ageInTicks, 1f);
         this.animate(entity.diveAnimationState, BronzeAnimations.DIVE, ageInTicks, 1f);
         this.animate(entity.slamAnimationState, BronzeAnimations.SLAM, ageInTicks, 1f);
-        this.animate(entity.flyAnimationState, BronzeAnimations.FLY, ageInTicks, 1f);
+
+        if (entity.isCrystallized()) {
+            this.applyCrystallizedRods(entity, ageInTicks, netHeadYaw, headPitch);
+        } else {
+            for (ModelPart rod : this.rodRoots) {
+                rod.visible = true;
+            }
+        }
+    }
+
+    private void applyCrystallizedRods(BronzeEntity entity, float ageInTicks, float netHeadYaw, float headPitch) {
+        int count = Mth.clamp(entity.getRodCount(), 0, this.rodRoots.length);
+        float partial = ageInTicks - entity.tickCount;
+        float bodyYaw = Mth.rotLerp(partial, entity.yBodyRotO, entity.yBodyRot) * Mth.DEG_TO_RAD;
+        float spin = (entity.level().getGameTime() + partial) * BronzeEntity.ROD_SPIN_SPEED;
+
+        this.rods.y = this.rods.getInitialPose().y - ROD_LIFT;
+
+        for (int i = 0; i < this.rodRoots.length; i++) {
+            boolean active = i < count;
+            this.rodRoots[i].visible = active;
+            if (!active) {
+                continue;
+            }
+
+            float yaw;
+            float pitch = 0.0F;
+            float reach;
+            if (count == 1) {
+                yaw = netHeadYaw * Mth.DEG_TO_RAD + Mth.HALF_PI;
+                pitch = Mth.clamp(headPitch * Mth.DEG_TO_RAD, -1.0F, 1.0F);
+                reach = FINAL_ROD_REACH;
+            } else {
+                yaw = spin + Mth.TWO_PI * i / count - bodyYaw;
+                reach = ROD_REACH;
+            }
+
+            this.rodRoots[i].yRot = yaw;
+            this.rodCubes[i].x = reach;
+            this.rodCubes[i].zRot = Mth.HALF_PI + pitch;
+        }
     }
 
     private void applyHeadRotation(float headYaw, float headPitch) {

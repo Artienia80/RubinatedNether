@@ -30,7 +30,7 @@ public class CrystallizedOrbitGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (!entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED)) return false;
+        if (!entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED) || entity.isPlummeting()) return false;
 
         Player nearestPlayer = entity.level().getNearestPlayer(entity.getX(), entity.getY(), entity.getZ(), MAX_DISTANCE + 5, e -> !e.isSpectator() && !BronzeEntity.isSoothed(e));
         if (nearestPlayer != null && !nearestPlayer.isCreative() && !nearestPlayer.isSpectator()) {
@@ -43,7 +43,7 @@ public class CrystallizedOrbitGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED) && target != null && target.isAlive() && !BronzeEntity.isSoothed(target);
+        return entity.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED) && !entity.isPlummeting() && target != null && target.isAlive() && !BronzeEntity.isSoothed(target);
     }
 
     @Override
