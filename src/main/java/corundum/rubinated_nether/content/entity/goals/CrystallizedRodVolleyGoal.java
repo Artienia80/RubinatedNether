@@ -9,14 +9,17 @@ import java.util.Comparator;
 import java.util.List;
 
 public class CrystallizedRodVolleyGoal extends Goal {
-    private static final int MIN_DELAY = 80;
-    private static final int MAX_DELAY = 220;
+    private static final int MIN_DELAY = 30;
+    private static final int MAX_DELAY = 90;
+    private static final int AIM_TICKS = 25;
+    private static final int AIM_TIMEOUT = 60;
     private static final double RANGE = 24.0;
     private static final float BRONZE_TARGET_CHANCE = 0.35F;
 
     private final BronzeEntity entity;
     private LivingEntity target;
     private int delay;
+    private int aimTicks;
 
     public CrystallizedRodVolleyGoal(BronzeEntity entity) {
         this.entity = entity;
@@ -45,21 +48,49 @@ public class CrystallizedRodVolleyGoal extends Goal {
         }
 
         if (target == null || !isValid(target)) {
+            abortAim();
             target = pickTarget();
             if (target == null) {
                 return;
             }
         }
 
+        entity.getLookControl().setLookAt(target, 40.0F, 40.0F);
+
+        if (entity.getRodCount() > 1) {
+            if (!entity.isRodAiming()) {
+                if (!entity.beginRodAim(target)) {
+                    return;
+                }
+                aimTicks = 0;
+            }
+            aimTicks++;
+            if (aimTicks < AIM_TICKS) {
+                return;
+            }
+        }
+
         if (entity.fireRodAt(target)) {
             target = null;
+            aimTicks = 0;
             delay = nextDelay();
+        } else if (entity.isRodAiming() && aimTicks > AIM_TIMEOUT) {
+            abortAim();
+            delay = MIN_DELAY;
         }
     }
 
     @Override
     public void stop() {
+        abortAim();
         target = null;
+    }
+
+    private void abortAim() {
+        if (entity.isRodAiming()) {
+            entity.cancelRodAim();
+        }
+        aimTicks = 0;
     }
 
     private boolean isValid(LivingEntity candidate) {
@@ -78,7 +109,7 @@ public class CrystallizedRodVolleyGoal extends Goal {
     private LivingEntity pickTarget() {
         Player player = entity.level().getNearestPlayer(
                 entity.getX(), entity.getY(), entity.getZ(), RANGE,
-                e -> !e.isSpectator() && !e.isCreative() && !BronzeEntity.isSoothed(e) && entity.hasLineOfSight(e)
+                e -> !e.isSpectator() && !(e instanceof Player p && p.isCreative()) && !BronzeEntity.isSoothed(e) && entity.hasLineOfSight(e)
         );
 
         BronzeEntity bronze = null;

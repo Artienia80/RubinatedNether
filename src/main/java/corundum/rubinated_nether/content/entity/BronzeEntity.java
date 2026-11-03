@@ -87,9 +87,15 @@ public class BronzeEntity extends TarnishingEntity {
     private static final double ROD_SPAWN_DISTANCE = 1.0;
     private static final float ROD_SHOT_SPEED = 1.8F;
     private static final double ROD_ALIGN_DEGREES = 15.0;
+    private static final int ROD_TRANSITION_TICKS = 10;
+    private static final int ROD_AIM_BLEND_TICKS = 10;
     private static final int PLUMMET_MIN_TICKS = 3;
     private static final int PLUMMET_MAX_TICKS = 100;
     private static final EntityDataAccessor<Integer> ROD_COUNT =
+            SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> ROD_AIMING =
+            SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> FIRED_ROD_SLOT =
             SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.INT);
 
     private final PathNavigation groundNavigation;
@@ -99,6 +105,13 @@ public class BronzeEntity extends TarnishingEntity {
     private CrystallizedRodVolleyGoal volleyGoal;
     private boolean plummeting;
     private int plummetTicks;
+    private int trackedRodCount = MAX_RODS;
+    private int rodTransitionFrom = MAX_RODS;
+    private int rodTransition;
+    private int rodTransitionFired = -1;
+    private float rodSpin;
+    private float rodSpinO;
+    private int rodAimTicks;
 
     // Goals
     private TarnishedStalkGoal stalkGoal;
@@ -181,6 +194,7 @@ public class BronzeEntity extends TarnishingEntity {
                 .add(Attributes.MAX_HEALTH, 20.0)
                 .add(Attributes.FOLLOW_RANGE, 35.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.2)
+                .add(Attributes.FLYING_SPEED, 0.4) // required by FlyingMoveControl (crystallized stage)
                 .add(Attributes.ATTACK_DAMAGE, 4.0);
     }
 
@@ -563,6 +577,8 @@ public class BronzeEntity extends TarnishingEntity {
         super.tick();
         floatOnLava();
         setupAnimationStates();
+
+        this.tickRodTransition();
 
         if (this.isCrystallized() && this.level() instanceof ServerLevel crystalLevel) {
             if (this.plummeting) {
@@ -1071,6 +1087,8 @@ public class BronzeEntity extends TarnishingEntity {
         if (stage == TarnishStage.CRYSTALLIZED && !wasCrystallized) {
             this.plummeting = false;
             this.plummetTicks = 0;
+            this.entityData.set(FIRED_ROD_SLOT, -1);
+            this.entityData.set(ROD_AIMING, false);
             this.setRodCount(MAX_RODS);
         }
         this.updateLocomotion(stage);
@@ -1082,6 +1100,92 @@ public class BronzeEntity extends TarnishingEntity {
         this.navigation = flying ? this.flyingNavigation : this.groundNavigation;
         this.moveControl = flying ? this.flyingMoveControl : this.groundMoveControl;
         this.setNoGravity(flying);
+    }
+
+    private void tickRodTransition() {
+        int current = this.getRodCount();
+        if (current != this.trackedRodCount) {
+            this.rodTransitionFrom = this.trackedRodCount;
+            this.rodTransitionFired = this.entityData.get(FIRED_ROD_SLOT);
+            this.trackedRodCount = current;
+            this.rodTransition = ROD_TRANSITION_TICKS;
+        } else if (this.rodTransition > 0) {
+            this.rodTransition--;
+        }
+
+        this.rodSpinO = this.rodSpin;
+        if (this.isRodAiming()) {
+            if (this.rodAimTicks < ROD_AIM_BLEND_TICKS) {
+                this.rodAimTicks++;
+            }
+        } else {
+            this.rodAimTicks = 0;
+            this.rodSpin += ROD_SPIN_SPEED;
+        }
+    }
+
+    public boolean isRodAiming() {
+        return this.entityData.get(ROD_AIMING);
+    }
+
+    public int getRodAimSlot() {
+        return this.entityData.get(FIRED_ROD_SLOT);
+    }
+
+    public float getRodSpin(float partial) {
+        return Mth.lerp(partial, this.rodSpinO, this.rodSpin);
+    }
+
+    public float getRodAimProgress(float partial) {
+        return Mth.clamp((this.rodAimTicks + partial) / ROD_AIM_BLEND_TICKS, 0.0F, 1.0F);
+    }
+
+    public boolean beginRodAim(LivingEntity target) {
+        int count = this.getRodCount();
+        if (this.level().isClientSide() || !this.isCrystallized() || this.plummeting || count < 2 || this.isRodAiming()) {
+            return false;
+        }
+
+        Vec3 head = this.position().add(0.0, HEAD_CENTER_HEIGHT, 0.0);
+        Vec3 aim = target.getBoundingBox().getCenter().subtract(head);
+        double targetAzimuth = Mth.atan2(aim.z, aim.x);
+        double best = Double.MAX_VALUE;
+        int chosen = 0;
+        for (int slot = 0; slot < count; slot++) {
+            double slotAzimuth = this.rodSpin + Mth.TWO_PI * slot / count;
+            double diff = Math.abs(Mth.wrapDegrees((slotAzimuth - targetAzimuth) * Mth.RAD_TO_DEG));
+            if (diff < best) {
+                best = diff;
+                chosen = slot;
+            }
+        }
+
+        this.entityData.set(FIRED_ROD_SLOT, chosen);
+        this.entityData.set(ROD_AIMING, true);
+        return true;
+    }
+
+    public void cancelRodAim() {
+        if (!this.level().isClientSide()) {
+            this.entityData.set(ROD_AIMING, false);
+        }
+    }
+
+    public float getRodSlot(int index, int count, float partial) {
+        float target = (float) index / count;
+        if (this.rodTransition <= 0 || this.rodTransitionFrom <= 1 || this.rodTransitionFrom == count || index >= count) {
+            return target;
+        }
+        float start;
+        if (this.rodTransitionFired >= 0 && this.rodTransitionFrom == count + 1) {
+            start = (float) (index < this.rodTransitionFired ? index : index + 1) / this.rodTransitionFrom;
+        } else if (index < this.rodTransitionFrom) {
+            start = (float) index / this.rodTransitionFrom;
+        } else {
+            return target;
+        }
+        float blend = Mth.clamp((this.rodTransition - partial) / ROD_TRANSITION_TICKS, 0.0F, 1.0F);
+        return Mth.lerp(blend, target, start);
     }
 
     public int getRodCount() {
@@ -1097,7 +1201,11 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     public boolean fireRodAt(LivingEntity target) {
-        if (this.level().isClientSide() || !this.isCrystallized() || this.plummeting || this.getRodCount() <= 0) {
+        int count = this.getRodCount();
+        if (this.level().isClientSide() || !this.isCrystallized() || this.plummeting || count <= 0) {
+            return false;
+        }
+        if (count > 1 && !this.isRodAiming()) {
             return false;
         }
 
@@ -1107,26 +1215,10 @@ public class BronzeEntity extends TarnishingEntity {
             return false;
         }
 
-        int count = this.getRodCount();
-        double azimuth;
-        if (count == 1) {
-            azimuth = this.getYHeadRot() * Mth.DEG_TO_RAD + Mth.HALF_PI;
-        } else {
-            double targetAzimuth = Mth.atan2(aim.z, aim.x);
-            double spin = this.level().getGameTime() * (double) ROD_SPIN_SPEED;
-            double best = Double.MAX_VALUE;
-            azimuth = 0.0;
-            for (int slot = 0; slot < count; slot++) {
-                double slotAzimuth = spin + Mth.TWO_PI * slot / count;
-                double diff = Math.abs(Mth.wrapDegrees((slotAzimuth - targetAzimuth) * Mth.RAD_TO_DEG));
-                if (diff < best) {
-                    best = diff;
-                    azimuth = slotAzimuth;
-                }
-            }
-            if (best > ROD_ALIGN_DEGREES) {
-                return false;
-            }
+        double azimuth = this.getYHeadRot() * Mth.DEG_TO_RAD + Mth.HALF_PI;
+        double targetAzimuth = Mth.atan2(aim.z, aim.x);
+        if (Math.abs(Mth.wrapDegrees((azimuth - targetAzimuth) * Mth.RAD_TO_DEG)) > ROD_ALIGN_DEGREES) {
+            return false;
         }
 
         Vec3 spawn = head.add(Math.cos(azimuth) * ROD_SPAWN_DISTANCE, 0.0, Math.sin(azimuth) * ROD_SPAWN_DISTANCE);
@@ -1141,7 +1233,10 @@ public class BronzeEntity extends TarnishingEntity {
         this.level().addFreshEntity(rod);
         this.playSound(SoundEvents.AMETHYST_BLOCK_CHIME, 1.5F, 0.7F + this.random.nextFloat() * 0.3F);
 
+        int firedSlot = count == 1 ? 0 : Mth.clamp(this.getRodAimSlot(), 0, count - 1);
         int remaining = count - 1;
+        this.entityData.set(ROD_AIMING, false);
+        this.entityData.set(FIRED_ROD_SLOT, firedSlot);
         this.setRodCount(remaining);
         if (remaining <= 0) {
             this.startPlummet();
@@ -1212,6 +1307,8 @@ public class BronzeEntity extends TarnishingEntity {
         builder.define(IS_BURROWED, false);
         builder.define(IS_DEFENDING, false);
         builder.define(ROD_COUNT, MAX_RODS);
+        builder.define(FIRED_ROD_SLOT, -1);
+        builder.define(ROD_AIMING, false);
     }
 
     @Override

@@ -136,7 +136,11 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
         int count = Mth.clamp(entity.getRodCount(), 0, this.rodRoots.length);
         float partial = ageInTicks - entity.tickCount;
         float bodyYaw = Mth.rotLerp(partial, entity.yBodyRotO, entity.yBodyRot) * Mth.DEG_TO_RAD;
-        float spin = (entity.level().getGameTime() + partial) * BronzeEntity.ROD_SPIN_SPEED;
+        float spin = entity.getRodSpin(partial);
+        boolean aiming = count > 1 && entity.isRodAiming();
+        int aimSlot = entity.getRodAimSlot();
+        float aimProgress = entity.getRodAimProgress(partial);
+        float aimBlend = aiming ? aimProgress * aimProgress * (3.0F - 2.0F * aimProgress) : 0.0F;
 
         this.rods.y = this.rods.getInitialPose().y - ROD_LIFT;
 
@@ -155,8 +159,15 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
                 pitch = Mth.clamp(headPitch * Mth.DEG_TO_RAD, -1.0F, 1.0F);
                 reach = FINAL_ROD_REACH;
             } else {
-                yaw = spin + Mth.TWO_PI * i / count - bodyYaw;
+                yaw = spin + Mth.TWO_PI * entity.getRodSlot(i, count, partial) - bodyYaw;
                 reach = ROD_REACH;
+                if (aiming && i == aimSlot) {
+                    float frontYaw = netHeadYaw * Mth.DEG_TO_RAD + Mth.HALF_PI;
+                    float delta = Mth.wrapDegrees((frontYaw - yaw) * Mth.RAD_TO_DEG) * Mth.DEG_TO_RAD;
+                    yaw += delta * aimBlend;
+                    reach = Mth.lerp(aimBlend, ROD_REACH, FINAL_ROD_REACH);
+                    pitch = Mth.clamp(headPitch * Mth.DEG_TO_RAD, -1.0F, 1.0F) * aimBlend;
+                }
             }
 
             this.rodRoots[i].yRot = yaw;
