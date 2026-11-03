@@ -1355,6 +1355,7 @@ public class RNBlocks {
 			() -> new BronzeStrongboxBlock(
 					TarnishStage.UNAFFECTED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get())
+							.noOcclusion()
 			)
 	);
 
@@ -1363,6 +1364,7 @@ public class RNBlocks {
 			() -> new BronzeStrongboxBlock(
 					TarnishStage.DISCOLORED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get())
+							.noOcclusion()
 			)
 	);
 
@@ -1371,6 +1373,7 @@ public class RNBlocks {
 			() -> new BronzeStrongboxBlock(
 					TarnishStage.CORRODED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get())
+							.noOcclusion()
 			)
 	);
 
@@ -1379,6 +1382,7 @@ public class RNBlocks {
 			() -> new BronzeStrongboxBlock(
 					TarnishStage.TARNISHED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get())
+							.noOcclusion()
 			)
 	);
 
@@ -1387,6 +1391,7 @@ public class RNBlocks {
 			() -> new BronzeStrongboxBlock(
 					TarnishStage.CRYSTALLIZED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get())
+							.noOcclusion()
 			)
 	);
 

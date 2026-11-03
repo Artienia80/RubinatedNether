@@ -1,0 +1,78 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "rubinated_nether:block/bronze/bronze_block/tarnished_bronze_block",
+    "sheet": "rubinated_nether:block/bronze_strongbox/tarnished_bronze_strongbox"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            10,
+            4,
+            12
+          ],
+          "texture": "#sheet"
+        },
+        "east": {
+          "uv": [
+            0,
+            10,
+            2,
+            12
+          ],
+          "texture": "#sheet"
+        },
+        "south": {
+          "uv": [
+            6,
+            10,
+            8,
+            12
+          ],
+          "texture": "#sheet"
+        },
+        "west": {
+          "uv": [
+            4,
+            10,
+            6,
+            12
+          ],
+          "texture": "#sheet"
+        },
+        "up": {
+          "uv": [
+            4,
+            4,
+            2,
+            2
+          ],
+          "texture": "#sheet"
+        },
+        "down": {
+          "uv": [
+            6,
+            2,
+            4,
+            4
+          ],
+          "texture": "#sheet"
+        }
+      }
+    }
+  ]
+}

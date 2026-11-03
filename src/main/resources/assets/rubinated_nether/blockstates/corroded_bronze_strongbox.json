@@ -1,8 +1,19 @@
 {
   "multipart": [
     {
+      "when": {
+        "key": "0"
+      },
       "apply": {
-        "model": "rubinated_nether:block/corroded_bronze_block"
+        "model": "rubinated_nether:block/corroded_bronze_strongbox_locked"
+      }
+    },
+    {
+      "when": {
+        "key": "1|2|3|4|5|6|7|8"
+      },
+      "apply": {
+        "model": "rubinated_nether:block/corroded_bronze_strongbox_open"
       }
     },
     {

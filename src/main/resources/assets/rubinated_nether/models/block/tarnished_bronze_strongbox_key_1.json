@@ -6,46 +6,46 @@
         "east": {
           "texture": "#key",
           "uv": [
-            12.75,
-            6.5,
-            13.25,
-            7.75
+            9.25,
+            11.25,
+            9.5,
+            11.875
           ]
         },
         "north": {
           "texture": "#key",
           "uv": [
-            13.25,
-            6.5,
-            13.75,
-            7.75
+            9.5,
+            11.25,
+            9.75,
+            11.875
           ]
         },
         "south": {
           "texture": "#key",
           "uv": [
-            12.25,
-            6.5,
-            12.75,
-            7.75
+            9.0,
+            11.25,
+            9.25,
+            11.875
           ]
         },
         "up": {
           "texture": "#key",
           "uv": [
-            12.75,
-            6.0,
-            13.25,
-            6.5
+            9.25,
+            11.0,
+            9.5,
+            11.25
           ]
         },
         "west": {
           "texture": "#key",
           "uv": [
-            13.75,
-            6.5,
-            14.25,
-            7.75
+            9.75,
+            11.25,
+            10.0,
+            11.875
           ]
         }
       },
@@ -74,19 +74,19 @@
         "east": {
           "texture": "#key",
           "uv": [
-            12.25,
-            3.5,
-            14.75,
-            4.5
+            9.0,
+            10.0,
+            10.25,
+            10.5
           ]
         },
         "west": {
           "texture": "#key",
           "uv": [
-            12.25,
-            3.5,
-            14.75,
-            4.5
+            9.0,
+            10.0,
+            10.25,
+            10.5
           ]
         }
       },
@@ -113,6 +113,6 @@
   ],
   "render_type": "minecraft:cutout",
   "textures": {
-    "key": "rubinated_nether:entity/bronze/bronze_tarnished"
+    "key": "rubinated_nether:block/bronze_strongbox/tarnished_bronze_strongbox"
   }
 }

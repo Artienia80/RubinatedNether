@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.blocks.BronzeStrongboxBlock;
 import corundum.rubinated_nether.content.menu.StrongboxMenu;
 import corundum.rubinated_nether.utils.StrongboxLock;
 import net.minecraft.core.BlockPos;
@@ -17,7 +18,12 @@ import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -44,6 +50,8 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BronzeStrongboxBlockEntity extends ChestBlockEntity {
     public static final ResourceKey<LootTable> DISPENSE_LOOT_TABLE = ResourceKey.create(
@@ -57,8 +65,15 @@ public class BronzeStrongboxBlockEntity extends ChestBlockEntity {
     private static final String CRANKS_TAG = "CranksRemaining";
     private static final String PASSWORD_TAG = "Password";
     private static final String KEY_TAG = "InsertedKey";
+    private static final String DISPLAY_TAG = "DisplayItems";
+    private static final int PREVIEW_SAMPLES = 48;
+    private static final int MAX_PREVIEW_STACKS = 64;
 
     private int cranksRemaining;
+
+    private List<ItemStack> lootPreview = List.of();
+
+    private List<ItemStack> displayStacks = List.of();
 
     private final NonNullList<ItemStack> contents = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
 
@@ -304,6 +319,78 @@ public class BronzeStrongboxBlockEntity extends ChestBlockEntity {
         tag.remove("Items");
     }
 
+    public List<ItemStack> getDisplayStacks() {
+        return this.displayStacks;
+    }
+
+    private List<ItemStack> collectDisplayStacks() {
+        if (this.getBlockState().getValue(BronzeStrongboxBlock.NATURAL)) {
+            return this.lootPreview();
+        }
+        List<ItemStack> result = new ArrayList<>();
+        for (ItemStack stack : this.contents) {
+            if (stack.isEmpty() || containsSame(result, stack)) {
+                continue;
+            }
+            result.add(stack.copyWithCount(1));
+        }
+        return result;
+    }
+
+    private List<ItemStack> lootPreview() {
+        if (this.lootPreview.isEmpty() && this.level instanceof ServerLevel serverLevel) {
+            LootTable table = serverLevel.getServer().reloadableRegistries().getLootTable(DISPENSE_LOOT_TABLE);
+            LootParams params = new LootParams.Builder(serverLevel)
+                    .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition))
+                    .create(LootContextParamSets.CHEST);
+            List<ItemStack> sampled = new ArrayList<>();
+            for (int i = 0; i < PREVIEW_SAMPLES && sampled.size() < MAX_PREVIEW_STACKS; i++) {
+                for (ItemStack stack : table.getRandomItems(params)) {
+                    if (!stack.isEmpty() && sampled.size() < MAX_PREVIEW_STACKS && !containsSame(sampled, stack)) {
+                        sampled.add(stack.copyWithCount(1));
+                    }
+                }
+            }
+            this.lootPreview = sampled;
+        }
+        return this.lootPreview;
+    }
+
+    private static boolean containsSame(List<ItemStack> stacks, ItemStack candidate) {
+        for (ItemStack existing : stacks) {
+            if (ItemStack.isSameItemSameComponents(existing, candidate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if (this.level != null && !this.level.isClientSide && this.getBlockState().getValue(BronzeStrongboxBlock.KEY) != 0) {
+            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), Block.UPDATE_CLIENTS);
+        }
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag tag = super.getUpdateTag(registries);
+        if (this.getBlockState().getValue(BronzeStrongboxBlock.KEY) != 0) {
+            ListTag list = new ListTag();
+            for (ItemStack stack : this.collectDisplayStacks()) {
+                list.add(stack.save(registries));
+            }
+            tag.put(DISPLAY_TAG, list);
+        }
+        return tag;
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
     public boolean hasPassword() {
         return this.password != null;
     }
@@ -381,6 +468,14 @@ public class BronzeStrongboxBlockEntity extends ChestBlockEntity {
         this.insertedKey = tag.contains(KEY_TAG)
                 ? ItemStack.parse(registries, tag.getCompound(KEY_TAG)).orElse(ItemStack.EMPTY)
                 : ItemStack.EMPTY;
+        List<ItemStack> display = new ArrayList<>();
+        if (tag.contains(DISPLAY_TAG, Tag.TAG_LIST)) {
+            ListTag list = tag.getList(DISPLAY_TAG, Tag.TAG_COMPOUND);
+            for (int i = 0; i < list.size(); i++) {
+                ItemStack.parse(registries, list.getCompound(i)).ifPresent(display::add);
+            }
+        }
+        this.displayStacks = display;
     }
 
     @Override

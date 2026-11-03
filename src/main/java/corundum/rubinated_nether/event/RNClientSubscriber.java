@@ -158,6 +158,7 @@ public class RNClientSubscriber {
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_LASER.get(), BronzeLaserRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.COPPER_LASER.get(), CopperLaserRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_VASE.get(), VaseBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_STRONGBOX.get(), StrongboxRenderer::new);
         event.registerEntityRenderer(RNEntityCreator.BRONZE_SHOT.get(), BronzeShotProjectileRenderer::new);
     }
 

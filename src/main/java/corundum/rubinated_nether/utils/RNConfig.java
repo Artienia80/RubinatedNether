@@ -238,6 +238,9 @@ public class RNConfig extends MidnightConfig {
 	@Entry(category = CLIENT)
 	public static boolean rubinatedLanguage = true;
 
+	@Entry(category = CLIENT)
+	public static boolean strongboxItemDisplay = true;
+
 	@Entry(
 			category = POCKETWATCH,
 			isSlider = true,
