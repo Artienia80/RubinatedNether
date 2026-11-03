@@ -3,11 +3,11 @@ package corundum.rubinated_nether.content.blocks;
 import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNRecipes;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
+import corundum.rubinated_nether.content.effect.BrazierPowerEffect;
 import corundum.rubinated_nether.content.recipe.BaptismRecipe;
 import corundum.rubinated_nether.utils.BrazierTracker;
 import corundum.rubinated_nether.utils.RNConfig;
@@ -291,8 +291,8 @@ public class BrazierBlock extends BaseEntityBlock {
                                 .and(EntitySelector.NO_SPECTATORS);
 
                         for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
-                            if (serverPlayer.hasEffect(RNEffects.BRAZIER_POWER)) {
-                                serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
+                            if (BrazierPowerEffect.isFromBrazier(serverPlayer)) {
+                                BrazierPowerEffect.removeBrazierPower(serverPlayer);
                             }
                         }
 
@@ -385,8 +385,8 @@ public class BrazierBlock extends BaseEntityBlock {
                                 .and(EntitySelector.NO_SPECTATORS);
 
                         for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
-                            if (serverPlayer.hasEffect(RNEffects.BRAZIER_POWER)) {
-                                serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
+                            if (BrazierPowerEffect.isFromBrazier(serverPlayer)) {
+                                BrazierPowerEffect.removeBrazierPower(serverPlayer);
                             }
                         }
 

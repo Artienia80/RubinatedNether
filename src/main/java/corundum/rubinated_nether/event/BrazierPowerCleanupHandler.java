@@ -1,7 +1,7 @@
 package corundum.rubinated_nether.event;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNEffects;
+import corundum.rubinated_nether.content.effect.BrazierPowerEffect;
 import corundum.rubinated_nether.utils.BrazierTracker;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,11 +17,11 @@ public class BrazierPowerCleanupHandler {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
             return;
         }
-        if (player.tickCount % 20 != 0 || !player.hasEffect(RNEffects.BRAZIER_POWER)) {
+        if (player.tickCount % 20 != 0 || !BrazierPowerEffect.isFromBrazier(player)) {
             return;
         }
         if (!BrazierTracker.anyInRange(player.level(), player.getX(), player.getY(), player.getZ(), RNConfig.brazierEffectRange)) {
-            player.removeEffect(RNEffects.BRAZIER_POWER);
+            BrazierPowerEffect.removeBrazierPower(player);
         }
     }
 }

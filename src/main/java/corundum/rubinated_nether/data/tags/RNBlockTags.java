@@ -590,5 +590,10 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(),
 				RNBlocks.RUNESTONE.get()
 		);
+
+		this.tag(BlockTags.SNIFFER_DIGGABLE_BLOCK).add(
+				Blocks.CRIMSON_NYLIUM,
+				Blocks.WARPED_NYLIUM
+		);
 	}
 }

@@ -162,6 +162,7 @@ public class RNRecipeProvider extends RecipeProvider {
 		RuneCarvingRecipeProvider.registerBlankRune(recipeOutput);
 
 		baptism(recipeOutput, Ingredient.of(RNTags.Items.OFFERING_BRAZIER_ITEM), RNItems.RITUAL_OFFERING);
+		baptism(recipeOutput, Ingredient.of(RNItems.POMEGRANATE), RNItems.RUBINATED_POMEGRANATE);
 		for (Rubination rubination : Rubination.carvableValues()) {
 			baptism(recipeOutput,
 					DataComponentIngredient.of(false, RNDataComponents.RUNE_CARVING, rubination, RNItems.RUNE.get()),

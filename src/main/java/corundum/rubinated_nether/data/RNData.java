@@ -28,6 +28,7 @@ public class RNData {
 		datagen.addProvider(event.includeClient(), new RNItemModels(output, fileHelper));
 
 		datagen.addProvider(event.includeServer(), new RNRecipeProvider(output, lookupProvider));
+		datagen.addProvider(event.includeServer(), new RNGlobalLootModifiers(output, lookupProvider));
 
 		// Create datapack provider first so advancements can use its patched lookup,
 		// which includes custom banner patterns, trim patterns, etc.

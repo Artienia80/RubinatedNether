@@ -63,7 +63,8 @@ public class RubinatedNether {
             RNBlockEntities.BLOCK_ENTITY_TYPES,
             RNMenuTypes.MENUS,
             RNEntityDataSerializers.SERIALIZERS,
-            RNDataComponents.DATA_COMPONENTS
+            RNDataComponents.DATA_COMPONENTS,
+            RNLootModifiers.LOOT_MODIFIERS
     );
 
     public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {

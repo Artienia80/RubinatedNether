@@ -769,6 +769,7 @@
   "effect.rubinated_nether.bronze_diseased": "Bronze Diseased",
   "effect.rubinated_nether.blessed": "Blessed",
   "effect.rubinated_nether.brazier_power": "Brazier Power",
+  "effect.rubinated_nether.life_steal": "Life Steal",
 
 
   "death.attack.chandelier": "%1$s was embraced by a falling chandelier",
@@ -797,6 +798,7 @@
   "rubinated_nether.midnightconfig.category.client": "Client",
   "rubinated_nether.midnightconfig.category.cauldron": "Cauldron",
   "rubinated_nether.midnightconfig.category.vent": "Vent",
+  "rubinated_nether.midnightconfig.category.pomegranate": "Pomegranate",
 
   "rubinated_nether.midnightconfig.chandelierDefaultDamage": "Chandelier Default Damage Value",
   "rubinated_nether.midnightconfig.chandelierStateMultiplierIncrease": "Chandelier Damage Multiplier Increase",
@@ -812,6 +814,9 @@
   "rubinated_nether.midnightconfig.brazierPowerDisableFireOverlay": "Brazier Power Disable Fire Overlay",
   "rubinated_nether.midnightconfig.brazierPowerBoatLava": "Brazier Power Lets Boats Float on Lava",
   "rubinated_nether.midnightconfig.brazierPowerLavaImmuneItems": "Brazier Power Lava-Immune Items",
+
+  "rubinated_nether.midnightconfig.rubinatedPomegranateEffectLevels": "Rubinated Pomegranate Duration (Molten Ruby Levels)",
+  "rubinated_nether.midnightconfig.lifeStealRatio": "Life Steal Healing Ratio",
 
   "rubinated_nether.midnightconfig.altarRubinationCost": "Altar Rubination Cost",
   "rubinated_nether.midnightconfig.altarLesserBlessingTime": "Altar Lesser Blessing Duration",

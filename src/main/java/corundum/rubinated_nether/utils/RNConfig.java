@@ -16,6 +16,7 @@ public class RNConfig extends MidnightConfig {
 	public static final String CAULDRON = "cauldron";
 	public static final String VENT = "vent";
 	public static final String POCKETWATCH = "pocketwatch";
+	public static final String POMEGRANATE = "pomegranate";
 
 	/* -- Brazier -- */
 
@@ -76,6 +77,24 @@ public class RNConfig extends MidnightConfig {
 
 	@Entry(category = BRAZIER)
 	public static boolean brazierBoundaryParticles = true;
+
+	@Entry(
+			category = POMEGRANATE,
+			isSlider = true,
+			min = 0.05,
+			max = 4
+	)
+	@Synced
+	public static float rubinatedPomegranateEffectLevels = 0.25f;
+
+	@Entry(
+			category = POMEGRANATE,
+			isSlider = true,
+			min = 0,
+			max = 1
+	)
+	@Synced
+	public static float lifeStealRatio = 0.5f;
 
 	/* -- Altar -- */
 
@@ -236,6 +255,10 @@ public class RNConfig extends MidnightConfig {
 	 */
 	public static int getBrazierSecondsPerLevel() {
 		return brazierMinutesPerLevel * 60;
+	}
+
+	public static int getRubinatedPomegranateEffectTicks() {
+		return Math.round(rubinatedPomegranateEffectLevels * getBrazierSecondsPerLevel() * 20);
 	}
 
 	/**

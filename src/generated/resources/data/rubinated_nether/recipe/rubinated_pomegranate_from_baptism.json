@@ -1,0 +1,10 @@
+{
+  "type": "rubinated_nether:baptism",
+  "ingredient": {
+    "item": "rubinated_nether:pomegranate"
+  },
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:rubinated_pomegranate"
+  }
+}

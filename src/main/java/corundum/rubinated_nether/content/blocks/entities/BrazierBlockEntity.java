@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.blocks.BrazierBlock;
+import corundum.rubinated_nether.content.effect.BrazierPowerEffect;
 import corundum.rubinated_nether.utils.BrazierTracker;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
@@ -126,7 +127,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		for (ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
 			MobEffectInstance oldEffect = player.getEffect(RNEffects.BRAZIER_POWER);
 
-			if (oldEffect != null) {
+			if (BrazierPowerEffect.isFromBrazier(oldEffect)) {
 				player.removeEffect(RNEffects.BRAZIER_POWER);
 			}
 
@@ -187,11 +188,11 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		double rangeSquared = RNConfig.brazierEffectRange * RNConfig.brazierEffectRange;
 
 		for (ServerPlayer player : level.getServer().getPlayerList().getPlayers()) {
-			if (player.level() == level && player.hasEffect(RNEffects.BRAZIER_POWER)) {
+			if (player.level() == level && BrazierPowerEffect.isFromBrazier(player)) {
 				double distanceSq = player.distanceToSqr(x + 0.5, y + 0.5, z + 0.5);
 				if (distanceSq > rangeSquared) {
 					if (!isPlayerInRangeOfAnyBrazier(level, player)) {
-						player.removeEffect(RNEffects.BRAZIER_POWER);
+						BrazierPowerEffect.removeBrazierPower(player);
 					}
 				}
 			}
@@ -354,9 +355,9 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 				.and(EntitySelector.NO_SPECTATORS);
 
 		for (ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
-			if (player.hasEffect(RNEffects.BRAZIER_POWER)) {
+			if (BrazierPowerEffect.isFromBrazier(player)) {
 				if (!isPlayerInRangeOfAnyBrazierExcluding(level, player, excludePos)) {
-					player.removeEffect(RNEffects.BRAZIER_POWER);
+					BrazierPowerEffect.removeBrazierPower(player);
 				}
 			}
 		}
@@ -548,7 +549,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 
 		for (ServerPlayer serverPlayer : level.getEntitiesOfClass(ServerPlayer.class, area, selector)) {
 			MobEffectInstance currentEffect = serverPlayer.getEffect(RNEffects.BRAZIER_POWER);
-			if (currentEffect != null) {
+			if (BrazierPowerEffect.isFromBrazier(currentEffect)) {
 				int currentDuration = currentEffect.getDuration();
 				int newDuration = Math.max(0, currentDuration - ticksToReduce);
 
@@ -563,7 +564,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 							currentEffect.showIcon()
 					));
 				} else {
-					serverPlayer.removeEffect(RNEffects.BRAZIER_POWER);
+					BrazierPowerEffect.removeBrazierPower(serverPlayer);
 				}
 			}
 		}
