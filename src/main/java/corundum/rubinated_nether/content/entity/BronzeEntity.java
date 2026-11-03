@@ -5,7 +5,8 @@ import corundum.rubinated_nether.content.entity.goals.CorrodedHideAndAmbushGoal;
 import corundum.rubinated_nether.content.entity.goals.CrystallizeNearbyBronzeGoal;
 import corundum.rubinated_nether.content.entity.goals.CrystallizedOrbitGoal;
 import corundum.rubinated_nether.content.entity.goals.DiscoloredRamGoal;
-import corundum.rubinated_nether.content.entity.goals.TarnishedShockwaveGoal;
+import corundum.rubinated_nether.content.entity.goals.TarnishedPounceGoal;
+import corundum.rubinated_nether.content.entity.goals.TarnishedStalkGoal;
 import corundum.rubinated_nether.content.entity.goals.UnaffectedAttackGoal;
 import corundum.rubinated_nether.content.items.MusicBoxItem;
 import net.minecraft.core.BlockPos;
@@ -75,9 +76,10 @@ public class BronzeEntity extends TarnishingEntity {
     private final BronzePart keyPart;
 
     // Goals
-    private TarnishedShockwaveGoal shockwaveGoal;
+    private TarnishedStalkGoal stalkGoal;
+    private TarnishedPounceGoal pounceGoal;
     private DiscoloredRamGoal dashGoal;
-    private int shockwaveCooldownTicks = 0;
+    private int pounceCooldownTicks = 0;
     private int ramCooldownTicks = 0;
     private int ambushCooldownTicks = 0;
 
@@ -99,6 +101,10 @@ public class BronzeEntity extends TarnishingEntity {
     public final AnimationState undergroundWalkAnimationState = new AnimationState();
     public final AnimationState ambushAnimationState = new AnimationState();
     public final AnimationState ramAnimationState = new AnimationState();
+    public final AnimationState crouchAnimationState = new AnimationState();
+    public final AnimationState leapAnimationState = new AnimationState();
+    public final AnimationState slamAnimationState = new AnimationState();
+    public final AnimationState diveAnimationState = new AnimationState();
 
     public static final byte NORMAL_ATTACK_START = 61;
     public static final byte NORMAL_ATTACK_STOP = 64;
@@ -114,6 +120,13 @@ public class BronzeEntity extends TarnishingEntity {
     public static final byte AMBUSH_STOP = 87;
     public static final byte RAM_STOP = 93;
     public static final byte RAM_START = 97;
+    public static final byte CROUCH_START = 110;
+    public static final byte CROUCH_STOP = 111;
+    public static final byte LEAP_START = 112;
+    public static final byte LEAP_STOP = 113;
+    public static final byte SLAM_START = 114;
+    public static final byte SLAM_STOP = 115;
+    public static final byte DIVE_START = 116;
 
 
     public BronzeEntity(EntityType<? extends Monster> entityType, Level level) {
@@ -248,8 +261,11 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     private void registerTarnishedGoals() {
-        this.shockwaveGoal = new TarnishedShockwaveGoal(this);
-        this.targetSelector.addGoal(1, shockwaveGoal);
+        removeTarnishedGoals();
+        this.pounceGoal = new TarnishedPounceGoal(this);
+        this.stalkGoal = new TarnishedStalkGoal(this);
+        this.goalSelector.addGoal(2, this.pounceGoal);
+        this.goalSelector.addGoal(3, this.stalkGoal);
     }
 
     private void registerCrystallizedGoals() {
@@ -281,8 +297,14 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     private void removeTarnishedGoals() {
-        this.shockwaveGoal = new TarnishedShockwaveGoal(this);
-        this.targetSelector.removeGoal(shockwaveGoal);
+        if (this.pounceGoal != null) {
+            this.goalSelector.removeGoal(this.pounceGoal);
+            this.pounceGoal = null;
+        }
+        if (this.stalkGoal != null) {
+            this.goalSelector.removeGoal(this.stalkGoal);
+            this.stalkGoal = null;
+        }
     }
 
     private void removeCrystallizedGoals() {
@@ -334,6 +356,10 @@ public class BronzeEntity extends TarnishingEntity {
             this.walkAnimationState.stop();
             this.defendAnimationState.stop();
             this.shockwaveAnimationState.stop();
+            this.crouchAnimationState.stop();
+            this.leapAnimationState.stop();
+            this.slamAnimationState.stop();
+            this.diveAnimationState.stop();
             this.stunAnimationState.startIfStopped(this.tickCount);
         }
         if (state == STUN_STOP){
@@ -362,6 +388,40 @@ public class BronzeEntity extends TarnishingEntity {
             this.undergroundWalkAnimationState.stop();
             this.drillAnimationState.stop();
         }
+        if (state == CROUCH_START){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.crouchAnimationState.startIfStopped(this.tickCount);
+        }
+        if (state == CROUCH_STOP){
+            this.crouchAnimationState.stop();
+        }
+        if (state == LEAP_START){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.crouchAnimationState.stop();
+            this.leapAnimationState.startIfStopped(this.tickCount);
+        }
+        if (state == DIVE_START){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.leapAnimationState.stop();
+            this.diveAnimationState.startIfStopped(this.tickCount);
+        }
+        if (state == LEAP_STOP){
+            this.leapAnimationState.stop();
+            this.diveAnimationState.stop();
+        }
+        if (state == SLAM_START){
+            this.idleAnimationState.stop();
+            this.walkAnimationState.stop();
+            this.leapAnimationState.stop();
+            this.diveAnimationState.stop();
+            this.slamAnimationState.startIfStopped(this.tickCount);
+        }
+        if (state == SLAM_STOP){
+            this.slamAnimationState.stop();
+        }
         if (state == RAM_START){
             this.idleAnimationState.stop();
             this.walkAnimationState.stop();
@@ -376,7 +436,9 @@ public class BronzeEntity extends TarnishingEntity {
     private void setupAnimationStates() {
         if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = 80;
-            if (!this.ramAnimationState.isStarted()) {
+            if (!this.ramAnimationState.isStarted() && !this.crouchAnimationState.isStarted()
+                    && !this.leapAnimationState.isStarted() && !this.diveAnimationState.isStarted()
+                    && !this.slamAnimationState.isStarted()) {
                 this.idleAnimationState.start(this.tickCount);
             }
         } else {
@@ -424,7 +486,7 @@ public class BronzeEntity extends TarnishingEntity {
     public void aiStep() {
         super.aiStep();
 
-        if (shockwaveGoal != null && shockwaveGoal.isStunned) {
+        if (pounceGoal != null && pounceGoal.isStunned) {
             setDeltaMovement(Vec3.ZERO);
         }
     }
@@ -471,7 +533,7 @@ public class BronzeEntity extends TarnishingEntity {
         }
 
         // Spawn particles when stunned
-        if ((shockwaveGoal != null && shockwaveGoal.isStunned) || (dashGoal != null && dashGoal.isStunned())) {
+        if ((pounceGoal != null && pounceGoal.isStunned) || (dashGoal != null && dashGoal.isStunned())) {
             spawnStunParticles();
         }
 
@@ -616,6 +678,11 @@ public class BronzeEntity extends TarnishingEntity {
         health.setBaseValue(level.getHealth());
         attack.setBaseValue(level.getAttack());
 
+        AttributeInstance knockbackResistance = this.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+        if (knockbackResistance != null) {
+            knockbackResistance.setBaseValue(level == TarnishStage.TARNISHED ? 1.0 : 0.0);
+        }
+
         float oldDefense = (float) defense.getBaseValue();
         double newDefense = level.getArmor();
 
@@ -645,6 +712,14 @@ public class BronzeEntity extends TarnishingEntity {
             default:
                 registerUnaffectedGoals();
         };
+    }
+
+    @Override
+    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
+        if (this.getTarnishLevel().equals(TarnishStage.TARNISHED)) {
+            return false;
+        }
+        return super.causeFallDamage(fallDistance, multiplier, source);
     }
 
     @Override
@@ -696,40 +771,19 @@ public class BronzeEntity extends TarnishingEntity {
         boolean wasDefending = this.isDefending();
         boolean wasBurrowed = this.isBurrowed();
 
+        boolean tarnished = this.getTarnishLevel().equals(TarnishStage.TARNISHED) && pounceGoal != null;
+
         if (part == this.keyPart) {
             amount *= 2.0F;
 
-            if (this.getTarnishLevel().equals(TarnishStage.TARNISHED) && shockwaveGoal != null && this.isDefending()) {
-                if (source.getDirectEntity() instanceof BronzeShotProjectileEntity) {
-                    shockwaveGoal.triggerStunFromKeyHit();
-                    return false;
-                }
-                if (!this.level().isClientSide()) {
-                    ((ServerLevel) this.level()).sendParticles(
-                            ParticleTypes.CRIT,
-                            this.getX(), this.getY(0.5), this.getZ(),
-                            10, 0.2, 0.4, 0.2, 0.1
-                    );
-                }
+            if (tarnished && pounceGoal.isCrouching() && source.getDirectEntity() instanceof BronzeShotProjectileEntity) {
+                pounceGoal.triggerStunFromKeyHit();
                 return false;
             }
         }
 
-        if (this.getTarnishLevel().equals(TarnishStage.TARNISHED) && shockwaveGoal != null) {
-            if (this.isDefending()) {
-                if (!this.level().isClientSide()) {
-                    ((ServerLevel) this.level()).sendParticles(
-                            ParticleTypes.CRIT,
-                            this.getX(), this.getY(0.5), this.getZ(),
-                            10, 0.2, 0.4, 0.2, 0.1
-                    );
-                }
-                return false;
-            }
-
-            if (shockwaveGoal.isStunned) {
-                amount *= 1.5f;
-            }
+        if (tarnished && pounceGoal.isStunned) {
+            amount *= 1.5f;
         }
 
         boolean result = super.hurt(source, amount);
@@ -862,8 +916,8 @@ public class BronzeEntity extends TarnishingEntity {
 
 
     private void decreaseCooldowns() {
-        if (shockwaveCooldownTicks > 0) {
-            shockwaveCooldownTicks--;
+        if (pounceCooldownTicks > 0) {
+            pounceCooldownTicks--;
         }
         if (ramCooldownTicks > 0) {
             ramCooldownTicks--;
@@ -882,12 +936,12 @@ public class BronzeEntity extends TarnishingEntity {
         }
     }
 
-    public int getShockwaveCooldown() {
-        return this.shockwaveCooldownTicks;
+    public int getPounceCooldown() {
+        return this.pounceCooldownTicks;
     }
 
-    public void setShockwaveCooldown(int ticks) {
-        this.shockwaveCooldownTicks = ticks;
+    public void setPounceCooldown(int ticks) {
+        this.pounceCooldownTicks = ticks;
     }
 
     public boolean isCrystallized() {

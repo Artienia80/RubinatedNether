@@ -792,4 +792,171 @@ public static final AnimationDefinition SHOCKWAVE = AnimationDefinition.Builder.
                             new Keyframe(1f, KeyframeAnimations.degreeVec(-90.3492f, -0.0382f, -720f),
                                     AnimationChannel.Interpolations.LINEAR)))
             .build();
+
+    private static final String[] ROD_BONES = {"rod1", "rod_2", "rod3", "rod_4", "rod_5", "rod_6"};
+    private static final float[] ROD_SIDE = {1f, 1f, -1f, 1f, 1f, 1f};
+
+    private static void splayRods(AnimationDefinition.Builder builder,
+                                  float t0, float x0, float y0, float tilt0,
+                                  float t1, float x1, float y1, float tilt1) {
+        for (int i = 0; i < ROD_BONES.length; i++) {
+            float side = ROD_SIDE[i];
+            builder.addAnimation(ROD_BONES[i],
+                    new AnimationChannel(AnimationChannel.Targets.POSITION,
+                            new Keyframe(t0, KeyframeAnimations.posVec(side * x0, y0, 0f),
+                                    AnimationChannel.Interpolations.CATMULLROM),
+                            new Keyframe(t1, KeyframeAnimations.posVec(side * x1, y1, 0f),
+                                    AnimationChannel.Interpolations.CATMULLROM)));
+            builder.addAnimation(ROD_BONES[i],
+                    new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                            new Keyframe(t0, KeyframeAnimations.degreeVec(0f, 0f, -side * tilt0),
+                                    AnimationChannel.Interpolations.CATMULLROM),
+                            new Keyframe(t1, KeyframeAnimations.degreeVec(0f, 0f, -side * tilt1),
+                                    AnimationChannel.Interpolations.CATMULLROM)));
+        }
+    }
+
+    public static final AnimationDefinition CROUCH = buildCrouch();
+
+    private static AnimationDefinition buildCrouch() {
+        AnimationDefinition.Builder b = AnimationDefinition.Builder.withLength(1.2f);
+        b.addAnimation("bronze",
+                new AnimationChannel(AnimationChannel.Targets.POSITION,
+                        new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(0.5f, KeyframeAnimations.posVec(0f, -1f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(1.2f, KeyframeAnimations.posVec(0f, -1f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM)));
+        b.addAnimation("head",
+                new AnimationChannel(AnimationChannel.Targets.POSITION,
+                        new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(0.4f, KeyframeAnimations.posVec(0f, -4f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(0.8f, KeyframeAnimations.posVec(0f, -3f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(1.2f, KeyframeAnimations.posVec(0f, -4f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM)));
+        b.addAnimation("windup",
+                new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                        new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.LINEAR),
+                        new Keyframe(1.2f, KeyframeAnimations.degreeVec(0f, 720f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        b.addAnimation("rods",
+                new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                        new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.LINEAR),
+                        new Keyframe(1.2f, KeyframeAnimations.degreeVec(0f, -720f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        splayRods(b, 0f, 0f, 0f, 0f, 0.5f, 8f, 2f, 40f);
+        return b.build();
+    }
+
+    public static final AnimationDefinition LEAP = buildLeap();
+
+    private static AnimationDefinition buildLeap() {
+        AnimationDefinition.Builder b = AnimationDefinition.Builder.withLength(0.5f).looping();
+        b.addAnimation("bronze",
+                new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                        new Keyframe(0f, KeyframeAnimations.degreeVec(-5f, 0f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        b.addAnimation("head",
+                new AnimationChannel(AnimationChannel.Targets.POSITION,
+                        new Keyframe(0f, KeyframeAnimations.posVec(0f, -4f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        b.addAnimation("windup",
+                new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                        new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.LINEAR),
+                        new Keyframe(0.5f, KeyframeAnimations.degreeVec(0f, 360f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        b.addAnimation("rods",
+                new AnimationChannel(AnimationChannel.Targets.POSITION,
+                        new Keyframe(0f, KeyframeAnimations.posVec(0f, 4f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        b.addAnimation("rods",
+                new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                        new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.LINEAR),
+                        new Keyframe(0.5f, KeyframeAnimations.degreeVec(0f, -360f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        splayRods(b, 0f, 8f, 4f, 35f, 0.5f, 8f, 4f, 35f);
+        return b.build();
+    }
+
+    public static final AnimationDefinition DIVE = buildDive();
+
+    private static AnimationDefinition buildDive() {
+        AnimationDefinition.Builder b = AnimationDefinition.Builder.withLength(0.5f).looping();
+        b.addAnimation("bronze",
+                new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                        new Keyframe(0f, KeyframeAnimations.degreeVec(-5f, 0f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        b.addAnimation("head",
+                new AnimationChannel(AnimationChannel.Targets.POSITION,
+                        new Keyframe(0f, KeyframeAnimations.posVec(0f, -4f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        b.addAnimation("windup",
+                new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                        new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.LINEAR),
+                        new Keyframe(0.5f, KeyframeAnimations.degreeVec(0f, 360f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        b.addAnimation("rods",
+                new AnimationChannel(AnimationChannel.Targets.POSITION,
+                        new Keyframe(0f, KeyframeAnimations.posVec(0f, 8f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        b.addAnimation("rods",
+                new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                        new Keyframe(0f, KeyframeAnimations.degreeVec(180f, 0f, 0f),
+                                AnimationChannel.Interpolations.LINEAR),
+                        new Keyframe(0.5f, KeyframeAnimations.degreeVec(180f, -360f, 0f),
+                                AnimationChannel.Interpolations.LINEAR)));
+        splayRods(b, 0f, 2.5f, 0f, 48f, 0.5f, 2.5f, 0f, 48f);
+        return b.build();
+    }
+
+    public static final AnimationDefinition SLAM = buildSlam();
+
+    private static AnimationDefinition buildSlam() {
+        AnimationDefinition.Builder b = AnimationDefinition.Builder.withLength(0.5f);
+        b.addAnimation("bronze",
+                new AnimationChannel(AnimationChannel.Targets.POSITION,
+                        new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(0.08333f, KeyframeAnimations.posVec(0f, -1f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(0.41667f, KeyframeAnimations.posVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM)));
+        b.addAnimation("head",
+                new AnimationChannel(AnimationChannel.Targets.POSITION,
+                        new Keyframe(0f, KeyframeAnimations.posVec(0f, -4f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(0.41667f, KeyframeAnimations.posVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM)));
+        b.addAnimation("windup",
+                new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                        new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(0.20833f, KeyframeAnimations.degreeVec(0f, 90f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(0.41667f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM)));
+        b.addAnimation("rods",
+                new AnimationChannel(AnimationChannel.Targets.POSITION,
+                        new Keyframe(0f, KeyframeAnimations.posVec(0f, 8f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(0.41667f, KeyframeAnimations.posVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM)));
+        b.addAnimation("rods",
+                new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                        new Keyframe(0f, KeyframeAnimations.degreeVec(180f, 0f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(0.41667f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                AnimationChannel.Interpolations.CATMULLROM)));
+        splayRods(b, 0f, 2.5f, 0f, 48f, 0.41667f, 0f, 0f, 0f);
+        return b.build();
+    }
 }
