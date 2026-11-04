@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.gui;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.utils.RNConfig;
+import corundum.rubinated_nether.utils.RubyLensHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -18,7 +19,7 @@ public class RubyLensOverlay {
 		if(RNConfig.rubyLensOpacity == 0) return;
 		Minecraft minecraft = Minecraft.getInstance();
 		LocalPlayer player = minecraft.player;
-		if(player != null && minecraft.options.getCameraType().isFirstPerson() && player.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get())) {
+		if(player != null && minecraft.options.getCameraType().isFirstPerson() && RubyLensHelper.isWearing(player)) {
 			gui.renderTextureOverlay(graphics, Minecraft.useFancyGraphics() ? RUBY_OVERLAY : RUBY_OVERLAY_FAST, RNConfig.rubyLensOpacity);
 		}
 	}

@@ -96,8 +96,7 @@ public class RubinatedTextRenderer {
             if (mc == null || !mc.isSameThread()) return true;
             var player = mc.player;
             if (player == null) return true;
-            return !(player.getItemBySlot(EquipmentSlot.HEAD).getItem()
-                    instanceof corundum.rubinated_nether.content.items.RubyLensItem);
+            return !corundum.rubinated_nether.utils.RubyLensHelper.isWearing(player);
         } catch (Exception e) {
             return true;
         }

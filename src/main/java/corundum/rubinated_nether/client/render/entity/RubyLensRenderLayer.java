@@ -2,7 +2,7 @@ package corundum.rubinated_nether.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.utils.RubyLensHelper;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.awt.*;
@@ -31,7 +30,7 @@ public class RubyLensRenderLayer<T extends LivingEntity, M extends EntityModel<T
 
 	@Override
 	public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
-		if(livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get())) {
+		if(RubyLensHelper.isWearing(livingEntity)) {
 			lensModel.copyHeadData(baseModel.getHead());
 			lensModel.renderToBuffer(
 				poseStack, 

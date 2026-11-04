@@ -47,7 +47,7 @@ public abstract class AbstractLaserRenderer<T extends AbstractLaserBlockEntity> 
 	) {
 		var player = Minecraft.getInstance().player;
 
-		boolean hasLens = player.getItemBySlot(EquipmentSlot.HEAD).is(RNItems.RUBY_LENS.get());
+		boolean hasLens = corundum.rubinated_nether.utils.RubyLensHelper.isWearing(player);
 
 		if (blockEntity.alwaysVisible() || hasLens) {
 

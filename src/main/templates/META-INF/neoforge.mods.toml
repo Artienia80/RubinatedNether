@@ -34,3 +34,10 @@ enumExtensions = "META-INF/enumextensions.json"
 	versionRange="${minecraft_version_range}"
 	ordering="NONE"
 	side="BOTH"
+
+[[dependencies.rubinated_nether]]
+	modId="curios"
+	type="optional"
+	versionRange="[9.0.0,)"
+	ordering="NONE"
+	side="BOTH"

@@ -23,6 +23,8 @@ import corundum.rubinated_nether.content.screen.RubinationScreen;
 import corundum.rubinated_nether.content.screen.VaseScreen;
 import corundum.rubinated_nether.networking.CollectDiscsPayload;
 import corundum.rubinated_nether.utils.RNConfig;
+import corundum.rubinated_nether.utils.RubyLensHelper;
+import corundum.rubinated_nether.compat.CuriosCompat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -73,6 +75,10 @@ public class RNClientSubscriber {
     public static void onClientSetup(FMLClientSetupEvent event) {
         IEventBus modBus = net.neoforged.fml.ModLoadingContext.get().getActiveContainer().getEventBus();
         RubinatedTextRenderer.register(modBus);
+
+        if (RubyLensHelper.isCuriosLoaded()) {
+            event.enqueueWork(CuriosCompat::registerRenderer);
+        }
 
         event.enqueueWork(() -> ItemProperties.register(
                 RNItems.MUSIC_BOX.get(),

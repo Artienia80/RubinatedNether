@@ -23,6 +23,9 @@ repositories {
 		url = "https://modmaven.dev"
 	}
 	maven {
+		url = "https://maven.theillusivec4.top/"
+	}
+	maven {
 		name = "Fuzs Mod Resources"
 		url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
 	}
@@ -89,6 +92,9 @@ configurations {
 
 dependencies {
 	implementation "net.neoforged:neoforge:${neo_version}"
+
+	compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
+	runtimeOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
 	// Iris Shaders (only needed for shader test, api is identical to oculus)
 	compileOnly("maven.modrinth:iris:1.8.1+1.21.1-neoforge")
