@@ -2,7 +2,6 @@ package corundum.rubinated_nether.content.items;
 
 import corundum.rubinated_nether.utils.RubinatedText;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -29,10 +28,10 @@ public class CarvableRuneItem extends Item {
         Rubination carving = RuneCarvingHelper.getCarving(stack);
         if (carving == Rubination.EMPTY) return;
 
-        var level = Minecraft.getInstance().level;
-        if (level == null) return;
+        var registries = context.registries();
+        if (registries == null) return;
 
-        for (var enchant : carving.getEnchantments(level.registryAccess())) {
+        for (var enchant : carving.getEnchantments(registries)) {
             if (enchant == null) continue;
             tooltipComponents.add(RuneInertEnchantmentText.getFullnameInert(enchant.enchantment, enchant.level));
         }

@@ -11,8 +11,6 @@ import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.utils.BEBlock;
 import corundum.rubinated_nether.utils.RNConfig;
 import corundum.rubinated_nether.utils.TickableBlockEntity;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

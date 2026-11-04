@@ -23,7 +23,7 @@ public class RNBlockTags extends BlockTagsProvider {
 		super(output, lookupProvider, RubinatedNether.MODID, existingFileHelper);
 	}
 
-	@SuppressWarnings("unchecked") // TODO: Make Checked 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void addTags(Provider provider) {
 		// Mining tags 

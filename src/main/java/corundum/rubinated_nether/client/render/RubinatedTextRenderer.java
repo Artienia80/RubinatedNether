@@ -56,10 +56,13 @@ public class RubinatedTextRenderer {
             for (var entry : resources.entrySet()) {
                 try (InputStream stream = entry.getValue().open()) {
                     Language.loadFromJson(stream, englishStrings::put);
-                } catch (Exception ignored) {}
+                } catch (Exception e) {
+                    corundum.rubinated_nether.RubinatedNether.LOGGER.warn("Failed to read English language file {}", entry.getKey(), e);
+                }
             }
             englishLoaded = true;
         } catch (Exception e) {
+            corundum.rubinated_nether.RubinatedNether.LOGGER.warn("Failed to load English language files", e);
             englishLoaded = false;
         }
     }

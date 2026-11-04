@@ -2,7 +2,6 @@ package corundum.rubinated_nether.content.items;
 
 import corundum.rubinated_nether.content.RNBannerPatterns;
 import corundum.rubinated_nether.utils.RubinatedCurseText;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BannerPatternItem;
 import net.minecraft.world.item.Item;
@@ -47,10 +46,10 @@ public class RuneItem extends BannerPatternItem {
 						.withItalic(true));
 		tooltipComponents.add(patternDesc);
 
-		var level = Minecraft.getInstance().level;
-		if (level == null) return;
+		var registries = context.registries();
+		if (registries == null) return;
 
-		for (var enchant : this.getRubination().getEnchantments(level.registryAccess())) {
+		for (var enchant : this.getRubination().getEnchantments(registries)) {
 			if (enchant == null) continue;
 
 			tooltipComponents.add(RubinatedCurseText.fullName(enchant.enchantment, enchant.level));

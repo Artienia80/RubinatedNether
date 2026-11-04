@@ -185,11 +185,11 @@ public class RNClientSubscriber {
         event.registerAbove(
                 VanillaGuiLayers.DEMO_OVERLAY,
                 RubinatedNether.id("ruby_lens_overlay"),
-                (guiGraphics, deltaTracker) -> RubyLensOverlay.renderHud(new Gui(minecraft), guiGraphics)
+                (guiGraphics, deltaTracker) -> RubyLensOverlay.renderHud(minecraft.gui, guiGraphics)
         );
         event.registerBelowAll(
                 RubinatedNether.id("bronze_overlay"),
-                (guiGraphics, deltaTracker) -> BronzeDiseasedEffectOverlay.renderHud(new Gui(minecraft), guiGraphics)
+                (guiGraphics, deltaTracker) -> BronzeDiseasedEffectOverlay.renderHud(minecraft.gui, guiGraphics)
         );
     }
 

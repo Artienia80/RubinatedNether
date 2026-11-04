@@ -95,13 +95,13 @@ public enum Rubination implements StringRepresentable {
 				.collect(Collectors.toList());
 	}
 
-	public List<EnchantmentInstance> getEnchantments(RegistryAccess registryAccess) {
+	public List<EnchantmentInstance> getEnchantments(net.minecraft.core.HolderLookup.Provider registries) {
 		return enchantmentData
 				.entrySet()
 				.stream()
 				.map(entry -> {
-					var enchantment = registryAccess.registryOrThrow(Registries.ENCHANTMENT)
-							.getHolder(entry.getKey()).orElse(null);
+					var enchantment = registries.lookupOrThrow(Registries.ENCHANTMENT)
+							.get(net.minecraft.resources.ResourceKey.create(Registries.ENCHANTMENT, entry.getKey())).orElse(null);
 					return enchantment != null ? new EnchantmentInstance(enchantment, entry.getValue()) : null;
 				})
 				.collect(Collectors.toList());

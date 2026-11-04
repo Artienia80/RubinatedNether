@@ -249,14 +249,11 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 				double sz = zPos + 0.3 + random.nextDouble() * 0.4;
 				double spawnY = surfaceY + 0.1;
 
-				net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
-				if (mc != null && mc.particleEngine != null) {
-					mc.particleEngine.createParticle(
-							RNParticleTypes.RUBY_SPIRIT.get(),
-							sx, spawnY, sz,
-							0.0, 0.0, 0.0
-					);
-				}
+				level.addParticle(
+						RNParticleTypes.RUBY_SPIRIT.get(),
+						sx, spawnY, sz,
+						0.0, 0.0, 0.0
+				);
 			}
 		}
 	}

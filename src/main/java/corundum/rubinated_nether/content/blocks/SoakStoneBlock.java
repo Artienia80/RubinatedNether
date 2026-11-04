@@ -36,7 +36,7 @@ public class SoakStoneBlock extends Block{
 	private static final int CHAIN_DELAY = 5;
 
 	private final Map<UUID, Integer> standTime = new HashMap<>();
-	private static final Set<BlockPos> preventChainBreaks = new HashSet<>();
+	private static final Set<net.minecraft.core.GlobalPos> preventChainBreaks = new HashSet<>();
 
 	public SoakStoneBlock(BlockBehaviour.Properties properties) {
 		super(properties);
@@ -154,7 +154,7 @@ public class SoakStoneBlock extends Block{
 
 
 			if (silkTouchLevel > 0) {
-				preventChainBreaks.add(pos.immutable());
+				preventChainBreaks.add(net.minecraft.core.GlobalPos.of(level.dimension(), pos.immutable()));
 			}
 		}
 
@@ -166,11 +166,10 @@ public class SoakStoneBlock extends Block{
 	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
 		if (!level.isClientSide && !state.is(newState.getBlock())) {
 			if (level instanceof ServerLevel serverLevel) {
-				boolean prevented = preventChainBreaks.remove(pos);
+				boolean prevented = preventChainBreaks.remove(net.minecraft.core.GlobalPos.of(serverLevel.dimension(), pos));
 
 				if (!prevented) {
 					triggerChainDestruction(serverLevel, pos);
-				} else {
 				}
 			}
 		}

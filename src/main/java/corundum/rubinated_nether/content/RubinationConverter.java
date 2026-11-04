@@ -297,7 +297,9 @@ public class RubinationConverter {
             if (targetState.hasProperty(property)) {
                 try {
                     resultState = transferProperty(sourceState, resultState, property);
-                } catch (Exception ignored) {}
+                } catch (Exception e) {
+                    corundum.rubinated_nether.RubinatedNether.LOGGER.debug("Could not transfer block state property {}", property, e);
+                }
             }
         }
 
