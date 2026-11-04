@@ -4,71 +4,78 @@
     {
       "faces": {
         "down": {
-          "texture": "#under"
+          "texture": "#under",
+          "uv": [
+            4.0,
+            4.0,
+            12.0,
+            12.0
+          ]
         },
         "east": {
-          "rotation": 90,
           "texture": "#side",
           "uv": [
-            0.0,
-            0.0,
+            4.0,
             6.0,
-            16.0
+            12.0,
+            10.0
           ]
         },
         "north": {
-          "rotation": 90,
           "texture": "#side",
           "uv": [
-            0.0,
-            0.0,
+            4.0,
             6.0,
-            16.0
+            12.0,
+            10.0
           ]
         },
         "south": {
-          "rotation": 270,
           "texture": "#side",
           "uv": [
-            0.0,
-            0.0,
+            4.0,
             6.0,
-            16.0
+            12.0,
+            10.0
           ]
         },
         "up": {
-          "rotation": 90,
-          "texture": "#top"
+          "texture": "#top",
+          "uv": [
+            4.0,
+            4.0,
+            12.0,
+            12.0
+          ]
         },
         "west": {
-          "rotation": 270,
           "texture": "#side",
           "uv": [
-            0.0,
-            0.0,
+            4.0,
             6.0,
-            16.0
+            12.0,
+            10.0
           ]
         }
       },
       "from": [
+        4,
         0,
-        0,
-        0
+        4
       ],
       "to": [
-        16,
-        6,
-        16
+        12,
+        4,
+        12
       ]
     }
   ],
   "gui_light": "side",
   "render_type": "minecraft:cutout",
   "textures": {
-    "particle": "rubinated_nether:block/laser/material/bronze_laser_front",
-    "side": "rubinated_nether:block/laser/material/bronze_laser_side",
-    "top": "rubinated_nether:block/laser/material/bronze_laser_front",
-    "under": "rubinated_nether:block/laser/material/bronze_laser_front_on"
+    "particle": "rubinated_nether:block/bronze/bronze_block/bronze_block",
+    "side": "rubinated_nether:block/bronze/bronze_block/bronze_block",
+    "top": "rubinated_nether:block/bronze/bronze_block/bronze_block",
+    "under": "rubinated_nether:block/bronze/bronze_block/bronze_block"
   }
 }

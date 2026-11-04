@@ -4,62 +4,69 @@
     {
       "faces": {
         "down": {
-          "texture": "#under"
+          "texture": "#under",
+          "uv": [
+            4.0,
+            4.0,
+            12.0,
+            12.0
+          ]
         },
         "east": {
-          "rotation": 90,
           "texture": "#side",
           "uv": [
-            0.0,
-            0.0,
+            4.0,
             6.0,
-            16.0
+            12.0,
+            10.0
           ]
         },
         "north": {
-          "rotation": 90,
           "texture": "#side",
           "uv": [
-            0.0,
-            0.0,
+            4.0,
             6.0,
-            16.0
+            12.0,
+            10.0
           ]
         },
         "south": {
-          "rotation": 270,
           "texture": "#side",
           "uv": [
-            0.0,
-            0.0,
+            4.0,
             6.0,
-            16.0
+            12.0,
+            10.0
           ]
         },
         "up": {
-          "rotation": 90,
-          "texture": "#top"
+          "texture": "#top",
+          "uv": [
+            4.0,
+            4.0,
+            12.0,
+            12.0
+          ]
         },
         "west": {
-          "rotation": 270,
           "texture": "#side",
           "uv": [
-            0.0,
-            0.0,
+            4.0,
             6.0,
-            16.0
+            12.0,
+            10.0
           ]
         }
       },
       "from": [
+        4,
         0,
-        0,
-        0
+        4
       ],
       "to": [
-        16,
-        6,
-        16
+        12,
+        4,
+        12
       ]
     },
     {
@@ -112,7 +119,7 @@
       },
       "from": [
         7,
-        6,
+        4,
         7
       ],
       "rotation": {
@@ -120,13 +127,13 @@
         "axis": "y",
         "origin": [
           8,
-          6,
+          4,
           8
         ]
       },
       "to": [
         9,
-        11,
+        9,
         9
       ]
     },
@@ -153,7 +160,7 @@
       },
       "from": [
         3,
-        8,
+        6,
         8
       ],
       "rotation": {
@@ -161,13 +168,13 @@
         "axis": "y",
         "origin": [
           8,
-          6,
+          4,
           8
         ]
       },
       "to": [
         13,
-        12,
+        10,
         8
       ]
     }
@@ -175,10 +182,9 @@
   "gui_light": "side",
   "render_type": "minecraft:cutout",
   "textures": {
-    "key": "rubinated_nether:entity/bronze/bronze_tarnished",
-    "particle": "rubinated_nether:block/laser/material/tarnished_bronze_laser_front",
-    "side": "rubinated_nether:block/laser/material/tarnished_bronze_laser_side",
-    "top": "rubinated_nether:block/laser/material/tarnished_bronze_laser_front",
-    "under": "rubinated_nether:block/laser/material/tarnished_bronze_laser_front"
+    "particle": "rubinated_nether:block/bronze/bronze_block/tarnished_bronze_block",
+    "side": "rubinated_nether:block/bronze/bronze_block/tarnished_bronze_block",
+    "top": "rubinated_nether:block/bronze/bronze_block/tarnished_bronze_block",
+    "under": "rubinated_nether:block/bronze/bronze_block/tarnished_bronze_block"
   }
 }

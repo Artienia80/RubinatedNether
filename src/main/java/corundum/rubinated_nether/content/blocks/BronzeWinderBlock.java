@@ -62,8 +62,8 @@ public class BronzeWinderBlock extends DirectionalBlock implements TarnishingBro
 	public static final IntegerProperty POWER = BlockStateProperties.POWER;
 
 	public static final Map<Direction, VoxelShape> SHAPES = ShapeUtils.allDirections(Shapes.or(
-			box(0, 0, 0, 16, 6, 16),
-			box(3, 6, 3, 13, 12, 13)
+			box(4, 0, 4, 12, 4, 12),
+			box(3, 4, 3, 13, 10, 13)
 	));
 
 	// how long a winder holds its charge unchanged after its last input before it starts unwinding

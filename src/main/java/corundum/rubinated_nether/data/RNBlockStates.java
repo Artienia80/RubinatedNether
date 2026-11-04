@@ -830,12 +830,12 @@ public class RNBlockStates extends BlockStateProvider {
 			"crystallized_bronze_winder"
 	};
 
-	private static final String[] WINDER_BASE_TEXTURES = {
-			"bronze_laser",
-			"discolored_bronze_laser",
-			"corroded_bronze_laser",
-			"tarnished_bronze_laser",
-			"crystallized_bronze_laser"
+	private static final String[] WINDER_BLOCK_TEXTURES = {
+			"bronze_block",
+			"discolored_bronze_block",
+			"corroded_bronze_block",
+			"tarnished_bronze_block",
+			"crystallized_bronze_block"
 	};
 
 	private static final String[] WINDER_KEY_TEXTURES = {
@@ -863,15 +863,15 @@ public class RNBlockStates extends BlockStateProvider {
 	private void generateWinderFamily() {
 		for (int i = 0; i < WINDER_NAMES.length; i++) {
 			String name = WINDER_NAMES[i];
-			String baseTexture = WINDER_BASE_TEXTURES[i];
+			String blockTexture = WINDER_BLOCK_TEXTURES[i];
 			String keyTexture = "entity/bronze/" + WINDER_KEY_TEXTURES[i];
 
 			try {
 				var field = RNBlocks.class.getField(name.toUpperCase());
 				DeferredBlock<?> block = (DeferredBlock<?>) field.get(null);
 
-				winderBaseModel(models().getBuilder(name + "_base"), baseTexture, false);
-				winderBaseModel(models().getBuilder(name + "_base_on"), baseTexture, true);
+				winderBaseModel(models().getBuilder(name + "_base"), blockTexture);
+				winderBaseModel(models().getBuilder(name + "_base_on"), blockTexture);
 				for (int position = 0; position < 16; position++) {
 					BlockModelBuilder keyModel = models().getBuilder(name + "_key_" + position)
 							.parent(models().getExistingFile(mcLoc("block/block")))
@@ -882,7 +882,7 @@ public class RNBlockStates extends BlockStateProvider {
 
 				BlockModelBuilder itemModel = models().getBuilder(name + "_item")
 						.texture("key", modLoc(keyTexture));
-				winderBaseModel(itemModel, baseTexture, false);
+				winderBaseModel(itemModel, blockTexture);
 				winderKeyElements(itemModel, 0);
 
 				generateWinderBlockStates(block, name);
@@ -892,22 +892,23 @@ public class RNBlockStates extends BlockStateProvider {
 		}
 	}
 
-	private void winderBaseModel(BlockModelBuilder model, String baseTexture, boolean powered) {
+	private void winderBaseModel(BlockModelBuilder model, String blockTexture) {
+		String block = "block/bronze/bronze_block/" + blockTexture;
 		model.parent(models().getExistingFile(mcLoc("block/block")))
 				.guiLight(BlockModel.GuiLight.SIDE)
-				.texture("top", modLoc("block/laser/material/" + baseTexture + "_front"))
-				.texture("under", modLoc("block/laser/material/" + baseTexture + (powered ? "_front_on" : "_front")))
-				.texture("side", modLoc("block/laser/material/" + baseTexture + "_side"))
-				.texture("particle", modLoc("block/laser/material/" + baseTexture + "_front"))
+				.texture("top", modLoc(block))
+				.texture("under", modLoc(block))
+				.texture("side", modLoc(block))
+				.texture("particle", modLoc(block))
 				.renderType("cutout")
 				.element()
-				.from(0, 0, 0).to(16, 6, 16)
-				.face(Direction.NORTH).uvs(0, 0, 6, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#side").end()
-				.face(Direction.EAST).uvs(0, 0, 6, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#side").end()
-				.face(Direction.SOUTH).uvs(0, 0, 6, 16).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#side").end()
-				.face(Direction.WEST).uvs(0, 0, 6, 16).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("#side").end()
-				.face(Direction.UP).uvs(0, 0, 16, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#top").end()
-				.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#under").end()
+				.from(4, 0, 4).to(12, 4, 12)
+				.face(Direction.NORTH).uvs(4, 6, 12, 10).texture("#side").end()
+				.face(Direction.EAST).uvs(4, 6, 12, 10).texture("#side").end()
+				.face(Direction.SOUTH).uvs(4, 6, 12, 10).texture("#side").end()
+				.face(Direction.WEST).uvs(4, 6, 12, 10).texture("#side").end()
+				.face(Direction.UP).uvs(4, 4, 12, 12).texture("#top").end()
+				.face(Direction.DOWN).uvs(4, 4, 12, 12).texture("#under").end()
 				.end();
 	}
 
@@ -919,8 +920,8 @@ public class RNBlockStates extends BlockStateProvider {
 		float elementAngle = 0.0F - residual;
 
 		var stem = model.element()
-				.from(7, 6, 7).to(9, 11, 9);
-		stem.rotation().angle(elementAngle).axis(Direction.Axis.Y).origin(8, 6, 8).end();
+				.from(7, 4, 7).to(9, 9, 9);
+		stem.rotation().angle(elementAngle).axis(Direction.Axis.Y).origin(8, 4, 8).end();
 		for (int side = 0; side < 4; side++) {
 			int[] uv = WINDER_STEM_UVS[Math.floorMod(side - quarter, 4)];
 			stem.face(WINDER_SIDES[side]).uvs(uv[0] / 4.0F, uv[1] / 4.0F, uv[2] / 4.0F, uv[3] / 4.0F).texture("#key").end();
@@ -931,11 +932,11 @@ public class RNBlockStates extends BlockStateProvider {
 		boolean alongX = quarter % 2 == 0;
 		var plane = model.element();
 		if (alongX) {
-			plane.from(3, 8, 8).to(13, 12, 8);
+			plane.from(3, 6, 8).to(13, 10, 8);
 		} else {
-			plane.from(8, 8, 3).to(8, 12, 13);
+			plane.from(8, 6, 3).to(8, 10, 13);
 		}
-		plane.rotation().angle(elementAngle).axis(Direction.Axis.Y).origin(8, 6, 8).end();
+		plane.rotation().angle(elementAngle).axis(Direction.Axis.Y).origin(8, 4, 8).end();
 		Direction first = alongX ? Direction.NORTH : Direction.EAST;
 		Direction second = alongX ? Direction.SOUTH : Direction.WEST;
 		plane.face(first).uvs(49 / 4.0F, 14 / 4.0F, 59 / 4.0F, 18 / 4.0F).texture("#key").end();
