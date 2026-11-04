@@ -41,11 +41,11 @@ public class BrazierPowerEffect extends MobEffect {
     public static void removeBrazierPower(LivingEntity entity) {
         entity.removeEffect(RNEffects.BRAZIER_POWER);
 
-        MobEffectInstance lifeSteal = entity.getEffect(RNEffects.LIFE_STEAL);
-        if (lifeSteal != null) {
+        MobEffectInstance reaping = entity.getEffect(RNEffects.REAPING);
+        if (reaping != null) {
             entity.addEffect(new MobEffectInstance(
                     RNEffects.BRAZIER_POWER,
-                    lifeSteal.getDuration(),
+                    reaping.getDuration(),
                     0,
                     false,
                     RNConfig.brazierEffectParticles,

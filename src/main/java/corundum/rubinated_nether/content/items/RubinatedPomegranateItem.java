@@ -28,7 +28,7 @@ public class RubinatedPomegranateItem extends Item {
 			if (!BrazierPowerEffect.isFromBrazier(entity)) {
 				entity.addEffect(new MobEffectInstance(RNEffects.BRAZIER_POWER, duration, 0, false, RNConfig.brazierEffectParticles, true));
 			}
-			entity.addEffect(new MobEffectInstance(RNEffects.LIFE_STEAL, duration, 0, false, true, true));
+			entity.addEffect(new MobEffectInstance(RNEffects.REAPING, duration, 0, false, true, true));
 		}
 
 		return result;

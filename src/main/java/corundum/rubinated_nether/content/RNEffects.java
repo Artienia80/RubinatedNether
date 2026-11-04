@@ -4,7 +4,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.effect.BlessedEffect;
 import corundum.rubinated_nether.content.effect.BrazierPowerEffect;
 import corundum.rubinated_nether.content.effect.BronzeDiseasedEffect;
-import corundum.rubinated_nether.content.effect.LifeStealEffect;
+import corundum.rubinated_nether.content.effect.ReapingEffect;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
@@ -24,8 +24,8 @@ public class RNEffects {
     public static final Holder<MobEffect> BRAZIER_POWER = MOB_EFFECTS.register("brazier_power",
             () -> new BrazierPowerEffect());
 
-    public static final Holder<MobEffect> LIFE_STEAL = MOB_EFFECTS.register("life_steal",
-            () -> new LifeStealEffect());
+    public static final Holder<MobEffect> REAPING = MOB_EFFECTS.register("reaping",
+            () -> new ReapingEffect());
 
     public static void register(IEventBus bus){
         MOB_EFFECTS.register(bus);

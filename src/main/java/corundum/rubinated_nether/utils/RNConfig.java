@@ -94,7 +94,7 @@ public class RNConfig extends MidnightConfig {
 			max = 1
 	)
 	@Synced
-	public static float lifeStealRatio = 0.5f;
+	public static float reapingRatio = 0.5f;
 
 	/* -- Altar -- */
 

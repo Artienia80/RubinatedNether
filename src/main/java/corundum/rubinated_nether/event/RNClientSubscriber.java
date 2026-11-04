@@ -214,26 +214,28 @@ public class RNClientSubscriber {
 
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer player = mc.player;
-        if (player == null || !player.hasEffect(RNEffects.BRONZE_DISEASED)) return;
+        if (player == null) return;
+        ResourceLocation overlay = BronzeDiseasedEffectOverlay.getOverlay(player);
+        if (overlay == null) return;
 
         RenderSystem.enableBlend();
         RenderSystem.disableDepthTest();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 0.5F);
-        RenderSystem.setShaderTexture(0, BronzeDiseasedEffectOverlay.PARANOIA_OVERLAY);
+        RenderSystem.setShaderTexture(0, overlay);
 
-        blitFullScreen();
+        blitFullScreen(overlay);
 
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableDepthTest();
         RenderSystem.disableBlend();
     }
 
-    private static void blitFullScreen() {
+    private static void blitFullScreen(ResourceLocation overlay) {
         Minecraft mc = Minecraft.getInstance();
         GuiGraphics guiGraphics = new GuiGraphics(mc, mc.renderBuffers().bufferSource());
         int screenWidth = mc.getWindow().getGuiScaledWidth();
         int screenHeight = mc.getWindow().getGuiScaledHeight();
-        guiGraphics.blit(BronzeDiseasedEffectOverlay.PARANOIA_OVERLAY, 0, 0, 0, 0.0F, 0.0F, screenWidth, screenHeight, screenWidth, screenHeight);
+        guiGraphics.blit(overlay, 0, 0, 0, 0.0F, 0.0F, screenWidth, screenHeight, screenWidth, screenHeight);
         guiGraphics.flush();
     }
 

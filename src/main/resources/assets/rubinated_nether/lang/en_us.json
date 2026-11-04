@@ -775,7 +775,7 @@
   "effect.rubinated_nether.bronze_diseased": "Bronze Diseased",
   "effect.rubinated_nether.blessed": "Blessed",
   "effect.rubinated_nether.brazier_power": "Brazier Power",
-  "effect.rubinated_nether.life_steal": "Life Steal",
+  "effect.rubinated_nether.reaping": "Reaping",
 
 
   "death.attack.chandelier": "%1$s was embraced by a falling chandelier",
@@ -822,7 +822,7 @@
   "rubinated_nether.midnightconfig.brazierPowerLavaImmuneItems": "Brazier Power Lava-Immune Items",
 
   "rubinated_nether.midnightconfig.rubinatedPomegranateEffectLevels": "Rubinated Pomegranate Duration (Molten Ruby Levels)",
-  "rubinated_nether.midnightconfig.lifeStealRatio": "Life Steal Healing Ratio",
+  "rubinated_nether.midnightconfig.reapingRatio": "Reaping Healing Ratio",
 
   "rubinated_nether.midnightconfig.altarRubinationCost": "Altar Rubination Cost",
   "rubinated_nether.midnightconfig.altarLesserBlessingTime": "Altar Lesser Blessing Duration",
