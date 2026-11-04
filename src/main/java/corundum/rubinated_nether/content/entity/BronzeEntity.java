@@ -648,36 +648,6 @@ public class BronzeEntity extends TarnishingEntity {
         }
 
         decreaseCooldowns();
-
-        if (!this.level().isClientSide()) {
-            List<BronzeEntity> bronzes = this.level().getEntitiesOfClass(BronzeEntity.class, this.getBoundingBox().inflate(25.0D));
-
-            long crystallizedBronze = bronzes.stream().filter(BronzeEntity::isCrystallized).count();
-            int cozinessLevel = (int) Math.min(crystallizedBronze - 1, 4);
-
-            List<Player> nearbyPlayers = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(25.0D));
-
-            for (Player player : nearbyPlayers) {
-                if (crystallizedBronze > 0) {
-                    int desiredAmplifier = cozinessLevel;
-                    MobEffectInstance current = player.getEffect(RNEffects.BRONZE_DISEASED);
-
-                    if (current == null || current.getAmplifier() < desiredAmplifier || current.getDuration() < 100) {
-                        player.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 210, desiredAmplifier, false, true));
-                    }
-                } else {
-                    if (player.hasEffect(RNEffects.BRONZE_DISEASED)) {
-                        MobEffectInstance current = player.getEffect(RNEffects.BRONZE_DISEASED);
-                        int currentAmplifier = current.getAmplifier();
-                        if (currentAmplifier > 0) {
-                            player.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, 210, currentAmplifier - 1, false, true));
-                        } else {
-                            player.removeEffect(RNEffects.BRONZE_DISEASED);
-                        }
-                    }
-                }
-            }
-        }
     }
 
     @Override
