@@ -19,6 +19,7 @@ import net.minecraft.world.phys.EntityHitResult;
 
 public class CrystallizedBronzeRodProjectileEntity extends AbstractArrow {
     private static final float DAMAGE = 3.0F;
+    private static final float DAMAGE_PER_DISEASE_LEVEL = 1.0F;
     private static final int MAX_AGE = 120;
     private static final int DISEASE_TICKS = 600;
     private static final int MAX_DISEASE_AMPLIFIER = 4;
@@ -69,9 +70,10 @@ public class CrystallizedBronzeRodProjectileEntity extends AbstractArrow {
         if (target instanceof BronzeEntity bronze) {
             bronze.setTarnishLevel(TarnishStage.CRYSTALLIZED);
         } else {
-            target.hurt(this.damageSources().arrow(this, this.getOwner()), DAMAGE);
+            MobEffectInstance current = target instanceof LivingEntity livingTarget ? livingTarget.getEffect(RNEffects.BRONZE_DISEASED) : null;
+            float damage = DAMAGE + (current == null ? 0 : current.getAmplifier() + 1) * DAMAGE_PER_DISEASE_LEVEL;
+            target.hurt(this.damageSources().arrow(this, this.getOwner()), damage);
             if (target instanceof LivingEntity living) {
-                MobEffectInstance current = living.getEffect(RNEffects.BRONZE_DISEASED);
                 int amplifier = current == null ? 0 : Math.min(current.getAmplifier() + 1, MAX_DISEASE_AMPLIFIER);
                 int duration = current == null ? DISEASE_TICKS : current.getDuration() + DISEASE_TICKS;
                 living.addEffect(new MobEffectInstance(RNEffects.BRONZE_DISEASED, duration, amplifier, false, true));

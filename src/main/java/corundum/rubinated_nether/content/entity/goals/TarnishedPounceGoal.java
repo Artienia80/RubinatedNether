@@ -467,7 +467,7 @@ public class TarnishedPounceGoal extends Goal {
         List<LivingEntity> victims = entity.level().getEntitiesOfClass(
                 LivingEntity.class,
                 entity.getBoundingBox().inflate(EXPLOSION_RADIUS, 1.5, EXPLOSION_RADIUS),
-                e -> e != entity && e.isAlive() && !(e instanceof BronzeEntity)
+                e -> e != entity && e.isAlive()
                         && !(e instanceof Player p && (p.isCreative() || p.isSpectator())));
 
         for (LivingEntity victim : victims) {
@@ -479,7 +479,7 @@ public class TarnishedPounceGoal extends Goal {
                 boolean wasBlocking = victim instanceof Player player && player.isBlocking() && isFacing(player, center);
                 Item shieldItem = victim instanceof Player player ? player.getUseItem().getItem() : null;
 
-                victim.hurt(entity.damageSources().mobAttack(entity), attack * falloff);
+                BronzeEntity.hurtWithSinnerDrop(victim, entity.damageSources().mobAttack(entity), attack * falloff);
 
                 if (wasBlocking && victim instanceof Player player) {
                     shieldHit = true;
@@ -490,11 +490,13 @@ public class TarnishedPounceGoal extends Goal {
             } else {
                 double t = (distance - SLAM_RADIUS) / (EXPLOSION_RADIUS - SLAM_RADIUS);
                 float falloff = (float) Mth.lerp(t, EXPLOSION_MAX_FRACTION, EXPLOSION_MIN_FRACTION);
-                victim.hurt(entity.damageSources().explosion(entity, entity), attack * falloff);
+                BronzeEntity.hurtWithSinnerDrop(victim, entity.damageSources().explosion(entity, entity), attack * falloff);
             }
 
             float knockback = (float) Mth.lerp(distance / EXPLOSION_RADIUS, 1.0, MIN_KNOCKBACK_FRACTION);
-            launchVictim(victim, center, knockback);
+            if (!(victim instanceof BronzeEntity)) {
+                launchVictim(victim, center, knockback);
+            }
         }
         return shieldHit;
     }

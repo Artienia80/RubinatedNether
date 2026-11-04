@@ -4,6 +4,7 @@ import corundum.rubinated_nether.content.entity.BronzeEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Comparator;
 import java.util.List;
@@ -11,15 +12,20 @@ import java.util.List;
 public class CrystallizedRodVolleyGoal extends Goal {
     private static final int MIN_DELAY = 30;
     private static final int MAX_DELAY = 90;
-    private static final int AIM_TICKS = 25;
-    private static final int AIM_TIMEOUT = 60;
+    private static final int TELEGRAPH_TICKS = 60;
+    private static final int FIRE_TIMEOUT = 40;
     private static final double RANGE = 24.0;
+    private static final float MIN_SPEED_SCALE = 0.5F;
+    private static final double VELOCITY_SMOOTHING = 0.5;
     private static final float BRONZE_TARGET_CHANCE = 0.35F;
 
     private final BronzeEntity entity;
     private LivingEntity target;
     private int delay;
-    private int aimTicks;
+    private int telegraphTicks;
+    private int holdTicks;
+    private Vec3 lastTargetPosition;
+    private Vec3 targetVelocity = Vec3.ZERO;
 
     public CrystallizedRodVolleyGoal(BronzeEntity entity) {
         this.entity = entity;
@@ -47,50 +53,69 @@ public class CrystallizedRodVolleyGoal extends Goal {
             return;
         }
 
-        if (target == null || !isValid(target)) {
-            abortAim();
+        if (target != null && !isValid(target)) {
+            cancelTelegraph();
+        }
+
+        if (target == null) {
             target = pickTarget();
             if (target == null) {
                 return;
             }
         }
 
-        entity.getLookControl().setLookAt(target, 40.0F, 40.0F);
+        trackTarget();
+        Vec3 aim = entity.predictAim(target, targetVelocity);
+        entity.getLookControl().setLookAt(aim.x, aim.y, aim.z, 90.0F, 90.0F);
 
-        if (entity.getRodCount() > 1) {
-            if (!entity.isRodAiming()) {
-                if (!entity.beginRodAim(target)) {
-                    return;
-                }
-                aimTicks = 0;
-            }
-            aimTicks++;
-            if (aimTicks < AIM_TICKS) {
-                return;
-            }
+        if (entity.getRodCount() > 1 && !entity.isRodAiming() && !entity.beginRodAim(target)) {
+            return;
         }
 
-        if (entity.fireRodAt(target)) {
-            target = null;
-            aimTicks = 0;
+        entity.setTelegraphing(true);
+
+        if (telegraphTicks < TELEGRAPH_TICKS) {
+            telegraphTicks++;
+            float progress = (float) telegraphTicks / TELEGRAPH_TICKS;
+            entity.setCrystalSpeedScale(1.0F - (1.0F - MIN_SPEED_SCALE) * progress);
+            return;
+        }
+
+        entity.setCrystalSpeedScale(MIN_SPEED_SCALE);
+
+        if (entity.fireRodAt(target, targetVelocity)) {
+            cancelTelegraph();
             delay = nextDelay();
-        } else if (entity.isRodAiming() && aimTicks > AIM_TIMEOUT) {
-            abortAim();
+        } else if (++holdTicks > FIRE_TIMEOUT) {
+            cancelTelegraph();
             delay = MIN_DELAY;
         }
     }
 
     @Override
     public void stop() {
-        abortAim();
-        target = null;
+        cancelTelegraph();
     }
 
-    private void abortAim() {
+    private void cancelTelegraph() {
         if (entity.isRodAiming()) {
             entity.cancelRodAim();
         }
-        aimTicks = 0;
+        entity.setCrystalSpeedScale(1.0F);
+        entity.setTelegraphing(false);
+        target = null;
+        telegraphTicks = 0;
+        holdTicks = 0;
+        lastTargetPosition = null;
+        targetVelocity = Vec3.ZERO;
+    }
+
+    private void trackTarget() {
+        Vec3 position = target.position();
+        if (lastTargetPosition != null) {
+            targetVelocity = targetVelocity.lerp(position.subtract(lastTargetPosition), VELOCITY_SMOOTHING);
+        }
+        lastTargetPosition = position;
     }
 
     private boolean isValid(LivingEntity candidate) {

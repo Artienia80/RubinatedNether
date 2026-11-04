@@ -65,6 +65,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -85,13 +87,19 @@ public class BronzeEntity extends TarnishingEntity {
     private static final int MAX_RODS = 6;
     private static final double HEAD_CENTER_HEIGHT = 1.0625;
     private static final double ROD_SPAWN_DISTANCE = 1.0;
-    private static final float ROD_SHOT_SPEED = 1.1F;
-    private static final double ROD_ALIGN_DEGREES = 15.0;
+    private static final float ROD_SHOT_SPEED = 1.6F;
+    private static final double ROD_ALIGN_DEGREES = 8.0;
+    private static final double ROD_LEAD = 0.85;
+    private static final double ROD_LEAD_VERTICAL = 0.5;
+    private static final int ROD_LEAD_ITERATIONS = 3;
     private static final int ROD_TRANSITION_TICKS = 10;
     private static final int ROD_AIM_BLEND_TICKS = 10;
     private static final float ROD_AIM_CHASE = 0.3F;
     private static final int PLUMMET_MIN_TICKS = 3;
     private static final int PLUMMET_MAX_TICKS = 100;
+    private static final double DETONATION_DAMAGE_RADIUS = 5.0;
+    private static final float DETONATION_MAX_DAMAGE = 16.0F;
+    private static final float DETONATION_MIN_DAMAGE = 6.0F;
     private static final EntityDataAccessor<Integer> ROD_COUNT =
             SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> ROD_AIMING =
@@ -100,6 +108,8 @@ public class BronzeEntity extends TarnishingEntity {
             SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Float> ROD_SPIN =
             SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Boolean> TELEGRAPHING =
+            SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.BOOLEAN);
 
     private final PathNavigation groundNavigation;
     private final MoveControl groundMoveControl;
@@ -107,6 +117,7 @@ public class BronzeEntity extends TarnishingEntity {
     private final MoveControl flyingMoveControl;
     private CrystallizedRodVolleyGoal volleyGoal;
     private boolean plummeting;
+    private float crystalSpeedScale = 1.0F;
     private int plummetTicks;
     private int trackedRodCount = MAX_RODS;
     private int rodTransitionFrom = MAX_RODS;
@@ -534,7 +545,7 @@ public class BronzeEntity extends TarnishingEntity {
         return new BodyRotationControl(this) {
             @Override
             public void clientTick() {
-                if (BronzeEntity.this.ramAnimationState.isStarted()) {
+                if (BronzeEntity.this.ramAnimationState.isStarted() || BronzeEntity.this.isTelegraphing()) {
                     BronzeEntity.this.yBodyRot = BronzeEntity.this.yHeadRot;
                     return;
                 }
@@ -552,6 +563,19 @@ public class BronzeEntity extends TarnishingEntity {
         }
     }
 
+
+    public static boolean hurtWithSinnerDrop(LivingEntity victim, DamageSource source, float amount) {
+        boolean wasAlive = victim.isAlive();
+        boolean hurt = victim.hurt(source, amount);
+        if (wasAlive && victim instanceof BronzeEntity && !victim.isAlive() && !victim.level().isClientSide()) {
+            victim.level().addFreshEntity(new ItemEntity(
+                    victim.level(),
+                    victim.getX(), victim.getY(), victim.getZ(),
+                    new ItemStack(RNItems.MUSIC_DISC_SINNER.get())
+            ));
+        }
+        return hurt;
+    }
 
     public static boolean isSoothed(@Nullable Entity entity) {
         return entity instanceof Player player && MusicBoxItem.isPlayingSinner(player);
@@ -1061,6 +1085,7 @@ public class BronzeEntity extends TarnishingEntity {
         if (stage == TarnishStage.CRYSTALLIZED && !wasCrystallized) {
             this.plummeting = false;
             this.plummetTicks = 0;
+            this.crystalSpeedScale = 1.0F;
             this.entityData.set(FIRED_ROD_SLOT, -1);
             this.entityData.set(ROD_AIMING, false);
             this.setRodCount(MAX_RODS);
@@ -1213,7 +1238,37 @@ public class BronzeEntity extends TarnishingEntity {
         return this.plummeting;
     }
 
-    public boolean fireRodAt(LivingEntity target) {
+    public boolean isTelegraphing() {
+        return this.entityData.get(TELEGRAPHING);
+    }
+
+    public void setTelegraphing(boolean telegraphing) {
+        if (!this.level().isClientSide()) {
+            this.entityData.set(TELEGRAPHING, telegraphing);
+        }
+    }
+
+    public Vec3 predictAim(LivingEntity target, Vec3 targetVelocity) {
+        Vec3 head = this.position().add(0.0, HEAD_CENTER_HEIGHT, 0.0);
+        Vec3 center = target.getBoundingBox().getCenter();
+        Vec3 lead = new Vec3(targetVelocity.x, targetVelocity.y * ROD_LEAD_VERTICAL, targetVelocity.z).scale(ROD_LEAD);
+        Vec3 aim = center;
+        for (int i = 0; i < ROD_LEAD_ITERATIONS; i++) {
+            double flightTicks = aim.subtract(head).length() / ROD_SHOT_SPEED;
+            aim = center.add(lead.scale(flightTicks));
+        }
+        return aim;
+    }
+
+    public float getCrystalSpeedScale() {
+        return this.crystalSpeedScale;
+    }
+
+    public void setCrystalSpeedScale(float scale) {
+        this.crystalSpeedScale = Mth.clamp(scale, 0.0F, 1.0F);
+    }
+
+    public boolean fireRodAt(LivingEntity target, Vec3 targetVelocity) {
         int count = this.getRodCount();
         if (this.level().isClientSide() || !this.isCrystallized() || this.plummeting || count <= 0) {
             return false;
@@ -1223,7 +1278,8 @@ public class BronzeEntity extends TarnishingEntity {
         }
 
         Vec3 head = this.position().add(0.0, HEAD_CENTER_HEIGHT, 0.0);
-        Vec3 aim = target.getBoundingBox().getCenter().subtract(head);
+        Vec3 aimPoint = this.predictAim(target, targetVelocity);
+        Vec3 aim = aimPoint.subtract(head);
         if (aim.lengthSqr() < 1.0E-4) {
             return false;
         }
@@ -1235,7 +1291,7 @@ public class BronzeEntity extends TarnishingEntity {
         }
 
         Vec3 spawn = head.add(Math.cos(azimuth) * ROD_SPAWN_DISTANCE, 0.0, Math.sin(azimuth) * ROD_SPAWN_DISTANCE);
-        Vec3 direction = target.getBoundingBox().getCenter().subtract(spawn);
+        Vec3 direction = aimPoint.subtract(spawn);
         if (direction.lengthSqr() < 1.0E-4) {
             return false;
         }
@@ -1263,12 +1319,29 @@ public class BronzeEntity extends TarnishingEntity {
         this.updateLocomotion(this.getTarnishLevel());
     }
 
+    private void damageNearbyBronzes(ServerLevel level) {
+        List<BronzeEntity> victims = level.getEntitiesOfClass(
+                BronzeEntity.class,
+                this.getBoundingBox().inflate(DETONATION_DAMAGE_RADIUS),
+                other -> other != this && other.isAlive() && !other.isCrystallized()
+        );
+        for (BronzeEntity victim : victims) {
+            double distance = this.distanceTo(victim);
+            if (distance > DETONATION_DAMAGE_RADIUS) {
+                continue;
+            }
+            float damage = (float) Mth.lerp(distance / DETONATION_DAMAGE_RADIUS, DETONATION_MAX_DAMAGE, DETONATION_MIN_DAMAGE);
+            hurtWithSinnerDrop(victim, this.damageSources().explosion(this, this), damage);
+        }
+    }
+
     private void crystalDetonation(ServerLevel level) {
         BlockPos center = this.blockPosition();
         this.plummeting = false;
         spawnCrystalExplosionParticles(level, center);
         CrystalConversion.detonate(level, center, true);
         spreadCrystalizedBlocks(level, center);
+        damageNearbyBronzes(level);
         this.hurt(this.damageSources().genericKill(), Float.MAX_VALUE);
         if (this.isAlive()) {
             this.discard();
@@ -1323,6 +1396,7 @@ public class BronzeEntity extends TarnishingEntity {
         builder.define(FIRED_ROD_SLOT, -1);
         builder.define(ROD_AIMING, false);
         builder.define(ROD_SPIN, 0.0F);
+        builder.define(TELEGRAPHING, false);
     }
 
     @Override
