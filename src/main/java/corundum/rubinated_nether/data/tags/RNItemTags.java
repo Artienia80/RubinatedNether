@@ -8,6 +8,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -130,7 +131,14 @@ public class RNItemTags extends ItemTagsProvider {
 		this.tag(ItemTags.TRIM_MATERIALS)
 				.add(
 						RNItems.BRONZE_SCRAP.asItem(),
-						RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.asItem());
+						RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.asItem(),
+						RNItems.RUBY.asItem());
+
+		this.tag(ItemTags.BEACON_PAYMENT_ITEMS).add(RNItems.RUBY.asItem());
+
+		this.tag(ItemTags.create(ResourceLocation.withDefaultNamespace("music_discs"))).add(
+				RNItems.MUSIC_DISC_SHIMMER.asItem(),
+				RNItems.MUSIC_DISC_SINNER.asItem());
 
 		this.tag(ItemTags.TRIM_TEMPLATES)
 				.add(

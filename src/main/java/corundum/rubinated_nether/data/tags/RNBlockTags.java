@@ -27,6 +27,8 @@ public class RNBlockTags extends BlockTagsProvider {
 	@Override
 	protected void addTags(Provider provider) {
 		// Mining tags 
+		this.tag(BlockTags.DRAGON_IMMUNE).add(RNBlocks.BLEEDING_OBSIDIAN.get());
+
 		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
 				RNBlocks.NETHER_RUBY_ORE.get(),
 				RNBlocks.MOLTEN_RUBY_ORE.get(),
