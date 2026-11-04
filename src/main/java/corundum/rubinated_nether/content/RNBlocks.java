@@ -1264,7 +1264,7 @@ public class RNBlocks {
 			"bronze_winder",
 			() -> new BronzeWinderBlock(
 					TarnishStage.UNAFFECTED,
-					BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get()).noCollission().noOcclusion()
 			)
 	);
 
@@ -1272,7 +1272,7 @@ public class RNBlocks {
 			"discolored_bronze_winder",
 			() -> new BronzeWinderBlock(
 					TarnishStage.DISCOLORED,
-					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get()).noCollission().noOcclusion()
 			)
 	);
 
@@ -1280,7 +1280,7 @@ public class RNBlocks {
 			"corroded_bronze_winder",
 			() -> new BronzeWinderBlock(
 					TarnishStage.CORRODED,
-					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get()).noCollission().noOcclusion()
 			)
 	);
 
@@ -1288,7 +1288,7 @@ public class RNBlocks {
 			"tarnished_bronze_winder",
 			() -> new BronzeWinderBlock(
 					TarnishStage.TARNISHED,
-					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get()).noCollission().noOcclusion()
 			)
 	);
 
@@ -1296,7 +1296,7 @@ public class RNBlocks {
 			"crystallized_bronze_winder",
 			() -> new BronzeWinderBlock(
 					TarnishStage.CRYSTALLIZED,
-					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()).noCollission().noOcclusion()
 			)
 	);
 

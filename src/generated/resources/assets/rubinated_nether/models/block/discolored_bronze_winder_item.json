@@ -4,13 +4,7 @@
     {
       "faces": {
         "down": {
-          "texture": "#under",
-          "uv": [
-            4.0,
-            4.0,
-            12.0,
-            12.0
-          ]
+          "texture": "#under"
         },
         "east": {
           "texture": "#side",
@@ -40,13 +34,7 @@
           ]
         },
         "up": {
-          "texture": "#top",
-          "uv": [
-            4.0,
-            4.0,
-            12.0,
-            12.0
-          ]
+          "texture": "#top"
         },
         "west": {
           "texture": "#side",
@@ -182,6 +170,7 @@
   "gui_light": "side",
   "render_type": "minecraft:cutout",
   "textures": {
+    "key": "rubinated_nether:entity/bronze/bronze_discolored",
     "particle": "rubinated_nether:block/bronze/bronze_block/discolored_bronze_block",
     "side": "rubinated_nether:block/bronze/bronze_block/discolored_bronze_block",
     "top": "rubinated_nether:block/bronze/bronze_block/discolored_bronze_block",

@@ -4,13 +4,7 @@
     {
       "faces": {
         "down": {
-          "texture": "#under",
-          "uv": [
-            4.0,
-            4.0,
-            12.0,
-            12.0
-          ]
+          "texture": "#under"
         },
         "east": {
           "texture": "#side",
@@ -40,13 +34,7 @@
           ]
         },
         "up": {
-          "texture": "#top",
-          "uv": [
-            4.0,
-            4.0,
-            12.0,
-            12.0
-          ]
+          "texture": "#top"
         },
         "west": {
           "texture": "#side",
