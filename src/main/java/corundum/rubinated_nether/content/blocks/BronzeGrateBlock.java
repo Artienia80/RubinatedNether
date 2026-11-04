@@ -284,6 +284,6 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock implements SimpleWat
 
     @Override
     public boolean skipRendering(BlockState state, BlockState adjacentState, Direction direction) {
-        return adjacentState.is(this) ? true : super.skipRendering(state, adjacentState, direction);
+        return adjacentState.getBlock() instanceof BronzeGrateBlock || super.skipRendering(state, adjacentState, direction);
     }
 }
