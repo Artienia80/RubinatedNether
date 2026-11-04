@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content;
 import corundum.rubinated_nether.RubinatedNether;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -66,6 +67,8 @@ public final class RNTags {
 	}
 
 	public static final class Items {
+
+		public static final TagKey<Item> WAX = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "wax"));
 
 		public static final TagKey<Item> RUBIES = createTag(Registries.ITEM, "rubies");
 

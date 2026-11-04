@@ -6,6 +6,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import corundum.rubinated_nether.content.*;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.VaseBlockEntity;
 import corundum.rubinated_nether.content.trim.VaseEngraving;
 import corundum.rubinated_nether.content.trim.VaseEngravingTooltip;
@@ -36,7 +37,6 @@ import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -331,7 +331,7 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
             return false;
         }
 
-        if (stack.is(Items.HONEYCOMB) && !waxed) {
+        if (stack.is(RNTags.Items.WAX) && !waxed) {
             setWaxedBothHalves(level, lowerPos, true);
 
             if (!player.isCreative())

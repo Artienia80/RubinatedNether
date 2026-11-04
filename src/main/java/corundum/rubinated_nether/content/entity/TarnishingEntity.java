@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.entity;
 
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.utils.RNEntityDataSerializers;
 import corundum.rubinated_nether.utils.RNParticleUtils;
@@ -141,7 +142,7 @@ public abstract class TarnishingEntity extends Monster {
             }
         }
 
-        if (stack.is(Items.HONEYCOMB) && !isWaxed()) {
+        if (stack.is(RNTags.Items.WAX) && !isWaxed()) {
             setWaxed(true);
             if (!player.isCreative()) stack.shrink(1);
             this.level().playSound(player, blockPosition(), SoundEvents.HONEYCOMB_WAX_ON, SoundSource.PLAYERS, 1.0F, 0.8F);

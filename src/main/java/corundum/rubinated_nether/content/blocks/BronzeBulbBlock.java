@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.blocks;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -13,7 +14,6 @@ import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -95,7 +95,7 @@ public class BronzeBulbBlock extends Block {
             ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack itemStack = player.getItemInHand(hand);
         if (player.getAbilities().mayBuild) {
-            if (player.getItemInHand(hand).is(Items.HONEYCOMB)) {
+            if (player.getItemInHand(hand).is(RNTags.Items.WAX)) {
                 setWaxed(player, state, level, pos);
                 if (!player.isCreative()) {
                     itemStack.shrink(1);

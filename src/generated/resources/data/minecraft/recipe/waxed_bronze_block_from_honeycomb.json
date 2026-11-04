@@ -7,7 +7,7 @@
       "item": "rubinated_nether:bronze_block"
     },
     {
-      "item": "minecraft:honeycomb"
+      "tag": "c:wax"
     }
   ],
   "result": {

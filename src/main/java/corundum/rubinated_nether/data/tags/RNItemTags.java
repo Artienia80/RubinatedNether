@@ -53,6 +53,8 @@ public class RNItemTags extends ItemTagsProvider {
 				RNItems.PHILARGYRIA_RUNE.asItem()
 		);
 
+		this.tag(RNTags.Items.WAX).add(Items.HONEYCOMB);
+
 		this.tag(RNTags.Items.RUBINATION_RUNES).addTag(RNTags.Items.RUNES);
 
 

@@ -7,7 +7,7 @@
       "item": "rubinated_nether:exposed_copper_laser"
     },
     {
-      "item": "minecraft:honeycomb"
+      "tag": "c:wax"
     }
   ],
   "result": {

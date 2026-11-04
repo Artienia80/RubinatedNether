@@ -7,7 +7,7 @@
       "item": "rubinated_nether:crystallized_cut_bronze_bricks_slab"
     },
     {
-      "item": "minecraft:honeycomb"
+      "tag": "c:wax"
     }
   ],
   "result": {

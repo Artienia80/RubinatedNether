@@ -7,7 +7,7 @@
       "item": "rubinated_nether:corroded_bronze_bulb"
     },
     {
-      "item": "minecraft:honeycomb"
+      "tag": "c:wax"
     }
   ],
   "result": {

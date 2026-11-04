@@ -9,6 +9,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.content.RNBlockEntities;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.CopperLaserBlockEntity;
 import corundum.rubinated_nether.utils.BEBlock;
 import corundum.rubinated_nether.utils.ShapeUtils;
@@ -122,7 +123,7 @@ public class CopperLaserBlock extends DirectionalBlock implements BEBlock<Copper
 		ItemStack heldItem = player.getMainHandItem();
 
 		// Check for honeycomb or axe - let Minecraft's default behavior handle both (highest priority)
-		if (heldItem.is(net.minecraft.world.item.Items.HONEYCOMB) || heldItem.is(net.minecraft.tags.ItemTags.AXES)) {
+		if (heldItem.is(RNTags.Items.WAX) || heldItem.is(net.minecraft.tags.ItemTags.AXES)) {
 			// PASS allows Minecraft's default copper interaction logic to run
 			// This handles waxing, unwaxing, and scraping in the correct order
 			return InteractionResult.PASS;

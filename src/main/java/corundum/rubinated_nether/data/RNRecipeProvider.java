@@ -552,28 +552,28 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WAXED_COPPER_LASER)
 				.requires(RNBlocks.COPPER_LASER)
-				.requires(Items.HONEYCOMB)
+				.requires(RNTags.Items.WAX)
 				.group(getItemName(RNBlocks.WAXED_COPPER_LASER))
 				.unlockedBy(getHasName(RNBlocks.COPPER_LASER), has(RNBlocks.COPPER_LASER))
 				.save(recipeOutput, getConversionRecipeName(RNBlocks.WAXED_COPPER_LASER, Items.HONEYCOMB));
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WAXED_EXPOSED_COPPER_LASER)
 				.requires(RNBlocks.EXPOSED_COPPER_LASER)
-				.requires(Items.HONEYCOMB)
+				.requires(RNTags.Items.WAX)
 				.group(getItemName(RNBlocks.WAXED_EXPOSED_COPPER_LASER))
 				.unlockedBy(getHasName(RNBlocks.EXPOSED_COPPER_LASER), has(RNBlocks.EXPOSED_COPPER_LASER))
 				.save(recipeOutput, getConversionRecipeName(RNBlocks.WAXED_EXPOSED_COPPER_LASER, Items.HONEYCOMB));
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WAXED_WEATHERED_COPPER_LASER)
 				.requires(RNBlocks.WEATHERED_COPPER_LASER)
-				.requires(Items.HONEYCOMB)
+				.requires(RNTags.Items.WAX)
 				.group(getItemName(RNBlocks.WAXED_WEATHERED_COPPER_LASER))
 				.unlockedBy(getHasName(RNBlocks.WEATHERED_COPPER_LASER), has(RNBlocks.WEATHERED_COPPER_LASER))
 				.save(recipeOutput, getConversionRecipeName(RNBlocks.WAXED_WEATHERED_COPPER_LASER, Items.HONEYCOMB));
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WAXED_OXIDIZED_COPPER_LASER)
 				.requires(RNBlocks.OXIDIZED_COPPER_LASER)
-				.requires(Items.HONEYCOMB)
+				.requires(RNTags.Items.WAX)
 				.group(getItemName(RNBlocks.WAXED_OXIDIZED_COPPER_LASER))
 				.unlockedBy(getHasName(RNBlocks.OXIDIZED_COPPER_LASER), has(RNBlocks.OXIDIZED_COPPER_LASER))
 				.save(recipeOutput, getConversionRecipeName(RNBlocks.WAXED_OXIDIZED_COPPER_LASER, Items.HONEYCOMB));
@@ -1049,7 +1049,7 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, waxedBlock)
 				.requires(block.get())
-				.requires(Items.HONEYCOMB)
+				.requires(RNTags.Items.WAX)
 				.group(getItemName(waxedBlock))
 				.unlockedBy(getHasName(block.get()), has(block.get()))
 				.save(recipeOutput, getConversionRecipeName(waxedBlock, Items.HONEYCOMB));

@@ -16,7 +16,6 @@ import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ChangeOverTimeBlock;
@@ -168,7 +167,7 @@ public class TarnishingBronzeBulbBlock extends BronzeBulbBlock implements Tarnis
 			return false; // Already at max tarnish state
 		}
 
-		if (stack.is(Items.HONEYCOMB) && !waxed) {
+		if (stack.is(RNTags.Items.WAX) && !waxed) {
 			level.setBlock(pos, state.setValue(WAXED, true), 2);
 
 			if (!player.isCreative())
