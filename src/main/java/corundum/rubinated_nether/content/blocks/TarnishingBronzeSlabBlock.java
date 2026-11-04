@@ -7,6 +7,7 @@ import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -14,6 +15,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -21,6 +23,7 @@ import net.minecraft.world.level.block.ChangeOverTimeBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
@@ -108,6 +111,30 @@ public class TarnishingBronzeSlabBlock extends SlabBlock implements TarnishingBr
 			hand, 
 			hitResult
 		);
+	}
+
+	@Override
+	protected boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
+		SlabType slabType = state.getValue(TYPE);
+		ItemStack held = context.getItemInHand();
+
+		if (slabType == SlabType.DOUBLE || !(held.is(this.asItem()) || held.is(this.getWaxedItem())))
+			return false;
+
+		if (!context.replacingClickedOnBlock())
+			return true;
+
+		boolean upperHalf = context.getClickLocation().y - context.getClickedPos().getY() > 0.5;
+		Direction face = context.getClickedFace();
+
+		if (slabType == SlabType.BOTTOM)
+			return face == Direction.UP || upperHalf && face.getAxis().isHorizontal();
+
+		return face == Direction.DOWN || !upperHalf && face.getAxis().isHorizontal();
+	}
+
+	private net.minecraft.world.item.Item getWaxedItem() {
+		return BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(this)));
 	}
 
 	@Override
