@@ -33,7 +33,7 @@ public class StrongboxMenu extends AbstractContainerMenu {
 
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
-                this.addSlot(new Slot(container, col + row * COLUMNS, SLOTS_X + col * 18, SLOTS_Y + row * 18));
+                this.addSlot(new StrongboxSlot(container, col + row * COLUMNS, SLOTS_X + col * 18, SLOTS_Y + row * 18));
             }
         }
 

@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.blocks.*;
+import corundum.rubinated_nether.content.items.StrongboxBlockItem;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -1350,7 +1351,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> BRONZE_STRONGBOX = registerWaxableBlock(
+	public static final DeferredBlock<Block> BRONZE_STRONGBOX = registerStrongbox(
 			"bronze_strongbox",
 			() -> new BronzeStrongboxBlock(
 					TarnishStage.UNAFFECTED,
@@ -1359,7 +1360,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> DISCOLORED_BRONZE_STRONGBOX = registerWaxableBlock(
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_STRONGBOX = registerStrongbox(
 			"discolored_bronze_strongbox",
 			() -> new BronzeStrongboxBlock(
 					TarnishStage.DISCOLORED,
@@ -1368,7 +1369,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> CORRODED_BRONZE_STRONGBOX = registerWaxableBlock(
+	public static final DeferredBlock<Block> CORRODED_BRONZE_STRONGBOX = registerStrongbox(
 			"corroded_bronze_strongbox",
 			() -> new BronzeStrongboxBlock(
 					TarnishStage.CORRODED,
@@ -1377,7 +1378,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> TARNISHED_BRONZE_STRONGBOX = registerWaxableBlock(
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_STRONGBOX = registerStrongbox(
 			"tarnished_bronze_strongbox",
 			() -> new BronzeStrongboxBlock(
 					TarnishStage.TARNISHED,
@@ -1386,7 +1387,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_STRONGBOX = registerWaxableBlock(
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_STRONGBOX = registerStrongbox(
 			"crystallized_bronze_strongbox",
 			() -> new BronzeStrongboxBlock(
 					TarnishStage.CRYSTALLIZED,
@@ -1631,6 +1632,25 @@ public class RNBlocks {
 
 	public static <T extends Block> DeferredBlock<T> registerWaxableBlock(String name, Supplier<T> block) {
 		var register = registerBlockAndItem(name, block);
+
+		RNItems.ITEMS.register(
+				"waxed_" + name,
+				() -> new WaxableBlockItem(
+						register,
+						new Item.Properties()
+				)
+		);
+
+		return register;
+	}
+
+	public static <T extends Block> DeferredBlock<T> registerStrongbox(String name, Supplier<T> block) {
+		var register = BLOCKS.register(name, block);
+
+		RNItems.ITEMS.register(
+				name,
+				() -> new StrongboxBlockItem(register.get(), new Item.Properties())
+		);
 
 		RNItems.ITEMS.register(
 				"waxed_" + name,

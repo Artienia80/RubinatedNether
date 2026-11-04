@@ -6,7 +6,6 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ShulkerBoxSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
@@ -26,7 +25,7 @@ public class VaseMenu extends AbstractContainerMenu {
 
         for(int k = 0; k < VaseBlockEntity.ROWS; ++k) {
             for(int l = 0; l < VaseBlockEntity.COLUMNS; ++l) {
-                this.addSlot(new ShulkerBoxSlot(container, l + k * VaseBlockEntity.COLUMNS, 53 + l * 18, 17 + k * 18));
+                this.addSlot(new VaseSlot(container, l + k * VaseBlockEntity.COLUMNS, 53 + l * 18, 17 + k * 18));
             }
         }
 

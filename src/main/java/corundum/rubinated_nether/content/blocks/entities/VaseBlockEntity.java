@@ -1,7 +1,7 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNBlockEntities;
+import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.blocks.BronzeVaseBlock;
 import corundum.rubinated_nether.content.menu.VaseMenu;
@@ -22,7 +22,7 @@ import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
+import corundum.rubinated_nether.content.NestingRules;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
@@ -175,7 +175,7 @@ public class VaseBlockEntity extends RandomizableContainerBlockEntity implements
     }
 
     public boolean canPlaceItemThroughFace(int index, ItemStack itemStack, @javax.annotation.Nullable Direction direction) {
-        return !(Block.byItem(itemStack.getItem()) instanceof BronzeVaseBlock) && itemStack.canFitInsideContainerItems();
+        return NestingRules.vaseAccepts(itemStack);
     }
 
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
