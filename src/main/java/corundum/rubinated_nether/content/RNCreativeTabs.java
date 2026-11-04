@@ -15,6 +15,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.BlockItemStateProperties;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -1056,6 +1057,7 @@ public class RNCreativeTabs {
 	};
 	private static ItemStack generated(ItemStack stack) {
 		stack.set(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY.with(BronzeStrongboxBlock.NATURAL, true));
+		stack.set(DataComponents.RARITY, Rarity.EPIC);
 		return stack;
 	}
 	private static ItemStack getWaxed(DeferredBlock<?> block) {
