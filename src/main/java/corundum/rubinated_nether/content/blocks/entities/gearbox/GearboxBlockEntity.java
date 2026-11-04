@@ -48,6 +48,8 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
     // Cooldown state — waits for all bronzes to die rather than a timer
     private boolean coolingDown = false;
 
+    private boolean spawnWaxed = false;
+
     private long lastInput = -1L;
 
     private final BaseSpawner spawner = new BaseSpawner() {
@@ -60,6 +62,7 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
                 if (level.getBlockState(blockPos).getBlock() instanceof TarnishingBronze block) {
                     spawnData.getEntityToSpawn().putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(RNEntityCreator.BRONZE.get()).toString());
                     spawnData.getEntityToSpawn().putInt("TarnishStage", block.getAge().getId());
+                    spawnData.getEntityToSpawn().putBoolean("Waxed", GearboxBlockEntity.this.spawnWaxed);
                 }
             }
             super.setNextSpawnData(level, blockPos, spawnData);
@@ -87,6 +90,15 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
         this.spawning = true;
         this.aliveWaveBronzes.clear();
         this.allSpawnedBronzes.clear();
+        this.setChanged();
+    }
+
+    public boolean isSpawnWaxed() {
+        return spawnWaxed;
+    }
+
+    public void setSpawnWaxed(boolean spawnWaxed) {
+        this.spawnWaxed = spawnWaxed;
         this.setChanged();
     }
 
@@ -201,6 +213,7 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
 
             bronze.moveTo(spawnX, spawnY, spawnZ, 0f, 0f);
             bronze.setTarnishLevel(TarnishStage.byId(tarnishId));
+            bronze.setWaxed(spawnWaxed);
             level.addFreshEntity(bronze);
 
             aliveWaveBronzes.add(bronze.getUUID());
@@ -234,6 +247,7 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
+        this.spawnWaxed = tag.getBoolean("SpawnWaxed");
         this.spawner.load(this.level, this.worldPosition, tag);
         this.totalBronzes = tag.getInt("TotalBronzes");
         this.bronzesSpawned = tag.getInt("BronzesSpawned");
@@ -269,6 +283,7 @@ public class GearboxBlockEntity extends BlockEntity implements Spawner, Tickable
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         this.spawner.save(tag);
+        tag.putBoolean("SpawnWaxed", this.spawnWaxed);
         tag.putInt("TotalBronzes", this.totalBronzes);
         tag.putInt("BronzesSpawned", this.bronzesSpawned);
         tag.putInt("WaveSize", this.waveSize);

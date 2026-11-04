@@ -132,7 +132,12 @@ public class RNCreativeTabs {
 								RNItems.DISCOLORED_BRONZE_SPAWN_EGG,
 								RNItems.CORRODED_BRONZE_SPAWN_EGG,
 								RNItems.TARNISHED_BRONZE_SPAWN_EGG,
-								RNItems.CRYSTALLIZED_BRONZE_SPAWN_EGG
+								RNItems.CRYSTALLIZED_BRONZE_SPAWN_EGG,
+								RNItems.WAXED_BRONZE_SPAWN_EGG,
+								RNItems.WAXED_DISCOLORED_BRONZE_SPAWN_EGG,
+								RNItems.WAXED_CORRODED_BRONZE_SPAWN_EGG,
+								RNItems.WAXED_TARNISHED_BRONZE_SPAWN_EGG,
+								RNItems.WAXED_CRYSTALLIZED_BRONZE_SPAWN_EGG
 						);
 						// Legacy (gray italic tooltip added in RNClientSubscriber)
 						addItems(output, RNBlocks.NETHER_RUBY_ORE, RNBlocks.RUBINATED_BLACKSTONE);
@@ -1018,6 +1023,16 @@ public class RNCreativeTabs {
 					RNItems.TARNISHED_BRONZE_SPAWN_EGG.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.TARNISHED_BRONZE_SPAWN_EGG.get().getDefaultInstance(),
 					RNItems.CRYSTALLIZED_BRONZE_SPAWN_EGG.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.CRYSTALLIZED_BRONZE_SPAWN_EGG.get().getDefaultInstance(),
+					RNItems.WAXED_BRONZE_SPAWN_EGG.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.WAXED_BRONZE_SPAWN_EGG.get().getDefaultInstance(),
+					RNItems.WAXED_DISCOLORED_BRONZE_SPAWN_EGG.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.WAXED_DISCOLORED_BRONZE_SPAWN_EGG.get().getDefaultInstance(),
+					RNItems.WAXED_CORRODED_BRONZE_SPAWN_EGG.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.WAXED_CORRODED_BRONZE_SPAWN_EGG.get().getDefaultInstance(),
+					RNItems.WAXED_TARNISHED_BRONZE_SPAWN_EGG.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.WAXED_TARNISHED_BRONZE_SPAWN_EGG.get().getDefaultInstance(),
+					RNItems.WAXED_CRYSTALLIZED_BRONZE_SPAWN_EGG.get().getDefaultInstance(), BOTH_TABS);
 		}
 	}
 	private static final DeferredBlock<?>[] GENERATED_STRONGBOXES = {

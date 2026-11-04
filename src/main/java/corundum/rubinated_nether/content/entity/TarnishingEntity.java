@@ -59,6 +59,7 @@ public abstract class TarnishingEntity extends Monster {
     }
 
     public void setTarnishLevel(TarnishStage stage) {
+        if (this.getTarnishLevel() == TarnishStage.CRYSTALLIZED && stage != TarnishStage.CRYSTALLIZED) return;
         this.entityData.set(TARNISH_STAGE, stage.getId());
     }
 
@@ -115,11 +116,6 @@ public abstract class TarnishingEntity extends Monster {
                             level().addFreshEntity(powder);
                         }
                     }
-            } else if (this.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED)) {
-                if (random.nextFloat() < 0.05f) {
-                    this.setTarnishLevel(TarnishStage.UNAFFECTED);
-                    handleVFX(player);
-                }
             }
         }
     }

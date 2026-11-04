@@ -1079,6 +1079,7 @@ public class BronzeEntity extends TarnishingEntity {
     @Override
     public void setTarnishLevel(TarnishStage stage) {
         boolean wasCrystallized = this.isCrystallized();
+        if (wasCrystallized && stage != TarnishStage.CRYSTALLIZED) return;
         super.setTarnishLevel(stage);
         this.updateAttributesForTarnish(stage);
         this.changeGoalsOnLevelChange(stage);

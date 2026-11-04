@@ -186,23 +186,43 @@ public class RNItems {
 	);
 
 	public static final DeferredItem<Item> BRONZE_SPAWN_EGG = ITEMS.register("bronze_spawn_egg",
-			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.UNAFFECTED,
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.UNAFFECTED, false,
 					0xbf8142, 0x76422c, new Item.Properties()));
 
 	public static final DeferredItem<Item> DISCOLORED_BRONZE_SPAWN_EGG = ITEMS.register("discolored_bronze_spawn_egg",
-			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.DISCOLORED,
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.DISCOLORED, false,
 					0xC77459, 0x6D411C, new Item.Properties()));
 
 	public static final DeferredItem<Item> CORRODED_BRONZE_SPAWN_EGG = ITEMS.register("corroded_bronze_spawn_egg",
-			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.CORRODED,
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.CORRODED, false,
 					0xB25B4E, 0x662D1B, new Item.Properties()));
 
 	public static final DeferredItem<Item> TARNISHED_BRONZE_SPAWN_EGG = ITEMS.register("tarnished_bronze_spawn_egg",
-			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.TARNISHED,
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.TARNISHED, false,
 					0x6F4A4F, 0x352227, new Item.Properties()));
 
 	public static final DeferredItem<Item> CRYSTALLIZED_BRONZE_SPAWN_EGG = ITEMS.register("crystallized_bronze_spawn_egg",
-			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.CRYSTALLIZED,
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.CRYSTALLIZED, false,
+					0xACD1B0, 0x738E79, new Item.Properties()));
+
+	public static final DeferredItem<Item> WAXED_BRONZE_SPAWN_EGG = ITEMS.register("waxed_bronze_spawn_egg",
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.UNAFFECTED, true,
+					0xBF8142, 0x76422c, new Item.Properties()));
+
+	public static final DeferredItem<Item> WAXED_DISCOLORED_BRONZE_SPAWN_EGG = ITEMS.register("waxed_discolored_bronze_spawn_egg",
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.DISCOLORED, true,
+					0xC77459, 0x6D411C, new Item.Properties()));
+
+	public static final DeferredItem<Item> WAXED_CORRODED_BRONZE_SPAWN_EGG = ITEMS.register("waxed_corroded_bronze_spawn_egg",
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.CORRODED, true,
+					0xB25B4E, 0x662D1B, new Item.Properties()));
+
+	public static final DeferredItem<Item> WAXED_TARNISHED_BRONZE_SPAWN_EGG = ITEMS.register("waxed_tarnished_bronze_spawn_egg",
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.TARNISHED, true,
+					0x6F4A4F, 0x352227, new Item.Properties()));
+
+	public static final DeferredItem<Item> WAXED_CRYSTALLIZED_BRONZE_SPAWN_EGG = ITEMS.register("waxed_crystallized_bronze_spawn_egg",
+			() -> new BronzeSpawnEgg(RNEntityCreator.BRONZE, TarnishStage.CRYSTALLIZED, true,
 					0xACD1B0, 0x738E79, new Item.Properties()));
 
 	public static final DeferredItem<Item> MOLTEN_RUBY_BUCKET = ITEMS.register(

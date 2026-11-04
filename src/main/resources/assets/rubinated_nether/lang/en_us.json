@@ -442,6 +442,11 @@
   "item.rubinated_nether.corroded_bronze_spawn_egg": "Corroded Bronze Spawn Egg",
   "item.rubinated_nether.tarnished_bronze_spawn_egg": "Tarnished Bronze Spawn Egg",
   "item.rubinated_nether.crystallized_bronze_spawn_egg": "Crystallized Bronze Spawn Egg",
+  "item.rubinated_nether.waxed_bronze_spawn_egg": "Waxed Bronze Spawn Egg",
+  "item.rubinated_nether.waxed_discolored_bronze_spawn_egg": "Waxed Discolored Bronze Spawn Egg",
+  "item.rubinated_nether.waxed_corroded_bronze_spawn_egg": "Waxed Corroded Bronze Spawn Egg",
+  "item.rubinated_nether.waxed_tarnished_bronze_spawn_egg": "Waxed Tarnished Bronze Spawn Egg",
+  "item.rubinated_nether.waxed_crystallized_bronze_spawn_egg": "Waxed Crystallized Bronze Spawn Egg",
 
   "item.rubinated_nether.molten_ruby_bucket": "Molten Ruby Bucket",
 
