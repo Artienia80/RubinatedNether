@@ -81,6 +81,8 @@
 
   "item.rubinated_nether.music_disc_sinner": "Music Disc",
   "jukebox_song.rubinated_nether.sinner": "Soup Can - Sinner",
+  "item.rubinated_nether.music_disc_sinner_music_box": "Crystallized Music Disc",
+  "jukebox_song.rubinated_nether.sinner_music_box": "Soup Can - Sinner (Music Box)",
 
   "block.rubinated_nether.bronze_block": "Block of Bronze",
   "block.rubinated_nether.discolored_bronze_block": "Discolored Bronze",

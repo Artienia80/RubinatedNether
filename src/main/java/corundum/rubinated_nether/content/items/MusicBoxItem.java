@@ -352,7 +352,7 @@ public class MusicBoxItem extends BundleItem {
             }
             JukeboxSong song = holder.get().value();
             long end = level.getGameTime() + Mth.ceil(song.lengthInSeconds() * 20.0F) + GAP_TICKS;
-            boolean sinner = holder.get().is(RNJukeboxSongs.SINNER);
+            boolean sinner = holder.get().is(RNJukeboxSongs.SINNER) || holder.get().is(RNJukeboxSongs.SINNER_MUSIC_BOX);
             if (player != null) {
                 if (sinner) {
                     player.getPersistentData().putLong(SOOTHING_KEY, end);

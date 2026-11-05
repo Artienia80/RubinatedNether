@@ -278,6 +278,7 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.RUBINATED_POMEGRANATE,
 				RNItems.MUSIC_DISC_SHIMMER,
 				RNItems.MUSIC_DISC_SINNER,
+				RNItems.MUSIC_DISC_SINNER_MUSIC_BOX,
 				RNItems.BRONZE_ROD,
 				RNItems.BRONZE_POWDER,
 				RNItems.BRONZE_SCRAP,

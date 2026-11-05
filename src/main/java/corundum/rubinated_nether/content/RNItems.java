@@ -149,6 +149,13 @@ public class RNItems {
 					.rarity(Rarity.RARE)
 					.jukeboxPlayable(RNJukeboxSongs.SINNER)
 	);
+	public static final DeferredItem<Item> MUSIC_DISC_SINNER_MUSIC_BOX = ITEMS.registerSimpleItem(
+			"music_disc_sinner_music_box",
+			new Item.Properties()
+					.stacksTo(1)
+					.rarity(Rarity.EPIC)
+					.jukeboxPlayable(RNJukeboxSongs.SINNER_MUSIC_BOX)
+	);
 
 	public static final DeferredItem<BlockItem> FROSTED_ICE = ITEMS.registerSimpleBlockItem(
 			"frosted_ice",

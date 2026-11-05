@@ -644,13 +644,17 @@ public class BronzeEntity extends TarnishingEntity {
 
 
     public static boolean hurtWithSinnerDrop(LivingEntity victim, DamageSource source, float amount) {
+        return hurtWithSinnerDrop(victim, source, amount, false);
+    }
+
+    public static boolean hurtWithSinnerDrop(LivingEntity victim, DamageSource source, float amount, boolean musicBox) {
         boolean wasAlive = victim.isAlive();
         boolean hurt = victim.hurt(source, amount);
         if (wasAlive && victim instanceof BronzeEntity && !victim.isAlive() && !victim.level().isClientSide()) {
             victim.level().addFreshEntity(new ItemEntity(
                     victim.level(),
                     victim.getX(), victim.getY(), victim.getZ(),
-                    new ItemStack(RNItems.MUSIC_DISC_SINNER.get())
+                    new ItemStack(musicBox ? RNItems.MUSIC_DISC_SINNER_MUSIC_BOX.get() : RNItems.MUSIC_DISC_SINNER.get())
             ));
         }
         return hurt;
@@ -1432,7 +1436,7 @@ public class BronzeEntity extends TarnishingEntity {
                 continue;
             }
             float damage = (float) Mth.lerp(distance / DETONATION_DAMAGE_RADIUS, DETONATION_MAX_DAMAGE, DETONATION_MIN_DAMAGE);
-            hurtWithSinnerDrop(victim, this.damageSources().explosion(this, this), damage);
+            hurtWithSinnerDrop(victim, this.damageSources().explosion(this, this), damage, true);
         }
     }
 

@@ -138,7 +138,8 @@ public class RNItemTags extends ItemTagsProvider {
 
 		this.tag(ItemTags.create(ResourceLocation.withDefaultNamespace("music_discs"))).add(
 				RNItems.MUSIC_DISC_SHIMMER.asItem(),
-				RNItems.MUSIC_DISC_SINNER.asItem());
+				RNItems.MUSIC_DISC_SINNER.asItem(),
+				RNItems.MUSIC_DISC_SINNER_MUSIC_BOX.asItem());
 
 		this.tag(ItemTags.TRIM_TEMPLATES)
 				.add(

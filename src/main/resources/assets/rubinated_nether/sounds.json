@@ -14,5 +14,13 @@
 				"stream": true
 			}
 		]
+	},
+	"sinner_music_box": {
+		"sounds": [
+			{
+				"name": "rubinated_nether:sinner_music_box",
+				"stream": true
+			}
+		]
 	}
 }

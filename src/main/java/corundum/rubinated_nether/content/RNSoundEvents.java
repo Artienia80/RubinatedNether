@@ -33,4 +33,14 @@ public class RNSoundEvents {
 					)
 			)
 	);
+
+	public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_DISC_SINNER_MUSIC_BOX = SOUNDS.register(
+			"sinner_music_box",
+			() -> SoundEvent.createVariableRangeEvent(
+					ResourceLocation.fromNamespaceAndPath(
+							RubinatedNether.MODID,
+							"sinner_music_box"
+					)
+			)
+	);
 }

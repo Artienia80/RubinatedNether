@@ -125,7 +125,7 @@ public class RNCreativeTabs {
 								RNBlocks.WAXED_OXIDIZED_COPPER_LASER
 						);
 						// Discs, banner pattern
-						addItems(output, RNItems.MUSIC_DISC_SHIMMER, RNItems.MUSIC_DISC_SINNER, RNItems.COGS_BANNER_PATTERN.get());
+						addItems(output, RNItems.MUSIC_DISC_SHIMMER, RNItems.MUSIC_DISC_SINNER, RNItems.MUSIC_DISC_SINNER_MUSIC_BOX, RNItems.COGS_BANNER_PATTERN.get());
 						// Spawn eggs
 						addItems(
 								output,
@@ -403,6 +403,8 @@ public class RNCreativeTabs {
 					RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(),
 					RNItems.MUSIC_DISC_SINNER.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.MUSIC_DISC_SINNER.get().getDefaultInstance(),
+					RNItems.MUSIC_DISC_SINNER_MUSIC_BOX.get().getDefaultInstance(), BOTH_TABS);
 		}
 		private static void injectFood(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.FOOD_AND_DRINKS) return;
