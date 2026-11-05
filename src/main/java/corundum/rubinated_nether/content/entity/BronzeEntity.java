@@ -451,6 +451,7 @@ public class BronzeEntity extends TarnishingEntity {
         }
         if (state == AMBUSH_STOP){
             this.ambushAnimationState.stop();
+            this.idleAnimationState.start(this.tickCount - 4);
             this.undergroundWalkAnimationState.stop();
             this.drillAnimationState.stop();
         }
@@ -545,7 +546,8 @@ public class BronzeEntity extends TarnishingEntity {
         return new BodyRotationControl(this) {
             @Override
             public void clientTick() {
-                if (BronzeEntity.this.ramAnimationState.isStarted() || BronzeEntity.this.isTelegraphing()) {
+                if (BronzeEntity.this.ramAnimationState.isStarted() || BronzeEntity.this.isTelegraphing()
+                        || BronzeEntity.this.undergroundWalkAnimationState.isStarted() || BronzeEntity.this.ambushAnimationState.isStarted()) {
                     BronzeEntity.this.yBodyRot = BronzeEntity.this.yHeadRot;
                     return;
                 }
@@ -992,7 +994,6 @@ public class BronzeEntity extends TarnishingEntity {
         }
         if (ambushCooldownTicks > 0) {
             ambushCooldownTicks--;
-            this.setDeltaMovement(0, this.getDeltaMovement().y, 0);
         }
     }
 

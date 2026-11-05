@@ -8,6 +8,7 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -28,7 +29,6 @@ public class CorrodedHideAndAmbushGoal extends Goal {
     private Vec3 ambushTargetPos;
 
     private static final double MOVE_SPEED = 0.4;
-    private static final double AMBUSH_MOVE_SPEED = 0.15;
     private static final float ATTACK_RANGE = 2.0f;
     private static final float EMERGE_ATTACK_RANGE = 2.5f;
     private boolean hasAttacked = false;
@@ -73,9 +73,12 @@ public class CorrodedHideAndAmbushGoal extends Goal {
     public void tick() {
         if (!entity.getTarnishLevel().equals(TarnishStage.CORRODED)) stop();
         ambushTargetPos = target.position();
+        if (state == 2 || state == 3) faceTarget();
         switch (state) {
             case 1 -> {
                 stateTicks++;
+                entity.setDeltaMovement(Vec3.ZERO);
+                entity.getNavigation().stop();
                 if (stateTicks >= 20) {
                     state = 2;
                     stateTicks = 0;
@@ -130,20 +133,22 @@ public class CorrodedHideAndAmbushGoal extends Goal {
             case 3 -> {
                 stateTicks++;
 
-                Vec3 entityPosFlat = new Vec3(entity.getX(), 0, entity.getZ());
-                Vec3 targetPosFlat = new Vec3(ambushTargetPos.x, 0, ambushTargetPos.z);
-                Vec3 horizontalDirection = targetPosFlat.subtract(entityPosFlat).normalize();
-
-                double currentY = entity.getY();
-                entity.setDeltaMovement(horizontalDirection.x * AMBUSH_MOVE_SPEED, 0, horizontalDirection.z * AMBUSH_MOVE_SPEED);
-                entity.setPos(entity.getX(), currentY, entity.getZ());
+                entity.setDeltaMovement(Vec3.ZERO);
+                entity.getNavigation().stop();
 
                 if (!entity.level().isClientSide) {
                     entity.level().broadcastEntityEvent(entity, (byte) 81);
                 }
 
-                if (stateTicks == 1 && !hasEmergeAttacked) {
+                if (stateTicks == 9 && !hasEmergeAttacked) {
                     hasEmergeAttacked = true;
+
+                    if (entity.level() instanceof ServerLevel server) {
+                        BlockPos below = entity.blockPosition().below();
+                        BlockState blockstate = entity.level().getBlockState(below);
+                        ParticleOptions dust = new BlockParticleOption(ParticleTypes.BLOCK, blockstate);
+                        server.sendParticles(dust, entity.getX(), entity.getY() + 0.1, entity.getZ(), 16, 0.3, 0.1, 0.3, 0.05);
+                    }
 
                     if (!entity.level().isClientSide) {
                         List<LivingEntity> nearbyEntities = entity.level().getEntitiesOfClass(
@@ -170,7 +175,7 @@ public class CorrodedHideAndAmbushGoal extends Goal {
                     }
                 }
 
-                if (stateTicks == 15 && !hasAttacked) {
+                if (stateTicks == 9 && !hasAttacked) {
                     hasAttacked = true;
 
                     boolean shouldDamage = entity.distanceToSqr(target) < ATTACK_RANGE;
@@ -182,7 +187,7 @@ public class CorrodedHideAndAmbushGoal extends Goal {
                     }
                 }
 
-                if (stateTicks >= 25) {
+                if (stateTicks >= 60) {
                     entity.setBurrowed(false);
                     stop();
                 }
@@ -191,6 +196,15 @@ public class CorrodedHideAndAmbushGoal extends Goal {
             case 4 -> {
             }
         }
+    }
+
+    private void faceTarget() {
+        double dx = target.getX() - entity.getX();
+        double dz = target.getZ() - entity.getZ();
+        float yaw = (float) (Mth.atan2(dz, dx) * (180F / Math.PI)) - 90F;
+        entity.setYRot(yaw);
+        entity.yBodyRot = yaw;
+        entity.yHeadRot = yaw;
     }
 
     @Override

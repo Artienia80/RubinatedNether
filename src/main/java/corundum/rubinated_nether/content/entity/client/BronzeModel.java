@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import corundum.rubinated_nether.content.entity.animation.BronzeAnimations;
 import net.minecraft.client.model.HierarchicalModel;
@@ -122,6 +123,11 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
         this.animate(entity.leapAnimationState, BronzeAnimations.LEAP, ageInTicks, 1f);
         this.animate(entity.diveAnimationState, BronzeAnimations.DIVE, ageInTicks, 1f);
         this.animate(entity.slamAnimationState, BronzeAnimations.SLAM, ageInTicks, 1f);
+
+        if (entity.getTarnishLevel().equals(TarnishStage.CORRODED)
+                && !entity.undergroundWalkAnimationState.isStarted() && !entity.drillAnimationState.isStarted()) {
+            this.rods.yRot = -ageInTicks * 15.0F * Mth.DEG_TO_RAD;
+        }
 
         if (entity.isCrystallized()) {
             this.applyCrystallizedRods(entity, ageInTicks, netHeadYaw, headPitch);
