@@ -61,7 +61,7 @@ public class TarnishedPounceGoal extends Goal {
 
     private static final int SHIELD_STUN = 50;
     private static final int INTERRUPT_STUN = 60;
-    private static final int SLAM_PAUSE_TICKS = 12;
+    private static final int SLAM_PAUSE_TICKS = 47;
 
     private final BronzeEntity entity;
     private final ArrayDeque<Vec3> samples = new ArrayDeque<>();
@@ -79,7 +79,6 @@ public class TarnishedPounceGoal extends Goal {
     public boolean isStunned = false;
     private int stunTicks = 0;
     private int stunVisualDelay = 0;
-    private boolean diving = false;
     private boolean primed = false;
 
     public TarnishedPounceGoal(BronzeEntity entity) {
@@ -131,7 +130,6 @@ public class TarnishedPounceGoal extends Goal {
     public void start() {
         phase = Phase.CROUCH;
         phaseTicks = 0;
-        diving = false;
         samples.clear();
         entity.getNavigation().stop();
         entity.setDeltaMovement(0, entity.getDeltaMovement().y, 0);
@@ -180,7 +178,6 @@ public class TarnishedPounceGoal extends Goal {
         isStunned = false;
         stunTicks = 0;
         stunVisualDelay = 0;
-        diving = false;
         target = null;
         samples.clear();
     }
@@ -197,12 +194,6 @@ public class TarnishedPounceGoal extends Goal {
         faceToward(target.position(), CROUCH_TURN_SPEED);
         recordSample();
         phaseTicks++;
-
-        if (phaseTicks % 3 == 0 && entity.level() instanceof ServerLevel server) {
-            int count = 1 + phaseTicks / 8;
-            server.sendParticles(ParticleTypes.ELECTRIC_SPARK, entity.getX(), entity.getY() + 0.2, entity.getZ(),
-                    count, 0.4, 0.1, 0.4, 0.4);
-        }
 
         if (phaseTicks >= CROUCH_TICKS) {
             launch();
@@ -377,8 +368,6 @@ public class TarnishedPounceGoal extends Goal {
 
         double s = Math.min(1.0, phaseTicks / (double) flightTicks);
 
-        if (s >= 0.5) startDive();
-
         Vec3 delta = flightPoint(s).subtract(entity.position());
         double length = delta.length();
         if (length > 1.5) delta = delta.scale(1.5 / length);
@@ -404,12 +393,6 @@ public class TarnishedPounceGoal extends Goal {
         }
     }
 
-    private void startDive() {
-        if (diving) return;
-        diving = true;
-        broadcast(BronzeEntity.DIVE_START);
-    }
-
     private int randomCooldown() {
         return COOLDOWN_BASE + entity.getRandom().nextInt(COOLDOWN_SPREAD);
     }
@@ -424,7 +407,6 @@ public class TarnishedPounceGoal extends Goal {
     }
 
     private void tickLanding() {
-        startDive();
         phaseTicks++;
         entity.fallDistance = 0;
         entity.setDeltaMovement(0.0, -0.9, 0.0);
@@ -438,7 +420,6 @@ public class TarnishedPounceGoal extends Goal {
         Vec3 center = entity.position();
         entity.setDeltaMovement(Vec3.ZERO);
         entity.fallDistance = 0;
-        diving = false;
         phase = Phase.IDLE;
         phaseTicks = 0;
 

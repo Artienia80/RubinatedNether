@@ -101,7 +101,6 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 					.put(RNBlocks.BRONZE_WINDER.get(), RNBlocks.DISCOLORED_BRONZE_WINDER.get())
 					.put(RNBlocks.DISCOLORED_BRONZE_WINDER.get(), RNBlocks.CORRODED_BRONZE_WINDER.get())
 					.put(RNBlocks.CORRODED_BRONZE_WINDER.get(), RNBlocks.TARNISHED_BRONZE_WINDER.get())
-					.put(RNBlocks.TARNISHED_BRONZE_WINDER.get(), RNBlocks.CRYSTALLIZED_BRONZE_WINDER.get())
 
 					.put(RNBlocks.BRONZE_GEARBOX.get(), RNBlocks.DISCOLORED_BRONZE_GEARBOX.get())
 					.put(RNBlocks.DISCOLORED_BRONZE_GEARBOX.get(), RNBlocks.CORRODED_BRONZE_GEARBOX.get())
