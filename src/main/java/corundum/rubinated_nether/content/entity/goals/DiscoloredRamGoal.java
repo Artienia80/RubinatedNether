@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.entity.goals;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -25,6 +26,11 @@ public class DiscoloredRamGoal extends Goal {
     // Max degrees per tick it can turn to keep facing the player while aiming
     private static final float AIM_TURN_SPEED = 30.0F;
     private static final int DASH_TIME = 10;
+    private static final int MAX_DASH_TIME = 24;
+    private static final double ATTACK_RANGE = 25.0;
+    private static final double JUMP_IMPULSE = 0.42;
+    private int dashTime = DASH_TIME;
+    private boolean hopping = false;
     private static final int COOLDOWN = 80;
     private static final double RAM_SPEED = 1.2;
     private boolean isStunned = false;
@@ -65,7 +71,7 @@ public class DiscoloredRamGoal extends Goal {
         if (!entity.getTarnishLevel().equals(TarnishStage.DISCOLORED)) return false;
         if (entity.getRamCooldown() > 0) return false;
 
-        Player player = entity.level().getNearestPlayer(entity.getX(), entity.getY(), entity.getZ(), 15.0, e -> !e.isSpectator() && !BronzeEntity.isSoothed(e));
+        Player player = entity.level().getNearestPlayer(entity.getX(), entity.getY(), entity.getZ(), ATTACK_RANGE, e -> !e.isSpectator() && !BronzeEntity.isSoothed(e));
         if (player != null && entity.hasLineOfSight(player) && !player.isCreative()) {
             target = player;
             return true;
@@ -130,6 +136,9 @@ public class DiscoloredRamGoal extends Goal {
                     entity.yHeadRot = yaw;
                     lookAt(rodOrigin().add(dashDirection.scale(16.0)), 360.0F, 90.0F);
 
+                    double dashDistance = targetCenter().distanceTo(rodOrigin());
+                    dashTime = Mth.clamp(Mth.ceil(dashDistance / RAM_SPEED) + 3, DASH_TIME, MAX_DASH_TIME);
+                    hopping = false;
                     phase = 2;
                     phaseTicks = 0;
                 }
@@ -139,9 +148,18 @@ public class DiscoloredRamGoal extends Goal {
                 lookAt(rodOrigin().add(dashDirection.scale(16.0)), 360.0F, 90.0F);
 
                 Vec3 dashVelocity = dashDirection.scale(RAM_SPEED);
-                if (dashVelocity.y > 0.0) {
-                    dashVelocity = new Vec3(dashVelocity.x, entity.getDeltaMovement().y, dashVelocity.z);
+                boolean grounded = entity.onGround();
+                double dashY = dashVelocity.y;
+                if (grounded && !isDivingRam() && (gapAhead() || entity.horizontalCollision)) {
+                    dashY = JUMP_IMPULSE;
+                    hopping = true;
+                } else if (hopping && !grounded) {
+                    dashY = entity.horizontalCollision ? JUMP_IMPULSE : entity.getDeltaMovement().y;
+                } else {
+                    if (grounded) hopping = false;
+                    if (dashY > 0.0) dashY = entity.getDeltaMovement().y;
                 }
+                dashVelocity = new Vec3(dashVelocity.x, dashY, dashVelocity.z);
                 entity.setDeltaMovement(dashVelocity);
 
                 boolean pitched = Math.abs(dashDirection.y) >= PITCHED_RAM;
@@ -209,11 +227,41 @@ public class DiscoloredRamGoal extends Goal {
                 }
 
                 phaseTicks++;
-                if (phaseTicks >= DASH_TIME) {
+                if (phaseTicks >= dashTime) {
                     stop();
                 }
                 break;
         }
+    }
+
+    private boolean solidAt(double x, double y, double z) {
+        BlockPos pos = BlockPos.containing(x, y, z);
+        return !entity.level().getBlockState(pos).getCollisionShape(entity.level(), pos).isEmpty();
+    }
+
+    private boolean floorBelow(double x, double z) {
+        return solidAt(x, entity.getY() - 0.5, z) || solidAt(x, entity.getY() - 1.5, z);
+    }
+
+    private boolean gapAhead() {
+        double length = Math.sqrt(dashDirection.x * dashDirection.x + dashDirection.z * dashDirection.z);
+        if (length < 1.0E-4) return false;
+        double hx = dashDirection.x / length;
+        double hz = dashDirection.z / length;
+
+        boolean gap = false;
+        for (double d = 0.8; d <= 1.6; d += 0.8) {
+            if (!floorBelow(entity.getX() + hx * d, entity.getZ() + hz * d)) {
+                gap = true;
+                break;
+            }
+        }
+        if (!gap) return false;
+
+        for (double d = 2.4; d <= 6.4; d += 0.8) {
+            if (floorBelow(entity.getX() + hx * d, entity.getZ() + hz * d)) return true;
+        }
+        return false;
     }
 
     private void faceTarget(float maxTurn) {
@@ -253,6 +301,7 @@ public class DiscoloredRamGoal extends Goal {
         }
         entity.setDeltaMovement(Vec3.ZERO);
         phase = 0;
+        hopping = false;
         target = null;
     }
 }

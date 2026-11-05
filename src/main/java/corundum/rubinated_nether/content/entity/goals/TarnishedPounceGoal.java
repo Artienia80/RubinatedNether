@@ -33,7 +33,7 @@ import java.util.List;
 public class TarnishedPounceGoal extends Goal {
     private enum Phase { IDLE, CROUCH, AIRBORNE, LANDING, RECOVER }
 
-    private static final double TRIGGER_RANGE = 9.0;
+    private static final double TRIGGER_RANGE = 25.0;
     private static final int COOLDOWN_BASE = 80;
     private static final int COOLDOWN_SPREAD = 60;
 
@@ -44,10 +44,10 @@ public class TarnishedPounceGoal extends Goal {
     private static final double MIN_LEAD = 0.70;
     private static final double MAX_LEAD = 0.95;
     private static final double AIM_ERROR = 0.6;
-    private static final double MAX_LEAP = 14.0;
+    private static final double MAX_LEAP = 25.0;
 
     private static final int MIN_AIR_TICKS = 12;
-    private static final int MAX_AIR_TICKS = 34;
+    private static final int MAX_AIR_TICKS = 56;
     private static final double MIN_USABLE_ARC = 1.0;
     private static final double LAND_DIP = 0.2;
 

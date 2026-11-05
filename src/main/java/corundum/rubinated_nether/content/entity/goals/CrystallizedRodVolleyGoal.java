@@ -14,7 +14,7 @@ public class CrystallizedRodVolleyGoal extends Goal {
     private static final int MAX_DELAY = 90;
     private static final int TELEGRAPH_TICKS = 60;
     private static final int FIRE_TIMEOUT = 40;
-    private static final double RANGE = 24.0;
+    private static final double RANGE = 25.0;
     private static final float MIN_SPEED_SCALE = 0.5F;
     private static final double VELOCITY_SMOOTHING = 0.5;
     private static final float BRONZE_TARGET_CHANCE = 0.35F;

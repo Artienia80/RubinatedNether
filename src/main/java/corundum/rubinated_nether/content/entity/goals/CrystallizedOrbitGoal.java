@@ -13,7 +13,7 @@ public class CrystallizedOrbitGoal extends Goal {
     private static final double MIN_DISTANCE = 4.0;
     private static final double MAX_DISTANCE = 7.0;
     private static final double EDGE_BUFFER = 0.5;
-    private static final double ACQUIRE_RANGE = 24.0;
+    private static final double ACQUIRE_RANGE = 25.0;
     private static final double MOVE_SPEED = 0.3;
     private static final double SMOOTHING = 0.25;
     private static final double LAST_ROD_HEIGHT = 5.0;
