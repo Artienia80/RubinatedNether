@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -18,10 +19,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -36,6 +41,8 @@ public class CorrodedHideAndAmbushGoal extends Goal {
     private Vec3 trapPos;
     private final Deque<Vec3> samples = new ArrayDeque<>();
     private final Set<UUID> alreadyHit = new HashSet<>();
+    private final List<BlockPos> route = new ArrayList<>();
+    private int routeIndex = 0;
 
     private static final double MOVE_SPEED = 0.3;
     private static final double HIT_RADIUS = 2.0;
@@ -61,6 +68,13 @@ public class CorrodedHideAndAmbushGoal extends Goal {
     private static final int MAX_LURK = 100;
     private static final int MAX_UNDERGROUND = 160;
     private static final double[] LEAD_STEPS = {1.0, 0.75, 0.5, 0.25, 0.0};
+
+    private static final int ROUTE_REFRESH = 10;
+    private static final int ROUTE_RADIUS = 24;
+    private static final int ROUTE_MAX_NODES = 2500;
+    private static final double WAYPOINT_REACHED = 0.3;
+    private static final double STEP_UP_IMPULSE = 0.42;
+    private static final int[][] ROUTE_DIRS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
 
     private static final int SAMPLE_WINDOW = 10;
     private static final double MAX_READ_SPEED = 0.45;
@@ -100,6 +114,8 @@ public class CorrodedHideAndAmbushGoal extends Goal {
         repicks = 0;
         undergroundTicks = 0;
         trapPos = null;
+        route.clear();
+        routeIndex = 0;
         samples.clear();
         alreadyHit.clear();
         recordSample();
@@ -144,19 +160,21 @@ public class CorrodedHideAndAmbushGoal extends Goal {
                     fire();
                     return;
                 }
-                if (stateTicks % 10 == 0) trapPos = pickTrapPos();
+                if (stateTicks % ROUTE_REFRESH == 0) trapPos = pickTrapPos();
+                if (stateTicks == 1 || stateTicks % ROUTE_REFRESH == 0) buildRoute();
 
-                Vec3 toTrap = new Vec3(trapPos.x - entity.getX(), 0, trapPos.z - entity.getZ());
-                if (toTrap.lengthSqr() < 0.25 || stateTicks >= MAX_TRAVEL) {
-                    entity.setDeltaMovement(Vec3.ZERO);
+                while (routeIndex < route.size() && reachedWaypoint(route.get(routeIndex))) {
+                    routeIndex++;
+                }
+
+                if (routeIndex >= route.size() || stateTicks >= MAX_TRAVEL) {
+                    entity.setDeltaMovement(0, entity.getDeltaMovement().y, 0);
                     state = 4;
                     stateTicks = 0;
                     return;
                 }
 
-                Vec3 direction = toTrap.normalize();
-                faceToward(trapPos);
-                entity.setDeltaMovement(direction.x * MOVE_SPEED, 0, direction.z * MOVE_SPEED);
+                walkTo(route.get(routeIndex));
                 spawnDust(4, 0.2, 0.05, 0.02);
             }
 
@@ -307,23 +325,139 @@ public class CorrodedHideAndAmbushGoal extends Goal {
             leadZ *= MAX_LEAD_DIST / length;
         }
 
+        int baseY = entity.blockPosition().getY();
         for (double step : LEAD_STEPS) {
-            Vec3 candidate = new Vec3(pos.x + leadX * step, entity.getY(), pos.z + leadZ * step);
-            if (isStandable(candidate)) return candidate;
+            double cx = pos.x + leadX * step;
+            double cz = pos.z + leadZ * step;
+            BlockPos feet = findFeet(cx, cz, baseY);
+            if (feet != null) return new Vec3(cx, feet.getY(), cz);
         }
-        return new Vec3(pos.x, entity.getY(), pos.z);
+        BlockPos fallback = findFeet(pos.x, pos.z, baseY);
+        return new Vec3(pos.x, fallback != null ? fallback.getY() : entity.getY(), pos.z);
     }
 
-    private boolean isStandable(Vec3 point) {
+    private boolean passable(BlockPos pos) {
         Level level = entity.level();
-        BlockPos feet = BlockPos.containing(point.x, entity.getY() + 0.1, point.z);
-        if (!level.hasChunkAt(feet)) return false;
+        if (!level.hasChunkAt(pos)) return false;
+        return level.getBlockState(pos).getCollisionShape(level, pos).isEmpty()
+                && (level.getFluidState(pos).isEmpty() || level.getFluidState(pos).is(FluidTags.LAVA));
+    }
 
-        BlockPos above = feet.above();
+    private boolean standableFeet(BlockPos feet) {
+        Level level = entity.level();
+        if (!passable(feet) || !passable(feet.above())) return false;
         BlockPos below = feet.below();
-        return level.getBlockState(feet).getCollisionShape(level, feet).isEmpty()
-                && level.getBlockState(above).getCollisionShape(level, above).isEmpty()
-                && !level.getBlockState(below).getCollisionShape(level, below).isEmpty();
+        if (!level.hasChunkAt(below)) return false;
+        BlockState floor = level.getBlockState(below);
+        if (floor.getFluidState().is(FluidTags.LAVA)) return true;
+        return !floor.getCollisionShape(level, below).isEmpty() && floor.getFluidState().isEmpty();
+    }
+
+    private BlockPos findFeet(double x, double z, int aroundY) {
+        int[] offsets = {0, 1, -1, 2, -2};
+        for (int dy : offsets) {
+            BlockPos feet = BlockPos.containing(x, aroundY + dy, z);
+            if (standableFeet(feet)) return feet;
+        }
+        return null;
+    }
+
+    private BlockPos stepTo(BlockPos cur, int dx, int dz) {
+        int[] dys = {0, 1, -1};
+        for (int dy : dys) {
+            BlockPos next = new BlockPos(cur.getX() + dx, cur.getY() + dy, cur.getZ() + dz);
+            if (!standableFeet(next)) continue;
+            if (dy == 1 && !passable(cur.above(2))) continue;
+            return next;
+        }
+        return null;
+    }
+
+    private void buildRoute() {
+        route.clear();
+        routeIndex = 0;
+        if (trapPos == null) return;
+
+        BlockPos start = findFeet(entity.getX(), entity.getZ(), entity.blockPosition().getY());
+        if (start == null) start = entity.blockPosition();
+
+        double goalX = trapPos.x;
+        double goalZ = trapPos.z;
+
+        Map<BlockPos, BlockPos> parent = new HashMap<>();
+        Deque<BlockPos> queue = new ArrayDeque<>();
+        parent.put(start, start);
+        queue.add(start);
+
+        BlockPos best = start;
+        double bestDist = distSqr(start, goalX, goalZ);
+
+        while (!queue.isEmpty() && parent.size() < ROUTE_MAX_NODES) {
+            BlockPos cur = queue.poll();
+            double d = distSqr(cur, goalX, goalZ);
+            if (d < bestDist) {
+                bestDist = d;
+                best = cur;
+            }
+            if (d <= 0.5) break;
+
+            for (int[] dir : ROUTE_DIRS) {
+                int dx = dir[0];
+                int dz = dir[1];
+                if (Math.abs(cur.getX() + dx - start.getX()) > ROUTE_RADIUS || Math.abs(cur.getZ() + dz - start.getZ()) > ROUTE_RADIUS) continue;
+
+                BlockPos next = stepTo(cur, dx, dz);
+                if (next == null || parent.containsKey(next)) continue;
+                if (dx != 0 && dz != 0 && (stepTo(cur, dx, 0) == null || stepTo(cur, 0, dz) == null)) continue;
+
+                parent.put(next, cur);
+                queue.add(next);
+            }
+        }
+
+        List<BlockPos> reversed = new ArrayList<>();
+        BlockPos node = best;
+        while (!node.equals(start)) {
+            reversed.add(node);
+            node = parent.get(node);
+        }
+        Collections.reverse(reversed);
+        route.addAll(reversed);
+    }
+
+    private static double distSqr(BlockPos cell, double x, double z) {
+        double dx = cell.getX() + 0.5 - x;
+        double dz = cell.getZ() + 0.5 - z;
+        return dx * dx + dz * dz;
+    }
+
+    private boolean reachedWaypoint(BlockPos cell) {
+        double dx = cell.getX() + 0.5 - entity.getX();
+        double dz = cell.getZ() + 0.5 - entity.getZ();
+        return dx * dx + dz * dz < WAYPOINT_REACHED * WAYPOINT_REACHED && Math.abs(cell.getY() - entity.getY()) < 1.2;
+    }
+
+    private void walkTo(BlockPos cell) {
+        Vec3 waypoint = Vec3.atBottomCenterOf(cell);
+        double dx = waypoint.x - entity.getX();
+        double dz = waypoint.z - entity.getZ();
+        double flat = Math.sqrt(dx * dx + dz * dz);
+
+        double vy = entity.getDeltaMovement().y;
+        boolean grounded = entity.onGround();
+        if (grounded && waypoint.y > entity.getY() + 0.3) {
+            vy = STEP_UP_IMPULSE;
+        }
+
+        double vx = 0.0;
+        double vz = 0.0;
+        if (flat > 1.0E-4 && (grounded || vy > 0.0)) {
+            vx = dx / flat * MOVE_SPEED;
+            vz = dz / flat * MOVE_SPEED;
+        }
+
+        faceToward(waypoint);
+        entity.setDeltaMovement(vx, vy, vz);
     }
 
     private double[] closestApproach() {
@@ -376,6 +510,8 @@ public class CorrodedHideAndAmbushGoal extends Goal {
         undergroundTicks = 0;
         target = null;
         trapPos = null;
+        route.clear();
+        routeIndex = 0;
         samples.clear();
         alreadyHit.clear();
         entity.setBurrowed(false);

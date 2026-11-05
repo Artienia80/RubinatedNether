@@ -28,6 +28,8 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
     private static final float ROD_LIFT = 18.72F;
     private static final float ROD_REACH = 6.2F;
     private static final float FINAL_ROD_REACH = 5.0F;
+    private static final float RAM_RADIUS = 18.0F;
+    private static final float RAM_MAX_PITCH = 85.0F;
 
     public BronzeModel(ModelPart root) {
         this.root = root.getChild("root");
@@ -129,6 +131,10 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
             this.rods.yRot = -ageInTicks * 15.0F * Mth.DEG_TO_RAD;
         }
 
+        if (entity.ramAnimationState.isStarted() && !entity.isCrystallized()) {
+            this.pitchRamBundle(headPitch);
+        }
+
         if (entity.isCrystallized()) {
             this.applyCrystallizedRods(entity, ageInTicks, netHeadYaw, headPitch);
         } else {
@@ -136,6 +142,44 @@ public class BronzeModel<T extends BronzeEntity> extends HierarchicalModel<T> {
                 rod.visible = true;
             }
         }
+    }
+
+    private void pitchRamBundle(float headPitch) {
+        double pitch = Mth.clamp(headPitch, -RAM_MAX_PITCH, RAM_MAX_PITCH) * Mth.DEG_TO_RAD;
+        double[][] pose = mul(rotX(pitch), mul(rotZ(this.rods.zRot), mul(rotY(this.rods.yRot), rotX(this.rods.xRot))));
+        this.rods.xRot = (float) Math.atan2(pose[2][1], pose[2][2]);
+        this.rods.yRot = (float) -Math.asin(Mth.clamp(pose[2][0], -1.0, 1.0));
+        this.rods.zRot = (float) Math.atan2(pose[1][0], pose[0][0]);
+        this.rods.y += RAM_RADIUS * (float) Math.sin(pitch);
+        this.rods.z += RAM_RADIUS * (1.0F - (float) Math.cos(pitch));
+    }
+
+    private static double[][] rotX(double a) {
+        double c = Math.cos(a);
+        double s = Math.sin(a);
+        return new double[][]{{1, 0, 0}, {0, c, -s}, {0, s, c}};
+    }
+
+    private static double[][] rotY(double a) {
+        double c = Math.cos(a);
+        double s = Math.sin(a);
+        return new double[][]{{c, 0, s}, {0, 1, 0}, {-s, 0, c}};
+    }
+
+    private static double[][] rotZ(double a) {
+        double c = Math.cos(a);
+        double s = Math.sin(a);
+        return new double[][]{{c, -s, 0}, {s, c, 0}, {0, 0, 1}};
+    }
+
+    private static double[][] mul(double[][] a, double[][] b) {
+        double[][] r = new double[3][3];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                r[i][j] = a[i][0] * b[0][j] + a[i][1] * b[1][j] + a[i][2] * b[2][j];
+            }
+        }
+        return r;
     }
 
     private void applyCrystallizedRods(BronzeEntity entity, float ageInTicks, float netHeadYaw, float headPitch) {

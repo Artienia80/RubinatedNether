@@ -8,6 +8,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
@@ -29,7 +30,10 @@ public class DiscoloredRamGoal extends Goal {
     private boolean isStunned = false;
     private int stunTicks = 0;
     private static final int STUN_DURATION = 40;
-
+    private static final double ROD_ORIGIN_HEIGHT = 1.0625;
+    private static final double ROD_REACH = 3.0;
+    private static final double PITCHED_RAM = 0.3;
+    private static final double DIVE_RAM = -0.3;
 
     public DiscoloredRamGoal(BronzeEntity entity) {
         this.entity = entity;
@@ -38,6 +42,22 @@ public class DiscoloredRamGoal extends Goal {
 
     public boolean isStunned() {
         return isStunned;
+    }
+
+    private Vec3 rodOrigin() {
+        return entity.position().add(0.0, ROD_ORIGIN_HEIGHT, 0.0);
+    }
+
+    private Vec3 targetCenter() {
+        return target.getBoundingBox().getCenter();
+    }
+
+    public boolean isDivingRam() {
+        return phase == 2 && dashDirection.y < DIVE_RAM;
+    }
+
+    private void lookAt(Vec3 point, float yawSpeed, float pitchSpeed) {
+        entity.getLookControl().setLookAt(point.x, point.y, point.z, yawSpeed, pitchSpeed);
     }
 
     @Override
@@ -99,14 +119,16 @@ public class DiscoloredRamGoal extends Goal {
                 entity.getNavigation().stop();
                 entity.setDeltaMovement(0, entity.getDeltaMovement().y, 0);
                 faceTarget(AIM_TURN_SPEED);
+                lookAt(targetCenter(), AIM_TURN_SPEED, AIM_TURN_SPEED);
 
                 phaseTicks++;
                 if (phaseTicks >= AIM_TIME) {
-                    dashDirection = target.position().subtract(entity.position()).normalize();
+                    dashDirection = targetCenter().subtract(rodOrigin()).normalize();
                     float yaw = (float) (Mth.atan2(dashDirection.z, dashDirection.x) * (180F / Math.PI)) - 90F;
                     entity.setYRot(yaw);
                     entity.yBodyRot = yaw;
                     entity.yHeadRot = yaw;
+                    lookAt(rodOrigin().add(dashDirection.scale(16.0)), 360.0F, 90.0F);
 
                     phase = 2;
                     phaseTicks = 0;
@@ -114,16 +136,32 @@ public class DiscoloredRamGoal extends Goal {
                 break;
 
             case 2:
-                entity.setDeltaMovement(dashDirection.scale(RAM_SPEED));
+                lookAt(rodOrigin().add(dashDirection.scale(16.0)), 360.0F, 90.0F);
+
+                Vec3 dashVelocity = dashDirection.scale(RAM_SPEED);
+                if (dashVelocity.y > 0.0) {
+                    dashVelocity = new Vec3(dashVelocity.x, entity.getDeltaMovement().y, dashVelocity.z);
+                }
+                entity.setDeltaMovement(dashVelocity);
+
+                boolean pitched = Math.abs(dashDirection.y) >= PITCHED_RAM;
+                Vec3 rodTip = rodOrigin().add(dashDirection.scale(ROD_REACH));
+                AABB hitArea = entity.getBoundingBox().inflate(1.2);
+                if (pitched) {
+                    hitArea = hitArea.minmax(new AABB(rodTip, rodTip).inflate(1.2));
+                }
 
                 java.util.List<net.minecraft.world.entity.LivingEntity> nearbyEntities = entity.level().getEntitiesOfClass(
                         net.minecraft.world.entity.LivingEntity.class,
-                        entity.getBoundingBox().inflate(1.2),
+                        hitArea,
                         e -> e != entity && e.isAlive()
                 );
 
                 for (net.minecraft.world.entity.LivingEntity hitEntity : nearbyEntities) {
                     double distance = entity.distanceTo(hitEntity);
+                    if (pitched) {
+                        distance = Math.min(distance, hitEntity.getBoundingBox().getCenter().distanceTo(rodTip));
+                    }
 
                     if (distance > 2.0) continue;
 

@@ -39,6 +39,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -272,6 +273,71 @@ public class BronzeEntity extends TarnishingEntity {
         }
     }
 
+    private static final float EDGE_DROP_LIMIT = 1.25F;
+
+    @Override
+    public int getMaxFallDistance() {
+        return this.isCrystallized() ? super.getMaxFallDistance() : 1;
+    }
+
+    @Override
+    protected Vec3 maybeBackOffFromEdge(Vec3 movement, MoverType type) {
+        if (type != MoverType.SELF || movement.y > 0.0 || !this.onGround() || this.isNoGravity()
+                || this.isCrystallized() || this.hurtTime > 0 || this.isInWater() || this.isInLava()
+                || (this.dashGoal != null && this.dashGoal.isDivingRam())) {
+            return movement;
+        }
+
+        double x = movement.x;
+        double z = movement.z;
+        double stepX = Math.signum(x) * 0.05;
+        double stepZ = Math.signum(z) * 0.05;
+
+        while (x != 0.0 && this.dropsAt(x, 0.0)) {
+            if (Math.abs(x) <= 0.05) {
+                x = 0.0;
+                break;
+            }
+            x -= stepX;
+        }
+        while (z != 0.0 && this.dropsAt(0.0, z)) {
+            if (Math.abs(z) <= 0.05) {
+                z = 0.0;
+                break;
+            }
+            z -= stepZ;
+        }
+        while (x != 0.0 && z != 0.0 && this.dropsAt(x, z)) {
+            if (Math.abs(x) <= 0.05) {
+                x = 0.0;
+            } else {
+                x -= stepX;
+            }
+            if (Math.abs(z) <= 0.05) {
+                z = 0.0;
+            } else {
+                z -= stepZ;
+            }
+        }
+        return new Vec3(x, movement.y, z);
+    }
+
+    private boolean dropsAt(double x, double z) {
+        AABB box = this.getBoundingBox();
+        AABB below = new AABB(box.minX + x, box.minY - EDGE_DROP_LIMIT - 1.0E-5, box.minZ + z, box.maxX + x, box.minY, box.maxZ + z);
+        if (!this.level().noCollision(this, below)) {
+            return false;
+        }
+        double cx = (box.minX + box.maxX) * 0.5 + x;
+        double cz = (box.minZ + box.maxZ) * 0.5 + z;
+        for (int dy = 0; dy <= Mth.ceil(EDGE_DROP_LIMIT); dy++) {
+            if (this.level().getFluidState(BlockPos.containing(cx, box.minY - dy, cz)).is(FluidTags.LAVA)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // ------------------------------------------------------------------
     // Goals
     // ------------------------------------------------------------------
@@ -352,8 +418,10 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     private void removeDiscoloredGoals() {
-        this.dashGoal = new DiscoloredRamGoal(this);
-        this.goalSelector.removeGoal(this.dashGoal);
+        if (this.dashGoal != null) {
+            this.goalSelector.removeGoal(this.dashGoal);
+            this.dashGoal = null;
+        }
         this.goalSelector.removeGoal(new AvoidEntityGoal<>(this, Player.class, 10.0F, 1.2, 1.2) {
             public boolean canUse() {
                 return BronzeEntity.this.getTarnishLevel().equals(TarnishStage.DISCOLORED) && super.canUse();
