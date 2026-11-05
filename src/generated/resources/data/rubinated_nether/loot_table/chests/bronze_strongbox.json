@@ -6,12 +6,18 @@
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "value": "rubinated_nether:chests/bronze_strongbox_basic",
-          "weight": 2
+          "value": "rubinated_nether:chests/bronze_strongbox_general",
+          "weight": 60
         },
         {
           "type": "minecraft:loot_table",
-          "value": "rubinated_nether:chests/bronze_strongbox_valuables"
+          "value": "rubinated_nether:chests/bronze_strongbox_consumables",
+          "weight": 25
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "rubinated_nether:chests/bronze_strongbox_valuables",
+          "weight": 15
         }
       ],
       "rolls": 1.0

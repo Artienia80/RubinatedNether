@@ -7,12 +7,15 @@
     },
     "C": {
       "item": "rubinated_nether:cogwheel"
+    },
+    "R": {
+      "item": "rubinated_nether:corroded_bronze_grate"
     }
   },
   "pattern": [
-    "BBB",
     "BCB",
-    "BBB"
+    "CRC",
+    "BCB"
   ],
   "result": {
     "count": 1,

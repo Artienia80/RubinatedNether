@@ -955,11 +955,12 @@ public class RNRecipeProvider extends RecipeProvider {
 			Supplier<? extends Block> chiseled = getBlockByName(prefix + "CHISELED_BRONZE");
 			Supplier<? extends Block> bronzeBlock = getBlockByName(prefix + "BRONZE_BLOCK");
 			Supplier<? extends Block> strongbox = getBlockByName(prefix + "BRONZE_STRONGBOX");
+			Supplier<? extends Block> grate = getBlockByName(prefix + "BRONZE_GRATE");
 
 			gearboxRecipe(recipeOutput, gearbox.get(), chiseled.get());
 			gearboxRecipe(recipeOutput, waxed(gearbox), waxed(chiseled));
-			strongboxRecipe(recipeOutput, strongbox.get(), bronzeBlock.get());
-			strongboxRecipe(recipeOutput, waxed(strongbox), waxed(bronzeBlock));
+			strongboxRecipe(recipeOutput, strongbox.get(), bronzeBlock.get(), grate.get());
+			strongboxRecipe(recipeOutput, waxed(strongbox), waxed(bronzeBlock), waxed(grate));
 		}
 	}
 
@@ -976,13 +977,14 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 	}
 
-	private void strongboxRecipe(RecipeOutput recipeOutput, ItemLike strongbox, ItemLike bronzeBlock) {
+	private void strongboxRecipe(RecipeOutput recipeOutput, ItemLike strongbox, ItemLike bronzeBlock, ItemLike grate) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, strongbox, 1)
 				.define('B', bronzeBlock)
 				.define('C', RNItems.COGWHEEL)
-				.pattern("BBB")
+				.define('R', grate)
 				.pattern("BCB")
-				.pattern("BBB")
+				.pattern("CRC")
+				.pattern("BCB")
 				.unlockedBy(getHasName(RNItems.COGWHEEL), has(RNItems.COGWHEEL))
 				.save(recipeOutput);
 	}
