@@ -132,6 +132,7 @@ public class BronzeEntity extends TarnishingEntity {
     private TarnishedStalkGoal stalkGoal;
     private TarnishedPounceGoal pounceGoal;
     private DiscoloredRamGoal dashGoal;
+    private CorrodedHideAndAmbushGoal ambushGoal;
     private int pounceCooldownTicks = 0;
     private int ramCooldownTicks = 0;
     private int ambushCooldownTicks = 0;
@@ -141,6 +142,8 @@ public class BronzeEntity extends TarnishingEntity {
             SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_DEFENDING =
             SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> AMBUSH_PHASE =
+            SynchedEntityData.defineId(BronzeEntity.class, EntityDataSerializers.INT);
 
     // Animation
     public int idleAnimationTimeout = 0;
@@ -316,7 +319,10 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     private void registerCorrodedGoals() {
-        this.targetSelector.addGoal(1, new CorrodedHideAndAmbushGoal(this));
+        if (this.ambushGoal == null) {
+            this.ambushGoal = new CorrodedHideAndAmbushGoal(this);
+            this.goalSelector.addGoal(1, this.ambushGoal);
+        }
     }
 
     private void registerTarnishedGoals() {
@@ -356,7 +362,10 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     private void removeCorrodedGoals() {
-        this.targetSelector.removeGoal(new CorrodedHideAndAmbushGoal(this));
+        if (this.ambushGoal != null) {
+            this.goalSelector.removeGoal(this.ambushGoal);
+            this.ambushGoal = null;
+        }
     }
 
     private void removeTarnishedGoals() {
@@ -1047,6 +1056,28 @@ public class BronzeEntity extends TarnishingEntity {
         updatePartPositions();
     }
 
+    public int getAmbushPhase() {
+        return this.entityData.get(AMBUSH_PHASE);
+    }
+
+    public void setAmbushPhase(int phase) {
+        this.entityData.set(AMBUSH_PHASE, phase);
+    }
+
+    private void applyAmbushPhase(int phase) {
+        switch (phase) {
+            case 1 -> this.handleEntityEvent(DRILL_START);
+            case 2 -> this.handleEntityEvent(UNDERGROUND_START);
+            case 3 -> this.handleEntityEvent(AMBUSH_START);
+            default -> {
+                if (this.drillAnimationState.isStarted() || this.undergroundWalkAnimationState.isStarted()
+                        || this.ambushAnimationState.isStarted()) {
+                    this.handleEntityEvent(AMBUSH_STOP);
+                }
+            }
+        }
+    }
+
     public void setBurrowed(boolean burrowed) {
         this.entityData.set(IS_BURROWED, burrowed);
         updatePartPositions();
@@ -1394,6 +1425,7 @@ public class BronzeEntity extends TarnishingEntity {
         super.defineSynchedData(builder);
         builder.define(IS_BURROWED, false);
         builder.define(IS_DEFENDING, false);
+        builder.define(AMBUSH_PHASE, 0);
         builder.define(ROD_COUNT, MAX_RODS);
         builder.define(FIRED_ROD_SLOT, -1);
         builder.define(ROD_AIMING, false);
@@ -1408,6 +1440,10 @@ public class BronzeEntity extends TarnishingEntity {
         // Update part positions immediately when defending state changes
         if (pKey.equals(IS_DEFENDING) || pKey.equals(IS_BURROWED)) {
             updatePartPositions();
+        }
+
+        if (pKey.equals(AMBUSH_PHASE) && this.level().isClientSide) {
+            applyAmbushPhase(this.entityData.get(AMBUSH_PHASE));
         }
 
         this.refreshDimensions();
