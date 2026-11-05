@@ -438,6 +438,12 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		gearboxAndStrongboxCrafting(recipeOutput);
 
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, RNItems.COGS_BANNER_PATTERN.get())
+				.requires(Items.PAPER)
+				.requires(RNItems.COGWHEEL)
+				.unlockedBy(getHasName(RNItems.COGWHEEL), has(RNItems.COGWHEEL))
+				.save(recipeOutput);
+
 		waxRecipes(recipeOutput, FeatureFlagSet.of(FeatureFlags.VANILLA));
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.RUBY_GLASS, 8)

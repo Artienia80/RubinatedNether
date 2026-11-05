@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "rubinated_nether:cogwheel"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:cogs_banner_pattern"
+  }
+}
