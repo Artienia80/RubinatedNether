@@ -7,6 +7,13 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.Fallable;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.shapes.EntityCollisionContext;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.level.block.Block;
 import corundum.rubinated_nether.utils.FallingWaterCarry;
 import net.minecraft.world.level.material.FluidState;
@@ -33,6 +40,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
@@ -41,18 +50,20 @@ import static net.minecraft.world.level.block.FallingBlock.isFree;
 
 public class BronzeGrateBlock extends TarnishingBronzeBlock implements SimpleWaterloggedBlock, Fallable {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty LOCKED = BooleanProperty.create("locked");
+    private static final int MAX_COLUMN_HEIGHT = 256;
     private static final int MAX_REDSTONE_PROPAGATION = 256;
     private static final Direction[] HORIZONTAL_DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
     private static final int CASCADE_DELAY = 5; // Base delay for cascade
 
     public BronzeGrateBlock(TarnishStage tarnishStage, Properties properties) {
         super(tarnishStage, properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false).setValue(LOCKED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED);
+        builder.add(WATERLOGGED, LOCKED);
         super.createBlockStateDefinition(builder);
     }
 
@@ -255,6 +266,119 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock implements SimpleWat
         }
 
         return false;
+    }
+
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        super.onPlace(state, level, pos, oldState, movedByPiston);
+        if (level.isClientSide || oldState.is(state.getBlock())) return;
+        refreshNetwork(level, pos);
+        passThrough(level, pos);
+    }
+
+    @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, level, pos, block, fromPos, isMoving);
+        if (level.isClientSide) return;
+        if (level.hasNeighborSignal(pos) || state.getValue(LOCKED)) {
+            refreshNetwork(level, pos);
+        }
+        passThrough(level, pos);
+    }
+
+    @Override
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (!state.getValue(LOCKED) && context instanceof EntityCollisionContext entityContext
+                && entityContext.getEntity() instanceof FallingBlockEntity) {
+            return Shapes.empty();
+        }
+        return super.getCollisionShape(state, level, pos, context);
+    }
+
+    @Override
+    public boolean canPlaceLiquid(@Nullable Player player, BlockGetter level, BlockPos pos, BlockState state, Fluid fluid) {
+        if (player == null && !state.getValue(LOCKED)) return false;
+        return SimpleWaterloggedBlock.super.canPlaceLiquid(player, level, pos, state, fluid);
+    }
+
+    private static void refreshNetwork(Level level, BlockPos origin) {
+        Set<BlockPos> visited = new HashSet<>();
+        Queue<BlockPos> toCheck = new ArrayDeque<>();
+        List<BlockPos> members = new ArrayList<>();
+        boolean powered = false;
+        toCheck.add(origin);
+
+        while (!toCheck.isEmpty() && visited.size() < MAX_REDSTONE_PROPAGATION) {
+            BlockPos current = toCheck.poll();
+            if (!visited.add(current)) continue;
+            members.add(current);
+            if (level.hasNeighborSignal(current)) powered = true;
+
+            for (Direction dir : Direction.values()) {
+                BlockPos neighbor = current.relative(dir);
+                if (!visited.contains(neighbor) && level.getBlockState(neighbor).getBlock() instanceof BronzeGrateBlock) {
+                    toCheck.add(neighbor);
+                }
+            }
+        }
+
+        for (BlockPos member : members) {
+            BlockState memberState = level.getBlockState(member);
+            if (memberState.getValue(LOCKED) == powered) continue;
+            level.setBlock(member, memberState.setValue(LOCKED, powered), Block.UPDATE_CLIENTS);
+            if (!powered) passThrough(level, member);
+        }
+    }
+
+    private static boolean isOpenGrate(Level level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        return state.getBlock() instanceof BronzeGrateBlock && !state.getValue(LOCKED);
+    }
+
+    private static void passThrough(Level level, BlockPos pos) {
+        if (!isOpenGrate(level, pos)) return;
+
+        BlockPos top = pos;
+        for (int i = 0; i < MAX_COLUMN_HEIGHT && isOpenGrate(level, top.above()); i++) {
+            top = top.above();
+        }
+        BlockPos bottom = pos;
+        for (int i = 0; i < MAX_COLUMN_HEIGHT && isOpenGrate(level, bottom.below()); i++) {
+            bottom = bottom.below();
+        }
+
+        BlockPos exit = bottom.below();
+        if (exit.getY() < level.getMinBuildHeight()) return;
+
+        releaseGravityBlock(level, top.above(), exit);
+        relayFluid(level, top, bottom, exit);
+    }
+
+    private static void releaseGravityBlock(Level level, BlockPos abovePos, BlockPos exit) {
+        BlockState above = level.getBlockState(abovePos);
+        if (!(above.getBlock() instanceof FallingBlock)) return;
+        if (!isFree(level.getBlockState(exit))) return;
+
+        FallingBlockEntity fallingBlock = FallingBlockEntity.fall(level, abovePos, above);
+        if (above.getBlock() instanceof AnvilBlock) {
+            fallingBlock.setHurtsEntities(2.0F, 40);
+        }
+    }
+
+    private static void relayFluid(Level level, BlockPos top, BlockPos bottom, BlockPos exit) {
+        FluidState supply = level.getFluidState(top.above());
+        for (BlockPos cell = bottom; supply.isEmpty() && cell.getY() <= top.getY(); cell = cell.above()) {
+            supply = level.getFluidState(cell);
+        }
+        if (supply.isEmpty() || !(supply.getType() instanceof FlowingFluid flowing)) return;
+
+        BlockState exitState = level.getBlockState(exit);
+        if (!exitState.getFluidState().isEmpty()) return;
+        if (!exitState.isAir()) {
+            if (!exitState.canBeReplaced(supply.getType())) return;
+            Block.dropResources(exitState, level, exit);
+        }
+        level.setBlock(exit, flowing.getFlowing(8, true).createLegacyBlock(), Block.UPDATE_ALL);
     }
 
     @Override
