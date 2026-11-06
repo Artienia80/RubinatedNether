@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -21,7 +22,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 
-public class CrystallizedBronzeClusterBlock extends CrystallizedBronzeCrystalBlock {
+public class CrystallizedBronzeClusterBlock extends AmethystClusterBlock {
     private static final int SPREAD_CHANCE = 10;
 
     // 6 pixels wide, 7 pixels tall hitbox
@@ -33,7 +34,12 @@ public class CrystallizedBronzeClusterBlock extends CrystallizedBronzeCrystalBlo
     private static final VoxelShape DOWN_AABB = Block.box(5.0, 9.0, 5.0, 11.0, 16.0, 11.0);
 
     public CrystallizedBronzeClusterBlock(Properties properties) {
-        super(properties);
+        super(5.0F, 3.0F, properties);
+    }
+
+    @Override
+    protected boolean isRandomlyTicking(BlockState state) {
+        return true;
     }
 
     @Override
@@ -74,8 +80,7 @@ public class CrystallizedBronzeClusterBlock extends CrystallizedBronzeCrystalBlo
 
                 if (canPlaceCrystal(level, newCrystalPos)) {
                     BlockState newCrystalState = RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get()
-                            .defaultBlockState()
-                            .setValue(FACING, direction);
+                            .stateFacing(direction);
 
                     if (newCrystalState.canSurvive(level, newCrystalPos)) {
                         level.setBlock(newCrystalPos, newCrystalState, 3);

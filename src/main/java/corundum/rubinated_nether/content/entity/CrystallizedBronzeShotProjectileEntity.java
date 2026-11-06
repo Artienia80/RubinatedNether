@@ -155,11 +155,7 @@ public class CrystallizedBronzeShotProjectileEntity extends AbstractArrow {
             double replacementChance = 1.0 - normalizedDistance;
 
             if (random.nextDouble() < replacementChance) {
-                BlockState crystalState = RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get().defaultBlockState();
-
-                if (crystalState.hasProperty(BlockStateProperties.FACING)) {
-                    crystalState = crystalState.setValue(BlockStateProperties.FACING, attachmentDirection.getOpposite());
-                }
+                BlockState crystalState = RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get().stateFacing(attachmentDirection.getOpposite());
 
                 level.setBlockAndUpdate(targetPos, crystalState);
 

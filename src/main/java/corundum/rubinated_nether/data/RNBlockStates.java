@@ -331,7 +331,7 @@ public class RNBlockStates extends BlockStateProvider {
 		brazierBlock();
 
         generateCrystalModels();
-        crystalBlockState(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get(), "crystallized_bronze_crystal");
+        simpleBlock(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get(), models().getExistingFile(modLoc("block/crystal_carpet/up_0_0")));
         crystalBlockState(RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get(), "crystallized_bronze_cluster");
 
 		subfolder("bronze/bronze_vent/",
@@ -352,23 +352,6 @@ public class RNBlockStates extends BlockStateProvider {
 	}
 
     private void generateCrystalModels() {
-        models().getBuilder("crystallized_bronze_crystal")
-                .parent(models().getExistingFile(mcLoc("block/cross")))
-                .texture("cross", modLoc("block/crystallized_bronze_crystal"))
-                .element()
-                .from(5, 0, 8).to(11, 7, 8)
-                .rotation().angle(45).axis(Direction.Axis.Y).origin(8, 8, 8).end()
-                .face(Direction.NORTH).uvs(5, 9, 11, 16).texture("#cross").end()
-                .face(Direction.SOUTH).uvs(5, 9, 11, 16).texture("#cross").end()
-                .end()
-                .element()
-                .from(8, 0, 5).to(8, 7, 11)
-                .rotation().angle(45).axis(Direction.Axis.Y).origin(8, 8, 8).end()
-                .face(Direction.WEST).uvs(5, 9, 11, 16).texture("#cross").end()
-                .face(Direction.EAST).uvs(5, 9, 11, 16).texture("#cross").end()
-                .end()
-                .renderType(mcLoc("cutout"));
-
         models().getBuilder("crystallized_bronze_cluster")
                 .parent(models().getExistingFile(mcLoc("block/cross")))
                 .texture("cross", modLoc("block/crystallized_bronze_cluster"))

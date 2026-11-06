@@ -1,0 +1,74 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#tile",
+          "uv": [
+            12.8,
+            0,
+            9.6,
+            5.3333335
+          ]
+        },
+        "east": {
+          "cullface": "east",
+          "rotation": 90,
+          "texture": "#tile",
+          "uv": [
+            9.8,
+            5.3333335,
+            9.6,
+            0
+          ]
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#tile",
+          "uv": [
+            9.6,
+            5,
+            12.8,
+            5.3333335
+          ]
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#tile",
+          "uv": [
+            12.8,
+            0.33333334,
+            9.6,
+            0
+          ]
+        },
+        "west": {
+          "cullface": "west",
+          "rotation": 90,
+          "texture": "#tile",
+          "uv": [
+            12.6,
+            0,
+            12.8,
+            5.3333335
+          ]
+        }
+      },
+      "from": [
+        0,
+        15,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "rubinated_nether:block/crystallized_bronze_crystal",
+    "tile": "rubinated_nether:block/crystallized_bronze_crystal"
+  }
+}

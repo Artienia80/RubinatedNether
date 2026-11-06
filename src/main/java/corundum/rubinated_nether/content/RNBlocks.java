@@ -1497,7 +1497,6 @@ public class RNBlocks {
 							.strength(1.5F)
 							.sound(SoundType.AMETHYST_CLUSTER)
 							.noOcclusion()
-							.randomTicks()
 			)
 	);
 
