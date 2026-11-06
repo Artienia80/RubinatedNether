@@ -131,7 +131,7 @@ public class RNItemTags extends ItemTagsProvider {
 		this.tag(ItemTags.TRIM_MATERIALS)
 				.add(
 						RNItems.BRONZE_SCRAP.asItem(),
-						RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.asItem(),
+						RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.asItem(),
 						RNItems.RUBY.asItem());
 
 		this.tag(ItemTags.BEACON_PAYMENT_ITEMS).add(RNItems.RUBY.asItem());
@@ -346,7 +346,7 @@ public class RNItemTags extends ItemTagsProvider {
 				.addTag(ItemTags.TRIM_MATERIALS)
 				.add(
 						RNItems.BRONZE_SCRAP.asItem(),
-						RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.asItem(),
+						RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.asItem(),
 						RNItems.RUBY.asItem(),
 						RNItems.MOLTEN_RUBY.asItem()
 				);

@@ -35,7 +35,7 @@ public class RNTrimMaterials {
         register(context, DISCOLORED_BRONZE,  RNItems.BRONZE_SCRAP.get(),                Style.EMPTY.withColor(TextColor.parseColor("#C77459").getOrThrow()), 0.5F);  // copper
         register(context, CORRODED_BRONZE,    RNItems.BRONZE_SCRAP.get(),                Style.EMPTY.withColor(TextColor.parseColor("#B25B4E").getOrThrow()), 0.4F);  // redstone
         register(context, TARNISHED_BRONZE,   RNItems.BRONZE_SCRAP.get(),                Style.EMPTY.withColor(TextColor.parseColor("#6F4A4F").getOrThrow()), 0.3F);  // netherite
-        register(context, CRYSTALLIZED_BRONZE, RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get().asItem(), Style.EMPTY.withColor(TextColor.parseColor("#ACD1B0").getOrThrow()), 0.1F); // quartz
+        register(context, CRYSTALLIZED_BRONZE, RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get().asItem(), Style.EMPTY.withColor(TextColor.parseColor("#ACD1B0").getOrThrow()), 0.1F); // quartz
         register(context, RUBY,               RNItems.RUBY.get(),                        Style.EMPTY.withColor(TextColor.parseColor("#D52F4B").getOrThrow()), 0.4F);
     }
 

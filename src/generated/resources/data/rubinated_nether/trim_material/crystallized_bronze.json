@@ -4,6 +4,6 @@
     "color": "#ACD1B0",
     "translate": "trim_material.rubinated_nether.crystallized_bronze"
   },
-  "ingredient": "rubinated_nether:crystallized_bronze_crystal",
+  "ingredient": "rubinated_nether:crystallized_bronze_blight",
   "item_model_index": 0.1
 }

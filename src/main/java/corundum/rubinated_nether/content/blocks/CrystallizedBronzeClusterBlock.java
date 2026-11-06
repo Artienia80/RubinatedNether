@@ -76,14 +76,14 @@ public class CrystallizedBronzeClusterBlock extends AmethystClusterBlock {
             if (adjacentState.is(RNTags.Blocks.CRYSTALLIZED_BLOCKS) &&
                     adjacentState.isCollisionShapeFullBlock(level, adjacentPos)) {
 
-                BlockPos newCrystalPos = adjacentPos.relative(direction);
+                BlockPos newBlightPos = adjacentPos.relative(direction);
 
-                if (canPlaceCrystal(level, newCrystalPos)) {
-                    BlockState newCrystalState = RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get()
+                if (canPlaceBlight(level, newBlightPos)) {
+                    BlockState newBlightState = RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get()
                             .stateFacing(direction);
 
-                    if (newCrystalState.canSurvive(level, newCrystalPos)) {
-                        level.setBlock(newCrystalPos, newCrystalState, 3);
+                    if (newBlightState.canSurvive(level, newBlightPos)) {
+                        level.setBlock(newBlightPos, newBlightState, 3);
                         break;
                     }
                 }
@@ -91,7 +91,7 @@ public class CrystallizedBronzeClusterBlock extends AmethystClusterBlock {
         }
     }
 
-    private boolean canPlaceCrystal(Level level, BlockPos pos) {
+    private boolean canPlaceBlight(Level level, BlockPos pos) {
         BlockState state = level.getBlockState(pos);
         return state.isAir() || state.canBeReplaced();
     }
@@ -99,11 +99,11 @@ public class CrystallizedBronzeClusterBlock extends AmethystClusterBlock {
     @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         int count = 1 + builder.getLevel().random.nextInt(2);
-        return List.of(new ItemStack(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get(), count));
+        return List.of(new ItemStack(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get(), count));
     }
 
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
-        return new ItemStack(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get());
+        return new ItemStack(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get());
     }
 }

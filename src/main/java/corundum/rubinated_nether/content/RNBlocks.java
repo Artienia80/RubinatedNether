@@ -1488,9 +1488,9 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<CrystallizedBronzeCrystalBlock> CRYSTALLIZED_BRONZE_CRYSTAL = registerBlockAndItem(
-			"crystallized_bronze_crystal",
-			() -> new CrystallizedBronzeCrystalBlock(
+	public static final DeferredBlock<CrystallizedBronzeBlightBlock> CRYSTALLIZED_BRONZE_BLIGHT = registerBlockAndItem(
+			"crystallized_bronze_blight",
+			() -> new CrystallizedBronzeBlightBlock(
 					BlockBehaviour.Properties.of()
 							.mapColor(MapColor.TERRACOTTA_WHITE)
 							.requiresCorrectToolForDrops()

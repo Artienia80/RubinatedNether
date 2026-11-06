@@ -3,10 +3,10 @@
   "category": "building",
   "key": {
     "O": {
-      "item": "rubinated_nether:crystallized_bronze_crystal"
+      "item": "rubinated_nether:crystallized_bronze_blight"
     },
     "X": {
-      "item": "rubinated_nether:crystallized_bronze_crystal"
+      "item": "rubinated_nether:crystallized_bronze_blight"
     }
   },
   "pattern": [

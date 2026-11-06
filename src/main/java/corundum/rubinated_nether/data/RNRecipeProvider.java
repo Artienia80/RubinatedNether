@@ -374,7 +374,7 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		twoByTwo(
 				recipeOutput,
-				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
+				RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT,
 				RNItems.CRYSTALLIZED_BRONZE_SHOT,
 				8
 		);
@@ -388,7 +388,7 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		threeByThree(
 				recipeOutput,
-				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
+				RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT,
 				RNBlocks.CRYSTALLIZED_BRONZE_BLOCK,
 				1
 		);
@@ -501,12 +501,12 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CRYSTALLIZED_BRONZE_LANTERN, 1)
-				.define('X', RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL)
+				.define('X', RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT)
 				.define('O', RNItems.MOLTEN_RUBY)
 				.pattern("XXX")
 				.pattern("XOX")
 				.pattern("XXX")
-				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL), has(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL))
+				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT), has(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT))
 				.unlockedBy(getHasName(RNItems.MOLTEN_RUBY), has(RNItems.MOLTEN_RUBY))
 				.save(recipeOutput);
 
@@ -521,13 +521,13 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CRYSTALLIZED_BRONZE_CHAIN, 1)
-				.define('X', RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL)
-				.define('O', RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL)
+				.define('X', RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT)
+				.define('O', RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT)
 				.pattern(" X ")
 				.pattern(" O ")
 				.pattern(" X ")
-				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL), has(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL))
-				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL), has(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL))
+				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT), has(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT))
+				.unlockedBy(getHasName(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT), has(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT))
 				.save(recipeOutput);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNItems.RUBY_LENS, 1)
@@ -610,7 +610,7 @@ public class RNRecipeProvider extends RecipeProvider {
 		bronzeTrimTarnish(recipeOutput, RNTrimMaterials.BRONZE,            RNTrimMaterials.DISCOLORED_BRONZE, "bronze_to_discolored_trim");
 		bronzeTrimTarnish(recipeOutput, RNTrimMaterials.DISCOLORED_BRONZE, RNTrimMaterials.CORRODED_BRONZE,   "discolored_to_corroded_trim");
 		bronzeTrimTarnish(recipeOutput, RNTrimMaterials.CORRODED_BRONZE,   RNTrimMaterials.TARNISHED_BRONZE,  "corroded_to_tarnished_trim");
-		trimSmithing(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get().asItem(),
+		trimSmithing(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get().asItem(),
 				ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "crystallized_bronze_trim"));
 
 		freezing(recipeOutput, Blocks.MAGMA_BLOCK,			RNBlocks.SOAKSTONE,       400,  1.0f);
@@ -1044,7 +1044,7 @@ public class RNRecipeProvider extends RecipeProvider {
 
 	private ItemLike lesserBronzeFor(String prefix) {
 		return "CRYSTALLIZED_".equals(prefix)
-				? RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL
+				? RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT
 				: RNItems.BRONZE_SCRAP;
 	}
 

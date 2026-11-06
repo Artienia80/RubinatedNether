@@ -100,7 +100,7 @@ public class RNCreativeTabs {
 								RNItems.BRONZE_SCRAP,
 								RNItems.BRONZE_SHOT,
 								RNItems.CRYSTALLIZED_BRONZE_SHOT,
-								RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL
+								RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT
 						);
 						// Mechanical tools, music box, ruby lens
 						addItems(
@@ -359,7 +359,7 @@ public class RNCreativeTabs {
 			event.insertAfter(RNItems.BRONZE_POWDER.get().getDefaultInstance(),
 					RNItems.BRONZE_SCRAP.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.BRONZE_SCRAP.get().getDefaultInstance(),
-					RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get().asItem().getDefaultInstance(), BOTH_TABS);
+					RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.OMINOUS_TRIAL_KEY.getDefaultInstance(),
 					RNItems.RITUAL_OFFERING.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.FLOWER_BANNER_PATTERN.getDefaultInstance(),

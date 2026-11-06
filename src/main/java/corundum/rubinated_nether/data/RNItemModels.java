@@ -287,7 +287,7 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.RITUAL_OFFERING,
 				RNItems.COGWHEEL,
 				RNItems.WINDING_KEY,
-				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL,
+				RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT,
 				RNItems.MOLTEN_RUBY_BUCKET,
 
 				RNItems.COGS_BANNER_PATTERN.get()

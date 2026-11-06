@@ -331,7 +331,7 @@ public class RNBlockStates extends BlockStateProvider {
 		brazierBlock();
 
         generateCrystalModels();
-        simpleBlock(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get(), models().getExistingFile(modLoc("block/crystal_carpet/up_0_0")));
+        simpleBlock(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get(), models().getExistingFile(modLoc("block/blight_carpet/up_0_0")));
         crystalBlockState(RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get(), "crystallized_bronze_cluster");
 
 		subfolder("bronze/bronze_vent/",

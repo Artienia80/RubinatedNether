@@ -43,7 +43,7 @@ public record VaseEngravingMaterial(String paletteName) {
 
     public static void bootstrap() {
         registerCustomPalette(RNItems.BRONZE_SCRAP, "bronze");
-        registerCustomPalette(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL::asItem, "crystallized_bronze");
+        registerCustomPalette(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT::asItem, "crystallized_bronze");
         registerCustomPalette(RNItems.RUBY, "ruby");
         registerCustomPalette(RNItems.MOLTEN_RUBY, "molten_ruby");
     }

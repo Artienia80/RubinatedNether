@@ -252,7 +252,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.WAXED_WEATHERED_COPPER_LASER.get());
 		this.dropSelf(RNBlocks.WAXED_OXIDIZED_COPPER_LASER.get());
 
-		this.dropSelf(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get());
+		this.dropSelf(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get());
 
 		this.add(
 				RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get(),
@@ -263,7 +263,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 											RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER,
 											LootPool.lootPool()
 													.add(
-															LootItem.lootTableItem(RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL)
+															LootItem.lootTableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT)
 																	.apply(
 																			SetItemCountFunction.setCount(
 																					UniformGenerator.between(1, 2)

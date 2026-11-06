@@ -1,0 +1,72 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#tile",
+          "uv": [
+            12.8,
+            10.333334,
+            16,
+            10.666667
+          ]
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#tile",
+          "uv": [
+            15.8,
+            5.3333335,
+            16,
+            10.666667
+          ]
+        },
+        "north": {
+          "texture": "#tile",
+          "uv": [
+            16,
+            5.3333335,
+            12.8,
+            10.666667
+          ]
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#tile",
+          "uv": [
+            12.8,
+            5.3333335,
+            16,
+            5.666667
+          ]
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#tile",
+          "uv": [
+            12.8,
+            5.3333335,
+            13,
+            10.666667
+          ]
+        }
+      },
+      "from": [
+        0,
+        0,
+        15
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "rubinated_nether:block/crystallized_bronze_blight",
+    "tile": "rubinated_nether:block/crystallized_bronze_blight"
+  }
+}

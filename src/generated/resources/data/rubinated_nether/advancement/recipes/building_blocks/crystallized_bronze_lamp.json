@@ -11,11 +11,11 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_crystallized_bronze_crystal": {
+    "has_crystallized_bronze_blight": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:crystallized_bronze_crystal"
+            "items": "rubinated_nether:crystallized_bronze_blight"
           }
         ]
       },
@@ -53,7 +53,7 @@
       "has_the_recipe",
       "has_ruby_glass_pane",
       "has_molten_ruby",
-      "has_crystallized_bronze_crystal",
+      "has_crystallized_bronze_blight",
       "has_crystallized_bronze_block"
     ]
   ],

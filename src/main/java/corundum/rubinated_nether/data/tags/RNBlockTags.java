@@ -206,7 +206,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.TARNISHED_BRONZE_WINDER.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_WINDER.get(),
 
-				RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get(),
+				RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get()
 
 				);

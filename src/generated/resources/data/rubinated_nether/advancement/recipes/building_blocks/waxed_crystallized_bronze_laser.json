@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_crystallized_bronze_crystal": {
+    "has_crystallized_bronze_blight": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:crystallized_bronze_crystal"
+            "items": "rubinated_nether:crystallized_bronze_blight"
           }
         ]
       },
@@ -62,7 +62,7 @@
     [
       "has_the_recipe",
       "has_ruby_block",
-      "has_crystallized_bronze_crystal",
+      "has_crystallized_bronze_blight",
       "has_redstone",
       "has_glowstone",
       "has_waxed_crystallized_bronze_block"

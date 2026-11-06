@@ -1009,9 +1009,9 @@ public class BronzeEntity extends TarnishingEntity {
             double replacementChance = 1.0 - normalizedDistance;
 
             if (random.nextDouble() < replacementChance) {
-                BlockState crystalState = RNBlocks.CRYSTALLIZED_BRONZE_CRYSTAL.get().stateFacing(attachmentDirection.getOpposite());
+                BlockState blightState = RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get().stateFacing(attachmentDirection.getOpposite());
 
-                level.setBlockAndUpdate(targetPos, crystalState);
+                level.setBlockAndUpdate(targetPos, blightState);
 
                 spawnCrystalPlacementParticles(level, targetPos);
 

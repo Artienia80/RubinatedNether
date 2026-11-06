@@ -4,7 +4,7 @@
   "group": "DeferredHolder{ResourceKey[minecraft:block / rubinated_nether:crystallized_bronze_block]}",
   "key": {
     "I": {
-      "item": "rubinated_nether:crystallized_bronze_crystal"
+      "item": "rubinated_nether:crystallized_bronze_blight"
     }
   },
   "pattern": [
