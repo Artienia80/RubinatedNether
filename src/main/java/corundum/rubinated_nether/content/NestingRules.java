@@ -15,11 +15,16 @@ public final class NestingRules {
         return block instanceof ShulkerBoxBlock || block instanceof BronzeStrongboxBlock;
     }
 
+    public static boolean isNestedContainer(ItemStack stack) {
+        Block block = Block.byItem(stack.getItem());
+        return block instanceof BronzeVaseBlock || block instanceof BronzeStrongboxBlock;
+    }
+
     public static boolean vaseAccepts(ItemStack stack) {
         return !(Block.byItem(stack.getItem()) instanceof BronzeVaseBlock) && (stack.canFitInsideContainerItems() || isNestingBox(stack));
     }
 
     public static boolean strongboxAccepts(ItemStack stack) {
-        return !isNestingBox(stack) && stack.canFitInsideContainerItems();
+        return !isNestingBox(stack) && !isNestedContainer(stack) && stack.canFitInsideContainerItems();
     }
 }
