@@ -276,6 +276,28 @@ public class RNRecipeProvider extends RecipeProvider {
 			RNBlocks.SHRINE_STONE_TILES_WALL
 		);
 
+		stairsAndSlab(
+			recipeOutput,
+			RNBlocks.SHRINE_STONE_GRAVEL,
+			RNBlocks.SHRINE_STONE_GRAVEL_STAIRS,
+			RNBlocks.SHRINE_STONE_GRAVEL_SLAB
+		);
+
+		wall(
+			recipeOutput,
+			RNBlocks.SHRINE_STONE_GRAVEL,
+			RNBlocks.SHRINE_STONE_GRAVEL_WALL
+		);
+
+		stonecutterList(
+			recipeOutput,
+			RNBlocks.SHRINE_STONE_GRAVEL,
+
+			RNBlocks.SHRINE_STONE_GRAVEL_SLAB,
+			RNBlocks.SHRINE_STONE_GRAVEL_STAIRS,
+			RNBlocks.SHRINE_STONE_GRAVEL_WALL
+		);
+
 		twoByTwo(
 			recipeOutput,
 			RNBlocks.COBBLED_SHRINE_STONE,

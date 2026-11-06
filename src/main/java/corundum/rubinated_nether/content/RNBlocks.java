@@ -299,6 +299,29 @@ public class RNBlocks {
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
 
+	public static final DeferredBlock<ShrineGravelBlock> SHRINE_STONE_GRAVEL = registerBlockAndItem(
+			"shrine_stone_gravel",
+			() -> new ShrineGravelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GRAVEL).mapColor(MapColor.COLOR_PURPLE))
+	);
+
+	public static final DeferredBlock<ShrineGravelSlabBlock> SHRINE_STONE_GRAVEL_SLAB = registerBlockAndItem(
+			"shrine_stone_gravel_slab",
+			() -> new ShrineGravelSlabBlock(BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_GRAVEL.get()))
+	);
+
+	public static final DeferredBlock<ShrineGravelStairBlock> SHRINE_STONE_GRAVEL_STAIRS = registerBlockAndItem(
+			"shrine_stone_gravel_stairs",
+			() -> new ShrineGravelStairBlock(
+					SHRINE_STONE_GRAVEL.get().defaultBlockState(),
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_GRAVEL.get())
+			)
+	);
+
+	public static final DeferredBlock<ShrineGravelWallBlock> SHRINE_STONE_GRAVEL_WALL = registerBlockAndItem(
+			"shrine_stone_gravel_wall",
+			() -> new ShrineGravelWallBlock(BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_GRAVEL.get()))
+	);
+
 	public static final DeferredBlock<SixWayPillarBlock> RUBINATED_CHISELED_SHRINE_STONE_BRICKS = registerBlockAndItemWithRarity(
 			"rubinated_chiseled_shrine_stone_bricks",
 			() -> new SixWayPillarBlock(
