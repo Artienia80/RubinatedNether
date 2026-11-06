@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.items;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.blocks.BronzeStrongboxBlock;
+import corundum.rubinated_nether.content.blocks.BronzeVaseBlock;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -36,7 +37,7 @@ public class WaxableBlockItem extends BlockItem {
 
 	@Override
 	public boolean canFitInsideContainerItems() {
-		return !(this.getBlock() instanceof BronzeStrongboxBlock);
+		return !(this.getBlock() instanceof BronzeStrongboxBlock || this.getBlock() instanceof BronzeVaseBlock);
 	}
 
 	@Override

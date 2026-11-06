@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.blocks.*;
 import corundum.rubinated_nether.content.items.StrongboxBlockItem;
+import corundum.rubinated_nether.content.items.VaseBlockItem;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -1471,7 +1472,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> BRONZE_VASE = registerWaxableBlock(
+	public static final DeferredBlock<Block> BRONZE_VASE = registerVase(
 			"bronze_vase",
 			() -> new BronzeVaseBlock(
 					TarnishStage.UNAFFECTED,
@@ -1479,7 +1480,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> DISCOLORED_BRONZE_VASE = registerWaxableBlock(
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_VASE = registerVase(
 			"discolored_bronze_vase",
 			() -> new BronzeVaseBlock(
 					TarnishStage.DISCOLORED,
@@ -1487,7 +1488,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> CORRODED_BRONZE_VASE = registerWaxableBlock(
+	public static final DeferredBlock<Block> CORRODED_BRONZE_VASE = registerVase(
 			"corroded_bronze_vase",
 			() -> new BronzeVaseBlock(
 					TarnishStage.CORRODED,
@@ -1495,7 +1496,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> TARNISHED_BRONZE_VASE = registerWaxableBlock(
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_VASE = registerVase(
 			"tarnished_bronze_vase",
 			() -> new BronzeVaseBlock(
 					TarnishStage.TARNISHED,
@@ -1503,7 +1504,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_VASE = registerWaxableBlock(
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_VASE = registerVase(
 			"crystallized_bronze_vase",
 			() -> new BronzeVaseBlock(
 					TarnishStage.CRYSTALLIZED,
@@ -1654,6 +1655,25 @@ public class RNBlocks {
 
 	public static <T extends Block> DeferredBlock<T> registerWaxableBlock(String name, Supplier<T> block) {
 		var register = registerBlockAndItem(name, block);
+
+		RNItems.ITEMS.register(
+				"waxed_" + name,
+				() -> new WaxableBlockItem(
+						register,
+						new Item.Properties()
+				)
+		);
+
+		return register;
+	}
+
+	public static <T extends Block> DeferredBlock<T> registerVase(String name, Supplier<T> block) {
+		var register = BLOCKS.register(name, block);
+
+		RNItems.ITEMS.register(
+				name,
+				() -> new VaseBlockItem(register.get(), new Item.Properties())
+		);
 
 		RNItems.ITEMS.register(
 				"waxed_" + name,

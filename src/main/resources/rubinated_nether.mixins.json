@@ -11,9 +11,7 @@
     "PlayerMixin",
     "BoatMixin",
     "StonecutterMenuMixin",
-    "AnvilMenuMixin",
-    "ShulkerBoxBlockEntityMixin",
-    "ShulkerBoxSlotMixin"
+    "AnvilMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1
