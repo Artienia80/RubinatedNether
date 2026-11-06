@@ -1,8 +1,15 @@
 package corundum.rubinated_nether.content.blocks;
 
 import corundum.rubinated_nether.RubinatedNether;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -15,10 +22,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.level.block.Block;
-import corundum.rubinated_nether.utils.FallingWaterCarry;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
@@ -42,14 +47,47 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
 
 import static net.minecraft.world.level.block.FallingBlock.isFree;
 
-public class BronzeGrateBlock extends TarnishingBronzeBlock implements SimpleWaterloggedBlock, Fallable {
-    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+public class BronzeGrateBlock extends TarnishingBronzeBlock implements LiquidBlockContainer, BucketPickup, Fallable {
+    public enum StoredFluid implements StringRepresentable {
+        NONE("none"),
+        WATER("water"),
+        LAVA("lava");
+
+        private final String name;
+
+        StoredFluid(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getSerializedName() {
+            return this.name;
+        }
+
+        FlowingFluid still() {
+            return this == LAVA ? Fluids.LAVA : Fluids.WATER;
+        }
+
+        FlowingFluid flowing() {
+            return this == LAVA ? Fluids.FLOWING_LAVA : Fluids.FLOWING_WATER;
+        }
+
+        static StoredFluid of(Fluid fluid) {
+            if (Fluids.WATER.isSame(fluid)) return WATER;
+            if (Fluids.LAVA.isSame(fluid)) return LAVA;
+            return NONE;
+        }
+    }
+
+    public static final EnumProperty<StoredFluid> FLUID = EnumProperty.create("fluid", StoredFluid.class);
+    public static final IntegerProperty FLUID_LEVEL = IntegerProperty.create("fluid_level", 0, 8);
     public static final BooleanProperty LOCKED = BooleanProperty.create("locked");
     private static final int MAX_COLUMN_HEIGHT = 256;
     private static final int MAX_REDSTONE_PROPAGATION = 256;
@@ -58,46 +96,60 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock implements SimpleWat
 
     public BronzeGrateBlock(TarnishStage tarnishStage, Properties properties) {
         super(tarnishStage, properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false).setValue(LOCKED, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(FLUID, StoredFluid.NONE).setValue(FLUID_LEVEL, 0).setValue(LOCKED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED, LOCKED);
+        builder.add(FLUID, FLUID_LEVEL, LOCKED);
         super.createBlockStateDefinition(builder);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluid = context.getLevel().getFluidState(context.getClickedPos());
-        return this.defaultBlockState().setValue(WATERLOGGED, fluid.getType() == Fluids.WATER);
+        return withFluid(this.defaultBlockState(), fluid);
+    }
+
+    public static BlockState withFluid(BlockState state, FluidState fluid) {
+        StoredFluid kind = fluid.isEmpty() ? StoredFluid.NONE : StoredFluid.of(fluid.getType());
+        if (kind == StoredFluid.NONE) {
+            return state.setValue(FLUID, StoredFluid.NONE).setValue(FLUID_LEVEL, 0);
+        }
+        int level = fluid.isSource() ? 0 : fluid.getValue(FlowingFluid.FALLING) ? 8 : 8 - fluid.getAmount();
+        return state.setValue(FLUID, kind).setValue(FLUID_LEVEL, level);
     }
 
     @Override
     protected FluidState getFluidState(BlockState state) {
-        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+        StoredFluid kind = state.getValue(FLUID);
+        if (kind == StoredFluid.NONE) return super.getFluidState(state);
+
+        int level = state.getValue(FLUID_LEVEL);
+        if (level == 0) return kind.still().getSource(false);
+        return level >= 8 ? kind.flowing().getFlowing(8, true) : kind.flowing().getFlowing(8 - level, false);
     }
 
     @Override
     protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        if (state.getValue(WATERLOGGED))
-            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        FluidState stored = state.getFluidState();
+        if (!stored.isEmpty())
+            GrateFluidScheduler.schedule(level, pos, stored.getType().getTickDelay(level));
         return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
 
     @Override
-    public void onLand(Level level, BlockPos pos, BlockState fallingState, BlockState hitState, FallingBlockEntity fallingBlock) {
-        FallingWaterCarry.dropOffWater(level, pos, fallingBlock);
-    }
-
-    @Override
     public boolean isRandomlyTicking(BlockState state) {
-        return !state.getValue(WAXED) && TarnishingBronze.canCrystallize(state.getBlock());
+        return (!state.getValue(WAXED) && TarnishingBronze.canCrystallize(state.getBlock()))
+                || (state.getValue(FLUID) != StoredFluid.NONE && !state.getValue(LOCKED));
     }
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (state.getValue(WAXED)) return;
+        if (!state.getValue(LOCKED) && state.getValue(FLUID) != StoredFluid.NONE) {
+            GrateFluidScheduler.schedule(level, pos, state.getFluidState().getType().getTickDelay(level));
+        }
+        if (state.getValue(WAXED) || !TarnishingBronze.canCrystallize(state.getBlock())) return;
 
         boolean hasCatalystNearby = BlockPos.betweenClosedStream(
                 pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
@@ -182,7 +234,9 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock implements SimpleWat
             boolean isCrystallized = getAgeFromBlock(state) == TarnishStage.CRYSTALLIZED;
 
             FallingBlockEntity fallingBlock = FallingBlockEntity.fall(level, pos, state);
-            FallingWaterCarry.pickUpWater(level, pos, state, fallingBlock);
+            if (state.getValue(FLUID) != StoredFluid.NONE) {
+                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+            }
             this.falling(fallingBlock);
 
             // Only trigger immediate neighbors when this block falls
@@ -274,6 +328,10 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock implements SimpleWat
         if (level.isClientSide || oldState.is(state.getBlock())) return;
         refreshNetwork(level, pos);
         passThrough(level, pos);
+        FluidState stored = state.getFluidState();
+        if (!stored.isEmpty()) {
+            GrateFluidScheduler.schedule(level, pos, stored.getType().getTickDelay(level));
+        }
     }
 
     @Override
@@ -288,17 +346,54 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock implements SimpleWat
 
     @Override
     protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        if (!state.getValue(LOCKED) && context instanceof EntityCollisionContext entityContext
-                && entityContext.getEntity() instanceof FallingBlockEntity) {
-            return Shapes.empty();
+        if (!state.getValue(LOCKED) && context instanceof EntityCollisionContext entityContext) {
+            Entity entity = entityContext.getEntity();
+            if (entity == null || entity instanceof FallingBlockEntity) {
+                return Shapes.empty();
+            }
         }
         return super.getCollisionShape(state, level, pos, context);
     }
 
     @Override
+    protected VoxelShape getBlockSupportShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return super.getCollisionShape(state, level, pos, CollisionContext.empty());
+    }
+
+    @Override
+    protected VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        if (!state.getValue(LOCKED)) return Shapes.empty();
+        return super.getOcclusionShape(state, level, pos);
+    }
+
+    @Override
     public boolean canPlaceLiquid(@Nullable Player player, BlockGetter level, BlockPos pos, BlockState state, Fluid fluid) {
-        if (player == null && !state.getValue(LOCKED)) return false;
-        return SimpleWaterloggedBlock.super.canPlaceLiquid(player, level, pos, state, fluid);
+        return !state.getValue(LOCKED)
+                && state.getValue(FLUID) == StoredFluid.NONE
+                && StoredFluid.of(fluid) != StoredFluid.NONE;
+    }
+
+    @Override
+    public boolean placeLiquid(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState) {
+        if (!canPlaceLiquid(null, level, pos, state, fluidState.getType())) return false;
+        level.setBlock(pos, withFluid(state, fluidState), Block.UPDATE_ALL);
+        GrateFluidScheduler.schedule(level, pos, fluidState.getType().getTickDelay(level));
+        return true;
+    }
+
+    @Override
+    public ItemStack pickupBlock(@Nullable Player player, LevelAccessor level, BlockPos pos, BlockState state) {
+        if (state.getValue(LOCKED) || state.getValue(FLUID) == StoredFluid.NONE || state.getValue(FLUID_LEVEL) != 0) {
+            return ItemStack.EMPTY;
+        }
+        Fluid fluid = state.getFluidState().getType();
+        level.setBlock(pos, withFluid(state, Fluids.EMPTY.defaultFluidState()), Block.UPDATE_ALL);
+        return new ItemStack(fluid.getBucket());
+    }
+
+    @Override
+    public Optional<SoundEvent> getPickupSound() {
+        return Fluids.WATER.getPickupSound();
     }
 
     private static void refreshNetwork(Level level, BlockPos origin) {
@@ -325,9 +420,40 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock implements SimpleWat
         for (BlockPos member : members) {
             BlockState memberState = level.getBlockState(member);
             if (memberState.getValue(LOCKED) == powered) continue;
-            level.setBlock(member, memberState.setValue(LOCKED, powered), Block.UPDATE_CLIENTS);
-            if (!powered) passThrough(level, member);
+            level.setBlock(member, memberState.setValue(LOCKED, powered), Block.UPDATE_ALL);
+            if (!powered) {
+                FluidState stored = memberState.getFluidState();
+                if (!stored.isEmpty()) {
+                    GrateFluidScheduler.schedule(level, member, stored.getType().getTickDelay(level));
+                }
+                passThrough(level, member);
+            }
         }
+    }
+
+    static void updateFluid(ServerLevel level, BlockPos pos) {
+        BlockState block = level.getBlockState(pos);
+        if (!(block.getBlock() instanceof BronzeGrateBlock) || block.getValue(LOCKED)) return;
+
+        FluidState state = block.getFluidState();
+        if (state.isEmpty() || !(state.getType() instanceof FlowingFluid fluid)) return;
+
+        if (!state.isSource()) {
+            FluidState next = FlowingFluidAccess.getNewLiquid(fluid, level, pos, block);
+            int delay = FlowingFluidAccess.getSpreadDelay(fluid, level, pos, state, next);
+            if (next.isEmpty()) {
+                state = next;
+                level.setBlock(pos, withFluid(block, next), Block.UPDATE_ALL);
+            } else if (!next.equals(state)) {
+                state = next;
+                BlockState updated = withFluid(block, next);
+                level.setBlock(pos, updated, Block.UPDATE_CLIENTS);
+                GrateFluidScheduler.schedule(level, pos, delay);
+                level.updateNeighborsAt(pos, updated.getBlock());
+            }
+        }
+
+        FlowingFluidAccess.spread(fluid, level, pos, state);
     }
 
     private static boolean isOpenGrate(Level level, BlockPos pos) {
@@ -351,7 +477,6 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock implements SimpleWat
         if (exit.getY() < level.getMinBuildHeight()) return;
 
         releaseGravityBlock(level, top.above(), exit);
-        relayFluid(level, top, bottom, exit);
     }
 
     private static void releaseGravityBlock(Level level, BlockPos abovePos, BlockPos exit) {
@@ -363,22 +488,6 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock implements SimpleWat
         if (above.getBlock() instanceof AnvilBlock) {
             fallingBlock.setHurtsEntities(2.0F, 40);
         }
-    }
-
-    private static void relayFluid(Level level, BlockPos top, BlockPos bottom, BlockPos exit) {
-        FluidState supply = level.getFluidState(top.above());
-        for (BlockPos cell = bottom; supply.isEmpty() && cell.getY() <= top.getY(); cell = cell.above()) {
-            supply = level.getFluidState(cell);
-        }
-        if (supply.isEmpty() || !(supply.getType() instanceof FlowingFluid flowing)) return;
-
-        BlockState exitState = level.getBlockState(exit);
-        if (!exitState.getFluidState().isEmpty()) return;
-        if (!exitState.isAir()) {
-            if (!exitState.canBeReplaced(supply.getType())) return;
-            Block.dropResources(exitState, level, exit);
-        }
-        level.setBlock(exit, flowing.getFlowing(8, true).createLegacyBlock(), Block.UPDATE_ALL);
     }
 
     @Override
