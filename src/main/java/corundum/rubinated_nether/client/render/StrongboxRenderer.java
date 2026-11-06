@@ -5,6 +5,7 @@ import com.mojang.math.Axis;
 import corundum.rubinated_nether.content.blocks.BronzeStrongboxBlock;
 import corundum.rubinated_nether.content.blocks.entities.BronzeStrongboxBlockEntity;
 import corundum.rubinated_nether.utils.RNConfig;
+import net.minecraft.Util;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -38,6 +39,7 @@ public class StrongboxRenderer implements BlockEntityRenderer<BronzeStrongboxBlo
     private static final float ITEM_CENTER_Y = 0.5F;
     private static final float BLOCK_CENTER_Y = 0.55F;
     private static final float SPIN_DEGREES_PER_TICK = 2.0F;
+    private static final long SPIN_PERIOD_MILLIS = 360000L;
 
     private final ItemRenderer itemRenderer;
     private final RandomSource random = RandomSource.create();
@@ -64,9 +66,9 @@ public class StrongboxRenderer implements BlockEntityRenderer<BronzeStrongboxBlo
             return;
         }
         int light = surroundingLight(level, blockEntity.getBlockPos(), packedLight);
-        float spin = (level.getGameTime() + partialTick) * SPIN_DEGREES_PER_TICK;
+        float spin = (float) ((Util.getMillis() % SPIN_PERIOD_MILLIS) / 50.0) * SPIN_DEGREES_PER_TICK;
         if (state.getValue(BronzeStrongboxBlock.NATURAL)) {
-            long cycle = level.getGameTime() / NATURAL_CYCLE_TICKS;
+            long cycle = Util.getMillis() / (NATURAL_CYCLE_TICKS * 50L);
             int hash = Mth.murmurHash3Mixer((int) (cycle ^ (cycle >>> 32)) ^ blockEntity.getBlockPos().hashCode());
             this.renderItem(level, poseStack, bufferSource, light, stacks.get(Math.floorMod(hash, stacks.size())), CENTER, CENTER, NATURAL_SCALE, spin);
             return;

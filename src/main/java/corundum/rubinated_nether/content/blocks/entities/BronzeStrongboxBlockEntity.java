@@ -284,7 +284,13 @@ public class BronzeStrongboxBlockEntity extends ChestBlockEntity {
 
     @Override
     public Component getDisplayName() {
-        return this.password != null ? StrongboxLock.sealedTitle(this.password, this.strongboxName()) : this.getDefaultName();
+        if (this.password == null) {
+            return this.getDefaultName();
+        }
+        if (this.getBlockState().getValue(BronzeStrongboxBlock.KEY) != 0) {
+            return Component.literal(this.password);
+        }
+        return StrongboxLock.sealedTitle(this.password, this.strongboxName());
     }
 
     @Nullable
