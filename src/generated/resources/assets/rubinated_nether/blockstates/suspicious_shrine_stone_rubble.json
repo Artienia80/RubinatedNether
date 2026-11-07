@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "dusted=0": {
+      "model": "rubinated_nether:block/suspicious_shrine_stone_rubble_0"
+    },
+    "dusted=1": {
+      "model": "rubinated_nether:block/suspicious_shrine_stone_rubble_1"
+    },
+    "dusted=2": {
+      "model": "rubinated_nether:block/suspicious_shrine_stone_rubble_2"
+    },
+    "dusted=3": {
+      "model": "rubinated_nether:block/suspicious_shrine_stone_rubble_3"
+    }
+  }
+}

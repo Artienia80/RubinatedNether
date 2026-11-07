@@ -15,6 +15,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -37,6 +38,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 public class CofferRenderer implements BlockEntityRenderer<CofferBlockEntity> {
     public static final ResourceLocation COFFER_TEXTURE = RubinatedNether.id("textures/entity/coffer/shrine_stone_coffer.png");
     public static final ResourceLocation RUBINATED_COFFER_TEXTURE = RubinatedNether.id("textures/entity/coffer/rubinated_shrine_stone_coffer.png");
+    public static final ResourceLocation RUBINATED_COFFER_EMISSIVE_TEXTURE = RubinatedNether.id("textures/entity/coffer/rubinated_shrine_stone_coffer_e.png");
 
     private static final String BOTTOM = "bottom";
     private static final String LID = "lid";
@@ -81,6 +83,11 @@ public class CofferRenderer implements BlockEntityRenderer<CofferBlockEntity> {
             int i = ((Int2IntFunction) neighborcombineresult.apply(new BrightnessCombiner())).applyAsInt(packedLight);
 
             this.render(poseStack, vertexconsumer, this.lid, this.bottom, f1, i, packedOverlay);
+
+            if (var12 instanceof RubinatedCofferBlock) {
+                VertexConsumer glow = multiBufferSource.getBuffer(RenderType.entityCutout(RUBINATED_COFFER_EMISSIVE_TEXTURE));
+                this.render(poseStack, glow, this.lid, this.bottom, f1, LightTexture.FULL_BRIGHT, packedOverlay);
+            }
 
             poseStack.popPose();
         }

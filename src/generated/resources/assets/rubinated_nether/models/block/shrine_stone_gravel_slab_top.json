@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab_top",
-  "textures": {
-    "bottom": "rubinated_nether:block/shrine_stone_gravel",
-    "side": "rubinated_nether:block/shrine_stone_gravel",
-    "top": "rubinated_nether:block/shrine_stone_gravel"
-  }
-}

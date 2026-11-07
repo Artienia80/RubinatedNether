@@ -89,10 +89,11 @@ public class RNCreativeTabs {
 								RNBlocks.RUBINATED_SHRINE_STONE_TILES,
 								RNBlocks.RUBINATED_SHRINE_STONE_PILLAR,
 								RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS,
-								RNBlocks.SHRINE_STONE_GRAVEL,
-								RNBlocks.SHRINE_STONE_GRAVEL_STAIRS,
-								RNBlocks.SHRINE_STONE_GRAVEL_SLAB,
-								RNBlocks.SHRINE_STONE_GRAVEL_WALL
+								RNBlocks.SHRINE_STONE_RUBBLE,
+								RNBlocks.SHRINE_STONE_RUBBLE_STAIRS,
+								RNBlocks.SHRINE_STONE_RUBBLE_SLAB,
+								RNBlocks.SHRINE_STONE_RUBBLE_WALL,
+								RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE
 						);
 						// Bronze materials
 						addItems(
@@ -677,13 +678,15 @@ public class RNCreativeTabs {
 			event.insertAfter(RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get().asItem().getDefaultInstance(),
 					RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get().asItem().getDefaultInstance(),
-					RNBlocks.SHRINE_STONE_GRAVEL.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.SHRINE_STONE_GRAVEL.get().asItem().getDefaultInstance(),
-					RNBlocks.SHRINE_STONE_GRAVEL_STAIRS.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.SHRINE_STONE_GRAVEL_STAIRS.get().asItem().getDefaultInstance(),
-					RNBlocks.SHRINE_STONE_GRAVEL_SLAB.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.SHRINE_STONE_GRAVEL_SLAB.get().asItem().getDefaultInstance(),
-					RNBlocks.SHRINE_STONE_GRAVEL_WALL.get().asItem().getDefaultInstance(), BOTH_TABS);
+					RNBlocks.SHRINE_STONE_RUBBLE.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.SHRINE_STONE_RUBBLE.get().asItem().getDefaultInstance(),
+					RNBlocks.SHRINE_STONE_RUBBLE_STAIRS.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.SHRINE_STONE_RUBBLE_STAIRS.get().asItem().getDefaultInstance(),
+					RNBlocks.SHRINE_STONE_RUBBLE_SLAB.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.SHRINE_STONE_RUBBLE_SLAB.get().asItem().getDefaultInstance(),
+					RNBlocks.SHRINE_STONE_RUBBLE_WALL.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.SHRINE_STONE_RUBBLE_WALL.get().asItem().getDefaultInstance(),
+					RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE.get().asItem().getDefaultInstance(), BOTH_TABS);
 
 			// UNAFFECTED
 			event.insertAfter(Items.WAXED_OXIDIZED_COPPER_BULB.getDefaultInstance(),

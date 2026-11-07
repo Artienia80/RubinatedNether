@@ -1,0 +1,463 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "rubinated_nether:ruby_shard",
+          "weight": 250
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 6.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:iron_nugget",
+          "weight": 250
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "rubinated_nether:bronze_scrap",
+          "weight": 180
+        },
+        {
+          "type": "minecraft:item",
+          "name": "rubinated_nether:cogs_banner_pattern",
+          "weight": 60
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "sloth"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 1
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "gluttony"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 1
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "greed"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 1
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "vainglory"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 2
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "wrath"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 2
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "envy"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 2
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "pride"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 3
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "acedia"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 3
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "luxuria"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 3
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "insidiae"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 4
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "superbia"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 4
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "tristia"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 4
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "studiose"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 5
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "ardenter"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 5
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "nimis"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 5
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "ira"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 6
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "invidia"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 6
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "gula"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 6
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "ignavia"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 7
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "kenodoxia"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 7
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "rubinated_nether:rune_carving": "philargyria"
+              },
+              "function": "minecraft:set_components"
+            },
+            {
+              "components": {
+                "minecraft:custom_model_data": 7
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "rubinated_nether:rune",
+          "weight": 1
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

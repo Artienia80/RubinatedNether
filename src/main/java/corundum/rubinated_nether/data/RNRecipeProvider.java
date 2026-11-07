@@ -278,24 +278,24 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		stairsAndSlab(
 			recipeOutput,
-			RNBlocks.SHRINE_STONE_GRAVEL,
-			RNBlocks.SHRINE_STONE_GRAVEL_STAIRS,
-			RNBlocks.SHRINE_STONE_GRAVEL_SLAB
+			RNBlocks.SHRINE_STONE_RUBBLE,
+			RNBlocks.SHRINE_STONE_RUBBLE_STAIRS,
+			RNBlocks.SHRINE_STONE_RUBBLE_SLAB
 		);
 
 		wall(
 			recipeOutput,
-			RNBlocks.SHRINE_STONE_GRAVEL,
-			RNBlocks.SHRINE_STONE_GRAVEL_WALL
+			RNBlocks.SHRINE_STONE_RUBBLE,
+			RNBlocks.SHRINE_STONE_RUBBLE_WALL
 		);
 
 		stonecutterList(
 			recipeOutput,
-			RNBlocks.SHRINE_STONE_GRAVEL,
+			RNBlocks.SHRINE_STONE_RUBBLE,
 
-			RNBlocks.SHRINE_STONE_GRAVEL_SLAB,
-			RNBlocks.SHRINE_STONE_GRAVEL_STAIRS,
-			RNBlocks.SHRINE_STONE_GRAVEL_WALL
+			RNBlocks.SHRINE_STONE_RUBBLE_SLAB,
+			RNBlocks.SHRINE_STONE_RUBBLE_STAIRS,
+			RNBlocks.SHRINE_STONE_RUBBLE_WALL
 		);
 
 		twoByTwo(
@@ -790,6 +790,16 @@ public class RNRecipeProvider extends RecipeProvider {
 				Ingredient.of(RNBlocks.SHRINE_STONE_COFFER),
 				new ResonanceRecipe.TriggerData(20, 150),
 				new ResonanceRecipe.TriggerData(20, 300), true);
+
+		resonance(recipeOutput, RNBlocks.SHRINE_STONE_RUBBLE,
+				Ingredient.of(RNTags.Items.SHRINE_RUBBLE_CANDIDATE),
+				new ResonanceRecipe.TriggerData(20, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
+
+		resonance(recipeOutput, RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE,
+				Ingredient.of(Blocks.SUSPICIOUS_SAND, Blocks.SUSPICIOUS_GRAVEL),
+				new ResonanceRecipe.TriggerData(20, 2500),
+				new ResonanceRecipe.TriggerData(20, 5000), false);
 
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, RNItems.POCKETWATCH.get())

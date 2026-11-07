@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JukeboxBlock;
+import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import net.minecraft.world.level.block.entity.JukeboxBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -217,6 +218,10 @@ public class RubinationConverter {
         level.setBlock(pos, newState, flags);
         if (contents != null && level.getBlockEntity(pos) instanceof CofferBlockEntity target) {
             target.insertContents(contents, level.registryAccess());
+        }
+        if (newState.is(RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE.get())
+                && level.getBlockEntity(pos) instanceof BrushableBlockEntity brushable) {
+            brushable.setLootTable(RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE_LOOT, level.getRandom().nextLong());
         }
     }
 

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "rubinated_nether:block/suspicious_shrine_stone_rubble_3"
+  }
+}

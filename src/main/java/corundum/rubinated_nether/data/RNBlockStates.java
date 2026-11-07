@@ -194,20 +194,28 @@ public class RNBlockStates extends BlockStateProvider {
 				modLoc("block/shrine_stone_tiles")
 		);
 
-		this.simpleBlock(RNBlocks.SHRINE_STONE_GRAVEL.get());
+		this.simpleBlock(RNBlocks.SHRINE_STONE_RUBBLE.get());
 		this.slabBlock(
-				RNBlocks.SHRINE_STONE_GRAVEL_SLAB.get(),
-				modLoc("block/shrine_stone_gravel"),
-				modLoc("block/shrine_stone_gravel")
+				RNBlocks.SHRINE_STONE_RUBBLE_SLAB.get(),
+				modLoc("block/shrine_stone_rubble"),
+				modLoc("block/shrine_stone_rubble")
 		);
 		this.stairsBlock(
-				RNBlocks.SHRINE_STONE_GRAVEL_STAIRS.get(),
-				modLoc("block/shrine_stone_gravel")
+				RNBlocks.SHRINE_STONE_RUBBLE_STAIRS.get(),
+				modLoc("block/shrine_stone_rubble")
 		);
 		this.wallBlock(
-				RNBlocks.SHRINE_STONE_GRAVEL_WALL.get(),
-				modLoc("block/shrine_stone_gravel")
+				RNBlocks.SHRINE_STONE_RUBBLE_WALL.get(),
+				modLoc("block/shrine_stone_rubble")
 		);
+
+		this.getVariantBuilder(RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE.get()).forAllStates(state -> {
+			int dusted = state.getValue(BlockStateProperties.DUSTED);
+			String name = "suspicious_shrine_stone_rubble_" + dusted;
+			return ConfiguredModel.builder()
+					.modelFile(this.models().cubeAll(name, modLoc("block/" + name)))
+					.build();
+		});
 
 		this.axisBlock(RNBlocks.SHRINE_STONE_PILLAR.get());
 

@@ -6,6 +6,9 @@ import corundum.rubinated_nether.content.items.StrongboxBlockItem;
 import corundum.rubinated_nether.content.items.VaseBlockItem;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
@@ -17,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -300,27 +304,42 @@ public class RNBlocks {
 			() -> new Block(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
 
-	public static final DeferredBlock<ShrineGravelBlock> SHRINE_STONE_GRAVEL = registerBlockAndItem(
-			"shrine_stone_gravel",
-			() -> new ShrineGravelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GRAVEL).mapColor(MapColor.COLOR_PURPLE))
+	public static final DeferredBlock<ShrineRubbleBlock> SHRINE_STONE_RUBBLE = registerBlockAndItem(
+			"shrine_stone_rubble",
+			() -> new ShrineRubbleBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GRAVEL).mapColor(MapColor.COLOR_PURPLE))
 	);
 
-	public static final DeferredBlock<ShrineGravelSlabBlock> SHRINE_STONE_GRAVEL_SLAB = registerBlockAndItem(
-			"shrine_stone_gravel_slab",
-			() -> new ShrineGravelSlabBlock(BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_GRAVEL.get()))
+	public static final DeferredBlock<ShrineRubbleSlabBlock> SHRINE_STONE_RUBBLE_SLAB = registerBlockAndItem(
+			"shrine_stone_rubble_slab",
+			() -> new ShrineRubbleSlabBlock(BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_RUBBLE.get()))
 	);
 
-	public static final DeferredBlock<ShrineGravelStairBlock> SHRINE_STONE_GRAVEL_STAIRS = registerBlockAndItem(
-			"shrine_stone_gravel_stairs",
-			() -> new ShrineGravelStairBlock(
-					SHRINE_STONE_GRAVEL.get().defaultBlockState(),
-					BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_GRAVEL.get())
+	public static final DeferredBlock<ShrineRubbleStairBlock> SHRINE_STONE_RUBBLE_STAIRS = registerBlockAndItem(
+			"shrine_stone_rubble_stairs",
+			() -> new ShrineRubbleStairBlock(
+					SHRINE_STONE_RUBBLE.get().defaultBlockState(),
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_RUBBLE.get())
 			)
 	);
 
-	public static final DeferredBlock<ShrineGravelWallBlock> SHRINE_STONE_GRAVEL_WALL = registerBlockAndItem(
-			"shrine_stone_gravel_wall",
-			() -> new ShrineGravelWallBlock(BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_GRAVEL.get()))
+	public static final DeferredBlock<ShrineRubbleWallBlock> SHRINE_STONE_RUBBLE_WALL = registerBlockAndItem(
+			"shrine_stone_rubble_wall",
+			() -> new ShrineRubbleWallBlock(BlockBehaviour.Properties.ofFullCopy(RNBlocks.SHRINE_STONE_RUBBLE.get()))
+	);
+
+	public static final ResourceKey<LootTable> SUSPICIOUS_SHRINE_STONE_RUBBLE_LOOT = ResourceKey.create(
+			Registries.LOOT_TABLE,
+			RubinatedNether.id("archaeology/suspicious_shrine_stone_rubble")
+	);
+
+	public static final DeferredBlock<BrushableBlock> SUSPICIOUS_SHRINE_STONE_RUBBLE = registerBlockAndItem(
+			"suspicious_shrine_stone_rubble",
+			() -> new BrushableBlock(
+					RNBlocks.SHRINE_STONE_RUBBLE.get(),
+					SoundEvents.BRUSH_GRAVEL,
+					SoundEvents.BRUSH_GRAVEL_COMPLETED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.SUSPICIOUS_GRAVEL).mapColor(MapColor.COLOR_PURPLE)
+			)
 	);
 
 	public static final DeferredBlock<SixWayPillarBlock> RUBINATED_CHISELED_SHRINE_STONE_BRICKS = registerBlockAndItemWithRarity(

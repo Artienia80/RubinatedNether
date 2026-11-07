@@ -87,9 +87,9 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.SHRINE_STONE_TILES,
 				RNBlocks.SHRINE_STONE_TILES_STAIRS,
 				RNBlocks.SHRINE_STONE_TILES_SLAB,
-				RNBlocks.SHRINE_STONE_GRAVEL,
-				RNBlocks.SHRINE_STONE_GRAVEL_STAIRS,
-				RNBlocks.SHRINE_STONE_GRAVEL_SLAB,
+				RNBlocks.SHRINE_STONE_RUBBLE,
+				RNBlocks.SHRINE_STONE_RUBBLE_STAIRS,
+				RNBlocks.SHRINE_STONE_RUBBLE_SLAB,
 				RNBlocks.SHRINE_STONE_PILLAR,
 				RNBlocks.SHRINE_STONE_BRICKS,
 				RNBlocks.SHRINE_STONE_BRICKS_STAIRS,
@@ -232,6 +232,11 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.ORNATE_RUBY_GLASS_PANE,
 				"block/ornate_ruby_glass"
 		);
+		withExistingParent(
+				RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE.getId().getPath(),
+				modLoc("block/suspicious_shrine_stone_rubble_0")
+		);
+
 		paneItem(
 				RNBlocks.MOLTEN_RUBY_GLASS_PANE,
 				"block/molten_ruby_glass"
@@ -258,8 +263,8 @@ public class RNItemModels extends ItemModelProvider {
 				modLoc("block/shrine_stone_bricks")
 		);
 		wallInventory(
-				RNBlocks.SHRINE_STONE_GRAVEL_WALL.getId().toString(),
-				modLoc("block/shrine_stone_gravel")
+				RNBlocks.SHRINE_STONE_RUBBLE_WALL.getId().toString(),
+				modLoc("block/shrine_stone_rubble")
 		);
 
 		paneItem(

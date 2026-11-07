@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.data;
 
 import corundum.rubinated_nether.content.RNBannerPatterns;
+import corundum.rubinated_nether.data.sub_providers.RNArchaeologyLoot;
 import corundum.rubinated_nether.data.sub_providers.RNBlockLoot;
 import corundum.rubinated_nether.data.sub_providers.RNStrongboxLoot;
 import corundum.rubinated_nether.data.tags.*;
@@ -53,7 +54,8 @@ public class RNData {
 		datagen.addProvider(event.includeServer(), new LootTableProvider(output, Set.of(),
 				List.of(
 						new SubProviderEntry(RNBlockLoot::new, LootContextParamSets.BLOCK),
-						new SubProviderEntry(RNStrongboxLoot::new, LootContextParamSets.CHEST)
+						new SubProviderEntry(RNStrongboxLoot::new, LootContextParamSets.CHEST),
+						new SubProviderEntry(registries -> new RNArchaeologyLoot(), LootContextParamSets.ARCHAEOLOGY)
 				), datapackProvider.getRegistryProvider()));
 	}
 }

@@ -1,0 +1,20 @@
+{
+  "type": "rubinated_nether:resonance",
+  "ingredient": [
+    {
+      "item": "minecraft:suspicious_sand"
+    },
+    {
+      "item": "minecraft:suspicious_gravel"
+    }
+  ],
+  "key": {
+    "attempts": 5000,
+    "radius": 20.0
+  },
+  "offering": {
+    "attempts": 2500,
+    "radius": 20.0
+  },
+  "result": "rubinated_nether:suspicious_shrine_stone_rubble"
+}
