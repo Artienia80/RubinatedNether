@@ -11,7 +11,8 @@
     "PlayerMixin",
     "BoatMixin",
     "StonecutterMenuMixin",
-    "AnvilMenuMixin"
+    "AnvilMenuMixin",
+    "ProjectileWeaponItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1

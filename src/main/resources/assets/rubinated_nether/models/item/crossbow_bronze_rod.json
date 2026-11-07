@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/crossbow",
+  "textures": {
+    "layer0": "rubinated_nether:item/crossbow_bronze_rod"
+  }
+}

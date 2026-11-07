@@ -86,6 +86,12 @@ public class RNClientSubscriber {
                 (stack, level, entity, seed) ->
                         stack.getOrDefault(RNDataComponents.MUSIC_BOX_DATA.get(), MusicBoxData.EMPTY).playing() ? 1.0F : 0.0F
         ));
+
+        event.enqueueWork(() -> ItemProperties.register(
+                net.minecraft.world.item.Items.CROSSBOW,
+                ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "crossbow_rod"),
+                (stack, level, entity, seed) -> CrossbowRodHandler.loadedRodModelValue(stack)
+        ));
     }
 
     @SubscribeEvent

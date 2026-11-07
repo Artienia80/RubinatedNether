@@ -4,6 +4,7 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import corundum.rubinated_nether.content.entity.BronzeRodProjectileEntity;
 import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
+import corundum.rubinated_nether.content.entity.CrossbowRodProjectileEntity;
 import corundum.rubinated_nether.content.entity.CrystallizedBronzeRodProjectileEntity;
 import corundum.rubinated_nether.content.entity.CrystallizedBronzeShotProjectileEntity;
 import corundum.rubinated_nether.content.entity.client.BronzeModel;
@@ -12,6 +13,8 @@ import corundum.rubinated_nether.content.entity.client.BronzeRodProjectileModel;
 import corundum.rubinated_nether.content.entity.client.BronzeRodProjectileRenderer;
 import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileModel;
 import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileRenderer;
+import corundum.rubinated_nether.content.entity.client.CrossbowRodProjectileModel;
+import corundum.rubinated_nether.content.entity.client.CrossbowRodProjectileRenderer;
 import corundum.rubinated_nether.content.entity.client.CrystallizedBronzeRodProjectileRenderer;
 import corundum.rubinated_nether.content.entity.client.CrystallizedBronzeShotProjectileModel;
 import corundum.rubinated_nether.content.entity.client.CrystallizedBronzeShotProjectileRenderer;
@@ -62,6 +65,14 @@ public class RNEntityCreator {
 					.updateInterval(20)
 	);
 
+	public static final Supplier<EntityType<CrossbowRodProjectileEntity>> CROSSBOW_ROD = registerEntity(
+			"crossbow_rod",
+			EntityType.Builder.<CrossbowRodProjectileEntity>of(CrossbowRodProjectileEntity::new, MobCategory.MISC)
+					.sized(0.5F, 0.5F)
+					.clientTrackingRange(4)
+					.updateInterval(20)
+	);
+
 	public static final Supplier<EntityType<BronzeEntity>> BRONZE = registerEntity(
 			"bronze",
 			EntityType.Builder.of(BronzeEntity::new, MobCategory.MONSTER)
@@ -92,6 +103,7 @@ public class RNEntityCreator {
 		event.registerEntityRenderer(RNEntityCreator.BRONZE_ROD.get(), BronzeRodProjectileRenderer::new);
 		event.registerEntityRenderer(RNEntityCreator.CRYSTALLIZED_BRONZE_SHOT.get(), CrystallizedBronzeShotProjectileRenderer::new);
 		event.registerEntityRenderer(RNEntityCreator.CRYSTALLIZED_BRONZE_ROD.get(), CrystallizedBronzeRodProjectileRenderer::new);
+		event.registerEntityRenderer(RNEntityCreator.CROSSBOW_ROD.get(), CrossbowRodProjectileRenderer::new);
 	}
 
 	// LAYERS
@@ -103,5 +115,8 @@ public class RNEntityCreator {
 		event.registerLayerDefinition(BronzeShotProjectileModel.LAYER_LOCATION, BronzeShotProjectileModel::createBodyLayer);
 		event.registerLayerDefinition(BronzeRodProjectileModel.LAYER_LOCATION, BronzeRodProjectileModel::createBodyLayer);
 		event.registerLayerDefinition(CrystallizedBronzeShotProjectileModel.LAYER_LOCATION, CrystallizedBronzeShotProjectileModel::createBodyLayer);
+		event.registerLayerDefinition(CrossbowRodProjectileModel.BRONZE_LAYER, CrossbowRodProjectileModel::createBronzeLayer);
+		event.registerLayerDefinition(CrossbowRodProjectileModel.BREEZE_LAYER, CrossbowRodProjectileModel::createBreezeLayer);
+		event.registerLayerDefinition(CrossbowRodProjectileModel.BLAZE_LAYER, CrossbowRodProjectileModel::createBlazeLayer);
 	}
 }
