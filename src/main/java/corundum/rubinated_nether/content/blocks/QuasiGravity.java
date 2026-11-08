@@ -7,10 +7,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BrushableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
@@ -51,9 +55,15 @@ public final class QuasiGravity {
             }
         }
 
-        for (BlockPos pos : cluster) {
+        List<BlockPos> ordered = new ArrayList<>(cluster);
+        ordered.sort(Comparator.comparingInt(BlockPos::getY));
+
+        for (BlockPos pos : ordered) {
             BlockState state = level.getBlockState(pos);
             FallingBlockEntity fallingBlock = FallingBlockEntity.fall(level, pos, state);
+            if (state.getBlock() instanceof BrushableBlock) {
+                fallingBlock.disableDrop();
+            }
             FallingWaterCarry.pickUpWater(level, pos, state, fallingBlock);
         }
     }

@@ -276,6 +276,7 @@ public class RNItemModels extends ItemModelProvider {
 		handheldItem(RNItems.BRONZE_DRILL, "item/bronze_drill");
 		handheldItem(RNItems.BRONZE_JACKHAMMER, "item/bronze_jackhammer");
 		handheldItem(RNItems.BRONZE_CHAINSAW, "item/bronze_chainsaw");
+		handheldItem(RNItems.BRONZE_ROD, "item/bronze_rod");
 
 
 		// Basic items
@@ -291,7 +292,6 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.MUSIC_DISC_SHIMMER,
 				RNItems.MUSIC_DISC_SINNER,
 				RNItems.MUSIC_DISC_SINNER_MUSIC_BOX,
-				RNItems.BRONZE_ROD,
 				RNItems.BRONZE_POWDER,
 				RNItems.BRONZE_SCRAP,
 				RNItems.BRONZE_SHOT,

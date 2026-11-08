@@ -332,9 +332,9 @@ public class RNBlocks {
 			RubinatedNether.id("archaeology/suspicious_shrine_stone_rubble")
 	);
 
-	public static final DeferredBlock<BrushableBlock> SUSPICIOUS_SHRINE_STONE_RUBBLE = registerBlockAndItem(
+	public static final DeferredBlock<SuspiciousShrineRubbleBlock> SUSPICIOUS_SHRINE_STONE_RUBBLE = registerBlockAndItem(
 			"suspicious_shrine_stone_rubble",
-			() -> new BrushableBlock(
+			() -> new SuspiciousShrineRubbleBlock(
 					RNBlocks.SHRINE_STONE_RUBBLE.get(),
 					SoundEvents.BRUSH_GRAVEL,
 					SoundEvents.BRUSH_GRAVEL_COMPLETED,

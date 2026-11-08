@@ -17,6 +17,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.SimpleExplosionDamageCalculator;
@@ -88,6 +89,11 @@ public class CrossbowRodProjectileEntity extends AbstractArrow {
         if (type != null) {
             this.setRodType(type);
         }
+    }
+
+    @Override
+    public boolean ignoreExplosion(Explosion explosion) {
+        return this.getRodType() == CrossbowRodType.BREEZE || super.ignoreExplosion(explosion);
     }
 
     @Override
