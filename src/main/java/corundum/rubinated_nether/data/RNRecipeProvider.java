@@ -447,14 +447,6 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.ORNATE_RUBY_GLASS_PANE
 		);
 
-		laser(recipeOutput, Blocks.COPPER_BLOCK, RNBlocks.COPPER_LASER, true);
-		laser(recipeOutput, Blocks.EXPOSED_COPPER, RNBlocks.EXPOSED_COPPER_LASER, true);
-		laser(recipeOutput, Blocks.WEATHERED_COPPER, RNBlocks.WEATHERED_COPPER_LASER, true);
-		laser(recipeOutput, Blocks.OXIDIZED_COPPER, RNBlocks.OXIDIZED_COPPER_LASER, true);
-		laser(recipeOutput, Blocks.WAXED_COPPER_BLOCK, RNBlocks.WAXED_COPPER_LASER, true);
-		laser(recipeOutput, Blocks.WAXED_EXPOSED_COPPER, RNBlocks.WAXED_EXPOSED_COPPER_LASER, true);
-		laser(recipeOutput, Blocks.WAXED_WEATHERED_COPPER, RNBlocks.WAXED_WEATHERED_COPPER_LASER, true);
-		laser(recipeOutput, Blocks.WAXED_OXIDIZED_COPPER, RNBlocks.WAXED_OXIDIZED_COPPER_LASER, true);
 
 		generateAllWaxingRecipes(recipeOutput);
 
@@ -577,34 +569,6 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(Items.NETHERITE_INGOT), has(Items.NETHERITE_INGOT))
 				.unlockedBy(getHasName(Blocks.OBSIDIAN), has(Blocks.OBSIDIAN))
 				.save(recipeOutput);
-
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WAXED_COPPER_LASER)
-				.requires(RNBlocks.COPPER_LASER)
-				.requires(RNTags.Items.WAX)
-				.group(getItemName(RNBlocks.WAXED_COPPER_LASER))
-				.unlockedBy(getHasName(RNBlocks.COPPER_LASER), has(RNBlocks.COPPER_LASER))
-				.save(recipeOutput, getConversionRecipeName(RNBlocks.WAXED_COPPER_LASER, Items.HONEYCOMB));
-
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WAXED_EXPOSED_COPPER_LASER)
-				.requires(RNBlocks.EXPOSED_COPPER_LASER)
-				.requires(RNTags.Items.WAX)
-				.group(getItemName(RNBlocks.WAXED_EXPOSED_COPPER_LASER))
-				.unlockedBy(getHasName(RNBlocks.EXPOSED_COPPER_LASER), has(RNBlocks.EXPOSED_COPPER_LASER))
-				.save(recipeOutput, getConversionRecipeName(RNBlocks.WAXED_EXPOSED_COPPER_LASER, Items.HONEYCOMB));
-
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WAXED_WEATHERED_COPPER_LASER)
-				.requires(RNBlocks.WEATHERED_COPPER_LASER)
-				.requires(RNTags.Items.WAX)
-				.group(getItemName(RNBlocks.WAXED_WEATHERED_COPPER_LASER))
-				.unlockedBy(getHasName(RNBlocks.WEATHERED_COPPER_LASER), has(RNBlocks.WEATHERED_COPPER_LASER))
-				.save(recipeOutput, getConversionRecipeName(RNBlocks.WAXED_WEATHERED_COPPER_LASER, Items.HONEYCOMB));
-
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, RNBlocks.WAXED_OXIDIZED_COPPER_LASER)
-				.requires(RNBlocks.OXIDIZED_COPPER_LASER)
-				.requires(RNTags.Items.WAX)
-				.group(getItemName(RNBlocks.WAXED_OXIDIZED_COPPER_LASER))
-				.unlockedBy(getHasName(RNBlocks.OXIDIZED_COPPER_LASER), has(RNBlocks.OXIDIZED_COPPER_LASER))
-				.save(recipeOutput, getConversionRecipeName(RNBlocks.WAXED_OXIDIZED_COPPER_LASER, Items.HONEYCOMB));
 
 		trimSmithing(recipeOutput, RNItems.GREED_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "greed_rune"));
 		trimSmithing(recipeOutput, RNItems.GLUTTONY_RUNE.get(), ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "gluttony_rune"));

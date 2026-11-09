@@ -238,6 +238,11 @@
   "block.rubinated_nether.corroded_bronze_laser": "Laser de Bronze Corroído",
   "block.rubinated_nether.tarnished_bronze_laser": "Laser de Bronze Manchado",
   "block.rubinated_nether.crystallized_bronze_laser": "Laser de Bronze Cristalizado",
+  "block.rubinated_nether.bronze_head": "Cabeça de Bronze",
+  "block.rubinated_nether.discolored_bronze_head": "Cabeça de Bronze Discolorido",
+  "block.rubinated_nether.corroded_bronze_head": "Cabeça de Bronze Corroído",
+  "block.rubinated_nether.tarnished_bronze_head": "Cabeça de Bronze Manchado",
+  "block.rubinated_nether.crystallized_bronze_head": "Cabeça de Bronze Cristalizado",
 
   "item.rubinated_nether.waxed_bronze_laser": "Laser de Bronze Encerado",
   "item.rubinated_nether.waxed_discolored_bronze_laser": "Laser de Bronze Discolorido Encerado",
@@ -245,14 +250,6 @@
   "item.rubinated_nether.waxed_tarnished_bronze_laser": "Laser de Bronze Manchado Encerado",
   "item.rubinated_nether.waxed_crystallized_bronze_laser": "Laser de Bronze Cristalizado Encerado",
 
-  "block.rubinated_nether.copper_laser": "Laser de Cobre",
-  "block.rubinated_nether.exposed_copper_laser": "Laser de Cobre Exposto",
-  "block.rubinated_nether.weathered_copper_laser": "Laser de Cobre Desgastado",
-  "block.rubinated_nether.oxidized_copper_laser": "Laser de Cobre Oxidado",
-  "block.rubinated_nether.waxed_copper_laser": "Laser de Cobre Encerado",
-  "block.rubinated_nether.waxed_exposed_copper_laser": "Laser de Cobre Exposto Encerado",
-  "block.rubinated_nether.waxed_weathered_copper_laser": "Laser de Cobre Desgastado Encerado",
-  "block.rubinated_nether.waxed_oxidized_copper_laser": "Laser de Cobre Oxidado Encerado",
 
   "item.rubinated_nether.bronze_rod": "Vara de Bronze",
   "item.rubinated_nether.bronze_powder": "Pó de Bronze",
@@ -368,7 +365,7 @@
   "advancements.rubinated_nether.wear_lens.description": "Equipe Lentes de Rubi para ver lasers",
   "advancements.rubinated_nether.wear_lens.title": "Fundo de Garrafa",
   "advancements.rubinated_nether.laser_detection.title": "Parado aí!",
-  "advancements.rubinated_nether.laser_detection.description": "Seja detectado por um Laser de Cobre ou Bronze",
+  "advancements.rubinated_nether.laser_detection.description": "Seja detectado por um Laser de Bronze ou Cabeça de Bronze",
 
   "advancements.rubinated_nether.obtain_brazier.description": "Faça um Braseiro",
   "advancements.rubinated_nether.obtain_brazier.title": "Como uma Fênix",

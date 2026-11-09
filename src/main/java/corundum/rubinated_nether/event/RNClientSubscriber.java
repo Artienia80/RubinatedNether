@@ -102,6 +102,7 @@ public class RNClientSubscriber {
         );
         event.registerLayerDefinition(RNModelLayers.COFFER, CofferRenderer::createSingleBodyLayer);
         event.registerLayerDefinition(RNModelLayers.BRONZE_GEARBOX, GearboxRenderer::createSingleBodyLayer);
+        event.registerLayerDefinition(RNModelLayers.BRONZE_HEAD, BronzeHeadModel::createBodyLayer);
         event.registerLayerDefinition(RubyLensModel.LAYER_LOCATION, RubyLensModel::createBodyLayer);
     }
 
@@ -168,7 +169,7 @@ public class RNClientSubscriber {
         event.registerBlockEntityRenderer(RNBlockEntities.RUBINATED_COFFER.get(), CofferRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_GEARBOX.get(), GearboxRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_LASER.get(), BronzeLaserRenderer::new);
-        event.registerBlockEntityRenderer(RNBlockEntities.COPPER_LASER.get(), CopperLaserRenderer::new);
+        event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_HEAD.get(), BronzeHeadRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_VASE.get(), VaseBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_STRONGBOX.get(), StrongboxRenderer::new);
         event.registerEntityRenderer(RNEntityCreator.BRONZE_SHOT.get(), BronzeShotProjectileRenderer::new);
@@ -273,6 +274,18 @@ public class RNClientSubscriber {
 
     @SubscribeEvent
     public static void registerItemExtensions(RegisterClientExtensionsEvent event) {
+        IClientItemExtensions headExtensions = new IClientItemExtensions() {
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return BronzeHeadItemRenderer.INSTANCE;
+            }
+        };
+        event.registerItem(headExtensions, RNBlocks.BRONZE_HEAD.get().asItem());
+        event.registerItem(headExtensions, RNBlocks.DISCOLORED_BRONZE_HEAD.get().asItem());
+        event.registerItem(headExtensions, RNBlocks.CORRODED_BRONZE_HEAD.get().asItem());
+        event.registerItem(headExtensions, RNBlocks.TARNISHED_BRONZE_HEAD.get().asItem());
+        event.registerItem(headExtensions, RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get().asItem());
+
         IClientItemExtensions vaseExtensions = new IClientItemExtensions() {
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {

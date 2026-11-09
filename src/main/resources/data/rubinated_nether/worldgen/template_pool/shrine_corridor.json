@@ -14,7 +14,7 @@
   	{	
       "weight": 35,
       "element": {
-        "location": "rubinated_nether:alpha/corridor/copper_laser",
+        "location": "rubinated_nether:alpha/corridor/head",
         "processors": "minecraft:empty",
 	    	"projection": "rigid",
         "element_type": "minecraft:single_pool_element"

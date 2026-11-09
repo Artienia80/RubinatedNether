@@ -299,6 +299,11 @@
   "block.rubinated_nether.corroded_bronze_laser": "Corroded Bronze Laser",
   "block.rubinated_nether.tarnished_bronze_laser": "Tarnished Bronze Laser",
   "block.rubinated_nether.crystallized_bronze_laser": "Crystallized Bronze Laser",
+  "block.rubinated_nether.bronze_head": "Bronze Head",
+  "block.rubinated_nether.discolored_bronze_head": "Discolored Bronze Head",
+  "block.rubinated_nether.corroded_bronze_head": "Corroded Bronze Head",
+  "block.rubinated_nether.tarnished_bronze_head": "Tarnished Bronze Head",
+  "block.rubinated_nether.crystallized_bronze_head": "Crystallized Bronze Head",
 
   "item.rubinated_nether.waxed_bronze_laser": "Waxed Bronze Laser",
   "item.rubinated_nether.waxed_discolored_bronze_laser": "Waxed Discolored Bronze Laser",
@@ -316,14 +321,6 @@
   "item.rubinated_nether.waxed_tarnished_bronze_winder": "Waxed Tarnished Bronze Winder",
   "item.rubinated_nether.waxed_crystallized_bronze_winder": "Waxed Crystallized Bronze Winder",
 
-  "block.rubinated_nether.copper_laser": "Copper Laser",
-  "block.rubinated_nether.exposed_copper_laser": "Exposed Copper Laser",
-  "block.rubinated_nether.weathered_copper_laser": "Weathered Copper Laser",
-  "block.rubinated_nether.oxidized_copper_laser": "Oxidized Copper Laser",
-  "block.rubinated_nether.waxed_copper_laser": "Waxed Copper Laser",
-  "block.rubinated_nether.waxed_exposed_copper_laser": "Waxed Exposed Copper Laser",
-  "block.rubinated_nether.waxed_weathered_copper_laser": "Waxed Weathered Copper Laser",
-  "block.rubinated_nether.waxed_oxidized_copper_laser": "Waxed Oxidized Copper Laser",
 
   "block.rubinated_nether.crystallized_bronze_blight": "Crystallized Bronze Blight",
   "block.rubinated_nether.crystallized_bronze_cluster": "Crystallized Bronze",
@@ -711,7 +708,7 @@
   "advancements.rubinated_nether.wear_lens.description": "Equip a pair of Ruby Lenses to see lasers",
   "advancements.rubinated_nether.wear_lens.title": "Rose-Tinted Glasses",
   "advancements.rubinated_nether.laser_detection.title": "I see you...",
-  "advancements.rubinated_nether.laser_detection.description": "Be Detected by a Bronze or Copper Laser",
+  "advancements.rubinated_nether.laser_detection.description": "Be Detected by a Bronze Laser or Bronze Head",
 
   "advancements.rubinated_nether.obtain_brazier.description": "Craft a Brazier",
   "advancements.rubinated_nether.obtain_brazier.title": "I'll Be Back",

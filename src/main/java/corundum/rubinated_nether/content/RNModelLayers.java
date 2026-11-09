@@ -14,6 +14,7 @@ public class RNModelLayers {
     public static final ModelLayerLocation COFFER = register("coffer");
     public static final ModelLayerLocation BRONZE_GEARBOX = register("bronze_gearbox");
     public static final ModelLayerLocation BRONZE = register("bronze");
+    public static final ModelLayerLocation BRONZE_HEAD = register("bronze_head");
 
     private static ModelLayerLocation register(String path) {
         return register(path, "main");
