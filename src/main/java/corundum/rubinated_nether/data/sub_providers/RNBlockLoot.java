@@ -249,11 +249,11 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.add(RNBlocks.TARNISHED_BRONZE_VASE.get(), (block) -> LootTable.lootTable());
 		this.add(RNBlocks.CRYSTALLIZED_BRONZE_VASE.get(), (block) -> LootTable.lootTable());
 
-		this.dropSelf(RNBlocks.BRONZE_HEAD.get());
-		this.dropSelf(RNBlocks.DISCOLORED_BRONZE_HEAD.get());
-		this.dropSelf(RNBlocks.CORRODED_BRONZE_HEAD.get());
-		this.dropSelf(RNBlocks.TARNISHED_BRONZE_HEAD.get());
-		this.dropSelf(RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get());
+		this.waxableDrop(RNBlocks.BRONZE_HEAD);
+		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_HEAD);
+		this.waxableDrop(RNBlocks.CORRODED_BRONZE_HEAD);
+		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_HEAD);
+		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_HEAD);
 
 		this.dropSelf(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get());
 

@@ -28,7 +28,6 @@ import net.minecraft.world.phys.Vec3;
 public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockEntity {
 	public static final float DEGREES_PER_POWER = 22.5F;
 
-	/** How far every head can see, in blocks. */
 	public static final int MAX_RANGE = 15;
 
 	private static final float TICK_VOLUME = 0.6F;
@@ -38,7 +37,6 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 	private boolean synced;
 	private int lastPower;
 
-	/** Server only: power coming from what the head currently sees. */
 	private int visionPower;
 	private boolean initialized;
 	private long observationStart = -1;
@@ -50,13 +48,10 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 		super(RNBlockEntities.BRONZE_HEAD.get(), pos, blockState);
 	}
 
-	// ------------------------------------------------------------------ server
-
 	@Override
 	public void tick() {
 		if (level == null) return;
 
-		// first tick after placing / loading: pick up any redstone signal that is already there
 		if (!initialized) {
 			initialized = true;
 			refreshPower();
@@ -68,7 +63,6 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 			return;
 		}
 
-		// scan every other tick, offset per head so they don't all scan on the same tick
 		if ((level.getGameTime() + worldPosition.hashCode()) % 2 != 0) return;
 
 		int seen = updateObservation(scanVision(state));
@@ -78,10 +72,6 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 		}
 	}
 
-	/**
-	 * Recomputes the head's output: the stronger of what it sees and the redstone signal it receives.
-	 * A sheared head does neither and stays at 0.
-	 */
 	public void refreshPower() {
 		if (level == null || level.isClientSide) return;
 		BlockState state = getBlockState();
@@ -98,10 +88,10 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 		if (state.getValue(BronzeHeadBlock.POWER) != target) {
 			level.setBlock(worldPosition, state.setValue(BronzeHeadBlock.POWER, target), Block.UPDATE_ALL);
 			BronzeHeadBlock.updateBehind(level, worldPosition, state);
+			level.updateNeighbourForOutputSignal(worldPosition, state.getBlock());
 		}
 	}
 
-	/** Redstone input from every side except the back, where the head outputs its own signal. */
 	private int redstoneInput(BlockState state) {
 		int best = 0;
 		for (Direction dir : Direction.values()) {
@@ -227,8 +217,6 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 			}
 		}
 	}
-
-	// ------------------------------------------------------------------ client
 
 	@Override
 	public void clientTick() {

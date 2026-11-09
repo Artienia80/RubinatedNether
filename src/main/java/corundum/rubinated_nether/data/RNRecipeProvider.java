@@ -1073,6 +1073,7 @@ public class RNRecipeProvider extends RecipeProvider {
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LAMP);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_CHAIN);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_LASER);
+		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_HEAD);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_SPRING);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_VENT);
 		waxAllTarnishVariants(recipeOutput, RNBlocks.BRONZE_BUTTON);

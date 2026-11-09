@@ -1556,7 +1556,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> BRONZE_HEAD = registerBlockAndItem(
+	public static final DeferredBlock<Block> BRONZE_HEAD = registerWaxableBlock(
 			"bronze_head",
 			() -> new BronzeHeadBlock(
 					TarnishStage.UNAFFECTED,
@@ -1564,7 +1564,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> DISCOLORED_BRONZE_HEAD = registerBlockAndItem(
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_HEAD = registerWaxableBlock(
 			"discolored_bronze_head",
 			() -> new BronzeHeadBlock(
 					TarnishStage.DISCOLORED,
@@ -1572,7 +1572,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> CORRODED_BRONZE_HEAD = registerBlockAndItem(
+	public static final DeferredBlock<Block> CORRODED_BRONZE_HEAD = registerWaxableBlock(
 			"corroded_bronze_head",
 			() -> new BronzeHeadBlock(
 					TarnishStage.CORRODED,
@@ -1580,7 +1580,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> TARNISHED_BRONZE_HEAD = registerBlockAndItem(
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_HEAD = registerWaxableBlock(
 			"tarnished_bronze_head",
 			() -> new BronzeHeadBlock(
 					TarnishStage.TARNISHED,
@@ -1588,7 +1588,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_HEAD = registerBlockAndItem(
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_HEAD = registerWaxableBlock(
 			"crystallized_bronze_head",
 			() -> new BronzeHeadBlock(
 					TarnishStage.CRYSTALLIZED,

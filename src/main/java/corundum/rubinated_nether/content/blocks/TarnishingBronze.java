@@ -90,6 +90,10 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 					.put(RNBlocks.DISCOLORED_BRONZE_LASER.get(), RNBlocks.CORRODED_BRONZE_LASER.get())
 					.put(RNBlocks.CORRODED_BRONZE_LASER.get(), RNBlocks.TARNISHED_BRONZE_LASER.get())
 
+					.put(RNBlocks.BRONZE_HEAD.get(), RNBlocks.DISCOLORED_BRONZE_HEAD.get())
+					.put(RNBlocks.DISCOLORED_BRONZE_HEAD.get(), RNBlocks.CORRODED_BRONZE_HEAD.get())
+					.put(RNBlocks.CORRODED_BRONZE_HEAD.get(), RNBlocks.TARNISHED_BRONZE_HEAD.get())
+
 					.put(RNBlocks.BRONZE_SPRING.get(), RNBlocks.DISCOLORED_BRONZE_SPRING.get())
 					.put(RNBlocks.DISCOLORED_BRONZE_SPRING.get(), RNBlocks.CORRODED_BRONZE_SPRING.get())
 					.put(RNBlocks.CORRODED_BRONZE_SPRING.get(), RNBlocks.TARNISHED_BRONZE_SPRING.get())
@@ -191,6 +195,11 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 				map.put(RNBlocks.DISCOLORED_BRONZE_LASER.get(), RNBlocks.CRYSTALLIZED_BRONZE_LASER.get());
 				map.put(RNBlocks.CORRODED_BRONZE_LASER.get(), RNBlocks.CRYSTALLIZED_BRONZE_LASER.get());
 				map.put(RNBlocks.TARNISHED_BRONZE_LASER.get(), RNBlocks.CRYSTALLIZED_BRONZE_LASER.get());
+
+				map.put(RNBlocks.BRONZE_HEAD.get(), RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get());
+				map.put(RNBlocks.DISCOLORED_BRONZE_HEAD.get(), RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get());
+				map.put(RNBlocks.CORRODED_BRONZE_HEAD.get(), RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get());
+				map.put(RNBlocks.TARNISHED_BRONZE_HEAD.get(), RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get());
 
 				map.put(RNBlocks.BRONZE_SPRING.get(), RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get());
 				map.put(RNBlocks.DISCOLORED_BRONZE_SPRING.get(), RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get());

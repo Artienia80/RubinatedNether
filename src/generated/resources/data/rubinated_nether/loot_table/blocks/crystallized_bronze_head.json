@@ -5,7 +5,33 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "condition": "minecraft:survives_explosion"
+          "block": "rubinated_nether:crystallized_bronze_head",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "waxed": "true"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "rubinated_nether:waxed_crystallized_bronze_head"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "block": "rubinated_nether:crystallized_bronze_head",
+            "condition": "minecraft:block_state_property",
+            "properties": {
+              "waxed": "true"
+            }
+          }
         }
       ],
       "entries": [

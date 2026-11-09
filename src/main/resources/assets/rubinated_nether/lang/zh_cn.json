@@ -254,6 +254,11 @@
   "item.rubinated_nether.waxed_corroded_bronze_laser": "涂蜡的腐蚀青铜激光器",
   "item.rubinated_nether.waxed_tarnished_bronze_laser": "涂蜡的褪色青铜激光器",
   "item.rubinated_nether.waxed_crystallized_bronze_laser": "涂蜡的晶化青铜激光器",
+  "item.rubinated_nether.waxed_bronze_head": "涂蜡的青铜头颅",
+  "item.rubinated_nether.waxed_discolored_bronze_head": "涂蜡的脱色青铜头颅",
+  "item.rubinated_nether.waxed_corroded_bronze_head": "涂蜡的腐蚀青铜头颅",
+  "item.rubinated_nether.waxed_tarnished_bronze_head": "涂蜡的褪色青铜头颅",
+  "item.rubinated_nether.waxed_crystallized_bronze_head": "涂蜡的晶化青铜头颅",
 
 
   "block.rubinated_nether.crystallized_bronze_blight": "晶化青铜",

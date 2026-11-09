@@ -285,6 +285,11 @@ public class RNClientSubscriber {
         event.registerItem(headExtensions, RNBlocks.CORRODED_BRONZE_HEAD.get().asItem());
         event.registerItem(headExtensions, RNBlocks.TARNISHED_BRONZE_HEAD.get().asItem());
         event.registerItem(headExtensions, RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get().asItem());
+        event.registerItem(headExtensions, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.BRONZE_HEAD.get().asItem()))));
+        event.registerItem(headExtensions, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.DISCOLORED_BRONZE_HEAD.get().asItem()))));
+        event.registerItem(headExtensions, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CORRODED_BRONZE_HEAD.get().asItem()))));
+        event.registerItem(headExtensions, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_HEAD.get().asItem()))));
+        event.registerItem(headExtensions, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get().asItem()))));
 
         IClientItemExtensions vaseExtensions = new IClientItemExtensions() {
             @Override

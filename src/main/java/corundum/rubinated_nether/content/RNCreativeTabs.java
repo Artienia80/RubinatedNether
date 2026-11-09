@@ -125,6 +125,11 @@ public class RNCreativeTabs {
 								RNBlocks.TARNISHED_BRONZE_HEAD,
 								RNBlocks.CRYSTALLIZED_BRONZE_HEAD
 						);
+						output.accept(getWaxed(RNBlocks.BRONZE_HEAD));
+						output.accept(getWaxed(RNBlocks.DISCOLORED_BRONZE_HEAD));
+						output.accept(getWaxed(RNBlocks.CORRODED_BRONZE_HEAD));
+						output.accept(getWaxed(RNBlocks.TARNISHED_BRONZE_HEAD));
+						output.accept(getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_HEAD));
 						// Discs, banner pattern
 						addItems(output, RNItems.MUSIC_DISC_SHIMMER, RNItems.MUSIC_DISC_SINNER, RNItems.MUSIC_DISC_SINNER_MUSIC_BOX, RNItems.COGS_BANNER_PATTERN.get());
 						// Spawn eggs
@@ -1017,6 +1022,16 @@ public class RNCreativeTabs {
 			event.insertAfter(RNBlocks.TARNISHED_BRONZE_HEAD.get().asItem().getDefaultInstance(),
 					RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get().asItem().getDefaultInstance(),
+					getWaxed(RNBlocks.BRONZE_HEAD), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.BRONZE_HEAD),
+					getWaxed(RNBlocks.DISCOLORED_BRONZE_HEAD), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.DISCOLORED_BRONZE_HEAD),
+					getWaxed(RNBlocks.CORRODED_BRONZE_HEAD), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.CORRODED_BRONZE_HEAD),
+					getWaxed(RNBlocks.TARNISHED_BRONZE_HEAD), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_HEAD),
+					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_HEAD), BOTH_TABS);
+			event.insertAfter(getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_HEAD),
 					getWaxed(RNBlocks.BRONZE_LASER), BOTH_TABS);
 			event.insertAfter(getWaxed(RNBlocks.BRONZE_LASER),
 					getWaxed(RNBlocks.DISCOLORED_BRONZE_LASER), BOTH_TABS);
