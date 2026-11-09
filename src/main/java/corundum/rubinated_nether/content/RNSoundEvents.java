@@ -43,4 +43,14 @@ public class RNSoundEvents {
 					)
 			)
 	);
+
+	public static final DeferredHolder<SoundEvent, SoundEvent> HEAD_TICK = SOUNDS.register(
+			"head_tick",
+			() -> SoundEvent.createVariableRangeEvent(
+					ResourceLocation.fromNamespaceAndPath(
+							RubinatedNether.MODID,
+							"head_tick"
+					)
+			)
+	);
 }

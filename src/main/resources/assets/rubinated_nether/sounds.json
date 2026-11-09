@@ -22,5 +22,14 @@
 				"stream": true
 			}
 		]
+	},
+	"head_tick": {
+		"subtitle": "subtitles.rubinated_nether.head_tick",
+		"sounds": [
+			{
+				"name": "minecraft:block.comparator.click",
+				"type": "event"
+			}
+		]
 	}
 }

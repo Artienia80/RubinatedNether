@@ -2,16 +2,19 @@ package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
+import corundum.rubinated_nether.content.RNSoundEvents;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.BronzeHeadBlock;
 import corundum.rubinated_nether.utils.HeadCone;
 import corundum.rubinated_nether.utils.HeadConeCache;
+import corundum.rubinated_nether.utils.HeadOrientation;
 import corundum.rubinated_nether.utils.TickableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -20,6 +23,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockEntity {
 	public static final float DEGREES_PER_POWER = 22.5F;
@@ -27,9 +31,12 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 	/** How far every head can see, in blocks. */
 	public static final int MAX_RANGE = 15;
 
+	private static final float TICK_VOLUME = 0.6F;
+
 	private float keyAngle;
 	private float prevKeyAngle;
 	private boolean synced;
+	private int lastPower;
 
 	/** Server only: power coming from what the head currently sees. */
 	private int visionPower;
@@ -96,10 +103,9 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 
 	/** Redstone input from every side except the back, where the head outputs its own signal. */
 	private int redstoneInput(BlockState state) {
-		Direction back = state.getValue(BronzeHeadBlock.FACING).getOpposite();
 		int best = 0;
 		for (Direction dir : Direction.values()) {
-			if (dir == back) continue;
+			if (BronzeHeadBlock.outputsTo(state, dir.getOpposite())) continue;
 			best = Math.max(best, level.getSignal(worldPosition.relative(dir), dir));
 		}
 		return best;
@@ -121,15 +127,24 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 	private boolean scanVision(BlockState state) {
 		TarnishStage stage = getStage(state);
 		boolean crystallized = stage == TarnishStage.CRYSTALLIZED;
-		Direction facing = state.getValue(BronzeHeadBlock.FACING);
+		Direction attach = state.getValue(BronzeHeadBlock.ATTACH);
+		int step = BronzeHeadBlock.getStep(state);
+		Direction.Axis plane = attach.getAxis();
+		Vec3 look = HeadOrientation.look(attach, step);
 
-		cone.refresh(level, worldPosition, facing.getStepX(), facing.getStepZ(), halfAngle(stage), crystallized,
-				facing.get3DDataValue() * 8 + stage.getId());
+		cone.refresh(level, worldPosition,
+				look.get(HeadOrientation.uAxis(plane)), look.get(HeadOrientation.vAxis(plane)),
+				halfAngle(stage), crystallized,
+				(attach.get3DDataValue() * HeadOrientation.STEPS + step) * 8 + stage.getId(), plane);
 
 		int range = HeadCone.RANGE;
 		AABB area = new AABB(
-				worldPosition.getX() - range, worldPosition.getY(), worldPosition.getZ() - range,
-				worldPosition.getX() + range + 1, worldPosition.getY() + 1, worldPosition.getZ() + range + 1
+				worldPosition.getX() - (plane == Direction.Axis.X ? 0 : range),
+				worldPosition.getY() - (plane == Direction.Axis.Y ? 0 : range),
+				worldPosition.getZ() - (plane == Direction.Axis.Z ? 0 : range),
+				worldPosition.getX() + (plane == Direction.Axis.X ? 0 : range) + 1,
+				worldPosition.getY() + (plane == Direction.Axis.Y ? 0 : range) + 1,
+				worldPosition.getZ() + (plane == Direction.Axis.Z ? 0 : range) + 1
 		);
 
 		boolean observed = false;
@@ -218,15 +233,28 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 	@Override
 	public void clientTick() {
 		BlockState state = getBlockState();
-		float target = state.getValue(BronzeHeadBlock.POWER) * DEGREES_PER_POWER;
+		int power = state.getValue(BronzeHeadBlock.POWER);
+		float target = power * DEGREES_PER_POWER;
 		if (!synced) {
 			synced = true;
+			lastPower = power;
 			keyAngle = target;
 			prevKeyAngle = target;
 			return;
 		}
+		if (power > lastPower) playTick(power);
+		lastPower = power;
 		prevKeyAngle = keyAngle;
 		keyAngle = target;
+	}
+
+	private void playTick(int power) {
+		if (level == null) return;
+		float pitch = 0.7F + 0.8F * power / 15.0F;
+		level.playLocalSound(
+				worldPosition.getX() + 0.5D, worldPosition.getY() + 0.5D, worldPosition.getZ() + 0.5D,
+				RNSoundEvents.HEAD_TICK.get(), SoundSource.BLOCKS, TICK_VOLUME, pitch, false
+		);
 	}
 
 	public float getKeyAngle(float partialTick) {

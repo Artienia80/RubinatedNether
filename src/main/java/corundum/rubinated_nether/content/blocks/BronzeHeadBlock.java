@@ -7,9 +7,11 @@ import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.entities.BronzeHeadBlockEntity;
 import corundum.rubinated_nether.utils.BEBlock;
+import corundum.rubinated_nether.utils.HeadOrientation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -22,7 +24,9 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -31,6 +35,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
@@ -53,8 +58,15 @@ public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEnt
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final IntegerProperty POWER = BlockStateProperties.POWER;
 	public static final BooleanProperty KEYED = BooleanProperty.create("keyed");
+	public static final BooleanProperty DIAGONAL = BooleanProperty.create("diagonal");
+	public static final DirectionProperty ATTACH = DirectionProperty.create("attach");
 
-	private static final VoxelShape SHAPE = box(3, 0, 3, 13, 10, 13);
+	private static final VoxelShape SHAPE_UP = box(3, 0, 3, 13, 10, 13);
+	private static final VoxelShape SHAPE_DOWN = box(3, 6, 3, 13, 16, 13);
+	private static final VoxelShape SHAPE_NORTH = box(3, 3, 6, 13, 13, 16);
+	private static final VoxelShape SHAPE_SOUTH = box(3, 3, 0, 13, 13, 10);
+	private static final VoxelShape SHAPE_EAST = box(0, 3, 3, 10, 13, 13);
+	private static final VoxelShape SHAPE_WEST = box(6, 3, 3, 16, 13, 13);
 
 	private final TarnishStage stage;
 
@@ -65,6 +77,8 @@ public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEnt
 				.setValue(FACING, Direction.NORTH)
 				.setValue(POWER, 0)
 				.setValue(KEYED, true)
+				.setValue(DIAGONAL, false)
+				.setValue(ATTACH, Direction.UP)
 		);
 	}
 
@@ -72,9 +86,60 @@ public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEnt
 		return stage;
 	}
 
+	public static int getStep(BlockState state) {
+		return state.getValue(FACING).get2DDataValue() * 2 + (state.getValue(DIAGONAL) ? 1 : 0);
+	}
+
+	public static BlockState withStep(BlockState state, int step) {
+		int wrapped = step & 7;
+		return state
+				.setValue(FACING, Direction.from2DDataValue(wrapped / 2))
+				.setValue(DIAGONAL, (wrapped & 1) == 1);
+	}
+
+	public static Direction[] outputDirections(BlockState state) {
+		return HeadOrientation.outputs(state.getValue(ATTACH), getStep(state));
+	}
+
+	public static boolean outputsTo(BlockState state, Direction direction) {
+		for (Direction output : outputDirections(state)) {
+			if (output == direction) return true;
+		}
+		return false;
+	}
+
+	private static BlockState orient(BlockState state, Direction attach, Vec3 look) {
+		return withStep(state.setValue(ATTACH, attach), HeadOrientation.stepFor(attach, look.x, look.y, look.z));
+	}
+
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(FACING, POWER, KEYED);
+		builder.add(FACING, POWER, KEYED, DIAGONAL, ATTACH);
+	}
+
+	@Override
+	protected BlockState rotate(BlockState state, Rotation rotation) {
+		Direction attach = state.getValue(ATTACH);
+		Vec3 look = HeadOrientation.look(attach, getStep(state));
+		Vec3 rotated = switch (rotation) {
+			case CLOCKWISE_90 -> new Vec3(-look.z, look.y, look.x);
+			case CLOCKWISE_180 -> new Vec3(-look.x, look.y, -look.z);
+			case COUNTERCLOCKWISE_90 -> new Vec3(look.z, look.y, -look.x);
+			default -> look;
+		};
+		return orient(state, rotation.rotate(attach), rotated);
+	}
+
+	@Override
+	protected BlockState mirror(BlockState state, Mirror mirror) {
+		Direction attach = state.getValue(ATTACH);
+		Vec3 look = HeadOrientation.look(attach, getStep(state));
+		Vec3 mirrored = switch (mirror) {
+			case LEFT_RIGHT -> new Vec3(look.x, look.y, -look.z);
+			case FRONT_BACK -> new Vec3(-look.x, look.y, look.z);
+			default -> look;
+		};
+		return orient(state, mirror.mirror(attach), mirrored);
 	}
 
 	@Override
@@ -89,7 +154,14 @@ public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEnt
 
 	@Override
 	protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		return SHAPE;
+		return switch (state.getValue(ATTACH)) {
+			case UP -> SHAPE_UP;
+			case DOWN -> SHAPE_DOWN;
+			case NORTH -> SHAPE_NORTH;
+			case SOUTH -> SHAPE_SOUTH;
+			case EAST -> SHAPE_EAST;
+			case WEST -> SHAPE_WEST;
+		};
 	}
 
 	@Override
@@ -100,7 +172,16 @@ public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEnt
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+		Direction attach = context.getClickedFace();
+		Player player = context.getPlayer();
+		int step = 0;
+		if (attach.getAxis().isVertical()) {
+			step = Mth.floor((context.getRotation() + 180.0F) / 45.0F + 0.5F);
+		} else if (player != null) {
+			Vec3 look = player.getLookAngle();
+			step = HeadOrientation.stepFor(attach, -look.x, -look.y, -look.z);
+		}
+		return withStep(defaultBlockState().setValue(ATTACH, attach), step);
 	}
 
 	@Override
@@ -153,7 +234,7 @@ public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEnt
 
 	@Override
 	protected int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-		return state.getValue(FACING) == direction ? state.getValue(POWER) : 0;
+		return outputsTo(state, direction) ? state.getValue(POWER) : 0;
 	}
 
 	@Override
@@ -163,10 +244,11 @@ public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEnt
 
 	/** Tells the block behind the head (and its neighbours) that the head's signal changed. */
 	public static void updateBehind(Level level, BlockPos pos, BlockState state) {
-		Direction facing = state.getValue(FACING);
-		BlockPos behind = pos.relative(facing.getOpposite());
-		level.neighborChanged(behind, state.getBlock(), pos);
-		level.updateNeighborsAtExceptFromFacing(behind, state.getBlock(), facing);
+		for (Direction output : outputDirections(state)) {
+			BlockPos behind = pos.relative(output.getOpposite());
+			level.neighborChanged(behind, state.getBlock(), pos);
+			level.updateNeighborsAtExceptFromFacing(behind, state.getBlock(), output);
+		}
 	}
 
 	@Override
