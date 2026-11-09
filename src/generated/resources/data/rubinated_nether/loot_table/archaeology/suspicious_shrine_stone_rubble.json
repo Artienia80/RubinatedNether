@@ -73,8 +73,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -92,8 +91,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -111,8 +109,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -130,8 +127,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -149,8 +145,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -168,8 +163,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -187,8 +181,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -206,8 +199,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -225,8 +217,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -244,8 +235,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -263,8 +253,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -282,8 +271,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -301,8 +289,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -320,8 +307,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -339,8 +325,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -358,8 +343,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -377,8 +361,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -396,8 +379,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -415,8 +397,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -434,8 +415,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         },
         {
           "type": "minecraft:item",
@@ -453,11 +433,11 @@
               "function": "minecraft:set_components"
             }
           ],
-          "name": "rubinated_nether:rune",
-          "weight": 1
+          "name": "rubinated_nether:rune"
         }
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "rubinated_nether:archaeology/suspicious_shrine_stone_rubble"
 }

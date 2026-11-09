@@ -1,21 +1,21 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_crystallized_bronze_block": {
-      "conditions": {
-        "items": [
-          {
-            "items": "rubinated_nether:crystallized_bronze_block"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_crystallized_bronze_blight": {
       "conditions": {
         "items": [
           {
             "items": "rubinated_nether:crystallized_bronze_blight"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_crystallized_bronze_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:crystallized_bronze_block"
           }
         ]
       },

@@ -117,17 +117,13 @@ public class RNCreativeTabs {
 								RNItems.MUSIC_BOX,
 								RNItems.RUBY_LENS
 						);
-						// Copper lasers
 						addItems(
 								output,
-								RNBlocks.COPPER_LASER,
-								RNBlocks.EXPOSED_COPPER_LASER,
-								RNBlocks.WEATHERED_COPPER_LASER,
-								RNBlocks.OXIDIZED_COPPER_LASER,
-								RNBlocks.WAXED_COPPER_LASER,
-								RNBlocks.WAXED_EXPOSED_COPPER_LASER,
-								RNBlocks.WAXED_WEATHERED_COPPER_LASER,
-								RNBlocks.WAXED_OXIDIZED_COPPER_LASER
+								RNBlocks.BRONZE_HEAD,
+								RNBlocks.DISCOLORED_BRONZE_HEAD,
+								RNBlocks.CORRODED_BRONZE_HEAD,
+								RNBlocks.TARNISHED_BRONZE_HEAD,
+								RNBlocks.CRYSTALLIZED_BRONZE_HEAD
 						);
 						// Discs, banner pattern
 						addItems(output, RNItems.MUSIC_DISC_SHIMMER, RNItems.MUSIC_DISC_SINNER, RNItems.MUSIC_DISC_SINNER_MUSIC_BOX, RNItems.COGS_BANNER_PATTERN.get());
@@ -1011,14 +1007,16 @@ public class RNCreativeTabs {
 					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_WINDER), BOTH_TABS);
 
 			event.insertAfter(Items.OBSERVER.getDefaultInstance(),
-					RNBlocks.WAXED_COPPER_LASER.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.WAXED_COPPER_LASER.get().asItem().getDefaultInstance(),
-					RNBlocks.WAXED_EXPOSED_COPPER_LASER.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.WAXED_EXPOSED_COPPER_LASER.get().asItem().getDefaultInstance(),
-					RNBlocks.WAXED_WEATHERED_COPPER_LASER.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.WAXED_WEATHERED_COPPER_LASER.get().asItem().getDefaultInstance(),
-					RNBlocks.WAXED_OXIDIZED_COPPER_LASER.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.WAXED_OXIDIZED_COPPER_LASER.get().asItem().getDefaultInstance(),
+					RNBlocks.BRONZE_HEAD.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.BRONZE_HEAD.get().asItem().getDefaultInstance(),
+					RNBlocks.DISCOLORED_BRONZE_HEAD.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.DISCOLORED_BRONZE_HEAD.get().asItem().getDefaultInstance(),
+					RNBlocks.CORRODED_BRONZE_HEAD.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.CORRODED_BRONZE_HEAD.get().asItem().getDefaultInstance(),
+					RNBlocks.TARNISHED_BRONZE_HEAD.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.TARNISHED_BRONZE_HEAD.get().asItem().getDefaultInstance(),
+					RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get().asItem().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get().asItem().getDefaultInstance(),
 					getWaxed(RNBlocks.BRONZE_LASER), BOTH_TABS);
 			event.insertAfter(getWaxed(RNBlocks.BRONZE_LASER),
 					getWaxed(RNBlocks.DISCOLORED_BRONZE_LASER), BOTH_TABS);

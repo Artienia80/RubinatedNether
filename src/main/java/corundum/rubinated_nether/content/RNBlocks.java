@@ -1556,67 +1556,43 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> COPPER_LASER = registerBlockAndItem(
-			"copper_laser",
-			() -> new CopperLaserBlock(
-					WeatheringCopper.WeatherState.UNAFFECTED,
-					BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).noOcclusion()
+	public static final DeferredBlock<Block> BRONZE_HEAD = registerBlockAndItem(
+			"bronze_head",
+			() -> new BronzeHeadBlock(
+					TarnishStage.UNAFFECTED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 
-	public static final DeferredBlock<Block> EXPOSED_COPPER_LASER = registerBlockAndItem(
-			"exposed_copper_laser",
-			() -> new CopperLaserBlock(
-					WeatheringCopper.WeatherState.EXPOSED,
-					BlockBehaviour.Properties.ofFullCopy(Blocks.EXPOSED_COPPER).noOcclusion()
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_HEAD = registerBlockAndItem(
+			"discolored_bronze_head",
+			() -> new BronzeHeadBlock(
+					TarnishStage.DISCOLORED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 
-	public static final DeferredBlock<Block> WEATHERED_COPPER_LASER = registerBlockAndItem(
-			"weathered_copper_laser",
-			() -> new CopperLaserBlock(
-					WeatheringCopper.WeatherState.WEATHERED,
-					BlockBehaviour.Properties.ofFullCopy(Blocks.WEATHERED_COPPER).noOcclusion()
+	public static final DeferredBlock<Block> CORRODED_BRONZE_HEAD = registerBlockAndItem(
+			"corroded_bronze_head",
+			() -> new BronzeHeadBlock(
+					TarnishStage.CORRODED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 
-	public static final DeferredBlock<Block> OXIDIZED_COPPER_LASER = registerBlockAndItem(
-			"oxidized_copper_laser",
-			() -> new CopperLaserBlock(
-					WeatheringCopper.WeatherState.OXIDIZED,
-					BlockBehaviour.Properties.ofFullCopy(Blocks.OXIDIZED_COPPER).noOcclusion()
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_HEAD = registerBlockAndItem(
+			"tarnished_bronze_head",
+			() -> new BronzeHeadBlock(
+					TarnishStage.TARNISHED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 
-	public static final DeferredBlock<Block> WAXED_COPPER_LASER = registerBlockAndItem(
-			"waxed_copper_laser",
-			() -> new CopperLaserBlock(
-					WeatheringCopper.WeatherState.UNAFFECTED,
-					BlockBehaviour.Properties.ofFullCopy(Blocks.WAXED_COPPER_BLOCK).noOcclusion()
-			)
-	);
-
-	public static final DeferredBlock<Block> WAXED_EXPOSED_COPPER_LASER = registerBlockAndItem(
-			"waxed_exposed_copper_laser",
-			() -> new CopperLaserBlock(
-					WeatheringCopper.WeatherState.EXPOSED,
-					BlockBehaviour.Properties.ofFullCopy(Blocks.WAXED_EXPOSED_COPPER).noOcclusion()
-			)
-	);
-
-	public static final DeferredBlock<Block> WAXED_WEATHERED_COPPER_LASER = registerBlockAndItem(
-			"waxed_weathered_copper_laser",
-			() -> new CopperLaserBlock(
-					WeatheringCopper.WeatherState.WEATHERED,
-					BlockBehaviour.Properties.ofFullCopy(Blocks.WAXED_WEATHERED_COPPER).noOcclusion()
-			)
-	);
-
-	public static final DeferredBlock<Block> WAXED_OXIDIZED_COPPER_LASER = registerBlockAndItem(
-			"waxed_oxidized_copper_laser",
-			() -> new CopperLaserBlock(
-					WeatheringCopper.WeatherState.OXIDIZED,
-					BlockBehaviour.Properties.ofFullCopy(Blocks.WAXED_OXIDIZED_COPPER).noOcclusion()
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_HEAD = registerBlockAndItem(
+			"crystallized_bronze_head",
+			() -> new BronzeHeadBlock(
+					TarnishStage.CRYSTALLIZED,
+					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
 			)
 	);
 

@@ -32,16 +32,6 @@ public class RNRenderTypes extends RenderType {
 			BronzeLaserRenderer.LASER_TEXTURE_GREYSCALE
 	);
 
-	public static final RenderType COPPER_LASER_BEAM = createRenderType(
-			"copper_laser_beam",
-			CopperLaserRenderer.LASER_TEXTURE
-	);
-
-	public static final RenderType COPPER_LASER_BEAM_GRAYSCALE = createRenderType(
-			"copper_laser_beam_grayscale",
-			CopperLaserRenderer.LASER_TEXTURE_GREYSCALE
-	);
-
 	private static final ResourceLocation RUBINATED_GLINT_ITEM_TEXTURE =
 			ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "textures/misc/rubinated_glint_item.png");
 

@@ -350,7 +350,6 @@ public class RNBlockStates extends BlockStateProvider {
 
 		generateBronzeLaserFamily("laser");
 		generateWinderFamily();
-		generateCopperLaserFamily("laser");
 		brazierBlock();
 
         generateCrystalModels();
@@ -748,20 +747,6 @@ public class RNBlockStates extends BlockStateProvider {
 			"crystallized_bronze"
 	};
 
-	private static final String[] COPPER_LASER_STATES = {
-			"copper",
-			"exposed_copper",
-			"weathered_copper",
-			"oxidized_copper"
-	};
-
-	private static final String[] WAXED_COPPER_LASER_STATES = {
-			"waxed_copper",
-			"waxed_exposed_copper",
-			"waxed_weathered_copper",
-			"waxed_oxidized_copper"
-	};
-
 	// ===== BRONZE LASER METHODS =====
 	private void generateBronzeLaserFamily(String baseName) {
 		for (String state : BRONZE_LASER_STATES) {
@@ -990,90 +975,6 @@ public class RNBlockStates extends BlockStateProvider {
 						.condition(BlockStateProperties.FACING, facing)
 						.condition(BlockStateProperties.POWER, power)
 						.end();
-			}
-		}
-	}
-
-	// ===== COPPER LASER METHODS =====
-	private void generateCopperLaserFamily(String baseName) {
-		// Generate unwaxed copper lasers
-		for (String state : COPPER_LASER_STATES) {
-			String blockName = state + "_" + baseName.toLowerCase();
-
-			try {
-				var field = RNBlocks.class.getField(blockName.toUpperCase());
-				DeferredBlock<?> block = (DeferredBlock<?>) field.get(null);
-
-				generateLaserModels(blockName, blockName); // Same name for both model and texture
-				generateCopperLaserBlockStates(block);
-
-			} catch (NoSuchFieldException | IllegalAccessException e) {
-				throw new RuntimeException("Could not find RNBlocks." + blockName.toUpperCase(), e);
-			}
-		}
-
-		// Generate waxed copper lasers (separate models, unwaxed textures)
-		for (String state : WAXED_COPPER_LASER_STATES) {
-			String blockName = state + "_" + baseName.toLowerCase();
-			String textureBlockName = blockName.replace("waxed_", ""); // Use unwaxed textures
-
-			try {
-				var field = RNBlocks.class.getField(blockName.toUpperCase());
-				DeferredBlock<?> block = (DeferredBlock<?>) field.get(null);
-
-				generateLaserModels(blockName, textureBlockName); // Different model name, unwaxed texture name
-				generateCopperLaserBlockStates(block);
-
-			} catch (NoSuchFieldException | IllegalAccessException e) {
-				throw new RuntimeException("Could not find RNBlocks." + blockName.toUpperCase(), e);
-			}
-		}
-	}
-
-	private void generateCopperLaserBlockStates(DeferredBlock<?> laserBlock) {
-		String blockName = blockName(laserBlock);
-		VariantBlockStateBuilder builder = getVariantBuilder(laserBlock.get());
-
-		// Order: Power (0-15) -> Mode (spectrum, uv, ir) -> Facing (down, east, north, south, up, west)
-		for (int power = 0; power <= 15; power++) {
-			for (LaserMode mode : LaserMode.values()) {
-				for (Direction facing : Direction.values()) {
-					String modeStr = mode.getSerializedName();
-
-					// Determine model suffix based on mode and power
-					String modelSuffix = "";
-					if (!modeStr.equals("spectrum")) {
-						modelSuffix += "_" + modeStr;
-					}
-					if (power > 0) {
-						modelSuffix += "_on";
-					}
-
-					// Determine rotations based on facing direction
-					int rotationX = switch(facing) {
-						case UP -> 0;
-						case DOWN -> 180;
-						default -> 90;
-					};
-
-					int rotationY = switch(facing) {
-						case NORTH -> 0;
-						case SOUTH -> 180;
-						case EAST -> 90;
-						case WEST -> 270;
-						default -> 0;
-					};
-
-					builder.partialState()
-							.with(BlockStateProperties.FACING, facing)
-							.with(CopperLaserBlock.MODE, mode)
-							.with(CopperLaserBlock.POWER, power)
-							.modelForState()
-							.modelFile(models().getExistingFile(modLoc("block/" + blockName + modelSuffix)))
-							.rotationX(rotationX)
-							.rotationY(rotationY)
-							.addModel();
-				}
 			}
 		}
 	}

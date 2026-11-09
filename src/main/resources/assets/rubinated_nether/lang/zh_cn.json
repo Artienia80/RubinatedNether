@@ -243,6 +243,11 @@
   "block.rubinated_nether.corroded_bronze_laser": "腐蚀的青铜激光器",
   "block.rubinated_nether.tarnished_bronze_laser": "褪色的青铜激光器",
   "block.rubinated_nether.crystallized_bronze_laser": "晶化的青铜激光器",
+  "block.rubinated_nether.bronze_head": "青铜头颅",
+  "block.rubinated_nether.discolored_bronze_head": "脱色的青铜头颅",
+  "block.rubinated_nether.corroded_bronze_head": "腐蚀的青铜头颅",
+  "block.rubinated_nether.tarnished_bronze_head": "褪色的青铜头颅",
+  "block.rubinated_nether.crystallized_bronze_head": "晶化的青铜头颅",
 
   "item.rubinated_nether.waxed_bronze_laser": "涂蜡的青铜激光器",
   "item.rubinated_nether.waxed_discolored_bronze_laser": "涂蜡的脱色青铜激光器",
@@ -250,14 +255,6 @@
   "item.rubinated_nether.waxed_tarnished_bronze_laser": "涂蜡的褪色青铜激光器",
   "item.rubinated_nether.waxed_crystallized_bronze_laser": "涂蜡的晶化青铜激光器",
 
-  "block.rubinated_nether.copper_laser": "铜激光器",
-  "block.rubinated_nether.exposed_copper_laser": "斑驳的铜激光器",
-  "block.rubinated_nether.weathered_copper_laser": "锈蚀的铜激光器",
-  "block.rubinated_nether.oxidized_copper_laser": "氧化的铜激光器",
-  "block.rubinated_nether.waxed_copper_laser": "涂蜡的铜激光器",
-  "block.rubinated_nether.waxed_exposed_copper_laser": "涂蜡的斑驳铜激光器",
-  "block.rubinated_nether.waxed_weathered_copper_laser": "涂蜡的锈蚀铜激光器",
-  "block.rubinated_nether.waxed_oxidized_copper_laser": "涂蜡的氧化铜激光器",
 
   "block.rubinated_nether.crystallized_bronze_blight": "晶化青铜",
   "block.rubinated_nether.crystallized_bronze_cluster": "晶化青铜",
@@ -588,7 +585,7 @@
   "advancements.rubinated_nether.wear_lens.description": "戴上红宝石眼镜以看见激光束",
   "advancements.rubinated_nether.wear_lens.title": "玫瑰色眼镜",
   "advancements.rubinated_nether.laser_detection.title": "我看见你了……",
-  "advancements.rubinated_nether.laser_detection.description": "被青铜激光器或铜激光器探测到",
+  "advancements.rubinated_nether.laser_detection.description": "被青铜激光器或青铜头颅探测到",
 
   "advancements.rubinated_nether.obtain_brazier.description": "合成一个火盆",
   "advancements.rubinated_nether.obtain_brazier.title": "我会回来的",

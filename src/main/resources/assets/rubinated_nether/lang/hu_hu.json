@@ -237,6 +237,11 @@
 "block.rubinated_nether.corroded_bronze_laser": "Korrodált bronzlézer",
 "block.rubinated_nether.tarnished_bronze_laser": "Megfakult bronzlézer",
 "block.rubinated_nether.crystallized_bronze_laser": "Kristályosodott bronzlézer",
+"block.rubinated_nether.bronze_head": "Bronzfej",
+"block.rubinated_nether.discolored_bronze_head": "Elszíneződött bronzfej",
+"block.rubinated_nether.corroded_bronze_head": "Korrodált bronzfej",
+"block.rubinated_nether.tarnished_bronze_head": "Megfakult bronzfej",
+"block.rubinated_nether.crystallized_bronze_head": "Kristályosodott bronzfej",
 
 "item.rubinated_nether.waxed_bronze_laser": "Viaszolt bronzlézer",
 "item.rubinated_nether.waxed_discolored_bronze_laser": "Viaszolt elszíneződött bronzlézer",
@@ -244,14 +249,6 @@
 "item.rubinated_nether.waxed_tarnished_bronze_laser": "Viaszolt megfakult bronzlézer",
 "item.rubinated_nether.waxed_crystallized_bronze_laser": "Viaszolt kristályosodott bronzlézer",
 
-"block.rubinated_nether.copper_laser": "Rézlézer",
-"block.rubinated_nether.exposed_copper_laser": "Megviselt rézlézer",
-"block.rubinated_nether.weathered_copper_laser": "Viharvert rézlézer",
-"block.rubinated_nether.oxidized_copper_laser": "Patinás rézlézer",
-"block.rubinated_nether.waxed_copper_laser": "Viaszolt rézlézer",
-"block.rubinated_nether.waxed_exposed_copper_laser": "Viaszolt megviselt rézlézer",
-"block.rubinated_nether.waxed_weathered_copper_laser": "Viaszolt viharvert rézlézer",
-"block.rubinated_nether.waxed_oxidized_copper_laser": "Viaszolt patinás rézlézer",
 
 "item.rubinated_nether.bronze_rod": "Bronzrúd",
 "item.rubinated_nether.bronze_powder": "Bronzpor",
@@ -368,7 +365,7 @@
  "advancements.rubinated_nether.wear_lens.description": "Végy fel egy rubinlencse párt, hogy lásd a lézereket",
  "advancements.rubinated_nether.wear_lens.title": "Rózsaszín szemüveg",
  "advancements.rubinated_nether.laser_detection.title": "Látlak...",
- "advancements.rubinated_nether.laser_detection.description": "Észleljen egy bronz vagy réz lézer",
+ "advancements.rubinated_nether.laser_detection.description": "Észleljen egy bronz lézer vagy bronzfej",
 
  "advancements.rubinated_nether.obtain_brazier.description": "Készíts egy parázstartót",
  "advancements.rubinated_nether.obtain_brazier.title": "Visszajövök",
