@@ -13,6 +13,7 @@ import corundum.rubinated_nether.utils.BEBlock;
 import corundum.rubinated_nether.utils.HeadOrientation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -20,12 +21,15 @@ import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Equipable;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.BlockItemStateProperties;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -48,7 +52,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEntity>, TarnishingBronze {
+public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEntity>, TarnishingBronze, Equipable {
 	public static final MapCodec<BronzeHeadBlock> CODEC = RecordCodecBuilder.mapCodec(
 			instance -> instance.group(
 					TarnishStage.CODEC.fieldOf("tarnishing_state").forGetter(BronzeHeadBlock::getStage),
@@ -82,6 +86,11 @@ public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEnt
 				.setValue(ATTACH, Direction.UP)
 				.setValue(WAXED, false)
 		);
+	}
+
+	@Override
+	public EquipmentSlot getEquipmentSlot() {
+		return EquipmentSlot.HEAD;
 	}
 
 	public TarnishStage getStage() {
@@ -228,11 +237,15 @@ public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEnt
 
 	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
-		return new ItemStack(
+		ItemStack stack = new ItemStack(
 				state.getValue(WAXED)
 						? BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(this)))
 						: this
 		);
+		if (!state.getValue(KEYED)) {
+			stack.set(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY.with(KEYED, false));
+		}
+		return stack;
 	}
 
 	@Override

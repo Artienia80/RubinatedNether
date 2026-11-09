@@ -374,6 +374,20 @@ public class RNItemTags extends ItemTagsProvider {
 						RNItems.MOLTEN_RUBY.asItem()
 				);
 
+		this.tag(ItemTags.create(ResourceLocation.withDefaultNamespace("skulls")))
+				.add(
+						RNBlocks.BRONZE_HEAD.asItem(),
+						RNBlocks.DISCOLORED_BRONZE_HEAD.asItem(),
+						RNBlocks.CORRODED_BRONZE_HEAD.asItem(),
+						RNBlocks.TARNISHED_BRONZE_HEAD.asItem(),
+						RNBlocks.CRYSTALLIZED_BRONZE_HEAD.asItem()
+				)
+				.addOptional(RubinatedNether.id("waxed_bronze_head"))
+				.addOptional(RubinatedNether.id("waxed_discolored_bronze_head"))
+				.addOptional(RubinatedNether.id("waxed_corroded_bronze_head"))
+				.addOptional(RubinatedNether.id("waxed_tarnished_bronze_head"))
+				.addOptional(RubinatedNether.id("waxed_crystallized_bronze_head"));
+
 		this.tag(RNTags.Items.DOWSING_RODS).add(
 				Items.BLAZE_ROD,
 				Items.BREEZE_ROD

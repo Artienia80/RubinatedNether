@@ -273,6 +273,16 @@ public class RNClientSubscriber {
     }
 
     @SubscribeEvent
+    public static void onRenderLivingPre(RenderLivingEvent.Pre<?, ?> event) {
+        BronzeHeadItemRenderer.setWearer(event.getEntity());
+    }
+
+    @SubscribeEvent
+    public static void onRenderLivingPost(RenderLivingEvent.Post<?, ?> event) {
+        BronzeHeadItemRenderer.setWearer(null);
+    }
+
+    @SubscribeEvent
     public static void registerItemExtensions(RegisterClientExtensionsEvent event) {
         IClientItemExtensions headExtensions = new IClientItemExtensions() {
             @Override

@@ -15,6 +15,11 @@ import corundum.rubinated_nether.content.entity.goals.TarnishedPounceGoal;
 import corundum.rubinated_nether.content.entity.goals.TarnishedStalkGoal;
 import corundum.rubinated_nether.content.entity.goals.UnaffectedAttackGoal;
 import corundum.rubinated_nether.content.items.MusicBoxItem;
+import corundum.rubinated_nether.content.items.WaxableBlockItem;
+import corundum.rubinated_nether.RubinatedNether;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.core.BlockPos;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.core.Direction;
@@ -642,6 +647,32 @@ public class BronzeEntity extends TarnishingEntity {
         }
     }
 
+
+    @Override
+    protected void dropCustomDeathLoot(ServerLevel level, DamageSource damageSource, boolean recentlyHit) {
+        super.dropCustomDeathLoot(level, damageSource, recentlyHit);
+        Entity killer = damageSource.getEntity();
+        if (killer instanceof Creeper creeper && creeper.canDropMobsSkull()) {
+            creeper.increaseDroppedSkulls();
+            this.spawnAtLocation(this.createHeadStack());
+        } else if (killer instanceof BronzeEntity && killer != this) {
+            this.spawnAtLocation(this.createHeadStack());
+        }
+    }
+
+    private ItemStack createHeadStack() {
+        ItemLike head = switch (getTarnishLevel()) {
+            case UNAFFECTED -> RNBlocks.BRONZE_HEAD.get();
+            case DISCOLORED -> RNBlocks.DISCOLORED_BRONZE_HEAD.get();
+            case CORRODED -> RNBlocks.CORRODED_BRONZE_HEAD.get();
+            case TARNISHED -> RNBlocks.TARNISHED_BRONZE_HEAD.get();
+            case CRYSTALLIZED -> RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get();
+        };
+        if (isWaxed()) {
+            head = BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(head)));
+        }
+        return new ItemStack(head);
+    }
 
     public static boolean hurtWithSinnerDrop(LivingEntity victim, DamageSource source, float amount) {
         return hurtWithSinnerDrop(victim, source, amount, false);

@@ -6,7 +6,7 @@ public final class HeadCone {
 	public static final int RANGE = 15;
 	public static final int SIZE = RANGE * 2 + 1;
 
-	private static final double BEAM_STEP_RADIANS = Math.toRadians(0.5D);
+	private static final double CELL_MARGIN = 0.5D;
 	private static final double EPSILON = 1.0E-9D;
 
 	public interface Probe {
@@ -20,18 +20,71 @@ public final class HeadCone {
 		Arrays.fill(visible, false);
 		Arrays.fill(probed, (byte) 0);
 
-		int beams = 1;
-		if (halfAngle > 0.0D) {
-			beams = (int) Math.ceil(2.0D * halfAngle / BEAM_STEP_RADIANS) + 1;
-			if (beams % 2 == 0) beams++;
+		if (halfAngle <= 0.0D) {
+			castBeam(forwardX, forwardZ, pierce, probe);
+			return;
 		}
 
-		for (int i = 0; i < beams; i++) {
-			double angle = beams == 1 ? 0.0D : -halfAngle + 2.0D * halfAngle * i / (beams - 1);
-			double cos = Math.cos(angle);
-			double sin = Math.sin(angle);
-			castBeam(forwardX * cos - forwardZ * sin, forwardX * sin + forwardZ * cos, pierce, probe);
+		double length = Math.hypot(forwardX, forwardZ);
+		if (length < EPSILON) return;
+		double fx = forwardX / length;
+		double fz = forwardZ / length;
+
+		for (int cx = -RANGE; cx <= RANGE; cx++) {
+			for (int cz = -RANGE; cz <= RANGE; cz++) {
+				if (cx == 0 && cz == 0) continue;
+				double dist = Math.hypot(cx, cz);
+				double cos = Math.max(-1.0D, Math.min(1.0D, (cx * fx + cz * fz) / dist));
+				if (Math.acos(cos) > halfAngle + CELL_MARGIN / dist) continue;
+				if (!pierce && !clear(cx, cz, probe)) continue;
+				visible[(cx + RANGE) * SIZE + (cz + RANGE)] = true;
+			}
 		}
+	}
+
+	private boolean clear(int targetX, int targetZ, Probe probe) {
+		int stepX = Integer.signum(targetX);
+		int stepZ = Integer.signum(targetZ);
+		int ax = Math.abs(targetX);
+		int az = Math.abs(targetZ);
+		int ix = 0;
+		int iz = 0;
+		int cx = 0;
+		int cz = 0;
+
+		while (ix < ax || iz < az) {
+			int side;
+			if (ix >= ax) side = 1;
+			else if (iz >= az) side = -1;
+			else side = (2 * ix + 1) * az - (2 * iz + 1) * ax;
+
+			if (side == 0) {
+				if (!(cx + stepX == targetX && cz == targetZ) && blockedAt(cx + stepX, cz, probe)) return false;
+				if (!(cx == targetX && cz + stepZ == targetZ) && blockedAt(cx, cz + stepZ, probe)) return false;
+				cx += stepX;
+				cz += stepZ;
+				ix++;
+				iz++;
+			} else if (side < 0) {
+				cx += stepX;
+				ix++;
+			} else {
+				cz += stepZ;
+				iz++;
+			}
+
+			if ((cx != targetX || cz != targetZ) && blockedAt(cx, cz, probe)) return false;
+		}
+		return true;
+	}
+
+	private boolean blockedAt(int cx, int cz, Probe probe) {
+		if (Math.abs(cx) > RANGE || Math.abs(cz) > RANGE) return true;
+		int index = (cx + RANGE) * SIZE + (cz + RANGE);
+		if (probed[index] == 0) {
+			probed[index] = (byte) (probe.blocks(cx, cz) ? 2 : 1);
+		}
+		return probed[index] == 2;
 	}
 
 	private void castBeam(double dirX, double dirZ, boolean pierce, Probe probe) {

@@ -77,6 +77,20 @@
           },
           "enchantment": "minecraft:looting",
           "unenchanted_chance": 0.1
+        },
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "type": [
+                  "minecraft:creeper",
+                  "rubinated_nether:bronze"
+                ]
+              }
+            }
+          }
         }
       ],
       "entries": [

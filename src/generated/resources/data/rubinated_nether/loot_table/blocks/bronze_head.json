@@ -15,6 +15,24 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "block": "rubinated_nether:bronze_head",
+              "conditions": [
+                {
+                  "block": "rubinated_nether:bronze_head",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "keyed": "false"
+                  }
+                }
+              ],
+              "function": "minecraft:copy_state",
+              "properties": [
+                "keyed"
+              ]
+            }
+          ],
           "name": "rubinated_nether:waxed_bronze_head"
         }
       ],
@@ -37,6 +55,24 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "block": "rubinated_nether:bronze_head",
+              "conditions": [
+                {
+                  "block": "rubinated_nether:bronze_head",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "keyed": "false"
+                  }
+                }
+              ],
+              "function": "minecraft:copy_state",
+              "properties": [
+                "keyed"
+              ]
+            }
+          ],
           "name": "rubinated_nether:bronze_head"
         }
       ],

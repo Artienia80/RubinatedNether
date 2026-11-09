@@ -4,6 +4,7 @@ import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.blocks.BronzeHeadBlock;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
+import net.minecraft.world.level.storage.loot.functions.CopyBlockState;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -249,11 +251,11 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.add(RNBlocks.TARNISHED_BRONZE_VASE.get(), (block) -> LootTable.lootTable());
 		this.add(RNBlocks.CRYSTALLIZED_BRONZE_VASE.get(), (block) -> LootTable.lootTable());
 
-		this.waxableDrop(RNBlocks.BRONZE_HEAD);
-		this.waxableDrop(RNBlocks.DISCOLORED_BRONZE_HEAD);
-		this.waxableDrop(RNBlocks.CORRODED_BRONZE_HEAD);
-		this.waxableDrop(RNBlocks.TARNISHED_BRONZE_HEAD);
-		this.waxableDrop(RNBlocks.CRYSTALLIZED_BRONZE_HEAD);
+		this.headDrop(RNBlocks.BRONZE_HEAD);
+		this.headDrop(RNBlocks.DISCOLORED_BRONZE_HEAD);
+		this.headDrop(RNBlocks.CORRODED_BRONZE_HEAD);
+		this.headDrop(RNBlocks.TARNISHED_BRONZE_HEAD);
+		this.headDrop(RNBlocks.CRYSTALLIZED_BRONZE_HEAD);
 
 		this.dropSelf(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get());
 
@@ -401,6 +403,45 @@ public class RNBlockLoot extends BlockLootSubProvider {
 										.when(this.hasSilkTouch().invert())
 										.add(LootItem.lootTableItem(RNItems.WINDING_KEY.get())
 												.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F))))
+						)
+		);
+	}
+
+	private void headDrop(DeferredBlock<?> block) {
+		var waxedCondition = LootItemBlockStatePropertyCondition
+				.hasBlockStateProperties(block.get())
+				.setProperties(
+						StatePropertiesPredicate.Builder
+								.properties()
+								.hasProperty(TarnishingBronze.WAXED, true)
+				);
+
+		var keylessCondition = LootItemBlockStatePropertyCondition
+				.hasBlockStateProperties(block.get())
+				.setProperties(
+						StatePropertiesPredicate.Builder
+								.properties()
+								.hasProperty(BronzeHeadBlock.KEYED, false)
+				);
+
+		var waxedItem = BuiltInRegistries.ITEM.get(
+				RubinatedNether.id(WaxableBlockItem.getWaxableItem(block))
+		);
+
+		add(
+				block.get(),
+				LootTable.lootTable()
+						.withPool(
+								LootPool.lootPool()
+										.when(waxedCondition)
+										.add(LootItem.lootTableItem(waxedItem)
+												.apply(CopyBlockState.copyState(block.get()).copy(BronzeHeadBlock.KEYED).when(keylessCondition)))
+						)
+						.withPool(
+								LootPool.lootPool()
+										.when(waxedCondition.invert())
+										.add(LootItem.lootTableItem(block)
+												.apply(CopyBlockState.copyState(block.get()).copy(BronzeHeadBlock.KEYED).when(keylessCondition)))
 						)
 		);
 	}

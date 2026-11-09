@@ -1,0 +1,29 @@
+{
+  "values": [
+    "rubinated_nether:bronze_head",
+    "rubinated_nether:discolored_bronze_head",
+    "rubinated_nether:corroded_bronze_head",
+    "rubinated_nether:tarnished_bronze_head",
+    "rubinated_nether:crystallized_bronze_head",
+    {
+      "id": "rubinated_nether:waxed_bronze_head",
+      "required": false
+    },
+    {
+      "id": "rubinated_nether:waxed_discolored_bronze_head",
+      "required": false
+    },
+    {
+      "id": "rubinated_nether:waxed_corroded_bronze_head",
+      "required": false
+    },
+    {
+      "id": "rubinated_nether:waxed_tarnished_bronze_head",
+      "required": false
+    },
+    {
+      "id": "rubinated_nether:waxed_crystallized_bronze_head",
+      "required": false
+    }
+  ]
+}

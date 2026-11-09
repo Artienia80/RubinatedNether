@@ -1556,44 +1556,49 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> BRONZE_HEAD = registerWaxableBlock(
+	public static final DeferredBlock<Block> BRONZE_HEAD = registerWaxableBlockWithRarity(
 			"bronze_head",
 			() -> new BronzeHeadBlock(
 					TarnishStage.UNAFFECTED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.BRONZE_BLOCK.get()).noOcclusion()
-			)
+			),
+			Rarity.UNCOMMON
 	);
 
-	public static final DeferredBlock<Block> DISCOLORED_BRONZE_HEAD = registerWaxableBlock(
+	public static final DeferredBlock<Block> DISCOLORED_BRONZE_HEAD = registerWaxableBlockWithRarity(
 			"discolored_bronze_head",
 			() -> new BronzeHeadBlock(
 					TarnishStage.DISCOLORED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.DISCOLORED_BRONZE_BLOCK.get()).noOcclusion()
-			)
+			),
+			Rarity.UNCOMMON
 	);
 
-	public static final DeferredBlock<Block> CORRODED_BRONZE_HEAD = registerWaxableBlock(
+	public static final DeferredBlock<Block> CORRODED_BRONZE_HEAD = registerWaxableBlockWithRarity(
 			"corroded_bronze_head",
 			() -> new BronzeHeadBlock(
 					TarnishStage.CORRODED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CORRODED_BRONZE_BLOCK.get()).noOcclusion()
-			)
+			),
+			Rarity.UNCOMMON
 	);
 
-	public static final DeferredBlock<Block> TARNISHED_BRONZE_HEAD = registerWaxableBlock(
+	public static final DeferredBlock<Block> TARNISHED_BRONZE_HEAD = registerWaxableBlockWithRarity(
 			"tarnished_bronze_head",
 			() -> new BronzeHeadBlock(
 					TarnishStage.TARNISHED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.TARNISHED_BRONZE_BLOCK.get()).noOcclusion()
-			)
+			),
+			Rarity.UNCOMMON
 	);
 
-	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_HEAD = registerWaxableBlock(
+	public static final DeferredBlock<Block> CRYSTALLIZED_BRONZE_HEAD = registerWaxableBlockWithRarity(
 			"crystallized_bronze_head",
 			() -> new BronzeHeadBlock(
 					TarnishStage.CRYSTALLIZED,
 					BlockBehaviour.Properties.ofFullCopy(RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get()).noOcclusion()
-			)
+			),
+			Rarity.UNCOMMON
 	);
 
 	public static final DeferredBlock<Block> FREEZER = registerBlockAndItem(
@@ -1656,6 +1661,25 @@ public class RNBlocks {
 				() -> new WaxableBlockItem(
 						register,
 						new Item.Properties()
+				)
+		);
+
+		return register;
+	}
+
+	public static <T extends Block> DeferredBlock<T> registerWaxableBlockWithRarity(String name, Supplier<T> block, Rarity rarity) {
+		var register = BLOCKS.register(name, block);
+
+		RNItems.ITEMS.register(
+				name,
+				() -> new BlockItem(register.get(), new Item.Properties().rarity(rarity))
+		);
+
+		RNItems.ITEMS.register(
+				"waxed_" + name,
+				() -> new WaxableBlockItem(
+						register,
+						new Item.Properties().rarity(rarity)
 				)
 		);
 
