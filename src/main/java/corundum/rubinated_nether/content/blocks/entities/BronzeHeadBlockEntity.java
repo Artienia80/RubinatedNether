@@ -114,7 +114,7 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 		};
 	}
 
-	private boolean scanVision(BlockState state) {
+	private Direction.Axis refreshCone(BlockState state) {
 		TarnishStage stage = getStage(state);
 		boolean crystallized = stage == TarnishStage.CRYSTALLIZED;
 		Direction attach = state.getValue(BronzeHeadBlock.ATTACH);
@@ -126,6 +126,21 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 				look.get(HeadOrientation.uAxis(plane)), look.get(HeadOrientation.vAxis(plane)),
 				halfAngle(stage), crystallized,
 				(attach.get3DDataValue() * HeadOrientation.STEPS + step) * 8 + stage.getId(), plane);
+		return plane;
+	}
+
+	public HeadConeCache getCone() {
+		refreshCone(getBlockState());
+		return cone;
+	}
+
+	public AABB getRenderBoundingBox() {
+		return new AABB(worldPosition).inflate(HeadCone.RANGE);
+	}
+
+	private boolean scanVision(BlockState state) {
+		boolean crystallized = getStage(state) == TarnishStage.CRYSTALLIZED;
+		Direction.Axis plane = refreshCone(state);
 
 		int range = HeadCone.RANGE;
 		AABB area = new AABB(
@@ -169,23 +184,12 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 		} else {
 			resetObservation();
 		}
-		return powerFromSeconds(getStage(getBlockState()), observationSeconds);
+		return powerFromSeconds(observationSeconds);
 	}
 
-	private static int secondsPerPowerLevel(TarnishStage stage) {
-		return switch (stage) {
-			case UNAFFECTED, CRYSTALLIZED -> 1;
-			case DISCOLORED -> 2;
-			case CORRODED -> 3;
-			case TARNISHED -> 4;
-		};
-	}
-
-	private static int powerFromSeconds(TarnishStage stage, int seconds) {
+	private static int powerFromSeconds(int seconds) {
 		if (seconds <= 0) return 0;
-		int perLevel = secondsPerPowerLevel(stage);
-		int clamped = Math.min(seconds, perLevel * 15);
-		return Math.max(1, Math.min(15, clamped / perLevel));
+		return Math.min(15, seconds);
 	}
 
 	@Override
@@ -202,7 +206,7 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 		observationStart = tag.contains("ObservationStart") ? tag.getLong("ObservationStart") : -1;
 		observationSeconds = tag.getInt("ObservationSeconds");
 		wasObserving = tag.getBoolean("WasObserving");
-		visionPower = powerFromSeconds(getStage(getBlockState()), observationSeconds);
+		visionPower = powerFromSeconds(observationSeconds);
 	}
 
 	private void grantLaserDetectionAdvancement(Entity entity) {

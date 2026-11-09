@@ -13,6 +13,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class HeadConeCache {
 	private static final long FULL_RESCAN_INTERVAL_TICKS = 20;
+	private static final double CORE_FRACTION = 0.5D;
 	private static final VoxelShape BEAM_BAND_Y = Shapes.box(0.0D, 0.4D, 0.0D, 1.0D, 0.6D, 1.0D);
 	private static final VoxelShape BEAM_BAND_X = Shapes.box(0.4D, 0.0D, 0.0D, 0.6D, 1.0D, 1.0D);
 	private static final VoxelShape BEAM_BAND_Z = Shapes.box(0.0D, 0.0D, 0.4D, 1.0D, 1.0D, 0.6D);
@@ -30,13 +31,25 @@ public final class HeadConeCache {
 		rescan(level, origin, forwardU, forwardV, halfAngle, pierce, key, plane);
 	}
 
+	public boolean isVisible(int du, int dv) {
+		return count > 0 && cone.isVisible(du, dv);
+	}
+
+	public Direction.Axis getPlane() {
+		return plane;
+	}
+
 	public boolean sees(AABB box, BlockPos origin) {
 		Direction.Axis uAxis = HeadOrientation.uAxis(plane);
 		Direction.Axis vAxis = HeadOrientation.vAxis(plane);
-		int minU = Mth.floor(box.min(uAxis)) - origin.get(uAxis);
-		int maxU = Math.max(minU, Mth.floor(box.max(uAxis) - 1.0E-6D) - origin.get(uAxis));
-		int minV = Mth.floor(box.min(vAxis)) - origin.get(vAxis);
-		int maxV = Math.max(minV, Mth.floor(box.max(vAxis) - 1.0E-6D) - origin.get(vAxis));
+		double centerU = (box.min(uAxis) + box.max(uAxis)) * 0.5D;
+		double centerV = (box.min(vAxis) + box.max(vAxis)) * 0.5D;
+		double halfU = (box.max(uAxis) - box.min(uAxis)) * CORE_FRACTION * 0.5D;
+		double halfV = (box.max(vAxis) - box.min(vAxis)) * CORE_FRACTION * 0.5D;
+		int minU = Mth.floor(centerU - halfU) - origin.get(uAxis);
+		int maxU = Mth.floor(centerU + halfU) - origin.get(uAxis);
+		int minV = Mth.floor(centerV - halfV) - origin.get(vAxis);
+		int maxV = Mth.floor(centerV + halfV) - origin.get(vAxis);
 		return cone.sees(minU, maxU, minV, maxV);
 	}
 

@@ -1,13 +1,18 @@
 package corundum.rubinated_nether.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.RNModelLayers;
 import corundum.rubinated_nether.content.blocks.BronzeHeadBlock;
 import corundum.rubinated_nether.content.blocks.entities.BronzeHeadBlockEntity;
+import corundum.rubinated_nether.utils.HeadCone;
+import corundum.rubinated_nether.utils.HeadConeCache;
 import corundum.rubinated_nether.utils.HeadOrientation;
+import corundum.rubinated_nether.utils.RubyLensHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -16,8 +21,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -37,6 +44,9 @@ public class BronzeHeadRenderer implements BlockEntityRenderer<BronzeHeadBlockEn
 			case CRYSTALLIZED -> CRYSTALLIZED_TEXTURE;
 		};
 	}
+
+	private static final float RANGE_INSET = 0.04F;
+	private static final int RANGE_ALPHA = 60;
 
 	private final BronzeHeadModel model;
 
@@ -72,5 +82,52 @@ public class BronzeHeadRenderer implements BlockEntityRenderer<BronzeHeadBlockEn
 		poseStack.scale(-1.0F, -1.0F, 1.0F);
 		model.render(poseStack, bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture)), packedLight, packedOverlay);
 		poseStack.popPose();
+
+		if (state.getValue(BronzeHeadBlock.KEYED) && RubyLensHelper.isWearing(Minecraft.getInstance().player)) {
+			renderRange(blockEntity.getCone(), poseStack, bufferSource);
+		}
+	}
+
+	private static void renderRange(HeadConeCache cone, PoseStack poseStack, MultiBufferSource bufferSource) {
+		Direction.Axis plane = cone.getPlane();
+		int planeIndex = plane.ordinal();
+		int uIndex = HeadOrientation.uAxis(plane).ordinal();
+		int vIndex = HeadOrientation.vAxis(plane).ordinal();
+		VertexConsumer buffer = bufferSource.getBuffer(RenderType.lightning());
+		Matrix4f pose = poseStack.last().pose();
+		float[] a = new float[3];
+		float[] b = new float[3];
+		float[] c = new float[3];
+		float[] d = new float[3];
+
+		for (int du = -HeadCone.RANGE; du <= HeadCone.RANGE; du++) {
+			for (int dv = -HeadCone.RANGE; dv <= HeadCone.RANGE; dv++) {
+				if (!cone.isVisible(du, dv)) continue;
+
+				a[planeIndex] = b[planeIndex] = c[planeIndex] = d[planeIndex] = 0.5F;
+				a[uIndex] = d[uIndex] = du + RANGE_INSET;
+				b[uIndex] = c[uIndex] = du + 1.0F - RANGE_INSET;
+				a[vIndex] = b[vIndex] = dv + RANGE_INSET;
+				c[vIndex] = d[vIndex] = dv + 1.0F - RANGE_INSET;
+
+				quad(buffer, pose, a, b, c, d);
+				quad(buffer, pose, d, c, b, a);
+			}
+		}
+	}
+
+	private static void quad(VertexConsumer buffer, Matrix4f pose, float[] a, float[] b, float[] c, float[] d) {
+		vertex(buffer, pose, a);
+		vertex(buffer, pose, b);
+		vertex(buffer, pose, c);
+		vertex(buffer, pose, d);
+	}
+
+	private static void vertex(VertexConsumer buffer, Matrix4f pose, float[] p) {
+		buffer.addVertex(pose, p[0], p[1], p[2]).setColor(255, 70, 70, RANGE_ALPHA);
+	}
+
+	public AABB getRenderBoundingBox(BronzeHeadBlockEntity blockEntity) {
+		return new AABB(blockEntity.getBlockPos()).inflate(HeadCone.RANGE);
 	}
 }
