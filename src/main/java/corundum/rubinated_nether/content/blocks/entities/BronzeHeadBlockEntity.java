@@ -2,9 +2,10 @@ package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
-import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.BronzeHeadBlock;
+import corundum.rubinated_nether.utils.HeadCone;
+import corundum.rubinated_nether.utils.HeadConeCache;
 import corundum.rubinated_nether.utils.TickableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,15 +15,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 
 public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockEntity {
 	public static final float DEGREES_PER_POWER = 22.5F;
@@ -40,6 +37,7 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 	private long observationStart = -1;
 	private int observationSeconds;
 	private boolean wasObserving;
+	private final HeadConeCache cone = new HeadConeCache();
 
 	public BronzeHeadBlockEntity(BlockPos pos, BlockState blockState) {
 		super(RNBlockEntities.BRONZE_HEAD.get(), pos, blockState);
@@ -111,65 +109,34 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 		return state.getBlock() instanceof BronzeHeadBlock head ? head.getStage() : TarnishStage.UNAFFECTED;
 	}
 
-	/**
-	 * How wide the cone is on each side of the centre line, at a given distance in front of the head.
-	 * Straight line (Bronze, Crystallized): 0. Discolored 1,2: one block wider every two blocks.
-	 * Corroded 1,1: one block wider every block. Tarnished 2,1: two blocks wider every block.
-	 */
-	private static int halfWidth(TarnishStage stage, int row) {
+	private static double halfAngle(TarnishStage stage) {
 		return switch (stage) {
-			case UNAFFECTED, CRYSTALLIZED -> 0;
-			case DISCOLORED -> row / 2;
-			case CORRODED -> row;
-			case TARNISHED -> row * 2;
+			case UNAFFECTED, CRYSTALLIZED -> 0.0D;
+			case DISCOLORED -> Math.atan(0.5D);
+			case CORRODED -> Math.atan(1.0D);
+			case TARNISHED -> Math.atan(2.0D);
 		};
 	}
 
 	private boolean scanVision(BlockState state) {
 		TarnishStage stage = getStage(state);
 		boolean crystallized = stage == TarnishStage.CRYSTALLIZED;
-
 		Direction facing = state.getValue(BronzeHeadBlock.FACING);
-		Direction.Axis facingAxis = facing.getAxis();
-		Vec3 origin = Vec3.atCenterOf(worldPosition);
-		Vec3 forwardVec = new Vec3(facing.getStepX(), facing.getStepY(), facing.getStepZ());
 
-		double lateralReach = Math.min(MAX_RANGE + 1, halfWidth(stage, MAX_RANGE) + 2);
-		AABB area = new AABB(origin, origin.add(forwardVec.scale(MAX_RANGE + 1))).inflate(
-				facingAxis == Direction.Axis.X ? 0 : lateralReach,
-				lateralReach,
-				facingAxis == Direction.Axis.Z ? 0 : lateralReach
+		cone.refresh(level, worldPosition, facing.getStepX(), facing.getStepZ(), halfAngle(stage), crystallized,
+				facing.get3DDataValue() * 8 + stage.getId());
+
+		int range = HeadCone.RANGE;
+		AABB area = new AABB(
+				worldPosition.getX() - range, worldPosition.getY(), worldPosition.getZ() - range,
+				worldPosition.getX() + range + 1, worldPosition.getY() + 1, worldPosition.getZ() + range + 1
 		);
 
 		boolean observed = false;
 		for (Entity entity : level.getEntities((Entity) null, area,
 				candidate -> !candidate.isSpectator() && (!crystallized || candidate instanceof Player))) {
 			if (observed && !(entity instanceof ServerPlayer)) continue;
-			AABB box = entity.getBoundingBox();
-			Vec3 relative = box.getCenter().subtract(origin);
-
-			double forward = relative.dot(forwardVec);
-			int row = (int) Math.floor(forward + 0.5);
-			if (row < 1 || row > MAX_RANGE) continue;
-
-			// sideways distance of the entity from the centre line, measured to the edge of its hitbox
-			// so a big mob clipping the edge of the cone still counts
-			double lateralSq = 0;
-			double shrunkSq = 0;
-			for (Direction.Axis axis : Direction.Axis.values()) {
-				if (axis == facingAxis) continue;
-				double offset = Math.abs(axis.choose(relative.x, relative.y, relative.z));
-				double half = axis.choose(box.getXsize(), box.getYsize(), box.getZsize()) / 2;
-				lateralSq += offset * offset;
-				double shrunk = Math.max(0, offset - half);
-				shrunkSq += shrunk * shrunk;
-			}
-
-			if (Math.sqrt(forward * forward + lateralSq) > MAX_RANGE + 0.5) continue;
-			if (Math.sqrt(shrunkSq) > halfWidth(stage, row) + 0.5) continue;
-
-			// Crystallized heads see players straight through walls; every other head needs a clear line
-			if (!crystallized && !canSee(entity, origin.add(forwardVec.scale(0.51)))) continue;
+			if (!cone.sees(entity.getBoundingBox(), worldPosition)) continue;
 
 			observed = true;
 			grantLaserDetectionAdvancement(entity);
@@ -231,28 +198,6 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 		observationSeconds = tag.getInt("ObservationSeconds");
 		wasObserving = tag.getBoolean("WasObserving");
 		visionPower = powerFromSeconds(getStage(getBlockState()), observationSeconds);
-	}
-
-	// Rays go to the entity's centre or its eyes. Solid blocks stop them; glass, panes, bars and grates
-	// (the laser_transparent tag) don't. Tinted glass (laser_no_signal) blocks them.
-	private boolean canSee(Entity entity, Vec3 from) {
-		return hasClearPath(entity, from, entity.getBoundingBox().getCenter())
-				|| hasClearPath(entity, from, entity.getEyePosition());
-	}
-
-	private boolean hasClearPath(Entity entity, Vec3 from, Vec3 to) {
-		Vec3 direction = to.subtract(from);
-		if (direction.lengthSqr() < 1.0E-6) return true;
-		Vec3 step = direction.normalize().scale(0.01);
-		Vec3 cursor = from;
-		for (int i = 0; i < 32; i++) {
-			BlockHitResult hit = level.clip(new ClipContext(cursor, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity));
-			if (hit.getType() == HitResult.Type.MISS) return true;
-			BlockState hitState = level.getBlockState(hit.getBlockPos());
-			if (!hitState.is(RNTags.Blocks.LASER_TRANSPARENT) || hitState.is(RNTags.Blocks.LASER_NO_SIGNAL)) return false;
-			cursor = hit.getLocation().add(step);
-		}
-		return false;
 	}
 
 	private void grantLaserDetectionAdvancement(Entity entity) {
