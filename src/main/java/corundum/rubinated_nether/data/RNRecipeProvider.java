@@ -64,6 +64,11 @@ public class RNRecipeProvider extends RecipeProvider {
 			RNBlocks.COBBLED_SHRINE_STONE_STAIRS,
 			RNBlocks.COBBLED_SHRINE_STONE_WALL,
 
+			RNBlocks.SHRINE_STONE_RUBBLE,
+			RNBlocks.SHRINE_STONE_RUBBLE_SLAB,
+			RNBlocks.SHRINE_STONE_RUBBLE_STAIRS,
+			RNBlocks.SHRINE_STONE_RUBBLE_WALL,
+
 			RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
 
 			RNBlocks.SHRINE_STONE_BRICKS_SLAB,
@@ -91,6 +96,11 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.COBBLED_SHRINE_STONE_SLAB,
 				RNBlocks.COBBLED_SHRINE_STONE_STAIRS,
 				RNBlocks.COBBLED_SHRINE_STONE_WALL,
+
+				RNBlocks.SHRINE_STONE_RUBBLE,
+				RNBlocks.SHRINE_STONE_RUBBLE_SLAB,
+				RNBlocks.SHRINE_STONE_RUBBLE_STAIRS,
+				RNBlocks.SHRINE_STONE_RUBBLE_WALL,
 
 				RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
 
@@ -294,7 +304,22 @@ public class RNRecipeProvider extends RecipeProvider {
 
 			RNBlocks.SHRINE_STONE_RUBBLE_SLAB,
 			RNBlocks.SHRINE_STONE_RUBBLE_STAIRS,
-			RNBlocks.SHRINE_STONE_RUBBLE_WALL
+			RNBlocks.SHRINE_STONE_RUBBLE_WALL,
+
+			RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
+			RNBlocks.SHRINE_STONE_BRICKS_SLAB,
+			RNBlocks.SHRINE_STONE_BRICKS_STAIRS,
+			RNBlocks.SHRINE_STONE_BRICKS_WALL,
+			RNBlocks.SHRINE_STONE_BRICKS,
+			RNBlocks.SHRINE_STONE_TILES_SLAB,
+			RNBlocks.SHRINE_STONE_TILES_STAIRS,
+			RNBlocks.SHRINE_STONE_TILES_WALL,
+			RNBlocks.SHRINE_STONE_TILES,
+			RNBlocks.POLISHED_SHRINE_STONE_SLAB,
+			RNBlocks.POLISHED_SHRINE_STONE_STAIRS,
+			RNBlocks.POLISHED_SHRINE_STONE_WALL,
+			RNBlocks.POLISHED_SHRINE_STONE,
+			RNBlocks.SHRINE_STONE_PILLAR
 		);
 
 		twoByTwo(
@@ -612,6 +637,7 @@ public class RNRecipeProvider extends RecipeProvider {
 		freezing(recipeOutput, RNItems.BRONZE_ROD,			Items.BREEZE_ROD,         400,  1.0f);
 		freezing(recipeOutput, Blocks.PACKED_ICE,			Blocks.BLUE_ICE,          9600, 1.0f);
 		freezing(recipeOutput, RNBlocks.COBBLED_SHRINE_STONE, RNBlocks.SHRINE_STONE, 400, 1.0f);
+		freezing(recipeOutput, RNBlocks.SHRINE_STONE_RUBBLE, RNBlocks.COBBLED_SHRINE_STONE, 400, 1.0f);
 
 		smelting(recipeOutput, RNItems.BRONZE_ROD, Items.BLAZE_ROD,   0.7f, 200);
 		blasting(recipeOutput, RNItems.BRONZE_ROD, Items.BLAZE_ROD,   0.7f, 100);
