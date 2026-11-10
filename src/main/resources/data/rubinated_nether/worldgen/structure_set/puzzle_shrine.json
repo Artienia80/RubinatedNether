@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "rubinated_nether:puzzle_shrine",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 34,
+    "separation": 12,
+    "salt": 2071937281
+  }
+}

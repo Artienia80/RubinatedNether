@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:jigsaw",
+  "biomes": "#rubinated_nether:has_structure/puzzle_shrine",
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none",
+  "start_pool": "rubinated_nether:puzzle_shrine/start",
+  "size": 3,
+  "start_height": {
+    "absolute": 13
+  },
+  "max_distance_from_center": 96,
+  "use_expansion_hack": false
+}
