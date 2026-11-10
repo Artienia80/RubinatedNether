@@ -106,7 +106,23 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.SHRINE_STONE_SLAB.get());
 		this.dropSelf(RNBlocks.SHRINE_STONE_WALL.get());
 
-		this.dropSelf(RNBlocks.COBBLED_SHRINE_STONE.get());
+		this.add(
+				RNBlocks.COBBLED_SHRINE_STONE.get(),
+				(block) -> LootTable.lootTable()
+						.withPool(
+								LootPool.lootPool()
+										.when(this.hasSilkTouch())
+										.add(LootItem.lootTableItem(RNBlocks.COBBLED_SHRINE_STONE))
+						)
+						.withPool(
+								applyExplosionCondition(
+										RNBlocks.COBBLED_SHRINE_STONE,
+										LootPool.lootPool()
+												.when(this.hasSilkTouch().invert())
+												.add(LootItem.lootTableItem(RNBlocks.SHRINE_STONE_RUBBLE))
+								)
+						)
+		);
 		this.dropSelf(RNBlocks.COBBLED_SHRINE_STONE_STAIRS.get());
 		this.dropSelf(RNBlocks.COBBLED_SHRINE_STONE_SLAB.get());
 		this.dropSelf(RNBlocks.COBBLED_SHRINE_STONE_WALL.get());

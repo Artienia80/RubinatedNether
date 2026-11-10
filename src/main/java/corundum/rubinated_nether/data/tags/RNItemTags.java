@@ -77,6 +77,11 @@ public class RNItemTags extends ItemTagsProvider {
 				.add(Items.GRAVEL, Items.SAND, Items.RED_SAND)
 				.addTag(RNTags.Items.CONCRETE_POWDER);
 
+		this.tag(RNTags.Items.PROCESSING_TO_SHRINE_RUBBLE).add(
+				RNBlocks.SHRINE_STONE.asItem(),
+				RNBlocks.COBBLED_SHRINE_STONE.asItem()
+		);
+
 		this.tag(RNTags.Items.WAX).add(Items.HONEYCOMB);
 
 		this.tag(RNTags.Items.RUBINATION_RUNES).addTag(RNTags.Items.RUNES);

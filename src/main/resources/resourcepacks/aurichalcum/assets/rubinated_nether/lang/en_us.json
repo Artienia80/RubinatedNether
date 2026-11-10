@@ -259,5 +259,6 @@
   "rubinated_nether.midnightconfig.bronzeDiseasedWeaknessStrength": "Aurichalcum Diseased Weakness Strength",
   "rubinated_nether.midnightconfig.ventSmokeParticleMultiplier": "Aurichalcum Vent Particle Count",
   "rubinated_nether.midnightconfig.crystallizedVentRange": "Crzstallized Aurichalcum Vent Range",
-  "rubinated_nether.midnightconfig.bronzeDiseasedOverlayOpacity": "Aurichalcum Diseased Overlay Opacity"
+  "rubinated_nether.midnightconfig.bronzeDiseasedOverlayOpacity": "Aurichalcum Diseased Overlay Opacity",
+  "subtitles.rubinated_nether.head_tick": "Aurichalcum Head ticks"
 }

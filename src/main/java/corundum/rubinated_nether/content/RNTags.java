@@ -103,6 +103,8 @@ public final class RNTags {
 
 		public static final TagKey<Item> SHRINE_RUBBLE_CANDIDATE = createTag(Registries.ITEM, "shrine_rubble_candidate");
 
+		public static final TagKey<Item> PROCESSING_TO_SHRINE_RUBBLE = createTag(Registries.ITEM, "processing/to_shrine_rubble");
+
 		public static final TagKey<Item> SHRINE_STONE_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_candidate");
 		public static final TagKey<Item> SHRINE_STONE_STAIRS_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_stairs_candidate");
 		public static final TagKey<Item> SHRINE_STONE_SLAB_CANDIDATE = createTag(Registries.ITEM, "shrine_stone_slab_candidate");

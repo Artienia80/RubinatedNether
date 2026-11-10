@@ -1,6 +1,8 @@
 package corundum.rubinated_nether.content.module;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.RNTags;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.ItemTags;
@@ -31,6 +33,7 @@ public final class BuiltinDropProcessors {
 
     public static Optional<ItemStack> process(ServerLevel level, ItemStack drop) {
         if (drop.is(ItemTags.LOGS)) return planks(level, drop);
+        if (drop.is(RNTags.Items.PROCESSING_TO_SHRINE_RUBBLE)) return Optional.of(new ItemStack(RNBlocks.SHRINE_STONE_RUBBLE.asItem(), drop.getCount()));
         if (drop.is(TO_GRAVEL)) return Optional.of(new ItemStack(Items.GRAVEL, drop.getCount()));
         if (drop.is(TO_SAND)) return Optional.of(new ItemStack(Items.SAND, drop.getCount()));
         return Optional.empty();
