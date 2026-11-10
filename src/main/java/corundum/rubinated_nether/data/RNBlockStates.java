@@ -108,7 +108,8 @@ public class RNBlockStates extends BlockStateProvider {
 				this.models()
 						.withExistingParent("dry_ice", this.modLoc("block/dry_ice_base"))
 		);
-		this.simpleBlock(RNBlocks.SOAKSTONE.get());
+		this.simpleBlock(RNBlocks.PUMICE.get());
+		this.simpleBlock(RNBlocks.CINDER.get());
 
 		glassWithPane(
 				RNBlocks.RUBY_GLASS.get(),

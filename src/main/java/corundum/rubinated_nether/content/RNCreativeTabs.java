@@ -42,8 +42,8 @@ public class RNCreativeTabs {
 						addItems(output, RNBlocks.MOLTEN_RUBY_BLOCK);
 						if (showItems) addItems(output, RNItems.MOLTEN_RUBY, RNItems.MOLTEN_RUBY_NUGGET);
 						if (showItems) addItems(output, RNItems.POMEGRANATE, RNItems.RUBINATED_POMEGRANATE);
-						// Ore, obsidian, soakstone
-						addItems(output, RNBlocks.MOLTEN_RUBY_ORE, RNBlocks.BLEEDING_OBSIDIAN, RNBlocks.SOAKSTONE);
+						// Ore, obsidian, pumice, cinder
+						addItems(output, RNBlocks.MOLTEN_RUBY_ORE, RNBlocks.BLEEDING_OBSIDIAN, RNBlocks.PUMICE, RNBlocks.CINDER);
 						// Ruby glass, then panes in the same order
 						addItems(
 								output,
@@ -524,7 +524,10 @@ public class RNCreativeTabs {
 			event.insertAfter(RNBlocks.MOLTEN_RUBY_GLASS_PANE.get().asItem().getDefaultInstance(),
 					RNBlocks.ORNATE_RUBY_GLASS_PANE.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.CONDUIT.getDefaultInstance(),
-					RNBlocks.SOAKSTONE.get().asItem().getDefaultInstance(), BOTH_TABS);
+					RNBlocks.PUMICE.get().asItem().getDefaultInstance(), BOTH_TABS);
+
+			event.insertAfter(RNBlocks.PUMICE.get().asItem().getDefaultInstance(),
+					RNBlocks.CINDER.get().asItem().getDefaultInstance(), BOTH_TABS);
 
 			event.insertAfter(Items.LANTERN.getDefaultInstance(),
 					RNBlocks.BRONZE_LANTERN.get().asItem().getDefaultInstance(), BOTH_TABS);

@@ -32,7 +32,7 @@
     {
       "weight": 35,
       "element": {
-        "location": "rubinated_nether:beta/corridor/soakstone",
+        "location": "rubinated_nether:beta/corridor/pumice",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

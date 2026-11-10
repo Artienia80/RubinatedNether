@@ -16,7 +16,7 @@ Barter with Piglins
 Break Rubies into **Ruby Shards** for a more economical and efficient way to Barter with Piglins.
 
 Fight Fire with Fire
-Use **Soakstones** to soak up lava like a sponge, or craft a _Ruby Brazier_ to have Fire Resistance applied to you.
+Use **Pumice** to soak up lava like a sponge, or craft a _Ruby Brazier_ to have Fire Resistance applied to you.
 
 Protect Your Base
 Craft **Ruby Glass** for a blast-proof window, or **Bleeding Obsidian** to invite nightmares. You can Rubinate obsidian by right clicking any Crying Obsidian with a Ruby Shard.

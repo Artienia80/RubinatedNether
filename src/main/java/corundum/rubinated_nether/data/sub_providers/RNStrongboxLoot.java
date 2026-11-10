@@ -63,7 +63,7 @@ public class RNStrongboxLoot implements LootTableSubProvider {
 		lines.add(simple(Items.COPPER_INGOT, 8, 16, 12));
 		lines.add(simple(RNItems.BRONZE_SCRAP.get(), 3, 8, 8));
 		lines.add(simple(Items.OBSIDIAN, 4, 8, 6));
-		lines.add(simple(RNBlocks.SOAKSTONE.get(), 4, 12, 8));
+		lines.add(simple(RNBlocks.PUMICE.get(), 4, 12, 8));
 		lines.add(simple(RNItems.RUBY.get(), 2, 6, 5));
 		lines.add(simple(RNItems.MOLTEN_RUBY.get(), 2, 6, 4));
 		lines.add(simple(Items.QUARTZ, 4, 10, 7));

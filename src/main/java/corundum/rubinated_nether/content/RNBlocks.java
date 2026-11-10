@@ -154,9 +154,19 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<Block> SOAKSTONE = registerBlockAndItem(
-			"soakstone",
-			() -> new SoakStoneBlock(Block.Properties.ofFullCopy(Blocks.NETHERRACK))
+	public static final DeferredBlock<Block> PUMICE = registerBlockAndItem(
+			"pumice",
+			() -> new PumiceBlock(Block.Properties.ofFullCopy(Blocks.NETHERRACK))
+	);
+
+	static {
+		BLOCKS.addAlias(RubinatedNether.id("soakstone"), RubinatedNether.id("pumice"));
+		RNItems.ITEMS.addAlias(RubinatedNether.id("soakstone"), RubinatedNether.id("pumice"));
+	}
+
+	public static final DeferredBlock<CinderBlock> CINDER = registerBlockAndItem(
+			"cinder",
+			() -> new CinderBlock(Block.Properties.ofFullCopy(Blocks.GRAVEL).mapColor(MapColor.NETHER))
 	);
 
 	public static final DeferredBlock<Block> RUNESTONE = registerBlockAndItem(

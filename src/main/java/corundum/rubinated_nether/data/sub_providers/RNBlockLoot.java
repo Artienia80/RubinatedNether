@@ -83,7 +83,8 @@ public class RNBlockLoot extends BlockLootSubProvider {
         this.dropSelf(RNBlocks.TARNISHED_BRONZE_CHANDELIER.get());
         this.dropSelf(RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get());
 
-		this.dropSelf(RNBlocks.SOAKSTONE.get());
+		this.dropSelf(RNBlocks.PUMICE.get());
+		this.dropSelf(RNBlocks.CINDER.get());
 
 		this.add(
 				RNBlocks.SHRINE_STONE.get(),

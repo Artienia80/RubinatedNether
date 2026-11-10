@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class SoakStoneBlock extends Block{
+public class PumiceBlock extends Block{
 	public static final int MAX_DEPTH = 6;
 	public static final int MAX_COUNT = 64;
 	private static final Direction[] ALL_DIRECTIONS = Direction.values();
@@ -38,7 +38,7 @@ public class SoakStoneBlock extends Block{
 	private final Map<UUID, Integer> standTime = new HashMap<>();
 	private static final Set<net.minecraft.core.GlobalPos> preventChainBreaks = new HashSet<>();
 
-	public SoakStoneBlock(BlockBehaviour.Properties properties) {
+	public PumiceBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 	}
 

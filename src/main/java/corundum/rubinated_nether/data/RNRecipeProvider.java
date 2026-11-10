@@ -623,7 +623,7 @@ public class RNRecipeProvider extends RecipeProvider {
 		trimSmithing(recipeOutput, RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get().asItem(),
 				ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "crystallized_bronze_trim"));
 
-		freezing(recipeOutput, Blocks.MAGMA_BLOCK,			RNBlocks.SOAKSTONE,       400,  1.0f);
+		freezing(recipeOutput, Blocks.MAGMA_BLOCK,			RNBlocks.PUMICE,       400,  1.0f);
 		freezing(recipeOutput, Blocks.POWDER_SNOW,			Blocks.SNOW_BLOCK,        600,  1.0f);
 		freezing(recipeOutput, Items.MAGMA_CREAM,			Items.SLIME_BALL,         400,  1.0f);
 		freezing(recipeOutput, RNItems.MOLTEN_RUBY,			RNItems.RUBY,             400,  1.0f);
