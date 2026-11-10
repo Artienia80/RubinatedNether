@@ -189,8 +189,7 @@ public class RNRecipeProvider extends RecipeProvider {
 		tarnish(recipeOutput, this::bulb, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_BULB);
 		tarnish(recipeOutput, this::chandelier, RNBlocks.BRONZE_LANTERN, RNBlocks.BRONZE_GRATE, RNBlocks.BRONZE_CHANDELIER);
 
-		tarnish(recipeOutput, (output, input, lesser, result) -> laser(output, input, lesser, result, false),
-				RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_LASER);
+		tarnish(recipeOutput, this::laser, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_LASER);
 
 		tarnish(recipeOutput, (output, input, result) -> grate(output, input, result, 4),
 				RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_GRATE);
@@ -1091,27 +1090,20 @@ public class RNRecipeProvider extends RecipeProvider {
 		}
 	}
 
-	private void laser(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike laser, boolean isCopper) {
-		laser(recipeOutput, blockInput, RNItems.BRONZE_SCRAP, laser, isCopper);
-	}
-
-	private void laser(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike lesserBronze, ItemLike laser, boolean isCopper) {
-		ItemLike scrapOrIngot = isCopper ? Items.COPPER_INGOT : lesserBronze;
-		ItemLike glowOrQuartz = isCopper ? Items.QUARTZ : Items.GLOWSTONE;
-
+	private void laser(RecipeOutput recipeOutput, ItemLike blockInput, ItemLike lesserBronze, ItemLike laser) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, laser, 1)
 				.define('A', blockInput)
-				.define('B', scrapOrIngot)
+				.define('B', lesserBronze)
 				.define('C', Items.REDSTONE)
-				.define('D', glowOrQuartz)
+				.define('D', Items.GLOWSTONE)
 				.define('E', RNBlocks.RUBY_BLOCK)
 				.pattern(" E ")
 				.pattern("BDB")
 				.pattern("ACA")
 				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
-				.unlockedBy(getHasName(scrapOrIngot), has(scrapOrIngot))
+				.unlockedBy(getHasName(lesserBronze), has(lesserBronze))
 				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(glowOrQuartz), has(glowOrQuartz))
+				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
 				.unlockedBy(getHasName(blockInput), has(blockInput))
 				.save(recipeOutput);
 	}

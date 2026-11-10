@@ -113,15 +113,8 @@ public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEnt
 				.setValue(DIAGONAL, (wrapped & 1) == 1);
 	}
 
-	public static Direction[] outputDirections(BlockState state) {
-		return new Direction[]{state.getValue(ATTACH)};
-	}
-
 	public static boolean outputsTo(BlockState state, Direction direction) {
-		for (Direction output : outputDirections(state)) {
-			if (output == direction) return true;
-		}
-		return false;
+		return state.getValue(ATTACH) == direction;
 	}
 
 	private static BlockState orient(BlockState state, Direction attach, Vec3 look) {
@@ -314,11 +307,10 @@ public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEnt
 	}
 
 	public static void updateBehind(Level level, BlockPos pos, BlockState state) {
-		for (Direction output : outputDirections(state)) {
-			BlockPos behind = pos.relative(output.getOpposite());
-			level.neighborChanged(behind, state.getBlock(), pos);
-			level.updateNeighborsAtExceptFromFacing(behind, state.getBlock(), output);
-		}
+		Direction output = state.getValue(ATTACH);
+		BlockPos behind = pos.relative(output.getOpposite());
+		level.neighborChanged(behind, state.getBlock(), pos);
+		level.updateNeighborsAtExceptFromFacing(behind, state.getBlock(), output);
 	}
 
 	@Override

@@ -146,8 +146,8 @@ public class RNClientSubscriber {
             return;
         }
         if (event.getCamera().getEntity() instanceof LivingEntity living && living.hasEffect(RNEffects.BRAZIER_POWER)) {
-            event.setNearPlaneDistance(RNConfig.brazierPowerViewRange);
-            event.setFarPlaneDistance(RNConfig.brazierPowerViewRange * 2);
+            event.setNearPlaneDistance(-8.0F);
+            event.setFarPlaneDistance(RNConfig.brazierPowerViewRange * 2.0F);
             event.setFogShape(FogShape.SPHERE);
             event.setCanceled(true);
         }

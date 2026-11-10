@@ -12,7 +12,6 @@ public final class HeadOrientation {
 	private static final double MIN_PROJECTION_SQR = 0.01D;
 
 	private static final Vec3[][] LOOKS = new Vec3[6][STEPS];
-	private static final Direction[][][] OUTPUTS = new Direction[6][STEPS][];
 
 	static {
 		for (Direction normal : Direction.values()) {
@@ -25,7 +24,6 @@ public final class HeadOrientation {
 						a.z * COS[step] + b.z * SIN[step]
 				);
 				LOOKS[normal.get3DDataValue()][step] = look;
-				OUTPUTS[normal.get3DDataValue()][step] = directionsOf(look);
 			}
 		}
 	}
@@ -50,10 +48,6 @@ public final class HeadOrientation {
 		return LOOKS[normal.get3DDataValue()][step & (STEPS - 1)];
 	}
 
-	public static Direction[] outputs(Direction normal, int step) {
-		return OUTPUTS[normal.get3DDataValue()][step & (STEPS - 1)];
-	}
-
 	public static int stepFor(Direction normal, double x, double y, double z) {
 		Vec3 a = axisA(normal);
 		Vec3 b = axisB(normal);
@@ -70,19 +64,5 @@ public final class HeadOrientation {
 
 	public static Direction.Axis vAxis(Direction.Axis normalAxis) {
 		return normalAxis == Direction.Axis.Y ? Direction.Axis.Z : Direction.Axis.Y;
-	}
-
-	private static Direction[] directionsOf(Vec3 look) {
-		Direction[] found = new Direction[3];
-		int count = 0;
-		if (look.x > 0.1D) found[count++] = Direction.EAST;
-		else if (look.x < -0.1D) found[count++] = Direction.WEST;
-		if (look.y > 0.1D) found[count++] = Direction.UP;
-		else if (look.y < -0.1D) found[count++] = Direction.DOWN;
-		if (look.z > 0.1D) found[count++] = Direction.SOUTH;
-		else if (look.z < -0.1D) found[count++] = Direction.NORTH;
-		Direction[] result = new Direction[count];
-		System.arraycopy(found, 0, result, 0, count);
-		return result;
 	}
 }

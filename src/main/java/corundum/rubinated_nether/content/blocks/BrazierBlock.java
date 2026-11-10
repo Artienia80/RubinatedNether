@@ -12,6 +12,7 @@ import corundum.rubinated_nether.content.recipe.BaptismRecipe;
 import corundum.rubinated_nether.utils.BrazierTracker;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -91,6 +92,7 @@ public class BrazierBlock extends BaseEntityBlock {
         super.onPlace(state, level, pos, oldState, isMoving);
 
         if (!level.isClientSide) {
+            level.updateNeighborsAt(pos.below(), this);
             BrazierTracker.set(level, pos, state.getValue(LEVEL) > 0);
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof BrazierBlockEntity brazier) {
@@ -407,6 +409,7 @@ public class BrazierBlock extends BaseEntityBlock {
         // Only remove effects if the block is actually being removed (not just changing state)
         if (!state.is(newState.getBlock())) {
             if (!level.isClientSide) {
+                level.updateNeighborsAt(pos.below(), this);
                 BlockEntity blockEntity = level.getBlockEntity(pos);
                 if (blockEntity instanceof BrazierBlockEntity brazier) {
                     // Pass the current position so it's excluded from the search
@@ -417,6 +420,21 @@ public class BrazierBlock extends BaseEntityBlock {
 
         // Call super AFTER we've cleaned up effects
         super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
+    @Override
+    protected boolean isSignalSource(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        return direction == Direction.UP ? state.getValue(LEVEL) : 0;
+    }
+
+    @Override
+    protected int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        return direction == Direction.UP ? state.getValue(LEVEL) : 0;
     }
 
     @Override

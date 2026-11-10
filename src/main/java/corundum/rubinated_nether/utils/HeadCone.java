@@ -150,12 +150,4 @@ public final class HeadCone {
 		}
 		return false;
 	}
-
-	public int visibleCount() {
-		int count = 0;
-		for (boolean cell : visible) {
-			if (cell) count++;
-		}
-		return count;
-	}
 }
