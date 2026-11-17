@@ -11,6 +11,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DoubleHighBlockItem;
+import net.minecraft.world.item.SignItem;
+import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -18,11 +21,15 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -179,6 +186,105 @@ public class RNBlocks {
 							.isViewBlocking((state, level, pos) -> false)
 							.isSuffocating((state, level, pos) -> false)
 			)
+	);
+
+	public static final DeferredBlock<RotatedPillarBlock> STRIPPED_PETRIFIED_SNAG = registerBlockAndItem(
+			"stripped_petrified_snag",
+			() -> new RotatedPillarBlock(petrified())
+	);
+
+	public static final DeferredBlock<PetrifiedLogBlock> PETRIFIED_SNAG = registerBlockAndItem(
+			"petrified_snag",
+			() -> new PetrifiedLogBlock(STRIPPED_PETRIFIED_SNAG, petrified())
+	);
+
+	public static final DeferredBlock<RotatedPillarBlock> STRIPPED_PETRIFIED_RIND = registerBlockAndItem(
+			"stripped_petrified_rind",
+			() -> new RotatedPillarBlock(petrified())
+	);
+
+	public static final DeferredBlock<PetrifiedLogBlock> PETRIFIED_RIND = registerBlockAndItem(
+			"petrified_rind",
+			() -> new PetrifiedLogBlock(STRIPPED_PETRIFIED_RIND, petrified())
+	);
+
+	public static final DeferredBlock<Block> PETRIFIED_FLAGS = registerBlockAndItem(
+			"petrified_flags",
+			() -> new Block(petrified())
+	);
+
+	public static final DeferredBlock<SlabBlock> PETRIFIED_SLAB = registerBlockAndItem(
+			"petrified_slab",
+			() -> new SlabBlock(petrified())
+	);
+
+	public static final DeferredBlock<StairBlock> PETRIFIED_STAIRS = registerBlockAndItem(
+			"petrified_stairs",
+			() -> new StairBlock(PETRIFIED_FLAGS.get().defaultBlockState(), petrified())
+	);
+
+	public static final DeferredBlock<WallBlock> PETRIFIED_WALL = registerBlockAndItem(
+			"petrified_wall",
+			() -> new WallBlock(petrified())
+	);
+
+	public static final DeferredBlock<DoorBlock> PETRIFIED_DOOR = registerDoubleHighBlockAndItem(
+			"petrified_door",
+			() -> new DoorBlock(BlockSetType.STONE, petrified().noOcclusion().pushReaction(PushReaction.DESTROY))
+	);
+
+	public static final DeferredBlock<TrapDoorBlock> PETRIFIED_TRAPDOOR = registerBlockAndItem(
+			"petrified_trapdoor",
+			() -> new TrapDoorBlock(BlockSetType.STONE, petrified().noOcclusion().isValidSpawn((state, level, pos, type) -> false))
+	);
+
+	public static final DeferredBlock<PressurePlateBlock> PETRIFIED_PRESSURE_PLATE = registerBlockAndItem(
+			"petrified_pressure_plate",
+			() -> new PressurePlateBlock(BlockSetType.STONE, petrified().strength(0.5F).noCollission().pushReaction(PushReaction.DESTROY))
+	);
+
+	public static final DeferredBlock<ButtonBlock> PETRIFIED_BUTTON = registerBlockAndItem(
+			"petrified_button",
+			() -> new ButtonBlock(BlockSetType.STONE, 20, petrified().strength(0.5F).noCollission().pushReaction(PushReaction.DESTROY))
+	);
+
+	public static final WoodType PETRIFIED_WOOD_TYPE = WoodType.register(new WoodType(
+			RubinatedNether.id("petrified").toString(),
+			BlockSetType.STONE,
+			SoundType.STONE,
+			SoundType.STONE,
+			SoundEvents.FENCE_GATE_CLOSE,
+			SoundEvents.FENCE_GATE_OPEN
+	));
+
+	public static final DeferredBlock<StandingSignBlock> PETRIFIED_SIGN = BLOCKS.register(
+			"petrified_sign",
+			() -> new StandingSignBlock(PETRIFIED_WOOD_TYPE, petrified().forceSolidOn().noCollission().strength(1.0F))
+	);
+
+	public static final DeferredBlock<WallSignBlock> PETRIFIED_WALL_SIGN = BLOCKS.register(
+			"petrified_wall_sign",
+			() -> new WallSignBlock(PETRIFIED_WOOD_TYPE, petrified().forceSolidOn().noCollission().strength(1.0F))
+	);
+
+	public static final DeferredBlock<CeilingHangingSignBlock> PETRIFIED_HANGING_SIGN = BLOCKS.register(
+			"petrified_hanging_sign",
+			() -> new CeilingHangingSignBlock(PETRIFIED_WOOD_TYPE, petrified().forceSolidOn().noCollission().strength(1.0F))
+	);
+
+	public static final DeferredBlock<WallHangingSignBlock> PETRIFIED_WALL_HANGING_SIGN = BLOCKS.register(
+			"petrified_wall_hanging_sign",
+			() -> new WallHangingSignBlock(PETRIFIED_WOOD_TYPE, petrified().forceSolidOn().noCollission().strength(1.0F))
+	);
+
+	public static final DeferredItem<SignItem> PETRIFIED_SIGN_ITEM = RNItems.ITEMS.register(
+			"petrified_sign",
+			() -> new SignItem(new Item.Properties().stacksTo(16), PETRIFIED_SIGN.get(), PETRIFIED_WALL_SIGN.get())
+	);
+
+	public static final DeferredItem<HangingSignItem> PETRIFIED_HANGING_SIGN_ITEM = RNItems.ITEMS.register(
+			"petrified_hanging_sign",
+			() -> new HangingSignItem(PETRIFIED_HANGING_SIGN.get(), PETRIFIED_WALL_HANGING_SIGN.get(), new Item.Properties().stacksTo(16))
 	);
 
 	public static final DeferredBlock<Block> RUNESTONE = registerBlockAndItem(
@@ -1673,6 +1779,26 @@ public class RNBlocks {
 		);
 
 		return register;
+	}
+
+	public static <T extends Block> DeferredBlock<T> registerDoubleHighBlockAndItem(String name, Supplier<T> block) {
+		var register = BLOCKS.register(name, block);
+
+		RNItems.ITEMS.register(
+				name,
+				() -> new DoubleHighBlockItem(register.get(), new Item.Properties())
+		);
+
+		return register;
+	}
+
+	private static BlockBehaviour.Properties petrified() {
+		return BlockBehaviour.Properties.of()
+				.mapColor(MapColor.WOOD)
+				.instrument(NoteBlockInstrument.BASEDRUM)
+				.sound(SoundType.STONE)
+				.strength(2.0F, 6.0F)
+				.requiresCorrectToolForDrops();
 	}
 
 	public static <T extends Block> DeferredBlock<T> registerWaxableBlock(String name, Supplier<T> block) {

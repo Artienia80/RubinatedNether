@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/door_bottom_right",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "bottom": "rubinated_nether:block/petrified_door_bottom",
+    "top": "rubinated_nether:block/petrified_door_top"
+  }
+}

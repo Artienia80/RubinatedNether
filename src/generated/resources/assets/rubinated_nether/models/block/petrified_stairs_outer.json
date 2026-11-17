@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "rubinated_nether:block/petrified_flags",
+    "side": "rubinated_nether:block/petrified_flags",
+    "top": "rubinated_nether:block/petrified_flags"
+  }
+}

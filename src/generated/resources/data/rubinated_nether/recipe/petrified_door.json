@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "petrified_door",
+  "key": {
+    "F": {
+      "item": "rubinated_nether:petrified_flags"
+    }
+  },
+  "pattern": [
+    "FF",
+    "FF",
+    "FF"
+  ],
+  "result": {
+    "count": 3,
+    "id": "rubinated_nether:petrified_door"
+  }
+}

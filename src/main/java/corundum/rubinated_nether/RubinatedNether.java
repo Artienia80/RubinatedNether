@@ -16,6 +16,8 @@ import corundum.rubinated_nether.content.menu.RNMenuTypes;
 import corundum.rubinated_nether.content.recipe.RNRecipeCategories;
 import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
 import corundum.rubinated_nether.content.trim.RNTrimMaterials;
+import corundum.rubinated_nether.content.world.structures.RNStructurePieceTypes;
+import corundum.rubinated_nether.content.world.structures.RNStructureTypes;
 import corundum.rubinated_nether.data.RNData;
 import corundum.rubinated_nether.event.RNAnvilRepairHandler;
 import corundum.rubinated_nether.misc.DatapackRegistry;
@@ -64,7 +66,9 @@ public class RubinatedNether {
             RNMenuTypes.MENUS,
             RNEntityDataSerializers.SERIALIZERS,
             RNDataComponents.DATA_COMPONENTS,
-            RNLootModifiers.LOOT_MODIFIERS
+            RNLootModifiers.LOOT_MODIFIERS,
+            RNStructureTypes.STRUCTURE_TYPES,
+            RNStructurePieceTypes.STRUCTURE_PIECE_TYPES
     );
 
     public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {

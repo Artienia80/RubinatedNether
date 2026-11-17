@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "petrified_boat",
+  "key": {
+    "#": {
+      "item": "rubinated_nether:petrified_flags"
+    }
+  },
+  "pattern": [
+    "# #",
+    "###"
+  ],
+  "result": {
+    "id": "rubinated_nether:petrified_boat"
+  }
+}

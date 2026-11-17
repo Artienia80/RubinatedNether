@@ -47,6 +47,14 @@ public class RNItems {
 			)
 	);
 
+	public static final DeferredItem<PetrifiedBoatItem> PETRIFIED_BOAT = ITEMS.register(
+			"petrified_boat",
+			() -> new PetrifiedBoatItem(false, new Item.Properties().stacksTo(1))
+	);
+	public static final DeferredItem<PetrifiedBoatItem> PETRIFIED_CHEST_BOAT = ITEMS.register(
+			"petrified_chest_boat",
+			() -> new PetrifiedBoatItem(true, new Item.Properties().stacksTo(1))
+	);
 	// Runes
 	public static final DeferredItem<Item> RUNE = ITEMS.register(
 			"rune",

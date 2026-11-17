@@ -393,6 +393,24 @@ public class RNItemTags extends ItemTagsProvider {
 				.addOptional(RubinatedNether.id("waxed_tarnished_bronze_head"))
 				.addOptional(RubinatedNether.id("waxed_crystallized_bronze_head"));
 
+		this.tag(RNTags.Items.PETRIFIED_SNAGS).add(
+				RNBlocks.PETRIFIED_SNAG.asItem(),
+				RNBlocks.STRIPPED_PETRIFIED_SNAG.asItem(),
+				RNBlocks.PETRIFIED_RIND.asItem(),
+				RNBlocks.STRIPPED_PETRIFIED_RIND.asItem()
+		);
+		this.tag(ItemTags.SLABS).add(RNBlocks.PETRIFIED_SLAB.asItem());
+		this.tag(ItemTags.STAIRS).add(RNBlocks.PETRIFIED_STAIRS.asItem());
+		this.tag(ItemTags.WALLS).add(RNBlocks.PETRIFIED_WALL.asItem());
+		this.tag(ItemTags.DOORS).add(RNBlocks.PETRIFIED_DOOR.asItem());
+		this.tag(ItemTags.TRAPDOORS).add(RNBlocks.PETRIFIED_TRAPDOOR.asItem());
+		this.tag(ItemTags.BUTTONS).add(RNBlocks.PETRIFIED_BUTTON.asItem());
+		this.tag(ItemTags.STONE_TOOL_MATERIALS).add(RNBlocks.PETRIFIED_FLAGS.asItem());
+		this.tag(ItemTags.SIGNS).add(RNBlocks.PETRIFIED_SIGN_ITEM.get());
+		this.tag(ItemTags.HANGING_SIGNS).add(RNBlocks.PETRIFIED_HANGING_SIGN_ITEM.get());
+		this.tag(ItemTags.BOATS).add(RNItems.PETRIFIED_BOAT.get());
+		this.tag(ItemTags.CHEST_BOATS).add(RNItems.PETRIFIED_CHEST_BOAT.get());
+
 		this.tag(RNTags.Items.DOWSING_RODS).add(
 				Items.BLAZE_ROD,
 				Items.BREEZE_ROD

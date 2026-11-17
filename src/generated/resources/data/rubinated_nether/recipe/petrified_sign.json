@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "petrified_sign",
+  "key": {
+    "#": {
+      "item": "rubinated_nether:petrified_flags"
+    },
+    "X": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "###",
+    "###",
+    " X "
+  ],
+  "result": {
+    "count": 3,
+    "id": "rubinated_nether:petrified_sign"
+  }
+}

@@ -72,6 +72,14 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.PUMICE,
 				RNBlocks.CINDER,
 				RNBlocks.SOUL_STARVED_SAND,
+				RNBlocks.PETRIFIED_SNAG,
+				RNBlocks.STRIPPED_PETRIFIED_SNAG,
+				RNBlocks.PETRIFIED_RIND,
+				RNBlocks.STRIPPED_PETRIFIED_RIND,
+				RNBlocks.PETRIFIED_FLAGS,
+				RNBlocks.PETRIFIED_SLAB,
+				RNBlocks.PETRIFIED_STAIRS,
+				RNBlocks.PETRIFIED_PRESSURE_PLATE,
 				RNBlocks.RUBINATION_ALTAR,
 				RNBlocks.RUBY_GLASS,
 				RNBlocks.ORNATE_RUBY_GLASS,
@@ -234,6 +242,24 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.MOLTEN_RUBY_GLASS_PANE,
 				"block/molten_ruby_glass"
 		);
+
+		withExistingParent(
+				RNBlocks.PETRIFIED_TRAPDOOR.getId().getPath(),
+				modLoc("block/petrified_trapdoor_bottom")
+		);
+		withExistingParent(
+				RNBlocks.PETRIFIED_BUTTON.getId().getPath(),
+				modLoc("block/petrified_button_inventory")
+		);
+		wallInventory(
+				RNBlocks.PETRIFIED_WALL.getId().toString(),
+				modLoc("block/petrified_flags")
+		);
+		basicItem(RNBlocks.PETRIFIED_DOOR.asItem());
+		basicItem(RNBlocks.PETRIFIED_SIGN_ITEM.get());
+		basicItem(RNBlocks.PETRIFIED_HANGING_SIGN_ITEM.get());
+		basicItem(RNItems.PETRIFIED_BOAT.get());
+		basicItem(RNItems.PETRIFIED_CHEST_BOAT.get());
 
 		wallInventory(
 				RNBlocks.SHRINE_STONE_WALL.getId().toString(),

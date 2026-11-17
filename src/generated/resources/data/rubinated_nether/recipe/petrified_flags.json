@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "petrified_flags",
+  "ingredients": [
+    {
+      "tag": "rubinated_nether:petrified_snags"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "rubinated_nether:petrified_flags"
+  }
+}

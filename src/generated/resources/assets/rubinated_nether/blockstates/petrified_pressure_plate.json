@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "rubinated_nether:block/petrified_pressure_plate"
+    },
+    "powered=true": {
+      "model": "rubinated_nether:block/petrified_pressure_plate_down"
+    }
+  }
+}

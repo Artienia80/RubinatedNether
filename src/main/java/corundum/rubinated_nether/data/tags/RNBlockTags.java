@@ -32,6 +32,36 @@ public class RNBlockTags extends BlockTagsProvider {
 		this.tag(BlockTags.SOUL_SPEED_BLOCKS).add(RNBlocks.SOUL_STARVED_SAND.get());
 
 		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
+				RNBlocks.PETRIFIED_SNAG.get(),
+				RNBlocks.STRIPPED_PETRIFIED_SNAG.get(),
+				RNBlocks.PETRIFIED_RIND.get(),
+				RNBlocks.STRIPPED_PETRIFIED_RIND.get(),
+				RNBlocks.PETRIFIED_FLAGS.get(),
+				RNBlocks.PETRIFIED_SLAB.get(),
+				RNBlocks.PETRIFIED_STAIRS.get(),
+				RNBlocks.PETRIFIED_WALL.get(),
+				RNBlocks.PETRIFIED_DOOR.get(),
+				RNBlocks.PETRIFIED_TRAPDOOR.get(),
+				RNBlocks.PETRIFIED_PRESSURE_PLATE.get(),
+				RNBlocks.PETRIFIED_BUTTON.get(),
+				RNBlocks.PETRIFIED_SIGN.get(),
+				RNBlocks.PETRIFIED_WALL_SIGN.get(),
+				RNBlocks.PETRIFIED_HANGING_SIGN.get(),
+				RNBlocks.PETRIFIED_WALL_HANGING_SIGN.get()
+		);
+		this.tag(BlockTags.SLABS).add(RNBlocks.PETRIFIED_SLAB.get());
+		this.tag(BlockTags.STAIRS).add(RNBlocks.PETRIFIED_STAIRS.get());
+		this.tag(BlockTags.WALLS).add(RNBlocks.PETRIFIED_WALL.get());
+		this.tag(BlockTags.DOORS).add(RNBlocks.PETRIFIED_DOOR.get());
+		this.tag(BlockTags.TRAPDOORS).add(RNBlocks.PETRIFIED_TRAPDOOR.get());
+		this.tag(BlockTags.PRESSURE_PLATES).add(RNBlocks.PETRIFIED_PRESSURE_PLATE.get());
+		this.tag(BlockTags.BUTTONS).add(RNBlocks.PETRIFIED_BUTTON.get());
+		this.tag(BlockTags.STANDING_SIGNS).add(RNBlocks.PETRIFIED_SIGN.get());
+		this.tag(BlockTags.WALL_SIGNS).add(RNBlocks.PETRIFIED_WALL_SIGN.get());
+		this.tag(BlockTags.CEILING_HANGING_SIGNS).add(RNBlocks.PETRIFIED_HANGING_SIGN.get());
+		this.tag(BlockTags.WALL_HANGING_SIGNS).add(RNBlocks.PETRIFIED_WALL_HANGING_SIGN.get());
+
+		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
 				RNBlocks.NETHER_RUBY_ORE.get(),
 				RNBlocks.MOLTEN_RUBY_ORE.get(),
 				RNBlocks.RUBINATED_BLACKSTONE.get(),

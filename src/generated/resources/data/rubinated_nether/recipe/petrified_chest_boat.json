@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "petrified_chest_boat",
+  "ingredients": [
+    {
+      "item": "rubinated_nether:petrified_boat"
+    },
+    {
+      "item": "minecraft:chest"
+    }
+  ],
+  "result": {
+    "id": "rubinated_nether:petrified_chest_boat"
+  }
+}

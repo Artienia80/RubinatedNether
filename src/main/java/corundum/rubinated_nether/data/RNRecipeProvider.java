@@ -213,6 +213,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				RNBlocks.BRONZE_BLOCK, RNBlocks.CUT_BRONZE_PILLAR);
 
 		winder(recipeOutput);
+		petrified(recipeOutput);
 
 		tarnish(recipeOutput, this::spring, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_SPRING);
 		tarnish(recipeOutput, this::vent, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_VENT);
@@ -857,6 +858,89 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy("has_diamond", has(Items.DIAMOND))
 				.save(recipeOutput);
 
+	}
+
+	private void petrified(RecipeOutput recipeOutput) {
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, RNBlocks.PETRIFIED_FLAGS, 4)
+				.requires(RNTags.Items.PETRIFIED_SNAGS)
+				.group("petrified_flags")
+				.unlockedBy("has_petrified_snags", has(RNTags.Items.PETRIFIED_SNAGS))
+				.save(recipeOutput);
+
+		petrifiedRind(recipeOutput, RNBlocks.PETRIFIED_SNAG, RNBlocks.PETRIFIED_RIND);
+		petrifiedRind(recipeOutput, RNBlocks.STRIPPED_PETRIFIED_SNAG, RNBlocks.STRIPPED_PETRIFIED_RIND);
+
+		stairsAndSlab(
+				recipeOutput,
+				RNBlocks.PETRIFIED_FLAGS,
+				RNBlocks.PETRIFIED_STAIRS,
+				RNBlocks.PETRIFIED_SLAB
+		);
+		wall(recipeOutput, RNBlocks.PETRIFIED_FLAGS, RNBlocks.PETRIFIED_WALL);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.PETRIFIED_DOOR, 3)
+				.define('F', RNBlocks.PETRIFIED_FLAGS)
+				.pattern("FF")
+				.pattern("FF")
+				.pattern("FF")
+				.group("petrified_door")
+				.unlockedBy(getHasName(RNBlocks.PETRIFIED_FLAGS), has(RNBlocks.PETRIFIED_FLAGS))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.PETRIFIED_TRAPDOOR, 2)
+				.define('F', RNBlocks.PETRIFIED_FLAGS)
+				.pattern("FFF")
+				.pattern("FFF")
+				.group("petrified_trapdoor")
+				.unlockedBy(getHasName(RNBlocks.PETRIFIED_FLAGS), has(RNBlocks.PETRIFIED_FLAGS))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.PETRIFIED_PRESSURE_PLATE)
+				.define('F', RNBlocks.PETRIFIED_FLAGS)
+				.pattern("FF")
+				.group("petrified_pressure_plate")
+				.unlockedBy(getHasName(RNBlocks.PETRIFIED_FLAGS), has(RNBlocks.PETRIFIED_FLAGS))
+				.save(recipeOutput);
+		button(recipeOutput, RNBlocks.PETRIFIED_FLAGS, RNBlocks.PETRIFIED_BUTTON, 1);
+		ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, RNBlocks.PETRIFIED_SIGN_ITEM, 3)
+				.define('#', RNBlocks.PETRIFIED_FLAGS)
+				.define('X', Items.STICK)
+				.pattern("###")
+				.pattern("###")
+				.pattern(" X ")
+				.group("petrified_sign")
+				.unlockedBy(getHasName(RNBlocks.PETRIFIED_FLAGS), has(RNBlocks.PETRIFIED_FLAGS))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, RNBlocks.PETRIFIED_HANGING_SIGN_ITEM, 6)
+				.define('#', RNBlocks.STRIPPED_PETRIFIED_SNAG)
+				.define('X', Items.CHAIN)
+				.pattern("X X")
+				.pattern("###")
+				.pattern("###")
+				.group("petrified_hanging_sign")
+				.unlockedBy(getHasName(RNBlocks.STRIPPED_PETRIFIED_SNAG), has(RNBlocks.STRIPPED_PETRIFIED_SNAG))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, RNItems.PETRIFIED_BOAT)
+				.define('#', RNBlocks.PETRIFIED_FLAGS)
+				.pattern("# #")
+				.pattern("###")
+				.group("petrified_boat")
+				.unlockedBy(getHasName(RNBlocks.PETRIFIED_FLAGS), has(RNBlocks.PETRIFIED_FLAGS))
+				.save(recipeOutput);
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, RNItems.PETRIFIED_CHEST_BOAT)
+				.requires(RNItems.PETRIFIED_BOAT)
+				.requires(Items.CHEST)
+				.group("petrified_chest_boat")
+				.unlockedBy(getHasName(RNItems.PETRIFIED_BOAT), has(RNItems.PETRIFIED_BOAT))
+				.save(recipeOutput);
+	}
+
+	private void petrifiedRind(RecipeOutput recipeOutput, ItemLike snag, ItemLike rind) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, rind, 3)
+				.define('S', snag)
+				.pattern("SS")
+				.pattern("SS")
+				.group("petrified_rind")
+				.unlockedBy(getHasName(snag), has(snag))
+				.save(recipeOutput);
 	}
 
 	private void twoByTwo(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int count) {

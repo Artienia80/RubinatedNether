@@ -72,6 +72,8 @@ public final class RNTags {
 
 		public static final TagKey<Item> CONCRETE_POWDER = createTag(Registries.ITEM, "concrete_powder");
 
+		public static final TagKey<Item> PETRIFIED_SNAGS = createTag(Registries.ITEM, "petrified_snags");
+
 		public static final TagKey<Item> RUBIES = createTag(Registries.ITEM, "rubies");
 
 		public static final TagKey<Item> RUBY_GLASS = createTag(Registries.ITEM, "ruby_glass_tag");

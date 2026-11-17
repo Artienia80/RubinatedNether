@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "petrified_trapdoor",
+  "key": {
+    "F": {
+      "item": "rubinated_nether:petrified_flags"
+    }
+  },
+  "pattern": [
+    "FFF",
+    "FFF"
+  ],
+  "result": {
+    "count": 2,
+    "id": "rubinated_nether:petrified_trapdoor"
+  }
+}

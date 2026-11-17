@@ -13,5 +13,7 @@ public class RNBrushableBlocks {
 	@SubscribeEvent
 	public static void addValidBlocks(BlockEntityTypeAddBlocksEvent event) {
 		event.modify(BlockEntityType.BRUSHABLE_BLOCK, RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE.get());
+		event.modify(BlockEntityType.SIGN, RNBlocks.PETRIFIED_SIGN.get(), RNBlocks.PETRIFIED_WALL_SIGN.get());
+		event.modify(BlockEntityType.HANGING_SIGN, RNBlocks.PETRIFIED_HANGING_SIGN.get(), RNBlocks.PETRIFIED_WALL_HANGING_SIGN.get());
 	}
 }

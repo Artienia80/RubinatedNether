@@ -61,6 +61,9 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import corundum.rubinated_nether.content.entity.client.PetrifiedBoatRenderer;
+import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.client.renderer.Sheets;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
@@ -79,6 +82,8 @@ public class RNClientSubscriber {
     public static void onClientSetup(FMLClientSetupEvent event) {
         IEventBus modBus = net.neoforged.fml.ModLoadingContext.get().getActiveContainer().getEventBus();
         RubinatedTextRenderer.register(modBus);
+
+        event.enqueueWork(() -> Sheets.addWoodType(corundum.rubinated_nether.content.RNBlocks.PETRIFIED_WOOD_TYPE));
 
         if (RubyLensHelper.isCuriosLoaded()) {
             event.enqueueWork(CuriosCompat::registerRenderer);
@@ -231,6 +236,8 @@ public class RNClientSubscriber {
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_VASE.get(), VaseBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(RNBlockEntities.BRONZE_STRONGBOX.get(), StrongboxRenderer::new);
         event.registerEntityRenderer(RNEntityCreator.BRONZE_SHOT.get(), BronzeShotProjectileRenderer::new);
+        event.<Boat>registerEntityRenderer(RNEntityCreator.PETRIFIED_BOAT.get(), context -> new PetrifiedBoatRenderer(context, false));
+        event.<Boat>registerEntityRenderer(RNEntityCreator.PETRIFIED_CHEST_BOAT.get(), context -> new PetrifiedBoatRenderer(context, true));
     }
 
     @SubscribeEvent

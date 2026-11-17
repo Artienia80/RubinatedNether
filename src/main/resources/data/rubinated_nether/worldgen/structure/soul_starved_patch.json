@@ -1,0 +1,7 @@
+{
+  "type": "rubinated_nether:soul_starved_patch",
+  "biomes": "#rubinated_nether:has_structure/soul_starved_patch",
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none"
+}

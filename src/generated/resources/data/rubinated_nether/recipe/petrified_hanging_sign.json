@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "petrified_hanging_sign",
+  "key": {
+    "#": {
+      "item": "rubinated_nether:stripped_petrified_snag"
+    },
+    "X": {
+      "item": "minecraft:chain"
+    }
+  },
+  "pattern": [
+    "X X",
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "id": "rubinated_nether:petrified_hanging_sign"
+  }
+}

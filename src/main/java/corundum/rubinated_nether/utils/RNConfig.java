@@ -17,6 +17,7 @@ public class RNConfig extends MidnightConfig {
 	public static final String VENT = "vent";
 	public static final String POCKETWATCH = "pocketwatch";
 	public static final String POMEGRANATE = "pomegranate";
+	public static final String PETRIFIED = "petrified";
 
 	/* -- Brazier -- */
 
@@ -273,6 +274,9 @@ public class RNConfig extends MidnightConfig {
 		return Math.round(rubinatedPomegranateEffectLevels * getBrazierSecondsPerLevel() * 20);
 	}
 
+	@Entry(category = PETRIFIED)
+	@Synced
+	public static boolean petrifiedBoatLavaMode = true;
 	/**
 	 * Calculates the probability per tick for cauldron filling.
 	 * Checks happen every 20 ticks, so this returns the chance per check.

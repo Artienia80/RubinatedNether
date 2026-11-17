@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "rubinated_nether:block/petrified_snag_top",
+    "side": "rubinated_nether:block/petrified_snag"
+  }
+}

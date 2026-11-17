@@ -7,6 +7,8 @@ import corundum.rubinated_nether.content.entity.BronzeShotProjectileEntity;
 import corundum.rubinated_nether.content.entity.CrossbowRodProjectileEntity;
 import corundum.rubinated_nether.content.entity.CrystallizedBronzeRodProjectileEntity;
 import corundum.rubinated_nether.content.entity.CrystallizedBronzeShotProjectileEntity;
+import corundum.rubinated_nether.content.entity.PetrifiedChestBoat;
+import corundum.rubinated_nether.content.entity.PetrifiedBoat;
 import corundum.rubinated_nether.content.entity.client.BronzeModel;
 import corundum.rubinated_nether.content.entity.client.BronzeRenderer;
 import corundum.rubinated_nether.content.entity.client.BronzeRodProjectileModel;
@@ -73,6 +75,21 @@ public class RNEntityCreator {
 					.updateInterval(20)
 	);
 
+	public static final Supplier<EntityType<PetrifiedBoat>> PETRIFIED_BOAT = registerEntity(
+			"petrified_boat",
+			EntityType.Builder.<PetrifiedBoat>of(PetrifiedBoat::new, MobCategory.MISC)
+					.sized(1.375F, 0.5625F)
+					.eyeHeight(0.5625F)
+					.clientTrackingRange(10)
+	);
+
+	public static final Supplier<EntityType<PetrifiedChestBoat>> PETRIFIED_CHEST_BOAT = registerEntity(
+			"petrified_chest_boat",
+			EntityType.Builder.<PetrifiedChestBoat>of(PetrifiedChestBoat::new, MobCategory.MISC)
+					.sized(1.375F, 0.5625F)
+					.eyeHeight(0.5625F)
+					.clientTrackingRange(10)
+	);
 	public static final Supplier<EntityType<BronzeEntity>> BRONZE = registerEntity(
 			"bronze",
 			EntityType.Builder.of(BronzeEntity::new, MobCategory.MONSTER)

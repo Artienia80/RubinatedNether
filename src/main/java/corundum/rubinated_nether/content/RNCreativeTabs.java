@@ -95,6 +95,25 @@ public class RNCreativeTabs {
 								RNBlocks.SHRINE_STONE_RUBBLE_WALL,
 								RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE
 						);
+						addItems(
+								output,
+								RNBlocks.PETRIFIED_SNAG,
+								RNBlocks.STRIPPED_PETRIFIED_SNAG,
+								RNBlocks.PETRIFIED_RIND,
+								RNBlocks.STRIPPED_PETRIFIED_RIND,
+								RNBlocks.PETRIFIED_FLAGS,
+								RNBlocks.PETRIFIED_STAIRS,
+								RNBlocks.PETRIFIED_SLAB,
+								RNBlocks.PETRIFIED_WALL,
+								RNBlocks.PETRIFIED_DOOR,
+								RNBlocks.PETRIFIED_TRAPDOOR,
+								RNBlocks.PETRIFIED_PRESSURE_PLATE,
+								RNBlocks.PETRIFIED_BUTTON,
+								RNBlocks.PETRIFIED_SIGN_ITEM,
+								RNBlocks.PETRIFIED_HANGING_SIGN_ITEM,
+								RNItems.PETRIFIED_BOAT,
+								RNItems.PETRIFIED_CHEST_BOAT
+						);
 						// Bronze materials
 						addItems(
 								output,

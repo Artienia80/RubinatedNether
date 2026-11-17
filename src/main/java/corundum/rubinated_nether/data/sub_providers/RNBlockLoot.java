@@ -45,6 +45,23 @@ public class RNBlockLoot extends BlockLootSubProvider {
 
 	@Override
 	protected void generate() {
+		this.dropSelf(RNBlocks.PETRIFIED_SNAG.get());
+		this.dropSelf(RNBlocks.STRIPPED_PETRIFIED_SNAG.get());
+		this.dropSelf(RNBlocks.PETRIFIED_RIND.get());
+		this.dropSelf(RNBlocks.STRIPPED_PETRIFIED_RIND.get());
+		this.dropSelf(RNBlocks.PETRIFIED_FLAGS.get());
+		this.dropSelf(RNBlocks.PETRIFIED_STAIRS.get());
+		this.dropSelf(RNBlocks.PETRIFIED_WALL.get());
+		this.dropSelf(RNBlocks.PETRIFIED_TRAPDOOR.get());
+		this.dropSelf(RNBlocks.PETRIFIED_PRESSURE_PLATE.get());
+		this.dropSelf(RNBlocks.PETRIFIED_BUTTON.get());
+		this.add(RNBlocks.PETRIFIED_SLAB.get(), this::createSlabItemTable);
+		this.add(RNBlocks.PETRIFIED_DOOR.get(), this::createDoorTable);
+		this.dropSelf(RNBlocks.PETRIFIED_SIGN.get());
+		this.dropSelf(RNBlocks.PETRIFIED_WALL_SIGN.get());
+		this.dropSelf(RNBlocks.PETRIFIED_HANGING_SIGN.get());
+		this.dropSelf(RNBlocks.PETRIFIED_WALL_HANGING_SIGN.get());
+
 		this.dropSelf(RNBlocks.RUBY_BLOCK.get());
 		this.dropSelf(RNBlocks.MOLTEN_RUBY_BLOCK.get());
 		this.dropSelf(RNBlocks.BLEEDING_OBSIDIAN.get());
