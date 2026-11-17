@@ -71,6 +71,7 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.DRY_ICE,
 				RNBlocks.PUMICE,
 				RNBlocks.CINDER,
+				RNBlocks.SOUL_STARVED_SAND,
 				RNBlocks.RUBINATION_ALTAR,
 				RNBlocks.RUBY_GLASS,
 				RNBlocks.ORNATE_RUBY_GLASS,

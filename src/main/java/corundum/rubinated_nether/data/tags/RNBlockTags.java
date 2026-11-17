@@ -28,7 +28,8 @@ public class RNBlockTags extends BlockTagsProvider {
 	protected void addTags(Provider provider) {
 		// Mining tags 
 		this.tag(BlockTags.DRAGON_IMMUNE).add(RNBlocks.BLEEDING_OBSIDIAN.get());
-		this.tag(BlockTags.MINEABLE_WITH_SHOVEL).add(RNBlocks.CINDER.get());
+		this.tag(BlockTags.MINEABLE_WITH_SHOVEL).add(RNBlocks.CINDER.get(), RNBlocks.SOUL_STARVED_SAND.get());
+		this.tag(BlockTags.SOUL_SPEED_BLOCKS).add(RNBlocks.SOUL_STARVED_SAND.get());
 
 		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
 				RNBlocks.NETHER_RUBY_ORE.get(),

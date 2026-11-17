@@ -16,6 +16,7 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -85,6 +86,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 
 		this.dropSelf(RNBlocks.PUMICE.get());
 		this.dropSelf(RNBlocks.CINDER.get());
+		this.add(RNBlocks.SOUL_STARVED_SAND.get(), (block) -> this.createSingleItemTableWithSilkTouch(block, Blocks.SOUL_SAND));
 
 		this.add(
 				RNBlocks.SHRINE_STONE.get(),

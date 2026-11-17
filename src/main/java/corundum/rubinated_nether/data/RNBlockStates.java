@@ -110,6 +110,7 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 		this.simpleBlock(RNBlocks.PUMICE.get());
 		this.simpleBlock(RNBlocks.CINDER.get());
+		this.simpleBlock(RNBlocks.SOUL_STARVED_SAND.get());
 
 		glassWithPane(
 				RNBlocks.RUBY_GLASS.get(),

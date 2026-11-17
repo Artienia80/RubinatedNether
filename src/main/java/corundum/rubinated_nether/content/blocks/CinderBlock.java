@@ -3,7 +3,11 @@ package corundum.rubinated_nether.content.blocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -15,6 +19,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class CinderBlock extends FallingBlock {
 	public static final MapCodec<CinderBlock> CODEC = simpleCodec(CinderBlock::new);
+	private static final int TRIGGER_DELAY = 5;
+	private static final int CASCADE_DELAY = 2;
+	private static final Direction[] CASCADE_DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST, Direction.UP};
 
 	public CinderBlock(Properties properties) {
 		super(properties);
@@ -27,6 +34,42 @@ public class CinderBlock extends FallingBlock {
 
 	public static BlockState solidState() {
 		return Blocks.MAGMA_BLOCK.defaultBlockState();
+	}
+
+	@Override
+	protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+	}
+
+	@Override
+	public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+		if (entity instanceof LivingEntity && entity.isSprinting()) {
+			trigger(level, pos);
+		}
+		super.stepOn(level, pos, state, entity);
+	}
+
+	public void trigger(Level level, BlockPos pos) {
+		if (level.isClientSide()) {
+			return;
+		}
+		if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
+			level.scheduleTick(pos, this, TRIGGER_DELAY);
+		}
+	}
+
+	@Override
+	protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		if (pos.getY() < level.getMinBuildHeight() || !isFree(level.getBlockState(pos.below()))) {
+			return;
+		}
+		FallingBlockEntity.fall(level, pos, state);
+		for (Direction direction : CASCADE_DIRECTIONS) {
+			BlockPos neighborPos = pos.relative(direction);
+			if (level.getBlockState(neighborPos).getBlock() instanceof CinderBlock neighbor
+					&& !level.getBlockTicks().hasScheduledTick(neighborPos, neighbor)) {
+				level.scheduleTick(neighborPos, neighbor, CASCADE_DELAY);
+			}
+		}
 	}
 
 	@Override
@@ -51,7 +94,7 @@ public class CinderBlock extends FallingBlock {
 		if (touchesLava(level, pos)) {
 			return solidState();
 		}
-		return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+		return state;
 	}
 
 	@Override

@@ -25,6 +25,7 @@ import corundum.rubinated_nether.networking.CollectDiscsPayload;
 import corundum.rubinated_nether.utils.RNConfig;
 import corundum.rubinated_nether.utils.RubyLensHelper;
 import corundum.rubinated_nether.compat.CuriosCompat;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -47,6 +48,9 @@ import corundum.rubinated_nether.content.items.MusicBoxData;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
@@ -151,6 +155,60 @@ public class RNClientSubscriber {
             event.setFogShape(FogShape.SPHERE);
             event.setCanceled(true);
         }
+    }
+
+    private static final int SOUL_FLASH_TICKS = 10;
+    private static int soulStarvedAmplifier = -1;
+    private static int soulFlashTicks;
+
+    @SubscribeEvent
+    public static void onRenderSoulStarvedSandFog(ViewportEvent.RenderFog event) {
+        if (event.getType() != FogType.NONE || !isCameraInSoulStarvedSand(event.getCamera())) {
+            return;
+        }
+        if (event.getCamera().getEntity().isSpectator()) {
+            event.setNearPlaneDistance(-8.0F);
+            event.setFarPlaneDistance(Minecraft.getInstance().options.getEffectiveRenderDistance() * 8.0F);
+        } else {
+            event.setNearPlaneDistance(0.0F);
+            event.setFarPlaneDistance(2.0F);
+        }
+        event.setFogShape(FogShape.SPHERE);
+        event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public static void onSoulStarvedClientTick(ClientTickEvent.Post event) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player == null) {
+            soulStarvedAmplifier = -1;
+            soulFlashTicks = 0;
+            return;
+        }
+        MobEffectInstance starved = player.getEffect(RNEffects.SOUL_STARVED);
+        int amplifier = starved == null ? -1 : starved.getAmplifier();
+        if (amplifier > soulStarvedAmplifier) {
+            soulFlashTicks = SOUL_FLASH_TICKS;
+        } else if (soulFlashTicks > 0) {
+            soulFlashTicks--;
+        }
+        soulStarvedAmplifier = amplifier;
+    }
+
+    @SubscribeEvent
+    public static void onComputeSoulStarvedSandFogColor(ViewportEvent.ComputeFogColor event) {
+        if (event.getCamera().getFluidInCamera() != FogType.NONE || !isCameraInSoulStarvedSand(event.getCamera())) {
+            return;
+        }
+        float flash = Mth.clamp((soulFlashTicks - (float) event.getPartialTick()) / SOUL_FLASH_TICKS, 0.0F, 1.0F);
+        event.setRed(Mth.lerp(flash, 0.32F, 0.106F));
+        event.setGreen(Mth.lerp(flash, 0.245F, 0.278F));
+        event.setBlue(Mth.lerp(flash, 0.2F, 0.271F));
+    }
+
+    private static boolean isCameraInSoulStarvedSand(Camera camera) {
+        Entity entity = camera.getEntity();
+        return entity != null && entity.level().getBlockState(camera.getBlockPosition()).is(RNBlocks.SOUL_STARVED_SAND.get());
     }
 
     @SubscribeEvent

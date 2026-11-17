@@ -147,6 +147,7 @@ public final class RNTags {
 
 	public static final class EntityTypes {
 		public static final TagKey<EntityType<?>> NOT_AFFECTED_BY_VENTS = createTag(Registries.ENTITY_TYPE, "not_affected_by_vents");
+		public static final TagKey<EntityType<?>> SOUL_STARVED_SAND_IMMUNE = createTag(Registries.ENTITY_TYPE, "soul_starved_sand_immune");
 	}
 
 	public static final class Enchantments {

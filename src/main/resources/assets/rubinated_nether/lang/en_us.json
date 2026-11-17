@@ -28,6 +28,7 @@
   "block.rubinated_nether.dry_ice": "Dry Ice",
   "block.rubinated_nether.pumice": "Pumice",
   "block.rubinated_nether.cinder": "Cinder",
+  "block.rubinated_nether.soul_starved_sand": "Soul-Starved Sand",
 
   "block.rubinated_nether.ruby_glass": "Ruby Glass",
   "block.rubinated_nether.ruby_glass_pane": "Ruby Glass Pane",
@@ -786,6 +787,7 @@
   "effect.rubinated_nether.blessed": "Blessed",
   "effect.rubinated_nether.brazier_power": "Brazier Power",
   "effect.rubinated_nether.reaping": "Reaping",
+  "effect.rubinated_nether.soul_starved": "Soul Starved",
 
 
   "death.attack.chandelier": "%1$s was embraced by a falling chandelier",
@@ -832,7 +834,8 @@
   "rubinated_nether.midnightconfig.brazierPowerLavaImmuneItems": "Brazier Power Lava-Immune Items",
 
   "rubinated_nether.midnightconfig.rubinatedPomegranateEffectLevels": "Rubinated Pomegranate Duration (Molten Ruby Levels)",
-  "rubinated_nether.midnightconfig.reapingRatio": "Reaping Healing Ratio",
+  "rubinated_nether.midnightconfig.reapingDamagePerHealth": "Reaping Damage Per Health Point",
+  "rubinated_nether.midnightconfig.reapingOverhealDamagePerHealth": "Reaping Damage Per Bonus Max Health Point",
 
   "rubinated_nether.midnightconfig.altarRubinationCost": "Altar Rubination Cost",
   "rubinated_nether.midnightconfig.altarLesserBlessingTime": "Altar Lesser Blessing Duration",

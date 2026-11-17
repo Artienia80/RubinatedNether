@@ -20,6 +20,7 @@ import java.util.Optional;
 public final class BuiltinDropProcessors {
     public static final TagKey<Item> TO_GRAVEL = TagKey.create(Registries.ITEM, RubinatedNether.id("processing/to_gravel"));
     public static final TagKey<Item> TO_SAND = TagKey.create(Registries.ITEM, RubinatedNether.id("processing/to_sand"));
+    public static final TagKey<Item> TO_SOUL_STARVED_SAND = TagKey.create(Registries.ITEM, RubinatedNether.id("processing/to_soul_starved_sand"));
 
     private BuiltinDropProcessors() {}
 
@@ -36,6 +37,7 @@ public final class BuiltinDropProcessors {
         if (drop.is(RNTags.Items.PROCESSING_TO_SHRINE_RUBBLE)) return Optional.of(new ItemStack(RNBlocks.SHRINE_STONE_RUBBLE.asItem(), drop.getCount()));
         if (drop.is(TO_GRAVEL)) return Optional.of(new ItemStack(Items.GRAVEL, drop.getCount()));
         if (drop.is(TO_SAND)) return Optional.of(new ItemStack(Items.SAND, drop.getCount()));
+        if (drop.is(TO_SOUL_STARVED_SAND)) return Optional.of(new ItemStack(RNBlocks.SOUL_STARVED_SAND.asItem(), drop.getCount()));
         return Optional.empty();
     }
 

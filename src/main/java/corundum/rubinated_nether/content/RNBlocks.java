@@ -169,6 +169,18 @@ public class RNBlocks {
 			() -> new CinderBlock(Block.Properties.ofFullCopy(Blocks.GRAVEL).mapColor(MapColor.NETHER))
 	);
 
+	public static final DeferredBlock<SoulStarvedSandBlock> SOUL_STARVED_SAND = registerBlockAndItem(
+			"soul_starved_sand",
+			() -> new SoulStarvedSandBlock(
+					Block.Properties.ofFullCopy(Blocks.SOUL_SAND)
+							.speedFactor(1.0F)
+							.dynamicShape()
+							.isRedstoneConductor((state, level, pos) -> false)
+							.isViewBlocking((state, level, pos) -> false)
+							.isSuffocating((state, level, pos) -> false)
+			)
+	);
+
 	public static final DeferredBlock<Block> RUNESTONE = registerBlockAndItem(
 			"runestone",
 			() -> new RunestoneBlock(

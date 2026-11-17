@@ -90,11 +90,20 @@ public class RNConfig extends MidnightConfig {
 	@Entry(
 			category = POMEGRANATE,
 			isSlider = true,
-			min = 0,
-			max = 1
+			min = 1,
+			max = 32
 	)
 	@Synced
-	public static float reapingRatio = 0.5f;
+	public static float reapingDamagePerHealth = 4f;
+
+	@Entry(
+			category = POMEGRANATE,
+			isSlider = true,
+			min = 1,
+			max = 64
+	)
+	@Synced
+	public static float reapingOverhealDamagePerHealth = 16f;
 
 	/* -- Altar -- */
 

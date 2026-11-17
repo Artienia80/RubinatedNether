@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.effect.BlessedEffect;
 import corundum.rubinated_nether.content.effect.BrazierPowerEffect;
 import corundum.rubinated_nether.content.effect.BronzeDiseasedEffect;
 import corundum.rubinated_nether.content.effect.ReapingEffect;
+import corundum.rubinated_nether.content.effect.SoulStarvedEffect;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
@@ -26,6 +27,9 @@ public class RNEffects {
 
     public static final Holder<MobEffect> REAPING = MOB_EFFECTS.register("reaping",
             () -> new ReapingEffect());
+
+    public static final Holder<MobEffect> SOUL_STARVED = MOB_EFFECTS.register("soul_starved",
+            () -> new SoulStarvedEffect());
 
     public static void register(IEventBus bus){
         MOB_EFFECTS.register(bus);

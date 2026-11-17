@@ -6,7 +6,6 @@ import corundum.rubinated_nether.data.registries.RNJukeboxSongs;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.food.Foods;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.BundleContents;
@@ -37,13 +36,13 @@ public class RNItems {
 
 	public static final DeferredItem<Item> POMEGRANATE = ITEMS.register(
 			"pomegranate",
-			() -> new Item(new Item.Properties().food(Foods.APPLE))
+			() -> new PomegranateItem(new Item.Properties().food(new FoodProperties.Builder().nutrition(0).saturationModifier(0.0F).alwaysEdible().build()))
 	);
 	public static final DeferredItem<Item> RUBINATED_POMEGRANATE = ITEMS.register(
 			"rubinated_pomegranate",
 			() -> new RubinatedPomegranateItem(
 					new Item.Properties()
-							.food(new FoodProperties.Builder().nutrition(4).saturationModifier(0.3F).alwaysEdible().build())
+							.food(new FoodProperties.Builder().nutrition(0).saturationModifier(0.0F).alwaysEdible().build())
 							.rarity(RNRarity.RUBINATED_NETHER_RUBY.get())
 			)
 	);
