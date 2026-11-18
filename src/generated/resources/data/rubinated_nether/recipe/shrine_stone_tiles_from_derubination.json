@@ -1,0 +1,5 @@
+{
+  "type": "rubinated_nether:derubination",
+  "result": "rubinated_nether:shrine_stone_tiles",
+  "source": "rubinated_nether:rubinated_shrine_stone_tiles"
+}

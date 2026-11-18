@@ -41,6 +41,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import org.slf4j.Logger;
 
 import java.util.Optional;
@@ -76,6 +77,7 @@ public class RubinatedNether {
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::loadComplete);
+        modEventBus.addListener(this::registerDataMaps);
         modEventBus.addListener(this::addPackFinders);
         NeoForge.EVENT_BUS.addListener(ChainsawItem::onEntityTick);
 
@@ -173,9 +175,14 @@ public class RubinatedNether {
     public void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             RNCauldronInteraction.bootStrap();
-            corundum.rubinated_nether.content.trim.VaseEngravingMaterial.bootstrap();
             VentProjectileHandler.registerTntBehavior();
         });
+    }
+
+    public void registerDataMaps(RegisterDataMapTypesEvent event) {
+        event.register(corundum.rubinated_nether.content.RNDataMaps.VASE_ENGRAVING_MATERIALS);
+        event.register(corundum.rubinated_nether.content.RNDataMaps.TARNISHABLES);
+        event.register(corundum.rubinated_nether.content.RNDataMaps.RUBINATION_BUNDLES);
     }
 
     public void loadComplete(FMLLoadCompleteEvent event) {

@@ -1,0 +1,340 @@
+{
+  "values": {
+    "rubinated_nether:acedia_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:protection",
+          "level": 6
+        },
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 4
+        },
+        {
+          "enchantment": "rubinated_nether:leeching_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:ardenter_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:quick_charge",
+          "level": 5
+        },
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 4
+        },
+        {
+          "enchantment": "rubinated_nether:crooked_shot_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:envy_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:looting",
+          "level": 5
+        },
+        {
+          "enchantment": "minecraft:sharpness",
+          "level": 6
+        },
+        {
+          "enchantment": "rubinated_nether:fragility_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:gluttony_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:efficiency",
+          "level": 7
+        },
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 4
+        },
+        {
+          "enchantment": "rubinated_nether:misfortune_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:greed_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:fortune",
+          "level": 5
+        },
+        {
+          "enchantment": "minecraft:efficiency",
+          "level": 6
+        },
+        {
+          "enchantment": "rubinated_nether:fragility_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:gula_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:riptide",
+          "level": 5
+        },
+        {
+          "enchantment": "minecraft:impaling",
+          "level": 6
+        },
+        {
+          "enchantment": "rubinated_nether:fragility_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:ignavia_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 5
+        },
+        {
+          "enchantment": "minecraft:wind_burst",
+          "level": 4
+        },
+        {
+          "enchantment": "rubinated_nether:buoyancy_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:insidiae_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 5
+        },
+        {
+          "enchantment": "minecraft:punch",
+          "level": 3
+        },
+        {
+          "enchantment": "rubinated_nether:dullness_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:invidia_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:impaling",
+          "level": 7
+        },
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 4
+        },
+        {
+          "enchantment": "rubinated_nether:recoil_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:ira_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 5
+        },
+        {
+          "enchantment": "minecraft:riptide",
+          "level": 4
+        },
+        {
+          "enchantment": "rubinated_nether:bluntness_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:kenodoxia_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:density",
+          "level": 7
+        },
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 4
+        },
+        {
+          "enchantment": "rubinated_nether:sinking_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:luxuria_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:thorns",
+          "level": 5
+        },
+        {
+          "enchantment": "minecraft:protection",
+          "level": 5
+        },
+        {
+          "enchantment": "rubinated_nether:fragility_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:nimis_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:multishot",
+          "level": 3
+        },
+        {
+          "enchantment": "minecraft:quick_charge",
+          "level": 4
+        },
+        {
+          "enchantment": "rubinated_nether:fragility_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:philargyria_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:wind_burst",
+          "level": 5
+        },
+        {
+          "enchantment": "minecraft:density",
+          "level": 6
+        },
+        {
+          "enchantment": "rubinated_nether:fragility_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:pride_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 5
+        },
+        {
+          "enchantment": "minecraft:thorns",
+          "level": 4
+        },
+        {
+          "enchantment": "rubinated_nether:exposure_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:sloth_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 5
+        },
+        {
+          "enchantment": "minecraft:fortune",
+          "level": 4
+        },
+        {
+          "enchantment": "rubinated_nether:deficiency_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:studiose_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 5
+        },
+        {
+          "enchantment": "minecraft:multishot",
+          "level": 2
+        },
+        {
+          "enchantment": "rubinated_nether:slow_charge_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:superbia_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:power",
+          "level": 7
+        },
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 4
+        },
+        {
+          "enchantment": "rubinated_nether:hooking_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:tristia_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:punch",
+          "level": 4
+        },
+        {
+          "enchantment": "minecraft:power",
+          "level": 6
+        },
+        {
+          "enchantment": "rubinated_nether:fragility_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:vainglory_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 5
+        },
+        {
+          "enchantment": "minecraft:looting",
+          "level": 4
+        },
+        {
+          "enchantment": "rubinated_nether:bluntness_curse",
+          "level": 1
+        }
+      ]
+    },
+    "rubinated_nether:wrath_rune": {
+      "enchantments": [
+        {
+          "enchantment": "minecraft:sharpness",
+          "level": 7
+        },
+        {
+          "enchantment": "minecraft:unbreaking",
+          "level": 4
+        },
+        {
+          "enchantment": "rubinated_nether:ravaging_curse",
+          "level": 1
+        }
+      ]
+    }
+  }
+}
