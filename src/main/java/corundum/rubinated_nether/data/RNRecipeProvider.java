@@ -46,7 +46,7 @@ import static net.minecraft.data.recipes.SimpleCookingRecipeBuilder.blasting;
 import static net.minecraft.data.recipes.SimpleCookingRecipeBuilder.smelting;
 
 
-public class RNRecipeProvider extends RecipeProvider {
+public class c extends RecipeProvider {
 	protected RNRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
 		super(output, provider);
 	}
