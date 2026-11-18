@@ -1,6 +1,7 @@
-package corundum.rubinated_nether.content.world.structures.patch;
+package corundum.rubinated_nether.content.world.structures.tree;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.content.world.structures.RNStructureTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.QuartPos;
@@ -14,8 +15,11 @@ import net.minecraft.world.level.levelgen.structure.StructureType;
 
 import java.util.Optional;
 
-public class SoulStarvedPatchStructure extends Structure {
-	public static final MapCodec<SoulStarvedPatchStructure> CODEC = simpleCodec(SoulStarvedPatchStructure::new);
+public class PetrifiedTreeStructure extends Structure {
+	public static final MapCodec<PetrifiedTreeStructure> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+			settingsCodec(instance),
+			PetrifiedTreeVariant.CODEC.fieldOf("variant").forGetter(structure -> structure.variant)
+	).apply(instance, PetrifiedTreeStructure::new));
 
 	private static final int CHECK_OFFSET = 6;
 	private static final int MAX_SLOPE = 8;
@@ -27,8 +31,11 @@ public class SoulStarvedPatchStructure extends Structure {
 			{0, -CHECK_OFFSET}
 	};
 
-	public SoulStarvedPatchStructure(StructureSettings settings) {
+	private final PetrifiedTreeVariant variant;
+
+	public PetrifiedTreeStructure(StructureSettings settings, PetrifiedTreeVariant variant) {
 		super(settings);
+		this.variant = variant;
 	}
 
 	@Override
@@ -57,7 +64,7 @@ public class SoulStarvedPatchStructure extends Structure {
 
 		return Optional.of(new GenerationStub(
 				center,
-				builder -> builder.addPiece(new SoulStarvedPatchPiece(center, radius, phase, seed))
+				builder -> builder.addPiece(new PetrifiedTreePiece(center, radius, phase, seed, variant))
 		));
 	}
 
@@ -86,6 +93,6 @@ public class SoulStarvedPatchStructure extends Structure {
 
 	@Override
 	public StructureType<?> type() {
-		return RNStructureTypes.SOUL_STARVED_PATCH.get();
+		return RNStructureTypes.PETRIFIED_TREE.get();
 	}
 }

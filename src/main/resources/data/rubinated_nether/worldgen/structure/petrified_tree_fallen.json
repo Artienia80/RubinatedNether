@@ -1,0 +1,8 @@
+{
+  "type": "rubinated_nether:petrified_tree",
+  "variant": "fallen",
+  "biomes": "#rubinated_nether:has_structure/petrified_tree",
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none"
+}

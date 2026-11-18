@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "rubinated_nether:petrified_tree_standing",
+      "weight": 1
+    },
+    {
+      "structure": "rubinated_nether:petrified_tree_chopped",
+      "weight": 1
+    },
+    {
+      "structure": "rubinated_nether:petrified_tree_fallen",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 8,
+    "separation": 3,
+    "salt": 1384720951
+  }
+}

@@ -1,7 +1,7 @@
 package corundum.rubinated_nether.content.world.structures;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.world.structures.patch.SoulStarvedPatchStructure;
+import corundum.rubinated_nether.content.world.structures.tree.PetrifiedTreeStructure;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -12,5 +12,5 @@ public class RNStructureTypes {
 
     //public static final DeferredHolder<StructureType<?>, StructureType<SacredShrineStructure>> SACRED_SHRINE = STRUCTURE_TYPES.register("sacred_shrine", () -> () -> SacredShrineStructure.CODEC);
 
-    public static final DeferredHolder<StructureType<?>, StructureType<SoulStarvedPatchStructure>> SOUL_STARVED_PATCH = STRUCTURE_TYPES.register("soul_starved_patch", () -> () -> SoulStarvedPatchStructure.CODEC);
+    public static final DeferredHolder<StructureType<?>, StructureType<PetrifiedTreeStructure>> PETRIFIED_TREE = STRUCTURE_TYPES.register("petrified_tree", () -> () -> PetrifiedTreeStructure.CODEC);
 }
