@@ -3,6 +3,8 @@ package corundum.rubinated_nether.content;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.recipe.BaptismRecipe;
 import corundum.rubinated_nether.content.recipe.FreezingRecipe;
+import corundum.rubinated_nether.content.recipe.CrackingRecipe;
+import corundum.rubinated_nether.content.recipe.DerubinationRecipe;
 import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -26,4 +28,10 @@ public class RNRecipes {
 
 	public static final DeferredHolder<RecipeType<?>, RecipeType<BaptismRecipe>> BAPTISM =
 			RECIPE_TYPES.register("baptism", RecipeType::simple);
+
+	public static final DeferredHolder<RecipeType<?>, RecipeType<DerubinationRecipe>> DERUBINATION =
+			RECIPE_TYPES.register("derubination", RecipeType::simple);
+
+	public static final DeferredHolder<RecipeType<?>, RecipeType<CrackingRecipe>> CRACKING =
+			RECIPE_TYPES.register("cracking", RecipeType::simple);
 }

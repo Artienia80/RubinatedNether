@@ -9,6 +9,8 @@ import corundum.rubinated_nether.content.items.PocketwatchData;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.content.recipe.BaptismRecipe;
+import corundum.rubinated_nether.content.recipe.CrackingRecipe;
+import corundum.rubinated_nether.content.recipe.DerubinationRecipe;
 import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
 import corundum.rubinated_nether.content.recipe.RuneCarvingRecipeProvider;
 import corundum.rubinated_nether.content.trim.RNBronzeTrimTarnishRecipe;
@@ -215,6 +217,7 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		winder(recipeOutput);
 		petrified(recipeOutput);
+		blockSwaps(recipeOutput);
 		morion(recipeOutput);
 
 		tarnish(recipeOutput, this::spring, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_SPRING);
@@ -1632,6 +1635,31 @@ public class RNRecipeProvider extends RecipeProvider {
 		SimpleCookingRecipeBuilder.blasting(Ingredient.of(input), RecipeCategory.MISC, output, xp, cookingTime)
 				.unlockedBy(getHasName(input), has(input))
 				.save(recipeOutput, ResourceLocation.withDefaultNamespace(id));
+	}
+
+	private void blockSwaps(RecipeOutput recipeOutput) {
+		derubination(recipeOutput, RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(), RNBlocks.SHRINE_STONE_TILES.get());
+		derubination(recipeOutput, RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(), RNBlocks.SHRINE_STONE_PILLAR.get());
+		derubination(recipeOutput, RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(), RNBlocks.SHRINE_STONE_BRICKS.get());
+		derubination(recipeOutput, RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(), RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
+		derubination(recipeOutput, RNBlocks.RUBINATED_SHRINE_STONE_COFFER.get(), RNBlocks.SHRINE_STONE_COFFER.get());
+
+		cracking(recipeOutput, Blocks.STONE_BRICKS, Blocks.CRACKED_STONE_BRICKS);
+		cracking(recipeOutput, Blocks.NETHER_BRICKS, Blocks.CRACKED_NETHER_BRICKS);
+		cracking(recipeOutput, Blocks.DEEPSLATE_BRICKS, Blocks.CRACKED_DEEPSLATE_BRICKS);
+		cracking(recipeOutput, Blocks.DEEPSLATE_TILES, Blocks.CRACKED_DEEPSLATE_TILES);
+		cracking(recipeOutput, Blocks.POLISHED_BLACKSTONE_BRICKS, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS);
+		cracking(recipeOutput, Blocks.INFESTED_STONE_BRICKS, Blocks.INFESTED_CRACKED_STONE_BRICKS);
+	}
+
+	private void derubination(RecipeOutput recipeOutput, Block source, Block result) {
+		ResourceLocation id = RubinatedNether.id(BuiltInRegistries.BLOCK.getKey(result).getPath() + "_from_derubination");
+		recipeOutput.accept(id, new DerubinationRecipe(source, result), null);
+	}
+
+	private void cracking(RecipeOutput recipeOutput, Block source, Block result) {
+		ResourceLocation id = RubinatedNether.id(BuiltInRegistries.BLOCK.getKey(result).getPath() + "_from_cracking");
+		recipeOutput.accept(id, new CrackingRecipe(source, result), null);
 	}
 
 	private void baptism(RecipeOutput recipeOutput, Ingredient ingredient, ItemLike result) {

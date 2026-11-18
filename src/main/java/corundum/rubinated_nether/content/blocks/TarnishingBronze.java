@@ -1,10 +1,5 @@
 package corundum.rubinated_nether.content.blocks;
 
-import com.google.common.base.Suppliers;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.ImmutableBiMap;
-import corundum.rubinated_nether.content.RNBlocks;
-import corundum.rubinated_nether.content.RNDataMaps;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
@@ -23,227 +18,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 	public static final BooleanProperty WAXED = BooleanProperty.create("waxed");
 
-	Supplier<BiMap<Block, Block>> NEXT_BY_BLOCK = Suppliers.memoize(
-			() -> ImmutableBiMap.<Block, Block>builder()
-					.put(RNBlocks.BRONZE_BLOCK.get(), RNBlocks.DISCOLORED_BRONZE_BLOCK.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_BLOCK.get(), RNBlocks.CORRODED_BRONZE_BLOCK.get())
-					.put(RNBlocks.CORRODED_BRONZE_BLOCK.get(), RNBlocks.TARNISHED_BRONZE_BLOCK.get())
-
-					.put(RNBlocks.CHISELED_BRONZE.get(), RNBlocks.DISCOLORED_CHISELED_BRONZE.get())
-					.put(RNBlocks.DISCOLORED_CHISELED_BRONZE.get(), RNBlocks.CORRODED_CHISELED_BRONZE.get())
-					.put(RNBlocks.CORRODED_CHISELED_BRONZE.get(), RNBlocks.TARNISHED_CHISELED_BRONZE.get())
-
-					.put(RNBlocks.CUT_BRONZE_PILLAR.get(), RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get())
-					.put(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get(), RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get())
-					.put(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get(), RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get())
-
-					.put(RNBlocks.CUT_BRONZE_BRICKS.get(), RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get())
-					.put(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get(), RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get())
-					.put(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get(), RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get())
-
-					.put(RNBlocks.CUT_BRONZE_BRICKS_STAIRS.get(), RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS.get())
-					.put(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS.get(), RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS.get())
-					.put(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS.get(), RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS.get())
-
-					.put(RNBlocks.CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get())
-					.put(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get())
-					.put(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get())
-
-					.put(RNBlocks.BRONZE_BULB.get(), RNBlocks.DISCOLORED_BRONZE_BULB.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_BULB.get(), RNBlocks.CORRODED_BRONZE_BULB.get())
-					.put(RNBlocks.CORRODED_BRONZE_BULB.get(), RNBlocks.TARNISHED_BRONZE_BULB.get())
-
-					.put(RNBlocks.BRONZE_GRATE.get(), RNBlocks.DISCOLORED_BRONZE_GRATE.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_GRATE.get(), RNBlocks.CORRODED_BRONZE_GRATE.get())
-					.put(RNBlocks.CORRODED_BRONZE_GRATE.get(), RNBlocks.TARNISHED_BRONZE_GRATE.get())
-
-					.put(RNBlocks.BRONZE_BUTTON.get(), RNBlocks.DISCOLORED_BRONZE_BUTTON.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_BUTTON.get(), RNBlocks.CORRODED_BRONZE_BUTTON.get())
-					.put(RNBlocks.CORRODED_BRONZE_BUTTON.get(), RNBlocks.TARNISHED_BRONZE_BUTTON.get())
-
-					.put(RNBlocks.BRONZE_CHAIN.get(), RNBlocks.DISCOLORED_BRONZE_CHAIN.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_CHAIN.get(), RNBlocks.CORRODED_BRONZE_CHAIN.get())
-					.put(RNBlocks.CORRODED_BRONZE_CHAIN.get(), RNBlocks.TARNISHED_BRONZE_CHAIN.get())
-
-					.put(RNBlocks.BRONZE_LANTERN.get(), RNBlocks.DISCOLORED_BRONZE_LANTERN.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_LANTERN.get(), RNBlocks.CORRODED_BRONZE_LANTERN.get())
-					.put(RNBlocks.CORRODED_BRONZE_LANTERN.get(), RNBlocks.TARNISHED_BRONZE_LANTERN.get())
-
-					.put(RNBlocks.BRONZE_CHANDELIER.get(), RNBlocks.DISCOLORED_BRONZE_CHANDELIER.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_CHANDELIER.get(), RNBlocks.CORRODED_BRONZE_CHANDELIER.get())
-					.put(RNBlocks.CORRODED_BRONZE_CHANDELIER.get(), RNBlocks.TARNISHED_BRONZE_CHANDELIER.get())
-
-					.put(RNBlocks.BRONZE_LAMP.get(), RNBlocks.DISCOLORED_BRONZE_LAMP.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_LAMP.get(), RNBlocks.CORRODED_BRONZE_LAMP.get())
-					.put(RNBlocks.CORRODED_BRONZE_LAMP.get(), RNBlocks.TARNISHED_BRONZE_LAMP.get())
-
-					.put(RNBlocks.BRONZE_LASER.get(), RNBlocks.DISCOLORED_BRONZE_LASER.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_LASER.get(), RNBlocks.CORRODED_BRONZE_LASER.get())
-					.put(RNBlocks.CORRODED_BRONZE_LASER.get(), RNBlocks.TARNISHED_BRONZE_LASER.get())
-
-					.put(RNBlocks.BRONZE_HEAD.get(), RNBlocks.DISCOLORED_BRONZE_HEAD.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_HEAD.get(), RNBlocks.CORRODED_BRONZE_HEAD.get())
-					.put(RNBlocks.CORRODED_BRONZE_HEAD.get(), RNBlocks.TARNISHED_BRONZE_HEAD.get())
-
-					.put(RNBlocks.BRONZE_SPRING.get(), RNBlocks.DISCOLORED_BRONZE_SPRING.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_SPRING.get(), RNBlocks.CORRODED_BRONZE_SPRING.get())
-					.put(RNBlocks.CORRODED_BRONZE_SPRING.get(), RNBlocks.TARNISHED_BRONZE_SPRING.get())
-
-					.put(RNBlocks.BRONZE_VENT.get(), RNBlocks.DISCOLORED_BRONZE_VENT.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_VENT.get(), RNBlocks.CORRODED_BRONZE_VENT.get())
-					.put(RNBlocks.CORRODED_BRONZE_VENT.get(), RNBlocks.TARNISHED_BRONZE_VENT.get())
-
-					.put(RNBlocks.BRONZE_WINDER.get(), RNBlocks.DISCOLORED_BRONZE_WINDER.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_WINDER.get(), RNBlocks.CORRODED_BRONZE_WINDER.get())
-					.put(RNBlocks.CORRODED_BRONZE_WINDER.get(), RNBlocks.TARNISHED_BRONZE_WINDER.get())
-
-					.put(RNBlocks.BRONZE_GEARBOX.get(), RNBlocks.DISCOLORED_BRONZE_GEARBOX.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_GEARBOX.get(), RNBlocks.CORRODED_BRONZE_GEARBOX.get())
-					.put(RNBlocks.CORRODED_BRONZE_GEARBOX.get(), RNBlocks.TARNISHED_BRONZE_GEARBOX.get())
-
-					.put(RNBlocks.BRONZE_VASE.get(), RNBlocks.DISCOLORED_BRONZE_VASE.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_VASE.get(), RNBlocks.CORRODED_BRONZE_VASE.get())
-					.put(RNBlocks.CORRODED_BRONZE_VASE.get(), RNBlocks.TARNISHED_BRONZE_VASE.get())
-
-					.put(RNBlocks.BRONZE_STRONGBOX.get(), RNBlocks.DISCOLORED_BRONZE_STRONGBOX.get())
-					.put(RNBlocks.DISCOLORED_BRONZE_STRONGBOX.get(), RNBlocks.CORRODED_BRONZE_STRONGBOX.get())
-					.put(RNBlocks.CORRODED_BRONZE_STRONGBOX.get(), RNBlocks.TARNISHED_BRONZE_STRONGBOX.get())
-
-					.build()
-	);
-
-	// Map that directly turns any block into its crystallized version
-	Supplier<Map<Block, Block>> CRYSTALLIZED_BY_BLOCK = Suppliers.memoize(
-			() -> {
-				Map<Block, Block> map = new HashMap<>();
-
-				map.put(RNBlocks.BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
-				map.put(RNBlocks.CORRODED_BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_BLOCK.get(), RNBlocks.CRYSTALLIZED_BRONZE_BLOCK.get());
-
-				map.put(RNBlocks.CHISELED_BRONZE.get(), RNBlocks.CRYSTALLIZED_CHISELED_BRONZE.get());
-				map.put(RNBlocks.DISCOLORED_CHISELED_BRONZE.get(), RNBlocks.CRYSTALLIZED_CHISELED_BRONZE.get());
-				map.put(RNBlocks.CORRODED_CHISELED_BRONZE.get(), RNBlocks.CRYSTALLIZED_CHISELED_BRONZE.get());
-				map.put(RNBlocks.TARNISHED_CHISELED_BRONZE.get(), RNBlocks.CRYSTALLIZED_CHISELED_BRONZE.get());
-
-				map.put(RNBlocks.CUT_BRONZE_PILLAR.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
-				map.put(RNBlocks.DISCOLORED_CUT_BRONZE_PILLAR.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
-				map.put(RNBlocks.CORRODED_CUT_BRONZE_PILLAR.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
-				map.put(RNBlocks.TARNISHED_CUT_BRONZE_PILLAR.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_PILLAR.get());
-
-				map.put(RNBlocks.CUT_BRONZE_BRICKS.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get());
-				map.put(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get());
-				map.put(RNBlocks.CORRODED_CUT_BRONZE_BRICKS.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get());
-				map.put(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS.get());
-
-				map.put(RNBlocks.CUT_BRONZE_BRICKS_STAIRS.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get());
-				map.put(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_STAIRS.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get());
-				map.put(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_STAIRS.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get());
-				map.put(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_STAIRS.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_STAIRS.get());
-
-				map.put(RNBlocks.CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
-				map.put(RNBlocks.DISCOLORED_CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
-				map.put(RNBlocks.CORRODED_CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
-				map.put(RNBlocks.TARNISHED_CUT_BRONZE_BRICKS_SLAB.get(), RNBlocks.CRYSTALLIZED_CUT_BRONZE_BRICKS_SLAB.get());
-
-				map.put(RNBlocks.BRONZE_BULB.get(), RNBlocks.CRYSTALLIZED_BRONZE_BULB.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_BULB.get(), RNBlocks.CRYSTALLIZED_BRONZE_BULB.get());
-				map.put(RNBlocks.CORRODED_BRONZE_BULB.get(), RNBlocks.CRYSTALLIZED_BRONZE_BULB.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_BULB.get(), RNBlocks.CRYSTALLIZED_BRONZE_BULB.get());
-
-				map.put(RNBlocks.BRONZE_GRATE.get(), RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_GRATE.get(), RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get());
-				map.put(RNBlocks.CORRODED_BRONZE_GRATE.get(), RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_GRATE.get(), RNBlocks.CRYSTALLIZED_BRONZE_GRATE.get());
-
-				map.put(RNBlocks.BRONZE_BUTTON.get(), RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_BUTTON.get(), RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get());
-				map.put(RNBlocks.CORRODED_BRONZE_BUTTON.get(), RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_BUTTON.get(), RNBlocks.CRYSTALLIZED_BRONZE_BUTTON.get());
-
-				map.put(RNBlocks.BRONZE_CHAIN.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_CHAIN.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get());
-				map.put(RNBlocks.CORRODED_BRONZE_CHAIN.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_CHAIN.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHAIN.get());
-
-				map.put(RNBlocks.BRONZE_LANTERN.get(), RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_LANTERN.get(), RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get());
-				map.put(RNBlocks.CORRODED_BRONZE_LANTERN.get(), RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_LANTERN.get(), RNBlocks.CRYSTALLIZED_BRONZE_LANTERN.get());
-
-				map.put(RNBlocks.BRONZE_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get());
-				map.put(RNBlocks.CORRODED_BRONZE_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_CHANDELIER.get(), RNBlocks.CRYSTALLIZED_BRONZE_CHANDELIER.get());
-
-				map.put(RNBlocks.BRONZE_LAMP.get(), RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_LAMP.get(), RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get());
-				map.put(RNBlocks.CORRODED_BRONZE_LAMP.get(), RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_LAMP.get(), RNBlocks.CRYSTALLIZED_BRONZE_LAMP.get());
-
-				map.put(RNBlocks.BRONZE_LASER.get(), RNBlocks.CRYSTALLIZED_BRONZE_LASER.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_LASER.get(), RNBlocks.CRYSTALLIZED_BRONZE_LASER.get());
-				map.put(RNBlocks.CORRODED_BRONZE_LASER.get(), RNBlocks.CRYSTALLIZED_BRONZE_LASER.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_LASER.get(), RNBlocks.CRYSTALLIZED_BRONZE_LASER.get());
-
-				map.put(RNBlocks.BRONZE_HEAD.get(), RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_HEAD.get(), RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get());
-				map.put(RNBlocks.CORRODED_BRONZE_HEAD.get(), RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_HEAD.get(), RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get());
-
-				map.put(RNBlocks.BRONZE_SPRING.get(), RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_SPRING.get(), RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get());
-				map.put(RNBlocks.CORRODED_BRONZE_SPRING.get(), RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_SPRING.get(), RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get());
-
-				map.put(RNBlocks.BRONZE_VENT.get(), RNBlocks.CRYSTALLIZED_BRONZE_VENT.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_VENT.get(), RNBlocks.CRYSTALLIZED_BRONZE_VENT.get());
-				map.put(RNBlocks.CORRODED_BRONZE_VENT.get(), RNBlocks.CRYSTALLIZED_BRONZE_VENT.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_VENT.get(), RNBlocks.CRYSTALLIZED_BRONZE_VENT.get());
-
-				map.put(RNBlocks.BRONZE_VASE.get(), RNBlocks.CRYSTALLIZED_BRONZE_VASE.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_VASE.get(), RNBlocks.CRYSTALLIZED_BRONZE_VASE.get());
-				map.put(RNBlocks.CORRODED_BRONZE_VASE.get(), RNBlocks.CRYSTALLIZED_BRONZE_VASE.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_VASE.get(), RNBlocks.CRYSTALLIZED_BRONZE_VASE.get());
-
-				map.put(RNBlocks.BRONZE_STRONGBOX.get(), RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_STRONGBOX.get(), RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX.get());
-				map.put(RNBlocks.CORRODED_BRONZE_STRONGBOX.get(), RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_STRONGBOX.get(), RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX.get());
-
-				map.put(RNBlocks.BRONZE_WINDER.get(), RNBlocks.CRYSTALLIZED_BRONZE_WINDER.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_WINDER.get(), RNBlocks.CRYSTALLIZED_BRONZE_WINDER.get());
-				map.put(RNBlocks.CORRODED_BRONZE_WINDER.get(), RNBlocks.CRYSTALLIZED_BRONZE_WINDER.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_WINDER.get(), RNBlocks.CRYSTALLIZED_BRONZE_WINDER.get());
-
-				map.put(RNBlocks.BRONZE_GEARBOX.get(), RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX.get());
-				map.put(RNBlocks.DISCOLORED_BRONZE_GEARBOX.get(), RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX.get());
-				map.put(RNBlocks.CORRODED_BRONZE_GEARBOX.get(), RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX.get());
-				map.put(RNBlocks.TARNISHED_BRONZE_GEARBOX.get(), RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX.get());
-
-				return Collections.unmodifiableMap(map);
-			}
-	);
-
-
-	Supplier<BiMap<Block, Block>> PREVIOUS_BY_BLOCK = Suppliers.memoize(() -> NEXT_BY_BLOCK.get().inverse());
-
-	Map<Block, Block> INVERSE_TARNISHABLES_DATAMAP_INTERNAL = new HashMap<>();
-
-	Map<Block, Block> INVERSE_TARNISHABLES_DATAMAP = Collections.unmodifiableMap(INVERSE_TARNISHABLES_DATAMAP_INTERNAL);
-
 	static Block getPreviousTarnishStage(Block block) {
-		return INVERSE_TARNISHABLES_DATAMAP.containsKey(block) ? INVERSE_TARNISHABLES_DATAMAP.get(block) : TarnishingBronze.PREVIOUS_BY_BLOCK.get().get(block);
+		return TarnishData.previous(block);
 	}
 
 	static Optional<Block> getPrevious(Block block) {
@@ -261,7 +42,8 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 	}
 
 	static Block getCrystallizedStage(Block p_block) {
-		return CRYSTALLIZED_BY_BLOCK.get().getOrDefault(p_block, p_block);
+		Block crystallized = TarnishData.crystallized(p_block);
+		return crystallized != null ? crystallized : p_block;
 	}
 
 	static Optional<Block> getCrystallized(Block block) {
@@ -273,20 +55,15 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 	}
 
 	static boolean canCrystallize(Block p_block) {
-		return CRYSTALLIZED_BY_BLOCK.get().get(p_block) != null;
+		return TarnishData.crystallized(p_block) != null;
 	}
 
 	static Optional<BlockState> getPrevious(BlockState state) {
 		return getPrevious(state.getBlock()).map(block -> block.withPropertiesOf(state));
 	}
 
-	@SuppressWarnings("deprecation") // IDK if theres a non-deprecated method
 	static Block getNextTarnishStage(Block block) {
-		var tarnishable = block.builtInRegistryHolder().getData(RNDataMaps.TARNISHABLES);
-
-		return tarnishable != null
-				? tarnishable.nextTarnishmentStage()
-				: TarnishingBronze.NEXT_BY_BLOCK.get().get(block);
+		return TarnishData.next(block);
 	}
 
 	static Optional<Block> getNext(Block block) {

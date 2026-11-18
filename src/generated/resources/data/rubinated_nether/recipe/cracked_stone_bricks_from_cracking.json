@@ -1,0 +1,5 @@
+{
+  "type": "rubinated_nether:cracking",
+  "result": "minecraft:cracked_stone_bricks",
+  "source": "minecraft:stone_bricks"
+}
