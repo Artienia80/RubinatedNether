@@ -11,6 +11,7 @@ import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.content.recipe.BaptismRecipe;
 import corundum.rubinated_nether.content.recipe.CrackingRecipe;
 import corundum.rubinated_nether.content.recipe.DerubinationRecipe;
+import corundum.rubinated_nether.content.recipe.PetrificationRecipe;
 import corundum.rubinated_nether.content.recipe.ResonanceRecipe;
 import corundum.rubinated_nether.content.recipe.RuneCarvingRecipeProvider;
 import corundum.rubinated_nether.content.trim.RNBronzeTrimTarnishRecipe;
@@ -28,7 +29,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.crafting.CookingBookCategory;
@@ -46,7 +49,7 @@ import static net.minecraft.data.recipes.SimpleCookingRecipeBuilder.blasting;
 import static net.minecraft.data.recipes.SimpleCookingRecipeBuilder.smelting;
 
 
-public class c extends RecipeProvider {
+public class RNRecipeProvider extends RecipeProvider {
 	protected RNRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
 		super(output, provider);
 	}
@@ -217,6 +220,7 @@ public class c extends RecipeProvider {
 
 		winder(recipeOutput);
 		petrified(recipeOutput);
+		petrification(recipeOutput);
 		blockSwaps(recipeOutput);
 		morion(recipeOutput);
 
@@ -1660,6 +1664,35 @@ public class c extends RecipeProvider {
 	private void cracking(RecipeOutput recipeOutput, Block source, Block result) {
 		ResourceLocation id = RubinatedNether.id(BuiltInRegistries.BLOCK.getKey(result).getPath() + "_from_cracking");
 		recipeOutput.accept(id, new CrackingRecipe(source, result), null);
+	}
+
+	/**
+	 * World recipes for the Soul Starved Sand + Soul Fire petrification:
+	 * a block in the source tag becomes its petrified counterpart.
+	 */
+	private void petrification(RecipeOutput recipeOutput) {
+		petrification(recipeOutput, RNTags.Blocks.PETRIFIABLE_SNAGS, RNBlocks.PETRIFIED_SNAG.get());
+		petrification(recipeOutput, RNTags.Blocks.PETRIFIABLE_STRIPPED_SNAGS, RNBlocks.STRIPPED_PETRIFIED_SNAG.get());
+		petrification(recipeOutput, RNTags.Blocks.PETRIFIABLE_RINDS, RNBlocks.PETRIFIED_RIND.get());
+		petrification(recipeOutput, RNTags.Blocks.PETRIFIABLE_STRIPPED_RINDS, RNBlocks.STRIPPED_PETRIFIED_RIND.get());
+		petrification(recipeOutput, BlockTags.PLANKS, RNBlocks.PETRIFIED_FLAGS.get());
+		petrification(recipeOutput, BlockTags.WOODEN_STAIRS, RNBlocks.PETRIFIED_STAIRS.get());
+		petrification(recipeOutput, BlockTags.WOODEN_SLABS, RNBlocks.PETRIFIED_SLAB.get());
+		petrification(recipeOutput, BlockTags.WOODEN_FENCES, RNBlocks.PETRIFIED_FENCE.get());
+		petrification(recipeOutput, BlockTags.FENCE_GATES, RNBlocks.PETRIFIED_FENCE_GATE.get());
+		petrification(recipeOutput, BlockTags.WOODEN_DOORS, RNBlocks.PETRIFIED_DOOR.get());
+		petrification(recipeOutput, BlockTags.WOODEN_TRAPDOORS, RNBlocks.PETRIFIED_TRAPDOOR.get());
+		petrification(recipeOutput, BlockTags.WOODEN_BUTTONS, RNBlocks.PETRIFIED_BUTTON.get());
+		petrification(recipeOutput, BlockTags.WOODEN_PRESSURE_PLATES, RNBlocks.PETRIFIED_PRESSURE_PLATE.get());
+		petrification(recipeOutput, BlockTags.STANDING_SIGNS, RNBlocks.PETRIFIED_SIGN.get());
+		petrification(recipeOutput, BlockTags.WALL_SIGNS, RNBlocks.PETRIFIED_WALL_SIGN.get());
+		petrification(recipeOutput, BlockTags.CEILING_HANGING_SIGNS, RNBlocks.PETRIFIED_HANGING_SIGN.get());
+		petrification(recipeOutput, BlockTags.WALL_HANGING_SIGNS, RNBlocks.PETRIFIED_WALL_HANGING_SIGN.get());
+	}
+
+	private void petrification(RecipeOutput recipeOutput, TagKey<Block> source, Block result) {
+		ResourceLocation id = RubinatedNether.id(BuiltInRegistries.BLOCK.getKey(result).getPath() + "_from_petrification");
+		recipeOutput.accept(id, new PetrificationRecipe(source, result), null);
 	}
 
 	private void baptism(RecipeOutput recipeOutput, Ingredient ingredient, ItemLike result) {

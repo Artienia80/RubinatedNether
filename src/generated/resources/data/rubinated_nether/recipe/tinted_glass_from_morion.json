@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "M": {
-      "item": "rubinated_nether:nether_morion"
-    },
     "G": {
       "item": "minecraft:glass"
+    },
+    "M": {
+      "item": "rubinated_nether:nether_morion"
     }
   },
   "pattern": [

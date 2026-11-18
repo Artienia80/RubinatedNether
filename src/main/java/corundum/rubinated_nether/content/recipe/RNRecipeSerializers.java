@@ -40,6 +40,9 @@ public class RNRecipeSerializers {
 	public static final DeferredHolder<RecipeSerializer<?>, BlockSwapRecipeSerializer<CrackingRecipe>> CRACKING =
 			RECIPE_SERIALIZERS.register("cracking", () -> new BlockSwapRecipeSerializer<>(CrackingRecipe::new));
 
+	public static final DeferredHolder<RecipeSerializer<?>, PetrificationRecipeSerializer> PETRIFICATION =
+			RECIPE_SERIALIZERS.register("petrification", PetrificationRecipeSerializer::new);
+
 	public static final DeferredHolder<RecipeSerializer<?>, ModuleSmithingRecipe.Serializer> MODULE_APPLY =
 			RECIPE_SERIALIZERS.register("module_apply", ModuleSmithingRecipe.Serializer::new);
 }

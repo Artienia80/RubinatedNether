@@ -1,5 +1,45 @@
 {
   "variants": {
+    "facing=east,in_wall=false,open=false": {
+      "model": "rubinated_nether:block/petrified_fence_gate",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,in_wall=false,open=true": {
+      "model": "rubinated_nether:block/petrified_fence_gate_open",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,in_wall=true,open=false": {
+      "model": "rubinated_nether:block/petrified_fence_gate_wall",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,in_wall=true,open=true": {
+      "model": "rubinated_nether:block/petrified_fence_gate_wall_open",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,in_wall=false,open=false": {
+      "model": "rubinated_nether:block/petrified_fence_gate",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,in_wall=false,open=true": {
+      "model": "rubinated_nether:block/petrified_fence_gate_open",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,in_wall=true,open=false": {
+      "model": "rubinated_nether:block/petrified_fence_gate_wall",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,in_wall=true,open=true": {
+      "model": "rubinated_nether:block/petrified_fence_gate_wall_open",
+      "uvlock": true,
+      "y": 180
+    },
     "facing=south,in_wall=false,open=false": {
       "model": "rubinated_nether:block/petrified_fence_gate",
       "uvlock": true
@@ -35,46 +75,6 @@
       "model": "rubinated_nether:block/petrified_fence_gate_wall_open",
       "uvlock": true,
       "y": 90
-    },
-    "facing=north,in_wall=false,open=false": {
-      "model": "rubinated_nether:block/petrified_fence_gate",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=north,in_wall=false,open=true": {
-      "model": "rubinated_nether:block/petrified_fence_gate_open",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=north,in_wall=true,open=false": {
-      "model": "rubinated_nether:block/petrified_fence_gate_wall",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=north,in_wall=true,open=true": {
-      "model": "rubinated_nether:block/petrified_fence_gate_wall_open",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=east,in_wall=false,open=false": {
-      "model": "rubinated_nether:block/petrified_fence_gate",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=east,in_wall=false,open=true": {
-      "model": "rubinated_nether:block/petrified_fence_gate_open",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=east,in_wall=true,open=false": {
-      "model": "rubinated_nether:block/petrified_fence_gate_wall",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=east,in_wall=true,open=true": {
-      "model": "rubinated_nether:block/petrified_fence_gate_wall_open",
-      "uvlock": true,
-      "y": 270
     }
   }
 }

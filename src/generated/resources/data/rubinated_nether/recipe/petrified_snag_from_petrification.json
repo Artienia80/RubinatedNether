@@ -1,0 +1,5 @@
+{
+  "type": "rubinated_nether:petrification",
+  "result": "rubinated_nether:petrified_snag",
+  "source": "rubinated_nether:petrifiable_snags"
+}

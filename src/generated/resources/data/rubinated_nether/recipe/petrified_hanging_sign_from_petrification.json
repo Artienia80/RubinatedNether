@@ -1,0 +1,5 @@
+{
+  "type": "rubinated_nether:petrification",
+  "result": "rubinated_nether:petrified_hanging_sign",
+  "source": "minecraft:ceiling_hanging_signs"
+}

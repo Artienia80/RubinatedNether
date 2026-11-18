@@ -70,49 +70,49 @@
     },
     "face=wall,facing=east,powered=false": {
       "model": "rubinated_nether:block/petrified_button",
+      "uvlock": true,
       "x": 90,
-      "y": 90,
-      "uvlock": true
+      "y": 90
     },
     "face=wall,facing=east,powered=true": {
       "model": "rubinated_nether:block/petrified_button_pressed",
+      "uvlock": true,
       "x": 90,
-      "y": 90,
-      "uvlock": true
+      "y": 90
     },
     "face=wall,facing=north,powered=false": {
       "model": "rubinated_nether:block/petrified_button",
-      "x": 90,
-      "uvlock": true
+      "uvlock": true,
+      "x": 90
     },
     "face=wall,facing=north,powered=true": {
       "model": "rubinated_nether:block/petrified_button_pressed",
-      "x": 90,
-      "uvlock": true
+      "uvlock": true,
+      "x": 90
     },
     "face=wall,facing=south,powered=false": {
       "model": "rubinated_nether:block/petrified_button",
+      "uvlock": true,
       "x": 90,
-      "y": 180,
-      "uvlock": true
+      "y": 180
     },
     "face=wall,facing=south,powered=true": {
       "model": "rubinated_nether:block/petrified_button_pressed",
+      "uvlock": true,
       "x": 90,
-      "y": 180,
-      "uvlock": true
+      "y": 180
     },
     "face=wall,facing=west,powered=false": {
       "model": "rubinated_nether:block/petrified_button",
+      "uvlock": true,
       "x": 90,
-      "y": 270,
-      "uvlock": true
+      "y": 270
     },
     "face=wall,facing=west,powered=true": {
       "model": "rubinated_nether:block/petrified_button_pressed",
+      "uvlock": true,
       "x": 90,
-      "y": 270,
-      "uvlock": true
+      "y": 270
     }
   }
 }

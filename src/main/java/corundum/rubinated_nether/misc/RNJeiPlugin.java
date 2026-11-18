@@ -7,6 +7,7 @@ import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNRecipes;
 import corundum.rubinated_nether.content.recipe.JEI.BaptismRecipeCategory;
 import corundum.rubinated_nether.content.recipe.JEI.FreezerRecipeCategory;
+import corundum.rubinated_nether.content.recipe.JEI.PetrificationRecipeCategory;
 import corundum.rubinated_nether.content.recipe.JEI.ResonanceRecipeCategory;
 import corundum.rubinated_nether.content.recipe.JEI.RuneGrindstoneCategory;
 import corundum.rubinated_nether.content.recipe.JEI.RuneGrindstoneRecipe;
@@ -36,8 +37,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.Set;
 
 @JeiPlugin
 public class RNJeiPlugin implements IModPlugin {
@@ -72,7 +76,8 @@ public class RNJeiPlugin implements IModPlugin {
 				new ResonanceRecipeCategory(registration.getJeiHelpers().getGuiHelper(), resonanceRecipes),
 				new FreezerRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
 				new RuneGrindstoneCategory(registration.getJeiHelpers().getGuiHelper()),
-				new BaptismRecipeCategory(registration.getJeiHelpers().getGuiHelper())
+				new BaptismRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+				new PetrificationRecipeCategory(registration.getJeiHelpers().getGuiHelper())
 		);
 	}
 
@@ -90,6 +95,17 @@ public class RNJeiPlugin implements IModPlugin {
 		registration.addRecipes(
 				BaptismRecipeCategory.RECIPE_TYPE,
 				man.getAllRecipesFor(RNRecipes.BAPTISM.get()).stream().map(RecipeHolder::value).toList()
+		);
+
+		Set<List<Object>> seenPetrifications = new HashSet<>();
+		registration.addRecipes(
+				PetrificationRecipeCategory.RECIPE_TYPE,
+				man.getAllRecipesFor(RNRecipes.PETRIFICATION.get()).stream()
+						.map(RecipeHolder::value)
+						.filter(recipe -> recipe.getResultBlock().asItem() != Items.AIR)
+						.filter(recipe -> !PetrificationRecipeCategory.inputItems(recipe).isEmpty())
+						.filter(recipe -> seenPetrifications.add(List.of(recipe.getResultBlock().asItem(), PetrificationRecipeCategory.inputItems(recipe))))
+						.toList()
 		);
 
 		// Grindstone: shrine stone in one slot -> blank rune, in both slots -> runestone (rules live in RuneGrindstoneHandler)
@@ -129,6 +145,8 @@ public class RNJeiPlugin implements IModPlugin {
 				BaptismRecipeCategory.filledBrazier(),
 				BaptismRecipeCategory.RECIPE_TYPE
 		);
+		registration.addRecipeCatalyst(new ItemStack(RNBlocks.SOUL_STARVED_SAND.get()), PetrificationRecipeCategory.RECIPE_TYPE);
+		registration.addRecipeCatalyst(new ItemStack(RNBlocks.SOUL_STARVED_SAND.get()), PetrificationRecipeCategory.RECIPE_TYPE);
 	}
 
 	@Override
@@ -147,7 +165,8 @@ public class RNJeiPlugin implements IModPlugin {
 					ResonanceRecipeCategory.RECIPE_TYPE.getUid().toString(),
 					FreezerRecipeCategory.RECIPE_TYPE.getUid().toString(),
 					RuneGrindstoneCategory.RECIPE_TYPE.getUid().toString(),
-					BaptismRecipeCategory.RECIPE_TYPE.getUid().toString()
+					BaptismRecipeCategory.RECIPE_TYPE.getUid().toString(),
+					PetrificationRecipeCategory.RECIPE_TYPE.getUid().toString()
 			);
 			List<String> tags = lines.stream().filter(line -> line.contains(":tag_recipes/")).toList();
 			List<String> arranged = new ArrayList<>(lines);

@@ -1,17 +1,5 @@
 {
   "variants": {
-    "facing=north,mode=compare,powered=false": {
-      "model": "minecraft:block/comparator"
-    },
-    "facing=north,mode=compare,powered=true": {
-      "model": "minecraft:block/comparator_on"
-    },
-    "facing=north,mode=subtract,powered=false": {
-      "model": "minecraft:block/comparator_subtract"
-    },
-    "facing=north,mode=subtract,powered=true": {
-      "model": "minecraft:block/comparator_on_subtract"
-    },
     "facing=east,mode=compare,powered=false": {
       "model": "minecraft:block/comparator",
       "y": 90
@@ -27,6 +15,18 @@
     "facing=east,mode=subtract,powered=true": {
       "model": "minecraft:block/comparator_on_subtract",
       "y": 90
+    },
+    "facing=north,mode=compare,powered=false": {
+      "model": "minecraft:block/comparator"
+    },
+    "facing=north,mode=compare,powered=true": {
+      "model": "minecraft:block/comparator_on"
+    },
+    "facing=north,mode=subtract,powered=false": {
+      "model": "minecraft:block/comparator_subtract"
+    },
+    "facing=north,mode=subtract,powered=true": {
+      "model": "minecraft:block/comparator_on_subtract"
     },
     "facing=south,mode=compare,powered=false": {
       "model": "minecraft:block/comparator",

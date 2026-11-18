@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "Q": {
-      "item": "rubinated_nether:tiled_quartz"
-    },
     "M": {
       "item": "rubinated_nether:tiled_morion"
+    },
+    "Q": {
+      "item": "rubinated_nether:tiled_quartz"
     }
   },
   "pattern": [

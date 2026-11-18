@@ -1,0 +1,5 @@
+{
+  "type": "rubinated_nether:petrification",
+  "result": "rubinated_nether:stripped_petrified_rind",
+  "source": "rubinated_nether:petrifiable_stripped_rinds"
+}

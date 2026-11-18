@@ -1,0 +1,5 @@
+{
+  "type": "rubinated_nether:petrification",
+  "result": "rubinated_nether:petrified_wall_hanging_sign",
+  "source": "minecraft:wall_hanging_signs"
+}

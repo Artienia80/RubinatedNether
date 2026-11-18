@@ -1,0 +1,5 @@
+{
+  "type": "rubinated_nether:petrification",
+  "result": "rubinated_nether:petrified_fence",
+  "source": "minecraft:wooden_fences"
+}

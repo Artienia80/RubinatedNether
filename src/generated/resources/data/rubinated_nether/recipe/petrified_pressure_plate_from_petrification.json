@@ -1,0 +1,5 @@
+{
+  "type": "rubinated_nether:petrification",
+  "result": "rubinated_nether:petrified_pressure_plate",
+  "source": "minecraft:wooden_pressure_plates"
+}
