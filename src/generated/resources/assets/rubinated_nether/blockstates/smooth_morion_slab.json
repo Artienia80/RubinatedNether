@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "type=bottom": [
+      {
+        "model": "rubinated_nether:block/smooth_morion_slab"
+      },
+      {
+        "model": "rubinated_nether:block/smooth_morion_slab"
+      }
+    ],
+    "type=double": [
+      {
+        "model": "rubinated_nether:block/smooth_morion"
+      },
+      {
+        "model": "rubinated_nether:block/smooth_morion"
+      }
+    ],
+    "type=top": [
+      {
+        "model": "rubinated_nether:block/smooth_morion_slab_top"
+      },
+      {
+        "model": "rubinated_nether:block/smooth_morion_slab_top"
+      }
+    ]
+  }
+}

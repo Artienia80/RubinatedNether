@@ -8,6 +8,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -30,6 +31,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SoulStarvedSandBlock extends Block {
+	private static final int PETRIFY_CHANCE = 3;
 	public static final int DAMAGE_INTERVAL = 10;
 	public static final int EFFECT_INTERVAL = 20;
 	public static final int MAX_AMPLIFIER = 8;
@@ -124,6 +126,18 @@ public class SoulStarvedSandBlock extends Block {
 			if (enchantment.is(Enchantments.SOUL_SPEED)) return true;
 		}
 		return false;
+	}
+
+	@Override
+	protected boolean isRandomlyTicking(BlockState state) {
+		return true;
+	}
+
+	@Override
+	protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		if (!level.getBlockState(pos.above()).is(RNTags.Blocks.PETRIFICATION_CATALYST)) return;
+		if (random.nextInt(PETRIFY_CHANCE) != 0) return;
+		Petrification.tryPetrify(level, pos);
 	}
 
 	@Override

@@ -33,6 +33,7 @@ public class RNItems {
 	public static final DeferredItem<Item> MOLTEN_RUBY = basicItem("molten_ruby");
 	public static final DeferredItem<Item> RUBY_SHARD = basicItem("ruby_shard");
 	public static final DeferredItem<Item> MOLTEN_RUBY_NUGGET = basicItem("molten_ruby_nugget");
+	public static final DeferredItem<Item> NETHER_MORION = basicItem("nether_morion");
 
 	public static final DeferredItem<Item> POMEGRANATE = ITEMS.register(
 			"pomegranate",

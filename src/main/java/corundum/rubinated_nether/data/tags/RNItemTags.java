@@ -399,9 +399,11 @@ public class RNItemTags extends ItemTagsProvider {
 				RNBlocks.PETRIFIED_RIND.asItem(),
 				RNBlocks.STRIPPED_PETRIFIED_RIND.asItem()
 		);
-		this.tag(ItemTags.SLABS).add(RNBlocks.PETRIFIED_SLAB.asItem());
-		this.tag(ItemTags.STAIRS).add(RNBlocks.PETRIFIED_STAIRS.asItem());
+		this.tag(ItemTags.SLABS).add(RNBlocks.PETRIFIED_SLAB.asItem(), RNBlocks.MORION_SLAB.asItem(), RNBlocks.SMOOTH_MORION_SLAB.asItem());
+		this.tag(ItemTags.STAIRS).add(RNBlocks.PETRIFIED_STAIRS.asItem(), RNBlocks.MORION_STAIRS.asItem(), RNBlocks.SMOOTH_MORION_STAIRS.asItem());
 		this.tag(ItemTags.WALLS).add(RNBlocks.PETRIFIED_WALL.asItem());
+		this.tag(ItemTags.FENCES).add(RNBlocks.PETRIFIED_FENCE.asItem());
+		this.tag(ItemTags.FENCE_GATES).add(RNBlocks.PETRIFIED_FENCE_GATE.asItem());
 		this.tag(ItemTags.DOORS).add(RNBlocks.PETRIFIED_DOOR.asItem());
 		this.tag(ItemTags.TRAPDOORS).add(RNBlocks.PETRIFIED_TRAPDOOR.asItem());
 		this.tag(ItemTags.BUTTONS).add(RNBlocks.PETRIFIED_BUTTON.asItem());

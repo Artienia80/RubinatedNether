@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:cobblestone"
+      },
+      {
+        "item": "minecraft:diorite"
+      },
+      {
+        "item": "minecraft:andesite"
+      },
+      {
+        "item": "minecraft:granite"
+      }
+    ],
+    {
+      "item": "rubinated_nether:nether_morion"
+    }
+  ],
+  "result": {
+    "id": "minecraft:blackstone"
+  }
+}

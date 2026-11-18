@@ -255,11 +255,45 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.PETRIFIED_WALL.getId().toString(),
 				modLoc("block/petrified_flags")
 		);
+		withExistingParent(
+				RNBlocks.PETRIFIED_FENCE.getId().getPath(),
+				mcLoc("block/fence_inventory")
+		)
+				.texture("texture", modLoc("block/petrified_flags"));
+		withExistingParent(
+				RNBlocks.PETRIFIED_FENCE_GATE.getId().getPath(),
+				modLoc("block/petrified_fence_gate")
+		);
 		basicItem(RNBlocks.PETRIFIED_DOOR.asItem());
 		basicItem(RNBlocks.PETRIFIED_SIGN_ITEM.get());
 		basicItem(RNBlocks.PETRIFIED_HANGING_SIGN_ITEM.get());
 		basicItem(RNItems.PETRIFIED_BOAT.get());
 		basicItem(RNItems.PETRIFIED_CHEST_BOAT.get());
+		basicItem(RNItems.NETHER_MORION.get());
+		simpleBlockItems(
+				RNBlocks.MORION_BLOCK,
+				RNBlocks.CHISELED_MORION_BLOCK,
+				RNBlocks.MORION_PILLAR,
+				RNBlocks.MORION_BRICKS,
+				RNBlocks.SMOOTH_MORION,
+				RNBlocks.MORION_SLAB,
+				RNBlocks.MORION_STAIRS,
+				RNBlocks.SMOOTH_MORION_SLAB,
+				RNBlocks.SMOOTH_MORION_STAIRS,
+				RNBlocks.TILED_QUARTZ,
+				RNBlocks.TILED_MORION,
+				RNBlocks.CHECKERED_TILES
+		);
+
+		withExistingParent(
+				RNBlocks.REDSTONE_ACCUMULATOR.getId().toString(),
+				mcLoc("item/generated")
+		)
+				.texture("layer0", mcLoc("item/comparator"));
+		withExistingParent(
+				RNBlocks.MOONPHASE_SENSOR.getId().toString(),
+				mcLoc("block/daylight_detector")
+		);
 
 		wallInventory(
 				RNBlocks.SHRINE_STONE_WALL.getId().toString(),

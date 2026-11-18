@@ -40,6 +40,8 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.PETRIFIED_SLAB.get(),
 				RNBlocks.PETRIFIED_STAIRS.get(),
 				RNBlocks.PETRIFIED_WALL.get(),
+				RNBlocks.PETRIFIED_FENCE.get(),
+				RNBlocks.PETRIFIED_FENCE_GATE.get(),
 				RNBlocks.PETRIFIED_DOOR.get(),
 				RNBlocks.PETRIFIED_TRAPDOOR.get(),
 				RNBlocks.PETRIFIED_PRESSURE_PLATE.get(),
@@ -47,11 +49,31 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.PETRIFIED_SIGN.get(),
 				RNBlocks.PETRIFIED_WALL_SIGN.get(),
 				RNBlocks.PETRIFIED_HANGING_SIGN.get(),
-				RNBlocks.PETRIFIED_WALL_HANGING_SIGN.get()
+				RNBlocks.PETRIFIED_WALL_HANGING_SIGN.get(),
+				RNBlocks.MORION_BLOCK.get(),
+				RNBlocks.CHISELED_MORION_BLOCK.get(),
+				RNBlocks.MORION_PILLAR.get(),
+				RNBlocks.MORION_BRICKS.get(),
+				RNBlocks.SMOOTH_MORION.get(),
+				RNBlocks.MORION_SLAB.get(),
+				RNBlocks.MORION_STAIRS.get(),
+				RNBlocks.SMOOTH_MORION_SLAB.get(),
+				RNBlocks.SMOOTH_MORION_STAIRS.get(),
+				RNBlocks.TILED_QUARTZ.get(),
+				RNBlocks.TILED_MORION.get(),
+				RNBlocks.CHECKERED_TILES.get()
 		);
-		this.tag(BlockTags.SLABS).add(RNBlocks.PETRIFIED_SLAB.get());
-		this.tag(BlockTags.STAIRS).add(RNBlocks.PETRIFIED_STAIRS.get());
+		this.tag(BlockTags.MINEABLE_WITH_AXE).add(
+				RNBlocks.PETRIFIED_SNAG.get(),
+				RNBlocks.STRIPPED_PETRIFIED_SNAG.get(),
+				RNBlocks.PETRIFIED_RIND.get(),
+				RNBlocks.STRIPPED_PETRIFIED_RIND.get()
+		);
+		this.tag(BlockTags.SLABS).add(RNBlocks.PETRIFIED_SLAB.get(), RNBlocks.MORION_SLAB.get(), RNBlocks.SMOOTH_MORION_SLAB.get());
+		this.tag(BlockTags.STAIRS).add(RNBlocks.PETRIFIED_STAIRS.get(), RNBlocks.MORION_STAIRS.get(), RNBlocks.SMOOTH_MORION_STAIRS.get());
 		this.tag(BlockTags.WALLS).add(RNBlocks.PETRIFIED_WALL.get());
+		this.tag(BlockTags.FENCES).add(RNBlocks.PETRIFIED_FENCE.get());
+		this.tag(BlockTags.FENCE_GATES).add(RNBlocks.PETRIFIED_FENCE_GATE.get());
 		this.tag(BlockTags.DOORS).add(RNBlocks.PETRIFIED_DOOR.get());
 		this.tag(BlockTags.TRAPDOORS).add(RNBlocks.PETRIFIED_TRAPDOOR.get());
 		this.tag(BlockTags.PRESSURE_PLATES).add(RNBlocks.PETRIFIED_PRESSURE_PLATE.get());
@@ -466,7 +488,57 @@ public class RNBlockTags extends BlockTagsProvider {
 
 		);
 
-		this.tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).addTag(RNTags.Blocks.CRYSTALLIZED_BLOCKS);
+		this.tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).addTag(RNTags.Blocks.CRYSTALLIZED_BLOCKS).add(RNBlocks.SOUL_STARVED_SAND.get());
+		this.tag(RNTags.Blocks.SOUL_BLOCKS).add(Blocks.SOUL_SAND, Blocks.SOUL_SOIL);
+		this.tag(RNTags.Blocks.PETRIFICATION_CATALYST).add(Blocks.SOUL_FIRE);
+		this.tag(RNTags.Blocks.PETRIFIABLE_SNAGS).add(
+				Blocks.OAK_LOG,
+				Blocks.SPRUCE_LOG,
+				Blocks.BIRCH_LOG,
+				Blocks.JUNGLE_LOG,
+				Blocks.ACACIA_LOG,
+				Blocks.DARK_OAK_LOG,
+				Blocks.MANGROVE_LOG,
+				Blocks.CHERRY_LOG,
+				Blocks.CRIMSON_STEM,
+				Blocks.WARPED_STEM
+		);
+		this.tag(RNTags.Blocks.PETRIFIABLE_STRIPPED_SNAGS).add(
+				Blocks.STRIPPED_OAK_LOG,
+				Blocks.STRIPPED_SPRUCE_LOG,
+				Blocks.STRIPPED_BIRCH_LOG,
+				Blocks.STRIPPED_JUNGLE_LOG,
+				Blocks.STRIPPED_ACACIA_LOG,
+				Blocks.STRIPPED_DARK_OAK_LOG,
+				Blocks.STRIPPED_MANGROVE_LOG,
+				Blocks.STRIPPED_CHERRY_LOG,
+				Blocks.STRIPPED_CRIMSON_STEM,
+				Blocks.STRIPPED_WARPED_STEM
+		);
+		this.tag(RNTags.Blocks.PETRIFIABLE_RINDS).add(
+				Blocks.OAK_WOOD,
+				Blocks.SPRUCE_WOOD,
+				Blocks.BIRCH_WOOD,
+				Blocks.JUNGLE_WOOD,
+				Blocks.ACACIA_WOOD,
+				Blocks.DARK_OAK_WOOD,
+				Blocks.MANGROVE_WOOD,
+				Blocks.CHERRY_WOOD,
+				Blocks.CRIMSON_HYPHAE,
+				Blocks.WARPED_HYPHAE
+		);
+		this.tag(RNTags.Blocks.PETRIFIABLE_STRIPPED_RINDS).add(
+				Blocks.STRIPPED_OAK_WOOD,
+				Blocks.STRIPPED_SPRUCE_WOOD,
+				Blocks.STRIPPED_BIRCH_WOOD,
+				Blocks.STRIPPED_JUNGLE_WOOD,
+				Blocks.STRIPPED_ACACIA_WOOD,
+				Blocks.STRIPPED_DARK_OAK_WOOD,
+				Blocks.STRIPPED_MANGROVE_WOOD,
+				Blocks.STRIPPED_CHERRY_WOOD,
+				Blocks.STRIPPED_CRIMSON_HYPHAE,
+				Blocks.STRIPPED_WARPED_HYPHAE
+		);
 
 		this.tag(RNTags.Blocks.CRYSTALLIZATION_CATALYST).addTag(RNTags.Blocks.LIT_SOUL_BLOCKS);
 

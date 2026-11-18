@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "decorations",
+  "group": "petrified_fence",
+  "key": {
+    "F": {
+      "item": "rubinated_nether:petrified_flags"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "FSF",
+    "FSF"
+  ],
+  "result": {
+    "count": 3,
+    "id": "rubinated_nether:petrified_fence"
+  }
+}

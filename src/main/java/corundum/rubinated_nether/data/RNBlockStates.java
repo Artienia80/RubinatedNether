@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.ComparatorMode;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
@@ -129,6 +130,14 @@ public class RNBlockStates extends BlockStateProvider {
 				RNBlocks.PETRIFIED_WALL.get(),
 				modLoc("block/petrified_flags")
 		);
+		this.fenceBlock(
+				RNBlocks.PETRIFIED_FENCE.get(),
+				modLoc("block/petrified_flags")
+		);
+		this.fenceGateBlock(
+				RNBlocks.PETRIFIED_FENCE_GATE.get(),
+				modLoc("block/petrified_flags")
+		);
 		this.doorBlockWithRenderType(
 				RNBlocks.PETRIFIED_DOOR.get(),
 				modLoc("block/petrified_door_bottom"),
@@ -150,6 +159,29 @@ public class RNBlockStates extends BlockStateProvider {
 		var petrifiedHangingSign = this.models().sign("petrified_hanging_sign", modLoc("block/stripped_petrified_snag"));
 		this.simpleBlock(RNBlocks.PETRIFIED_HANGING_SIGN.get(), petrifiedHangingSign);
 		this.simpleBlock(RNBlocks.PETRIFIED_WALL_HANGING_SIGN.get(), petrifiedHangingSign);
+		this.simpleBlock(RNBlocks.MORION_BLOCK.get());
+		this.simpleBlock(
+				RNBlocks.CHISELED_MORION_BLOCK.get(),
+				this.models().cubeColumn("chiseled_morion_block", modLoc("block/chiseled_morion_block"), modLoc("block/chiseled_morion_block_top"))
+		);
+		this.axisBlock(RNBlocks.MORION_PILLAR.get(), modLoc("block/morion_pillar"), modLoc("block/morion_pillar_top"));
+		this.simpleBlock(RNBlocks.MORION_BRICKS.get());
+		this.simpleBlock(RNBlocks.SMOOTH_MORION.get());
+		this.slabBlock(RNBlocks.MORION_SLAB.get(), modLoc("block/morion_block"), modLoc("block/morion_block"));
+		this.stairsBlock(RNBlocks.MORION_STAIRS.get(), modLoc("block/morion_block"));
+		this.slabBlock(RNBlocks.SMOOTH_MORION_SLAB.get(), modLoc("block/smooth_morion"), modLoc("block/smooth_morion"));
+		this.stairsBlock(RNBlocks.SMOOTH_MORION_STAIRS.get(), modLoc("block/smooth_morion"));
+		this.simpleBlock(RNBlocks.TILED_QUARTZ.get());
+		this.simpleBlock(RNBlocks.TILED_MORION.get());
+		this.horizontalBlock(
+				RNBlocks.CHECKERED_TILES.get(),
+				this.models()
+						.withExistingParent("checkered_tiles", mcLoc("block/template_glazed_terracotta"))
+						.texture("pattern", modLoc("block/checkered_tiles"))
+		);
+
+		redstoneAccumulator();
+		moonphaseSensor();
 
 		glassWithPane(
 				RNBlocks.RUBY_GLASS.get(),
@@ -458,6 +490,35 @@ public class RNBlockStates extends BlockStateProvider {
                     .build();
         });
     }
+
+	private void redstoneAccumulator() {
+		getVariantBuilder(RNBlocks.REDSTONE_ACCUMULATOR.get()).forAllStatesExcept(
+				state -> {
+					boolean subtract = state.getValue(RedstoneAccumulatorBlock.MODE) == ComparatorMode.SUBTRACT;
+					String model = "block/comparator"
+							+ (state.getValue(RedstoneAccumulatorBlock.POWERED) ? "_on" : "")
+							+ (subtract ? "_subtract" : "");
+					return ConfiguredModel.builder()
+							.modelFile(this.models().getExistingFile(mcLoc(model)))
+							.rotationY(((int) state.getValue(RedstoneAccumulatorBlock.FACING).toYRot() + 180) % 360)
+							.build();
+				},
+				RedstoneAccumulatorBlock.POWER
+		);
+	}
+
+	private void moonphaseSensor() {
+		getVariantBuilder(RNBlocks.MOONPHASE_SENSOR.get()).forAllStatesExcept(
+				state -> ConfiguredModel.builder()
+						.modelFile(this.models().getExistingFile(
+								mcLoc(state.getValue(MoonphaseSensorBlock.INVERTED)
+										? "block/daylight_detector_inverted"
+										: "block/daylight_detector")
+						))
+						.build(),
+				MoonphaseSensorBlock.POWER
+		);
+	}
 
 	private void glassWithPane(Block glass, IronBarsBlock pane, String name, ResourceLocation edge) {
 		this.simpleBlock(

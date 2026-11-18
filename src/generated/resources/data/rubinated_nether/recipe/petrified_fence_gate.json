@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "petrified_fence_gate",
+  "key": {
+    "F": {
+      "item": "rubinated_nether:petrified_flags"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "SFS",
+    "SFS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:petrified_fence_gate"
+  }
+}

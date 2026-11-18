@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "rubinated_nether:block/checkered_tiles"
+    },
+    "facing=east": {
+      "model": "rubinated_nether:block/checkered_tiles",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "rubinated_nether:block/checkered_tiles",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "rubinated_nether:block/checkered_tiles",
+      "y": 270
+    }
+  }
+}

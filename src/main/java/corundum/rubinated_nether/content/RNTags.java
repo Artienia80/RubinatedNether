@@ -63,6 +63,18 @@ public final class RNTags {
 		/** Blue ice and dry ice behind a vent. High damage. */
 		public static final TagKey<Block> VENT_COLD_HIGH = createTag(Registries.BLOCK, "vent_cold_high");
 
+		public static final TagKey<Block> SOUL_BLOCKS = createTag(Registries.BLOCK, "soul_blocks");
+
+		public static final TagKey<Block> PETRIFICATION_CATALYST = createTag(Registries.BLOCK, "petrification_catalyst");
+
+		public static final TagKey<Block> PETRIFIABLE_SNAGS = createTag(Registries.BLOCK, "petrifiable_snags");
+
+		public static final TagKey<Block> PETRIFIABLE_STRIPPED_SNAGS = createTag(Registries.BLOCK, "petrifiable_stripped_snags");
+
+		public static final TagKey<Block> PETRIFIABLE_RINDS = createTag(Registries.BLOCK, "petrifiable_rinds");
+
+		public static final TagKey<Block> PETRIFIABLE_STRIPPED_RINDS = createTag(Registries.BLOCK, "petrifiable_stripped_rinds");
+
 
 	}
 

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "Q": {
+      "item": "rubinated_nether:tiled_quartz"
+    },
+    "M": {
+      "item": "rubinated_nether:tiled_morion"
+    }
+  },
+  "pattern": [
+    "QM",
+    "MQ"
+  ],
+  "result": {
+    "count": 4,
+    "id": "rubinated_nether:checkered_tiles"
+  }
+}

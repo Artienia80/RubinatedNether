@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_smooth_morion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:smooth_morion"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "rubinated_nether:smooth_morion_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_smooth_morion"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "rubinated_nether:smooth_morion_stairs"
+    ]
+  }
+}

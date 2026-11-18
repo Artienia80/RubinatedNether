@@ -105,6 +105,8 @@ public class RNCreativeTabs {
 								RNBlocks.PETRIFIED_STAIRS,
 								RNBlocks.PETRIFIED_SLAB,
 								RNBlocks.PETRIFIED_WALL,
+								RNBlocks.PETRIFIED_FENCE,
+								RNBlocks.PETRIFIED_FENCE_GATE,
 								RNBlocks.PETRIFIED_DOOR,
 								RNBlocks.PETRIFIED_TRAPDOOR,
 								RNBlocks.PETRIFIED_PRESSURE_PLATE,
@@ -113,6 +115,24 @@ public class RNCreativeTabs {
 								RNBlocks.PETRIFIED_HANGING_SIGN_ITEM,
 								RNItems.PETRIFIED_BOAT,
 								RNItems.PETRIFIED_CHEST_BOAT
+						);
+						addItems(
+								output,
+								RNItems.NETHER_MORION,
+								RNBlocks.MORION_BLOCK,
+								RNBlocks.CHISELED_MORION_BLOCK,
+								RNBlocks.MORION_PILLAR,
+								RNBlocks.MORION_BRICKS,
+								RNBlocks.SMOOTH_MORION,
+								RNBlocks.MORION_STAIRS,
+								RNBlocks.MORION_SLAB,
+								RNBlocks.SMOOTH_MORION_STAIRS,
+								RNBlocks.SMOOTH_MORION_SLAB,
+								RNBlocks.TILED_QUARTZ,
+								RNBlocks.TILED_MORION,
+								RNBlocks.CHECKERED_TILES,
+								RNBlocks.REDSTONE_ACCUMULATOR,
+								RNBlocks.MOONPHASE_SENSOR
 						);
 						// Bronze materials
 						addItems(

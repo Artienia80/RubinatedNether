@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "M": {
+      "item": "rubinated_nether:nether_morion"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "T": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "pattern": [
+    " T ",
+    "TMT",
+    "SSS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:redstone_accumulator"
+  }
+}

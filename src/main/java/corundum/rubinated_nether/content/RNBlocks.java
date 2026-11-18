@@ -228,6 +228,16 @@ public class RNBlocks {
 			() -> new WallBlock(petrified())
 	);
 
+	public static final DeferredBlock<FenceBlock> PETRIFIED_FENCE = registerBlockAndItem(
+			"petrified_fence",
+			() -> new FenceBlock(petrified())
+	);
+
+	public static final DeferredBlock<FenceGateBlock> PETRIFIED_FENCE_GATE = registerBlockAndItem(
+			"petrified_fence_gate",
+			() -> new FenceGateBlock(RNBlocks.PETRIFIED_WOOD_TYPE, petrified())
+	);
+
 	public static final DeferredBlock<DoorBlock> PETRIFIED_DOOR = registerDoubleHighBlockAndItem(
 			"petrified_door",
 			() -> new DoorBlock(BlockSetType.STONE, petrified().noOcclusion().pushReaction(PushReaction.DESTROY))
@@ -246,6 +256,70 @@ public class RNBlocks {
 	public static final DeferredBlock<ButtonBlock> PETRIFIED_BUTTON = registerBlockAndItem(
 			"petrified_button",
 			() -> new ButtonBlock(BlockSetType.STONE, 20, petrified().strength(0.5F).noCollission().pushReaction(PushReaction.DESTROY))
+	);
+
+	public static final DeferredBlock<Block> MORION_BLOCK = registerBlockAndItem(
+			"morion_block",
+			() -> new Block(morion())
+	);
+	public static final DeferredBlock<Block> CHISELED_MORION_BLOCK = registerBlockAndItem(
+			"chiseled_morion_block",
+			() -> new Block(morion())
+	);
+	public static final DeferredBlock<RotatedPillarBlock> MORION_PILLAR = registerBlockAndItem(
+			"morion_pillar",
+			() -> new RotatedPillarBlock(morion())
+	);
+	public static final DeferredBlock<Block> MORION_BRICKS = registerBlockAndItem(
+			"morion_bricks",
+			() -> new Block(morion())
+	);
+	public static final DeferredBlock<Block> SMOOTH_MORION = registerBlockAndItem(
+			"smooth_morion",
+			() -> new Block(morion().strength(2.0F, 6.0F))
+	);
+	public static final DeferredBlock<SlabBlock> MORION_SLAB = registerBlockAndItem(
+			"morion_slab",
+			() -> new SlabBlock(morion())
+	);
+	public static final DeferredBlock<StairBlock> MORION_STAIRS = registerBlockAndItem(
+			"morion_stairs",
+			() -> new StairBlock(MORION_BLOCK.get().defaultBlockState(), morion())
+	);
+	public static final DeferredBlock<SlabBlock> SMOOTH_MORION_SLAB = registerBlockAndItem(
+			"smooth_morion_slab",
+			() -> new SlabBlock(morion().strength(2.0F, 6.0F))
+	);
+	public static final DeferredBlock<StairBlock> SMOOTH_MORION_STAIRS = registerBlockAndItem(
+			"smooth_morion_stairs",
+			() -> new StairBlock(SMOOTH_MORION.get().defaultBlockState(), morion().strength(2.0F, 6.0F))
+	);
+	public static final DeferredBlock<Block> TILED_QUARTZ = registerBlockAndItem(
+			"tiled_quartz",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.QUARTZ_BLOCK))
+	);
+	public static final DeferredBlock<Block> TILED_MORION = registerBlockAndItem(
+			"tiled_morion",
+			() -> new Block(morion())
+	);
+	public static final DeferredBlock<GlazedTerracottaBlock> CHECKERED_TILES = registerBlockAndItem(
+			"checkered_tiles",
+			() -> new GlazedTerracottaBlock(
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.COLOR_BLACK)
+							.instrument(NoteBlockInstrument.BASEDRUM)
+							.requiresCorrectToolForDrops()
+							.strength(1.4F)
+							.pushReaction(PushReaction.PUSH_ONLY)
+			)
+	);
+	public static final DeferredBlock<RedstoneAccumulatorBlock> REDSTONE_ACCUMULATOR = registerBlockAndItem(
+			"redstone_accumulator",
+			() -> new RedstoneAccumulatorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COMPARATOR))
+	);
+	public static final DeferredBlock<MoonphaseSensorBlock> MOONPHASE_SENSOR = registerBlockAndItem(
+			"moonphase_sensor",
+			() -> new MoonphaseSensorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DAYLIGHT_DETECTOR))
 	);
 
 	public static final WoodType PETRIFIED_WOOD_TYPE = WoodType.register(new WoodType(
@@ -1790,6 +1864,14 @@ public class RNBlocks {
 		);
 
 		return register;
+	}
+
+	private static BlockBehaviour.Properties morion() {
+		return BlockBehaviour.Properties.of()
+				.mapColor(MapColor.COLOR_BLACK)
+				.instrument(NoteBlockInstrument.BASEDRUM)
+				.requiresCorrectToolForDrops()
+				.strength(0.8F);
 	}
 
 	private static BlockBehaviour.Properties petrified() {

@@ -1,5 +1,7 @@
 {
   "values": [
-    "rubinated_nether:petrified_stairs"
+    "rubinated_nether:petrified_stairs",
+    "rubinated_nether:morion_stairs",
+    "rubinated_nether:smooth_morion_stairs"
   ]
 }

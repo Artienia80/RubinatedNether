@@ -1,5 +1,10 @@
 package corundum.rubinated_nether.data.sub_providers;
 
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
+import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
@@ -45,13 +50,15 @@ public class RNBlockLoot extends BlockLootSubProvider {
 
 	@Override
 	protected void generate() {
-		this.dropSelf(RNBlocks.PETRIFIED_SNAG.get());
-		this.dropSelf(RNBlocks.STRIPPED_PETRIFIED_SNAG.get());
-		this.dropSelf(RNBlocks.PETRIFIED_RIND.get());
-		this.dropSelf(RNBlocks.STRIPPED_PETRIFIED_RIND.get());
+		this.petrifiedLogDrops(RNBlocks.PETRIFIED_SNAG.get());
+		this.petrifiedLogDrops(RNBlocks.STRIPPED_PETRIFIED_SNAG.get());
+		this.petrifiedLogDrops(RNBlocks.PETRIFIED_RIND.get());
+		this.petrifiedLogDrops(RNBlocks.STRIPPED_PETRIFIED_RIND.get());
 		this.dropSelf(RNBlocks.PETRIFIED_FLAGS.get());
 		this.dropSelf(RNBlocks.PETRIFIED_STAIRS.get());
 		this.dropSelf(RNBlocks.PETRIFIED_WALL.get());
+		this.dropSelf(RNBlocks.PETRIFIED_FENCE.get());
+		this.dropSelf(RNBlocks.PETRIFIED_FENCE_GATE.get());
 		this.dropSelf(RNBlocks.PETRIFIED_TRAPDOOR.get());
 		this.dropSelf(RNBlocks.PETRIFIED_PRESSURE_PLATE.get());
 		this.dropSelf(RNBlocks.PETRIFIED_BUTTON.get());
@@ -61,6 +68,20 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.PETRIFIED_WALL_SIGN.get());
 		this.dropSelf(RNBlocks.PETRIFIED_HANGING_SIGN.get());
 		this.dropSelf(RNBlocks.PETRIFIED_WALL_HANGING_SIGN.get());
+		this.dropSelf(RNBlocks.MORION_BLOCK.get());
+		this.dropSelf(RNBlocks.CHISELED_MORION_BLOCK.get());
+		this.dropSelf(RNBlocks.MORION_PILLAR.get());
+		this.dropSelf(RNBlocks.MORION_BRICKS.get());
+		this.dropSelf(RNBlocks.SMOOTH_MORION.get());
+		this.add(RNBlocks.MORION_SLAB.get(), this::createSlabItemTable);
+		this.dropSelf(RNBlocks.MORION_STAIRS.get());
+		this.add(RNBlocks.SMOOTH_MORION_SLAB.get(), this::createSlabItemTable);
+		this.dropSelf(RNBlocks.SMOOTH_MORION_STAIRS.get());
+		this.dropSelf(RNBlocks.TILED_QUARTZ.get());
+		this.dropSelf(RNBlocks.TILED_MORION.get());
+		this.dropSelf(RNBlocks.CHECKERED_TILES.get());
+		this.dropSelf(RNBlocks.REDSTONE_ACCUMULATOR.get());
+		this.dropSelf(RNBlocks.MOONPHASE_SENSOR.get());
 
 		this.dropSelf(RNBlocks.RUBY_BLOCK.get());
 		this.dropSelf(RNBlocks.MOLTEN_RUBY_BLOCK.get());
@@ -374,6 +395,27 @@ public class RNBlockLoot extends BlockLootSubProvider {
 					)
 					.withPool(RubinatedBlackstonePool());
 			}
+		);
+	}
+
+	private void petrifiedLogDrops(Block block) {
+		this.add(
+				block,
+				LootTable.lootTable().withPool(
+						LootPool.lootPool().add(
+								AlternativesEntry.alternatives(
+										LootItem.lootTableItem(block)
+												.when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.PICKAXES)))
+												.when(ExplosionCondition.survivesExplosion()),
+										this.applyExplosionDecay(
+												block,
+												LootItem.lootTableItem(RNItems.NETHER_MORION.get())
+														.when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.AXES)))
+														.apply(ApplyBonusCount.addOreBonusCount(registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE)))
+										)
+								)
+						)
+				)
 		);
 	}
 

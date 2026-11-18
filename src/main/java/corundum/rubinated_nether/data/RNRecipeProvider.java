@@ -26,6 +26,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.crafting.CookingBookCategory;
@@ -214,6 +215,7 @@ public class RNRecipeProvider extends RecipeProvider {
 
 		winder(recipeOutput);
 		petrified(recipeOutput);
+		morion(recipeOutput);
 
 		tarnish(recipeOutput, this::spring, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_SPRING);
 		tarnish(recipeOutput, this::vent, RNBlocks.BRONZE_BLOCK, RNBlocks.BRONZE_VENT);
@@ -860,6 +862,89 @@ public class RNRecipeProvider extends RecipeProvider {
 
 	}
 
+	private void morion(RecipeOutput recipeOutput) {
+		ItemLike morion = RNItems.NETHER_MORION;
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.MORION_BLOCK)
+				.define('M', morion)
+				.pattern("MM")
+				.pattern("MM")
+				.unlockedBy(getHasName(morion), has(morion))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CHISELED_MORION_BLOCK)
+				.define('S', RNBlocks.MORION_SLAB)
+				.pattern("S")
+				.pattern("S")
+				.unlockedBy(getHasName(RNBlocks.MORION_SLAB), has(RNBlocks.MORION_SLAB))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.MORION_PILLAR, 2)
+				.define('B', RNBlocks.MORION_BLOCK)
+				.pattern("B")
+				.pattern("B")
+				.unlockedBy(getHasName(RNBlocks.MORION_BLOCK), has(RNBlocks.MORION_BLOCK))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.MORION_BRICKS, 4)
+				.define('B', RNBlocks.MORION_BLOCK)
+				.pattern("BB")
+				.pattern("BB")
+				.unlockedBy(getHasName(RNBlocks.MORION_BLOCK), has(RNBlocks.MORION_BLOCK))
+				.save(recipeOutput);
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(RNBlocks.MORION_BLOCK), RecipeCategory.BUILDING_BLOCKS, RNBlocks.SMOOTH_MORION, 0.1F, 200)
+				.unlockedBy(getHasName(RNBlocks.MORION_BLOCK), has(RNBlocks.MORION_BLOCK))
+				.save(recipeOutput);
+		stairsAndSlab(recipeOutput, RNBlocks.MORION_BLOCK, RNBlocks.MORION_STAIRS, RNBlocks.MORION_SLAB);
+		stairsAndSlab(recipeOutput, RNBlocks.SMOOTH_MORION, RNBlocks.SMOOTH_MORION_STAIRS, RNBlocks.SMOOTH_MORION_SLAB);
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.TILED_MORION, 4)
+				.define('B', RNBlocks.MORION_BRICKS)
+				.pattern("BB")
+				.pattern("BB")
+				.unlockedBy(getHasName(RNBlocks.MORION_BRICKS), has(RNBlocks.MORION_BRICKS))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.TILED_QUARTZ, 4)
+				.define('B', Blocks.QUARTZ_BRICKS)
+				.pattern("BB")
+				.pattern("BB")
+				.unlockedBy(getHasName(Blocks.QUARTZ_BRICKS), has(Blocks.QUARTZ_BRICKS))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CHECKERED_TILES, 4)
+				.define('Q', RNBlocks.TILED_QUARTZ)
+				.define('M', RNBlocks.TILED_MORION)
+				.pattern("QM")
+				.pattern("MQ")
+				.unlockedBy(getHasName(RNBlocks.TILED_MORION), has(RNBlocks.TILED_MORION))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.REDSTONE_ACCUMULATOR)
+				.define('T', Blocks.REDSTONE_TORCH)
+				.define('M', morion)
+				.define('S', Blocks.STONE)
+				.pattern(" T ")
+				.pattern("TMT")
+				.pattern("SSS")
+				.unlockedBy(getHasName(morion), has(morion))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.MOONPHASE_SENSOR)
+				.define('G', Blocks.GLASS)
+				.define('M', morion)
+				.define('W', ItemTags.WOODEN_SLABS)
+				.pattern("GGG")
+				.pattern("MMM")
+				.pattern("WWW")
+				.unlockedBy(getHasName(morion), has(morion))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Blocks.TINTED_GLASS, 2)
+				.define('M', morion)
+				.define('G', Blocks.GLASS)
+				.pattern(" M ")
+				.pattern("MGM")
+				.pattern(" M ")
+				.unlockedBy(getHasName(morion), has(morion))
+				.save(recipeOutput, RubinatedNether.id("tinted_glass_from_morion"));
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.BLACKSTONE)
+				.requires(Ingredient.of(Blocks.COBBLESTONE, Blocks.DIORITE, Blocks.ANDESITE, Blocks.GRANITE))
+				.requires(morion)
+				.unlockedBy(getHasName(morion), has(morion))
+				.save(recipeOutput, RubinatedNether.id("blackstone_from_morion"));
+	}
+
 	private void petrified(RecipeOutput recipeOutput) {
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, RNBlocks.PETRIFIED_FLAGS, 4)
 				.requires(RNTags.Items.PETRIFIED_SNAGS)
@@ -878,6 +963,22 @@ public class RNRecipeProvider extends RecipeProvider {
 		);
 		wall(recipeOutput, RNBlocks.PETRIFIED_FLAGS, RNBlocks.PETRIFIED_WALL);
 
+		ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, RNBlocks.PETRIFIED_FENCE, 3)
+				.define('F', RNBlocks.PETRIFIED_FLAGS)
+				.define('S', Items.STICK)
+				.pattern("FSF")
+				.pattern("FSF")
+				.group("petrified_fence")
+				.unlockedBy(getHasName(RNBlocks.PETRIFIED_FLAGS), has(RNBlocks.PETRIFIED_FLAGS))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.PETRIFIED_FENCE_GATE)
+				.define('F', RNBlocks.PETRIFIED_FLAGS)
+				.define('S', Items.STICK)
+				.pattern("SFS")
+				.pattern("SFS")
+				.group("petrified_fence_gate")
+				.unlockedBy(getHasName(RNBlocks.PETRIFIED_FLAGS), has(RNBlocks.PETRIFIED_FLAGS))
+				.save(recipeOutput);
 		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.PETRIFIED_DOOR, 3)
 				.define('F', RNBlocks.PETRIFIED_FLAGS)
 				.pattern("FF")
