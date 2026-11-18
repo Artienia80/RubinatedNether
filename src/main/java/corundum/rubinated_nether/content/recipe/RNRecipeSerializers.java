@@ -34,6 +34,24 @@ public class RNRecipeSerializers {
 	public static final DeferredHolder<RecipeSerializer<?>, BaptismRecipeSerializer> BAPTISM =
 			RECIPE_SERIALIZERS.register("baptism", BaptismRecipeSerializer::new);
 
+	public static final DeferredHolder<RecipeSerializer<?>, BlockSwapRecipeSerializer<DerubinationRecipe>> DERUBINATION =
+			RECIPE_SERIALIZERS.register("derubination", () -> new BlockSwapRecipeSerializer<>(DerubinationRecipe::new));
+
+	public static final DeferredHolder<RecipeSerializer<?>, BlockSwapRecipeSerializer<CrackingRecipe>> CRACKING =
+			RECIPE_SERIALIZERS.register("cracking", () -> new BlockSwapRecipeSerializer<>(CrackingRecipe::new));
+
+	public static final DeferredHolder<RecipeSerializer<?>, BlockSwapRecipeSerializer<DerubinationRecipe>> DERUBINATION =
+			RECIPE_SERIALIZERS.register("derubination", () -> new BlockSwapRecipeSerializer<>(DerubinationRecipe::new));
+
+	public static final DeferredHolder<RecipeSerializer<?>, BlockSwapRecipeSerializer<CrackingRecipe>> CRACKING =
+			RECIPE_SERIALIZERS.register("cracking", () -> new BlockSwapRecipeSerializer<>(CrackingRecipe::new));
+
+	public static final DeferredHolder<RecipeSerializer<?>, BlockSwapRecipeSerializer<DerubinationRecipe>> DERUBINATION =
+			RECIPE_SERIALIZERS.register("derubination", () -> new BlockSwapRecipeSerializer<>(DerubinationRecipe::new));
+
+	public static final DeferredHolder<RecipeSerializer<?>, BlockSwapRecipeSerializer<CrackingRecipe>> CRACKING =
+			RECIPE_SERIALIZERS.register("cracking", () -> new BlockSwapRecipeSerializer<>(CrackingRecipe::new));
+
 	public static final DeferredHolder<RecipeSerializer<?>, ModuleSmithingRecipe.Serializer> MODULE_APPLY =
 			RECIPE_SERIALIZERS.register("module_apply", ModuleSmithingRecipe.Serializer::new);
 }

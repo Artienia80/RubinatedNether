@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.content.blocks.CofferBlock;
 import corundum.rubinated_nether.content.blocks.entities.CofferBlockEntity;
+import corundum.rubinated_nether.content.recipe.BlockSwaps;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -30,20 +31,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 
 public class RubinationConverter {
 
     private static final double MIN_REPLACEMENT_CHANCE = 0.0;
     private static final double MAX_REPLACEMENT_CHANCE = 1.0;
-
-    private static final Map<Block, Block> RUBINATED_TO_NORMAL_MAP = Map.of(
-            RNBlocks.RUBINATED_SHRINE_STONE_TILES.get(), RNBlocks.SHRINE_STONE_TILES.get(),
-            RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get(), RNBlocks.SHRINE_STONE_PILLAR.get(),
-            RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get(), RNBlocks.SHRINE_STONE_BRICKS.get(),
-            RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get(), RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get(),
-            RNBlocks.RUBINATED_SHRINE_STONE_COFFER.get(), RNBlocks.SHRINE_STONE_COFFER.get()
-    );
 
     public static class ConversionRule {
         private final Block inputBlock;
@@ -103,8 +97,8 @@ public class RubinationConverter {
 
     public static final int ALTAR_SCAN_RADIUS = 20;
 
-    public static boolean isRubinatedBlock(BlockState state) {
-        return RUBINATED_TO_NORMAL_MAP.containsKey(state.getBlock());
+    private static Map<Block, Block> derubinationMap(Level level) {
+        return BlockSwaps.map(level, RNRecipes.DERUBINATION.get());
     }
 
     @FunctionalInterface
@@ -117,6 +111,10 @@ public class RubinationConverter {
         int maxX = centerPos.getX() + radius;
         int minZ = centerPos.getZ() - radius;
         int maxZ = centerPos.getZ() + radius;
+        Map<Block, Block> derubination = derubinationMap(level);
+        if (derubination.isEmpty()) return;
+        Predicate<BlockState> isRubinated = state -> derubination.containsKey(state.getBlock());
+
         int minY = Math.max(centerPos.getY() - radius, level.getMinBuildHeight());
         int maxY = Math.min(centerPos.getY() + radius, level.getMaxBuildHeight() - 1);
         if (minY > maxY) return;
@@ -138,7 +136,7 @@ public class RubinationConverter {
                     if (index < 0 || index >= chunk.getSectionsCount()) continue;
 
                     LevelChunkSection section = chunk.getSection(index);
-                    if (section.hasOnlyAir() || !section.maybeHas(RubinationConverter::isRubinatedBlock)) continue;
+                    if (section.hasOnlyAir() || !section.maybeHas(isRubinated)) continue;
 
                     int fromY = Math.max(minY, sectionY << 4);
                     int toY = Math.min(maxY, (sectionY << 4) + 15);
@@ -146,7 +144,7 @@ public class RubinationConverter {
                     for (int y = fromY; y <= toY; y++) {
                         for (int z = fromZ; z <= toZ; z++) {
                             for (int x = fromX; x <= toX; x++) {
-                                if (isRubinatedBlock(section.getBlockState(x & 15, y & 15, z & 15))) {
+                                if (isRubinated.test(section.getBlockState(x & 15, y & 15, z & 15))) {
                                     cursor.set(x, y, z);
                                     if (!visitor.visit(cursor)) return;
                                 }
@@ -179,12 +177,10 @@ public class RubinationConverter {
     }
 
     @Nullable
-    public static BlockState getDerubinatedVersion(BlockState state) {
-        var derubinatedBlock = RUBINATED_TO_NORMAL_MAP.get(state.getBlock());
-        if (derubinatedBlock != null) {
-            return transferProperties(state, derubinatedBlock.defaultBlockState());
-        }
-        return null;
+    public static BlockState getDerubinatedVersion(Level level, BlockState state) {
+        return BlockSwaps.result(level, RNRecipes.DERUBINATION.get(), state)
+                .map(block -> transferProperties(state, block.defaultBlockState()))
+                .orElse(null);
     }
 
     public static void derubinateBlocks(Level level, BlockPos centerPos, int radius, int amountToRemove) {
@@ -196,12 +192,13 @@ public class RubinationConverter {
             return true;
         });
 
+        Map<Block, Block> derubination = derubinationMap(level);
         Collections.shuffle(rubinatedPositions, new Random(level.random.nextLong()));
         for (int i = 0; i < Math.min(amountToRemove, rubinatedPositions.size()); i++) {
             BlockPos pos = rubinatedPositions.get(i);
             BlockState currentState = level.getBlockState(pos);
             Block currentBlock = currentState.getBlock();
-            Block normalBlock = RUBINATED_TO_NORMAL_MAP.get(currentBlock);
+            Block normalBlock = derubination.get(currentBlock);
 
             if (normalBlock != null) {
                 BlockState newState = transferProperties(currentState, normalBlock.defaultBlockState());

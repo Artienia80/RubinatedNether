@@ -1,0 +1,5 @@
+{
+  "type": "rubinated_nether:cracking",
+  "result": "minecraft:cracked_deepslate_tiles",
+  "source": "minecraft:deepslate_tiles"
+}

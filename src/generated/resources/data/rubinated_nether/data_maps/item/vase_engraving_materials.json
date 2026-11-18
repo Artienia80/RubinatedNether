@@ -1,0 +1,17 @@
+{
+  "values": {
+    "rubinated_nether:bronze_scrap": {
+      "palette": "bronze"
+    },
+    "rubinated_nether:crystallized_bronze_blight": {
+      "palette": "crystallized_bronze"
+    },
+    "rubinated_nether:molten_ruby": {
+      "color": "#FF6A2B",
+      "palette": "molten_ruby"
+    },
+    "rubinated_nether:ruby": {
+      "palette": "ruby"
+    }
+  }
+}

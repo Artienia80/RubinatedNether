@@ -1,0 +1,319 @@
+{
+  "values": {
+    "rubinated_nether:bronze_block": {
+      "crystallized": "rubinated_nether:crystallized_bronze_block",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_block"
+    },
+    "rubinated_nether:bronze_bulb": {
+      "crystallized": "rubinated_nether:crystallized_bronze_bulb",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_bulb"
+    },
+    "rubinated_nether:bronze_button": {
+      "crystallized": "rubinated_nether:crystallized_bronze_button",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_button"
+    },
+    "rubinated_nether:bronze_chain": {
+      "crystallized": "rubinated_nether:crystallized_bronze_chain",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_chain"
+    },
+    "rubinated_nether:bronze_chandelier": {
+      "crystallized": "rubinated_nether:crystallized_bronze_chandelier",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_chandelier"
+    },
+    "rubinated_nether:bronze_gearbox": {
+      "crystallized": "rubinated_nether:crystallized_bronze_gearbox",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_gearbox"
+    },
+    "rubinated_nether:bronze_grate": {
+      "crystallized": "rubinated_nether:crystallized_bronze_grate",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_grate"
+    },
+    "rubinated_nether:bronze_head": {
+      "crystallized": "rubinated_nether:crystallized_bronze_head",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_head"
+    },
+    "rubinated_nether:bronze_lamp": {
+      "crystallized": "rubinated_nether:crystallized_bronze_lamp",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_lamp"
+    },
+    "rubinated_nether:bronze_lantern": {
+      "crystallized": "rubinated_nether:crystallized_bronze_lantern",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_lantern"
+    },
+    "rubinated_nether:bronze_laser": {
+      "crystallized": "rubinated_nether:crystallized_bronze_laser",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_laser"
+    },
+    "rubinated_nether:bronze_spring": {
+      "crystallized": "rubinated_nether:crystallized_bronze_spring",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_spring"
+    },
+    "rubinated_nether:bronze_strongbox": {
+      "crystallized": "rubinated_nether:crystallized_bronze_strongbox",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_strongbox"
+    },
+    "rubinated_nether:bronze_vase": {
+      "crystallized": "rubinated_nether:crystallized_bronze_vase",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_vase"
+    },
+    "rubinated_nether:bronze_vent": {
+      "crystallized": "rubinated_nether:crystallized_bronze_vent",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_vent"
+    },
+    "rubinated_nether:bronze_winder": {
+      "crystallized": "rubinated_nether:crystallized_bronze_winder",
+      "next_tarnishment_stage": "rubinated_nether:discolored_bronze_winder"
+    },
+    "rubinated_nether:chiseled_bronze": {
+      "crystallized": "rubinated_nether:crystallized_chiseled_bronze",
+      "next_tarnishment_stage": "rubinated_nether:discolored_chiseled_bronze"
+    },
+    "rubinated_nether:corroded_bronze_block": {
+      "crystallized": "rubinated_nether:crystallized_bronze_block",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_block"
+    },
+    "rubinated_nether:corroded_bronze_bulb": {
+      "crystallized": "rubinated_nether:crystallized_bronze_bulb",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_bulb"
+    },
+    "rubinated_nether:corroded_bronze_button": {
+      "crystallized": "rubinated_nether:crystallized_bronze_button",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_button"
+    },
+    "rubinated_nether:corroded_bronze_chain": {
+      "crystallized": "rubinated_nether:crystallized_bronze_chain",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_chain"
+    },
+    "rubinated_nether:corroded_bronze_chandelier": {
+      "crystallized": "rubinated_nether:crystallized_bronze_chandelier",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_chandelier"
+    },
+    "rubinated_nether:corroded_bronze_gearbox": {
+      "crystallized": "rubinated_nether:crystallized_bronze_gearbox",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_gearbox"
+    },
+    "rubinated_nether:corroded_bronze_grate": {
+      "crystallized": "rubinated_nether:crystallized_bronze_grate",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_grate"
+    },
+    "rubinated_nether:corroded_bronze_head": {
+      "crystallized": "rubinated_nether:crystallized_bronze_head",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_head"
+    },
+    "rubinated_nether:corroded_bronze_lamp": {
+      "crystallized": "rubinated_nether:crystallized_bronze_lamp",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_lamp"
+    },
+    "rubinated_nether:corroded_bronze_lantern": {
+      "crystallized": "rubinated_nether:crystallized_bronze_lantern",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_lantern"
+    },
+    "rubinated_nether:corroded_bronze_laser": {
+      "crystallized": "rubinated_nether:crystallized_bronze_laser",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_laser"
+    },
+    "rubinated_nether:corroded_bronze_spring": {
+      "crystallized": "rubinated_nether:crystallized_bronze_spring",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_spring"
+    },
+    "rubinated_nether:corroded_bronze_strongbox": {
+      "crystallized": "rubinated_nether:crystallized_bronze_strongbox",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_strongbox"
+    },
+    "rubinated_nether:corroded_bronze_vase": {
+      "crystallized": "rubinated_nether:crystallized_bronze_vase",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_vase"
+    },
+    "rubinated_nether:corroded_bronze_vent": {
+      "crystallized": "rubinated_nether:crystallized_bronze_vent",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_vent"
+    },
+    "rubinated_nether:corroded_bronze_winder": {
+      "crystallized": "rubinated_nether:crystallized_bronze_winder",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_bronze_winder"
+    },
+    "rubinated_nether:corroded_chiseled_bronze": {
+      "crystallized": "rubinated_nether:crystallized_chiseled_bronze",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_chiseled_bronze"
+    },
+    "rubinated_nether:corroded_cut_bronze_bricks": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_bricks",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_cut_bronze_bricks"
+    },
+    "rubinated_nether:corroded_cut_bronze_bricks_slab": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_bricks_slab",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_cut_bronze_bricks_slab"
+    },
+    "rubinated_nether:corroded_cut_bronze_bricks_stairs": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_bricks_stairs",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_cut_bronze_bricks_stairs"
+    },
+    "rubinated_nether:corroded_cut_bronze_pillar": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_pillar",
+      "next_tarnishment_stage": "rubinated_nether:tarnished_cut_bronze_pillar"
+    },
+    "rubinated_nether:cut_bronze_bricks": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_bricks",
+      "next_tarnishment_stage": "rubinated_nether:discolored_cut_bronze_bricks"
+    },
+    "rubinated_nether:cut_bronze_bricks_slab": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_bricks_slab",
+      "next_tarnishment_stage": "rubinated_nether:discolored_cut_bronze_bricks_slab"
+    },
+    "rubinated_nether:cut_bronze_bricks_stairs": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_bricks_stairs",
+      "next_tarnishment_stage": "rubinated_nether:discolored_cut_bronze_bricks_stairs"
+    },
+    "rubinated_nether:cut_bronze_pillar": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_pillar",
+      "next_tarnishment_stage": "rubinated_nether:discolored_cut_bronze_pillar"
+    },
+    "rubinated_nether:discolored_bronze_block": {
+      "crystallized": "rubinated_nether:crystallized_bronze_block",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_block"
+    },
+    "rubinated_nether:discolored_bronze_bulb": {
+      "crystallized": "rubinated_nether:crystallized_bronze_bulb",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_bulb"
+    },
+    "rubinated_nether:discolored_bronze_button": {
+      "crystallized": "rubinated_nether:crystallized_bronze_button",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_button"
+    },
+    "rubinated_nether:discolored_bronze_chain": {
+      "crystallized": "rubinated_nether:crystallized_bronze_chain",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_chain"
+    },
+    "rubinated_nether:discolored_bronze_chandelier": {
+      "crystallized": "rubinated_nether:crystallized_bronze_chandelier",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_chandelier"
+    },
+    "rubinated_nether:discolored_bronze_gearbox": {
+      "crystallized": "rubinated_nether:crystallized_bronze_gearbox",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_gearbox"
+    },
+    "rubinated_nether:discolored_bronze_grate": {
+      "crystallized": "rubinated_nether:crystallized_bronze_grate",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_grate"
+    },
+    "rubinated_nether:discolored_bronze_head": {
+      "crystallized": "rubinated_nether:crystallized_bronze_head",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_head"
+    },
+    "rubinated_nether:discolored_bronze_lamp": {
+      "crystallized": "rubinated_nether:crystallized_bronze_lamp",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_lamp"
+    },
+    "rubinated_nether:discolored_bronze_lantern": {
+      "crystallized": "rubinated_nether:crystallized_bronze_lantern",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_lantern"
+    },
+    "rubinated_nether:discolored_bronze_laser": {
+      "crystallized": "rubinated_nether:crystallized_bronze_laser",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_laser"
+    },
+    "rubinated_nether:discolored_bronze_spring": {
+      "crystallized": "rubinated_nether:crystallized_bronze_spring",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_spring"
+    },
+    "rubinated_nether:discolored_bronze_strongbox": {
+      "crystallized": "rubinated_nether:crystallized_bronze_strongbox",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_strongbox"
+    },
+    "rubinated_nether:discolored_bronze_vase": {
+      "crystallized": "rubinated_nether:crystallized_bronze_vase",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_vase"
+    },
+    "rubinated_nether:discolored_bronze_vent": {
+      "crystallized": "rubinated_nether:crystallized_bronze_vent",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_vent"
+    },
+    "rubinated_nether:discolored_bronze_winder": {
+      "crystallized": "rubinated_nether:crystallized_bronze_winder",
+      "next_tarnishment_stage": "rubinated_nether:corroded_bronze_winder"
+    },
+    "rubinated_nether:discolored_chiseled_bronze": {
+      "crystallized": "rubinated_nether:crystallized_chiseled_bronze",
+      "next_tarnishment_stage": "rubinated_nether:corroded_chiseled_bronze"
+    },
+    "rubinated_nether:discolored_cut_bronze_bricks": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_bricks",
+      "next_tarnishment_stage": "rubinated_nether:corroded_cut_bronze_bricks"
+    },
+    "rubinated_nether:discolored_cut_bronze_bricks_slab": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_bricks_slab",
+      "next_tarnishment_stage": "rubinated_nether:corroded_cut_bronze_bricks_slab"
+    },
+    "rubinated_nether:discolored_cut_bronze_bricks_stairs": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_bricks_stairs",
+      "next_tarnishment_stage": "rubinated_nether:corroded_cut_bronze_bricks_stairs"
+    },
+    "rubinated_nether:discolored_cut_bronze_pillar": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_pillar",
+      "next_tarnishment_stage": "rubinated_nether:corroded_cut_bronze_pillar"
+    },
+    "rubinated_nether:tarnished_bronze_block": {
+      "crystallized": "rubinated_nether:crystallized_bronze_block"
+    },
+    "rubinated_nether:tarnished_bronze_bulb": {
+      "crystallized": "rubinated_nether:crystallized_bronze_bulb"
+    },
+    "rubinated_nether:tarnished_bronze_button": {
+      "crystallized": "rubinated_nether:crystallized_bronze_button"
+    },
+    "rubinated_nether:tarnished_bronze_chain": {
+      "crystallized": "rubinated_nether:crystallized_bronze_chain"
+    },
+    "rubinated_nether:tarnished_bronze_chandelier": {
+      "crystallized": "rubinated_nether:crystallized_bronze_chandelier"
+    },
+    "rubinated_nether:tarnished_bronze_gearbox": {
+      "crystallized": "rubinated_nether:crystallized_bronze_gearbox"
+    },
+    "rubinated_nether:tarnished_bronze_grate": {
+      "crystallized": "rubinated_nether:crystallized_bronze_grate"
+    },
+    "rubinated_nether:tarnished_bronze_head": {
+      "crystallized": "rubinated_nether:crystallized_bronze_head"
+    },
+    "rubinated_nether:tarnished_bronze_lamp": {
+      "crystallized": "rubinated_nether:crystallized_bronze_lamp"
+    },
+    "rubinated_nether:tarnished_bronze_lantern": {
+      "crystallized": "rubinated_nether:crystallized_bronze_lantern"
+    },
+    "rubinated_nether:tarnished_bronze_laser": {
+      "crystallized": "rubinated_nether:crystallized_bronze_laser"
+    },
+    "rubinated_nether:tarnished_bronze_spring": {
+      "crystallized": "rubinated_nether:crystallized_bronze_spring"
+    },
+    "rubinated_nether:tarnished_bronze_strongbox": {
+      "crystallized": "rubinated_nether:crystallized_bronze_strongbox"
+    },
+    "rubinated_nether:tarnished_bronze_vase": {
+      "crystallized": "rubinated_nether:crystallized_bronze_vase"
+    },
+    "rubinated_nether:tarnished_bronze_vent": {
+      "crystallized": "rubinated_nether:crystallized_bronze_vent"
+    },
+    "rubinated_nether:tarnished_bronze_winder": {
+      "crystallized": "rubinated_nether:crystallized_bronze_winder"
+    },
+    "rubinated_nether:tarnished_chiseled_bronze": {
+      "crystallized": "rubinated_nether:crystallized_chiseled_bronze"
+    },
+    "rubinated_nether:tarnished_cut_bronze_bricks": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_bricks"
+    },
+    "rubinated_nether:tarnished_cut_bronze_bricks_slab": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_bricks_slab"
+    },
+    "rubinated_nether:tarnished_cut_bronze_bricks_stairs": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_bricks_stairs"
+    },
+    "rubinated_nether:tarnished_cut_bronze_pillar": {
+      "crystallized": "rubinated_nether:crystallized_cut_bronze_pillar"
+    }
+  }
+}

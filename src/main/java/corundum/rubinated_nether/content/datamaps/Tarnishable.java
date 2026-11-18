@@ -5,19 +5,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 
-public record Tarnishable(Block nextTarnishmentStage) {
-	public static final Codec<Tarnishable> TARNISHABLE_CODEC = BuiltInRegistries.BLOCK
-		.byNameCodec()
-		.xmap(Tarnishable::new, Tarnishable::nextTarnishmentStage);
+import java.util.Optional;
 
-	public static final Codec<Tarnishable> CODEC = Codec.withAlternative(
-		RecordCodecBuilder.create(in -> in.group(
-				BuiltInRegistries.BLOCK
-					.byNameCodec()
-					.fieldOf("next_tarnishment_stage")
-					.forGetter(Tarnishable::nextTarnishmentStage)
-			).apply(in, Tarnishable::new)
-		),
-		TARNISHABLE_CODEC
-	);
+public record Tarnishable(Optional<Block> nextTarnishmentStage, Optional<Block> crystallized) {
+	public static final Codec<Tarnishable> CODEC = RecordCodecBuilder.create(in -> in.group(
+			BuiltInRegistries.BLOCK.byNameCodec().optionalFieldOf("next_tarnishment_stage").forGetter(Tarnishable::nextTarnishmentStage),
+			BuiltInRegistries.BLOCK.byNameCodec().optionalFieldOf("crystallized").forGetter(Tarnishable::crystallized)
+	).apply(in, Tarnishable::new));
 }
