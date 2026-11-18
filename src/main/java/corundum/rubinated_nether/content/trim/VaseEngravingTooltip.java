@@ -1,21 +1,25 @@
 package corundum.rubinated_nether.content.trim;
 
-import corundum.rubinated_nether.content.RNDataMaps;
-import corundum.rubinated_nether.content.datamaps.VaseEngravingMaterialData;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TextColor;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
 
 public final class VaseEngravingTooltip {
 
     private VaseEngravingTooltip() {}
+
+    private static final Map<String, Component> CUSTOM_MATERIAL_DESCRIPTIONS = Map.of(
+            "ruby", Component.translatable("vase_engraving_material.rubinated_nether.ruby")
+                    .withStyle(Style.EMPTY.withColor(TextColor.parseColor("#C62B3B").getOrThrow())),
+            "molten_ruby", Component.translatable("vase_engraving_material.rubinated_nether.molten_ruby")
+                    .withStyle(Style.EMPTY.withColor(TextColor.parseColor("#FF6A2B").getOrThrow()))
+    );
 
     public static void appendHoverText(@Nullable VaseEngraving engraving, @Nullable HolderLookup.Provider registries, List<Component> tooltip) {
         if (engraving == null) return;
@@ -40,14 +44,10 @@ public final class VaseEngravingTooltip {
             }
         }
 
-        for (var entry : BuiltInRegistries.ITEM.getDataMap(RNDataMaps.VASE_ENGRAVING_MATERIALS).entrySet()) {
-            VaseEngravingMaterialData data = entry.getValue();
-            if (!data.palette().equals(material.paletteName())) continue;
-            ResourceLocation itemId = entry.getKey().location();
-            MutableComponent description = Component.translatable("vase_engraving_material." + itemId.getNamespace() + "." + data.palette());
-            return data.color().map(color -> description.copy().withStyle(Style.EMPTY.withColor(color))).orElse(description);
-        }
-
-        return Component.literal(material.paletteName());
+        Component custom = CUSTOM_MATERIAL_DESCRIPTIONS.getOrDefault(
+                material.paletteName(),
+                Component.literal(material.paletteName())
+        );
+        return custom.plainCopy().withStyle(custom.getStyle());
     }
 }

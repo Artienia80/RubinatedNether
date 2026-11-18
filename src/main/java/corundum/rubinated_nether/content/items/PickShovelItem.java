@@ -2,11 +2,9 @@ package corundum.rubinated_nether.content.items;
 
 import corundum.rubinated_nether.content.RNItemAbilities;
 import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.RNRecipes;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.RubinationConverter;
 import corundum.rubinated_nether.content.module.ToolModules;
-import corundum.rubinated_nether.content.recipe.BlockSwaps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -28,16 +26,30 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public abstract class PickShovelItem extends DiggerItem implements MechanicalTool {
+	private static final Map<Block, Block> CRACKABLES = new HashMap<>();
+
+	static {
+		CRACKABLES.put(Blocks.STONE_BRICKS, Blocks.CRACKED_STONE_BRICKS);
+		CRACKABLES.put(Blocks.NETHER_BRICKS, Blocks.CRACKED_NETHER_BRICKS);
+		CRACKABLES.put(Blocks.DEEPSLATE_BRICKS, Blocks.CRACKED_DEEPSLATE_BRICKS);
+		CRACKABLES.put(Blocks.DEEPSLATE_TILES, Blocks.CRACKED_DEEPSLATE_TILES);
+		CRACKABLES.put(Blocks.POLISHED_BLACKSTONE_BRICKS, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS);
+		CRACKABLES.put(Blocks.INFESTED_STONE_BRICKS, Blocks.INFESTED_CRACKED_STONE_BRICKS);
+	}
+
 	public PickShovelItem(Tier tier, Properties properties) {
 		super(tier, RNTags.Blocks.MINEABLE_WITH_DRILL, properties);
 	}
@@ -135,7 +147,7 @@ public abstract class PickShovelItem extends DiggerItem implements MechanicalToo
 
 		var player = context.getPlayer();
 
-		var derubinatedState = RubinationConverter.getDerubinatedVersion(level, blockstate);
+		var derubinatedState = RubinationConverter.getDerubinatedVersion(blockstate);
 		if (derubinatedState != null && level.getBlockState(blockpos.above()).isAir()) {
 			if (!level.isClientSide) {
 				RubinationConverter.setBlockKeepingContents(level, blockpos, derubinatedState, 11);
@@ -150,7 +162,7 @@ public abstract class PickShovelItem extends DiggerItem implements MechanicalToo
 			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
 
-		var crackedState = getCrackedVersion(level, blockstate);
+		var crackedState = getCrackedVersion(blockstate);
 		if (crackedState != null && level.getBlockState(blockpos.above()).isAir()) {
 			if (!level.isClientSide) {
 				level.setBlock(blockpos, crackedState, 11);
@@ -164,10 +176,9 @@ public abstract class PickShovelItem extends DiggerItem implements MechanicalToo
 	}
 
 	@Nullable
-	private BlockState getCrackedVersion(Level level, BlockState state) {
-		return BlockSwaps.result(level, RNRecipes.CRACKING.get(), state)
-				.map(Block::defaultBlockState)
-				.orElse(null);
+	private BlockState getCrackedVersion(BlockState state) {
+		var crackedBlock = CRACKABLES.get(state.getBlock());
+		return crackedBlock != null ? crackedBlock.defaultBlockState() : null;
 	}
 
 	protected abstract void appendStats(ItemStack stack, List<Component> tooltip);
