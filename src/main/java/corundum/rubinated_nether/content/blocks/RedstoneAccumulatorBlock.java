@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.blocks;
 
 import com.mojang.serialization.MapCodec;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -8,20 +9,23 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.DiodeBlock;
-import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.redstone.Redstone;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.ticks.TickPriority;
 
@@ -61,19 +65,96 @@ public class RedstoneAccumulatorBlock extends DiodeBlock {
 		return state.getValue(POWER);
 	}
 
+	@Override
+	protected boolean sideInputDiodesOnly() {
+		return true;
+	}
+
+	@Override
+	protected boolean hasAnalogOutputSignal(BlockState state) {
+		return true;
+	}
+
+	@Override
+	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+		return this.getOutputSignal(level, pos, state);
+	}
+
+	@Override
+	protected int getInputSignal(Level level, BlockPos pos, BlockState state) {
+		int signal = super.getInputSignal(level, pos, state);
+		Direction facing = state.getValue(FACING);
+		BlockPos behind = pos.relative(facing);
+		BlockState behindState = level.getBlockState(behind);
+		if (behindState.hasAnalogOutputSignal()) {
+			signal = this.containerInput(level, behind, behindState);
+		} else if (signal < Redstone.SIGNAL_MAX && behindState.isRedstoneConductor(level, behind)) {
+			behind = behind.relative(facing);
+			behindState = level.getBlockState(behind);
+			ItemFrame frame = this.getItemFrame(level, facing, behind);
+			int analog = Math.max(
+					frame == null ? Integer.MIN_VALUE : frame.getAnalogOutput(),
+					behindState.hasAnalogOutputSignal() ? this.containerInput(level, behind, behindState) : Integer.MIN_VALUE
+			);
+			if (analog != Integer.MIN_VALUE) {
+				signal = analog;
+			}
+		}
+		return signal;
+	}
+
+	private int rawCount(Level level, BlockPos pos, BlockState state) {
+		if (!state.hasAnalogOutputSignal()) {
+			return Integer.MIN_VALUE;
+		}
+		if (state.getBlock() instanceof ChestBlock chest) {
+			Container chestContainer = ChestBlock.getContainer(chest, state, level, pos, false);
+			return chestContainer == null ? 0 : this.countItems(chestContainer);
+		}
+		if (level.getBlockEntity(pos) instanceof Container container) {
+			return this.countItems(container);
+		}
+		return Integer.MIN_VALUE;
+	}
+
+	private int containerInput(Level level, BlockPos pos, BlockState state) {
+		int raw = this.rawCount(level, pos, state);
+		return raw != Integer.MIN_VALUE ? raw : state.getAnalogOutputSignal(level, pos);
+	}
+
+	private int countItems(Container container) {
+		int total = 0;
+		for (int slot = 0; slot < container.getContainerSize(); slot++) {
+			total += container.getItem(slot).getCount();
+		}
+		return total;
+	}
+
+	private ItemFrame getItemFrame(Level level, Direction facing, BlockPos pos) {
+		List<ItemFrame> frames = level.getEntitiesOfClass(
+				ItemFrame.class,
+				new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1),
+				frame -> frame != null && frame.getDirection() == facing
+		);
+		return frames.size() == 1 ? frames.get(0) : null;
+	}
+
 	private int sideInput(Level level, BlockPos pos, Direction side) {
-		BlockPos neighborPos = pos.relative(side);
-		BlockState neighbor = level.getBlockState(neighborPos);
-		if (neighbor.is(Blocks.REDSTONE_BLOCK)) {
-			return Redstone.SIGNAL_MAX;
+		BlockPos adjacent = pos.relative(side);
+		int signal = level.getControlInputSignal(adjacent, side, this.sideInputDiodesOnly());
+		BlockState adjacentState = level.getBlockState(adjacent);
+		int raw = this.rawCount(level, adjacent, adjacentState);
+		if (raw != Integer.MIN_VALUE) {
+			return raw;
 		}
-		if (neighbor.is(Blocks.REDSTONE_WIRE)) {
-			return neighbor.getValue(RedStoneWireBlock.POWER);
+		if (signal < Redstone.SIGNAL_MAX && adjacentState.isRedstoneConductor(level, adjacent)) {
+			BlockPos far = adjacent.relative(side);
+			raw = this.rawCount(level, far, level.getBlockState(far));
+			if (raw != Integer.MIN_VALUE) {
+				return raw;
+			}
 		}
-		if (neighbor.getBlock() instanceof DiodeBlock) {
-			return level.getSignal(neighborPos, side);
-		}
-		return 0;
+		return signal;
 	}
 
 	private int computeOutput(Level level, BlockPos pos, BlockState state) {
@@ -96,8 +177,10 @@ public class RedstoneAccumulatorBlock extends DiodeBlock {
 		if (level.getBlockTicks().willTickThisTick(pos, this)) {
 			return;
 		}
-		if (this.computeOutput(level, pos, state) != state.getValue(POWER)) {
-			level.scheduleTick(pos, this, this.getDelay(state), TickPriority.HIGH);
+		int output = this.computeOutput(level, pos, state);
+		if (output != state.getValue(POWER) || state.getValue(POWERED) != this.shouldTurnOn(level, pos, state)) {
+			TickPriority priority = this.shouldPrioritize(level, pos, state) ? TickPriority.HIGH : TickPriority.NORMAL;
+			level.scheduleTick(pos, this, this.getDelay(state), priority);
 		}
 	}
 
@@ -126,6 +209,18 @@ public class RedstoneAccumulatorBlock extends DiodeBlock {
 		level.setBlock(pos, cycled, Block.UPDATE_CLIENTS);
 		this.refreshOutput(level, pos, cycled);
 		return InteractionResult.sidedSuccess(level.isClientSide);
+	}
+
+	@Override
+	public boolean getWeakChanges(BlockState state, LevelReader level, BlockPos pos) {
+		return true;
+	}
+
+	@Override
+	public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
+		if (pos.getY() == neighbor.getY() && level instanceof Level real && !real.isClientSide()) {
+			state.handleNeighborChanged(real, pos, level.getBlockState(neighbor).getBlock(), neighbor, false);
+		}
 	}
 
 	public enum Mode implements StringRepresentable {
