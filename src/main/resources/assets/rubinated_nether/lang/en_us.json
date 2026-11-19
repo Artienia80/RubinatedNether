@@ -60,7 +60,7 @@
   "block.rubinated_nether.tiled_morion": "Tiled Morion",
   "block.rubinated_nether.checkered_tiles": "Checkered Tiles",
   "block.rubinated_nether.redstone_accumulator": "Redstone Accumulator",
-  "block.rubinated_nether.moonphase_sensor": "Moonphase Sensor",
+  "block.rubinated_nether.moonphase_detector": "Moonphase Detector",
   "item.rubinated_nether.nether_morion": "Nether Morion",
   "item.rubinated_nether.petrified_boat": "Petrified Boat",
   "item.rubinated_nether.petrified_chest_boat": "Petrified Boat with Chest",
@@ -367,7 +367,6 @@
 
 
   "block.rubinated_nether.crystallized_bronze_blight": "Crystallized Bronze Blight",
-  "block.rubinated_nether.crystallized_bronze_cluster": "Crystallized Bronze",
 
   "block.rubinated_nether.bronze_gearbox": "Bronze Gearbox",
   "block.rubinated_nether.discolored_bronze_gearbox": "Discolored Bronze Gearbox",

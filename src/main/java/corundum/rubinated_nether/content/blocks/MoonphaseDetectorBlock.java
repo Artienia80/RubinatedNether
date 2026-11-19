@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
@@ -15,24 +16,24 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class MoonphaseSensorBlock extends Block {
-	public static final MapCodec<MoonphaseSensorBlock> CODEC = simpleCodec(MoonphaseSensorBlock::new);
-	public static final BooleanProperty INVERTED = BlockStateProperties.INVERTED;
+public class MoonphaseDetectorBlock extends Block {
+	public static final MapCodec<MoonphaseDetectorBlock> CODEC = simpleCodec(MoonphaseDetectorBlock::new);
+	public static final EnumProperty<Mode> MODE = EnumProperty.create("mode", Mode.class);
 	public static final IntegerProperty POWER = BlockStateProperties.POWER;
 	protected static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 6.0, 16.0);
 	private static final int UPDATE_INTERVAL = 20;
 	private static final long NIGHT_START = 13000L;
 	private static final long NIGHT_END = 23000L;
 
-	public MoonphaseSensorBlock(Properties properties) {
+	public MoonphaseDetectorBlock(Properties properties) {
 		super(properties);
-		this.registerDefaultState(this.stateDefinition.any().setValue(INVERTED, false).setValue(POWER, 0));
+		this.registerDefaultState(this.stateDefinition.any().setValue(MODE, Mode.RISING).setValue(POWER, 0));
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class MoonphaseSensorBlock extends Block {
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(INVERTED, POWER);
+		builder.add(MODE, POWER);
 	}
 
 	@Override
@@ -74,7 +75,7 @@ public class MoonphaseSensorBlock extends Block {
 			return 0;
 		}
 		int phase = (level.getMoonPhase() + 4) % 8;
-		return 1 + (state.getValue(INVERTED) ? 4 - Math.abs(phase - 4) : phase);
+		return 1 + (state.getValue(MODE) == Mode.LOOPING ? 4 - Math.abs(phase - 4) : phase);
 	}
 
 	private static void refreshOutput(Level level, BlockPos pos, BlockState state) {
@@ -105,10 +106,26 @@ public class MoonphaseSensorBlock extends Block {
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		}
-		BlockState cycled = state.cycle(INVERTED);
-		level.playSound(null, pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.3F, cycled.getValue(INVERTED) ? 0.55F : 0.5F);
+		BlockState cycled = state.cycle(MODE);
+		level.playSound(null, pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.3F, cycled.getValue(MODE) == Mode.LOOPING ? 0.55F : 0.5F);
 		level.setBlock(pos, cycled, Block.UPDATE_ALL);
 		refreshOutput(level, pos, cycled);
 		return InteractionResult.CONSUME;
+	}
+
+	public enum Mode implements StringRepresentable {
+		RISING("rising"),
+		LOOPING("looping");
+
+		private final String name;
+
+		Mode(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.name;
+		}
 	}
 }

@@ -4,6 +4,7 @@ import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.RNEntityCreator;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.TarnishStage;
+import corundum.rubinated_nether.content.blocks.BlightGrowth;
 import corundum.rubinated_nether.content.blocks.CrystalConversion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -23,6 +24,8 @@ public class CrystallizedBronzeRodProjectileEntity extends AbstractArrow {
     private static final int MAX_AGE = 120;
     private static final int DISEASE_TICKS = 600;
     private static final int MAX_DISEASE_AMPLIFIER = 4;
+    private static final double BLIGHT_RADIUS = 3.0;
+    private static final int BLIGHT_ATTEMPTS = 60;
 
     public CrystallizedBronzeRodProjectileEntity(EntityType<? extends AbstractArrow> entityType, Level level) {
         super(entityType, level);
@@ -85,12 +88,13 @@ public class CrystallizedBronzeRodProjectileEntity extends AbstractArrow {
 
     @Override
     protected void onHitBlock(BlockHitResult result) {
-        this.detonate(result.getBlockPos());
+        this.detonate(result.getBlockPos().relative(result.getDirection()));
     }
 
     private void detonate(BlockPos center) {
         if (this.level() instanceof ServerLevel serverLevel) {
             CrystalConversion.detonate(serverLevel, center, false);
+            BlightGrowth.scatter(serverLevel, center, BLIGHT_RADIUS, BLIGHT_ATTEMPTS);
         }
         this.discard();
     }

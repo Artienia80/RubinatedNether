@@ -317,9 +317,9 @@ public class RNBlocks {
 			"redstone_accumulator",
 			() -> new RedstoneAccumulatorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COMPARATOR))
 	);
-	public static final DeferredBlock<MoonphaseSensorBlock> MOONPHASE_SENSOR = registerBlockAndItem(
-			"moonphase_sensor",
-			() -> new MoonphaseSensorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DAYLIGHT_DETECTOR))
+	public static final DeferredBlock<MoonphaseDetectorBlock> MOONPHASE_DETECTOR = registerBlockAndItem(
+			"moonphase_detector",
+			() -> new MoonphaseDetectorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DAYLIGHT_DETECTOR))
 	);
 
 	public static final WoodType PETRIFIED_WOOD_TYPE = WoodType.register(new WoodType(
@@ -1742,19 +1742,6 @@ public class RNBlocks {
 							.strength(1.5F)
 							.sound(SoundType.AMETHYST_CLUSTER)
 							.noOcclusion()
-			)
-	);
-
-	public static final DeferredBlock<CrystallizedBronzeClusterBlock> CRYSTALLIZED_BRONZE_CLUSTER = BLOCKS.register(
-			"crystallized_bronze_cluster",
-			() -> new CrystallizedBronzeClusterBlock(
-					BlockBehaviour.Properties.of()
-							.mapColor(MapColor.TERRACOTTA_WHITE)
-							.requiresCorrectToolForDrops()
-							.strength(1.5F)
-							.sound(SoundType.AMETHYST_CLUSTER)
-							.noOcclusion()
-							.randomTicks()
 			)
 	);
 

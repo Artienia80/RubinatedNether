@@ -81,7 +81,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.TILED_MORION.get());
 		this.dropSelf(RNBlocks.CHECKERED_TILES.get());
 		this.dropSelf(RNBlocks.REDSTONE_ACCUMULATOR.get());
-		this.dropSelf(RNBlocks.MOONPHASE_SENSOR.get());
+		this.dropSelf(RNBlocks.MOONPHASE_DETECTOR.get());
 
 		this.dropSelf(RNBlocks.RUBY_BLOCK.get());
 		this.dropSelf(RNBlocks.MOLTEN_RUBY_BLOCK.get());
@@ -315,34 +315,6 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.headDrop(RNBlocks.CRYSTALLIZED_BRONZE_HEAD);
 
 		this.dropSelf(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get());
-
-		this.add(
-				RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get(),
-				(block) -> {
-					return LootTable.lootTable()
-							.withPool(
-									applyExplosionCondition(
-											RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER,
-											LootPool.lootPool()
-													.add(
-															LootItem.lootTableItem(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT)
-																	.apply(
-																			SetItemCountFunction.setCount(
-																					UniformGenerator.between(1, 2)
-																			)
-																	)
-																	.apply(
-																			ApplyBonusCount.addOreBonusCount(
-																					registries
-																							.lookupOrThrow(Registries.ENCHANTMENT)
-																							.getOrThrow(Enchantments.FORTUNE)
-																			)
-																	)
-													)
-									)
-							);
-				}
-		);
 
 		this.add(
 				RNBlocks.MOLTEN_RUBY_ORE.get(),

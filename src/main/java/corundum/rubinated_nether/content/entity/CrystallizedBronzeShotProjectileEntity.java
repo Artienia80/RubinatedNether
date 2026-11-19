@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.RNEffects;
 import corundum.rubinated_nether.content.RNEntityCreator;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.TarnishStage;
+import corundum.rubinated_nether.content.blocks.BlightGrowth;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
@@ -134,36 +135,7 @@ public class CrystallizedBronzeShotProjectileEntity extends AbstractArrow {
                 0.8F + this.random.nextFloat() * 0.4F
         );
 
-        int successfulConversions = 0;
-
-        for (int attempt = 0; attempt < MAX_CRYSTAL_ATTEMPTS; attempt++) {
-            BlockPos targetPos = generateRandomPositionInSphere(centerPos, CRYSTAL_SPREAD_RADIUS);
-
-            BlockState currentState = level.getBlockState(targetPos);
-
-            if (!currentState.isAir()) {
-                continue;
-            }
-
-            Direction attachmentDirection = findAttachmentDirection(level, targetPos);
-            if (attachmentDirection == null) {
-                continue;
-            }
-
-            double distance = centerPos.distSqr(targetPos);
-            double normalizedDistance = Math.sqrt(distance) / CRYSTAL_SPREAD_RADIUS;
-            double replacementChance = 1.0 - normalizedDistance;
-
-            if (random.nextDouble() < replacementChance) {
-                BlockState blightState = RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get().stateFacing(attachmentDirection.getOpposite());
-
-                level.setBlockAndUpdate(targetPos, blightState);
-
-                spawnParticles(level, targetPos.getX() + 0.5, targetPos.getY() + 0.5, targetPos.getZ() + 0.5, 5, 0.6, 0.05);
-
-                successfulConversions++;
-            }
-        }
+        BlightGrowth.scatter(level, centerPos, CRYSTAL_SPREAD_RADIUS, MAX_CRYSTAL_ATTEMPTS);
     }
 
     private void spawnParticles(ServerLevel level, double x, double y, double z, int count, double spread, double speed) {
@@ -182,29 +154,6 @@ public class CrystallizedBronzeShotProjectileEntity extends AbstractArrow {
                     speed
             );
         }
-    }
-
-    private Direction findAttachmentDirection(Level level, BlockPos airPos) {
-        for (Direction direction : Direction.values()) {
-            BlockPos neighborPos = airPos.relative(direction);
-            BlockState neighborState = level.getBlockState(neighborPos);
-
-            if (neighborState.isSolidRender(level, neighborPos) && !neighborState.isAir()) {
-                return direction;
-            }
-        }
-        return null;
-    }
-
-    private BlockPos generateRandomPositionInSphere(BlockPos center, double radius) {
-        double x, y, z;
-        do {
-            x = (random.nextDouble() * 2.0 - 1.0) * radius;
-            y = (random.nextDouble() * 2.0 - 1.0) * radius;
-            z = (random.nextDouble() * 2.0 - 1.0) * radius;
-        } while (x * x + y * y + z * z > radius * radius);
-
-        return center.offset((int) Math.round(x), (int) Math.round(y), (int) Math.round(z));
     }
 
     private void shatterWithoutDrops() {

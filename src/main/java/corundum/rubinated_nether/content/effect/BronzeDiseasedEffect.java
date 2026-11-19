@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.effect;
 
 import corundum.rubinated_nether.content.RNDamageTypes;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.blocks.BlightGrowth;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -21,7 +22,7 @@ public class BronzeDiseasedEffect extends MobEffect {
         BlockState belowState = entity.level().getBlockState(entity.blockPosition().below());
         boolean onCrystallized = belowState.is(RNTags.Blocks.CRYSTALLIZED_BLOCKS);
 
-        if (onCrystallized) {
+        if (onCrystallized || BlightGrowth.isInBlight(entity)) {
             entity.hurt(entity.damageSources().source(RNDamageTypes.BRONZE_DISEASED), 1.0F);
         }
 

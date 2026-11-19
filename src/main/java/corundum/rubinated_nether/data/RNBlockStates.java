@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.ComparatorMode;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
@@ -181,7 +180,7 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 
 		redstoneAccumulator();
-		moonphaseSensor();
+		moonphaseDetector();
 
 		glassWithPane(
 				RNBlocks.RUBY_GLASS.get(),
@@ -425,9 +424,7 @@ public class RNBlockStates extends BlockStateProvider {
 		generateWinderFamily();
 		brazierBlock();
 
-        generateCrystalModels();
         simpleBlock(RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get(), models().getExistingFile(modLoc("block/blight_carpet/up_0_0")));
-        crystalBlockState(RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get(), "crystallized_bronze_cluster");
 
 		subfolder("bronze/bronze_vent/",
 				(rloc, name, block) -> ventBlock(block, rloc),
@@ -446,55 +443,10 @@ public class RNBlockStates extends BlockStateProvider {
 
 	}
 
-    private void generateCrystalModels() {
-        models().getBuilder("crystallized_bronze_cluster")
-                .parent(models().getExistingFile(mcLoc("block/cross")))
-                .texture("cross", modLoc("block/crystallized_bronze_cluster"))
-                .element()
-                .from(4, 0, 8).to(12, 9, 8)
-                .rotation().angle(45).axis(Direction.Axis.Y).origin(8, 8, 8).end()
-                .face(Direction.NORTH).uvs(4, 7, 12, 16).texture("#cross").end()
-                .face(Direction.SOUTH).uvs(4, 7, 12, 16).texture("#cross").end()
-                .end()
-                .element()
-                .from(8, 0, 4).to(8, 9, 12)
-                .rotation().angle(45).axis(Direction.Axis.Y).origin(8, 8, 8).end()
-                .face(Direction.WEST).uvs(4, 7, 12, 16).texture("#cross").end()
-                .face(Direction.EAST).uvs(4, 7, 12, 16).texture("#cross").end()
-                .end()
-                .renderType(mcLoc("cutout"));
-    }
-
-    private void crystalBlockState(Block crystal, String modelName) {
-        getVariantBuilder(crystal).forAllStates(state -> {
-            Direction facing = state.getValue(BlockStateProperties.FACING);
-
-            int rotationX = switch(facing) {
-                case UP -> 0;
-                case DOWN -> 180;
-                default -> 90;
-            };
-
-            int rotationY = switch(facing) {
-                case NORTH -> 0;
-                case SOUTH -> 180;
-                case EAST -> 90;
-                case WEST -> 270;
-                default -> 0;
-            };
-
-            return ConfiguredModel.builder()
-                    .modelFile(models().getExistingFile(modLoc("block/" + modelName)))
-                    .rotationX(rotationX)
-                    .rotationY(rotationY)
-                    .build();
-        });
-    }
-
 	private void redstoneAccumulator() {
 		getVariantBuilder(RNBlocks.REDSTONE_ACCUMULATOR.get()).forAllStatesExcept(
 				state -> {
-					boolean subtract = state.getValue(RedstoneAccumulatorBlock.MODE) == ComparatorMode.SUBTRACT;
+					boolean subtract = state.getValue(RedstoneAccumulatorBlock.MODE) == RedstoneAccumulatorBlock.Mode.WRAPPED;
 					String model = "block/comparator"
 							+ (state.getValue(RedstoneAccumulatorBlock.POWERED) ? "_on" : "")
 							+ (subtract ? "_subtract" : "");
@@ -507,16 +459,20 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 	}
 
-	private void moonphaseSensor() {
-		getVariantBuilder(RNBlocks.MOONPHASE_SENSOR.get()).forAllStatesExcept(
+	private void moonphaseDetector() {
+		ModelFile rising = this.models()
+				.withExistingParent("moonphase_detector_rising", mcLoc("block/template_daylight_detector"))
+				.texture("top", modLoc("block/moonphase_detector_top"))
+				.texture("side", modLoc("block/moonphase_detector_side"));
+		ModelFile looping = this.models()
+				.withExistingParent("moonphase_detector_looping", mcLoc("block/template_daylight_detector"))
+				.texture("top", modLoc("block/moonphase_detector_looping_top"))
+				.texture("side", modLoc("block/moonphase_detector_side"));
+		getVariantBuilder(RNBlocks.MOONPHASE_DETECTOR.get()).forAllStatesExcept(
 				state -> ConfiguredModel.builder()
-						.modelFile(this.models().getExistingFile(
-								mcLoc(state.getValue(MoonphaseSensorBlock.INVERTED)
-										? "block/daylight_detector_inverted"
-										: "block/daylight_detector")
-						))
+						.modelFile(state.getValue(MoonphaseDetectorBlock.MODE) == MoonphaseDetectorBlock.Mode.LOOPING ? looping : rising)
 						.build(),
-				MoonphaseSensorBlock.POWER
+				MoonphaseDetectorBlock.POWER
 		);
 	}
 

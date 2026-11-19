@@ -7,8 +7,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -46,6 +49,16 @@ public class CinderBlock extends FallingBlock {
 			trigger(level, pos);
 		}
 		super.stepOn(level, pos, state, entity);
+	}
+
+	@Override
+	public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+		if (entity instanceof Player player
+				&& fallDistance > 0.5F
+				&& !player.getItemBySlot(EquipmentSlot.FEET).is(Items.LEATHER_BOOTS)) {
+			trigger(level, pos);
+		}
+		super.fallOn(level, state, pos, entity, fallDistance);
 	}
 
 	public void trigger(Level level, BlockPos pos) {

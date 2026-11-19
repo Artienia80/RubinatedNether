@@ -264,8 +264,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.TARNISHED_BRONZE_WINDER.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_WINDER.get(),
 
-				RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get()
+				RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get()
 
 				);
 
@@ -482,8 +481,7 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CRYSTALLIZED_BRONZE_WINDER.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX.get(),
 				RNBlocks.CRYSTALLIZED_BRONZE_VENT.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get(),
-				RNBlocks.CRYSTALLIZED_BRONZE_CLUSTER.get()
+				RNBlocks.CRYSTALLIZED_BRONZE_SPRING.get()
 
 		);
 
@@ -538,8 +536,6 @@ public class RNBlockTags extends BlockTagsProvider {
 				Blocks.STRIPPED_CRIMSON_HYPHAE,
 				Blocks.STRIPPED_WARPED_HYPHAE
 		);
-
-		this.tag(RNTags.Blocks.CRYSTALLIZATION_CATALYST).addTag(RNTags.Blocks.LIT_SOUL_BLOCKS);
 
 		this.tag(RNTags.Blocks.LASER_NO_SIGNAL).add(
 				Blocks.TINTED_GLASS

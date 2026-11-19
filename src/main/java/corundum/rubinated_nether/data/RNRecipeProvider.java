@@ -928,7 +928,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern("SSS")
 				.unlockedBy(getHasName(morion), has(morion))
 				.save(recipeOutput);
-		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.MOONPHASE_SENSOR)
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.MOONPHASE_DETECTOR)
 				.define('G', Blocks.GLASS)
 				.define('M', morion)
 				.define('W', ItemTags.WOODEN_SLABS)

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_daylight_detector",
+  "textures": {
+    "side": "rubinated_nether:block/moonphase_detector_side",
+    "top": "rubinated_nether:block/moonphase_detector_looping_top"
+  }
+}

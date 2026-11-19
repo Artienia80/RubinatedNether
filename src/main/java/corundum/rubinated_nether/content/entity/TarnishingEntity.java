@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.entity;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
+import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.utils.RNEntityDataSerializers;
 import corundum.rubinated_nether.utils.RNParticleUtils;
 import net.minecraft.core.BlockPos;
@@ -87,14 +88,10 @@ public abstract class TarnishingEntity extends Monster {
         return stage.getTarnishDuration();
     }
 
-    private boolean isNearCatalyst() {
+    private boolean isOnSoulFire() {
         BlockPos pos = blockPosition();
-        for (BlockPos nearby : BlockPos.betweenClosed(pos.offset(-5, -5, -5), pos.offset(5, 5, 5))) {
-            if (level().getBlockState(nearby).is(corundum.rubinated_nether.content.RNTags.Blocks.CRYSTALLIZATION_CATALYST)) {
-                return true;
-            }
-        }
-        return false;
+        return TarnishingBronze.isSoulFire(level().getBlockState(pos))
+                || TarnishingBronze.isSoulFire(level().getBlockState(pos.below()));
     }
 
     @Override
@@ -209,7 +206,7 @@ public abstract class TarnishingEntity extends Monster {
                     tarnishTimer = 0;
                 }
             }
-            if (isNearCatalyst()) {
+            if (isOnSoulFire()) {
                 tarnishTimer++;
                 if (tarnishTimer >= getTarnishInterval(current)) {
                     setTarnishLevel(TarnishStage.CRYSTALLIZED);

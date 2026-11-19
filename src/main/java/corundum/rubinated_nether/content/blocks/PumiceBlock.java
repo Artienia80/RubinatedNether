@@ -55,7 +55,10 @@ public class PumiceBlock extends Block{
 
 	protected void tryAbsorbLava(Level level, BlockPos pos) {
 		if (this.removeLavaBreadthFirstSearch(level, pos)) {
+			net.minecraft.core.GlobalPos key = net.minecraft.core.GlobalPos.of(level.dimension(), pos.immutable());
+			preventChainBreaks.add(key);
 			level.setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), 2);
+			preventChainBreaks.remove(key);
 			level.levelEvent(2001, pos, Block.getId(Blocks.LAVA.defaultBlockState()));
 		}
 	}

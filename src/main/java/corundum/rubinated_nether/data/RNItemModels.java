@@ -291,8 +291,8 @@ public class RNItemModels extends ItemModelProvider {
 		)
 				.texture("layer0", mcLoc("item/comparator"));
 		withExistingParent(
-				RNBlocks.MOONPHASE_SENSOR.getId().toString(),
-				mcLoc("block/daylight_detector")
+				RNBlocks.MOONPHASE_DETECTOR.getId().toString(),
+				modLoc("block/moonphase_detector_rising")
 		);
 
 		wallInventory(

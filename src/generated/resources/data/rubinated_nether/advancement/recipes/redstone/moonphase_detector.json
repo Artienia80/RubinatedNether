@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rubinated_nether:moonphase_sensor"
+        "recipe": "rubinated_nether:moonphase_detector"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "rubinated_nether:moonphase_sensor"
+      "rubinated_nether:moonphase_detector"
     ]
   }
 }

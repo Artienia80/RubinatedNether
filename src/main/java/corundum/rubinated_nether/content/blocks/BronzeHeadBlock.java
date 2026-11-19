@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNItems;
-import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.entities.BronzeHeadBlockEntity;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
@@ -212,11 +211,9 @@ public class BronzeHeadBlock extends Block implements BEBlock<BronzeHeadBlockEnt
 	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		if (state.getValue(WAXED)) return;
 
-		boolean hasCatalystNearby = BlockPos.betweenClosedStream(
-				pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
-		).anyMatch(neighbor -> level.getBlockState(neighbor).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
+		boolean overSoulFire = TarnishingBronze.isOverSoulFire(level, pos);
 
-		if (hasCatalystNearby) {
+		if (overSoulFire) {
 			this.getCrystallized(state).ifPresent(next -> level.setBlockAndUpdate(pos, next));
 		} else {
 			this.changeOverTime(state, level, pos, random);

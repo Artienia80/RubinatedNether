@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "mode=looping": {
+      "model": "rubinated_nether:block/moonphase_detector_looping"
+    },
+    "mode=rising": {
+      "model": "rubinated_nether:block/moonphase_detector_rising"
+    }
+  }
+}

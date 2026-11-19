@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.entity;
 
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.entity.goals.CorrodedHideAndAmbushGoal;
+import corundum.rubinated_nether.content.blocks.BlightGrowth;
 import corundum.rubinated_nether.content.blocks.CrystalConversion;
 import corundum.rubinated_nether.content.entity.goals.CrystallizedRodVolleyGoal;
 import net.minecraft.nbt.CompoundTag;
@@ -1016,62 +1017,7 @@ public class BronzeEntity extends TarnishingEntity {
     }
 
     private void spreadCrystalizedBlocks(ServerLevel level, BlockPos centerPos) {
-        int successfulConversions = 0;
-        final int MAX_ATTEMPTS = 150;
-        final double RADIUS = 8.0;
-
-        for (int attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-            BlockPos targetPos = generateRandomPositionInSphere(centerPos, RADIUS);
-
-            BlockState currentState = level.getBlockState(targetPos);
-
-            if (!currentState.isAir()) {
-                continue;
-            }
-
-            Direction attachmentDirection = findAttachmentDirection(level, targetPos);
-            if (attachmentDirection == null) {
-                continue;
-            }
-
-            double distance = centerPos.distSqr(targetPos);
-            double maxDistanceSquared = RADIUS * RADIUS;
-            double normalizedDistance = Math.sqrt(distance) / RADIUS;
-            double replacementChance = 1.0 - normalizedDistance;
-
-            if (random.nextDouble() < replacementChance) {
-                BlockState blightState = RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT.get().stateFacing(attachmentDirection.getOpposite());
-
-                level.setBlockAndUpdate(targetPos, blightState);
-
-                spawnCrystalPlacementParticles(level, targetPos);
-
-                successfulConversions++;
-            }
-        }
-    }
-
-    private Direction findAttachmentDirection(Level level, BlockPos airPos) {
-        for (Direction direction : Direction.values()) {
-            BlockPos neighborPos = airPos.relative(direction);
-            BlockState neighborState = level.getBlockState(neighborPos);
-
-            if (neighborState.isSolidRender(level, neighborPos) && !neighborState.isAir()) {
-                return direction;
-            }
-        }
-        return null;
-    }
-
-    private BlockPos generateRandomPositionInSphere(BlockPos center, double radius) {
-        double x, y, z;
-        do {
-            x = (random.nextDouble() * 2.0 - 1.0) * radius;
-            y = (random.nextDouble() * 2.0 - 1.0) * radius;
-            z = (random.nextDouble() * 2.0 - 1.0) * radius;
-        } while (x * x + y * y + z * z > radius * radius);
-
-        return center.offset((int) Math.round(x), (int) Math.round(y), (int) Math.round(z));
+        BlightGrowth.scatter(level, centerPos, 8.0, 150);
     }
 
     private void spawnCrystalPlacementParticles(ServerLevel level, BlockPos pos) {

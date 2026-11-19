@@ -132,7 +132,7 @@ public class RNCreativeTabs {
 								RNBlocks.TILED_MORION,
 								RNBlocks.CHECKERED_TILES,
 								RNBlocks.REDSTONE_ACCUMULATOR,
-								RNBlocks.MOONPHASE_SENSOR
+								RNBlocks.MOONPHASE_DETECTOR
 						);
 						// Bronze materials
 						addItems(

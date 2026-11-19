@@ -12,7 +12,10 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.ChangeOverTimeBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -56,6 +59,15 @@ public interface TarnishingBronze extends ChangeOverTimeBlock<TarnishStage> {
 
 	static boolean canCrystallize(Block p_block) {
 		return TarnishData.crystallized(p_block) != null;
+	}
+
+	static boolean isSoulFire(BlockState state) {
+		return state.is(Blocks.SOUL_FIRE)
+				|| (state.is(Blocks.SOUL_CAMPFIRE) && state.getValue(CampfireBlock.LIT));
+	}
+
+	static boolean isOverSoulFire(LevelReader level, BlockPos pos) {
+		return isSoulFire(level.getBlockState(pos.below()));
 	}
 
 	static Optional<BlockState> getPrevious(BlockState state) {

@@ -403,11 +403,9 @@ public class BronzeVaseBlock extends TarnishingBronzeBlock implements BEBlock<Va
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (state.getValue(WAXED) || state.getValue(HALF) != DoubleBlockHalf.LOWER) return;
 
-        boolean hasCatalystNearby = BlockPos.betweenClosedStream(
-                pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
-        ).anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
+        boolean overSoulFire = TarnishingBronze.isOverSoulFire(level, pos);
 
-        if (hasCatalystNearby) {
+        if (overSoulFire) {
             TarnishingBronze.getCrystallized(this).ifPresent(nextBlock -> setBothHalves(level, pos, nextBlock));
         } else {
             this.changeOverTime(state, level, pos, random);

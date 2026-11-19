@@ -595,7 +595,12 @@ public class TarnishingBronzeVentBlock extends DirectionalBlock implements BEBlo
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (state.getValue(WAXED)) return;
-        this.changeOverTime(state, level, pos, random);
+
+        if (TarnishingBronze.isOverSoulFire(level, pos)) {
+            this.getCrystallized(state).ifPresent(next -> level.setBlockAndUpdate(pos, next));
+        } else {
+            this.changeOverTime(state, level, pos, random);
+        }
     }
 
     @Override

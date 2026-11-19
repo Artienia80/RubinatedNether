@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
@@ -18,7 +19,6 @@ import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.ComparatorMode;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.redstone.Redstone;
@@ -27,7 +27,7 @@ import net.minecraft.world.ticks.TickPriority;
 
 public class RedstoneAccumulatorBlock extends DiodeBlock {
 	public static final MapCodec<RedstoneAccumulatorBlock> CODEC = simpleCodec(RedstoneAccumulatorBlock::new);
-	public static final EnumProperty<ComparatorMode> MODE = BlockStateProperties.MODE_COMPARATOR;
+	public static final EnumProperty<Mode> MODE = EnumProperty.create("mode", Mode.class);
 	public static final IntegerProperty POWER = BlockStateProperties.POWER;
 
 	public RedstoneAccumulatorBlock(Properties properties) {
@@ -36,7 +36,7 @@ public class RedstoneAccumulatorBlock extends DiodeBlock {
 				this.stateDefinition.any()
 						.setValue(FACING, Direction.NORTH)
 						.setValue(POWERED, false)
-						.setValue(MODE, ComparatorMode.COMPARE)
+						.setValue(MODE, Mode.CLAMPED)
 						.setValue(POWER, 0)
 		);
 	}
@@ -81,7 +81,7 @@ public class RedstoneAccumulatorBlock extends DiodeBlock {
 		int sum = this.getInputSignal(level, pos, state)
 				+ this.sideInput(level, pos, facing.getClockWise())
 				+ this.sideInput(level, pos, facing.getCounterClockWise());
-		return state.getValue(MODE) == ComparatorMode.SUBTRACT
+		return state.getValue(MODE) == Mode.WRAPPED
 				? sum % (Redstone.SIGNAL_MAX + 1)
 				: Math.min(Redstone.SIGNAL_MAX, sum);
 	}
@@ -121,10 +121,26 @@ public class RedstoneAccumulatorBlock extends DiodeBlock {
 			return InteractionResult.PASS;
 		}
 		BlockState cycled = state.cycle(MODE);
-		float pitch = cycled.getValue(MODE) == ComparatorMode.SUBTRACT ? 0.55F : 0.5F;
+		float pitch = cycled.getValue(MODE) == Mode.WRAPPED ? 0.55F : 0.5F;
 		level.playSound(player, pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.3F, pitch);
 		level.setBlock(pos, cycled, Block.UPDATE_CLIENTS);
 		this.refreshOutput(level, pos, cycled);
 		return InteractionResult.sidedSuccess(level.isClientSide);
+	}
+
+	public enum Mode implements StringRepresentable {
+		CLAMPED("clamped"),
+		WRAPPED("wrapped");
+
+		private final String name;
+
+		Mode(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.name;
+		}
 	}
 }

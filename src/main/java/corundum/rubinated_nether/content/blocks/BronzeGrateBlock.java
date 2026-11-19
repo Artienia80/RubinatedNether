@@ -24,7 +24,6 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.entity.BronzeEntity;
 import net.minecraft.core.BlockPos;
@@ -151,11 +150,9 @@ public class BronzeGrateBlock extends TarnishingBronzeBlock implements LiquidBlo
         }
         if (state.getValue(WAXED) || !TarnishingBronze.canCrystallize(state.getBlock())) return;
 
-        boolean hasCatalystNearby = BlockPos.betweenClosedStream(
-                pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
-        ).anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
+        boolean overSoulFire = TarnishingBronze.isOverSoulFire(level, pos);
 
-        if (hasCatalystNearby) {
+        if (overSoulFire) {
             this.getCrystallized(state).ifPresent(newState -> level.setBlockAndUpdate(pos, newState));
         } else {
             this.changeOverTime(state, level, pos, random);

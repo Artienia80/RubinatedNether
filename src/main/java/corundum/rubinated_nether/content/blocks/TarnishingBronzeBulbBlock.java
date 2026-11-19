@@ -190,12 +190,9 @@ public class TarnishingBronzeBulbBlock extends BronzeBulbBlock implements Tarnis
 		if (state.getValue(WAXED))
 			return;
 
-		boolean hasCatalystNearby = BlockPos.betweenClosedStream(
-						pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
-				)
-				.anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
+		boolean overSoulFire = TarnishingBronze.isOverSoulFire(level, pos);
 
-		if (hasCatalystNearby)
+		if (overSoulFire)
 			this.getCrystallized(state).ifPresent(blockState -> level.setBlockAndUpdate(pos, blockState));
 		else
 			this.changeOverTime(state, level, pos, random);

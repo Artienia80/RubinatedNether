@@ -10,7 +10,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.utils.ShapeUtils;
@@ -136,12 +135,9 @@ public class TarnishingBronzeLampBlock extends RotatedPillarBlock implements Tar
 		if (state.getValue(WAXED))
 			return;
 
-		boolean hasCatalystNearby = BlockPos.betweenClosedStream(
-						pos.offset(-1, -1, -1), pos.offset(1, 1, 1)
-				)
-				.anyMatch(neighborPos -> level.getBlockState(neighborPos).is(RNTags.Blocks.CRYSTALLIZATION_CATALYST));
+		boolean overSoulFire = TarnishingBronze.isOverSoulFire(level, pos);
 
-		if (hasCatalystNearby)
+		if (overSoulFire)
 			this.getCrystallized(state).ifPresent(blockState -> level.setBlockAndUpdate(pos, blockState));
 		else
 			this.changeOverTime(state, level, pos, random);
