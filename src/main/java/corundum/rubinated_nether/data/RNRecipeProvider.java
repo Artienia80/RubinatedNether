@@ -1313,7 +1313,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.define('A', blockInput)
 				.define('B', lesserBronze)
 				.define('C', Items.REDSTONE)
-				.define('D', Items.GLOWSTONE)
+				.define('D', RNItems.NETHER_MORION)
 				.define('E', RNBlocks.RUBY_BLOCK)
 				.pattern(" E ")
 				.pattern("BDB")
@@ -1321,7 +1321,7 @@ public class RNRecipeProvider extends RecipeProvider {
 				.unlockedBy(getHasName(RNBlocks.RUBY_BLOCK), has(RNBlocks.RUBY_BLOCK))
 				.unlockedBy(getHasName(lesserBronze), has(lesserBronze))
 				.unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-				.unlockedBy(getHasName(Items.GLOWSTONE), has(Items.GLOWSTONE))
+				.unlockedBy(getHasName(RNItems.NETHER_MORION), has(RNItems.NETHER_MORION))
 				.unlockedBy(getHasName(blockInput), has(blockInput))
 				.save(recipeOutput);
 	}

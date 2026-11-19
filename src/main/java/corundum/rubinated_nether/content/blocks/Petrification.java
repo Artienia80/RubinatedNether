@@ -51,10 +51,6 @@ public final class Petrification {
 			return false;
 		}
 
-		if (!level.getBlockState(lowerPos.below()).is(RNTags.Blocks.SOUL_BLOCKS)) {
-			return false;
-		}
-
 		Optional<BlockState> petrifiedUpper = petrifiedState(level, upperState);
 		Optional<BlockState> petrifiedLower = petrifiedState(level, lowerState);
 
@@ -87,10 +83,6 @@ public final class Petrification {
 
 		if (woodState.getBlock() instanceof DoorBlock) {
 			return tryPetrifyDoor(level, woodPos, woodState);
-		}
-
-		if (!level.getBlockState(woodPos.below()).is(RNTags.Blocks.SOUL_BLOCKS)) {
-			return false;
 		}
 
 		Optional<BlockState> petrified = petrifiedState(level, woodState);

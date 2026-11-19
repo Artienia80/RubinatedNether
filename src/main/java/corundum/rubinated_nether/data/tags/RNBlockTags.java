@@ -103,7 +103,6 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.MOLTEN_RUBY_GLASS_PANE.get(),
 
 				RNBlocks.FREEZER.get(),
-				RNBlocks.BRAZIER.get(),
 
 				RNBlocks.SHRINE_STONE.get(),
 				RNBlocks.SHRINE_STONE_STAIRS.get(),

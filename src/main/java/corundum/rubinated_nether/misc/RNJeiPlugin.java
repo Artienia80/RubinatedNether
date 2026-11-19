@@ -146,7 +146,6 @@ public class RNJeiPlugin implements IModPlugin {
 				BaptismRecipeCategory.RECIPE_TYPE
 		);
 		registration.addRecipeCatalyst(new ItemStack(RNBlocks.SOUL_STARVED_SAND.get()), PetrificationRecipeCategory.RECIPE_TYPE);
-		registration.addRecipeCatalyst(new ItemStack(RNBlocks.SOUL_STARVED_SAND.get()), PetrificationRecipeCategory.RECIPE_TYPE);
 	}
 
 	@Override

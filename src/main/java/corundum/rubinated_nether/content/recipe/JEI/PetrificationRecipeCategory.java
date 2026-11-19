@@ -1,8 +1,10 @@
+
 package corundum.rubinated_nether.content.recipe.JEI;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.recipe.PetrificationRecipe;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
@@ -13,8 +15,9 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.api.constants.VanillaTypes;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -30,44 +33,63 @@ import java.util.Set;
 public class PetrificationRecipeCategory implements IRecipeCategory<PetrificationRecipe> {
 	public static final ResourceLocation UID = RubinatedNether.id("petrification");
 	public static final RecipeType<PetrificationRecipe> RECIPE_TYPE = new RecipeType<>(UID, PetrificationRecipe.class);
-	private static final ResourceLocation SOUL_FIRE_TEXTURE = ResourceLocation.withDefaultNamespace("textures/block/soul_fire_0.png");
+
+	private static final ResourceLocation SOUL_FIRE_SPRITE =
+			ResourceLocation.withDefaultNamespace("block/soul_fire_0");
 
 	private static final int SLOT_SIZE = 18;
 	private static final int ICON_SIZE = 16;
 	private static final int ARROW_WIDTH = 24;
 	private static final int GAP = 8;
 	private static final int WIDTH = SLOT_SIZE + GAP + ARROW_WIDTH + GAP + SLOT_SIZE;
-	private static final int HEIGHT = SLOT_SIZE + 2 + ICON_SIZE + SLOT_SIZE;
+	private static final int HEIGHT = SLOT_SIZE * 3 + 4;
+
 	private static final int INPUT_X = 0;
 	private static final int ARROW_X = SLOT_SIZE + GAP;
-	private static final int ARROW_Y = 1;
+	private static final int FIRE_Y = 0;
+	private static final int STARVED_SAND_Y = 20;
+	private static final int ROW_Y = 40;
 	private static final int OUTPUT_X = ARROW_X + ARROW_WIDTH + GAP;
-	private static final int CATALYST_X = (WIDTH - SLOT_SIZE) / 2;
-	private static final int FIRE_X = (WIDTH - ICON_SIZE) / 2;
-	private static final int FIRE_Y = SLOT_SIZE + 2;
-	private static final int CATALYST_Y = FIRE_Y + ICON_SIZE;
+	private static final int CENTER_SLOT_X = (WIDTH - SLOT_SIZE) / 2;
+	private static final int ARROW_Y = ROW_Y + 1;
 
 	private final IDrawableStatic background;
 	private final IDrawable icon;
 	private final IDrawable slot;
-	private final IDrawableStatic soulFire;
 	private final IDrawableAnimated arrow;
 
 	public PetrificationRecipeCategory(IGuiHelper helper) {
 		background = helper.createBlankDrawable(WIDTH, HEIGHT);
-		icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(RNBlocks.SOUL_STARVED_SAND.get()));
+		icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK,
+				new ItemStack(RNBlocks.SOUL_STARVED_SAND.get()));
 		slot = helper.getSlotDrawable();
-		soulFire = helper.drawableBuilder(SOUL_FIRE_TEXTURE, 0, 0, ICON_SIZE, ICON_SIZE)
-				.setTextureSize(ICON_SIZE, 512)
-				.build();
 		arrow = helper.createAnimatedRecipeArrow(60);
 	}
 
-	@Override public RecipeType<PetrificationRecipe> getRecipeType() { return RECIPE_TYPE; }
-	@Override public IDrawable getBackground() { return background; }
-	@Override public IDrawable getIcon() { return icon; }
-	@Override public int getWidth() { return WIDTH; }
-	@Override public int getHeight() { return HEIGHT; }
+	@Override
+	public RecipeType<PetrificationRecipe> getRecipeType() {
+		return RECIPE_TYPE;
+	}
+
+	@Override
+	public IDrawable getBackground() {
+		return background;
+	}
+
+	@Override
+	public IDrawable getIcon() {
+		return icon;
+	}
+
+	@Override
+	public int getWidth() {
+		return WIDTH;
+	}
+
+	@Override
+	public int getHeight() {
+		return HEIGHT;
+	}
 
 	@Override
 	public Component getTitle() {
@@ -76,9 +98,13 @@ public class PetrificationRecipeCategory implements IRecipeCategory<Petrificatio
 
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, PetrificationRecipe recipe, IFocusGroup focuses) {
-		builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X + 1, 1).addItemStacks(inputStacks(recipe));
-		builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X + 1, 1).addItemStack(new ItemStack(recipe.getResultBlock()));
-		builder.addSlot(RecipeIngredientRole.CATALYST, CATALYST_X + 1, CATALYST_Y + 1)
+		builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X + 1, ROW_Y + 1)
+				.addItemStacks(inputStacks(recipe));
+
+		builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X + 1, ROW_Y + 1)
+				.addItemStack(new ItemStack(recipe.getResultBlock()));
+
+		builder.addSlot(RecipeIngredientRole.CATALYST, CENTER_SLOT_X + 1, STARVED_SAND_Y + 1)
 				.addItemStack(new ItemStack(RNBlocks.SOUL_STARVED_SAND.get()));
 	}
 
@@ -97,19 +123,35 @@ public class PetrificationRecipeCategory implements IRecipeCategory<Petrificatio
 	}
 
 	@Override
-	public void draw(PetrificationRecipe recipe, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
-		slot.draw(graphics, INPUT_X, 0);
-		slot.draw(graphics, OUTPUT_X, 0);
-		slot.draw(graphics, CATALYST_X, CATALYST_Y);
+	public void draw(PetrificationRecipe recipe, IRecipeSlotsView slotsView,
+	                 GuiGraphics graphics, double mouseX, double mouseY) {
+		slot.draw(graphics, CENTER_SLOT_X, FIRE_Y);
+		slot.draw(graphics, CENTER_SLOT_X, STARVED_SAND_Y);
+		slot.draw(graphics, INPUT_X, ROW_Y);
+		slot.draw(graphics, OUTPUT_X, ROW_Y);
+
 		arrow.draw(graphics, ARROW_X, ARROW_Y);
-		soulFire.draw(graphics, FIRE_X, FIRE_Y);
+
+		graphics.blit(
+				CENTER_SLOT_X + 1,
+				FIRE_Y + 1,
+				0,
+				ICON_SIZE,
+				ICON_SIZE,
+				Minecraft.getInstance()
+						.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS)
+						.apply(SOUL_FIRE_SPRITE)
+		);
 	}
 
 	@Override
-	public List<Component> getTooltipStrings(PetrificationRecipe recipe, IRecipeSlotsView slotsView, double mouseX, double mouseY) {
-		if (mouseX >= FIRE_X && mouseX < FIRE_X + ICON_SIZE && mouseY >= FIRE_Y && mouseY < FIRE_Y + ICON_SIZE) {
+	public List<Component> getTooltipStrings(PetrificationRecipe recipe,
+	                                         IRecipeSlotsView slotsView, double mouseX, double mouseY) {
+		if (mouseX >= CENTER_SLOT_X && mouseX < CENTER_SLOT_X + SLOT_SIZE
+				&& mouseY >= FIRE_Y && mouseY < FIRE_Y + SLOT_SIZE) {
 			return List.of(Component.translatable("block.minecraft.soul_fire"));
 		}
+
 		return List.of();
 	}
 }
