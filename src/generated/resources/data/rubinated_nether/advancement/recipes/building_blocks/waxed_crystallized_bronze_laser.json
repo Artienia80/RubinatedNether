@@ -11,11 +11,11 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_glowstone": {
+    "has_nether_morion": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:glowstone"
+            "items": "rubinated_nether:nether_morion"
           }
         ]
       },
@@ -64,7 +64,7 @@
       "has_ruby_block",
       "has_crystallized_bronze_blight",
       "has_redstone",
-      "has_glowstone",
+      "has_nether_morion",
       "has_waxed_crystallized_bronze_block"
     ]
   ],
