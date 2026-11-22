@@ -1,16 +1,14 @@
 {
   "variants": {
     "facing=east,flipped=false,half=bottom,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x0_y270",
       "y": 270
     },
     "facing=east,flipped=false,half=bottom,shape=inner_right": {
       "model": "rubinated_nether:block/checkered_tiles_stairs_inner"
     },
     "facing=east,flipped=false,half=bottom,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x0_y270",
       "y": 270
     },
     "facing=east,flipped=false,half=bottom,shape=outer_right": {
@@ -20,43 +18,36 @@
       "model": "rubinated_nether:block/checkered_tiles_stairs"
     },
     "facing=east,flipped=false,half=top,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y0",
       "x": 180
     },
     "facing=east,flipped=false,half=top,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y90",
       "x": 180,
       "y": 90
     },
     "facing=east,flipped=false,half=top,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y0",
       "x": 180
     },
     "facing=east,flipped=false,half=top,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y90",
       "x": 180,
       "y": 90
     },
     "facing=east,flipped=false,half=top,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x180_y0",
       "x": 180
     },
     "facing=east,flipped=true,half=bottom,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x0_y270_flipped",
       "y": 270
     },
     "facing=east,flipped=true,half=bottom,shape=inner_right": {
       "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped"
     },
     "facing=east,flipped=true,half=bottom,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x0_y270_flipped",
       "y": 270
     },
     "facing=east,flipped=true,half=bottom,shape=outer_right": {
@@ -66,135 +57,110 @@
       "model": "rubinated_nether:block/checkered_tiles_stairs_flipped"
     },
     "facing=east,flipped=true,half=top,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y0_flipped",
       "x": 180
     },
     "facing=east,flipped=true,half=top,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y90_flipped",
       "x": 180,
       "y": 90
     },
     "facing=east,flipped=true,half=top,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y0_flipped",
       "x": 180
     },
     "facing=east,flipped=true,half=top,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y90_flipped",
       "x": 180,
       "y": 90
     },
     "facing=east,flipped=true,half=top,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x180_y0_flipped",
       "x": 180
     },
     "facing=north,flipped=false,half=bottom,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x0_y180",
       "y": 180
     },
     "facing=north,flipped=false,half=bottom,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x0_y270",
       "y": 270
     },
     "facing=north,flipped=false,half=bottom,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x0_y180",
       "y": 180
     },
     "facing=north,flipped=false,half=bottom,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x0_y270",
       "y": 270
     },
     "facing=north,flipped=false,half=bottom,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x0_y270",
       "y": 270
     },
     "facing=north,flipped=false,half=top,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y270",
       "x": 180,
       "y": 270
     },
     "facing=north,flipped=false,half=top,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y0",
       "x": 180
     },
     "facing=north,flipped=false,half=top,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y270",
       "x": 180,
       "y": 270
     },
     "facing=north,flipped=false,half=top,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y0",
       "x": 180
     },
     "facing=north,flipped=false,half=top,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x180_y270",
       "x": 180,
       "y": 270
     },
     "facing=north,flipped=true,half=bottom,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x0_y180_flipped",
       "y": 180
     },
     "facing=north,flipped=true,half=bottom,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x0_y270_flipped",
       "y": 270
     },
     "facing=north,flipped=true,half=bottom,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x0_y180_flipped",
       "y": 180
     },
     "facing=north,flipped=true,half=bottom,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x0_y270_flipped",
       "y": 270
     },
     "facing=north,flipped=true,half=bottom,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x0_y270_flipped",
       "y": 270
     },
     "facing=north,flipped=true,half=top,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y270_flipped",
       "x": 180,
       "y": 270
     },
     "facing=north,flipped=true,half=top,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y0_flipped",
       "x": 180
     },
     "facing=north,flipped=true,half=top,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y270_flipped",
       "x": 180,
       "y": 270
     },
     "facing=north,flipped=true,half=top,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y0_flipped",
       "x": 180
     },
     "facing=north,flipped=true,half=top,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x180_y270_flipped",
       "x": 180,
       "y": 270
     },
@@ -202,50 +168,42 @@
       "model": "rubinated_nether:block/checkered_tiles_stairs_inner"
     },
     "facing=south,flipped=false,half=bottom,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x0_y90",
       "y": 90
     },
     "facing=south,flipped=false,half=bottom,shape=outer_left": {
       "model": "rubinated_nether:block/checkered_tiles_stairs_outer"
     },
     "facing=south,flipped=false,half=bottom,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x0_y90",
       "y": 90
     },
     "facing=south,flipped=false,half=bottom,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x0_y90",
       "y": 90
     },
     "facing=south,flipped=false,half=top,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y90",
       "x": 180,
       "y": 90
     },
     "facing=south,flipped=false,half=top,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y180",
       "x": 180,
       "y": 180
     },
     "facing=south,flipped=false,half=top,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y90",
       "x": 180,
       "y": 90
     },
     "facing=south,flipped=false,half=top,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y180",
       "x": 180,
       "y": 180
     },
     "facing=south,flipped=false,half=top,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x180_y90",
       "x": 180,
       "y": 90
     },
@@ -253,160 +211,132 @@
       "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped"
     },
     "facing=south,flipped=true,half=bottom,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x0_y90_flipped",
       "y": 90
     },
     "facing=south,flipped=true,half=bottom,shape=outer_left": {
       "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped"
     },
     "facing=south,flipped=true,half=bottom,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x0_y90_flipped",
       "y": 90
     },
     "facing=south,flipped=true,half=bottom,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x0_y90_flipped",
       "y": 90
     },
     "facing=south,flipped=true,half=top,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y90_flipped",
       "x": 180,
       "y": 90
     },
     "facing=south,flipped=true,half=top,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y180_flipped",
       "x": 180,
       "y": 180
     },
     "facing=south,flipped=true,half=top,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y90_flipped",
       "x": 180,
       "y": 90
     },
     "facing=south,flipped=true,half=top,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y180_flipped",
       "x": 180,
       "y": 180
     },
     "facing=south,flipped=true,half=top,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x180_y90_flipped",
       "x": 180,
       "y": 90
     },
     "facing=west,flipped=false,half=bottom,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x0_y90",
       "y": 90
     },
     "facing=west,flipped=false,half=bottom,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x0_y180",
       "y": 180
     },
     "facing=west,flipped=false,half=bottom,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x0_y90",
       "y": 90
     },
     "facing=west,flipped=false,half=bottom,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x0_y180",
       "y": 180
     },
     "facing=west,flipped=false,half=bottom,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x0_y180",
       "y": 180
     },
     "facing=west,flipped=false,half=top,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y180",
       "x": 180,
       "y": 180
     },
     "facing=west,flipped=false,half=top,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y270",
       "x": 180,
       "y": 270
     },
     "facing=west,flipped=false,half=top,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y180",
       "x": 180,
       "y": 180
     },
     "facing=west,flipped=false,half=top,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y270",
       "x": 180,
       "y": 270
     },
     "facing=west,flipped=false,half=top,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x180_y180",
       "x": 180,
       "y": 180
     },
     "facing=west,flipped=true,half=bottom,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x0_y90_flipped",
       "y": 90
     },
     "facing=west,flipped=true,half=bottom,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x0_y180_flipped",
       "y": 180
     },
     "facing=west,flipped=true,half=bottom,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x0_y90_flipped",
       "y": 90
     },
     "facing=west,flipped=true,half=bottom,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x0_y180_flipped",
       "y": 180
     },
     "facing=west,flipped=true,half=bottom,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x0_y180_flipped",
       "y": 180
     },
     "facing=west,flipped=true,half=top,shape=inner_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y180_flipped",
       "x": 180,
       "y": 180
     },
     "facing=west,flipped=true,half=top,shape=inner_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_inner_x180_y270_flipped",
       "x": 180,
       "y": 270
     },
     "facing=west,flipped=true,half=top,shape=outer_left": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y180_flipped",
       "x": 180,
       "y": 180
     },
     "facing=west,flipped=true,half=top,shape=outer_right": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_outer_x180_y270_flipped",
       "x": 180,
       "y": 270
     },
     "facing=west,flipped=true,half=top,shape=straight": {
-      "model": "rubinated_nether:block/checkered_tiles_stairs_flipped",
-      "uvlock": true,
+      "model": "rubinated_nether:block/checkered_tiles_stairs_x180_y180_flipped",
       "x": 180,
       "y": 180
     }

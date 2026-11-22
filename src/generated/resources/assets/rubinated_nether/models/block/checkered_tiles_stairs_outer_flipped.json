@@ -1,8 +1,79 @@
 {
   "parent": "minecraft:block/outer_stairs",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#flipped"
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#flipped"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#normal"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#normal"
+        },
+        "up": {
+          "texture": "#normal"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#flipped"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        8,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "cullface": "east",
+          "texture": "#flipped"
+        },
+        "north": {
+          "texture": "#flipped"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#normal"
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#flipped"
+        },
+        "west": {
+          "texture": "#normal"
+        }
+      },
+      "from": [
+        8,
+        8,
+        8
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
   "textures": {
-    "bottom": "rubinated_nether:block/checkered_tiles_flipped",
-    "side": "rubinated_nether:block/checkered_tiles_flipped",
-    "top": "rubinated_nether:block/checkered_tiles_flipped"
+    "flipped": "rubinated_nether:block/checkered_tiles_flipped",
+    "normal": "rubinated_nether:block/checkered_tiles",
+    "particle": "rubinated_nether:block/checkered_tiles"
   }
 }

@@ -30,6 +30,8 @@ import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import org.apache.commons.lang3.function.TriConsumer;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RNBlockStates extends BlockStateProvider {
 	public RNBlockStates(PackOutput output, ExistingFileHelper fileHelper) {
@@ -190,10 +192,10 @@ public class RNBlockStates extends BlockStateProvider {
 		this.stairsBlock(RNBlocks.MOSAIC_QUARTZ_STAIRS.get(), modLoc("block/mosaic_quartz"));
 		this.slabBlock(RNBlocks.MOSAIC_MORION_SLAB.get(), modLoc("block/mosaic_morion"), modLoc("block/mosaic_morion"));
 		this.stairsBlock(RNBlocks.MOSAIC_MORION_STAIRS.get(), modLoc("block/mosaic_morion"));
-		this.flippableSlab(RNBlocks.CHECKERED_TILES_SLAB, "checkered_tiles");
-		this.flippableStairs(RNBlocks.CHECKERED_TILES_STAIRS, "checkered_tiles");
-		this.flippableSlab(RNBlocks.CHECKERED_MOSAIC_SLAB, "checkered_mosaic");
-		this.flippableStairs(RNBlocks.CHECKERED_MOSAIC_STAIRS, "checkered_mosaic");
+		this.flippableSlab(RNBlocks.CHECKERED_TILES_SLAB, "checkered_tiles", true);
+		this.flippableStairs(RNBlocks.CHECKERED_TILES_STAIRS, "checkered_tiles", true);
+		this.flippableSlab(RNBlocks.CHECKERED_MOSAIC_SLAB, "checkered_mosaic", false);
+		this.flippableStairs(RNBlocks.CHECKERED_MOSAIC_STAIRS, "checkered_mosaic", false);
 
 		redstoneAccumulator();
 		moonphaseDetector();
@@ -1368,9 +1370,57 @@ public class RNBlockStates extends BlockStateProvider {
 		return modLoc("block/" + base + flippedSuffix(flipped));
 	}
 
+	private static boolean checkerFaceSwapped(Direction face, SlabType type, boolean coarse) {
+		return switch (face) {
+			case NORTH, SOUTH -> true;
+			case UP -> coarse && type == SlabType.BOTTOM;
+			case DOWN -> coarse && type == SlabType.TOP;
+			default -> false;
+		};
+	}
+
+	private ResourceLocation checkerFaceTexture(String base, boolean flipped, Direction face, SlabType type, boolean coarse) {
+		return flippableTexture(base, flipped ^ checkerFaceSwapped(face, type, coarse));
+	}
+
+	private BlockModelBuilder checkerCube(String name, String base, boolean flipped) {
+		return this.models().cube(
+				name,
+				checkerFaceTexture(base, flipped, Direction.DOWN, SlabType.DOUBLE, false),
+				checkerFaceTexture(base, flipped, Direction.UP, SlabType.DOUBLE, false),
+				checkerFaceTexture(base, flipped, Direction.NORTH, SlabType.DOUBLE, false),
+				checkerFaceTexture(base, flipped, Direction.SOUTH, SlabType.DOUBLE, false),
+				checkerFaceTexture(base, flipped, Direction.EAST, SlabType.DOUBLE, false),
+				checkerFaceTexture(base, flipped, Direction.WEST, SlabType.DOUBLE, false)
+		).texture("particle", checkerFaceTexture(base, flipped, Direction.NORTH, SlabType.DOUBLE, false));
+	}
+
+	private BlockModelBuilder checkerSlab(String name, String base, boolean flipped, SlabType type, boolean coarse) {
+		BlockModelBuilder model = this.models().withExistingParent(name, mcLoc("block/block"));
+		for (Direction face : Direction.values()) {
+			model.texture(face.getName(), checkerFaceTexture(base, flipped, face, type, coarse));
+		}
+		model.texture("particle", checkerFaceTexture(base, flipped, Direction.NORTH, type, coarse));
+		boolean top = type == SlabType.TOP;
+		float y0 = top ? 8 : 0;
+		ModelBuilder<BlockModelBuilder>.ElementBuilder element = model.element().from(0, y0, 0).to(16, y0 + 8, 16);
+		for (Direction face : Direction.values()) {
+			boolean vertical = face.getAxis().isVertical();
+			float v0 = vertical ? 0 : top ? 0 : 8;
+			float v1 = vertical ? 16 : top ? 8 : 16;
+			boolean cull = !vertical || face == (top ? Direction.UP : Direction.DOWN);
+			var faceBuilder = element.face(face).uvs(0, v0, 16, v1).texture("#" + face.getName());
+			if (cull) {
+				faceBuilder.cullface(face);
+			}
+			faceBuilder.end();
+		}
+		return element.end();
+	}
+
 	private void flippableCube(DeferredBlock<? extends Block> block, String base) {
-		ModelFile normal = this.models().cubeAll(base, flippableTexture(base, false));
-		ModelFile flipped = this.models().cubeAll(base + "_flipped", flippableTexture(base, true));
+		ModelFile normal = checkerCube(base, base, false);
+		ModelFile flipped = checkerCube(base + "_flipped", base, true);
 		this.getVariantBuilder(block.get()).forAllStates(
 				state -> ConfiguredModel.builder()
 						.modelFile(state.getValue(RNBlockStateProperties.FLIPPED) ? flipped : normal)
@@ -1378,16 +1428,15 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 	}
 
-	private void flippableSlab(DeferredBlock<? extends SlabBlock> block, String base) {
+	private void flippableSlab(DeferredBlock<? extends SlabBlock> block, String base, boolean coarse) {
 		String name = base + "_slab";
 		ModelFile[] bottom = new ModelFile[2];
 		ModelFile[] top = new ModelFile[2];
 		ModelFile[] full = new ModelFile[2];
 		for (int i = 0; i < 2; i++) {
 			boolean flipped = i == 1;
-			ResourceLocation texture = flippableTexture(base, flipped);
-			bottom[i] = this.models().slab(name + flippedSuffix(flipped), texture, texture, texture);
-			top[i] = this.models().slabTop(name + "_top" + flippedSuffix(flipped), texture, texture, texture);
+			bottom[i] = checkerSlab(name + flippedSuffix(flipped), base, flipped, SlabType.BOTTOM, coarse);
+			top[i] = checkerSlab(name + "_top" + flippedSuffix(flipped), base, flipped, SlabType.TOP, coarse);
 			full[i] = this.models().getExistingFile(modLoc("block/" + base + flippedSuffix(flipped)));
 		}
 		this.getVariantBuilder(block.get()).forAllStatesExcept(
@@ -1401,21 +1450,41 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 	}
 
-	private void flippableStairs(DeferredBlock<? extends StairBlock> block, String base) {
-		String name = base + "_stairs";
-		ModelFile[] straight = new ModelFile[2];
-		ModelFile[] inner = new ModelFile[2];
-		ModelFile[] outer = new ModelFile[2];
-		for (int i = 0; i < 2; i++) {
-			boolean flipped = i == 1;
-			ResourceLocation texture = flippableTexture(base, flipped);
-			straight[i] = this.models().stairs(name + flippedSuffix(flipped), texture, texture, texture);
-			inner[i] = this.models().stairsInner(name + "_inner" + flippedSuffix(flipped), texture, texture, texture);
-			outer[i] = this.models().stairsOuter(name + "_outer" + flippedSuffix(flipped), texture, texture, texture);
+	private BlockModelBuilder checkerStairs(String name, String base, boolean flipped, String shape, int xRot, int yRot, boolean coarse) {
+		String parent = switch (shape) {
+			case "inner" -> "inner_stairs";
+			case "outer" -> "outer_stairs";
+			default -> "stairs";
+		};
+		BlockModelBuilder model = this.models().withExistingParent(name, mcLoc("block/" + parent))
+				.texture("normal", flippableTexture(base, false))
+				.texture("flipped", flippableTexture(base, true))
+				.texture("particle", flippableTexture(base, false));
+		for (CheckerStairLayout.Part part : CheckerStairLayout.parts(shape, xRot, yRot, coarse, flipped)) {
+			ModelBuilder<BlockModelBuilder>.ElementBuilder element = model.element()
+					.from(part.from()[0], part.from()[1], part.from()[2])
+					.to(part.to()[0], part.to()[1], part.to()[2]);
+			for (CheckerStairLayout.Face face : part.faces()) {
+				Direction direction = Direction.byName(face.direction());
+				var faceBuilder = element.face(direction)
+						.uvs(face.u1(), face.v1(), face.u2(), face.v2())
+						.texture(face.flipped() ? "#flipped" : "#normal");
+				if (face.cull()) {
+					faceBuilder.cullface(direction);
+				}
+				faceBuilder.end();
+			}
+			element.end();
 		}
+		return model;
+	}
+
+	private void flippableStairs(DeferredBlock<? extends StairBlock> block, String base, boolean coarse) {
+		String name = base + "_stairs";
+		Map<String, ModelFile> models = new HashMap<>();
 		this.getVariantBuilder(block.get()).forAllStatesExcept(
 				state -> {
-					int i = state.getValue(RNBlockStateProperties.FLIPPED) ? 1 : 0;
+					boolean flipped = state.getValue(RNBlockStateProperties.FLIPPED);
 					Direction facing = state.getValue(StairBlock.FACING);
 					Half half = state.getValue(StairBlock.HALF);
 					StairsShape shape = state.getValue(StairBlock.SHAPE);
@@ -1426,15 +1495,22 @@ public class RNBlockStates extends BlockStateProvider {
 					if (shape != StairsShape.STRAIGHT && half == Half.TOP) {
 						yRot += 90;
 					}
-					yRot %= 360;
-					ModelFile model = shape == StairsShape.STRAIGHT
-							? straight[i]
-							: shape == StairsShape.INNER_LEFT || shape == StairsShape.INNER_RIGHT ? inner[i] : outer[i];
+					int rotY = yRot % 360;
+					int xRot = half == Half.BOTTOM ? 0 : 180;
+					String kind = shape == StairsShape.STRAIGHT
+							? "straight"
+							: shape == StairsShape.INNER_LEFT || shape == StairsShape.INNER_RIGHT ? "inner" : "outer";
+					String modelName = name + (kind.equals("straight") ? "" : "_" + kind)
+							+ (xRot == 0 && rotY == 0 ? "" : "_x" + xRot + "_y" + rotY)
+							+ flippedSuffix(flipped);
+					ModelFile model = models.computeIfAbsent(
+							modelName,
+							key -> checkerStairs(key, base, flipped, kind, xRot, rotY, coarse)
+					);
 					return ConfiguredModel.builder()
 							.modelFile(model)
-							.rotationX(half == Half.BOTTOM ? 0 : 180)
-							.rotationY(yRot)
-							.uvLock(yRot != 0 || half == Half.TOP)
+							.rotationX(xRot)
+							.rotationY(rotY)
 							.build();
 				},
 				StairBlock.WATERLOGGED
