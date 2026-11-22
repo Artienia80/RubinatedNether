@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "M": {
+      "item": "rubinated_nether:mosaic_morion"
+    },
+    "Q": {
+      "item": "rubinated_nether:mosaic_quartz"
+    }
+  },
+  "pattern": [
+    "QM",
+    "MQ"
+  ],
+  "result": {
+    "count": 4,
+    "id": "rubinated_nether:checkered_mosaic"
+  }
+}

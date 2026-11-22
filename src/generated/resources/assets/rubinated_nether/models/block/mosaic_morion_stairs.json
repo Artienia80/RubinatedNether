@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "rubinated_nether:block/mosaic_morion",
+    "side": "rubinated_nether:block/mosaic_morion",
+    "top": "rubinated_nether:block/mosaic_morion"
+  }
+}

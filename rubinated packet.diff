@@ -1,0 +1,581 @@
+diff --git a/src/generated/resources/assets/rubinated_nether/models/item/rubinated_packet.json b/src/generated/resources/assets/rubinated_nether/models/item/rubinated_packet.json
+new file mode 100644
+index 0000000..bfe9d12
+--- /dev/null
++++ b/src/generated/resources/assets/rubinated_nether/models/item/rubinated_packet.json
+@@ -0,0 +1,6 @@
++{
++  "parent": "minecraft:item/generated",
++  "textures": {
++    "layer0": "rubinated_nether:item/rubinated_packet"
++  }
++}
+\ No newline at end of file
+diff --git a/src/generated/resources/data/rubinated_nether/recipe/rubinated_packet_from_baptism.json b/src/generated/resources/data/rubinated_nether/recipe/rubinated_packet_from_baptism.json
+new file mode 100644
+index 0000000..f2b2c87
+--- /dev/null
++++ b/src/generated/resources/data/rubinated_nether/recipe/rubinated_packet_from_baptism.json
+@@ -0,0 +1,10 @@
++{
++  "type": "rubinated_nether:baptism",
++  "ingredient": {
++    "item": "minecraft:paper"
++  },
++  "result": {
++    "count": 1,
++    "id": "rubinated_nether:rubinated_packet"
++  }
++}
+\ No newline at end of file
+diff --git a/src/main/java/corundum/rubinated_nether/content/RNCreativeTabs.java b/src/main/java/corundum/rubinated_nether/content/RNCreativeTabs.java
+index df371c6..ef03fee 100644
+--- a/src/main/java/corundum/rubinated_nether/content/RNCreativeTabs.java
++++ b/src/main/java/corundum/rubinated_nether/content/RNCreativeTabs.java
+@@ -169,6 +169,7 @@ public class RNCreativeTabs {
+ 								RNItems.BRONZE_JACKHAMMER,
+ 								RNItems.BRONZE_CHAINSAW,
+ 								RNItems.POCKETWATCH,
++								RNItems.RUBINATED_PACKET,
+ 								RNItems.MUSIC_BOX,
+ 								RNItems.RUBY_LENS
+ 						);
+@@ -460,6 +461,8 @@ public class RNCreativeTabs {
+ 					RNItems.BRONZE_CHAINSAW.get().getDefaultInstance(), BOTH_TABS);
+ 			event.insertAfter(RNItems.BRONZE_CHAINSAW.get().getDefaultInstance(),
+ 					RNItems.POCKETWATCH.get().getDefaultInstance(), BOTH_TABS);
++			event.insertAfter(RNItems.POCKETWATCH.get().getDefaultInstance(),
++					RNItems.RUBINATED_PACKET.get().getDefaultInstance(), BOTH_TABS);
+ 			event.insertAfter(Items.MUSIC_DISC_PIGSTEP.getDefaultInstance(),
+ 					RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(), BOTH_TABS);
+ 			event.insertAfter(RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(),
+diff --git a/src/main/java/corundum/rubinated_nether/content/RNItems.java b/src/main/java/corundum/rubinated_nether/content/RNItems.java
+index 18474a8..46188ad 100644
+--- a/src/main/java/corundum/rubinated_nether/content/RNItems.java
++++ b/src/main/java/corundum/rubinated_nether/content/RNItems.java
+@@ -48,6 +48,16 @@ public class RNItems {
+ 			)
+ 	);
+ 
++	public static final DeferredItem<Item> RUBINATED_PACKET = ITEMS.register(
++			"rubinated_packet",
++			() -> new RubinatedPacketItem(
++					new Item.Properties()
++							.stacksTo(1)
++							.rarity(RNRarity.RUBINATED_NETHER_RUBY.get())
++							.component(DataComponents.BUNDLE_CONTENTS, BundleContents.EMPTY)
++			)
++	);
++
+ 	public static final DeferredItem<PetrifiedBoatItem> PETRIFIED_BOAT = ITEMS.register(
+ 			"petrified_boat",
+ 			() -> new PetrifiedBoatItem(false, new Item.Properties().stacksTo(1))
+diff --git a/src/main/java/corundum/rubinated_nether/content/items/RubinatedPacketItem.java b/src/main/java/corundum/rubinated_nether/content/items/RubinatedPacketItem.java
+new file mode 100644
+index 0000000..fcfce12
+--- /dev/null
++++ b/src/main/java/corundum/rubinated_nether/content/items/RubinatedPacketItem.java
+@@ -0,0 +1,195 @@
++package corundum.rubinated_nether.content.items;
++
++import net.minecraft.ChatFormatting;
++import net.minecraft.core.component.DataComponents;
++import net.minecraft.network.chat.Component;
++import net.minecraft.server.level.ServerPlayer;
++import net.minecraft.sounds.SoundEvents;
++import net.minecraft.stats.Stats;
++import net.minecraft.world.InteractionHand;
++import net.minecraft.world.InteractionResultHolder;
++import net.minecraft.world.entity.SlotAccess;
++import net.minecraft.world.entity.item.ItemEntity;
++import net.minecraft.world.entity.player.Inventory;
++import net.minecraft.world.entity.player.Player;
++import net.minecraft.world.inventory.ClickAction;
++import net.minecraft.world.inventory.Slot;
++import net.minecraft.world.item.BundleItem;
++import net.minecraft.world.item.ItemStack;
++import net.minecraft.world.item.ItemUtils;
++import net.minecraft.world.item.Items;
++import net.minecraft.world.item.TooltipFlag;
++import net.minecraft.world.item.component.BundleContents;
++import net.minecraft.world.level.Level;
++
++import java.util.List;
++
++public class RubinatedPacketItem extends BundleItem {
++	public static final int SLOTS = 16;
++
++	public RubinatedPacketItem(Properties properties) {
++		super(properties);
++	}
++
++	private static BundleContents contents(ItemStack stack) {
++		return stack.getOrDefault(DataComponents.BUNDLE_CONTENTS, BundleContents.EMPTY);
++	}
++
++	private static boolean isEmerald(ItemStack stack) {
++		return stack.is(Items.EMERALD) && stack.getComponentsPatch().isEmpty();
++	}
++
++	private static boolean isStoredEmerald(ItemStack stack) {
++		return stack.is(Items.EMERALD);
++	}
++
++	private static void applyWeightMarker(ItemStack emerald) {
++		emerald.set(DataComponents.MAX_STACK_SIZE, SLOTS);
++	}
++
++	private static void stripWeightMarker(ItemStack emerald) {
++		if (isStoredEmerald(emerald)) {
++			emerald.set(DataComponents.MAX_STACK_SIZE, emerald.getItem().getDefaultMaxStackSize());
++		}
++	}
++
++	public static int absorb(Player player, ItemStack stack) {
++		if (!isEmerald(stack)) {
++			return 0;
++		}
++		int total = 0;
++		Inventory inventory = player.getInventory();
++		for (int i = 0; i < inventory.getContainerSize() && !stack.isEmpty(); i++) {
++			ItemStack packet = inventory.getItem(i);
++			if (!(packet.getItem() instanceof RubinatedPacketItem)) {
++				continue;
++			}
++			BundleContents.Mutable mutable = new BundleContents.Mutable(contents(packet));
++			applyWeightMarker(stack);
++			int moved = mutable.tryInsert(stack);
++			stripWeightMarker(stack);
++			if (moved > 0) {
++				packet.set(DataComponents.BUNDLE_CONTENTS, mutable.toImmutable());
++				total += moved;
++			}
++		}
++		return total;
++	}
++
++	public static ItemStack withdraw(Player player, int amount) {
++		int taken = 0;
++		Inventory inventory = player.getInventory();
++		for (int i = 0; i < inventory.getContainerSize() && taken < amount; i++) {
++			ItemStack packet = inventory.getItem(i);
++			if (!(packet.getItem() instanceof RubinatedPacketItem)) {
++				continue;
++			}
++			BundleContents.Mutable mutable = new BundleContents.Mutable(contents(packet));
++			boolean changed = false;
++			ItemStack removed;
++			while (taken < amount && (removed = mutable.removeOne()) != null) {
++				int take = Math.min(amount - taken, removed.getCount());
++				removed.shrink(take);
++				taken += take;
++				changed = true;
++				if (!removed.isEmpty()) {
++					mutable.tryInsert(removed);
++				}
++			}
++			if (changed) {
++				packet.set(DataComponents.BUNDLE_CONTENTS, mutable.toImmutable());
++			}
++		}
++		return taken > 0 ? new ItemStack(Items.EMERALD, taken) : ItemStack.EMPTY;
++	}
++
++	public static void collectEmeralds(ItemStack packet, List<Slot> slots, Player player) {
++		BundleContents.Mutable mutable = new BundleContents.Mutable(contents(packet));
++		for (Slot slot : slots) {
++			if (!slot.hasItem() || !slot.mayPickup(player)) {
++				continue;
++			}
++			ItemStack stack = slot.getItem();
++			if (!isEmerald(stack)) {
++				continue;
++			}
++			applyWeightMarker(stack);
++			mutable.tryInsert(stack);
++			stripWeightMarker(stack);
++			slot.setChanged();
++		}
++		packet.set(DataComponents.BUNDLE_CONTENTS, mutable.toImmutable());
++	}
++
++	@Override
++	public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction action, Player player) {
++		ItemStack target = slot.getItem();
++		boolean emerald = isEmerald(target);
++		if (!target.isEmpty() && !emerald) {
++			return false;
++		}
++		if (emerald) {
++			applyWeightMarker(target);
++		}
++		boolean handled = super.overrideStackedOnOther(stack, slot, action, player);
++		stripWeightMarker(slot.getItem());
++		return handled;
++	}
++
++	@Override
++	public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack other, Slot slot, ClickAction action, Player player, SlotAccess access) {
++		boolean emerald = isEmerald(other);
++		if (!other.isEmpty() && !emerald) {
++			return false;
++		}
++		if (emerald) {
++			applyWeightMarker(other);
++		}
++		boolean handled = super.overrideOtherStackedOnMe(stack, other, slot, action, player, access);
++		stripWeightMarker(other);
++		stripWeightMarker(access.get());
++		return handled;
++	}
++
++	@Override
++	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
++		ItemStack stack = player.getItemInHand(hand);
++		BundleContents contents = contents(stack);
++		if (contents.isEmpty()) {
++			return InteractionResultHolder.fail(stack);
++		}
++		stack.set(DataComponents.BUNDLE_CONTENTS, BundleContents.EMPTY);
++		if (player instanceof ServerPlayer) {
++			contents.itemCopyStream().forEach(emerald -> {
++				stripWeightMarker(emerald);
++				player.drop(emerald, true);
++			});
++		}
++		player.playSound(SoundEvents.BUNDLE_DROP_CONTENTS, 0.8F, 0.8F + level.getRandom().nextFloat() * 0.4F);
++		player.awardStat(Stats.ITEM_USED.get(this));
++		return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
++	}
++
++	@Override
++	public void onDestroyed(ItemEntity itemEntity) {
++		BundleContents contents = itemEntity.getItem().get(DataComponents.BUNDLE_CONTENTS);
++		if (contents != null) {
++			itemEntity.getItem().set(DataComponents.BUNDLE_CONTENTS, BundleContents.EMPTY);
++			ItemUtils.onContainerDestroyed(itemEntity, contents.itemCopyStream().peek(RubinatedPacketItem::stripWeightMarker).toList());
++		}
++	}
++
++	@Override
++	public boolean isFoil(ItemStack stack) {
++		return true;
++	}
++
++	@Override
++	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
++		int count = contents(stack).itemCopyStream().mapToInt(ItemStack::getCount).sum();
++		tooltipComponents.add(
++				Component.translatable("item.rubinated_nether.rubinated_packet.tooltip.contents", count, SLOTS)
++						.withStyle(ChatFormatting.GRAY)
++		);
++	}
++}
+diff --git a/src/main/java/corundum/rubinated_nether/data/RNItemModels.java b/src/main/java/corundum/rubinated_nether/data/RNItemModels.java
+index f5c553c..2e589d7 100644
+--- a/src/main/java/corundum/rubinated_nether/data/RNItemModels.java
++++ b/src/main/java/corundum/rubinated_nether/data/RNItemModels.java
+@@ -355,6 +355,7 @@ public class RNItemModels extends ItemModelProvider {
+ 				RNItems.MOLTEN_RUBY_NUGGET,
+ 				RNItems.POMEGRANATE,
+ 				RNItems.RUBINATED_POMEGRANATE,
++				RNItems.RUBINATED_PACKET,
+ 				RNItems.MUSIC_DISC_SHIMMER,
+ 				RNItems.MUSIC_DISC_SINNER,
+ 				RNItems.MUSIC_DISC_SINNER_MUSIC_BOX,
+diff --git a/src/main/java/corundum/rubinated_nether/data/RNRecipeProvider.java b/src/main/java/corundum/rubinated_nether/data/RNRecipeProvider.java
+index 4e7a10e..7ebdf77 100644
+--- a/src/main/java/corundum/rubinated_nether/data/RNRecipeProvider.java
++++ b/src/main/java/corundum/rubinated_nether/data/RNRecipeProvider.java
+@@ -180,6 +180,7 @@ public class RNRecipeProvider extends RecipeProvider {
+ 
+ 		baptism(recipeOutput, Ingredient.of(RNTags.Items.OFFERING_BRAZIER_ITEM), RNItems.RITUAL_OFFERING);
+ 		baptism(recipeOutput, Ingredient.of(RNItems.POMEGRANATE), RNItems.RUBINATED_POMEGRANATE);
++		baptism(recipeOutput, Ingredient.of(Items.PAPER), RNItems.RUBINATED_PACKET);
+ 		for (Rubination rubination : Rubination.carvableValues()) {
+ 			baptism(recipeOutput,
+ 					DataComponentIngredient.of(false, RNDataComponents.RUNE_CARVING, rubination, RNItems.RUNE.get()),
+diff --git a/src/main/java/corundum/rubinated_nether/event/RNClientSubscriber.java b/src/main/java/corundum/rubinated_nether/event/RNClientSubscriber.java
+index eb8e96a..02c374c 100644
+--- a/src/main/java/corundum/rubinated_nether/event/RNClientSubscriber.java
++++ b/src/main/java/corundum/rubinated_nether/event/RNClientSubscriber.java
+@@ -13,6 +13,7 @@ import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileModel
+ import corundum.rubinated_nether.content.entity.client.BronzeShotProjectileRenderer;
+ import corundum.rubinated_nether.content.gui.RubyLensOverlay;
+ import corundum.rubinated_nether.content.items.MusicBoxItem;
++import corundum.rubinated_nether.content.items.RubinatedPacketItem;
+ import corundum.rubinated_nether.content.items.WaxableBlockItem;
+ import corundum.rubinated_nether.content.menu.RNMenuTypes;
+ import corundum.rubinated_nether.content.screen.CofferScreen;
+@@ -434,7 +435,8 @@ public class RNClientSubscriber {
+         musicBoxSuppressRelease = false;
+ 
+         long now = System.currentTimeMillis();
+-        boolean holdingBox = screen.getMenu().getCarried().getItem() instanceof MusicBoxItem;
++        boolean holdingBox = screen.getMenu().getCarried().getItem() instanceof MusicBoxItem
++                || screen.getMenu().getCarried().getItem() instanceof RubinatedPacketItem;
+ 
+         if (holdingBox && now - musicBoxLastClick <= 300) {
+             if (screen instanceof CreativeModeInventoryScreen creative) {
+@@ -506,14 +508,18 @@ public class RNClientSubscriber {
+ 
+         var menu = player.inventoryMenu;
+         ItemStack carried = menu.getCarried();
+-        if (!(carried.getItem() instanceof MusicBoxItem)) return;
++        if (!(carried.getItem() instanceof MusicBoxItem) && !(carried.getItem() instanceof RubinatedPacketItem)) return;
+ 
+         List<ItemStack> before = new ArrayList<>();
+         for (var slot : menu.slots) {
+             before.add(slot.getItem().copy());
+         }
+ 
+-        MusicBoxItem.collectDiscs(carried, menu.slots, player);
++        if (carried.getItem() instanceof RubinatedPacketItem) {
++            RubinatedPacketItem.collectEmeralds(carried, menu.slots, player);
++        } else {
++            MusicBoxItem.collectDiscs(carried, menu.slots, player);
++        }
+ 
+         for (int i = 0; i < menu.slots.size(); i++) {
+             ItemStack now = menu.slots.get(i).getItem();
+diff --git a/src/main/java/corundum/rubinated_nether/event/RNCommonSubscriber.java b/src/main/java/corundum/rubinated_nether/event/RNCommonSubscriber.java
+index 448e0fa..53c84b2 100644
+--- a/src/main/java/corundum/rubinated_nether/event/RNCommonSubscriber.java
++++ b/src/main/java/corundum/rubinated_nether/event/RNCommonSubscriber.java
+@@ -11,6 +11,7 @@ import corundum.rubinated_nether.content.enchantment.RNEnchantments;
+ import corundum.rubinated_nether.content.entity.BronzeEntity;
+ import corundum.rubinated_nether.content.items.DrillItem;
+ import corundum.rubinated_nether.content.items.MusicBoxItem;
++import corundum.rubinated_nether.content.items.RubinatedPacketItem;
+ import corundum.rubinated_nether.content.module.ToolModules;
+ import corundum.rubinated_nether.misc.DatapackRegistry;
+ import corundum.rubinated_nether.networking.CollectDiscsPayload;
+@@ -196,6 +197,9 @@ public class RNCommonSubscriber {
+                         BundleContents after = carried.getOrDefault(DataComponents.BUNDLE_CONTENTS, BundleContents.EMPTY);
+                         player.displayClientMessage(Component.literal("DEBUG server: box discs " + before.size() + " -> " + after.size()), false); // remove once it works
+                         player.containerMenu.broadcastChanges();
++                    } else if (carried.getItem() instanceof RubinatedPacketItem) {
++                        RubinatedPacketItem.collectEmeralds(carried, player.containerMenu.slots, player);
++                        player.containerMenu.broadcastChanges();
+                     }
+                 }));
+     }
+diff --git a/src/main/java/corundum/rubinated_nether/mixin/InventoryMixin.java b/src/main/java/corundum/rubinated_nether/mixin/InventoryMixin.java
+new file mode 100644
+index 0000000..03f99db
+--- /dev/null
++++ b/src/main/java/corundum/rubinated_nether/mixin/InventoryMixin.java
+@@ -0,0 +1,30 @@
++package corundum.rubinated_nether.mixin;
++
++import corundum.rubinated_nether.content.items.RubinatedPacketItem;
++import net.minecraft.world.entity.player.Inventory;
++import net.minecraft.world.entity.player.Player;
++import net.minecraft.world.item.ItemStack;
++import org.spongepowered.asm.mixin.Final;
++import org.spongepowered.asm.mixin.Mixin;
++import org.spongepowered.asm.mixin.Shadow;
++import org.spongepowered.asm.mixin.injection.At;
++import org.spongepowered.asm.mixin.injection.Inject;
++import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
++
++@Mixin(Inventory.class)
++public abstract class InventoryMixin {
++    @Shadow
++    @Final
++    public Player player;
++
++    @Inject(method = "add(ILnet/minecraft/world/item/ItemStack;)Z", at = @At("HEAD"), cancellable = true)
++    private void rubinated_nether$emeraldsIntoPacket(int slot, ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
++        if (slot != -1 || stack.isEmpty() || this.player.level().isClientSide) {
++            return;
++        }
++        RubinatedPacketItem.absorb(this.player, stack);
++        if (stack.isEmpty()) {
++            cir.setReturnValue(true);
++        }
++    }
++}
+diff --git a/src/main/java/corundum/rubinated_nether/mixin/ItemRendererMixin.java b/src/main/java/corundum/rubinated_nether/mixin/ItemRendererMixin.java
+index ad1aa62..a2e1637 100644
+--- a/src/main/java/corundum/rubinated_nether/mixin/ItemRendererMixin.java
++++ b/src/main/java/corundum/rubinated_nether/mixin/ItemRendererMixin.java
+@@ -14,6 +14,7 @@ import corundum.rubinated_nether.content.items.MechanicalTool;
+ import corundum.rubinated_nether.content.items.MusicBoxItem;
+ import corundum.rubinated_nether.content.items.PocketwatchItem;
+ import corundum.rubinated_nether.content.items.RitualOfferingItem;
++import corundum.rubinated_nether.content.items.RubinatedPacketItem;
+ import corundum.rubinated_nether.content.items.RubinatedPomegranateItem;
+ import corundum.rubinated_nether.content.items.RuneItem;
+ import net.minecraft.client.renderer.MultiBufferSource;
+@@ -70,6 +71,7 @@ public class ItemRendererMixin {
+                 || rubinated_nether$isRune(stack)
+                 || rubinated_nether$isRitualOffering(stack)
+                 || rubinated_nether$isRubinatedPomegranate(stack)
++                || rubinated_nether$isRubinatedPacket(stack)
+                 || rubinated_nether$isChargedPocketwatch(stack)
+                 || rubinated_nether$isSinnerMusicBox(stack)
+                 || rubinated_nether$isFuelledMechanicalTool(stack);
+@@ -85,6 +87,11 @@ public class ItemRendererMixin {
+         return stack.getItem() instanceof RitualOfferingItem;
+     }
+ 
++    @Unique
++    private static boolean rubinated_nether$isRubinatedPacket(ItemStack stack) {
++        return stack.getItem() instanceof RubinatedPacketItem;
++    }
++
+     @Unique
+     private static boolean rubinated_nether$isRubinatedPomegranate(ItemStack stack) {
+         return stack.getItem() instanceof RubinatedPomegranateItem;
+diff --git a/src/main/java/corundum/rubinated_nether/mixin/MerchantMenuMixin.java b/src/main/java/corundum/rubinated_nether/mixin/MerchantMenuMixin.java
+new file mode 100644
+index 0000000..301ed56
+--- /dev/null
++++ b/src/main/java/corundum/rubinated_nether/mixin/MerchantMenuMixin.java
+@@ -0,0 +1,81 @@
++package corundum.rubinated_nether.mixin;
++
++import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
++import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
++import com.llamalad7.mixinextras.sugar.Local;
++import corundum.rubinated_nether.content.items.RubinatedPacketItem;
++import net.minecraft.world.Container;
++import net.minecraft.world.entity.player.Inventory;
++import net.minecraft.world.entity.player.Player;
++import net.minecraft.world.inventory.MerchantMenu;
++import net.minecraft.world.item.ItemStack;
++import net.minecraft.world.item.Items;
++import net.minecraft.world.item.trading.MerchantOffer;
++import net.minecraft.world.item.trading.MerchantOffers;
++import org.spongepowered.asm.mixin.Mixin;
++import org.spongepowered.asm.mixin.Unique;
++import org.spongepowered.asm.mixin.injection.At;
++import org.spongepowered.asm.mixin.injection.Inject;
++import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
++
++@Mixin(MerchantMenu.class)
++public abstract class MerchantMenuMixin {
++    @Inject(method = "tryMoveItems", at = @At("TAIL"))
++    private void rubinated_nether$fillPaymentFromPacket(int selectedMerchantRecipe, CallbackInfo ci) {
++        MerchantMenu menu = (MerchantMenu) (Object) this;
++        MerchantOffers offers = menu.getOffers();
++        if (selectedMerchantRecipe < 0 || selectedMerchantRecipe >= offers.size()) {
++            return;
++        }
++        if (!(menu.getSlot(3).container instanceof Inventory inventory)) {
++            return;
++        }
++        MerchantOffer offer = offers.get(selectedMerchantRecipe);
++        rubinated_nether$fill(menu, inventory.player, 0, offer.getCostA());
++        rubinated_nether$fill(menu, inventory.player, 1, offer.getCostB());
++    }
++
++    @WrapOperation(
++            method = "quickMoveStack",
++            at = @At(
++                    value = "INVOKE",
++                    target = "Lnet/minecraft/world/inventory/MerchantMenu;moveItemStackTo(Lnet/minecraft/world/item/ItemStack;IIZ)Z",
++                    ordinal = 0
++            )
++    )
++    private boolean rubinated_nether$resultEmeraldsIntoPacket(MerchantMenu menu, ItemStack stack, int start, int end, boolean reverse, Operation<Boolean> original, @Local(argsOnly = true) Player player) {
++        int before = stack.getCount();
++        RubinatedPacketItem.absorb(player, stack);
++        boolean absorbed = stack.getCount() != before;
++        if (stack.isEmpty()) {
++            return absorbed;
++        }
++        return original.call(menu, stack, start, end, reverse) || absorbed;
++    }
++
++    @Unique
++    private static void rubinated_nether$fill(MerchantMenu menu, Player player, int slotIndex, ItemStack cost) {
++        if (!cost.is(Items.EMERALD)) {
++            return;
++        }
++        Container payment = menu.getSlot(slotIndex).container;
++        ItemStack current = payment.getItem(slotIndex);
++        if (!current.isEmpty() && !ItemStack.isSameItemSameComponents(current, cost)) {
++            return;
++        }
++        int needed = cost.getCount() - current.getCount();
++        if (needed <= 0) {
++            return;
++        }
++        ItemStack taken = RubinatedPacketItem.withdraw(player, needed);
++        if (taken.isEmpty()) {
++            return;
++        }
++        if (current.isEmpty()) {
++            payment.setItem(slotIndex, taken);
++        } else {
++            current.grow(taken.getCount());
++            payment.setItem(slotIndex, current);
++        }
++    }
++}
+diff --git a/src/main/java/corundum/rubinated_nether/mixin/MerchantResultSlotMixin.java b/src/main/java/corundum/rubinated_nether/mixin/MerchantResultSlotMixin.java
+new file mode 100644
+index 0000000..bc075bc
+--- /dev/null
++++ b/src/main/java/corundum/rubinated_nether/mixin/MerchantResultSlotMixin.java
+@@ -0,0 +1,18 @@
++package corundum.rubinated_nether.mixin;
++
++import corundum.rubinated_nether.content.items.RubinatedPacketItem;
++import net.minecraft.world.entity.player.Player;
++import net.minecraft.world.inventory.MerchantResultSlot;
++import net.minecraft.world.item.ItemStack;
++import org.spongepowered.asm.mixin.Mixin;
++import org.spongepowered.asm.mixin.injection.At;
++import org.spongepowered.asm.mixin.injection.Inject;
++import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
++
++@Mixin(MerchantResultSlot.class)
++public abstract class MerchantResultSlotMixin {
++    @Inject(method = "onTake", at = @At("TAIL"))
++    private void rubinated_nether$emeraldsIntoPacket(Player player, ItemStack stack, CallbackInfo ci) {
++        RubinatedPacketItem.absorb(player, stack);
++    }
++}
+diff --git a/src/main/resources/assets/rubinated_nether/lang/en_us.json b/src/main/resources/assets/rubinated_nether/lang/en_us.json
+index b2cd874..b58a825 100644
+--- a/src/main/resources/assets/rubinated_nether/lang/en_us.json
++++ b/src/main/resources/assets/rubinated_nether/lang/en_us.json
+@@ -14,6 +14,8 @@
+   "item.rubinated_nether.molten_ruby_nugget": "Molten Ruby Nugget",
+   "item.rubinated_nether.pomegranate": "Pomegranate",
+   "item.rubinated_nether.rubinated_pomegranate": "Rubinated Pomegranate",
++  "item.rubinated_nether.rubinated_packet": "Rubinated Packet",
++  "item.rubinated_nether.rubinated_packet.tooltip.contents": "Emeralds: %s/%s",
+ 
+   "block.rubinated_nether.ruby_block": "Block of Ruby",
+   "block.rubinated_nether.molten_ruby_block": "Block of Molten Ruby",
+diff --git a/src/main/resources/assets/rubinated_nether/textures/item/rubinated_packet.png b/src/main/resources/assets/rubinated_nether/textures/item/rubinated_packet.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..5b3d0f1dd271eece3da78a0f3093ee87c738b5ac
+GIT binary patch
+literal 86
+zcmeAS@N?(olHy`uVBq!ia0y~yU=RRd4mJh`2Kmqb6B!s7WIbIRLn>}1+bAl0nBT~B
+o;E02wglWQ+hCpVvZbpV*SDDzG|En@FFfcH9y85}Sb4q9e0620MKmY&$
+
+literal 0
+HcmV?d00001
+
+diff --git a/src/main/resources/rubinated_nether.mixins.json b/src/main/resources/rubinated_nether.mixins.json
+index 9341d0a..d1f9e39 100644
+--- a/src/main/resources/rubinated_nether.mixins.json
++++ b/src/main/resources/rubinated_nether.mixins.json
+@@ -12,7 +12,10 @@
+     "BoatMixin",
+     "StonecutterMenuMixin",
+     "AnvilMenuMixin",
+-    "ProjectileWeaponItemMixin"
++    "ProjectileWeaponItemMixin",
++    "InventoryMixin",
++    "MerchantMenuMixin",
++    "MerchantResultSlotMixin"
+   ],
+   "injectors": {
+     "defaultRequire": 1

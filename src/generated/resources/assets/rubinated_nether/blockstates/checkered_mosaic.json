@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "flipped=false": {
+      "model": "rubinated_nether:block/checkered_mosaic"
+    },
+    "flipped=true": {
+      "model": "rubinated_nether:block/checkered_mosaic_flipped"
+    }
+  }
+}

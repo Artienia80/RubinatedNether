@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mosaic_quartz": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:mosaic_quartz"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:mosaic_quartz_slab_from_mosaic_quartz_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mosaic_quartz"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:mosaic_quartz_slab_from_mosaic_quartz_stonecutting"
+    ]
+  }
+}

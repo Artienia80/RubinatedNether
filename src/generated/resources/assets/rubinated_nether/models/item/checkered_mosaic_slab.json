@@ -1,0 +1,11 @@
+{
+  "parent": "rubinated_nether:block/checkered_mosaic_slab",
+  "overrides": [
+    {
+      "model": "rubinated_nether:item/checkered_mosaic_slab_flipped",
+      "predicate": {
+        "rubinated_nether:flipped": 1.0
+      }
+    }
+  ]
+}

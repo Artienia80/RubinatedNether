@@ -2,6 +2,12 @@
   "values": [
     "rubinated_nether:petrified_slab",
     "rubinated_nether:morion_slab",
-    "rubinated_nether:smooth_morion_slab"
+    "rubinated_nether:smooth_morion_slab",
+    "rubinated_nether:quartz_tiles_slab",
+    "rubinated_nether:morion_tiles_slab",
+    "rubinated_nether:checkered_tiles_slab",
+    "rubinated_nether:mosaic_quartz_slab",
+    "rubinated_nether:mosaic_morion_slab",
+    "rubinated_nether:checkered_mosaic_slab"
   ]
 }

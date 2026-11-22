@@ -280,10 +280,20 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.MORION_STAIRS,
 				RNBlocks.SMOOTH_MORION_SLAB,
 				RNBlocks.SMOOTH_MORION_STAIRS,
-				RNBlocks.TILED_QUARTZ,
-				RNBlocks.TILED_MORION,
-				RNBlocks.CHECKERED_TILES
+				RNBlocks.QUARTZ_TILES,
+				RNBlocks.QUARTZ_TILES_STAIRS,
+				RNBlocks.QUARTZ_TILES_SLAB,
+				RNBlocks.MORION_TILES,
+				RNBlocks.MORION_TILES_STAIRS,
+				RNBlocks.MORION_TILES_SLAB,
+				RNBlocks.MOSAIC_QUARTZ,
+				RNBlocks.MOSAIC_QUARTZ_STAIRS,
+				RNBlocks.MOSAIC_QUARTZ_SLAB,
+				RNBlocks.MOSAIC_MORION,
+				RNBlocks.MOSAIC_MORION_STAIRS,
+				RNBlocks.MOSAIC_MORION_SLAB
 		);
+		flippableBlockItems();
 
 		withExistingParent(
 				RNBlocks.REDSTONE_ACCUMULATOR.getId().toString(),
@@ -527,6 +537,17 @@ public class RNItemModels extends ItemModelProvider {
 				mcLoc("item/handheld")
 		)
 				.texture("layer0", texture);
+	}
+
+	private void flippableBlockItems() {
+		for (var block : RNBlocks.FLIPPABLE_BLOCKS) {
+			String name = block.getId().getPath();
+			var flipped = withExistingParent(name + "_flipped", modLoc("block/" + name + "_flipped"));
+			withExistingParent(name, modLoc("block/" + name))
+					.override()
+					.predicate(modLoc("flipped"), 1.0F)
+					.model(flipped);
+		}
 	}
 
 	private void simpleBlockItems(DeferredBlock<?>... blocks) {

@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "flipped=false,type=bottom": {
+      "model": "rubinated_nether:block/checkered_tiles_slab"
+    },
+    "flipped=false,type=double": {
+      "model": "rubinated_nether:block/checkered_tiles"
+    },
+    "flipped=false,type=top": {
+      "model": "rubinated_nether:block/checkered_tiles_slab_top"
+    },
+    "flipped=true,type=bottom": {
+      "model": "rubinated_nether:block/checkered_tiles_slab_flipped"
+    },
+    "flipped=true,type=double": {
+      "model": "rubinated_nether:block/checkered_tiles_flipped"
+    },
+    "flipped=true,type=top": {
+      "model": "rubinated_nether:block/checkered_tiles_slab_top_flipped"
+    }
+  }
+}

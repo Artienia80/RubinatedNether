@@ -8,12 +8,18 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import corundum.rubinated_nether.content.RNBlockStateProperties;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.Half;
+import net.minecraft.world.level.block.state.properties.SlabType;
+import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
@@ -170,14 +176,24 @@ public class RNBlockStates extends BlockStateProvider {
 		this.stairsBlock(RNBlocks.MORION_STAIRS.get(), modLoc("block/morion_block"));
 		this.slabBlock(RNBlocks.SMOOTH_MORION_SLAB.get(), modLoc("block/smooth_morion"), modLoc("block/smooth_morion"));
 		this.stairsBlock(RNBlocks.SMOOTH_MORION_STAIRS.get(), modLoc("block/smooth_morion"));
-		this.simpleBlock(RNBlocks.TILED_QUARTZ.get());
-		this.simpleBlock(RNBlocks.TILED_MORION.get());
-		this.horizontalBlock(
-				RNBlocks.CHECKERED_TILES.get(),
-				this.models()
-						.withExistingParent("checkered_tiles", mcLoc("block/template_glazed_terracotta"))
-						.texture("pattern", modLoc("block/checkered_tiles"))
-		);
+		this.simpleBlock(RNBlocks.QUARTZ_TILES.get());
+		this.simpleBlock(RNBlocks.MORION_TILES.get());
+		this.simpleBlock(RNBlocks.MOSAIC_QUARTZ.get());
+		this.simpleBlock(RNBlocks.MOSAIC_MORION.get());
+		this.flippableCube(RNBlocks.CHECKERED_TILES, "checkered_tiles");
+		this.flippableCube(RNBlocks.CHECKERED_MOSAIC, "checkered_mosaic");
+		this.slabBlock(RNBlocks.QUARTZ_TILES_SLAB.get(), modLoc("block/quartz_tiles"), modLoc("block/quartz_tiles"));
+		this.stairsBlock(RNBlocks.QUARTZ_TILES_STAIRS.get(), modLoc("block/quartz_tiles"));
+		this.slabBlock(RNBlocks.MORION_TILES_SLAB.get(), modLoc("block/morion_tiles"), modLoc("block/morion_tiles"));
+		this.stairsBlock(RNBlocks.MORION_TILES_STAIRS.get(), modLoc("block/morion_tiles"));
+		this.slabBlock(RNBlocks.MOSAIC_QUARTZ_SLAB.get(), modLoc("block/mosaic_quartz"), modLoc("block/mosaic_quartz"));
+		this.stairsBlock(RNBlocks.MOSAIC_QUARTZ_STAIRS.get(), modLoc("block/mosaic_quartz"));
+		this.slabBlock(RNBlocks.MOSAIC_MORION_SLAB.get(), modLoc("block/mosaic_morion"), modLoc("block/mosaic_morion"));
+		this.stairsBlock(RNBlocks.MOSAIC_MORION_STAIRS.get(), modLoc("block/mosaic_morion"));
+		this.flippableSlab(RNBlocks.CHECKERED_TILES_SLAB, "checkered_tiles");
+		this.flippableStairs(RNBlocks.CHECKERED_TILES_STAIRS, "checkered_tiles");
+		this.flippableSlab(RNBlocks.CHECKERED_MOSAIC_SLAB, "checkered_mosaic");
+		this.flippableStairs(RNBlocks.CHECKERED_MOSAIC_STAIRS, "checkered_mosaic");
 
 		redstoneAccumulator();
 		moonphaseDetector();
@@ -1342,5 +1358,86 @@ public class RNBlockStates extends BlockStateProvider {
 
 	private String blockName(DeferredBlock<?> block) {
 		return block.getId().toString().split(":")[1];
+	}
+
+	private static String flippedSuffix(boolean flipped) {
+		return flipped ? "_flipped" : "";
+	}
+
+	private ResourceLocation flippableTexture(String base, boolean flipped) {
+		return modLoc("block/" + base + flippedSuffix(flipped));
+	}
+
+	private void flippableCube(DeferredBlock<? extends Block> block, String base) {
+		ModelFile normal = this.models().cubeAll(base, flippableTexture(base, false));
+		ModelFile flipped = this.models().cubeAll(base + "_flipped", flippableTexture(base, true));
+		this.getVariantBuilder(block.get()).forAllStates(
+				state -> ConfiguredModel.builder()
+						.modelFile(state.getValue(RNBlockStateProperties.FLIPPED) ? flipped : normal)
+						.build()
+		);
+	}
+
+	private void flippableSlab(DeferredBlock<? extends SlabBlock> block, String base) {
+		String name = base + "_slab";
+		ModelFile[] bottom = new ModelFile[2];
+		ModelFile[] top = new ModelFile[2];
+		ModelFile[] full = new ModelFile[2];
+		for (int i = 0; i < 2; i++) {
+			boolean flipped = i == 1;
+			ResourceLocation texture = flippableTexture(base, flipped);
+			bottom[i] = this.models().slab(name + flippedSuffix(flipped), texture, texture, texture);
+			top[i] = this.models().slabTop(name + "_top" + flippedSuffix(flipped), texture, texture, texture);
+			full[i] = this.models().getExistingFile(modLoc("block/" + base + flippedSuffix(flipped)));
+		}
+		this.getVariantBuilder(block.get()).forAllStatesExcept(
+				state -> {
+					int i = state.getValue(RNBlockStateProperties.FLIPPED) ? 1 : 0;
+					SlabType type = state.getValue(SlabBlock.TYPE);
+					ModelFile model = type == SlabType.BOTTOM ? bottom[i] : type == SlabType.TOP ? top[i] : full[i];
+					return ConfiguredModel.builder().modelFile(model).build();
+				},
+				SlabBlock.WATERLOGGED
+		);
+	}
+
+	private void flippableStairs(DeferredBlock<? extends StairBlock> block, String base) {
+		String name = base + "_stairs";
+		ModelFile[] straight = new ModelFile[2];
+		ModelFile[] inner = new ModelFile[2];
+		ModelFile[] outer = new ModelFile[2];
+		for (int i = 0; i < 2; i++) {
+			boolean flipped = i == 1;
+			ResourceLocation texture = flippableTexture(base, flipped);
+			straight[i] = this.models().stairs(name + flippedSuffix(flipped), texture, texture, texture);
+			inner[i] = this.models().stairsInner(name + "_inner" + flippedSuffix(flipped), texture, texture, texture);
+			outer[i] = this.models().stairsOuter(name + "_outer" + flippedSuffix(flipped), texture, texture, texture);
+		}
+		this.getVariantBuilder(block.get()).forAllStatesExcept(
+				state -> {
+					int i = state.getValue(RNBlockStateProperties.FLIPPED) ? 1 : 0;
+					Direction facing = state.getValue(StairBlock.FACING);
+					Half half = state.getValue(StairBlock.HALF);
+					StairsShape shape = state.getValue(StairBlock.SHAPE);
+					int yRot = (int) facing.getClockWise().toYRot();
+					if (shape == StairsShape.INNER_LEFT || shape == StairsShape.OUTER_LEFT) {
+						yRot += 270;
+					}
+					if (shape != StairsShape.STRAIGHT && half == Half.TOP) {
+						yRot += 90;
+					}
+					yRot %= 360;
+					ModelFile model = shape == StairsShape.STRAIGHT
+							? straight[i]
+							: shape == StairsShape.INNER_LEFT || shape == StairsShape.INNER_RIGHT ? inner[i] : outer[i];
+					return ConfiguredModel.builder()
+							.modelFile(model)
+							.rotationX(half == Half.BOTTOM ? 0 : 180)
+							.rotationY(yRot)
+							.uvLock(yRot != 0 || half == Half.TOP)
+							.build();
+				},
+				StairBlock.WATERLOGGED
+		);
 	}
 }

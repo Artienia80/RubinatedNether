@@ -77,9 +77,24 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.dropSelf(RNBlocks.MORION_STAIRS.get());
 		this.add(RNBlocks.SMOOTH_MORION_SLAB.get(), this::createSlabItemTable);
 		this.dropSelf(RNBlocks.SMOOTH_MORION_STAIRS.get());
-		this.dropSelf(RNBlocks.TILED_QUARTZ.get());
-		this.dropSelf(RNBlocks.TILED_MORION.get());
+		this.dropSelf(RNBlocks.QUARTZ_TILES.get());
+		this.dropSelf(RNBlocks.QUARTZ_TILES_STAIRS.get());
+		this.add(RNBlocks.QUARTZ_TILES_SLAB.get(), this::createSlabItemTable);
+		this.dropSelf(RNBlocks.MORION_TILES.get());
+		this.dropSelf(RNBlocks.MORION_TILES_STAIRS.get());
+		this.add(RNBlocks.MORION_TILES_SLAB.get(), this::createSlabItemTable);
 		this.dropSelf(RNBlocks.CHECKERED_TILES.get());
+		this.dropSelf(RNBlocks.CHECKERED_TILES_STAIRS.get());
+		this.add(RNBlocks.CHECKERED_TILES_SLAB.get(), this::createSlabItemTable);
+		this.dropSelf(RNBlocks.MOSAIC_QUARTZ.get());
+		this.dropSelf(RNBlocks.MOSAIC_QUARTZ_STAIRS.get());
+		this.add(RNBlocks.MOSAIC_QUARTZ_SLAB.get(), this::createSlabItemTable);
+		this.dropSelf(RNBlocks.MOSAIC_MORION.get());
+		this.dropSelf(RNBlocks.MOSAIC_MORION_STAIRS.get());
+		this.add(RNBlocks.MOSAIC_MORION_SLAB.get(), this::createSlabItemTable);
+		this.dropSelf(RNBlocks.CHECKERED_MOSAIC.get());
+		this.dropSelf(RNBlocks.CHECKERED_MOSAIC_STAIRS.get());
+		this.add(RNBlocks.CHECKERED_MOSAIC_SLAB.get(), this::createSlabItemTable);
 		this.dropSelf(RNBlocks.REDSTONE_ACCUMULATOR.get());
 		this.dropSelf(RNBlocks.MOONPHASE_DETECTOR.get());
 

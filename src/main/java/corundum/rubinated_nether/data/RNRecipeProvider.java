@@ -900,25 +900,74 @@ public class RNRecipeProvider extends RecipeProvider {
 				.save(recipeOutput);
 		stairsAndSlab(recipeOutput, RNBlocks.MORION_BLOCK, RNBlocks.MORION_STAIRS, RNBlocks.MORION_SLAB);
 		stairsAndSlab(recipeOutput, RNBlocks.SMOOTH_MORION, RNBlocks.SMOOTH_MORION_STAIRS, RNBlocks.SMOOTH_MORION_SLAB);
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.TILED_MORION, 4)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.MORION_TILES, 4)
 				.define('B', RNBlocks.MORION_BRICKS)
 				.pattern("BB")
 				.pattern("BB")
 				.unlockedBy(getHasName(RNBlocks.MORION_BRICKS), has(RNBlocks.MORION_BRICKS))
 				.save(recipeOutput);
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.TILED_QUARTZ, 4)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.QUARTZ_TILES, 4)
 				.define('B', Blocks.QUARTZ_BRICKS)
 				.pattern("BB")
 				.pattern("BB")
 				.unlockedBy(getHasName(Blocks.QUARTZ_BRICKS), has(Blocks.QUARTZ_BRICKS))
 				.save(recipeOutput);
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CHECKERED_TILES, 4)
-				.define('Q', RNBlocks.TILED_QUARTZ)
-				.define('M', RNBlocks.TILED_MORION)
+				.define('Q', RNBlocks.QUARTZ_TILES)
+				.define('M', RNBlocks.MORION_TILES)
 				.pattern("QM")
 				.pattern("MQ")
-				.unlockedBy(getHasName(RNBlocks.TILED_MORION), has(RNBlocks.TILED_MORION))
+				.unlockedBy(getHasName(RNBlocks.MORION_TILES), has(RNBlocks.MORION_TILES))
 				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.MOSAIC_QUARTZ, 4)
+				.define('T', RNBlocks.QUARTZ_TILES)
+				.pattern("TT")
+				.pattern("TT")
+				.unlockedBy(getHasName(RNBlocks.QUARTZ_TILES), has(RNBlocks.QUARTZ_TILES))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.MOSAIC_MORION, 4)
+				.define('T', RNBlocks.MORION_TILES)
+				.pattern("TT")
+				.pattern("TT")
+				.unlockedBy(getHasName(RNBlocks.MORION_TILES), has(RNBlocks.MORION_TILES))
+				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CHECKERED_MOSAIC, 4)
+				.define('Q', RNBlocks.MOSAIC_QUARTZ)
+				.define('M', RNBlocks.MOSAIC_MORION)
+				.pattern("QM")
+				.pattern("MQ")
+				.unlockedBy(getHasName(RNBlocks.MOSAIC_MORION), has(RNBlocks.MOSAIC_MORION))
+				.save(recipeOutput);
+		stairsAndSlab(recipeOutput, RNBlocks.QUARTZ_TILES, RNBlocks.QUARTZ_TILES_STAIRS, RNBlocks.QUARTZ_TILES_SLAB);
+		stairsAndSlab(recipeOutput, RNBlocks.MORION_TILES, RNBlocks.MORION_TILES_STAIRS, RNBlocks.MORION_TILES_SLAB);
+		stairsAndSlab(recipeOutput, RNBlocks.CHECKERED_TILES, RNBlocks.CHECKERED_TILES_STAIRS, RNBlocks.CHECKERED_TILES_SLAB);
+		stairsAndSlab(recipeOutput, RNBlocks.MOSAIC_QUARTZ, RNBlocks.MOSAIC_QUARTZ_STAIRS, RNBlocks.MOSAIC_QUARTZ_SLAB);
+		stairsAndSlab(recipeOutput, RNBlocks.MOSAIC_MORION, RNBlocks.MOSAIC_MORION_STAIRS, RNBlocks.MOSAIC_MORION_SLAB);
+		stairsAndSlab(recipeOutput, RNBlocks.CHECKERED_MOSAIC, RNBlocks.CHECKERED_MOSAIC_STAIRS, RNBlocks.CHECKERED_MOSAIC_SLAB);
+		stonecutterList(recipeOutput, RNBlocks.MORION_BRICKS, RNBlocks.MORION_TILES);
+		stonecutterList(recipeOutput, Blocks.QUARTZ_BRICKS, RNBlocks.QUARTZ_TILES);
+		stonecutterList(
+				recipeOutput,
+				RNBlocks.QUARTZ_TILES,
+				RNBlocks.QUARTZ_TILES_STAIRS,
+				RNBlocks.QUARTZ_TILES_SLAB,
+				RNBlocks.MOSAIC_QUARTZ,
+				RNBlocks.MOSAIC_QUARTZ_STAIRS,
+				RNBlocks.MOSAIC_QUARTZ_SLAB
+		);
+		stonecutterList(
+				recipeOutput,
+				RNBlocks.MORION_TILES,
+				RNBlocks.MORION_TILES_STAIRS,
+				RNBlocks.MORION_TILES_SLAB,
+				RNBlocks.MOSAIC_MORION,
+				RNBlocks.MOSAIC_MORION_STAIRS,
+				RNBlocks.MOSAIC_MORION_SLAB
+		);
+		stonecutterList(recipeOutput, RNBlocks.MOSAIC_QUARTZ, RNBlocks.MOSAIC_QUARTZ_STAIRS, RNBlocks.MOSAIC_QUARTZ_SLAB);
+		stonecutterList(recipeOutput, RNBlocks.MOSAIC_MORION, RNBlocks.MOSAIC_MORION_STAIRS, RNBlocks.MOSAIC_MORION_SLAB);
+		stonecutterList(recipeOutput, RNBlocks.CHECKERED_TILES, RNBlocks.CHECKERED_TILES_STAIRS, RNBlocks.CHECKERED_TILES_SLAB);
+		stonecutterList(recipeOutput, RNBlocks.CHECKERED_MOSAIC, RNBlocks.CHECKERED_MOSAIC_STAIRS, RNBlocks.CHECKERED_MOSAIC_SLAB);
 		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.REDSTONE_ACCUMULATOR)
 				.define('T', Blocks.REDSTONE_TORCH)
 				.define('M', morion)

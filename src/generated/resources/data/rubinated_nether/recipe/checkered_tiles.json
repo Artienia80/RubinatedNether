@@ -3,10 +3,10 @@
   "category": "building",
   "key": {
     "M": {
-      "item": "rubinated_nether:tiled_morion"
+      "item": "rubinated_nether:morion_tiles"
     },
     "Q": {
-      "item": "rubinated_nether:tiled_quartz"
+      "item": "rubinated_nether:quartz_tiles"
     }
   },
   "pattern": [

@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/template_glazed_terracotta",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "pattern": "rubinated_nether:block/checkered_tiles"
+    "all": "rubinated_nether:block/checkered_tiles"
   }
 }

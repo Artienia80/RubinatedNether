@@ -32,11 +32,14 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
 public class RNBlocks {
 	public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(RubinatedNether.MODID);
+	public static final List<DeferredBlock<? extends Block>> FLIPPABLE_BLOCKS = new ArrayList<>();
 
 	public static final DeferredBlock<Block> NETHER_RUBY_ORE = registerBlockAndItem(
 			"nether_ruby_ore",
@@ -294,24 +297,77 @@ public class RNBlocks {
 			"smooth_morion_stairs",
 			() -> new StairBlock(SMOOTH_MORION.get().defaultBlockState(), morion().strength(2.0F, 6.0F))
 	);
-	public static final DeferredBlock<Block> TILED_QUARTZ = registerBlockAndItem(
-			"tiled_quartz",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.QUARTZ_BLOCK))
+	public static final DeferredBlock<Block> QUARTZ_TILES = registerBlockAndItem(
+			"quartz_tiles",
+			() -> new Block(quartz())
 	);
-	public static final DeferredBlock<Block> TILED_MORION = registerBlockAndItem(
-			"tiled_morion",
+	public static final DeferredBlock<Block> MORION_TILES = registerBlockAndItem(
+			"morion_tiles",
 			() -> new Block(morion())
 	);
-	public static final DeferredBlock<GlazedTerracottaBlock> CHECKERED_TILES = registerBlockAndItem(
+	public static final DeferredBlock<FlippableBlock> CHECKERED_TILES = registerFlippableBlockAndItem(
 			"checkered_tiles",
-			() -> new GlazedTerracottaBlock(
-					BlockBehaviour.Properties.of()
-							.mapColor(MapColor.COLOR_BLACK)
-							.instrument(NoteBlockInstrument.BASEDRUM)
-							.requiresCorrectToolForDrops()
-							.strength(1.4F)
-							.pushReaction(PushReaction.PUSH_ONLY)
-			)
+			() -> new FlippableBlock(checkered())
+	);
+	public static final DeferredBlock<Block> MOSAIC_QUARTZ = registerBlockAndItem(
+			"mosaic_quartz",
+			() -> new Block(quartz())
+	);
+	public static final DeferredBlock<Block> MOSAIC_MORION = registerBlockAndItem(
+			"mosaic_morion",
+			() -> new Block(morion())
+	);
+	public static final DeferredBlock<FlippableBlock> CHECKERED_MOSAIC = registerFlippableBlockAndItem(
+			"checkered_mosaic",
+			() -> new FlippableBlock(checkered())
+	);
+	public static final DeferredBlock<SlabBlock> QUARTZ_TILES_SLAB = registerBlockAndItem(
+			"quartz_tiles_slab",
+			() -> new SlabBlock(quartz())
+	);
+	public static final DeferredBlock<StairBlock> QUARTZ_TILES_STAIRS = registerBlockAndItem(
+			"quartz_tiles_stairs",
+			() -> new StairBlock(QUARTZ_TILES.get().defaultBlockState(), quartz())
+	);
+	public static final DeferredBlock<SlabBlock> MORION_TILES_SLAB = registerBlockAndItem(
+			"morion_tiles_slab",
+			() -> new SlabBlock(morion())
+	);
+	public static final DeferredBlock<StairBlock> MORION_TILES_STAIRS = registerBlockAndItem(
+			"morion_tiles_stairs",
+			() -> new StairBlock(MORION_TILES.get().defaultBlockState(), morion())
+	);
+	public static final DeferredBlock<FlippableSlabBlock> CHECKERED_TILES_SLAB = registerFlippableBlockAndItem(
+			"checkered_tiles_slab",
+			() -> new FlippableSlabBlock(checkered())
+	);
+	public static final DeferredBlock<FlippableStairBlock> CHECKERED_TILES_STAIRS = registerFlippableBlockAndItem(
+			"checkered_tiles_stairs",
+			() -> new FlippableStairBlock(CHECKERED_TILES.get().defaultBlockState(), checkered())
+	);
+	public static final DeferredBlock<SlabBlock> MOSAIC_QUARTZ_SLAB = registerBlockAndItem(
+			"mosaic_quartz_slab",
+			() -> new SlabBlock(quartz())
+	);
+	public static final DeferredBlock<StairBlock> MOSAIC_QUARTZ_STAIRS = registerBlockAndItem(
+			"mosaic_quartz_stairs",
+			() -> new StairBlock(MOSAIC_QUARTZ.get().defaultBlockState(), quartz())
+	);
+	public static final DeferredBlock<SlabBlock> MOSAIC_MORION_SLAB = registerBlockAndItem(
+			"mosaic_morion_slab",
+			() -> new SlabBlock(morion())
+	);
+	public static final DeferredBlock<StairBlock> MOSAIC_MORION_STAIRS = registerBlockAndItem(
+			"mosaic_morion_stairs",
+			() -> new StairBlock(MOSAIC_MORION.get().defaultBlockState(), morion())
+	);
+	public static final DeferredBlock<FlippableSlabBlock> CHECKERED_MOSAIC_SLAB = registerFlippableBlockAndItem(
+			"checkered_mosaic_slab",
+			() -> new FlippableSlabBlock(checkered())
+	);
+	public static final DeferredBlock<FlippableStairBlock> CHECKERED_MOSAIC_STAIRS = registerFlippableBlockAndItem(
+			"checkered_mosaic_stairs",
+			() -> new FlippableStairBlock(CHECKERED_MOSAIC.get().defaultBlockState(), checkered())
 	);
 	public static final DeferredBlock<RedstoneAccumulatorBlock> REDSTONE_ACCUMULATOR = registerBlockAndItem(
 			"redstone_accumulator",
@@ -1830,6 +1886,18 @@ public class RNBlocks {
 		return register;
 	}
 
+	public static <T extends Block> DeferredBlock<T> registerFlippableBlockAndItem(String name, Supplier<T> block) {
+		var register = BLOCKS.register(name, block);
+
+		RNItems.ITEMS.register(
+				name,
+				() -> new corundum.rubinated_nether.content.items.FlippableBlockItem(register.get(), new Item.Properties())
+		);
+		FLIPPABLE_BLOCKS.add(register);
+
+		return register;
+	}
+
 	/** Like registerBlockAndItem, but the item can be placed in a grindstone (see RuneGrindstoneHandler). */
 	public static <T extends Block> DeferredBlock<T> registerShrineStoneBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);
@@ -1859,6 +1927,19 @@ public class RNBlocks {
 				.instrument(NoteBlockInstrument.BASEDRUM)
 				.requiresCorrectToolForDrops()
 				.strength(0.8F);
+	}
+
+	private static BlockBehaviour.Properties quartz() {
+		return BlockBehaviour.Properties.ofFullCopy(Blocks.QUARTZ_BLOCK);
+	}
+
+	private static BlockBehaviour.Properties checkered() {
+		return BlockBehaviour.Properties.of()
+				.mapColor(MapColor.COLOR_BLACK)
+				.instrument(NoteBlockInstrument.BASEDRUM)
+				.requiresCorrectToolForDrops()
+				.strength(1.4F)
+				.pushReaction(PushReaction.PUSH_ONLY);
 	}
 
 	private static BlockBehaviour.Properties petrified() {

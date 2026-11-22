@@ -101,6 +101,16 @@ public class RNClientSubscriber {
                 ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "crossbow_rod"),
                 (stack, level, entity, seed) -> CrossbowRodHandler.loadedRodModelValue(stack)
         ));
+
+        event.enqueueWork(() -> {
+            for (var block : RNBlocks.FLIPPABLE_BLOCKS) {
+                ItemProperties.register(
+                        block.asItem(),
+                        ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "flipped"),
+                        (stack, level, entity, seed) -> entity != null && entity.getOffhandItem() == stack ? 1.0F : 0.0F
+                );
+            }
+        });
     }
 
     @SubscribeEvent

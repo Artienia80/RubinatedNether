@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "rubinated_nether:morion_tiles"
+  },
+  "result": {
+    "count": 2,
+    "id": "rubinated_nether:mosaic_morion_slab"
+  }
+}
