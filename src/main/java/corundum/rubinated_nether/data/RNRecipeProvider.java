@@ -28,6 +28,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -643,6 +644,16 @@ public class RNRecipeProvider extends RecipeProvider {
 		freezing(recipeOutput, Blocks.FROSTED_ICE,			Blocks.ICE,               2400, 1.0f);
 		freezing(recipeOutput, Items.WATER_BUCKET,			Blocks.FROSTED_ICE,     4800, 1.0f);
 		freezing(recipeOutput, Blocks.SNOW_BLOCK,			Blocks.FROSTED_ICE,     1200, 1.0f);
+		freezing(recipeOutput, Blocks.TINTED_GLASS,			RNBlocks.FROSTED_GLASS,   400,  1.0f);
+		for (DyeColor color : DyeColor.values()) {
+			freezing(
+					recipeOutput,
+					BuiltInRegistries.BLOCK.get(ResourceLocation.withDefaultNamespace(color.getName() + "_stained_glass")),
+					RNBlocks.STAINED_FROSTED_GLASS.get(color),
+					400,
+					1.0f
+			);
+		}
 		freezing(recipeOutput, Blocks.BLUE_ICE,				RNBlocks.DRY_ICE,         19200,1.0f);
 		freezing(recipeOutput, RNItems.BRONZE_ROD,			Items.BREEZE_ROD,         400,  1.0f);
 		freezing(recipeOutput, Blocks.PACKED_ICE,			Blocks.BLUE_ICE,          9600, 1.0f);

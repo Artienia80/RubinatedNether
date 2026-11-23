@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
@@ -218,6 +219,9 @@ public class RNBlockStates extends BlockStateProvider {
 				"molten_ruby_glass",
 				modLoc("block/molten_ruby_glass_pane_top")
 		);
+
+		this.frostedGlass(RNBlocks.FROSTED_GLASS.get(), "frosted_glass");
+		RNBlocks.STAINED_FROSTED_GLASS.forEach((color, block) -> this.frostedGlass(block.get(), color.getName() + "_frosted_glass"));
 
 		this.simpleBlock(RNBlocks.SHRINE_STONE.get());
 		this.slabBlock(
@@ -1357,6 +1361,60 @@ public class RNBlockStates extends BlockStateProvider {
 		});
 	}
 
+
+	private void frostedGlass(Block block, String name) {
+		this.models()
+				.withExistingParent(name, mcLoc("block/block"))
+				.texture("particle", modLoc("block/" + name))
+				.texture("glass", modLoc("block/" + name))
+				.texture("frost", modLoc("block/" + name + "_frosted"))
+				.renderType(mcLoc("translucent"))
+				.element()
+				.from(0, 0, 0)
+				.to(16, 16, 16)
+				.allFaces((direction, face) -> face
+						.texture(direction == Direction.NORTH ? "#frost" : "#glass")
+						.cullface(direction))
+				.end();
+		ModelFile glassFace = this.faceModel(name + "_face_glass", "block/" + name);
+		ModelFile frostFace = this.faceModel(name + "_face_frost", "block/" + name + "_frosted");
+		MultiPartBlockStateBuilder builder = this.getMultipartBuilder(block);
+		for (Direction direction : Direction.values()) {
+			BooleanProperty property = FrostedGlassBlock.property(direction);
+			int x = direction == Direction.UP ? 270 : direction == Direction.DOWN ? 90 : 0;
+			int y = switch (direction) {
+				case EAST -> 90;
+				case SOUTH -> 180;
+				case WEST -> 270;
+				default -> 0;
+			};
+			builder.part().modelFile(glassFace).rotationX(x).rotationY(y).addModel()
+					.condition(FrostedGlassBlock.POWERED, false)
+					.condition(property, false)
+					.end();
+			builder.part().modelFile(frostFace).rotationX(x).rotationY(y).addModel()
+					.useOr()
+					.condition(FrostedGlassBlock.POWERED, true)
+					.condition(property, true)
+					.end();
+		}
+	}
+
+	private ModelFile faceModel(String name, String texture) {
+		return this.models()
+				.getBuilder(name)
+				.texture("particle", modLoc(texture))
+				.texture("all", modLoc(texture))
+				.renderType(mcLoc("translucent"))
+				.element()
+				.from(0, 0, 0)
+				.to(16, 16, 16)
+				.face(Direction.NORTH)
+				.texture("#all")
+				.cullface(Direction.NORTH)
+				.end()
+				.end();
+	}
 
 	private String blockName(DeferredBlock<?> block) {
 		return block.getId().toString().split(":")[1];

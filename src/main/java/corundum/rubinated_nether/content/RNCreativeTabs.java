@@ -57,7 +57,8 @@ public class RNCreativeTabs {
 						// Brazier
 						addItems(output, RNBlocks.BRAZIER);
 						// Freezer and ice
-						addItems(output, RNBlocks.FREEZER, RNItems.POWDER_SNOW, RNItems.FROSTED_ICE, RNBlocks.DRY_ICE);
+						addItems(output, RNBlocks.FREEZER, RNItems.POWDER_SNOW, RNItems.FROSTED_ICE, RNBlocks.DRY_ICE, RNBlocks.FROSTED_GLASS);
+						addItems(output, RNBlocks.STAINED_FROSTED_GLASS.values().toArray(new ItemLike[0]));
 						// Coffer
 						addItems(output, RNBlocks.SHRINE_STONE_COFFER, RNBlocks.RUBINATED_SHRINE_STONE_COFFER);
 						// Shrine stone family

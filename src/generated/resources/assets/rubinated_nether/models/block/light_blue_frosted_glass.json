@@ -1,0 +1,49 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#glass"
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#glass"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#frost"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#glass"
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#glass"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#glass"
+        }
+      },
+      "from": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "to": [
+        16.0,
+        16.0,
+        16.0
+      ]
+    }
+  ],
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "frost": "rubinated_nether:block/light_blue_frosted_glass_frosted",
+    "glass": "rubinated_nether:block/light_blue_frosted_glass",
+    "particle": "rubinated_nether:block/light_blue_frosted_glass"
+  }
+}

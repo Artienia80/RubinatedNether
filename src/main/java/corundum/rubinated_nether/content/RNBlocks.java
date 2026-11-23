@@ -33,7 +33,9 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
@@ -1855,6 +1857,13 @@ public class RNBlocks {
 			)
 	);
 
+	public static final DeferredBlock<FrostedGlassBlock> FROSTED_GLASS = registerBlockAndItem(
+			"frosted_glass",
+			() -> new FrostedGlassBlock(Block.Properties.ofFullCopy(Blocks.GLASS).isRedstoneConductor((state, level, pos) -> true))
+	);
+
+	public static final Map<DyeColor, DeferredBlock<FrostedGlassBlock>> STAINED_FROSTED_GLASS = registerStainedFrostedGlass();
+
 	public static final DeferredBlock<Block> RUBINATION_ALTAR = registerBlockAndItem(
 			"rubination_altar",
 			() -> new RubinationAltarBlock(
@@ -1874,6 +1883,24 @@ public class RNBlocks {
 							.lightLevel(state -> state.getValue(BrazierBlock.LEVEL))
 			)
 	);
+
+	private static Map<DyeColor, DeferredBlock<FrostedGlassBlock>> registerStainedFrostedGlass() {
+		Map<DyeColor, DeferredBlock<FrostedGlassBlock>> blocks = new EnumMap<>(DyeColor.class);
+		for (DyeColor color : DyeColor.values()) {
+			blocks.put(
+					color,
+					registerBlockAndItem(
+							color.getName() + "_frosted_glass",
+							() -> new FrostedGlassBlock(
+									Block.Properties.ofFullCopy(Blocks.GLASS)
+											.mapColor(color)
+											.isRedstoneConductor((state, level, pos) -> true)
+							)
+					)
+			);
+		}
+		return blocks;
+	}
 
 	public static <T extends Block> DeferredBlock<T> registerBlockAndItem(String name, Supplier<T> block) {
 		var register = BLOCKS.register(name, block);

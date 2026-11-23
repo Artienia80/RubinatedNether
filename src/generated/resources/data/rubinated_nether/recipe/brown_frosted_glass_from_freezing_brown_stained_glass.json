@@ -1,0 +1,13 @@
+{
+  "type": "rubinated_nether:freezing",
+  "category": "freezable_misc",
+  "cookingtime": 400,
+  "experience": 1.0,
+  "ingredient": {
+    "item": "minecraft:brown_stained_glass"
+  },
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:brown_frosted_glass"
+  }
+}

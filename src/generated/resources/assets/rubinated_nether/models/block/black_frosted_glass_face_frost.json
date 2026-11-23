@@ -1,0 +1,27 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "north": {
+          "cullface": "north",
+          "texture": "#all"
+        }
+      },
+      "from": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "to": [
+        16.0,
+        16.0,
+        16.0
+      ]
+    }
+  ],
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "all": "rubinated_nether:block/black_frosted_glass_frosted",
+    "particle": "rubinated_nether:block/black_frosted_glass_frosted"
+  }
+}

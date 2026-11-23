@@ -60,6 +60,8 @@ public class RNItemModels extends ItemModelProvider {
 	@Override
 	protected void registerModels() {
 		// Block items
+		for (var block : RNBlocks.STAINED_FROSTED_GLASS.values())
+			simpleBlockItem(block.get());
 		simpleBlockItems(
 				RNBlocks.NETHER_RUBY_ORE,
 				RNBlocks.MOLTEN_RUBY_ORE,
@@ -84,6 +86,7 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.RUBY_GLASS,
 				RNBlocks.ORNATE_RUBY_GLASS,
 				RNBlocks.MOLTEN_RUBY_GLASS,
+				RNBlocks.FROSTED_GLASS,
 				RNBlocks.SHRINE_STONE,
 				RNBlocks.SHRINE_STONE_STAIRS,
 				RNBlocks.SHRINE_STONE_SLAB,

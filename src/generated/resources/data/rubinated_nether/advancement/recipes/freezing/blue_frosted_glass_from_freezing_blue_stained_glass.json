@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "rubinated_nether:blue_frosted_glass_from_freezing_blue_stained_glass"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_blue_stained_glass": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:blue_stained_glass"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_blue_stained_glass"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "rubinated_nether:blue_frosted_glass_from_freezing_blue_stained_glass"
+    ]
+  }
+}
