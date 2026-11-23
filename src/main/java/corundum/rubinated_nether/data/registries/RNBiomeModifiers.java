@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.neoforged.neoforge.common.world.BiomeModifier;
@@ -18,6 +19,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 public class RNBiomeModifiers {
 
 	public static final ResourceKey<BiomeModifier> MOLTEN_RUBY_ORE = createKey("molten_ruby_ore");
+	public static final ResourceKey<BiomeModifier> CINDER_FORMATIONS = createKey("cinder_formations");
 
 	private static ResourceKey<BiomeModifier> createKey(String key) {
 		return ResourceKey.create(
@@ -39,5 +41,20 @@ public class RNBiomeModifiers {
 				)
 		);
 
+		context.register(
+				CINDER_FORMATIONS,
+				new AddFeaturesBiomeModifier(
+						HolderSet.direct(
+								biomes.getOrThrow(Biomes.NETHER_WASTES),
+								biomes.getOrThrow(Biomes.SOUL_SAND_VALLEY),
+								biomes.getOrThrow(Biomes.BASALT_DELTAS)
+						),
+						HolderSet.direct(
+								placedFeatures.getOrThrow(RNPlacedFeatures.CINDER_OVERHANG),
+								placedFeatures.getOrThrow(RNPlacedFeatures.CINDER_BRIDGE)
+						),
+						GenerationStep.Decoration.TOP_LAYER_MODIFICATION
+				)
+		);
 	}
 }

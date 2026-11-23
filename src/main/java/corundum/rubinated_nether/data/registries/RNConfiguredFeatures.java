@@ -2,6 +2,8 @@ package corundum.rubinated_nether.data.registries;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.world.cinder.RNFeatures;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -14,6 +16,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTes
 
 public class RNConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> MOLTEN_RUBY_ORE = createKey("molten_ruby_ore");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> CINDER_OVERHANG = createKey("cinder_overhang");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> CINDER_BRIDGE = createKey("cinder_bridge");
 
 	public static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
 		return ResourceKey.create(
@@ -35,6 +39,7 @@ public class RNConfiguredFeatures {
 				)
 		);
 
-
+		context.register(CINDER_OVERHANG, new ConfiguredFeature<>(RNFeatures.CINDER_OVERHANG.get(), NoneFeatureConfiguration.INSTANCE));
+		context.register(CINDER_BRIDGE, new ConfiguredFeature<>(RNFeatures.CINDER_BRIDGE.get(), NoneFeatureConfiguration.INSTANCE));
 	}
 }

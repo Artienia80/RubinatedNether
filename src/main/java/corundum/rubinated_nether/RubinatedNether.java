@@ -37,6 +37,7 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
+import corundum.rubinated_nether.content.world.cinder.RNFeatures;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -69,7 +70,8 @@ public class RubinatedNether {
             RNDataComponents.DATA_COMPONENTS,
             RNLootModifiers.LOOT_MODIFIERS,
             RNStructureTypes.STRUCTURE_TYPES,
-            RNStructurePieceTypes.STRUCTURE_PIECE_TYPES
+            RNStructurePieceTypes.STRUCTURE_PIECE_TYPES,
+            RNFeatures.FEATURES
     );
 
     public RubinatedNether(IEventBus modEventBus, ModContainer modContainer, Dist dist) {

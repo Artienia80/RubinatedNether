@@ -1,0 +1,31 @@
+{
+  "feature": "rubinated_nether:cinder_bridge",
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 3
+    },
+    {
+      "type": "minecraft:count",
+      "count": 16
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": {
+          "absolute": 118
+        },
+        "min_inclusive": {
+          "absolute": 33
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

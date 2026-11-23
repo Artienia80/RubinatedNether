@@ -14,12 +14,15 @@ import net.minecraft.world.level.levelgen.placement.CountPlacement;
 import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.RarityFilter;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
 import java.util.List;
 
 public class RNPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> MOLTEN_RUBY_ORE = createKey("molten_ruby_ore");
+	public static final ResourceKey<PlacedFeature> CINDER_OVERHANG = createKey("cinder_overhang");
+	public static final ResourceKey<PlacedFeature> CINDER_BRIDGE = createKey("cinder_bridge");
 
 	public static void bootstap(BootstrapContext<PlacedFeature> context) {
 		HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -38,6 +41,32 @@ public class RNPlacedFeatures {
 				)
 		);
 
+		context.register(
+				CINDER_OVERHANG,
+				new PlacedFeature(
+						configuredFeatures.getOrThrow(RNConfiguredFeatures.CINDER_OVERHANG),
+						List.of(
+								CountPlacement.of(24),
+								InSquarePlacement.spread(),
+								HeightRangePlacement.uniform(VerticalAnchor.absolute(33), VerticalAnchor.absolute(118)),
+								BiomeFilter.biome()
+						)
+				)
+		);
+
+		context.register(
+				CINDER_BRIDGE,
+				new PlacedFeature(
+						configuredFeatures.getOrThrow(RNConfiguredFeatures.CINDER_BRIDGE),
+						List.of(
+								RarityFilter.onAverageOnceEvery(3),
+								CountPlacement.of(16),
+								InSquarePlacement.spread(),
+								HeightRangePlacement.uniform(VerticalAnchor.absolute(33), VerticalAnchor.absolute(118)),
+								BiomeFilter.biome()
+						)
+				)
+		);
 	}
 
 	public static ResourceKey<PlacedFeature> createKey(String name) {

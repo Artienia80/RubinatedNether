@@ -887,6 +887,8 @@
   "rubinated_nether.midnightconfig.category.vent": "Vent",
   "rubinated_nether.midnightconfig.category.pomegranate": "Pomegranate",
   "rubinated_nether.midnightconfig.category.petrified": "Petrified Wood",
+  "rubinated_nether.midnightconfig.category.worldgen": "World Generation",
+  "rubinated_nether.midnightconfig.replaceNetherGravelWithCinder": "Replace Nether Gravel With Cinder",
   "rubinated_nether.midnightconfig.petrifiedBoatLavaMode": "Petrified Boats Sink in Water and Float on Lava",
 
   "rubinated_nether.midnightconfig.chandelierDefaultDamage": "Chandelier Default Damage Value",

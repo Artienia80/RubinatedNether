@@ -18,6 +18,7 @@ public class RNConfig extends MidnightConfig {
 	public static final String POCKETWATCH = "pocketwatch";
 	public static final String POMEGRANATE = "pomegranate";
 	public static final String PETRIFIED = "petrified";
+	public static final String WORLDGEN = "worldgen";
 
 	/* -- Brazier -- */
 
@@ -277,6 +278,10 @@ public class RNConfig extends MidnightConfig {
 	@Entry(category = PETRIFIED)
 	@Synced
 	public static boolean petrifiedBoatLavaMode = true;
+
+	@Entry(category = WORLDGEN)
+	public static boolean replaceNetherGravelWithCinder = true;
+
 	/**
 	 * Calculates the probability per tick for cauldron filling.
 	 * Checks happen every 20 ticks, so this returns the chance per check.
