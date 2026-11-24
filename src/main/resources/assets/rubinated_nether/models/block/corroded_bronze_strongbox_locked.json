@@ -3,7 +3,7 @@
   "render_type": "minecraft:cutout",
   "textures": {
     "particle": "rubinated_nether:block/bronze/bronze_block/corroded_bronze_block",
-    "sheet": "rubinated_nether:block/bronze_strongbox/corroded_bronze_strongbox"
+    "sheet": "rubinated_nether:block/bronze/bronze_strongbox/corroded_bronze_strongbox"
   },
   "elements": [
     {

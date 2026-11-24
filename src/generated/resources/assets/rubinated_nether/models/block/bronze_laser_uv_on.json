@@ -363,10 +363,10 @@
   "gui_light": "side",
   "render_type": "minecraft:cutout",
   "textures": {
-    "0": "rubinated_nether:block/laser/mode/laser_lens_uv_on",
-    "1": "rubinated_nether:block/laser/mode/laser_lens_uv_on_e",
-    "2": "rubinated_nether:block/laser/material/bronze_laser_front_on",
-    "3": "rubinated_nether:block/laser/material/bronze_laser_side",
-    "particle": "rubinated_nether:block/laser/material/bronze_laser_front"
+    "0": "rubinated_nether:block/bronze/bronze_laser/mode/laser_lens_uv_on",
+    "1": "rubinated_nether:block/bronze/bronze_laser/mode/laser_lens_uv_on_e",
+    "2": "rubinated_nether:block/bronze/bronze_laser/material/bronze_laser_front_on",
+    "3": "rubinated_nether:block/bronze/bronze_laser/material/bronze_laser_side",
+    "particle": "rubinated_nether:block/bronze/bronze_laser/material/bronze_laser_front"
   }
 }

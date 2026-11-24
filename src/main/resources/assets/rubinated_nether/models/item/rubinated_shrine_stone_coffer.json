@@ -1,8 +1,8 @@
 {
   "loader": "neoforge:elements",
   "textures": {
-    "texture": "rubinated_nether:block/rubinated_shrine_stone_coffer",
-    "overlay": "rubinated_nether:block/rubinated_shrine_stone_coffer_e"
+    "texture": "rubinated_nether:block/shrine_stone/rubinated_shrine_stone_coffer",
+    "overlay": "rubinated_nether:block/shrine_stone/rubinated_shrine_stone_coffer_e"
   },
   "elements": [
     {

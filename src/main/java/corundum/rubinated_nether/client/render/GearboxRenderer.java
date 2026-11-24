@@ -35,19 +35,19 @@ import java.util.Map;
 @OnlyIn(Dist.CLIENT)
 public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> {
     public static final Map<TarnishStage, Material> BODY_TEXTURES = Map.of(
-            TarnishStage.UNAFFECTED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/bronze_gearbox")),
-            TarnishStage.DISCOLORED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/discolored_bronze_gearbox")),
-            TarnishStage.CORRODED,     new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/corroded_bronze_gearbox")),
-            TarnishStage.TARNISHED,    new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/tarnished_bronze_gearbox")),
-            TarnishStage.CRYSTALLIZED, new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/crystallized_bronze_gearbox"))
+            TarnishStage.UNAFFECTED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze/bronze_gearbox/bronze_gearbox")),
+            TarnishStage.DISCOLORED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze/bronze_gearbox/discolored_bronze_gearbox")),
+            TarnishStage.CORRODED,     new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze/bronze_gearbox/corroded_bronze_gearbox")),
+            TarnishStage.TARNISHED,    new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze/bronze_gearbox/tarnished_bronze_gearbox")),
+            TarnishStage.CRYSTALLIZED, new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze/bronze_gearbox/crystallized_bronze_gearbox"))
     );
 
     public static final Map<TarnishStage, Material> ANIM_BODY_TEXTURES = Map.of(
-            TarnishStage.UNAFFECTED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/bronze_gearbox_anim")),
-            TarnishStage.DISCOLORED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/discolored_bronze_gearbox_anim")),
-            TarnishStage.CORRODED,     new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/corroded_bronze_gearbox_anim")),
-            TarnishStage.TARNISHED,    new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/tarnished_bronze_gearbox_anim")),
-            TarnishStage.CRYSTALLIZED, new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze_gearbox/crystallized_bronze_gearbox_anim"))
+            TarnishStage.UNAFFECTED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze/bronze_gearbox/bronze_gearbox_anim")),
+            TarnishStage.DISCOLORED,   new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze/bronze_gearbox/discolored_bronze_gearbox_anim")),
+            TarnishStage.CORRODED,     new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze/bronze_gearbox/corroded_bronze_gearbox_anim")),
+            TarnishStage.TARNISHED,    new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze/bronze_gearbox/tarnished_bronze_gearbox_anim")),
+            TarnishStage.CRYSTALLIZED, new Material(InventoryMenu.BLOCK_ATLAS, RubinatedNether.id("block/bronze/bronze_gearbox/crystallized_bronze_gearbox_anim"))
     );
 
     public static final Map<TarnishStage, Material> KEY_TEXTURES = Map.of(

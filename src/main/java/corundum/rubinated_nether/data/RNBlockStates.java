@@ -174,32 +174,32 @@ public class RNBlockStates extends BlockStateProvider {
 		var petrifiedHangingSign = this.models().sign("petrified_hanging_sign", modLoc("block/stripped_petrified_snag"));
 		this.simpleBlock(RNBlocks.PETRIFIED_HANGING_SIGN.get(), petrifiedHangingSign);
 		this.simpleBlock(RNBlocks.PETRIFIED_WALL_HANGING_SIGN.get(), petrifiedHangingSign);
-		this.simpleBlock(RNBlocks.MORION_BLOCK.get());
+		this.subfolder("morion/", RNBlocks.MORION_BLOCK);
 		this.simpleBlock(
 				RNBlocks.CHISELED_MORION_BLOCK.get(),
-				this.models().cubeColumn("chiseled_morion_block", modLoc("block/chiseled_morion_block"), modLoc("block/chiseled_morion_block_top"))
+				this.models().cubeColumn("chiseled_morion_block", modLoc("block/morion/chiseled_morion_block"), modLoc("block/morion/chiseled_morion_block_top"))
 		);
-		this.axisBlock(RNBlocks.MORION_PILLAR.get(), modLoc("block/morion_pillar"), modLoc("block/morion_pillar_top"));
-		this.simpleBlock(RNBlocks.MORION_BRICKS.get());
-		this.simpleBlock(RNBlocks.SMOOTH_MORION.get());
-		this.slabBlock(RNBlocks.MORION_SLAB.get(), modLoc("block/morion_block"), modLoc("block/morion_block"));
-		this.stairsBlock(RNBlocks.MORION_STAIRS.get(), modLoc("block/morion_block"));
-		this.slabBlock(RNBlocks.SMOOTH_MORION_SLAB.get(), modLoc("block/smooth_morion"), modLoc("block/smooth_morion"));
-		this.stairsBlock(RNBlocks.SMOOTH_MORION_STAIRS.get(), modLoc("block/smooth_morion"));
-		this.simpleBlock(RNBlocks.QUARTZ_TILES.get());
-		this.simpleBlock(RNBlocks.MORION_TILES.get());
-		this.simpleBlock(RNBlocks.MOSAIC_QUARTZ.get());
-		this.simpleBlock(RNBlocks.MOSAIC_MORION.get());
+		this.axisBlock(RNBlocks.MORION_PILLAR.get(), modLoc("block/morion/morion_pillar"), modLoc("block/morion/morion_pillar_top"));
+		this.subfolder("morion/", RNBlocks.MORION_BRICKS);
+		this.subfolder("morion/", RNBlocks.SMOOTH_MORION);
+		this.slabBlock(RNBlocks.MORION_SLAB.get(), modLoc("block/morion_block"), modLoc("block/morion/morion_block"));
+		this.stairsBlock(RNBlocks.MORION_STAIRS.get(), modLoc("block/morion/morion_block"));
+		this.slabBlock(RNBlocks.SMOOTH_MORION_SLAB.get(), modLoc("block/smooth_morion"), modLoc("block/morion/smooth_morion"));
+		this.stairsBlock(RNBlocks.SMOOTH_MORION_STAIRS.get(), modLoc("block/morion/smooth_morion"));
+		this.subfolder("morion/", RNBlocks.QUARTZ_TILES);
+		this.subfolder("morion/", RNBlocks.MORION_TILES);
+		this.subfolder("morion/", RNBlocks.MOSAIC_QUARTZ);
+		this.subfolder("morion/", RNBlocks.MOSAIC_MORION);
 		this.flippableCube(RNBlocks.CHECKERED_TILES, "checkered_tiles");
 		this.flippableCube(RNBlocks.CHECKERED_MOSAIC, "checkered_mosaic");
-		this.slabBlock(RNBlocks.QUARTZ_TILES_SLAB.get(), modLoc("block/quartz_tiles"), modLoc("block/quartz_tiles"));
-		this.stairsBlock(RNBlocks.QUARTZ_TILES_STAIRS.get(), modLoc("block/quartz_tiles"));
-		this.slabBlock(RNBlocks.MORION_TILES_SLAB.get(), modLoc("block/morion_tiles"), modLoc("block/morion_tiles"));
-		this.stairsBlock(RNBlocks.MORION_TILES_STAIRS.get(), modLoc("block/morion_tiles"));
-		this.slabBlock(RNBlocks.MOSAIC_QUARTZ_SLAB.get(), modLoc("block/mosaic_quartz"), modLoc("block/mosaic_quartz"));
-		this.stairsBlock(RNBlocks.MOSAIC_QUARTZ_STAIRS.get(), modLoc("block/mosaic_quartz"));
-		this.slabBlock(RNBlocks.MOSAIC_MORION_SLAB.get(), modLoc("block/mosaic_morion"), modLoc("block/mosaic_morion"));
-		this.stairsBlock(RNBlocks.MOSAIC_MORION_STAIRS.get(), modLoc("block/mosaic_morion"));
+		this.slabBlock(RNBlocks.QUARTZ_TILES_SLAB.get(), modLoc("block/quartz_tiles"), modLoc("block/morion/quartz_tiles"));
+		this.stairsBlock(RNBlocks.QUARTZ_TILES_STAIRS.get(), modLoc("block/morion/quartz_tiles"));
+		this.slabBlock(RNBlocks.MORION_TILES_SLAB.get(), modLoc("block/morion_tiles"), modLoc("block/morion/morion_tiles"));
+		this.stairsBlock(RNBlocks.MORION_TILES_STAIRS.get(), modLoc("block/morion/morion_tiles"));
+		this.slabBlock(RNBlocks.MOSAIC_QUARTZ_SLAB.get(), modLoc("block/mosaic_quartz"), modLoc("block/morion/mosaic_quartz"));
+		this.stairsBlock(RNBlocks.MOSAIC_QUARTZ_STAIRS.get(), modLoc("block/morion/mosaic_quartz"));
+		this.slabBlock(RNBlocks.MOSAIC_MORION_SLAB.get(), modLoc("block/mosaic_morion"), modLoc("block/morion/mosaic_morion"));
+		this.stairsBlock(RNBlocks.MOSAIC_MORION_STAIRS.get(), modLoc("block/morion/mosaic_morion"));
 		this.flippableSlab(RNBlocks.CHECKERED_TILES_SLAB, "checkered_tiles", true);
 		this.flippableStairs(RNBlocks.CHECKERED_TILES_STAIRS, "checkered_tiles", true);
 		this.flippableSlab(RNBlocks.CHECKERED_MOSAIC_SLAB, "checkered_mosaic", false);
@@ -230,112 +230,112 @@ public class RNBlockStates extends BlockStateProvider {
 		this.frostedGlass(RNBlocks.FROSTED_GLASS.get(), "frosted_glass");
 		RNBlocks.STAINED_FROSTED_GLASS.forEach((color, block) -> this.frostedGlass(block.get(), color.getName() + "_frosted_glass"));
 
-		this.simpleBlock(RNBlocks.SHRINE_STONE.get());
+		this.subfolder("shrine_stone/", RNBlocks.SHRINE_STONE);
 		this.slabBlock(
 				RNBlocks.SHRINE_STONE_SLAB.get(),
 				modLoc("block/shrine_stone"),
-				modLoc("block/shrine_stone")
+				modLoc("block/shrine_stone/shrine_stone")
 		);
 		this.stairsBlock(
 				RNBlocks.SHRINE_STONE_STAIRS.get(),
-				modLoc("block/shrine_stone")
+				modLoc("block/shrine_stone/shrine_stone")
 		);
 		this.wallBlock(
 				RNBlocks.SHRINE_STONE_WALL.get(),
-				modLoc("block/shrine_stone")
+				modLoc("block/shrine_stone/shrine_stone")
 		);
 
-		this.simpleBlock(RNBlocks.COBBLED_SHRINE_STONE.get());
+		this.subfolder("shrine_stone/", RNBlocks.COBBLED_SHRINE_STONE);
 		this.slabBlock(
 				RNBlocks.COBBLED_SHRINE_STONE_SLAB.get(),
 				modLoc("block/cobbled_shrine_stone"),
-				modLoc("block/cobbled_shrine_stone")
+				modLoc("block/shrine_stone/cobbled_shrine_stone")
 		);
 		this.stairsBlock(
 				RNBlocks.COBBLED_SHRINE_STONE_STAIRS.get(),
-				modLoc("block/cobbled_shrine_stone")
+				modLoc("block/shrine_stone/cobbled_shrine_stone")
 		);
 		this.wallBlock(
 				RNBlocks.COBBLED_SHRINE_STONE_WALL.get(),
-				modLoc("block/cobbled_shrine_stone")
+				modLoc("block/shrine_stone/cobbled_shrine_stone")
 		);
 
-		this.simpleBlock(RNBlocks.POLISHED_SHRINE_STONE.get());
+		this.subfolder("shrine_stone/", RNBlocks.POLISHED_SHRINE_STONE);
 		this.slabBlock(
 				RNBlocks.POLISHED_SHRINE_STONE_SLAB.get(),
 				modLoc("block/polished_shrine_stone"),
-				modLoc("block/polished_shrine_stone")
+				modLoc("block/shrine_stone/polished_shrine_stone")
 		);
 		this.stairsBlock(
 				RNBlocks.POLISHED_SHRINE_STONE_STAIRS.get(),
-				modLoc("block/polished_shrine_stone")
+				modLoc("block/shrine_stone/polished_shrine_stone")
 		);
 		this.wallBlock(
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.get(),
-				modLoc("block/polished_shrine_stone")
+				modLoc("block/shrine_stone/polished_shrine_stone")
 		);
 
-		this.simpleBlock(RNBlocks.SHRINE_STONE_TILES.get());
+		this.subfolder("shrine_stone/", RNBlocks.SHRINE_STONE_TILES);
 		this.slabBlock(
 				RNBlocks.SHRINE_STONE_TILES_SLAB.get(),
 				modLoc("block/shrine_stone_tiles"),
-				modLoc("block/shrine_stone_tiles")
+				modLoc("block/shrine_stone/shrine_stone_tiles")
 		);
 		this.slabBlock(
 				RNBlocks.SHRINE_STONE_SLAB.get(),
 				modLoc("block/shrine_stone"),
-				modLoc("block/shrine_stone")
+				modLoc("block/shrine_stone/shrine_stone")
 		);
 		this.stairsBlock(
 				RNBlocks.SHRINE_STONE_TILES_STAIRS.get(),
-				modLoc("block/shrine_stone_tiles")
+				modLoc("block/shrine_stone/shrine_stone_tiles")
 		);
 		this.wallBlock(
 				RNBlocks.SHRINE_STONE_TILES_WALL.get(),
-				modLoc("block/shrine_stone_tiles")
+				modLoc("block/shrine_stone/shrine_stone_tiles")
 		);
 
-		this.simpleBlock(RNBlocks.SHRINE_STONE_RUBBLE.get());
+		this.subfolder("shrine_stone/", RNBlocks.SHRINE_STONE_RUBBLE);
 		this.slabBlock(
 				RNBlocks.SHRINE_STONE_RUBBLE_SLAB.get(),
 				modLoc("block/shrine_stone_rubble"),
-				modLoc("block/shrine_stone_rubble")
+				modLoc("block/shrine_stone/shrine_stone_rubble")
 		);
 		this.stairsBlock(
 				RNBlocks.SHRINE_STONE_RUBBLE_STAIRS.get(),
-				modLoc("block/shrine_stone_rubble")
+				modLoc("block/shrine_stone/shrine_stone_rubble")
 		);
 		this.wallBlock(
 				RNBlocks.SHRINE_STONE_RUBBLE_WALL.get(),
-				modLoc("block/shrine_stone_rubble")
+				modLoc("block/shrine_stone/shrine_stone_rubble")
 		);
 
 		this.getVariantBuilder(RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE.get()).forAllStates(state -> {
 			int dusted = state.getValue(BlockStateProperties.DUSTED);
 			String name = "suspicious_shrine_stone_rubble_" + dusted;
 			return ConfiguredModel.builder()
-					.modelFile(this.models().cubeAll(name, modLoc("block/" + name)))
+					.modelFile(this.models().cubeAll(name, modLoc("block/shrine_stone/" + name)))
 					.build();
 		});
 
-		this.axisBlock(RNBlocks.SHRINE_STONE_PILLAR.get());
+		this.axisBlock(RNBlocks.SHRINE_STONE_PILLAR.get(), modLoc("block/shrine_stone/shrine_stone_pillar_side"), modLoc("block/shrine_stone/shrine_stone_pillar_end"));
 
-		this.simpleBlock(RNBlocks.SHRINE_STONE_BRICKS.get());
+		this.subfolder("shrine_stone/", RNBlocks.SHRINE_STONE_BRICKS);
 		this.slabBlock(
 				RNBlocks.SHRINE_STONE_BRICKS_SLAB.get(),
 				modLoc("block/shrine_stone_bricks"),
-				modLoc("block/shrine_stone_bricks")
+				modLoc("block/shrine_stone/shrine_stone_bricks")
 		);
 		this.stairsBlock(
 				RNBlocks.SHRINE_STONE_BRICKS_STAIRS.get(),
-				modLoc("block/shrine_stone_bricks")
+				modLoc("block/shrine_stone/shrine_stone_bricks")
 		);
 		this.wallBlock(
 				RNBlocks.SHRINE_STONE_BRICKS_WALL.get(),
-				modLoc("block/shrine_stone_bricks")
+				modLoc("block/shrine_stone/shrine_stone_bricks")
 		);
 
-		this.simpleBlock(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get());
+		this.subfolder("shrine_stone/", RNBlocks.CHISELED_SHRINE_STONE_BRICKS);
 
 
 
@@ -1094,10 +1094,10 @@ public class RNBlockStates extends BlockStateProvider {
 		BlockModelBuilder model = models().getBuilder(modelName)
 				.parent(models().getExistingFile(mcLoc("block/block")))
 				.guiLight(BlockModel.GuiLight.SIDE)
-				.texture("0", modLoc("block/laser/mode/" + lensTexture))
-				.texture("2", modLoc("block/laser/material/" + frontTexture))
-				.texture("3", modLoc("block/laser/material/" + sideTexture))
-				.texture("particle", modLoc("block/laser/material/" + particleTexture))
+				.texture("0", modLoc("block/bronze/bronze_laser/mode/" + lensTexture))
+				.texture("2", modLoc("block/bronze/bronze_laser/material/" + frontTexture))
+				.texture("3", modLoc("block/bronze/bronze_laser/material/" + sideTexture))
+				.texture("particle", modLoc("block/bronze/bronze_laser/material/" + particleTexture))
 				.renderType("cutout")
 				// Element 1: Base
 				.element()
@@ -1142,7 +1142,7 @@ public class RNBlockStates extends BlockStateProvider {
 
 		// Element 5: emissive lens overlay, only while observing (same box as the lens, full-bright faces)
 		if (lensGlowTexture != null) {
-			model.texture("1", modLoc("block/laser/mode/" + lensGlowTexture));
+			model.texture("1", modLoc("block/bronze/bronze_laser/mode/" + lensGlowTexture));
 			model.element()
 					.from(3, 6, 3).to(13, 16, 13)
 					.rotation().angle(0).axis(Direction.Axis.Y).origin(8, 8, 8).end()
@@ -1372,9 +1372,9 @@ public class RNBlockStates extends BlockStateProvider {
 	private void frostedGlass(Block block, String name) {
 		this.models()
 				.withExistingParent(name, mcLoc("block/block"))
-				.texture("particle", modLoc("block/" + name))
-				.texture("glass", modLoc("block/" + name))
-				.texture("frost", modLoc("block/" + name + "_frosted"))
+				.texture("particle", modLoc("block/frosted_glass/" + name))
+				.texture("glass", modLoc("block/frosted_glass/" + name))
+				.texture("frost", modLoc("block/frosted_glass/" + name + "_frosted"))
 				.renderType(mcLoc("translucent"))
 				.element()
 				.from(0, 0, 0)
@@ -1383,8 +1383,8 @@ public class RNBlockStates extends BlockStateProvider {
 						.texture(direction == Direction.NORTH ? "#frost" : "#glass")
 						.cullface(direction))
 				.end();
-		ModelFile glassFace = this.faceModel(name + "_face_glass", "block/" + name);
-		ModelFile frostFace = this.faceModel(name + "_face_frost", "block/" + name + "_frosted");
+		ModelFile glassFace = this.faceModel(name + "_face_glass", "block/frosted_glass/" + name);
+		ModelFile frostFace = this.faceModel(name + "_face_frost", "block/frosted_glass/" + name + "_frosted");
 		MultiPartBlockStateBuilder builder = this.getMultipartBuilder(block);
 		for (Direction direction : Direction.values()) {
 			BooleanProperty property = FrostedGlassBlock.property(direction);
@@ -1432,7 +1432,7 @@ public class RNBlockStates extends BlockStateProvider {
 	}
 
 	private ResourceLocation flippableTexture(String base, boolean flipped) {
-		return modLoc("block/" + base + flippedSuffix(flipped));
+		return modLoc("block/morion/" + base + flippedSuffix(flipped));
 	}
 
 	private static boolean checkerFaceSwapped(Direction face, SlabType type, boolean coarse) {

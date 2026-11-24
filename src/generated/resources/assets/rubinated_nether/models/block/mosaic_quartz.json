@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "rubinated_nether:block/mosaic_quartz"
+    "all": "rubinated_nether:block/morion/mosaic_quartz"
   }
 }

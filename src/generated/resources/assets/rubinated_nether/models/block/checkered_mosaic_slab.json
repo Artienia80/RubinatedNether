@@ -40,12 +40,12 @@
     }
   ],
   "textures": {
-    "down": "rubinated_nether:block/checkered_mosaic",
-    "east": "rubinated_nether:block/checkered_mosaic",
-    "north": "rubinated_nether:block/checkered_mosaic_flipped",
-    "particle": "rubinated_nether:block/checkered_mosaic_flipped",
-    "south": "rubinated_nether:block/checkered_mosaic_flipped",
-    "up": "rubinated_nether:block/checkered_mosaic",
-    "west": "rubinated_nether:block/checkered_mosaic"
+    "down": "rubinated_nether:block/morion/checkered_mosaic",
+    "east": "rubinated_nether:block/morion/checkered_mosaic",
+    "north": "rubinated_nether:block/morion/checkered_mosaic_flipped",
+    "particle": "rubinated_nether:block/morion/checkered_mosaic_flipped",
+    "south": "rubinated_nether:block/morion/checkered_mosaic_flipped",
+    "up": "rubinated_nether:block/morion/checkered_mosaic",
+    "west": "rubinated_nether:block/morion/checkered_mosaic"
   }
 }

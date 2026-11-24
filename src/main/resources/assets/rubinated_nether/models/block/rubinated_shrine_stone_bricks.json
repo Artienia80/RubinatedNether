@@ -2,9 +2,9 @@
   "gui_light": "side",
   "render_type": "minecraft:cutout",
   "textures": {
-    "all": "rubinated_nether:block/rubinated_shrine_stone_bricks",
-    "overlay": "rubinated_nether:block/rubinated_shrine_stone_bricks_e",
-    "particle": "rubinated_nether:block/rubinated_shrine_stone_bricks"
+    "all": "rubinated_nether:block/shrine_stone/rubinated_shrine_stone_bricks",
+    "overlay": "rubinated_nether:block/shrine_stone/rubinated_shrine_stone_bricks_e",
+    "particle": "rubinated_nether:block/shrine_stone/rubinated_shrine_stone_bricks"
   },
   "elements": [
     {

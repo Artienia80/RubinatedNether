@@ -21,7 +21,7 @@
   ],
   "render_type": "minecraft:translucent",
   "textures": {
-    "all": "rubinated_nether:block/lime_frosted_glass",
-    "particle": "rubinated_nether:block/lime_frosted_glass"
+    "all": "rubinated_nether:block/frosted_glass/lime_frosted_glass",
+    "particle": "rubinated_nether:block/frosted_glass/lime_frosted_glass"
   }
 }

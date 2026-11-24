@@ -102,8 +102,8 @@
     }
   ],
   "textures": {
-    "flipped": "rubinated_nether:block/checkered_tiles_flipped",
-    "normal": "rubinated_nether:block/checkered_tiles",
-    "particle": "rubinated_nether:block/checkered_tiles"
+    "flipped": "rubinated_nether:block/morion/checkered_tiles_flipped",
+    "normal": "rubinated_nether:block/morion/checkered_tiles",
+    "particle": "rubinated_nether:block/morion/checkered_tiles"
   }
 }

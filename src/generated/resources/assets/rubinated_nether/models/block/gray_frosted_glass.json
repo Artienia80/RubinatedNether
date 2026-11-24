@@ -42,8 +42,8 @@
   ],
   "render_type": "minecraft:translucent",
   "textures": {
-    "frost": "rubinated_nether:block/gray_frosted_glass_frosted",
-    "glass": "rubinated_nether:block/gray_frosted_glass",
-    "particle": "rubinated_nether:block/gray_frosted_glass"
+    "frost": "rubinated_nether:block/frosted_glass/gray_frosted_glass_frosted",
+    "glass": "rubinated_nether:block/frosted_glass/gray_frosted_glass",
+    "particle": "rubinated_nether:block/frosted_glass/gray_frosted_glass"
   }
 }

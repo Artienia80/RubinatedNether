@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:block/cube",
   "textures": {
-    "down": "rubinated_nether:block/checkered_tiles",
-    "east": "rubinated_nether:block/checkered_tiles",
-    "north": "rubinated_nether:block/checkered_tiles_flipped",
-    "particle": "rubinated_nether:block/checkered_tiles_flipped",
-    "south": "rubinated_nether:block/checkered_tiles_flipped",
-    "up": "rubinated_nether:block/checkered_tiles",
-    "west": "rubinated_nether:block/checkered_tiles"
+    "down": "rubinated_nether:block/morion/checkered_tiles",
+    "east": "rubinated_nether:block/morion/checkered_tiles",
+    "north": "rubinated_nether:block/morion/checkered_tiles_flipped",
+    "particle": "rubinated_nether:block/morion/checkered_tiles_flipped",
+    "south": "rubinated_nether:block/morion/checkered_tiles_flipped",
+    "up": "rubinated_nether:block/morion/checkered_tiles",
+    "west": "rubinated_nether:block/morion/checkered_tiles"
   }
 }

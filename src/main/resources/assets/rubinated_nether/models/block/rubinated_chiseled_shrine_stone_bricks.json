@@ -2,11 +2,11 @@
   "gui_light": "side",
   "render_type": "minecraft:cutout",
   "textures": {
-    "end": "rubinated_nether:block/rubinated_chiseled_shrine_stone_bricks_end",
-    "side": "rubinated_nether:block/rubinated_chiseled_shrine_stone_bricks_side",
-    "overlay_end": "rubinated_nether:block/rubinated_chiseled_shrine_stone_bricks_end_e",
-    "overlay_side": "rubinated_nether:block/rubinated_chiseled_shrine_stone_bricks_side_e",
-    "particle": "rubinated_nether:block/rubinated_chiseled_shrine_stone_bricks_side"
+    "end": "rubinated_nether:block/shrine_stone/rubinated_chiseled_shrine_stone_bricks_end",
+    "side": "rubinated_nether:block/shrine_stone/rubinated_chiseled_shrine_stone_bricks_side",
+    "overlay_end": "rubinated_nether:block/shrine_stone/rubinated_chiseled_shrine_stone_bricks_end_e",
+    "overlay_side": "rubinated_nether:block/shrine_stone/rubinated_chiseled_shrine_stone_bricks_side_e",
+    "particle": "rubinated_nether:block/shrine_stone/rubinated_chiseled_shrine_stone_bricks_side"
   },
   "elements": [
     {

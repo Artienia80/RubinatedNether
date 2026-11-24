@@ -1,6 +1,6 @@
 {
   "textures": {
-    "texture": "rubinated_nether:block/bronze_gearbox/bronze_gearbox",
+    "texture": "rubinated_nether:block/bronze/bronze_gearbox/bronze_gearbox",
     "key": "rubinated_nether:entity/bronze/bronze"
   },
   "elements": [

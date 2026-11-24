@@ -113,6 +113,6 @@
   ],
   "render_type": "minecraft:cutout",
   "textures": {
-    "key": "rubinated_nether:block/bronze_strongbox/corroded_bronze_strongbox"
+    "key": "rubinated_nether:block/bronze/bronze_strongbox/corroded_bronze_strongbox"
   }
 }
