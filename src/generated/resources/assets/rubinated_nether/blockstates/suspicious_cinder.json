@@ -1,16 +1,300 @@
 {
   "variants": {
-    "dusted=0": {
-      "model": "rubinated_nether:block/suspicious_cinder_0"
-    },
-    "dusted=1": {
-      "model": "rubinated_nether:block/suspicious_cinder_1"
-    },
-    "dusted=2": {
-      "model": "rubinated_nether:block/suspicious_cinder_2"
-    },
-    "dusted=3": {
-      "model": "rubinated_nether:block/suspicious_cinder_3"
-    }
+    "dusted=0": [
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0"
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "y": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "x": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "x": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "x": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_0",
+        "x": 270,
+        "y": 270
+      }
+    ],
+    "dusted=1": [
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1"
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "y": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "x": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "x": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "x": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_1",
+        "x": 270,
+        "y": 270
+      }
+    ],
+    "dusted=2": [
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2"
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "y": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "x": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "x": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "x": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_2",
+        "x": 270,
+        "y": 270
+      }
+    ],
+    "dusted=3": [
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3"
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "y": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "x": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "x": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "x": 270
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "rubinated_nether:block/suspicious_cinder_3",
+        "x": 270,
+        "y": 270
+      }
+    ]
   }
 }

@@ -118,13 +118,13 @@ public class RNBlockStates extends BlockStateProvider {
 						.withExistingParent("dry_ice", this.modLoc("block/dry_ice_base"))
 		);
 		this.simpleBlock(RNBlocks.PUMICE.get());
-		this.simpleBlock(RNBlocks.CINDER.get());
+		this.getVariantBuilder(RNBlocks.CINDER.get()).partialState().setModels(
+				this.randomRotations(this.cubeAll(RNBlocks.CINDER.get()))
+		);
 		this.getVariantBuilder(RNBlocks.SUSPICIOUS_CINDER.get()).forAllStates(state -> {
 			int dusted = state.getValue(BlockStateProperties.DUSTED);
 			String name = "suspicious_cinder_" + dusted;
-			return ConfiguredModel.builder()
-					.modelFile(this.models().cubeAll(name, modLoc("block/" + name)))
-					.build();
+			return this.randomRotations(this.models().cubeAll(name, modLoc("block/" + name)));
 		});
 		this.simpleBlock(RNBlocks.SOUL_STARVED_SAND.get());
 		this.logBlock(RNBlocks.PETRIFIED_SNAG.get());
@@ -1580,5 +1580,15 @@ public class RNBlockStates extends BlockStateProvider {
 				},
 				StairBlock.WATERLOGGED
 		);
+	}
+
+	private ConfiguredModel[] randomRotations(ModelFile model) {
+		ConfiguredModel[] models = new ConfiguredModel[16];
+		for (int x = 0; x < 4; x++) {
+			for (int y = 0; y < 4; y++) {
+				models[x * 4 + y] = new ConfiguredModel(model, x * 90, y * 90, false);
+			}
+		}
+		return models;
 	}
 }
