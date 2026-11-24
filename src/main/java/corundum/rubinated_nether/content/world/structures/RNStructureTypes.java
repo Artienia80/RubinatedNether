@@ -10,7 +10,5 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class RNStructureTypes {
     public static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES = DeferredRegister.create(BuiltInRegistries.STRUCTURE_TYPE, RubinatedNether.MODID);
 
-    //public static final DeferredHolder<StructureType<?>, StructureType<SacredShrineStructure>> SACRED_SHRINE = STRUCTURE_TYPES.register("sacred_shrine", () -> () -> SacredShrineStructure.CODEC);
-
     public static final DeferredHolder<StructureType<?>, StructureType<PetrifiedTreeStructure>> PETRIFIED_TREE = STRUCTURE_TYPES.register("petrified_tree", () -> () -> PetrifiedTreeStructure.CODEC);
 }
