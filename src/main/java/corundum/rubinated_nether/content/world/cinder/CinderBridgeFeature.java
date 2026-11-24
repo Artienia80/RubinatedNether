@@ -16,7 +16,7 @@ import java.util.Set;
 public class CinderBridgeFeature extends Feature<NoneFeatureConfiguration> {
 	private static final int MIN_GAP = 8;
 	private static final int MAX_GAP = 25;
-	private static final int MAX_HEIGHT_DIFFERENCE = 4;
+	private static final int MAX_HEIGHT_DIFFERENCE = 1;
 	private static final int MAX_HALF_WIDTH = 6;
 
 	public CinderBridgeFeature(Codec<NoneFeatureConfiguration> codec) {
@@ -49,14 +49,29 @@ public class CinderBridgeFeature extends Feature<NoneFeatureConfiguration> {
 		}
 		BlockPos wallA = origin.relative(back, a);
 		BlockPos wallB = origin.relative(along, b);
-		int yA = pickLip(level, random, wallA, along, origin.getY());
-		if (yA == Integer.MIN_VALUE) {
+		List<Integer> lipsA = lips(level, wallA, along, origin.getY());
+		List<Integer> lipsB = lips(level, wallB, back, origin.getY());
+		int bestDifference = Integer.MAX_VALUE;
+		List<int[]> pairs = new ArrayList<>();
+		for (int candidateA : lipsA) {
+			for (int candidateB : lipsB) {
+				int difference = Math.abs(candidateA - candidateB);
+				if (difference > MAX_HEIGHT_DIFFERENCE || difference > bestDifference) {
+					continue;
+				}
+				if (difference < bestDifference) {
+					bestDifference = difference;
+					pairs.clear();
+				}
+				pairs.add(new int[]{candidateA, candidateB});
+			}
+		}
+		if (pairs.isEmpty()) {
 			return false;
 		}
-		int yB = pickLip(level, random, wallB, back, origin.getY());
-		if (yB == Integer.MIN_VALUE || Math.abs(yA - yB) > MAX_HEIGHT_DIFFERENCE) {
-			return false;
-		}
+		int[] chosen = pairs.get(random.nextInt(pairs.size()));
+		int yA = chosen[0];
+		int yB = chosen[1];
 
 		int[] heights = buildHeights(random, gap, yA, yB);
 		if (heights == null) {
@@ -93,12 +108,7 @@ public class CinderBridgeFeature extends Feature<NoneFeatureConfiguration> {
 				if (edge && fromEnd > 0 && random.nextFloat() < 0.3F) {
 					continue;
 				}
-				int h = heights[t];
-				if (edge && random.nextFloat() < 0.35F) {
-					h--;
-				}
-				int below = fromEnd <= 3 && !edge ? 1 : 0;
-				grid.set(t, u, h, below);
+				grid.set(t, u, heights[t], 0);
 			}
 		}
 
@@ -151,23 +161,24 @@ public class CinderBridgeFeature extends Feature<NoneFeatureConfiguration> {
 		);
 	}
 
-	private static int pickLip(WorldGenLevel level, RandomSource random, BlockPos wall, Direction outward, int centerY) {
+	private static List<Integer> lips(WorldGenLevel level, BlockPos wall, Direction outward, int centerY) {
 		List<Integer> lips = new ArrayList<>();
 		for (int dy = 4; dy >= -4; dy--) {
 			BlockPos solid = new BlockPos(wall.getX(), centerY + dy, wall.getZ());
 			BlockPos outside = solid.relative(outward);
 			if (CinderFormations.isTerrain(level, solid)
+					&& !CinderFormations.isTerrain(level, solid.above())
 					&& CinderFormations.isAir(level, outside)
 					&& CinderFormations.isAir(level, outside.above())
 					&& CinderFormations.isAir(level, outside.above(2))) {
 				lips.add(solid.getY());
 			}
 		}
-		return lips.isEmpty() ? Integer.MIN_VALUE : lips.get(random.nextInt(lips.size()));
+		return lips;
 	}
 
 	private static int[] buildHeights(RandomSource random, int gap, int yA, int yB) {
-		double sagMax = random.nextInt(3) * 0.5;
+		double sagMax = 0.0;
 		int[] heights = new int[gap];
 		for (int t = 0; t < gap; t++) {
 			double progress = (double) t / (gap - 1);
