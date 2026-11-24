@@ -149,7 +149,7 @@ public class CinderBridgeFeature extends Feature<NoneFeatureConfiguration> {
 		if (!reachesEnd) {
 			return false;
 		}
-		CinderFormations.place(level, connected);
+		CinderFormations.place(level, connected, random);
 		return true;
 	}
 

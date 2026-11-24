@@ -240,6 +240,10 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE.getId().getPath(),
 				modLoc("block/suspicious_shrine_stone_rubble_0")
 		);
+		withExistingParent(
+				RNBlocks.SUSPICIOUS_CINDER.getId().getPath(),
+				modLoc("block/suspicious_cinder_0")
+		);
 
 		paneItem(
 				RNBlocks.MOLTEN_RUBY_GLASS_PANE,

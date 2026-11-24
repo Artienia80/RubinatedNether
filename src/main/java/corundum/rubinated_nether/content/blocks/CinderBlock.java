@@ -13,6 +13,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -44,39 +45,60 @@ public class CinderBlock extends FallingBlock {
 
 	@Override
 	public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-		if (entity instanceof LivingEntity && entity.isSprinting()) {
-			trigger(level, pos);
-		}
+		onStep(level, pos, entity);
 		super.stepOn(level, pos, state, entity);
 	}
 
 	@Override
 	public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
-		if (entity instanceof LivingEntity && fallDistance >= FALL_TRIGGER_DISTANCE) {
-			trigger(level, pos);
-		}
+		onFall(level, pos, entity, fallDistance);
 		super.fallOn(level, state, pos, entity, fallDistance);
 	}
 
 	public void trigger(Level level, BlockPos pos) {
+		triggerAt(level, pos);
+	}
+
+	public static void onStep(Level level, BlockPos pos, Entity entity) {
+		if (entity instanceof LivingEntity && entity.isSprinting()) {
+			triggerAt(level, pos);
+		}
+	}
+
+	public static void onFall(Level level, BlockPos pos, Entity entity, float fallDistance) {
+		if (entity instanceof LivingEntity && fallDistance >= FALL_TRIGGER_DISTANCE) {
+			triggerAt(level, pos);
+		}
+	}
+
+	public static void triggerAt(Level level, BlockPos pos) {
 		if (level.isClientSide()) {
 			return;
 		}
-		if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
-			level.scheduleTick(pos, this, TRIGGER_DELAY);
+		Block block = level.getBlockState(pos).getBlock();
+		if (!level.getBlockTicks().hasScheduledTick(pos, block)) {
+			level.scheduleTick(pos, block, TRIGGER_DELAY);
 		}
+	}
+
+	public static boolean isCinder(BlockState state) {
+		return state.getBlock() instanceof CinderBlock || state.getBlock() instanceof SuspiciousCinderBlock;
 	}
 
 	@Override
 	protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		collapse(level, pos, state);
+	}
+
+	public static void collapse(ServerLevel level, BlockPos pos, BlockState state) {
 		if (pos.getY() < level.getMinBuildHeight() || !shouldFall(level, pos)) {
 			return;
 		}
 		FallingBlockEntity.fall(level, pos, state);
 		for (BlockPos offset : CASCADE_OFFSETS) {
 			BlockPos neighborPos = pos.offset(offset);
-			if (level.getBlockState(neighborPos).getBlock() instanceof CinderBlock neighbor
-					&& !level.getBlockTicks().hasScheduledTick(neighborPos, neighbor)) {
+			Block neighbor = level.getBlockState(neighborPos).getBlock();
+			if (isCinder(level.getBlockState(neighborPos)) && !level.getBlockTicks().hasScheduledTick(neighborPos, neighbor)) {
 				level.scheduleTick(neighborPos, neighbor, CASCADE_DELAY);
 			}
 		}
@@ -134,7 +156,7 @@ public class CinderBlock extends FallingBlock {
 			if (isFree(below)) {
 				return true;
 			}
-			if (!(below.getBlock() instanceof CinderBlock)) {
+			if (!isCinder(below)) {
 				return false;
 			}
 		}

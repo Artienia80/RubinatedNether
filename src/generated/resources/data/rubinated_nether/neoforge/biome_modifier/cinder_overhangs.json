@@ -5,8 +5,6 @@
     "minecraft:crimson_forest",
     "minecraft:warped_forest"
   ],
-  "features": [
-    "rubinated_nether:cinder_overhang"
-  ],
+  "features": "rubinated_nether:cinder_overhang",
   "step": "top_layer_modification"
 }

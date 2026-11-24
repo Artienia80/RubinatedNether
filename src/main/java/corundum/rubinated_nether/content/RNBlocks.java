@@ -181,6 +181,21 @@ public class RNBlocks {
 			() -> new CinderBlock(Block.Properties.ofFullCopy(Blocks.GRAVEL).mapColor(MapColor.NETHER))
 	);
 
+	public static final ResourceKey<LootTable> SUSPICIOUS_CINDER_LOOT = ResourceKey.create(
+			Registries.LOOT_TABLE,
+			RubinatedNether.id("archaeology/suspicious_cinder")
+	);
+
+	public static final DeferredBlock<SuspiciousCinderBlock> SUSPICIOUS_CINDER = registerBlockAndItem(
+			"suspicious_cinder",
+			() -> new SuspiciousCinderBlock(
+					RNBlocks.CINDER.get(),
+					SoundEvents.BRUSH_GRAVEL,
+					SoundEvents.BRUSH_GRAVEL_COMPLETED,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.SUSPICIOUS_GRAVEL).mapColor(MapColor.NETHER)
+			)
+	);
+
 	public static final DeferredBlock<SoulStarvedSandBlock> SOUL_STARVED_SAND = registerBlockAndItem(
 			"soul_starved_sand",
 			() -> new SoulStarvedSandBlock(

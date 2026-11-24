@@ -178,7 +178,7 @@ public class CinderOverhangFeature extends Feature<NoneFeatureConfiguration> {
 			return false;
 		}
 
-		CinderFormations.place(level, connected);
+		CinderFormations.place(level, connected, random);
 		return true;
 	}
 

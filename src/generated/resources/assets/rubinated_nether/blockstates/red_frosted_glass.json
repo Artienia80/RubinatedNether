@@ -2,102 +2,26 @@
   "multipart": [
     {
       "apply": {
-        "model": "rubinated_nether:block/red_frosted_glass_face_glass"
-      },
-      "when": {
-        "north": "false",
-        "powered": "false"
-      }
-    },
-    {
-      "apply": {
-        "model": "rubinated_nether:block/red_frosted_glass_face_frost"
-      },
-      "when": {
-        "OR": [
-          {
-            "north": "true"
-          },
-          {
-            "powered": "true"
-          }
-        ]
-      }
-    },
-    {
-      "apply": {
         "model": "rubinated_nether:block/red_frosted_glass_face_glass",
-        "y": 90
+        "x": 90
       },
       "when": {
-        "east": "false",
+        "down": "false",
         "powered": "false"
       }
     },
     {
       "apply": {
         "model": "rubinated_nether:block/red_frosted_glass_face_frost",
-        "y": 90
+        "x": 90
       },
       "when": {
         "OR": [
           {
-            "east": "true"
+            "powered": "true"
           },
           {
-            "powered": "true"
-          }
-        ]
-      }
-    },
-    {
-      "apply": {
-        "model": "rubinated_nether:block/red_frosted_glass_face_glass",
-        "y": 180
-      },
-      "when": {
-        "powered": "false",
-        "south": "false"
-      }
-    },
-    {
-      "apply": {
-        "model": "rubinated_nether:block/red_frosted_glass_face_frost",
-        "y": 180
-      },
-      "when": {
-        "OR": [
-          {
-            "south": "true"
-          },
-          {
-            "powered": "true"
-          }
-        ]
-      }
-    },
-    {
-      "apply": {
-        "model": "rubinated_nether:block/red_frosted_glass_face_glass",
-        "y": 270
-      },
-      "when": {
-        "powered": "false",
-        "west": "false"
-      }
-    },
-    {
-      "apply": {
-        "model": "rubinated_nether:block/red_frosted_glass_face_frost",
-        "y": 270
-      },
-      "when": {
-        "OR": [
-          {
-            "west": "true"
-          },
-          {
-            "powered": "true"
+            "down": "true"
           }
         ]
       }
@@ -120,10 +44,34 @@
       "when": {
         "OR": [
           {
-            "up": "true"
+            "powered": "true"
           },
           {
+            "up": "true"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/red_frosted_glass_face_glass"
+      },
+      "when": {
+        "north": "false",
+        "powered": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/red_frosted_glass_face_frost"
+      },
+      "when": {
+        "OR": [
+          {
             "powered": "true"
+          },
+          {
+            "north": "true"
           }
         ]
       }
@@ -131,25 +79,77 @@
     {
       "apply": {
         "model": "rubinated_nether:block/red_frosted_glass_face_glass",
-        "x": 90
+        "y": 180
       },
       "when": {
-        "down": "false",
+        "powered": "false",
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/red_frosted_glass_face_frost",
+        "y": 180
+      },
+      "when": {
+        "OR": [
+          {
+            "powered": "true"
+          },
+          {
+            "south": "true"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/red_frosted_glass_face_glass",
+        "y": 270
+      },
+      "when": {
+        "powered": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/red_frosted_glass_face_frost",
+        "y": 270
+      },
+      "when": {
+        "OR": [
+          {
+            "powered": "true"
+          },
+          {
+            "west": "true"
+          }
+        ]
+      }
+    },
+    {
+      "apply": {
+        "model": "rubinated_nether:block/red_frosted_glass_face_glass",
+        "y": 90
+      },
+      "when": {
+        "east": "false",
         "powered": "false"
       }
     },
     {
       "apply": {
         "model": "rubinated_nether:block/red_frosted_glass_face_frost",
-        "x": 90
+        "y": 90
       },
       "when": {
         "OR": [
           {
-            "down": "true"
+            "powered": "true"
           },
           {
-            "powered": "true"
+            "east": "true"
           }
         ]
       }

@@ -5,8 +5,6 @@
     "minecraft:soul_sand_valley",
     "minecraft:basalt_deltas"
   ],
-  "features": [
-    "rubinated_nether:cinder_bridge"
-  ],
+  "features": "rubinated_nether:cinder_bridge",
   "step": "top_layer_modification"
 }

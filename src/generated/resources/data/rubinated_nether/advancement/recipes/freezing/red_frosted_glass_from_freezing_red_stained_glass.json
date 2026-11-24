@@ -1,12 +1,6 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "rubinated_nether:red_frosted_glass_from_freezing_red_stained_glass"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
     "has_red_stained_glass": {
       "conditions": {
         "items": [
@@ -16,6 +10,12 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "rubinated_nether:red_frosted_glass_from_freezing_red_stained_glass"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [

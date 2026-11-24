@@ -4,17 +4,22 @@ import corundum.rubinated_nether.content.RNBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 final class CinderFormations {
 	static final int MAX_REACH = 14;
+	private static final float SUSPICIOUS_CHANCE = 1F;
 
 	private CinderFormations() {
 	}
@@ -80,6 +85,26 @@ final class CinderFormations {
 			}
 		}
 		return seen;
+	}
+
+	static void place(WorldGenLevel level, Collection<BlockPos> blocks, RandomSource random) {
+		place(level, blocks);
+		if (blocks.isEmpty() || random.nextFloat() >= SUSPICIOUS_CHANCE) {
+			return;
+		}
+		List<BlockPos> exposed = new ArrayList<>();
+		for (BlockPos pos : blocks) {
+			if (isAir(level, pos.above())) {
+				exposed.add(pos);
+			}
+		}
+		if (exposed.isEmpty()) {
+			return;
+		}
+		BlockPos target = exposed.get(random.nextInt(exposed.size()));
+		level.setBlock(target, RNBlocks.SUSPICIOUS_CINDER.get().defaultBlockState(), 2);
+		level.getBlockEntity(target, BlockEntityType.BRUSHABLE_BLOCK)
+				.ifPresent(entity -> entity.setLootTable(RNBlocks.SUSPICIOUS_CINDER_LOOT, target.asLong()));
 	}
 
 	static void place(WorldGenLevel level, Collection<BlockPos> blocks) {

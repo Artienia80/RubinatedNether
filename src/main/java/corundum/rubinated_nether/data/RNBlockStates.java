@@ -119,6 +119,13 @@ public class RNBlockStates extends BlockStateProvider {
 		);
 		this.simpleBlock(RNBlocks.PUMICE.get());
 		this.simpleBlock(RNBlocks.CINDER.get());
+		this.getVariantBuilder(RNBlocks.SUSPICIOUS_CINDER.get()).forAllStates(state -> {
+			int dusted = state.getValue(BlockStateProperties.DUSTED);
+			String name = "suspicious_cinder_" + dusted;
+			return ConfiguredModel.builder()
+					.modelFile(this.models().cubeAll(name, modLoc("block/" + name)))
+					.build();
+		});
 		this.simpleBlock(RNBlocks.SOUL_STARVED_SAND.get());
 		this.logBlock(RNBlocks.PETRIFIED_SNAG.get());
 		this.logBlock(RNBlocks.STRIPPED_PETRIFIED_SNAG.get());

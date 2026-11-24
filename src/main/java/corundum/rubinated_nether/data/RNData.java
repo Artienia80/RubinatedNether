@@ -56,7 +56,7 @@ public class RNData {
 				List.of(
 						new SubProviderEntry(RNBlockLoot::new, LootContextParamSets.BLOCK),
 						new SubProviderEntry(RNStrongboxLoot::new, LootContextParamSets.CHEST),
-						new SubProviderEntry(registries -> new RNArchaeologyLoot(), LootContextParamSets.ARCHAEOLOGY)
+						new SubProviderEntry(RNArchaeologyLoot::new, LootContextParamSets.ARCHAEOLOGY)
 				), datapackProvider.getRegistryProvider()));
 	}
 }
