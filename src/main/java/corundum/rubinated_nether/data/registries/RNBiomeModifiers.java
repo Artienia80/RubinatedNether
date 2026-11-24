@@ -20,6 +20,7 @@ public class RNBiomeModifiers {
 
 	public static final ResourceKey<BiomeModifier> MOLTEN_RUBY_ORE = createKey("molten_ruby_ore");
 	public static final ResourceKey<BiomeModifier> CINDER_FORMATIONS = createKey("cinder_formations");
+	public static final ResourceKey<BiomeModifier> CINDER_OVERHANGS = createKey("cinder_overhangs");
 
 	private static ResourceKey<BiomeModifier> createKey(String key) {
 		return ResourceKey.create(
@@ -50,8 +51,22 @@ public class RNBiomeModifiers {
 								biomes.getOrThrow(Biomes.BASALT_DELTAS)
 						),
 						HolderSet.direct(
-								placedFeatures.getOrThrow(RNPlacedFeatures.CINDER_OVERHANG),
 								placedFeatures.getOrThrow(RNPlacedFeatures.CINDER_BRIDGE)
+						),
+						GenerationStep.Decoration.TOP_LAYER_MODIFICATION
+				)
+		);
+
+		context.register(
+				CINDER_OVERHANGS,
+				new AddFeaturesBiomeModifier(
+						HolderSet.direct(
+								biomes.getOrThrow(Biomes.NETHER_WASTES),
+								biomes.getOrThrow(Biomes.CRIMSON_FOREST),
+								biomes.getOrThrow(Biomes.WARPED_FOREST)
+						),
+						HolderSet.direct(
+								placedFeatures.getOrThrow(RNPlacedFeatures.CINDER_OVERHANG)
 						),
 						GenerationStep.Decoration.TOP_LAYER_MODIFICATION
 				)

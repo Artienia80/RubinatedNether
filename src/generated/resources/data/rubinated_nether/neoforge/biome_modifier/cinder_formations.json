@@ -6,7 +6,6 @@
     "minecraft:basalt_deltas"
   ],
   "features": [
-    "rubinated_nether:cinder_overhang",
     "rubinated_nether:cinder_bridge"
   ],
   "step": "top_layer_modification"
