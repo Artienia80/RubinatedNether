@@ -1,0 +1,407 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "input_predicate": {
+            "predicate_type": "minecraft:random_blockstate_match",
+            "block_state": {
+              "Name": "rubinated_nether:tarnished_bronze_gearbox",
+              "Properties": {
+                "broken": "false",
+                "cooling_down": "false",
+                "waterlogged": "false",
+                "natural": "true",
+                "powered": "false",
+                "level": "0",
+                "lit": "false",
+                "waxed": "true",
+                "facing": "south"
+              }
+            },
+            "probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "rubinated_nether:crystallized_bronze_gearbox",
+            "Properties": {
+              "broken": "false",
+              "cooling_down": "false",
+              "waterlogged": "false",
+              "natural": "true",
+              "powered": "false",
+              "level": "0",
+              "lit": "false",
+              "waxed": "true",
+              "facing": "south"
+            }
+          },
+          "block_entity_modifier": {
+            "type": "minecraft:passthrough"
+          }
+        },
+        {
+          "input_predicate": {
+            "predicate_type": "minecraft:random_blockstate_match",
+            "block_state": {
+              "Name": "rubinated_nether:tarnished_bronze_gearbox",
+              "Properties": {
+                "broken": "false",
+                "cooling_down": "false",
+                "waterlogged": "false",
+                "natural": "true",
+                "powered": "false",
+                "level": "0",
+                "lit": "false",
+                "waxed": "true",
+                "facing": "south"
+              }
+            },
+            "probability": 0.111111
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "rubinated_nether:tarnished_bronze_gearbox",
+            "Properties": {
+              "broken": "false",
+              "cooling_down": "false",
+              "waterlogged": "false",
+              "natural": "true",
+              "powered": "false",
+              "level": "0",
+              "lit": "false",
+              "waxed": "true",
+              "facing": "south"
+            }
+          },
+          "block_entity_modifier": {
+            "type": "minecraft:passthrough"
+          }
+        },
+        {
+          "input_predicate": {
+            "predicate_type": "minecraft:random_blockstate_match",
+            "block_state": {
+              "Name": "rubinated_nether:tarnished_bronze_gearbox",
+              "Properties": {
+                "broken": "false",
+                "cooling_down": "false",
+                "waterlogged": "false",
+                "natural": "true",
+                "powered": "false",
+                "level": "0",
+                "lit": "false",
+                "waxed": "true",
+                "facing": "south"
+              }
+            },
+            "probability": 0.5
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "rubinated_nether:bronze_gearbox",
+            "Properties": {
+              "broken": "false",
+              "cooling_down": "false",
+              "waterlogged": "false",
+              "natural": "true",
+              "powered": "false",
+              "level": "0",
+              "lit": "false",
+              "waxed": "true",
+              "facing": "south"
+            }
+          },
+          "block_entity_modifier": {
+            "type": "minecraft:passthrough"
+          }
+        },
+        {
+          "input_predicate": {
+            "predicate_type": "minecraft:random_blockstate_match",
+            "block_state": {
+              "Name": "rubinated_nether:tarnished_bronze_gearbox",
+              "Properties": {
+                "broken": "false",
+                "cooling_down": "false",
+                "waterlogged": "false",
+                "natural": "true",
+                "powered": "false",
+                "level": "0",
+                "lit": "false",
+                "waxed": "true",
+                "facing": "south"
+              }
+            },
+            "probability": 0.5
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "rubinated_nether:discolored_bronze_gearbox",
+            "Properties": {
+              "broken": "false",
+              "cooling_down": "false",
+              "waterlogged": "false",
+              "natural": "true",
+              "powered": "false",
+              "level": "0",
+              "lit": "false",
+              "waxed": "true",
+              "facing": "south"
+            }
+          },
+          "block_entity_modifier": {
+            "type": "minecraft:passthrough"
+          }
+        },
+        {
+          "input_predicate": {
+            "predicate_type": "minecraft:blockstate_match",
+            "block_state": {
+              "Name": "rubinated_nether:tarnished_bronze_gearbox",
+              "Properties": {
+                "broken": "false",
+                "cooling_down": "false",
+                "waterlogged": "false",
+                "natural": "true",
+                "powered": "false",
+                "level": "0",
+                "lit": "false",
+                "waxed": "true",
+                "facing": "south"
+              }
+            }
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "rubinated_nether:corroded_bronze_gearbox",
+            "Properties": {
+              "broken": "false",
+              "cooling_down": "false",
+              "waterlogged": "false",
+              "natural": "true",
+              "powered": "false",
+              "level": "0",
+              "lit": "false",
+              "waxed": "true",
+              "facing": "south"
+            }
+          },
+          "block_entity_modifier": {
+            "type": "minecraft:passthrough"
+          }
+        },
+        {
+          "input_predicate": {
+            "predicate_type": "minecraft:random_blockstate_match",
+            "block_state": {
+              "Name": "rubinated_nether:tarnished_bronze_gearbox",
+              "Properties": {
+                "broken": "false",
+                "cooling_down": "false",
+                "waterlogged": "false",
+                "natural": "true",
+                "powered": "false",
+                "level": "0",
+                "lit": "false",
+                "waxed": "true",
+                "facing": "west"
+              }
+            },
+            "probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "rubinated_nether:crystallized_bronze_gearbox",
+            "Properties": {
+              "broken": "false",
+              "cooling_down": "false",
+              "waterlogged": "false",
+              "natural": "true",
+              "powered": "false",
+              "level": "0",
+              "lit": "false",
+              "waxed": "true",
+              "facing": "west"
+            }
+          },
+          "block_entity_modifier": {
+            "type": "minecraft:passthrough"
+          }
+        },
+        {
+          "input_predicate": {
+            "predicate_type": "minecraft:random_blockstate_match",
+            "block_state": {
+              "Name": "rubinated_nether:tarnished_bronze_gearbox",
+              "Properties": {
+                "broken": "false",
+                "cooling_down": "false",
+                "waterlogged": "false",
+                "natural": "true",
+                "powered": "false",
+                "level": "0",
+                "lit": "false",
+                "waxed": "true",
+                "facing": "west"
+              }
+            },
+            "probability": 0.111111
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "rubinated_nether:tarnished_bronze_gearbox",
+            "Properties": {
+              "broken": "false",
+              "cooling_down": "false",
+              "waterlogged": "false",
+              "natural": "true",
+              "powered": "false",
+              "level": "0",
+              "lit": "false",
+              "waxed": "true",
+              "facing": "west"
+            }
+          },
+          "block_entity_modifier": {
+            "type": "minecraft:passthrough"
+          }
+        },
+        {
+          "input_predicate": {
+            "predicate_type": "minecraft:random_blockstate_match",
+            "block_state": {
+              "Name": "rubinated_nether:tarnished_bronze_gearbox",
+              "Properties": {
+                "broken": "false",
+                "cooling_down": "false",
+                "waterlogged": "false",
+                "natural": "true",
+                "powered": "false",
+                "level": "0",
+                "lit": "false",
+                "waxed": "true",
+                "facing": "west"
+              }
+            },
+            "probability": 0.5
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "rubinated_nether:bronze_gearbox",
+            "Properties": {
+              "broken": "false",
+              "cooling_down": "false",
+              "waterlogged": "false",
+              "natural": "true",
+              "powered": "false",
+              "level": "0",
+              "lit": "false",
+              "waxed": "true",
+              "facing": "west"
+            }
+          },
+          "block_entity_modifier": {
+            "type": "minecraft:passthrough"
+          }
+        },
+        {
+          "input_predicate": {
+            "predicate_type": "minecraft:random_blockstate_match",
+            "block_state": {
+              "Name": "rubinated_nether:tarnished_bronze_gearbox",
+              "Properties": {
+                "broken": "false",
+                "cooling_down": "false",
+                "waterlogged": "false",
+                "natural": "true",
+                "powered": "false",
+                "level": "0",
+                "lit": "false",
+                "waxed": "true",
+                "facing": "west"
+              }
+            },
+            "probability": 0.5
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "rubinated_nether:discolored_bronze_gearbox",
+            "Properties": {
+              "broken": "false",
+              "cooling_down": "false",
+              "waterlogged": "false",
+              "natural": "true",
+              "powered": "false",
+              "level": "0",
+              "lit": "false",
+              "waxed": "true",
+              "facing": "west"
+            }
+          },
+          "block_entity_modifier": {
+            "type": "minecraft:passthrough"
+          }
+        },
+        {
+          "input_predicate": {
+            "predicate_type": "minecraft:blockstate_match",
+            "block_state": {
+              "Name": "rubinated_nether:tarnished_bronze_gearbox",
+              "Properties": {
+                "broken": "false",
+                "cooling_down": "false",
+                "waterlogged": "false",
+                "natural": "true",
+                "powered": "false",
+                "level": "0",
+                "lit": "false",
+                "waxed": "true",
+                "facing": "west"
+              }
+            }
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "rubinated_nether:corroded_bronze_gearbox",
+            "Properties": {
+              "broken": "false",
+              "cooling_down": "false",
+              "waterlogged": "false",
+              "natural": "true",
+              "powered": "false",
+              "level": "0",
+              "lit": "false",
+              "waxed": "true",
+              "facing": "west"
+            }
+          },
+          "block_entity_modifier": {
+            "type": "minecraft:passthrough"
+          }
+        }
+      ]
+    }
+  ]
+}
