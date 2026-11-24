@@ -46,7 +46,7 @@ public class RNPlacedFeatures {
 				new PlacedFeature(
 						configuredFeatures.getOrThrow(RNConfiguredFeatures.CINDER_OVERHANG),
 						List.of(
-								CountPlacement.of(96),
+								CountPlacement.of(64),
 								InSquarePlacement.spread(),
 								HeightRangePlacement.uniform(VerticalAnchor.absolute(33), VerticalAnchor.absolute(118)),
 								BiomeFilter.biome()

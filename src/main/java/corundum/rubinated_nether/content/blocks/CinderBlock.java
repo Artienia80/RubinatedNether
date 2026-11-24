@@ -7,11 +7,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -24,7 +21,9 @@ public class CinderBlock extends FallingBlock {
 	public static final MapCodec<CinderBlock> CODEC = simpleCodec(CinderBlock::new);
 	private static final int TRIGGER_DELAY = 5;
 	private static final int CASCADE_DELAY = 2;
-	private static final Direction[] CASCADE_DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST, Direction.UP};
+	private static final int SUPPORT_DEPTH = 2;
+	private static final float FALL_TRIGGER_DISTANCE = 3.0F;
+	private static final BlockPos[] CASCADE_OFFSETS = buildCascadeOffsets();
 
 	public CinderBlock(Properties properties) {
 		super(properties);
@@ -53,9 +52,7 @@ public class CinderBlock extends FallingBlock {
 
 	@Override
 	public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
-		if (entity instanceof Player player
-				&& fallDistance > 0.5F
-				&& !player.getItemBySlot(EquipmentSlot.FEET).is(Items.LEATHER_BOOTS)) {
+		if (entity instanceof LivingEntity && fallDistance >= FALL_TRIGGER_DISTANCE) {
 			trigger(level, pos);
 		}
 		super.fallOn(level, state, pos, entity, fallDistance);
@@ -72,12 +69,12 @@ public class CinderBlock extends FallingBlock {
 
 	@Override
 	protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-		if (pos.getY() < level.getMinBuildHeight() || !isFree(level.getBlockState(pos.below()))) {
+		if (pos.getY() < level.getMinBuildHeight() || !shouldFall(level, pos)) {
 			return;
 		}
 		FallingBlockEntity.fall(level, pos, state);
-		for (Direction direction : CASCADE_DIRECTIONS) {
-			BlockPos neighborPos = pos.relative(direction);
+		for (BlockPos offset : CASCADE_OFFSETS) {
+			BlockPos neighborPos = pos.offset(offset);
 			if (level.getBlockState(neighborPos).getBlock() instanceof CinderBlock neighbor
 					&& !level.getBlockTicks().hasScheduledTick(neighborPos, neighbor)) {
 				level.scheduleTick(neighborPos, neighbor, CASCADE_DELAY);
@@ -113,6 +110,35 @@ public class CinderBlock extends FallingBlock {
 	@Override
 	public int getDustColor(BlockState state, BlockGetter level, BlockPos pos) {
 		return state.getMapColor(level, pos).col;
+	}
+
+	private static BlockPos[] buildCascadeOffsets() {
+		java.util.List<BlockPos> offsets = new java.util.ArrayList<>();
+		for (Direction direction : Direction.Plane.HORIZONTAL) {
+			for (int dy = -1; dy <= 1; dy++) {
+				offsets.add(new BlockPos(direction.getStepX(), dy, direction.getStepZ()));
+			}
+		}
+		offsets.add(new BlockPos(0, 1, 0));
+		return offsets.toArray(new BlockPos[0]);
+	}
+
+	private static boolean shouldFall(ServerLevel level, BlockPos pos) {
+		BlockPos.MutableBlockPos cursor = pos.mutable();
+		for (int i = 0; i <= SUPPORT_DEPTH; i++) {
+			cursor.move(Direction.DOWN);
+			if (cursor.getY() < level.getMinBuildHeight()) {
+				return false;
+			}
+			BlockState below = level.getBlockState(cursor);
+			if (isFree(below)) {
+				return true;
+			}
+			if (!(below.getBlock() instanceof CinderBlock)) {
+				return false;
+			}
+		}
+		return false;
 	}
 
 	private static boolean touchesLava(BlockGetter level, BlockPos pos) {

@@ -1,7 +1,7 @@
 package corundum.rubinated_nether.data.registries;
 
 import corundum.rubinated_nether.RubinatedNether;
-import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.world.cinder.RNFeatures;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.core.registries.Registries;

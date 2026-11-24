@@ -11,14 +11,19 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class CinderOverhangFeature extends Feature<NoneFeatureConfiguration> {
 	private static final int MIN_BLOCKS = 60;
 	private static final int MIN_CONTACTS = 8;
 	private static final int MAX_CLIMB = 10;
+	private static final int MAX_STACK = 3;
+	private static final double TERRAIN_FADE = 4.0;
+	private static final float BEACH_CHANCE = 0.35F;
 	private static final int LAVA_SCAN = 40;
 	private static final float LAVA_FRACTION = 0.3F;
 	private static final float DRY_ACCEPT = 0.3F;
@@ -59,9 +64,11 @@ public class CinderOverhangFeature extends Feature<NoneFeatureConfiguration> {
 		}
 		BlockPos base = top.relative(along);
 
-		int anchorHalf = 5 + random.nextInt(3);
-		int length = 12 + random.nextInt(11);
-		double roundness = 0.8 + random.nextDouble() * 0.7;
+		boolean beach = random.nextFloat() < BEACH_CHANCE;
+		int anchorHalf = beach ? 7 + random.nextInt(4) : 5 + random.nextInt(3);
+		int length = beach ? 7 + random.nextInt(5) : 12 + random.nextInt(11);
+		double roundness = beach ? 0.45 + random.nextDouble() * 0.25 : 0.8 + random.nextDouble() * 0.7;
+		double taper = beach ? 4.0 : 2.0;
 
 		int lanes = anchorHalf * 2 + 1;
 		int[] laneY = new int[lanes];
@@ -79,11 +86,22 @@ public class CinderOverhangFeature extends Feature<NoneFeatureConfiguration> {
 			}
 		}
 
+		double baseline = 0;
+		for (int value : laneY) {
+			baseline += value;
+		}
+		baseline /= lanes;
+		double slope = (random.nextDouble() - 0.5) * 0.18;
+		double[] amp = {0.5 + random.nextDouble() * 0.4, 0.4 + random.nextDouble() * 0.4};
+		double[] freqT = {0.45 + random.nextDouble() * 0.3, 0.25 + random.nextDouble() * 0.3};
+		double[] freqU = {0.3 + random.nextDouble() * 0.3, 0.45 + random.nextDouble() * 0.3};
+		double[] phase = {random.nextDouble() * 6.28, random.nextDouble() * 6.28};
+
 		int drift = 0;
-		Set<BlockPos> shape = new HashSet<>();
+		Map<BlockPos, Integer> heights = new HashMap<>();
 		for (int t = 0; t < length; t++) {
 			double progress = (double) t / length;
-			double span = Math.pow(1.0 - Math.pow(progress, 2.0), roundness);
+			double span = Math.pow(1.0 - Math.pow(progress, taper), roundness);
 			int half = (int) Math.round(anchorHalf * span);
 			if (t > 1 && random.nextFloat() < 0.25F) {
 				drift = Math.max(-2, Math.min(2, drift + (random.nextBoolean() ? 1 : -1)));
@@ -96,11 +114,36 @@ public class CinderOverhangFeature extends Feature<NoneFeatureConfiguration> {
 				}
 				int lane = Math.max(-anchorHalf, Math.min(anchorHalf, u + shift));
 				BlockPos pos = base.relative(along, t).relative(across, u + shift);
-				BlockPos placed = new BlockPos(pos.getX(), laneY[lane + anchorHalf], pos.getZ());
+				BlockPos placed = new BlockPos(pos.getX(), 0, pos.getZ());
 				if (!inRegion(placed, origin)) {
 					return false;
 				}
-				shape.add(placed);
+				double mix = Math.max(0.0, 1.0 - t / TERRAIN_FADE);
+				double ramp = Math.min(1.0, t / 3.0);
+				double field = slope * t;
+				for (int k = 0; k < 2; k++) {
+					field += amp[k] * Math.sin(t * freqT[k] + u * freqU[k] + phase[k]);
+				}
+				field = Math.max(-2.0, Math.min(2.0, field)) * ramp;
+				double height = mix * laneY[lane + anchorHalf] + (1.0 - mix) * (baseline + field);
+				heights.putIfAbsent(placed, (int) Math.round(height));
+			}
+		}
+
+		Set<BlockPos> shape = new HashSet<>();
+		for (Map.Entry<BlockPos, Integer> entry : heights.entrySet()) {
+			BlockPos column = entry.getKey();
+			int topY = entry.getValue();
+			int bottom = topY;
+			for (Direction direction : Direction.Plane.HORIZONTAL) {
+				Integer neighbor = heights.get(column.relative(direction));
+				if (neighbor != null && neighbor < bottom) {
+					bottom = neighbor;
+				}
+			}
+			bottom = Math.max(bottom, topY - (MAX_STACK - 1));
+			for (int y = bottom; y <= topY; y++) {
+				shape.add(new BlockPos(column.getX(), y, column.getZ()));
 			}
 		}
 
