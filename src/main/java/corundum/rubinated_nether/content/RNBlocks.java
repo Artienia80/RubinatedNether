@@ -406,22 +406,22 @@ public class RNBlocks {
 
 	public static final DeferredBlock<StandingSignBlock> PETRIFIED_SIGN = BLOCKS.register(
 			"petrified_sign",
-			() -> new StandingSignBlock(PETRIFIED_WOOD_TYPE, petrified().forceSolidOn().noCollission().strength(1.0F))
+			() -> new PetrifiedSignBlock(PETRIFIED_WOOD_TYPE, petrified().forceSolidOn().noCollission().strength(1.0F))
 	);
 
 	public static final DeferredBlock<WallSignBlock> PETRIFIED_WALL_SIGN = BLOCKS.register(
 			"petrified_wall_sign",
-			() -> new WallSignBlock(PETRIFIED_WOOD_TYPE, petrified().forceSolidOn().noCollission().strength(1.0F))
+			() -> new PetrifiedWallSignBlock(PETRIFIED_WOOD_TYPE, petrified().forceSolidOn().noCollission().strength(1.0F))
 	);
 
 	public static final DeferredBlock<CeilingHangingSignBlock> PETRIFIED_HANGING_SIGN = BLOCKS.register(
 			"petrified_hanging_sign",
-			() -> new CeilingHangingSignBlock(PETRIFIED_WOOD_TYPE, petrified().forceSolidOn().noCollission().strength(1.0F))
+			() -> new PetrifiedHangingSignBlock(PETRIFIED_WOOD_TYPE, petrified().forceSolidOn().noCollission().strength(1.0F))
 	);
 
 	public static final DeferredBlock<WallHangingSignBlock> PETRIFIED_WALL_HANGING_SIGN = BLOCKS.register(
 			"petrified_wall_hanging_sign",
-			() -> new WallHangingSignBlock(PETRIFIED_WOOD_TYPE, petrified().forceSolidOn().noCollission().strength(1.0F))
+			() -> new PetrifiedWallHangingSignBlock(PETRIFIED_WOOD_TYPE, petrified().forceSolidOn().noCollission().strength(1.0F))
 	);
 
 	public static final DeferredItem<SignItem> PETRIFIED_SIGN_ITEM = RNItems.ITEMS.register(
