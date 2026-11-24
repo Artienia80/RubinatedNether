@@ -2,6 +2,6 @@
   "parent": "minecraft:block/template_orientable_trapdoor_bottom",
   "render_type": "minecraft:cutout",
   "textures": {
-    "texture": "rubinated_nether:block/petrified_trapdoor"
+    "texture": "rubinated_nether:block/petrified/petrified_trapdoor"
   }
 }

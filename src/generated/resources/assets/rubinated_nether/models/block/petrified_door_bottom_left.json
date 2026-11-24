@@ -2,7 +2,7 @@
   "parent": "minecraft:block/door_bottom_left",
   "render_type": "minecraft:cutout",
   "textures": {
-    "bottom": "rubinated_nether:block/petrified_door_bottom",
-    "top": "rubinated_nether:block/petrified_door_top"
+    "bottom": "rubinated_nether:block/petrified/petrified_door_bottom",
+    "top": "rubinated_nether:block/petrified/petrified_door_top"
   }
 }

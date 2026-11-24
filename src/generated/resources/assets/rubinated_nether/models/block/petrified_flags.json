@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "rubinated_nether:block/petrified_flags"
+    "all": "rubinated_nether:block/petrified/petrified_flags"
   }
 }

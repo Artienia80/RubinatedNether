@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/button",
   "textures": {
-    "texture": "rubinated_nether:block/petrified_flags"
+    "texture": "rubinated_nether:block/petrified/petrified_flags"
   }
 }

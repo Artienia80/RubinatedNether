@@ -260,13 +260,13 @@ public class RNItemModels extends ItemModelProvider {
 		);
 		wallInventory(
 				RNBlocks.PETRIFIED_WALL.getId().toString(),
-				modLoc("block/petrified_flags")
+				modLoc("block/petrified/petrified_flags")
 		);
 		withExistingParent(
 				RNBlocks.PETRIFIED_FENCE.getId().getPath(),
 				mcLoc("block/fence_inventory")
 		)
-				.texture("texture", modLoc("block/petrified_flags"));
+				.texture("texture", modLoc("block/petrified/petrified_flags"));
 		withExistingParent(
 				RNBlocks.PETRIFIED_FENCE_GATE.getId().getPath(),
 				modLoc("block/petrified_fence_gate")

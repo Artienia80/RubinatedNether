@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/wall_inventory",
   "textures": {
-    "wall": "rubinated_nether:block/petrified_flags"
+    "wall": "rubinated_nether:block/petrified/petrified_flags"
   }
 }

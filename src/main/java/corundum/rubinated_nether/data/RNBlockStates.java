@@ -127,51 +127,51 @@ public class RNBlockStates extends BlockStateProvider {
 			return this.randomRotations(this.models().cubeAll(name, modLoc("block/" + name)));
 		});
 		this.simpleBlock(RNBlocks.SOUL_STARVED_SAND.get());
-		this.logBlock(RNBlocks.PETRIFIED_SNAG.get());
-		this.logBlock(RNBlocks.STRIPPED_PETRIFIED_SNAG.get());
-		this.axisBlock(RNBlocks.PETRIFIED_RIND.get(), modLoc("block/petrified_snag"), modLoc("block/petrified_snag"));
-		this.axisBlock(RNBlocks.STRIPPED_PETRIFIED_RIND.get(), modLoc("block/stripped_petrified_snag"), modLoc("block/stripped_petrified_snag"));
-		this.simpleBlock(RNBlocks.PETRIFIED_FLAGS.get());
+		this.axisBlock(RNBlocks.PETRIFIED_SNAG.get(), modLoc("block/petrified/petrified_snag"), modLoc("block/petrified/petrified_snag_top"));
+		this.axisBlock(RNBlocks.STRIPPED_PETRIFIED_SNAG.get(), modLoc("block/petrified/stripped_petrified_snag"), modLoc("block/petrified/stripped_petrified_snag_top"));
+		this.axisBlock(RNBlocks.PETRIFIED_RIND.get(), modLoc("block/petrified/petrified_snag"), modLoc("block/petrified/petrified_snag"));
+		this.axisBlock(RNBlocks.STRIPPED_PETRIFIED_RIND.get(), modLoc("block/petrified/stripped_petrified_snag"), modLoc("block/petrified/stripped_petrified_snag"));
+		this.subfolder("petrified/", RNBlocks.PETRIFIED_FLAGS);
 		this.slabBlock(
 				RNBlocks.PETRIFIED_SLAB.get(),
 				modLoc("block/petrified_flags"),
-				modLoc("block/petrified_flags")
+				modLoc("block/petrified/petrified_flags")
 		);
 		this.stairsBlock(
 				RNBlocks.PETRIFIED_STAIRS.get(),
-				modLoc("block/petrified_flags")
+				modLoc("block/petrified/petrified_flags")
 		);
 		this.wallBlock(
 				RNBlocks.PETRIFIED_WALL.get(),
-				modLoc("block/petrified_flags")
+				modLoc("block/petrified/petrified_flags")
 		);
 		this.fenceBlock(
 				RNBlocks.PETRIFIED_FENCE.get(),
-				modLoc("block/petrified_flags")
+				modLoc("block/petrified/petrified_flags")
 		);
 		this.fenceGateBlock(
 				RNBlocks.PETRIFIED_FENCE_GATE.get(),
-				modLoc("block/petrified_flags")
+				modLoc("block/petrified/petrified_flags")
 		);
 		this.doorBlockWithRenderType(
 				RNBlocks.PETRIFIED_DOOR.get(),
-				modLoc("block/petrified_door_bottom"),
-				modLoc("block/petrified_door_top"),
+				modLoc("block/petrified/petrified_door_bottom"),
+				modLoc("block/petrified/petrified_door_top"),
 				"cutout"
 		);
 		this.trapdoorBlockWithRenderType(
 				RNBlocks.PETRIFIED_TRAPDOOR.get(),
-				modLoc("block/petrified_trapdoor"),
+				modLoc("block/petrified/petrified_trapdoor"),
 				true,
 				"cutout"
 		);
-		this.pressurePlateBlock(RNBlocks.PETRIFIED_PRESSURE_PLATE.get(), modLoc("block/petrified_flags"));
-		this.buttonBlock(RNBlocks.PETRIFIED_BUTTON.get(), modLoc("block/petrified_flags"));
-		this.models().buttonInventory("petrified_button_inventory", modLoc("block/petrified_flags"));
-		var petrifiedSign = this.models().sign("petrified_sign", modLoc("block/petrified_flags"));
+		this.pressurePlateBlock(RNBlocks.PETRIFIED_PRESSURE_PLATE.get(), modLoc("block/petrified/petrified_flags"));
+		this.buttonBlock(RNBlocks.PETRIFIED_BUTTON.get(), modLoc("block/petrified/petrified_flags"));
+		this.models().buttonInventory("petrified_button_inventory", modLoc("block/petrified/petrified_flags"));
+		var petrifiedSign = this.models().sign("petrified_sign", modLoc("block/petrified/petrified_flags"));
 		this.simpleBlock(RNBlocks.PETRIFIED_SIGN.get(), petrifiedSign);
 		this.simpleBlock(RNBlocks.PETRIFIED_WALL_SIGN.get(), petrifiedSign);
-		var petrifiedHangingSign = this.models().sign("petrified_hanging_sign", modLoc("block/stripped_petrified_snag"));
+		var petrifiedHangingSign = this.models().sign("petrified_hanging_sign", modLoc("block/petrified/stripped_petrified_snag"));
 		this.simpleBlock(RNBlocks.PETRIFIED_HANGING_SIGN.get(), petrifiedHangingSign);
 		this.simpleBlock(RNBlocks.PETRIFIED_WALL_HANGING_SIGN.get(), petrifiedHangingSign);
 		this.subfolder("morion/", RNBlocks.MORION_BLOCK);
