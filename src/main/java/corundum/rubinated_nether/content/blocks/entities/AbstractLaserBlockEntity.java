@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.blocks.entities;
 
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNTags;
+import corundum.rubinated_nether.content.blocks.BrazierBlock;
 import corundum.rubinated_nether.content.blocks.LaserMode;
 import corundum.rubinated_nether.utils.BeamScanCache;
 import corundum.rubinated_nether.utils.ShapeUtils;
@@ -171,7 +172,12 @@ public abstract class AbstractLaserBlockEntity extends BlockEntity implements Ti
 	protected boolean isNoSignalBlock(int range) {
 		BlockPos obstructionPos = worldPosition.relative(getFacing(), range);
 		BlockState obstructionState = level.getBlockState(obstructionPos);
-		return obstructionState.is(RNTags.Blocks.LASER_NO_SIGNAL);
+		if (obstructionState.is(RNTags.Blocks.LASER_NO_SIGNAL)) {
+			return true;
+		}
+		return getFacing() == Direction.DOWN
+				&& obstructionState.getBlock() instanceof BrazierBlock
+				&& obstructionState.getValue(BrazierBlock.LEVEL) == 0;
 	}
 
 	protected double getEntityBlockDistance(Entity entity, Direction facing) {
