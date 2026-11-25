@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_mosaic_morion": {
+    "has_morion_mosaic": {
       "conditions": {
         "items": [
           {
-            "items": "rubinated_nether:mosaic_morion"
+            "items": "rubinated_nether:morion_mosaic"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_mosaic_morion"
+      "has_morion_mosaic"
     ]
   ],
   "rewards": {

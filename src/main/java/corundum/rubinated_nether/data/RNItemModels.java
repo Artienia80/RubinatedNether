@@ -293,13 +293,23 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.MORION_TILES,
 				RNBlocks.MORION_TILES_STAIRS,
 				RNBlocks.MORION_TILES_SLAB,
-				RNBlocks.MOSAIC_QUARTZ,
-				RNBlocks.MOSAIC_QUARTZ_STAIRS,
-				RNBlocks.MOSAIC_QUARTZ_SLAB,
-				RNBlocks.MOSAIC_MORION,
-				RNBlocks.MOSAIC_MORION_STAIRS,
-				RNBlocks.MOSAIC_MORION_SLAB
+				RNBlocks.QUARTZ_MOSAIC,
+				RNBlocks.QUARTZ_MOSAIC_STAIRS,
+				RNBlocks.QUARTZ_MOSAIC_SLAB,
+				RNBlocks.MORION_MOSAIC,
+				RNBlocks.MORION_MOSAIC_STAIRS,
+				RNBlocks.MORION_MOSAIC_SLAB,
+				RNBlocks.QUARTZ_BRICKS_SLAB,
+				RNBlocks.QUARTZ_BRICKS_STAIRS,
+				RNBlocks.MORION_BRICKS_SLAB,
+				RNBlocks.MORION_BRICKS_STAIRS
 		);
+		wallInventory(RNBlocks.QUARTZ_BRICKS_WALL.getId().toString(), mcLoc("block/quartz_bricks"));
+		wallInventory(RNBlocks.MORION_BRICKS_WALL.getId().toString(), modLoc("block/morion/morion_bricks"));
+		wallInventory(RNBlocks.QUARTZ_TILES_WALL.getId().toString(), modLoc("block/morion/quartz_tiles"));
+		wallInventory(RNBlocks.MORION_TILES_WALL.getId().toString(), modLoc("block/morion/morion_tiles"));
+		wallInventory(RNBlocks.QUARTZ_MOSAIC_WALL.getId().toString(), modLoc("block/morion/quartz_mosaic"));
+		wallInventory(RNBlocks.MORION_MOSAIC_WALL.getId().toString(), modLoc("block/morion/morion_mosaic"));
 		flippableBlockItems();
 
 		withExistingParent(
@@ -314,27 +324,27 @@ public class RNItemModels extends ItemModelProvider {
 
 		wallInventory(
 				RNBlocks.SHRINE_STONE_WALL.getId().toString(),
-				modLoc("block/shrine_stone")
+				modLoc("block/shrine_stone/shrine_stone")
 		);
 		wallInventory(
 				RNBlocks.COBBLED_SHRINE_STONE_WALL.getId().toString(),
-				modLoc("block/cobbled_shrine_stone")
+				modLoc("block/shrine_stone/cobbled_shrine_stone")
 		);
 		wallInventory(
 				RNBlocks.POLISHED_SHRINE_STONE_WALL.getId().toString(),
-				modLoc("block/polished_shrine_stone")
+				modLoc("block/shrine_stone/polished_shrine_stone")
 		);
 		wallInventory(
 				RNBlocks.SHRINE_STONE_TILES_WALL.getId().toString(),
-				modLoc("block/shrine_stone_tiles")
+				modLoc("block/shrine_stone/shrine_stone_tiles")
 		);
 		wallInventory(
 				RNBlocks.SHRINE_STONE_BRICKS_WALL.getId().toString(),
-				modLoc("block/shrine_stone_bricks")
+				modLoc("block/shrine_stone/shrine_stone_bricks")
 		);
 		wallInventory(
 				RNBlocks.SHRINE_STONE_RUBBLE_WALL.getId().toString(),
-				modLoc("block/shrine_stone_rubble")
+				modLoc("block/shrine_stone/shrine_stone_rubble")
 		);
 
 		paneItem(
@@ -549,6 +559,15 @@ public class RNItemModels extends ItemModelProvider {
 	private void flippableBlockItems() {
 		for (var block : RNBlocks.FLIPPABLE_BLOCKS) {
 			String name = block.getId().getPath();
+			if (block.get() instanceof net.minecraft.world.level.block.WallBlock) {
+				String base = name.substring(0, name.length() - "_wall".length());
+				var flippedWall = wallInventory(name + "_flipped", modLoc("block/morion/" + base + "_flipped"));
+				wallInventory(name, modLoc("block/morion/" + base))
+						.override()
+						.predicate(modLoc("flipped"), 1.0F)
+						.model(flippedWall);
+				continue;
+			}
 			var flipped = withExistingParent(name + "_flipped", modLoc("block/" + name + "_flipped"));
 			withExistingParent(name, modLoc("block/" + name))
 					.override()

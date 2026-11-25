@@ -326,12 +326,12 @@ public class RNBlocks {
 			"checkered_tiles",
 			() -> new FlippableBlock(checkered())
 	);
-	public static final DeferredBlock<Block> MOSAIC_QUARTZ = registerBlockAndItem(
-			"mosaic_quartz",
+	public static final DeferredBlock<Block> QUARTZ_MOSAIC = registerBlockAndItem(
+			"quartz_mosaic",
 			() -> new Block(quartz())
 	);
-	public static final DeferredBlock<Block> MOSAIC_MORION = registerBlockAndItem(
-			"mosaic_morion",
+	public static final DeferredBlock<Block> MORION_MOSAIC = registerBlockAndItem(
+			"morion_mosaic",
 			() -> new Block(morion())
 	);
 	public static final DeferredBlock<FlippableBlock> CHECKERED_MOSAIC = registerFlippableBlockAndItem(
@@ -362,21 +362,21 @@ public class RNBlocks {
 			"checkered_tiles_stairs",
 			() -> new FlippableStairBlock(CHECKERED_TILES.get().defaultBlockState(), checkered())
 	);
-	public static final DeferredBlock<SlabBlock> MOSAIC_QUARTZ_SLAB = registerBlockAndItem(
-			"mosaic_quartz_slab",
+	public static final DeferredBlock<SlabBlock> QUARTZ_MOSAIC_SLAB = registerBlockAndItem(
+			"quartz_mosaic_slab",
 			() -> new SlabBlock(quartz())
 	);
-	public static final DeferredBlock<StairBlock> MOSAIC_QUARTZ_STAIRS = registerBlockAndItem(
-			"mosaic_quartz_stairs",
-			() -> new StairBlock(MOSAIC_QUARTZ.get().defaultBlockState(), quartz())
+	public static final DeferredBlock<StairBlock> QUARTZ_MOSAIC_STAIRS = registerBlockAndItem(
+			"quartz_mosaic_stairs",
+			() -> new StairBlock(QUARTZ_MOSAIC.get().defaultBlockState(), quartz())
 	);
-	public static final DeferredBlock<SlabBlock> MOSAIC_MORION_SLAB = registerBlockAndItem(
-			"mosaic_morion_slab",
+	public static final DeferredBlock<SlabBlock> MORION_MOSAIC_SLAB = registerBlockAndItem(
+			"morion_mosaic_slab",
 			() -> new SlabBlock(morion())
 	);
-	public static final DeferredBlock<StairBlock> MOSAIC_MORION_STAIRS = registerBlockAndItem(
-			"mosaic_morion_stairs",
-			() -> new StairBlock(MOSAIC_MORION.get().defaultBlockState(), morion())
+	public static final DeferredBlock<StairBlock> MORION_MOSAIC_STAIRS = registerBlockAndItem(
+			"morion_mosaic_stairs",
+			() -> new StairBlock(MORION_MOSAIC.get().defaultBlockState(), morion())
 	);
 	public static final DeferredBlock<FlippableSlabBlock> CHECKERED_MOSAIC_SLAB = registerFlippableBlockAndItem(
 			"checkered_mosaic_slab",
@@ -385,6 +385,66 @@ public class RNBlocks {
 	public static final DeferredBlock<FlippableStairBlock> CHECKERED_MOSAIC_STAIRS = registerFlippableBlockAndItem(
 			"checkered_mosaic_stairs",
 			() -> new FlippableStairBlock(CHECKERED_MOSAIC.get().defaultBlockState(), checkered())
+	);
+
+	public static final DeferredBlock<SlabBlock> QUARTZ_BRICKS_SLAB = registerBlockAndItem(
+			"quartz_bricks_slab",
+			() -> new SlabBlock(quartz())
+	);
+
+	public static final DeferredBlock<StairBlock> QUARTZ_BRICKS_STAIRS = registerBlockAndItem(
+			"quartz_bricks_stairs",
+			() -> new StairBlock(Blocks.QUARTZ_BRICKS.defaultBlockState(), quartz())
+	);
+
+	public static final DeferredBlock<WallBlock> QUARTZ_BRICKS_WALL = registerBlockAndItem(
+			"quartz_bricks_wall",
+			() -> new WallBlock(quartz())
+	);
+
+	public static final DeferredBlock<SlabBlock> MORION_BRICKS_SLAB = registerBlockAndItem(
+			"morion_bricks_slab",
+			() -> new SlabBlock(morion())
+	);
+
+	public static final DeferredBlock<StairBlock> MORION_BRICKS_STAIRS = registerBlockAndItem(
+			"morion_bricks_stairs",
+			() -> new StairBlock(MORION_BRICKS.get().defaultBlockState(), morion())
+	);
+
+	public static final DeferredBlock<WallBlock> MORION_BRICKS_WALL = registerBlockAndItem(
+			"morion_bricks_wall",
+			() -> new WallBlock(morion())
+	);
+
+	public static final DeferredBlock<WallBlock> QUARTZ_TILES_WALL = registerBlockAndItem(
+			"quartz_tiles_wall",
+			() -> new WallBlock(quartz())
+	);
+
+	public static final DeferredBlock<WallBlock> MORION_TILES_WALL = registerBlockAndItem(
+			"morion_tiles_wall",
+			() -> new WallBlock(morion())
+	);
+
+	public static final DeferredBlock<WallBlock> QUARTZ_MOSAIC_WALL = registerBlockAndItem(
+			"quartz_mosaic_wall",
+			() -> new WallBlock(quartz())
+	);
+
+	public static final DeferredBlock<WallBlock> MORION_MOSAIC_WALL = registerBlockAndItem(
+			"morion_mosaic_wall",
+			() -> new WallBlock(morion())
+	);
+
+	public static final DeferredBlock<FlippableWallBlock> CHECKERED_TILES_WALL = registerFlippableBlockAndItem(
+			"checkered_tiles_wall",
+			() -> new FlippableWallBlock(checkered())
+	);
+
+	public static final DeferredBlock<FlippableWallBlock> CHECKERED_MOSAIC_WALL = registerFlippableBlockAndItem(
+			"checkered_mosaic_wall",
+			() -> new FlippableWallBlock(checkered())
 	);
 	public static final DeferredBlock<RedstoneAccumulatorBlock> REDSTONE_ACCUMULATOR = registerBlockAndItem(
 			"redstone_accumulator",

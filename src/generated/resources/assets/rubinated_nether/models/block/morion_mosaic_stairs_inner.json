@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "rubinated_nether:block/morion/morion_mosaic",
+    "side": "rubinated_nether:block/morion/morion_mosaic",
+    "top": "rubinated_nether:block/morion/morion_mosaic"
+  }
+}

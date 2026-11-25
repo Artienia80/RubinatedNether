@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "bottom": "rubinated_nether:block/morion/mosaic_quartz",
-    "side": "rubinated_nether:block/morion/mosaic_quartz",
-    "top": "rubinated_nether:block/morion/mosaic_quartz"
-  }
-}

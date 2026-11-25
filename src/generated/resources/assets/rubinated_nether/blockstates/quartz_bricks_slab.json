@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "rubinated_nether:block/quartz_bricks_slab"
+    },
+    "type=double": {
+      "model": "minecraft:block/quartz_bricks"
+    },
+    "type=top": {
+      "model": "rubinated_nether:block/quartz_bricks_slab_top"
+    }
+  }
+}

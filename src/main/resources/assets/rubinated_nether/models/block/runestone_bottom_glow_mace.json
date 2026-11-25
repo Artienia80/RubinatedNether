@@ -20,7 +20,7 @@
 				"south": {"uv": [0, 5, 16, 16], "texture": "#8"},
 				"west": {"uv": [0, 5, 16, 16], "texture": "#8"},
 				"up": {"uv": [0, 0, 16, 16], "texture": "#13"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#missing"}
+				"down": {"uv": [0, 0, 16, 16], "texture": "#13"}
 			}
 		},
 		{
@@ -44,8 +44,7 @@
 				"east": {"uv": [0, 5, 16, 16], "texture": "#overlay8"},
 				"south": {"uv": [0, 5, 16, 16], "texture": "#overlay8"},
 				"west": {"uv": [0, 5, 16, 16], "texture": "#overlay8"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#overlay13"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#missing"}
+				"up": {"uv": [0, 0, 16, 16], "texture": "#overlay13"}
 			},
 			"neoforge_data": {
 				"block_light": 15,

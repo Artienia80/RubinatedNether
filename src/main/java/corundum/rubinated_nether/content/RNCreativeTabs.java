@@ -10,7 +10,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.Output;
 import net.minecraft.world.item.CreativeModeTabs;
-import corundum.rubinated_nether.content.blocks.BronzeStrongboxBlock;
+import corundum.rubinated_nether.content.blocks.*;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.BlockItemStateProperties;
@@ -117,36 +117,12 @@ public class RNCreativeTabs {
 								RNItems.PETRIFIED_BOAT,
 								RNItems.PETRIFIED_CHEST_BOAT
 						);
+						addItems(output, RNItems.NETHER_MORION);
+						for (var block : morionQuartzBlocks()) {
+							output.accept(block.get());
+						}
 						addItems(
 								output,
-								RNItems.NETHER_MORION,
-								RNBlocks.MORION_BLOCK,
-								RNBlocks.CHISELED_MORION_BLOCK,
-								RNBlocks.MORION_PILLAR,
-								RNBlocks.MORION_BRICKS,
-								RNBlocks.SMOOTH_MORION,
-								RNBlocks.MORION_STAIRS,
-								RNBlocks.MORION_SLAB,
-								RNBlocks.SMOOTH_MORION_STAIRS,
-								RNBlocks.SMOOTH_MORION_SLAB,
-								RNBlocks.QUARTZ_TILES,
-								RNBlocks.QUARTZ_TILES_STAIRS,
-								RNBlocks.QUARTZ_TILES_SLAB,
-								RNBlocks.MORION_TILES,
-								RNBlocks.MORION_TILES_STAIRS,
-								RNBlocks.MORION_TILES_SLAB,
-								RNBlocks.CHECKERED_TILES,
-								RNBlocks.CHECKERED_TILES_STAIRS,
-								RNBlocks.CHECKERED_TILES_SLAB,
-								RNBlocks.MOSAIC_QUARTZ,
-								RNBlocks.MOSAIC_QUARTZ_STAIRS,
-								RNBlocks.MOSAIC_QUARTZ_SLAB,
-								RNBlocks.MOSAIC_MORION,
-								RNBlocks.MOSAIC_MORION_STAIRS,
-								RNBlocks.MOSAIC_MORION_SLAB,
-								RNBlocks.CHECKERED_MOSAIC,
-								RNBlocks.CHECKERED_MOSAIC_STAIRS,
-								RNBlocks.CHECKERED_MOSAIC_SLAB,
 								RNBlocks.REDSTONE_ACCUMULATOR,
 								RNBlocks.MOONPHASE_DETECTOR
 						);
@@ -401,6 +377,8 @@ public class RNCreativeTabs {
 		}
 		private static void injectIngredients(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.INGREDIENTS) return;
+			event.insertAfter(Items.QUARTZ.getDefaultInstance(),
+					RNItems.NETHER_MORION.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.RAW_GOLD.getDefaultInstance(),
 					RNItems.MOLTEN_RUBY.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.EMERALD.getDefaultInstance(),
@@ -716,6 +694,12 @@ public class RNCreativeTabs {
 		}
 		private static void injectBuildingBlocks(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.BUILDING_BLOCKS) return;
+			ItemStack quartzAnchor = Items.SMOOTH_QUARTZ_SLAB.getDefaultInstance();
+			for (var block : morionQuartzBlocks()) {
+				ItemStack stack = block.get().asItem().getDefaultInstance();
+				event.insertAfter(quartzAnchor, stack, BOTH_TABS);
+				quartzAnchor = stack;
+			}
 			event.insertAfter(Items.NETHERITE_BLOCK.getDefaultInstance(),
 					RNBlocks.RUBY_BLOCK.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.GILDED_BLACKSTONE.getDefaultInstance(),
@@ -1157,6 +1141,50 @@ public class RNCreativeTabs {
 				.get(RubinatedNether.id("waxed_" + BuiltInRegistries.BLOCK.getKey(block.get()).getPath()))
 				.getDefaultInstance();
 	}
+	private static List<DeferredBlock<? extends net.minecraft.world.level.block.Block>> morionQuartzBlocks() {
+		return List.of(
+				RNBlocks.MORION_BLOCK,
+				RNBlocks.MORION_STAIRS,
+				RNBlocks.MORION_SLAB,
+				RNBlocks.SMOOTH_MORION,
+				RNBlocks.SMOOTH_MORION_STAIRS,
+				RNBlocks.SMOOTH_MORION_SLAB,
+				RNBlocks.CHISELED_MORION_BLOCK,
+				RNBlocks.MORION_PILLAR,
+				RNBlocks.QUARTZ_BRICKS_STAIRS,
+				RNBlocks.QUARTZ_BRICKS_SLAB,
+				RNBlocks.QUARTZ_BRICKS_WALL,
+				RNBlocks.MORION_BRICKS,
+				RNBlocks.MORION_BRICKS_STAIRS,
+				RNBlocks.MORION_BRICKS_SLAB,
+				RNBlocks.MORION_BRICKS_WALL,
+				RNBlocks.QUARTZ_TILES,
+				RNBlocks.QUARTZ_TILES_STAIRS,
+				RNBlocks.QUARTZ_TILES_SLAB,
+				RNBlocks.QUARTZ_TILES_WALL,
+				RNBlocks.MORION_TILES,
+				RNBlocks.MORION_TILES_STAIRS,
+				RNBlocks.MORION_TILES_SLAB,
+				RNBlocks.MORION_TILES_WALL,
+				RNBlocks.CHECKERED_TILES,
+				RNBlocks.CHECKERED_TILES_STAIRS,
+				RNBlocks.CHECKERED_TILES_SLAB,
+				RNBlocks.CHECKERED_TILES_WALL,
+				RNBlocks.QUARTZ_MOSAIC,
+				RNBlocks.QUARTZ_MOSAIC_STAIRS,
+				RNBlocks.QUARTZ_MOSAIC_SLAB,
+				RNBlocks.QUARTZ_MOSAIC_WALL,
+				RNBlocks.MORION_MOSAIC,
+				RNBlocks.MORION_MOSAIC_STAIRS,
+				RNBlocks.MORION_MOSAIC_SLAB,
+				RNBlocks.MORION_MOSAIC_WALL,
+				RNBlocks.CHECKERED_MOSAIC,
+				RNBlocks.CHECKERED_MOSAIC_STAIRS,
+				RNBlocks.CHECKERED_MOSAIC_SLAB,
+				RNBlocks.CHECKERED_MOSAIC_WALL
+		);
+	}
+
 	private static void addItems(Output output, ItemLike... items) {
 		for (var item : items)
 			output.accept(item);

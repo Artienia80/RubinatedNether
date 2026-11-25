@@ -68,15 +68,27 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.CHECKERED_TILES.get(),
 				RNBlocks.CHECKERED_TILES_STAIRS.get(),
 				RNBlocks.CHECKERED_TILES_SLAB.get(),
-				RNBlocks.MOSAIC_QUARTZ.get(),
-				RNBlocks.MOSAIC_QUARTZ_STAIRS.get(),
-				RNBlocks.MOSAIC_QUARTZ_SLAB.get(),
-				RNBlocks.MOSAIC_MORION.get(),
-				RNBlocks.MOSAIC_MORION_STAIRS.get(),
-				RNBlocks.MOSAIC_MORION_SLAB.get(),
+				RNBlocks.QUARTZ_MOSAIC.get(),
+				RNBlocks.QUARTZ_MOSAIC_STAIRS.get(),
+				RNBlocks.QUARTZ_MOSAIC_SLAB.get(),
+				RNBlocks.MORION_MOSAIC.get(),
+				RNBlocks.MORION_MOSAIC_STAIRS.get(),
+				RNBlocks.MORION_MOSAIC_SLAB.get(),
 				RNBlocks.CHECKERED_MOSAIC.get(),
 				RNBlocks.CHECKERED_MOSAIC_STAIRS.get(),
-				RNBlocks.CHECKERED_MOSAIC_SLAB.get()
+				RNBlocks.CHECKERED_MOSAIC_SLAB.get(),
+				RNBlocks.QUARTZ_BRICKS_SLAB.get(),
+				RNBlocks.QUARTZ_BRICKS_STAIRS.get(),
+				RNBlocks.QUARTZ_BRICKS_WALL.get(),
+				RNBlocks.MORION_BRICKS_SLAB.get(),
+				RNBlocks.MORION_BRICKS_STAIRS.get(),
+				RNBlocks.MORION_BRICKS_WALL.get(),
+				RNBlocks.QUARTZ_TILES_WALL.get(),
+				RNBlocks.MORION_TILES_WALL.get(),
+				RNBlocks.QUARTZ_MOSAIC_WALL.get(),
+				RNBlocks.MORION_MOSAIC_WALL.get(),
+				RNBlocks.CHECKERED_TILES_WALL.get(),
+				RNBlocks.CHECKERED_MOSAIC_WALL.get()
 		);
 		this.tag(BlockTags.MINEABLE_WITH_AXE).add(
 				RNBlocks.PETRIFIED_SNAG.get(),
@@ -85,10 +97,15 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.STRIPPED_PETRIFIED_RIND.get()
 		);
 		this.tag(BlockTags.SLABS).add(RNBlocks.PETRIFIED_SLAB.get(), RNBlocks.MORION_SLAB.get(), RNBlocks.SMOOTH_MORION_SLAB.get(),
-				RNBlocks.QUARTZ_TILES_SLAB.get(), RNBlocks.MORION_TILES_SLAB.get(), RNBlocks.CHECKERED_TILES_SLAB.get(), RNBlocks.MOSAIC_QUARTZ_SLAB.get(), RNBlocks.MOSAIC_MORION_SLAB.get(), RNBlocks.CHECKERED_MOSAIC_SLAB.get());
+				RNBlocks.QUARTZ_TILES_SLAB.get(), RNBlocks.MORION_TILES_SLAB.get(), RNBlocks.CHECKERED_TILES_SLAB.get(), RNBlocks.QUARTZ_MOSAIC_SLAB.get(), RNBlocks.MORION_MOSAIC_SLAB.get(), RNBlocks.CHECKERED_MOSAIC_SLAB.get(),
+				RNBlocks.QUARTZ_BRICKS_SLAB.get(), RNBlocks.MORION_BRICKS_SLAB.get());
 		this.tag(BlockTags.STAIRS).add(RNBlocks.PETRIFIED_STAIRS.get(), RNBlocks.MORION_STAIRS.get(), RNBlocks.SMOOTH_MORION_STAIRS.get(),
-				RNBlocks.QUARTZ_TILES_STAIRS.get(), RNBlocks.MORION_TILES_STAIRS.get(), RNBlocks.CHECKERED_TILES_STAIRS.get(), RNBlocks.MOSAIC_QUARTZ_STAIRS.get(), RNBlocks.MOSAIC_MORION_STAIRS.get(), RNBlocks.CHECKERED_MOSAIC_STAIRS.get());
-		this.tag(BlockTags.WALLS).add(RNBlocks.PETRIFIED_WALL.get());
+				RNBlocks.QUARTZ_TILES_STAIRS.get(), RNBlocks.MORION_TILES_STAIRS.get(), RNBlocks.CHECKERED_TILES_STAIRS.get(), RNBlocks.QUARTZ_MOSAIC_STAIRS.get(), RNBlocks.MORION_MOSAIC_STAIRS.get(), RNBlocks.CHECKERED_MOSAIC_STAIRS.get(),
+				RNBlocks.QUARTZ_BRICKS_STAIRS.get(), RNBlocks.MORION_BRICKS_STAIRS.get());
+		this.tag(BlockTags.WALLS).add(RNBlocks.PETRIFIED_WALL.get(),
+				RNBlocks.QUARTZ_BRICKS_WALL.get(), RNBlocks.MORION_BRICKS_WALL.get(), RNBlocks.QUARTZ_TILES_WALL.get(), RNBlocks.MORION_TILES_WALL.get(),
+				RNBlocks.QUARTZ_MOSAIC_WALL.get(), RNBlocks.MORION_MOSAIC_WALL.get(),
+				RNBlocks.CHECKERED_TILES_WALL.get(), RNBlocks.CHECKERED_MOSAIC_WALL.get());
 		this.tag(BlockTags.FENCES).add(RNBlocks.PETRIFIED_FENCE.get());
 		this.tag(BlockTags.FENCE_GATES).add(RNBlocks.PETRIFIED_FENCE_GATE.get());
 		this.tag(BlockTags.DOORS).add(RNBlocks.PETRIFIED_DOOR.get());

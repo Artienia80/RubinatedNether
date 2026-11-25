@@ -6,8 +6,10 @@
     "rubinated_nether:quartz_tiles_stairs",
     "rubinated_nether:morion_tiles_stairs",
     "rubinated_nether:checkered_tiles_stairs",
-    "rubinated_nether:mosaic_quartz_stairs",
-    "rubinated_nether:mosaic_morion_stairs",
-    "rubinated_nether:checkered_mosaic_stairs"
+    "rubinated_nether:quartz_mosaic_stairs",
+    "rubinated_nether:morion_mosaic_stairs",
+    "rubinated_nether:checkered_mosaic_stairs",
+    "rubinated_nether:quartz_bricks_stairs",
+    "rubinated_nether:morion_bricks_stairs"
   ]
 }

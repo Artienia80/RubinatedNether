@@ -1,5 +1,11 @@
 {
   "values": [
-    "rubinated_nether:petrified_wall"
+    "rubinated_nether:petrified_wall",
+    "rubinated_nether:quartz_bricks_wall",
+    "rubinated_nether:morion_bricks_wall",
+    "rubinated_nether:quartz_tiles_wall",
+    "rubinated_nether:morion_tiles_wall",
+    "rubinated_nether:quartz_mosaic_wall",
+    "rubinated_nether:morion_mosaic_wall"
   ]
 }

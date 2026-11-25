@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_morion_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:morion_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:morion_bricks_wall_from_morion_bricks_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_morion_bricks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:morion_bricks_wall_from_morion_bricks_stonecutting"
+    ]
+  }
+}

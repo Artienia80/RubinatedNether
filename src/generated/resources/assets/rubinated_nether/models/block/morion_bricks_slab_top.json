@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "rubinated_nether:block/morion/morion_bricks",
+    "side": "rubinated_nether:block/morion/morion_bricks",
+    "top": "rubinated_nether:block/morion/morion_bricks"
+  }
+}

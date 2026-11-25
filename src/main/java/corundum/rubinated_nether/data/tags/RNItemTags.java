@@ -400,10 +400,15 @@ public class RNItemTags extends ItemTagsProvider {
 				RNBlocks.STRIPPED_PETRIFIED_RIND.asItem()
 		);
 		this.tag(ItemTags.SLABS).add(RNBlocks.PETRIFIED_SLAB.asItem(), RNBlocks.MORION_SLAB.asItem(), RNBlocks.SMOOTH_MORION_SLAB.asItem(),
-				RNBlocks.QUARTZ_TILES_SLAB.asItem(), RNBlocks.MORION_TILES_SLAB.asItem(), RNBlocks.CHECKERED_TILES_SLAB.asItem(), RNBlocks.MOSAIC_QUARTZ_SLAB.asItem(), RNBlocks.MOSAIC_MORION_SLAB.asItem(), RNBlocks.CHECKERED_MOSAIC_SLAB.asItem());
+				RNBlocks.QUARTZ_TILES_SLAB.asItem(), RNBlocks.MORION_TILES_SLAB.asItem(), RNBlocks.CHECKERED_TILES_SLAB.asItem(), RNBlocks.QUARTZ_MOSAIC_SLAB.asItem(), RNBlocks.MORION_MOSAIC_SLAB.asItem(), RNBlocks.CHECKERED_MOSAIC_SLAB.asItem(),
+				RNBlocks.QUARTZ_BRICKS_SLAB.asItem(), RNBlocks.MORION_BRICKS_SLAB.asItem());
 		this.tag(ItemTags.STAIRS).add(RNBlocks.PETRIFIED_STAIRS.asItem(), RNBlocks.MORION_STAIRS.asItem(), RNBlocks.SMOOTH_MORION_STAIRS.asItem(),
-				RNBlocks.QUARTZ_TILES_STAIRS.asItem(), RNBlocks.MORION_TILES_STAIRS.asItem(), RNBlocks.CHECKERED_TILES_STAIRS.asItem(), RNBlocks.MOSAIC_QUARTZ_STAIRS.asItem(), RNBlocks.MOSAIC_MORION_STAIRS.asItem(), RNBlocks.CHECKERED_MOSAIC_STAIRS.asItem());
-		this.tag(ItemTags.WALLS).add(RNBlocks.PETRIFIED_WALL.asItem());
+				RNBlocks.QUARTZ_TILES_STAIRS.asItem(), RNBlocks.MORION_TILES_STAIRS.asItem(), RNBlocks.CHECKERED_TILES_STAIRS.asItem(), RNBlocks.QUARTZ_MOSAIC_STAIRS.asItem(), RNBlocks.MORION_MOSAIC_STAIRS.asItem(), RNBlocks.CHECKERED_MOSAIC_STAIRS.asItem(),
+				RNBlocks.QUARTZ_BRICKS_STAIRS.asItem(), RNBlocks.MORION_BRICKS_STAIRS.asItem());
+		this.tag(ItemTags.WALLS).add(RNBlocks.PETRIFIED_WALL.asItem(),
+				RNBlocks.QUARTZ_BRICKS_WALL.asItem(), RNBlocks.MORION_BRICKS_WALL.asItem(), RNBlocks.QUARTZ_TILES_WALL.asItem(), RNBlocks.MORION_TILES_WALL.asItem(),
+				RNBlocks.QUARTZ_MOSAIC_WALL.asItem(), RNBlocks.MORION_MOSAIC_WALL.asItem(),
+				RNBlocks.CHECKERED_TILES_WALL.asItem(), RNBlocks.CHECKERED_MOSAIC_WALL.asItem());
 		this.tag(ItemTags.FENCES).add(RNBlocks.PETRIFIED_FENCE.asItem());
 		this.tag(ItemTags.FENCE_GATES).add(RNBlocks.PETRIFIED_FENCE_GATE.asItem());
 		this.tag(ItemTags.DOORS).add(RNBlocks.PETRIFIED_DOOR.asItem());

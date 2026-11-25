@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "rubinated_nether:morion_mosaic"
+  },
+  "result": {
+    "count": 1,
+    "id": "rubinated_nether:morion_mosaic_stairs"
+  }
+}
