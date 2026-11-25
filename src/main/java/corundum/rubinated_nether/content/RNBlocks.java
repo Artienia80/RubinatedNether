@@ -544,9 +544,9 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<RotatedPillarBlock> SHRINE_STONE_PILLAR = registerBlockAndItem(
+	public static final DeferredBlock<ShrinePillarBlock> SHRINE_STONE_PILLAR = registerBlockAndItem(
 			"shrine_stone_pillar",
-			() -> new RotatedPillarBlock(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
+			() -> new ShrinePillarBlock(Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get()))
 	);
 
 	public static final DeferredBlock<Block> SHRINE_STONE_BRICKS = registerBlockAndItem(
@@ -644,9 +644,9 @@ public class RNBlocks {
 			RNRarity.RUBINATED_NETHER_RUBY.get()
 	);
 
-	public static final DeferredBlock<RotatedPillarBlock> RUBINATED_SHRINE_STONE_PILLAR = registerBlockAndItemWithRarity(
+	public static final DeferredBlock<ShrinePillarBlock> RUBINATED_SHRINE_STONE_PILLAR = registerBlockAndItemWithRarity(
 			"rubinated_shrine_stone_pillar",
-			() -> new RotatedPillarBlock(
+			() -> new ShrinePillarBlock(
 					Block.Properties.ofFullCopy(RNBlocks.SHRINE_STONE.get())
 							.lightLevel($ -> 2)
 			),

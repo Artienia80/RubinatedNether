@@ -318,7 +318,11 @@ public class RNBlockStates extends BlockStateProvider {
 					.build();
 		});
 
-		this.axisBlock(RNBlocks.SHRINE_STONE_PILLAR.get(), modLoc("block/shrine_stone/shrine_stone_pillar_side"), modLoc("block/shrine_stone/shrine_stone_pillar_end"));
+		this.shrinePillar(
+				RNBlocks.SHRINE_STONE_PILLAR.get(),
+				modLoc("block/shrine_stone/shrine_stone_pillar_side"),
+				modLoc("block/shrine_stone/shrine_stone_pillar_end")
+		);
 
 		this.subfolder("shrine_stone/", RNBlocks.SHRINE_STONE_BRICKS);
 		this.slabBlock(
@@ -518,6 +522,32 @@ public class RNBlockStates extends BlockStateProvider {
 				edge,
 				mcLoc("translucent")
 		);
+	}
+
+	public void shrinePillar(ShrinePillarBlock block, ResourceLocation side, ResourceLocation end) {
+		var name = BuiltInRegistries.BLOCK.getKey(block).getPath();
+		var vertical = models().cubeColumn(name, side, end);
+		var horizontal = models().cubeColumnHorizontal(name + "_horizontal", side, end);
+
+		getVariantBuilder(block).forAllStates(state -> {
+			boolean inverted = state.getValue(ShrinePillarBlock.INVERTED);
+			return switch (state.getValue(RotatedPillarBlock.AXIS)) {
+				case X -> ConfiguredModel.builder()
+						.modelFile(horizontal)
+						.rotationX(90)
+						.rotationY(inverted ? 270 : 90)
+						.build();
+				case Z -> ConfiguredModel.builder()
+						.modelFile(horizontal)
+						.rotationX(90)
+						.rotationY(inverted ? 180 : 0)
+						.build();
+				default -> ConfiguredModel.builder()
+						.modelFile(vertical)
+						.rotationX(inverted ? 180 : 0)
+						.build();
+			};
+		});
 	}
 
 	public void sixWayPillar(DeferredBlock<?> block, ResourceLocation side, ResourceLocation end) {

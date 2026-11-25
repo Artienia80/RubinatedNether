@@ -3,8 +3,10 @@
   "render_type": "minecraft:cutout",
   "textures": {
     "end": "rubinated_nether:block/shrine_stone/rubinated_shrine_stone_pillar_end",
+    "end_back": "rubinated_nether:block/shrine_stone/rubinated_shrine_stone_pillar_end_back",
     "side": "rubinated_nether:block/shrine_stone/rubinated_shrine_stone_pillar_side",
     "overlay_end": "rubinated_nether:block/shrine_stone/rubinated_shrine_stone_pillar_end_e",
+    "overlay_end_back": "rubinated_nether:block/shrine_stone/rubinated_shrine_stone_pillar_end_back_e",
     "overlay_side": "rubinated_nether:block/shrine_stone/rubinated_shrine_stone_pillar_side_e",
     "particle": "rubinated_nether:block/shrine_stone/rubinated_shrine_stone_pillar_side"
   },
@@ -13,7 +15,7 @@
       "from": [0, 0, 0],
       "to": [16, 16, 16],
       "faces": {
-        "down": {"texture": "#end"},
+        "down": {"texture": "#end_back"},
         "up": {"texture": "#end"},
         "north": {"texture": "#side"},
         "south": {"texture": "#side"},
@@ -25,7 +27,7 @@
       "from": [0, 0, 0],
       "to": [16, 16, 16],
       "faces": {
-        "down": {"texture": "#overlay_end"},
+        "down": {"texture": "#overlay_end_back"},
         "up": {"texture": "#overlay_end"},
         "north": {"texture": "#overlay_side"},
         "south": {"texture": "#overlay_side"},

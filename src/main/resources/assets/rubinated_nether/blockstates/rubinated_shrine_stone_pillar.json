@@ -1,16 +1,30 @@
 {
   "variants": {
-    "axis=x": {
+    "axis=x,inverted=false": {
       "model": "rubinated_nether:block/rubinated_shrine_stone_pillar",
       "x": 90,
       "y": 90
     },
-    "axis=y": {
+    "axis=x,inverted=true": {
+      "model": "rubinated_nether:block/rubinated_shrine_stone_pillar",
+      "x": 90,
+      "y": 270
+    },
+    "axis=y,inverted=false": {
       "model": "rubinated_nether:block/rubinated_shrine_stone_pillar"
     },
-    "axis=z": {
+    "axis=y,inverted=true": {
+      "model": "rubinated_nether:block/rubinated_shrine_stone_pillar",
+      "x": 180
+    },
+    "axis=z,inverted=false": {
       "model": "rubinated_nether:block/rubinated_shrine_stone_pillar",
       "x": 90
+    },
+    "axis=z,inverted=true": {
+      "model": "rubinated_nether:block/rubinated_shrine_stone_pillar",
+      "x": 90,
+      "y": 180
     }
   }
 }
