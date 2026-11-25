@@ -174,6 +174,41 @@ public class RubinatedNether {
                     consumer.accept(pack);
                 }
             });
+
+            if (RNConfig.slabSideTextures) {
+                var slabSidesPath = ModList.get()
+                        .getModFileById(MODID)
+                        .getFile()
+                        .findResource("resourcepacks/slab_sides");
+
+                event.addRepositorySource((consumer) -> {
+                    var pack = Pack.readMetaAndCreate(
+                            new PackLocationInfo(
+                                    "builtin/slab_sides",
+                                    Component.translatable("resourcepack.rubinated_nether.slab_sides"),
+                                    PackSource.BUILT_IN,
+                                    Optional.empty()
+                            ),
+                            new Pack.ResourcesSupplier() {
+                                @Override
+                                public PackResources openPrimary(PackLocationInfo location) {
+                                    return new PathPackResources(location, slabSidesPath);
+                                }
+
+                                @Override
+                                public PackResources openFull(PackLocationInfo location, Pack.Metadata metadata) {
+                                    return new PathPackResources(location, slabSidesPath);
+                                }
+                            },
+                            PackType.CLIENT_RESOURCES,
+                            new PackSelectionConfig(true, Pack.Position.TOP, false)
+                    );
+
+                    if (pack != null) {
+                        consumer.accept(pack);
+                    }
+                });
+            }
         }
     }
 

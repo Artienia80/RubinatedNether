@@ -252,6 +252,9 @@ public class RNConfig extends MidnightConfig {
 	@Entry(category = CLIENT)
 	public static boolean strongboxItemDisplay = true;
 
+	@Entry(category = CLIENT)
+	public static boolean slabSideTextures = true;
+
 	@Entry(
 			category = POCKETWATCH,
 			isSlider = true,

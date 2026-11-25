@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "minecraft:block/quartz_block_bottom",
+    "side": "rubinated_nether:block/morion/quartz_block_slab_side",
+    "top": "minecraft:block/quartz_block_top"
+  }
+}

@@ -937,11 +937,14 @@
 
   "rubinated_nether.midnightconfig.rubinatedLanguage": "Obscure Rubinated Items behind Cipher",
   "rubinated_nether.midnightconfig.strongboxItemDisplay": "Show Items Inside Strongboxes",
+  "rubinated_nether.midnightconfig.slabSideTextures": "Quartz and Morion Slab Side Textures (restart required)",
 
   "resourcepack.rubinated_nether.simple_freezer": "§4Simplified Freezer Model",
   "resourcepack.rubinated_nether.aurichalcum": "§4Bronze No More!",
+  "resourcepack.rubinated_nether.slab_sides": "Slab Side Textures",
 
   "resourcepack.rubinated_nether.simple_freezer.desc": "Turns the Freezer into a cube model",
+  "resourcepack.rubinated_nether.slab_sides.desc": "Quartz and Morion slabs get their own side texture",
   "resourcepack.rubinated_nether.aurichalcum.desc": "Renames 'Bronze' into 'Aurichalcum' for Modpacks",
   "module.rubinated_nether.dampening": "Dampening",
   "module.rubinated_nether.smelting": "Smelting",

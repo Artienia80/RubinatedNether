@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "minecraft:block/quartz_block_top",
+    "side": "rubinated_nether:block/morion/quartz_block_slab_side"
+  }
+}
