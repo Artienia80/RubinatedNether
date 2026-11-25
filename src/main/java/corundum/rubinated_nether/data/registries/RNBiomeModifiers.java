@@ -21,6 +21,8 @@ public class RNBiomeModifiers {
 	public static final ResourceKey<BiomeModifier> MOLTEN_RUBY_ORE = createKey("molten_ruby_ore");
 	public static final ResourceKey<BiomeModifier> CINDER_FORMATIONS = createKey("cinder_formations");
 	public static final ResourceKey<BiomeModifier> CINDER_OVERHANGS = createKey("cinder_overhangs");
+	public static final ResourceKey<BiomeModifier> PUMICE_CHASMS = createKey("pumice_chasms");
+	public static final ResourceKey<BiomeModifier> PUMICE_SINKHOLES = createKey("pumice_sinkholes");
 
 	private static ResourceKey<BiomeModifier> createKey(String key) {
 		return ResourceKey.create(
@@ -69,6 +71,36 @@ public class RNBiomeModifiers {
 								placedFeatures.getOrThrow(RNPlacedFeatures.CINDER_OVERHANG)
 						),
 						GenerationStep.Decoration.TOP_LAYER_MODIFICATION
+				)
+		);
+
+		context.register(
+				PUMICE_CHASMS,
+				new AddFeaturesBiomeModifier(
+						HolderSet.direct(
+								biomes.getOrThrow(Biomes.NETHER_WASTES),
+								biomes.getOrThrow(Biomes.CRIMSON_FOREST),
+								biomes.getOrThrow(Biomes.WARPED_FOREST)
+						),
+						HolderSet.direct(
+								placedFeatures.getOrThrow(RNPlacedFeatures.PUMICE_CHASM)
+						),
+						GenerationStep.Decoration.UNDERGROUND_DECORATION
+				)
+		);
+
+		context.register(
+				PUMICE_SINKHOLES,
+				new AddFeaturesBiomeModifier(
+						HolderSet.direct(
+								biomes.getOrThrow(Biomes.NETHER_WASTES),
+								biomes.getOrThrow(Biomes.CRIMSON_FOREST),
+								biomes.getOrThrow(Biomes.WARPED_FOREST)
+						),
+						HolderSet.direct(
+								placedFeatures.getOrThrow(RNPlacedFeatures.PUMICE_SINKHOLE)
+						),
+						GenerationStep.Decoration.UNDERGROUND_DECORATION
 				)
 		);
 	}

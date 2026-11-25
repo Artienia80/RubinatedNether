@@ -1,0 +1,12 @@
+{
+  "type": "rubinated_nether:pumice_sinkhole",
+  "config": {
+    "bottom_width_multiplier": 1.5,
+    "magma_pockets": 8,
+    "max_depth": 15,
+    "max_opening_width": 10,
+    "min_depth": 5,
+    "min_opening_width": 5,
+    "ruby_chance": 0.25
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": [
+    "minecraft:nether_wastes",
+    "minecraft:crimson_forest",
+    "minecraft:warped_forest"
+  ],
+  "features": "rubinated_nether:pumice_sinkhole",
+  "step": "underground_decoration"
+}

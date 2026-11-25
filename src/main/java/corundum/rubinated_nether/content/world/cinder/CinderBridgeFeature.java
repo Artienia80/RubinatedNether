@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.world.cinder;
 
 import com.mojang.serialization.Codec;
+import corundum.rubinated_nether.content.world.FeatureLocations;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -150,6 +151,7 @@ public class CinderBridgeFeature extends Feature<NoneFeatureConfiguration> {
 			return false;
 		}
 		CinderFormations.place(level, connected, random);
+		FeatureLocations.record(level, "cinder_bridge", origin);
 		return true;
 	}
 

@@ -1,6 +1,9 @@
 package corundum.rubinated_nether.content.world.cinder;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.world.chasm.PumiceChasmFeature;
+import corundum.rubinated_nether.content.world.sinkhole.PumiceSinkholeConfiguration;
+import corundum.rubinated_nether.content.world.sinkhole.PumiceSinkholeFeature;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -18,5 +21,15 @@ public class RNFeatures {
 	public static final DeferredHolder<Feature<?>, CinderBridgeFeature> CINDER_BRIDGE = FEATURES.register(
 			"cinder_bridge",
 			() -> new CinderBridgeFeature(NoneFeatureConfiguration.CODEC)
+	);
+
+	public static final DeferredHolder<Feature<?>, PumiceChasmFeature> PUMICE_CHASM = FEATURES.register(
+			"pumice_chasm",
+			() -> new PumiceChasmFeature(NoneFeatureConfiguration.CODEC)
+	);
+
+	public static final DeferredHolder<Feature<?>, PumiceSinkholeFeature> PUMICE_SINKHOLE = FEATURES.register(
+			"pumice_sinkhole",
+			() -> new PumiceSinkholeFeature(PumiceSinkholeConfiguration.CODEC)
 	);
 }

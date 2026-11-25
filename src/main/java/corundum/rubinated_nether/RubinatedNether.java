@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.RNCauldronInteraction;
+import corundum.rubinated_nether.content.commands.FeatureLocateCommand;
 import corundum.rubinated_nether.content.commands.PocketwatchCommand;
 import corundum.rubinated_nether.content.commands.ModuleCommand;
 import corundum.rubinated_nether.content.commands.RubinateCommand;
@@ -198,6 +199,7 @@ public class RubinatedNether {
         RubinateCommand.register(event.getDispatcher());
         ModuleCommand.register(event.getDispatcher());
         PocketwatchCommand.register(event.getDispatcher());
+        FeatureLocateCommand.register(event.getDispatcher());
     }
 
     public static ResourceLocation id(String s) {

@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.world.cinder;
 
 import com.mojang.serialization.Codec;
+import corundum.rubinated_nether.content.world.FeatureLocations;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -179,6 +180,7 @@ public class CinderOverhangFeature extends Feature<NoneFeatureConfiguration> {
 		}
 
 		CinderFormations.place(level, connected, random);
+		FeatureLocations.record(level, "cinder_overhang", origin);
 		return true;
 	}
 

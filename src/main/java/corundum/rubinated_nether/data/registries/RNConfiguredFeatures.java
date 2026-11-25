@@ -3,6 +3,7 @@ package corundum.rubinated_nether.data.registries;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.*;
 import corundum.rubinated_nether.content.world.cinder.RNFeatures;
+import corundum.rubinated_nether.content.world.sinkhole.PumiceSinkholeConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -18,6 +19,8 @@ public class RNConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> MOLTEN_RUBY_ORE = createKey("molten_ruby_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> CINDER_OVERHANG = createKey("cinder_overhang");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> CINDER_BRIDGE = createKey("cinder_bridge");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> PUMICE_CHASM = createKey("pumice_chasm");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> PUMICE_SINKHOLE = createKey("pumice_sinkhole");
 
 	public static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
 		return ResourceKey.create(
@@ -41,5 +44,7 @@ public class RNConfiguredFeatures {
 
 		context.register(CINDER_OVERHANG, new ConfiguredFeature<>(RNFeatures.CINDER_OVERHANG.get(), NoneFeatureConfiguration.INSTANCE));
 		context.register(CINDER_BRIDGE, new ConfiguredFeature<>(RNFeatures.CINDER_BRIDGE.get(), NoneFeatureConfiguration.INSTANCE));
+		context.register(PUMICE_CHASM, new ConfiguredFeature<>(RNFeatures.PUMICE_CHASM.get(), NoneFeatureConfiguration.INSTANCE));
+		context.register(PUMICE_SINKHOLE, new ConfiguredFeature<>(RNFeatures.PUMICE_SINKHOLE.get(), PumiceSinkholeConfiguration.defaults()));
 	}
 }
