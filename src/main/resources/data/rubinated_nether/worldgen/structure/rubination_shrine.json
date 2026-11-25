@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:jigsaw",
+  "type": "rubinated_nether:rubination_shrine",
   "biomes": "#rubinated_nether:has_structure/rubination_shrine",
   "step": "top_layer_modification",
   "spawn_overrides": {

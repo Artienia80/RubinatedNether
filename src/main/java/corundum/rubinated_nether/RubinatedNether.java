@@ -18,6 +18,7 @@ import corundum.rubinated_nether.content.recipe.RNRecipeSerializers;
 import corundum.rubinated_nether.content.trim.RNTrimMaterials;
 import corundum.rubinated_nether.content.world.structures.RNStructurePieceTypes;
 import corundum.rubinated_nether.content.world.structures.RNStructureTypes;
+import corundum.rubinated_nether.content.world.structures.shrine.RubinationShrineStructure;
 import corundum.rubinated_nether.data.RNData;
 import corundum.rubinated_nether.event.RNAnvilRepairHandler;
 import corundum.rubinated_nether.misc.DatapackRegistry;
@@ -82,6 +83,7 @@ public class RubinatedNether {
         modEventBus.addListener(this::registerDataMaps);
         modEventBus.addListener(this::addPackFinders);
         NeoForge.EVENT_BUS.addListener(ChainsawItem::onEntityTick);
+        NeoForge.EVENT_BUS.addListener(RubinationShrineStructure::verify);
 
         modEventBus.addListener(RNData::datagen);
         modEventBus.addListener(DatapackRegistry::datapackRegistry);

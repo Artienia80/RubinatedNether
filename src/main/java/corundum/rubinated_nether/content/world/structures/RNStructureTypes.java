@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.world.structures;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.content.world.structures.shrine.RubinationShrineStructure;
 import corundum.rubinated_nether.content.world.structures.tree.PetrifiedTreeStructure;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -11,4 +12,5 @@ public class RNStructureTypes {
     public static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES = DeferredRegister.create(BuiltInRegistries.STRUCTURE_TYPE, RubinatedNether.MODID);
 
     public static final DeferredHolder<StructureType<?>, StructureType<PetrifiedTreeStructure>> PETRIFIED_TREE = STRUCTURE_TYPES.register("petrified_tree", () -> () -> PetrifiedTreeStructure.CODEC);
+    public static final DeferredHolder<StructureType<?>, StructureType<RubinationShrineStructure>> RUBINATION_SHRINE = STRUCTURE_TYPES.register("rubination_shrine", () -> () -> RubinationShrineStructure.CODEC);
 }
