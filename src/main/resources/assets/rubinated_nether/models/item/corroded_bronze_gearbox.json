@@ -1,7 +1,14 @@
 {
-  "loader": "neoforge:separate_transforms",
-  "base": {"parent": "rubinated_nether:item/bronze_gearbox_hand", "textures": {"texture": "rubinated_nether:block/bronze/bronze_gearbox/corroded_bronze_gearbox", "key": "rubinated_nether:entity/bronze/bronze_corroded"}},
-  "perspectives": {
-    "gui": {"parent": "rubinated_nether:item/bronze_gearbox_gui", "textures": {"texture": "rubinated_nether:block/bronze/bronze_gearbox/corroded_bronze_gearbox", "key": "rubinated_nether:entity/bronze/bronze_corroded"}}
-  }
+  "parent": "rubinated_nether:item/gearbox_static",
+  "textures": {
+    "texture": "rubinated_nether:block/bronze/bronze_gearbox/corroded_bronze_gearbox"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "rubinated_nether:generated": 1
+      },
+      "model": "rubinated_nether:item/gearbox_generated"
+    }
+  ]
 }

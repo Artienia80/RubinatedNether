@@ -4,6 +4,8 @@ import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.blocks.BronzeStrongboxBlock;
 import corundum.rubinated_nether.content.blocks.BronzeVaseBlock;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
+import corundum.rubinated_nether.utils.BoxVariant;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -33,6 +35,11 @@ public class WaxableBlockItem extends BlockItem {
 	@Override
 	public String getDescriptionId(ItemStack stack) {
 		return "item." + RubinatedNether.MODID + "." + stack.toString().split(":")[1]; 
+	}
+
+	@Override
+	public Component getName(ItemStack stack) {
+		return BoxVariant.name(stack, super.getName(stack));
 	}
 
 	@Override

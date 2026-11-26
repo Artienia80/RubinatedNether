@@ -1,3 +1,11 @@
 {
-  "parent": "rubinated_nether:block/discolored_bronze_strongbox_locked"
+  "parent": "rubinated_nether:block/discolored_bronze_strongbox_locked",
+  "overrides": [
+    {
+      "predicate": {
+        "rubinated_nether:generated": 1
+      },
+      "model": "rubinated_nether:item/strongbox_generated"
+    }
+  ]
 }

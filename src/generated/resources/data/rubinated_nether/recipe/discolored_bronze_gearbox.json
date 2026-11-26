@@ -7,13 +7,10 @@
     },
     "C": {
       "item": "rubinated_nether:cogwheel"
-    },
-    "K": {
-      "item": "rubinated_nether:winding_key"
     }
   },
   "pattern": [
-    "CKC",
+    "CCC",
     "CBC",
     "CCC"
   ],

@@ -72,7 +72,10 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
     private final ModelPart lid;
 
     public GearboxRenderer(BlockEntityRendererProvider.Context context) {
-        ModelPart root = context.bakeLayer(RNModelLayers.BRONZE_GEARBOX);
+        this(context.bakeLayer(RNModelLayers.BRONZE_GEARBOX));
+    }
+
+    public GearboxRenderer(ModelPart root) {
         this.body = root.getChild(BODY);
         this.lid = root.getChild(LID);
     }
@@ -110,15 +113,18 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
             poseStack.translate(-0.5F, -0.5F, -0.5F);
 
             TarnishStage stage = gearboxBlock.getAge();
-            Material tex = (lit ? ANIM_BODY_TEXTURES : BODY_TEXTURES).getOrDefault(stage, BODY_TEXTURES.get(TarnishStage.UNAFFECTED));
-            VertexConsumer consumer = tex.buffer(multiBufferSource, RenderType::entityCutout);
-
             float angle = lit ? litAngle(level.getGameTime(), partialTick) : this.calcAngle(blockstate);
-            this.renderKey(poseStack, multiBufferSource, stage, angle, blockstate.getValue(GearboxBlock.BROKEN), packedLight, packedOverlay);
-            this.body.render(poseStack, consumer, packedLight, packedOverlay);
-            this.lid.render(poseStack, consumer, packedLight, packedOverlay);
+            this.renderBox(poseStack, multiBufferSource, stage, lit, angle, blockstate.getValue(GearboxBlock.BROKEN), packedLight, packedOverlay);
             poseStack.popPose();
         }
+    }
+
+    public void renderBox(PoseStack poseStack, MultiBufferSource multiBufferSource, TarnishStage stage, boolean lit, float angle, boolean broken, int packedLight, int packedOverlay) {
+        Material tex = (lit ? ANIM_BODY_TEXTURES : BODY_TEXTURES).getOrDefault(stage, BODY_TEXTURES.get(TarnishStage.UNAFFECTED));
+        VertexConsumer consumer = tex.buffer(multiBufferSource, RenderType::entityCutout);
+        this.renderKey(poseStack, multiBufferSource, stage, angle, broken, packedLight, packedOverlay);
+        this.body.render(poseStack, consumer, packedLight, packedOverlay);
+        this.lid.render(poseStack, consumer, packedLight, packedOverlay);
     }
 
     private void renderKey(PoseStack poseStack, MultiBufferSource buffers, TarnishStage stage, float angle, boolean broken, int light, int overlay) {
@@ -171,7 +177,7 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
         }
     }
 
-    private static float litAngle(long gameTime, float partialTick) {
+    public static float litAngle(long gameTime, float partialTick) {
         long step = gameTime / GearboxBlock.STEP_TICKS;
         float intoStep = (gameTime % GearboxBlock.STEP_TICKS) + partialTick;
         float progress = Math.min(intoStep / GearboxBlock.SNAP_TICKS, 1.0F);

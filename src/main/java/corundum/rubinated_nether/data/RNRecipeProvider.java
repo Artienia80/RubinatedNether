@@ -1248,13 +1248,11 @@ public class RNRecipeProvider extends RecipeProvider {
 	private void gearboxRecipe(RecipeOutput recipeOutput, ItemLike gearbox, ItemLike chiseledBronze) {
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, gearbox, 1)
 				.define('C', RNItems.COGWHEEL)
-				.define('K', RNItems.WINDING_KEY)
 				.define('B', chiseledBronze)
-				.pattern("CKC")
+				.pattern("CCC")
 				.pattern("CBC")
 				.pattern("CCC")
 				.unlockedBy(getHasName(RNItems.COGWHEEL), has(RNItems.COGWHEEL))
-				.unlockedBy(getHasName(RNItems.WINDING_KEY), has(RNItems.WINDING_KEY))
 				.save(recipeOutput);
 	}
 

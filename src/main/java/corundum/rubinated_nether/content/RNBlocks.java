@@ -1640,7 +1640,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<GearboxBlock> BRONZE_GEARBOX = registerWaxableBlock(
+	public static final DeferredBlock<GearboxBlock> BRONZE_GEARBOX = registerGearbox(
 			"bronze_gearbox",
 			() -> new ActiveGearboxBlock(
 					TarnishStage.UNAFFECTED,
@@ -1650,7 +1650,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<GearboxBlock> DISCOLORED_BRONZE_GEARBOX = registerWaxableBlock(
+	public static final DeferredBlock<GearboxBlock> DISCOLORED_BRONZE_GEARBOX = registerGearbox(
 			"discolored_bronze_gearbox",
 			() -> new ActiveGearboxBlock(
 					TarnishStage.DISCOLORED,
@@ -1660,7 +1660,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<GearboxBlock> CORRODED_BRONZE_GEARBOX = registerWaxableBlock(
+	public static final DeferredBlock<GearboxBlock> CORRODED_BRONZE_GEARBOX = registerGearbox(
 			"corroded_bronze_gearbox",
 			() -> new ActiveGearboxBlock(
 					TarnishStage.CORRODED,
@@ -1670,7 +1670,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<GearboxBlock> TARNISHED_BRONZE_GEARBOX = registerWaxableBlock(
+	public static final DeferredBlock<GearboxBlock> TARNISHED_BRONZE_GEARBOX = registerGearbox(
 			"tarnished_bronze_gearbox",
 			() -> new ActiveGearboxBlock(
 					TarnishStage.TARNISHED,
@@ -1680,7 +1680,7 @@ public class RNBlocks {
 			)
 	);
 
-	public static final DeferredBlock<GearboxBlock> CRYSTALLIZED_BRONZE_GEARBOX = registerWaxableBlock(
+	public static final DeferredBlock<GearboxBlock> CRYSTALLIZED_BRONZE_GEARBOX = registerGearbox(
 			"crystallized_bronze_gearbox",
 			() -> new ActiveGearboxBlock(
 					TarnishStage.CRYSTALLIZED,
@@ -2053,6 +2053,25 @@ public class RNBlocks {
 		RNItems.ITEMS.register(
 				name,
 				() -> new VaseBlockItem(register.get(), new Item.Properties())
+		);
+
+		RNItems.ITEMS.register(
+				"waxed_" + name,
+				() -> new WaxableBlockItem(
+						register,
+						new Item.Properties()
+				)
+		);
+
+		return register;
+	}
+
+	public static <T extends Block> DeferredBlock<T> registerGearbox(String name, Supplier<T> block) {
+		var register = BLOCKS.register(name, block);
+
+		RNItems.ITEMS.register(
+				name,
+				() -> new corundum.rubinated_nether.content.items.GearboxBlockItem(register.get(), new Item.Properties())
 		);
 
 		RNItems.ITEMS.register(

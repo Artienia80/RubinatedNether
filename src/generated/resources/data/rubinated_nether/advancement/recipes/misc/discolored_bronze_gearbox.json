@@ -16,23 +16,12 @@
         "recipe": "rubinated_nether:discolored_bronze_gearbox"
       },
       "trigger": "minecraft:recipe_unlocked"
-    },
-    "has_winding_key": {
-      "conditions": {
-        "items": [
-          {
-            "items": "rubinated_nether:winding_key"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "has_cogwheel",
-      "has_winding_key"
+      "has_cogwheel"
     ]
   ],
   "rewards": {

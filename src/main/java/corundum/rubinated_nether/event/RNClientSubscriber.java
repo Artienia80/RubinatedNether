@@ -103,6 +103,16 @@ public class RNClientSubscriber {
         ));
 
         event.enqueueWork(() -> {
+            for (Item box : boxItems()) {
+                ItemProperties.register(
+                        box,
+                        ResourceLocation.fromNamespaceAndPath(RubinatedNether.MODID, "generated"),
+                        (stack, level, entity, seed) -> corundum.rubinated_nether.utils.BoxVariant.isGenerated(stack) ? 1.0F : 0.0F
+                );
+            }
+        });
+
+        event.enqueueWork(() -> {
             for (var block : RNBlocks.FLIPPABLE_BLOCKS) {
                 ItemProperties.register(
                         block.asItem(),
@@ -111,6 +121,20 @@ public class RNClientSubscriber {
                 );
             }
         });
+    }
+
+    private static java.util.List<Item> boxItems() {
+        java.util.List<Item> items = new java.util.ArrayList<>();
+        for (DeferredBlock<?> block : new DeferredBlock<?>[]{
+                RNBlocks.BRONZE_GEARBOX, RNBlocks.DISCOLORED_BRONZE_GEARBOX, RNBlocks.CORRODED_BRONZE_GEARBOX,
+                RNBlocks.TARNISHED_BRONZE_GEARBOX, RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX,
+                RNBlocks.BRONZE_STRONGBOX, RNBlocks.DISCOLORED_BRONZE_STRONGBOX, RNBlocks.CORRODED_BRONZE_STRONGBOX,
+                RNBlocks.TARNISHED_BRONZE_STRONGBOX, RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX
+        }) {
+            items.add(block.get().asItem());
+            items.add(BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(block))));
+        }
+        return items;
     }
 
     @SubscribeEvent
@@ -376,6 +400,34 @@ public class RNClientSubscriber {
         event.registerItem(headExtensions, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.TARNISHED_BRONZE_HEAD.get().asItem()))));
         event.registerItem(headExtensions, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(RNBlocks.CRYSTALLIZED_BRONZE_HEAD.get().asItem()))));
 
+        IClientItemExtensions gearboxExtensions = new IClientItemExtensions() {
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return corundum.rubinated_nether.client.render.GearboxItemRenderer.INSTANCE;
+            }
+        };
+        for (DeferredBlock<?> gearbox : new DeferredBlock<?>[]{
+                RNBlocks.BRONZE_GEARBOX, RNBlocks.DISCOLORED_BRONZE_GEARBOX, RNBlocks.CORRODED_BRONZE_GEARBOX,
+                RNBlocks.TARNISHED_BRONZE_GEARBOX, RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX
+        }) {
+            event.registerItem(gearboxExtensions, gearbox.get().asItem());
+            event.registerItem(gearboxExtensions, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(gearbox))));
+        }
+
+        IClientItemExtensions strongboxExtensions = new IClientItemExtensions() {
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return corundum.rubinated_nether.client.render.StrongboxItemRenderer.INSTANCE;
+            }
+        };
+        for (DeferredBlock<?> strongbox : new DeferredBlock<?>[]{
+                RNBlocks.BRONZE_STRONGBOX, RNBlocks.DISCOLORED_BRONZE_STRONGBOX, RNBlocks.CORRODED_BRONZE_STRONGBOX,
+                RNBlocks.TARNISHED_BRONZE_STRONGBOX, RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX
+        }) {
+            event.registerItem(strongboxExtensions, strongbox.get().asItem());
+            event.registerItem(strongboxExtensions, BuiltInRegistries.ITEM.get(RubinatedNether.id(WaxableBlockItem.getWaxableItem(strongbox))));
+        }
+
         IClientItemExtensions vaseExtensions = new IClientItemExtensions() {
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
@@ -407,6 +459,10 @@ public class RNClientSubscriber {
                 "tarnished_bronze_vase", "crystallized_bronze_vase"
         }) {
             event.register(ModelResourceLocation.standalone(RubinatedNether.id("item/" + name + "_base")));
+        }
+        for (String stage : new String[]{"bronze", "discolored_bronze", "corroded_bronze", "tarnished_bronze", "crystallized_bronze"}) {
+            event.register(ModelResourceLocation.standalone(RubinatedNether.id("block/" + stage + "_strongbox_open")));
+            event.register(ModelResourceLocation.standalone(RubinatedNether.id("block/" + stage + "_strongbox_key_0")));
         }
     }
 

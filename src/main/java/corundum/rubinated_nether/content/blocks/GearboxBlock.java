@@ -115,6 +115,7 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
                 .setValue(COOLING_DOWN, false)
                 .setValue(CRANK_LEVEL, 0)
                 .setValue(NATURAL, false)
+                .setValue(BROKEN, !corundum.rubinated_nether.utils.BoxVariant.isGenerated(context.getItemInHand()))
                 .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
     }
 
