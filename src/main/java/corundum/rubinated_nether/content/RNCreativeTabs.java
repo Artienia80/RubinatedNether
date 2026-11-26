@@ -390,12 +390,12 @@ public class RNCreativeTabs {
 					RNItems.NETHER_MORION.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.RAW_GOLD.getDefaultInstance(),
 					RNItems.MOLTEN_RUBY.get().getDefaultInstance(), BOTH_TABS);
+			event.insertAfter(RNItems.MOLTEN_RUBY.get().getDefaultInstance(),
+					RNItems.MOLTEN_RUBY_NUGGET.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.EMERALD.getDefaultInstance(),
 					RNItems.RUBY.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.RUBY.get().getDefaultInstance(),
 					RNItems.RUBY_SHARD.get().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNItems.RUBY_SHARD.get().getDefaultInstance(),
-					RNItems.MOLTEN_RUBY_NUGGET.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.BREEZE_ROD.getDefaultInstance(),
 					RNItems.BRONZE_ROD.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.BRONZE_ROD.get().getDefaultInstance(),
@@ -459,7 +459,7 @@ public class RNCreativeTabs {
 		}
 		private static void injectFood(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.FOOD_AND_DRINKS) return;
-			event.insertAfter(Items.APPLE.getDefaultInstance(),
+			event.insertAfter(Items.ENCHANTED_GOLDEN_APPLE.getDefaultInstance(),
 					RNItems.POMEGRANATE.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.POMEGRANATE.get().getDefaultInstance(),
 					RNItems.RUBINATED_POMEGRANATE.get().getDefaultInstance(), BOTH_TABS);
@@ -491,8 +491,8 @@ public class RNCreativeTabs {
 					RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.BLUE_ICE.getDefaultInstance(),
 					RNBlocks.DRY_ICE.get().asItem().getDefaultInstance(), BOTH_TABS);
-			placeChain(event, List.<ItemLike>of(RNBlocks.PUMICE, RNBlocks.CINDER, RNBlocks.SOUL_STARVED_SAND, RNBlocks.SUSPICIOUS_CINDER),
-					Items.SOUL_SOIL, Items.SOUL_SAND);
+			placeChain(event, List.<ItemLike>of(RNBlocks.PUMICE, RNBlocks.CINDER), Items.NETHERRACK);
+			placeChain(event, List.<ItemLike>of(RNBlocks.SOUL_STARVED_SAND), Items.SOUL_SOIL, Items.SOUL_SAND);
 		}
 		private static void injectColoredBlocks(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.COLORED_BLOCKS) return;
@@ -523,37 +523,6 @@ public class RNCreativeTabs {
 					RNBlocks.SHRINE_STONE_COFFER.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNBlocks.SHRINE_STONE_COFFER.get().asItem().getDefaultInstance(),
 					RNBlocks.RUBINATED_SHRINE_STONE_COFFER.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.RUBINATED_SHRINE_STONE_COFFER.get().asItem().getDefaultInstance(),
-					RNBlocks.BRONZE_STRONGBOX.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.BRONZE_STRONGBOX.get().asItem().getDefaultInstance(),
-					RNBlocks.DISCOLORED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.DISCOLORED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(),
-					RNBlocks.CORRODED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.CORRODED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(),
-					RNBlocks.TARNISHED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.TARNISHED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(),
-					RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX.get().asItem().getDefaultInstance(),
-					getWaxed(RNBlocks.BRONZE_STRONGBOX), BOTH_TABS);
-			event.insertAfter(getWaxed(RNBlocks.BRONZE_STRONGBOX),
-					getWaxed(RNBlocks.DISCOLORED_BRONZE_STRONGBOX), BOTH_TABS);
-			event.insertAfter(getWaxed(RNBlocks.DISCOLORED_BRONZE_STRONGBOX),
-					getWaxed(RNBlocks.CORRODED_BRONZE_STRONGBOX), BOTH_TABS);
-			event.insertAfter(getWaxed(RNBlocks.CORRODED_BRONZE_STRONGBOX),
-					getWaxed(RNBlocks.TARNISHED_BRONZE_STRONGBOX), BOTH_TABS);
-			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_STRONGBOX),
-					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX), BOTH_TABS);
-			ItemStack previous = getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_STRONGBOX);
-			for (DeferredBlock<?> strongbox : RNCreativeTabs.GENERATED_STRONGBOXES) {
-				ItemStack next = generated(strongbox.get().asItem().getDefaultInstance());
-				event.insertAfter(previous, next, BOTH_TABS);
-				previous = next;
-			}
-			for (DeferredBlock<?> strongbox : RNCreativeTabs.GENERATED_STRONGBOXES) {
-				ItemStack next = generated(getWaxed(strongbox));
-				event.insertAfter(previous, next, BOTH_TABS);
-				previous = next;
-			}
 			event.insertAfter(Items.CHISELED_BOOKSHELF.getDefaultInstance(),
 					RNBlocks.RUNESTONE.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.LANTERN.getDefaultInstance(),
@@ -681,15 +650,17 @@ public class RNCreativeTabs {
 					getWaxed(RNBlocks.TARNISHED_BRONZE_VASE), BOTH_TABS);
 			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_VASE),
 					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_VASE), BOTH_TABS);
-			placeChain(event, List.<ItemLike>of(RNBlocks.PETRIFIED_SIGN_ITEM), Items.WARPED_SIGN);
-			placeChain(event, List.<ItemLike>of(RNBlocks.PETRIFIED_HANGING_SIGN_ITEM), Items.WARPED_HANGING_SIGN);
+			placeChain(event, List.<ItemLike>of(RNBlocks.PETRIFIED_SIGN_ITEM, RNBlocks.PETRIFIED_HANGING_SIGN_ITEM), Items.WARPED_HANGING_SIGN);
+			placeChain(event, List.<ItemLike>of(RNBlocks.SUSPICIOUS_CINDER, RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE), Items.SUSPICIOUS_GRAVEL);
 		}
 		private static void injectBuildingBlocks(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.BUILDING_BLOCKS) return;
 			// Quartz, then morion, then checkered
-			placeChain(event, quartzBlocks(), Items.QUARTZ_BRICKS, Items.SMOOTH_QUARTZ_SLAB);
-			placeChain(event, morionBlocks(), RNBlocks.QUARTZ_MOSAIC_SLAB);
-			placeChain(event, checkeredBlocks(), RNBlocks.MORION_MOSAIC_SLAB);
+			event.remove(Items.QUARTZ_PILLAR.getDefaultInstance(), BOTH_TABS);
+			placeChain(event, quartzBlocks(), Items.QUARTZ_BRICKS);
+			placeChain(event, List.<ItemLike>of(Items.QUARTZ_PILLAR), Items.SMOOTH_QUARTZ_SLAB);
+			placeChain(event, morionBlocks(), Items.QUARTZ_PILLAR);
+			placeChain(event, checkeredBlocks(), RNBlocks.MORION_PILLAR);
 			event.insertAfter(Items.NETHERITE_BLOCK.getDefaultInstance(),
 					RNBlocks.RUBY_BLOCK.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.GILDED_BLACKSTONE.getDefaultInstance(),
@@ -1063,28 +1034,6 @@ public class RNCreativeTabs {
 					getWaxed(RNBlocks.TARNISHED_BRONZE_LASER), BOTH_TABS);
 			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_LASER),
 					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_LASER), BOTH_TABS);
-			// Gearboxes: normal, waxed, generated, generated waxed (same layout as strongboxes)
-			ItemStack gearPrev = getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_SPRING);
-			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_GEARBOXES) {
-				ItemStack next = box.get().asItem().getDefaultInstance();
-				event.insertAfter(gearPrev, next, BOTH_TABS);
-				gearPrev = next;
-			}
-			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_GEARBOXES) {
-				ItemStack next = getWaxed(box);
-				event.insertAfter(gearPrev, next, BOTH_TABS);
-				gearPrev = next;
-			}
-			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_GEARBOXES) {
-				ItemStack next = generated(box.get().asItem().getDefaultInstance());
-				event.insertAfter(gearPrev, next, BOTH_TABS);
-				gearPrev = next;
-			}
-			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_GEARBOXES) {
-				ItemStack next = generated(getWaxed(box));
-				event.insertAfter(gearPrev, next, BOTH_TABS);
-				gearPrev = next;
-			}
 			placeChain(event, List.<ItemLike>of(RNBlocks.REDSTONE_ACCUMULATOR), Items.COMPARATOR, Items.REPEATER);
 			placeChain(event, List.<ItemLike>of(RNBlocks.MOONPHASE_DETECTOR), Items.DAYLIGHT_DETECTOR, Items.OBSERVER);
 			// Petrified wood redstone set
@@ -1096,6 +1045,27 @@ public class RNCreativeTabs {
 		}
 		private static void injectSpawnEggs(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.SPAWN_EGGS) return;
+			ItemStack previous = Items.TRIAL_SPAWNER.getDefaultInstance();
+			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_GEARBOXES) {
+				ItemStack next = generated(box.get().asItem().getDefaultInstance());
+				event.insertAfter(previous, next, BOTH_TABS);
+				previous = next;
+			}
+			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_GEARBOXES) {
+				ItemStack next = generated(getWaxed(box));
+				event.insertAfter(previous, next, BOTH_TABS);
+				previous = next;
+			}
+			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_STRONGBOXES) {
+				ItemStack next = generated(box.get().asItem().getDefaultInstance());
+				event.insertAfter(previous, next, BOTH_TABS);
+				previous = next;
+			}
+			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_STRONGBOXES) {
+				ItemStack next = generated(getWaxed(box));
+				event.insertAfter(previous, next, BOTH_TABS);
+				previous = next;
+			}
 			event.insertAfter(Items.BLAZE_SPAWN_EGG.getDefaultInstance(),
 					RNItems.BRONZE_SPAWN_EGG.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.BRONZE_SPAWN_EGG.get().getDefaultInstance(),
@@ -1116,6 +1086,27 @@ public class RNCreativeTabs {
 					RNItems.WAXED_TARNISHED_BRONZE_SPAWN_EGG.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.WAXED_TARNISHED_BRONZE_SPAWN_EGG.get().getDefaultInstance(),
 					RNItems.WAXED_CRYSTALLIZED_BRONZE_SPAWN_EGG.get().getDefaultInstance(), BOTH_TABS);
+			previous = Items.ZOMBIFIED_PIGLIN_SPAWN_EGG.getDefaultInstance();
+			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_GEARBOXES) {
+				ItemStack next = box.get().asItem().getDefaultInstance();
+				event.insertAfter(previous, next, BOTH_TABS);
+				previous = next;
+			}
+			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_GEARBOXES) {
+				ItemStack next = getWaxed(box);
+				event.insertAfter(previous, next, BOTH_TABS);
+				previous = next;
+			}
+			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_STRONGBOXES) {
+				ItemStack next = box.get().asItem().getDefaultInstance();
+				event.insertAfter(previous, next, BOTH_TABS);
+				previous = next;
+			}
+			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_STRONGBOXES) {
+				ItemStack next = getWaxed(box);
+				event.insertAfter(previous, next, BOTH_TABS);
+				previous = next;
+			}
 		}
 	}
 	private static final DeferredBlock<?>[] GENERATED_STRONGBOXES = {
@@ -1185,13 +1176,9 @@ public class RNCreativeTabs {
 	private static List<DeferredBlock<? extends net.minecraft.world.level.block.Block>> morionBlocks() {
 		return List.of(
 				RNBlocks.MORION_BLOCK,
-				RNBlocks.CHISELED_MORION_BLOCK,
-				RNBlocks.MORION_PILLAR,
 				RNBlocks.MORION_STAIRS,
 				RNBlocks.MORION_SLAB,
-				RNBlocks.SMOOTH_MORION,
-				RNBlocks.SMOOTH_MORION_STAIRS,
-				RNBlocks.SMOOTH_MORION_SLAB,
+				RNBlocks.CHISELED_MORION_BLOCK,
 				RNBlocks.MORION_BRICKS,
 				RNBlocks.MORION_BRICKS_STAIRS,
 				RNBlocks.MORION_BRICKS_SLAB,
@@ -1200,7 +1187,11 @@ public class RNCreativeTabs {
 				RNBlocks.MORION_TILES_SLAB,
 				RNBlocks.MORION_MOSAIC,
 				RNBlocks.MORION_MOSAIC_STAIRS,
-				RNBlocks.MORION_MOSAIC_SLAB
+				RNBlocks.MORION_MOSAIC_SLAB,
+				RNBlocks.SMOOTH_MORION,
+				RNBlocks.SMOOTH_MORION_STAIRS,
+				RNBlocks.SMOOTH_MORION_SLAB,
+				RNBlocks.MORION_PILLAR
 		);
 	}
 	private static List<DeferredBlock<? extends net.minecraft.world.level.block.Block>> checkeredBlocks() {
@@ -1222,8 +1213,7 @@ public class RNCreativeTabs {
 				RNBlocks.SHRINE_STONE_TILES, RNBlocks.SHRINE_STONE_TILES_STAIRS, RNBlocks.SHRINE_STONE_TILES_SLAB, RNBlocks.SHRINE_STONE_TILES_WALL,
 				RNBlocks.SHRINE_STONE_PILLAR, RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
 				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS, RNBlocks.RUBINATED_SHRINE_STONE_TILES, RNBlocks.RUBINATED_SHRINE_STONE_PILLAR, RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS,
-				RNBlocks.SHRINE_STONE_RUBBLE, RNBlocks.SHRINE_STONE_RUBBLE_STAIRS, RNBlocks.SHRINE_STONE_RUBBLE_SLAB, RNBlocks.SHRINE_STONE_RUBBLE_WALL,
-				RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE
+				RNBlocks.SHRINE_STONE_RUBBLE, RNBlocks.SHRINE_STONE_RUBBLE_STAIRS, RNBlocks.SHRINE_STONE_RUBBLE_SLAB, RNBlocks.SHRINE_STONE_RUBBLE_WALL
 		);
 	}
 	private static List<ItemLike> petrifiedBuildingBlocks() {
