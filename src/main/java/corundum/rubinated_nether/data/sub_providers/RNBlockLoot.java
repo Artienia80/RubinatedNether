@@ -94,16 +94,8 @@ public class RNBlockLoot extends BlockLootSubProvider {
 		this.add(RNBlocks.MORION_MOSAIC_SLAB.get(), this::createSlabItemTable);
 		this.add(RNBlocks.QUARTZ_BRICKS_SLAB.get(), this::createSlabItemTable);
 		this.dropSelf(RNBlocks.QUARTZ_BRICKS_STAIRS.get());
-		this.dropSelf(RNBlocks.QUARTZ_BRICKS_WALL.get());
 		this.add(RNBlocks.MORION_BRICKS_SLAB.get(), this::createSlabItemTable);
 		this.dropSelf(RNBlocks.MORION_BRICKS_STAIRS.get());
-		this.dropSelf(RNBlocks.MORION_BRICKS_WALL.get());
-		this.dropSelf(RNBlocks.QUARTZ_TILES_WALL.get());
-		this.dropSelf(RNBlocks.MORION_TILES_WALL.get());
-		this.dropSelf(RNBlocks.QUARTZ_MOSAIC_WALL.get());
-		this.dropSelf(RNBlocks.MORION_MOSAIC_WALL.get());
-		this.dropSelf(RNBlocks.CHECKERED_TILES_WALL.get());
-		this.dropSelf(RNBlocks.CHECKERED_MOSAIC_WALL.get());
 		this.dropSelf(RNBlocks.CHECKERED_MOSAIC.get());
 		this.dropSelf(RNBlocks.CHECKERED_MOSAIC_STAIRS.get());
 		this.add(RNBlocks.CHECKERED_MOSAIC_SLAB.get(), this::createSlabItemTable);

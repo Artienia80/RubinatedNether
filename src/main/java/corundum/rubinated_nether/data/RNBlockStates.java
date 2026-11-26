@@ -202,16 +202,8 @@ public class RNBlockStates extends BlockStateProvider {
 		this.stairsBlock(RNBlocks.MORION_MOSAIC_STAIRS.get(), modLoc("block/morion/morion_mosaic"));
 		this.slabBlock(RNBlocks.QUARTZ_BRICKS_SLAB.get(), mcLoc("block/quartz_bricks"), mcLoc("block/quartz_bricks"));
 		this.stairsBlock(RNBlocks.QUARTZ_BRICKS_STAIRS.get(), mcLoc("block/quartz_bricks"));
-		this.wallBlock(RNBlocks.QUARTZ_BRICKS_WALL.get(), mcLoc("block/quartz_bricks"));
 		this.slabBlock(RNBlocks.MORION_BRICKS_SLAB.get(), modLoc("block/morion_bricks"), modLoc("block/morion/morion_bricks"));
 		this.stairsBlock(RNBlocks.MORION_BRICKS_STAIRS.get(), modLoc("block/morion/morion_bricks"));
-		this.wallBlock(RNBlocks.MORION_BRICKS_WALL.get(), modLoc("block/morion/morion_bricks"));
-		this.wallBlock(RNBlocks.QUARTZ_TILES_WALL.get(), modLoc("block/morion/quartz_tiles"));
-		this.wallBlock(RNBlocks.MORION_TILES_WALL.get(), modLoc("block/morion/morion_tiles"));
-		this.wallBlock(RNBlocks.QUARTZ_MOSAIC_WALL.get(), modLoc("block/morion/quartz_mosaic"));
-		this.wallBlock(RNBlocks.MORION_MOSAIC_WALL.get(), modLoc("block/morion/morion_mosaic"));
-		this.flippableWall(RNBlocks.CHECKERED_TILES_WALL, "checkered_tiles");
-		this.flippableWall(RNBlocks.CHECKERED_MOSAIC_WALL, "checkered_mosaic");
 		this.flippableSlab(RNBlocks.CHECKERED_TILES_SLAB, "checkered_tiles", true);
 		this.flippableStairs(RNBlocks.CHECKERED_TILES_STAIRS, "checkered_tiles", true);
 		this.flippableSlab(RNBlocks.CHECKERED_MOSAIC_SLAB, "checkered_mosaic", false);
@@ -1555,41 +1547,6 @@ public class RNBlockStates extends BlockStateProvider {
 				},
 				SlabBlock.WATERLOGGED
 		);
-	}
-
-	private void flippableWall(DeferredBlock<? extends net.minecraft.world.level.block.WallBlock> block, String base) {
-		String name = base + "_wall";
-		ModelFile[] post = new ModelFile[2];
-		ModelFile[] side = new ModelFile[2];
-		ModelFile[] tall = new ModelFile[2];
-		for (int i = 0; i < 2; i++) {
-			boolean flipped = i == 1;
-			ResourceLocation texture = flippableTexture(base, flipped);
-			post[i] = this.models().wallPost(name + "_post" + flippedSuffix(flipped), texture);
-			side[i] = this.models().wallSide(name + "_side" + flippedSuffix(flipped), texture);
-			tall[i] = this.models().wallSideTall(name + "_side_tall" + flippedSuffix(flipped), texture);
-		}
-		Map<Direction, net.minecraft.world.level.block.state.properties.EnumProperty<net.minecraft.world.level.block.state.properties.WallSide>> sides = new java.util.LinkedHashMap<>();
-		sides.put(Direction.NORTH, net.minecraft.world.level.block.WallBlock.NORTH_WALL);
-		sides.put(Direction.EAST, net.minecraft.world.level.block.WallBlock.EAST_WALL);
-		sides.put(Direction.SOUTH, net.minecraft.world.level.block.WallBlock.SOUTH_WALL);
-		sides.put(Direction.WEST, net.minecraft.world.level.block.WallBlock.WEST_WALL);
-		MultiPartBlockStateBuilder builder = this.getMultipartBuilder(block.get());
-		for (int i = 0; i < 2; i++) {
-			boolean flipped = i == 1;
-			builder.part().modelFile(post[i]).addModel()
-					.condition(net.minecraft.world.level.block.WallBlock.UP, true)
-					.condition(RNBlockStateProperties.FLIPPED, flipped);
-			for (var entry : sides.entrySet()) {
-				int rotY = (((int) entry.getKey().toYRot()) + 180) % 360;
-				builder.part().modelFile(side[i]).rotationY(rotY).uvLock(true).addModel()
-						.condition(entry.getValue(), net.minecraft.world.level.block.state.properties.WallSide.LOW)
-						.condition(RNBlockStateProperties.FLIPPED, flipped);
-				builder.part().modelFile(tall[i]).rotationY(rotY).uvLock(true).addModel()
-						.condition(entry.getValue(), net.minecraft.world.level.block.state.properties.WallSide.TALL)
-						.condition(RNBlockStateProperties.FLIPPED, flipped);
-			}
-		}
 	}
 
 	private BlockModelBuilder checkerStairs(String name, String base, boolean flipped, String shape, int xRot, int yRot, boolean coarse) {

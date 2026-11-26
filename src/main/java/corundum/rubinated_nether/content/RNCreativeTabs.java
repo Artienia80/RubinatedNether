@@ -4,12 +4,14 @@ import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneCarvingHelper;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.utils.RNConfig;
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.Output;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.DyeColor;
 import corundum.rubinated_nether.content.blocks.*;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
@@ -58,7 +60,7 @@ public class RNCreativeTabs {
 						addItems(output, RNBlocks.BRAZIER);
 						// Freezer and ice
 						addItems(output, RNBlocks.FREEZER, RNItems.POWDER_SNOW, RNItems.FROSTED_ICE, RNBlocks.DRY_ICE, RNBlocks.FROSTED_GLASS);
-						addItems(output, RNBlocks.STAINED_FROSTED_GLASS.values().toArray(new ItemLike[0]));
+						addItems(output, stainedFrostedGlass().toArray(new ItemLike[0]));
 						// Coffer
 						addItems(output, RNBlocks.SHRINE_STONE_COFFER, RNBlocks.RUBINATED_SHRINE_STONE_COFFER);
 						// Shrine stone family
@@ -117,8 +119,15 @@ public class RNCreativeTabs {
 								RNItems.PETRIFIED_BOAT,
 								RNItems.PETRIFIED_CHEST_BOAT
 						);
+						// Quartz, then morion, then checkered
+						for (var block : quartzBlocks()) {
+							output.accept(block.get());
+						}
 						addItems(output, RNItems.NETHER_MORION);
-						for (var block : morionQuartzBlocks()) {
+						for (var block : morionBlocks()) {
+							output.accept(block.get());
+						}
+						for (var block : checkeredBlocks()) {
 							output.accept(block.get());
 						}
 						addItems(
@@ -438,6 +447,9 @@ public class RNCreativeTabs {
 					RNItems.BRONZE_CHAINSAW.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.BRONZE_CHAINSAW.get().getDefaultInstance(),
 					RNItems.POCKETWATCH.get().getDefaultInstance(), BOTH_TABS);
+			placeChain(event, List.<ItemLike>of(RNItems.MUSIC_BOX), RNItems.POCKETWATCH);
+			placeChain(event, List.<ItemLike>of(RNItems.PETRIFIED_BOAT, RNItems.PETRIFIED_CHEST_BOAT),
+					Items.BAMBOO_CHEST_RAFT, Items.BAMBOO_RAFT, Items.MANGROVE_CHEST_BOAT);
 			event.insertAfter(Items.MUSIC_DISC_PIGSTEP.getDefaultInstance(),
 					RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNItems.MUSIC_DISC_SHIMMER.get().getDefaultInstance(),
@@ -479,6 +491,8 @@ public class RNCreativeTabs {
 					RNBlocks.MOLTEN_RUBY_BLOCK.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.BLUE_ICE.getDefaultInstance(),
 					RNBlocks.DRY_ICE.get().asItem().getDefaultInstance(), BOTH_TABS);
+			placeChain(event, List.<ItemLike>of(RNBlocks.PUMICE, RNBlocks.CINDER, RNBlocks.SOUL_STARVED_SAND, RNBlocks.SUSPICIOUS_CINDER),
+					Items.SOUL_SOIL, Items.SOUL_SAND);
 		}
 		private static void injectColoredBlocks(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.COLORED_BLOCKS) return;
@@ -494,6 +508,8 @@ public class RNCreativeTabs {
 					RNBlocks.MOLTEN_RUBY_GLASS_PANE.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNBlocks.MOLTEN_RUBY_GLASS_PANE.get().asItem().getDefaultInstance(),
 					RNBlocks.ORNATE_RUBY_GLASS_PANE.get().asItem().getDefaultInstance(), BOTH_TABS);
+			placeChain(event, List.<ItemLike>of(RNBlocks.FROSTED_GLASS), RNBlocks.ORNATE_RUBY_GLASS, Items.TINTED_GLASS);
+			placeChain(event, stainedFrostedGlass(), Items.PINK_STAINED_GLASS, Items.BLACK_STAINED_GLASS);
 		}
 		private static void injectFunctionalBlocks(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.FUNCTIONAL_BLOCKS) return;
@@ -540,32 +556,6 @@ public class RNCreativeTabs {
 			}
 			event.insertAfter(Items.CHISELED_BOOKSHELF.getDefaultInstance(),
 					RNBlocks.RUNESTONE.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(Items.CRYING_OBSIDIAN.getDefaultInstance(),
-					RNBlocks.BLEEDING_OBSIDIAN.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(Items.MAGMA_BLOCK.getDefaultInstance(),
-					RNBlocks.MOLTEN_RUBY_ORE.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(Items.TINTED_GLASS.getDefaultInstance(),
-					RNBlocks.RUBY_GLASS.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.RUBY_GLASS.get().asItem().getDefaultInstance(),
-					RNBlocks.MOLTEN_RUBY_GLASS.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.MOLTEN_RUBY_GLASS.get().asItem().getDefaultInstance(),
-					RNBlocks.ORNATE_RUBY_GLASS.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.ORNATE_RUBY_GLASS.get().asItem().getDefaultInstance(),
-					RNBlocks.RUBY_GLASS_PANE.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.RUBY_GLASS_PANE.get().asItem().getDefaultInstance(),
-					RNBlocks.MOLTEN_RUBY_GLASS_PANE.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.MOLTEN_RUBY_GLASS_PANE.get().asItem().getDefaultInstance(),
-					RNBlocks.ORNATE_RUBY_GLASS_PANE.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(Items.CONDUIT.getDefaultInstance(),
-					RNBlocks.PUMICE.get().asItem().getDefaultInstance(), BOTH_TABS);
-
-			event.insertAfter(RNBlocks.PUMICE.get().asItem().getDefaultInstance(),
-					RNBlocks.CINDER.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.CINDER.get().asItem().getDefaultInstance(),
-					RNBlocks.SOUL_STARVED_SAND.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.SOUL_STARVED_SAND.get().asItem().getDefaultInstance(),
-					RNBlocks.SUSPICIOUS_CINDER.get().asItem().getDefaultInstance(), BOTH_TABS);
-
 			event.insertAfter(Items.LANTERN.getDefaultInstance(),
 					RNBlocks.BRONZE_LANTERN.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(RNBlocks.BRONZE_LANTERN.get().asItem().getDefaultInstance(),
@@ -691,49 +681,21 @@ public class RNCreativeTabs {
 					getWaxed(RNBlocks.TARNISHED_BRONZE_VASE), BOTH_TABS);
 			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_VASE),
 					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_VASE), BOTH_TABS);
+			placeChain(event, List.<ItemLike>of(RNBlocks.PETRIFIED_SIGN_ITEM), Items.WARPED_SIGN);
+			placeChain(event, List.<ItemLike>of(RNBlocks.PETRIFIED_HANGING_SIGN_ITEM), Items.WARPED_HANGING_SIGN);
 		}
 		private static void injectBuildingBlocks(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.BUILDING_BLOCKS) return;
-			ItemStack quartzAnchor = Items.SMOOTH_QUARTZ_SLAB.getDefaultInstance();
-			for (var block : morionQuartzBlocks()) {
-				ItemStack stack = block.get().asItem().getDefaultInstance();
-				event.insertAfter(quartzAnchor, stack, BOTH_TABS);
-				quartzAnchor = stack;
-			}
+			// Quartz, then morion, then checkered
+			placeChain(event, quartzBlocks(), Items.QUARTZ_BRICKS, Items.SMOOTH_QUARTZ_SLAB);
+			placeChain(event, morionBlocks(), RNBlocks.QUARTZ_MOSAIC_SLAB);
+			placeChain(event, checkeredBlocks(), RNBlocks.MORION_MOSAIC_SLAB);
 			event.insertAfter(Items.NETHERITE_BLOCK.getDefaultInstance(),
 					RNBlocks.RUBY_BLOCK.get().asItem().getDefaultInstance(), BOTH_TABS);
 			event.insertAfter(Items.GILDED_BLACKSTONE.getDefaultInstance(),
 					RNBlocks.RUBINATED_BLACKSTONE.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(Items.CRACKED_POLISHED_BLACKSTONE_BRICKS.getDefaultInstance(),
-					RNBlocks.SHRINE_STONE.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.SHRINE_STONE.get().asItem().getDefaultInstance(),
-					RNBlocks.POLISHED_SHRINE_STONE.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.POLISHED_SHRINE_STONE.get().asItem().getDefaultInstance(),
-					RNBlocks.SHRINE_STONE_BRICKS.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.SHRINE_STONE_BRICKS.get().asItem().getDefaultInstance(),
-					RNBlocks.SHRINE_STONE_TILES.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.SHRINE_STONE_TILES.get().asItem().getDefaultInstance(),
-					RNBlocks.SHRINE_STONE_PILLAR.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.SHRINE_STONE_PILLAR.get().asItem().getDefaultInstance(),
-					RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.CHISELED_SHRINE_STONE_BRICKS.get().asItem().getDefaultInstance(),
-					RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.RUBINATED_SHRINE_STONE_BRICKS.get().asItem().getDefaultInstance(),
-					RNBlocks.RUBINATED_SHRINE_STONE_TILES.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.RUBINATED_SHRINE_STONE_TILES.get().asItem().getDefaultInstance(),
-					RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.RUBINATED_SHRINE_STONE_PILLAR.get().asItem().getDefaultInstance(),
-					RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS.get().asItem().getDefaultInstance(),
-					RNBlocks.SHRINE_STONE_RUBBLE.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.SHRINE_STONE_RUBBLE.get().asItem().getDefaultInstance(),
-					RNBlocks.SHRINE_STONE_RUBBLE_STAIRS.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.SHRINE_STONE_RUBBLE_STAIRS.get().asItem().getDefaultInstance(),
-					RNBlocks.SHRINE_STONE_RUBBLE_SLAB.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.SHRINE_STONE_RUBBLE_SLAB.get().asItem().getDefaultInstance(),
-					RNBlocks.SHRINE_STONE_RUBBLE_WALL.get().asItem().getDefaultInstance(), BOTH_TABS);
-			event.insertAfter(RNBlocks.SHRINE_STONE_RUBBLE_WALL.get().asItem().getDefaultInstance(),
-					RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE.get().asItem().getDefaultInstance(), BOTH_TABS);
+			placeChain(event, shrineStoneBlocks(), Items.CRACKED_POLISHED_BLACKSTONE_BRICKS);
+			placeChain(event, petrifiedBuildingBlocks(), Items.WARPED_BUTTON, Items.WARPED_PRESSURE_PLATE, Items.WARPED_TRAPDOOR);
 
 			// UNAFFECTED
 			event.insertAfter(Items.WAXED_OXIDIZED_COPPER_BULB.getDefaultInstance(),
@@ -938,6 +900,18 @@ public class RNCreativeTabs {
 			}
 			event.accept(stack, BOTH_TABS);
 		}
+		private static void placeChain(BuildCreativeModeTabContentsEvent event, List<? extends ItemLike> items, ItemLike... anchors) {
+			ItemStack previous = null;
+			for (ItemLike item : items) {
+				ItemStack stack = item.asItem().getDefaultInstance();
+				if (previous == null) {
+					insertAfterFirstAvailable(event, stack, anchors);
+				} else {
+					event.insertAfter(previous, stack, BOTH_TABS);
+				}
+				previous = stack;
+			}
+		}
 		private static void injectRedstoneBlocks(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.REDSTONE_BLOCKS) return;
 			// The redstone tab only lists a subset of vanilla buttons, so try a few anchors
@@ -1077,7 +1051,9 @@ public class RNCreativeTabs {
 					getWaxed(RNBlocks.TARNISHED_BRONZE_HEAD), BOTH_TABS);
 			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_HEAD),
 					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_HEAD), BOTH_TABS);
-			event.insertAfter(getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_HEAD),
+			placeChain(event, List.<ItemLike>of(RNBlocks.BRONZE_LASER, RNBlocks.DISCOLORED_BRONZE_LASER, RNBlocks.CORRODED_BRONZE_LASER,
+					RNBlocks.TARNISHED_BRONZE_LASER, RNBlocks.CRYSTALLIZED_BRONZE_LASER), getWaxedItem(RNBlocks.CRYSTALLIZED_BRONZE_HEAD));
+			event.insertAfter(RNBlocks.CRYSTALLIZED_BRONZE_LASER.get().asItem().getDefaultInstance(),
 					getWaxed(RNBlocks.BRONZE_LASER), BOTH_TABS);
 			event.insertAfter(getWaxed(RNBlocks.BRONZE_LASER),
 					getWaxed(RNBlocks.DISCOLORED_BRONZE_LASER), BOTH_TABS);
@@ -1087,6 +1063,36 @@ public class RNCreativeTabs {
 					getWaxed(RNBlocks.TARNISHED_BRONZE_LASER), BOTH_TABS);
 			event.insertAfter(getWaxed(RNBlocks.TARNISHED_BRONZE_LASER),
 					getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_LASER), BOTH_TABS);
+			// Gearboxes: normal, waxed, generated, generated waxed (same layout as strongboxes)
+			ItemStack gearPrev = getWaxed(RNBlocks.CRYSTALLIZED_BRONZE_SPRING);
+			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_GEARBOXES) {
+				ItemStack next = box.get().asItem().getDefaultInstance();
+				event.insertAfter(gearPrev, next, BOTH_TABS);
+				gearPrev = next;
+			}
+			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_GEARBOXES) {
+				ItemStack next = getWaxed(box);
+				event.insertAfter(gearPrev, next, BOTH_TABS);
+				gearPrev = next;
+			}
+			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_GEARBOXES) {
+				ItemStack next = generated(box.get().asItem().getDefaultInstance());
+				event.insertAfter(gearPrev, next, BOTH_TABS);
+				gearPrev = next;
+			}
+			for (DeferredBlock<?> box : RNCreativeTabs.GENERATED_GEARBOXES) {
+				ItemStack next = generated(getWaxed(box));
+				event.insertAfter(gearPrev, next, BOTH_TABS);
+				gearPrev = next;
+			}
+			placeChain(event, List.<ItemLike>of(RNBlocks.REDSTONE_ACCUMULATOR), Items.COMPARATOR, Items.REPEATER);
+			placeChain(event, List.<ItemLike>of(RNBlocks.MOONPHASE_DETECTOR), Items.DAYLIGHT_DETECTOR, Items.OBSERVER);
+			// Petrified wood redstone set
+			placeChain(event, List.<ItemLike>of(RNBlocks.PETRIFIED_BUTTON), Items.WARPED_BUTTON, Items.POLISHED_BLACKSTONE_BUTTON, Items.STONE_BUTTON, Items.LEVER);
+			placeChain(event, List.<ItemLike>of(RNBlocks.PETRIFIED_PRESSURE_PLATE), Items.WARPED_PRESSURE_PLATE, Items.POLISHED_BLACKSTONE_PRESSURE_PLATE, Items.STONE_PRESSURE_PLATE);
+			placeChain(event, List.<ItemLike>of(RNBlocks.PETRIFIED_DOOR), Items.WARPED_DOOR, Items.IRON_DOOR);
+			placeChain(event, List.<ItemLike>of(RNBlocks.PETRIFIED_TRAPDOOR), Items.WARPED_TRAPDOOR, Items.IRON_TRAPDOOR);
+			placeChain(event, List.<ItemLike>of(RNBlocks.PETRIFIED_FENCE_GATE), Items.WARPED_FENCE_GATE);
 		}
 		private static void injectSpawnEggs(BuildCreativeModeTabContentsEvent event) {
 			if (event.getTabKey() != CreativeModeTabs.SPAWN_EGGS) return;
@@ -1136,52 +1142,96 @@ public class RNCreativeTabs {
 		stack.set(DataComponents.RARITY, Rarity.EPIC);
 		return stack;
 	}
+	private static final DeferredBlock<?>[] GENERATED_GEARBOXES = {
+			RNBlocks.BRONZE_GEARBOX,
+			RNBlocks.DISCOLORED_BRONZE_GEARBOX,
+			RNBlocks.CORRODED_BRONZE_GEARBOX,
+			RNBlocks.TARNISHED_BRONZE_GEARBOX,
+			RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX
+	};
+	private static ItemLike getWaxedItem(DeferredBlock<?> block) {
+		return getWaxed(block).getItem();
+	}
 	private static ItemStack getWaxed(DeferredBlock<?> block) {
 		return BuiltInRegistries.ITEM
 				.get(RubinatedNether.id("waxed_" + BuiltInRegistries.BLOCK.getKey(block.get()).getPath()))
 				.getDefaultInstance();
 	}
-	private static List<DeferredBlock<? extends net.minecraft.world.level.block.Block>> morionQuartzBlocks() {
+	private static final DyeColor[] CREATIVE_DYE_ORDER = {
+			DyeColor.WHITE, DyeColor.LIGHT_GRAY, DyeColor.GRAY, DyeColor.BLACK,
+			DyeColor.BROWN, DyeColor.RED, DyeColor.ORANGE, DyeColor.YELLOW,
+			DyeColor.LIME, DyeColor.GREEN, DyeColor.CYAN, DyeColor.LIGHT_BLUE,
+			DyeColor.BLUE, DyeColor.PURPLE, DyeColor.MAGENTA, DyeColor.PINK
+	};
+	private static List<ItemLike> stainedFrostedGlass() {
+		List<ItemLike> glass = new ArrayList<>();
+		for (DyeColor color : CREATIVE_DYE_ORDER) {
+			glass.add(RNBlocks.STAINED_FROSTED_GLASS.get(color));
+		}
+		return glass;
+	}
+	private static List<DeferredBlock<? extends net.minecraft.world.level.block.Block>> quartzBlocks() {
+		return List.of(
+				RNBlocks.QUARTZ_BRICKS_STAIRS,
+				RNBlocks.QUARTZ_BRICKS_SLAB,
+				RNBlocks.QUARTZ_TILES,
+				RNBlocks.QUARTZ_TILES_STAIRS,
+				RNBlocks.QUARTZ_TILES_SLAB,
+				RNBlocks.QUARTZ_MOSAIC,
+				RNBlocks.QUARTZ_MOSAIC_STAIRS,
+				RNBlocks.QUARTZ_MOSAIC_SLAB
+		);
+	}
+	private static List<DeferredBlock<? extends net.minecraft.world.level.block.Block>> morionBlocks() {
 		return List.of(
 				RNBlocks.MORION_BLOCK,
+				RNBlocks.CHISELED_MORION_BLOCK,
+				RNBlocks.MORION_PILLAR,
 				RNBlocks.MORION_STAIRS,
 				RNBlocks.MORION_SLAB,
 				RNBlocks.SMOOTH_MORION,
 				RNBlocks.SMOOTH_MORION_STAIRS,
 				RNBlocks.SMOOTH_MORION_SLAB,
-				RNBlocks.CHISELED_MORION_BLOCK,
-				RNBlocks.MORION_PILLAR,
-				RNBlocks.QUARTZ_BRICKS_STAIRS,
-				RNBlocks.QUARTZ_BRICKS_SLAB,
-				RNBlocks.QUARTZ_BRICKS_WALL,
 				RNBlocks.MORION_BRICKS,
 				RNBlocks.MORION_BRICKS_STAIRS,
 				RNBlocks.MORION_BRICKS_SLAB,
-				RNBlocks.MORION_BRICKS_WALL,
-				RNBlocks.QUARTZ_TILES,
-				RNBlocks.QUARTZ_TILES_STAIRS,
-				RNBlocks.QUARTZ_TILES_SLAB,
-				RNBlocks.QUARTZ_TILES_WALL,
 				RNBlocks.MORION_TILES,
 				RNBlocks.MORION_TILES_STAIRS,
 				RNBlocks.MORION_TILES_SLAB,
-				RNBlocks.MORION_TILES_WALL,
+				RNBlocks.MORION_MOSAIC,
+				RNBlocks.MORION_MOSAIC_STAIRS,
+				RNBlocks.MORION_MOSAIC_SLAB
+		);
+	}
+	private static List<DeferredBlock<? extends net.minecraft.world.level.block.Block>> checkeredBlocks() {
+		return List.of(
 				RNBlocks.CHECKERED_TILES,
 				RNBlocks.CHECKERED_TILES_STAIRS,
 				RNBlocks.CHECKERED_TILES_SLAB,
-				RNBlocks.CHECKERED_TILES_WALL,
-				RNBlocks.QUARTZ_MOSAIC,
-				RNBlocks.QUARTZ_MOSAIC_STAIRS,
-				RNBlocks.QUARTZ_MOSAIC_SLAB,
-				RNBlocks.QUARTZ_MOSAIC_WALL,
-				RNBlocks.MORION_MOSAIC,
-				RNBlocks.MORION_MOSAIC_STAIRS,
-				RNBlocks.MORION_MOSAIC_SLAB,
-				RNBlocks.MORION_MOSAIC_WALL,
 				RNBlocks.CHECKERED_MOSAIC,
 				RNBlocks.CHECKERED_MOSAIC_STAIRS,
-				RNBlocks.CHECKERED_MOSAIC_SLAB,
-				RNBlocks.CHECKERED_MOSAIC_WALL
+				RNBlocks.CHECKERED_MOSAIC_SLAB
+		);
+	}
+	private static List<ItemLike> shrineStoneBlocks() {
+		return List.<ItemLike>of(
+				RNBlocks.SHRINE_STONE, RNBlocks.SHRINE_STONE_STAIRS, RNBlocks.SHRINE_STONE_SLAB, RNBlocks.SHRINE_STONE_WALL,
+				RNBlocks.COBBLED_SHRINE_STONE, RNBlocks.COBBLED_SHRINE_STONE_STAIRS, RNBlocks.COBBLED_SHRINE_STONE_SLAB, RNBlocks.COBBLED_SHRINE_STONE_WALL,
+				RNBlocks.POLISHED_SHRINE_STONE, RNBlocks.POLISHED_SHRINE_STONE_STAIRS, RNBlocks.POLISHED_SHRINE_STONE_SLAB, RNBlocks.POLISHED_SHRINE_STONE_WALL,
+				RNBlocks.SHRINE_STONE_BRICKS, RNBlocks.SHRINE_STONE_BRICKS_STAIRS, RNBlocks.SHRINE_STONE_BRICKS_SLAB, RNBlocks.SHRINE_STONE_BRICKS_WALL,
+				RNBlocks.SHRINE_STONE_TILES, RNBlocks.SHRINE_STONE_TILES_STAIRS, RNBlocks.SHRINE_STONE_TILES_SLAB, RNBlocks.SHRINE_STONE_TILES_WALL,
+				RNBlocks.SHRINE_STONE_PILLAR, RNBlocks.CHISELED_SHRINE_STONE_BRICKS,
+				RNBlocks.RUBINATED_SHRINE_STONE_BRICKS, RNBlocks.RUBINATED_SHRINE_STONE_TILES, RNBlocks.RUBINATED_SHRINE_STONE_PILLAR, RNBlocks.RUBINATED_CHISELED_SHRINE_STONE_BRICKS,
+				RNBlocks.SHRINE_STONE_RUBBLE, RNBlocks.SHRINE_STONE_RUBBLE_STAIRS, RNBlocks.SHRINE_STONE_RUBBLE_SLAB, RNBlocks.SHRINE_STONE_RUBBLE_WALL,
+				RNBlocks.SUSPICIOUS_SHRINE_STONE_RUBBLE
+		);
+	}
+	private static List<ItemLike> petrifiedBuildingBlocks() {
+		return List.<ItemLike>of(
+				RNBlocks.PETRIFIED_SNAG, RNBlocks.STRIPPED_PETRIFIED_SNAG, RNBlocks.PETRIFIED_RIND, RNBlocks.STRIPPED_PETRIFIED_RIND, RNBlocks.PETRIFIED_FLAGS,
+				RNBlocks.PETRIFIED_STAIRS, RNBlocks.PETRIFIED_SLAB, RNBlocks.PETRIFIED_WALL,
+				RNBlocks.PETRIFIED_FENCE, RNBlocks.PETRIFIED_FENCE_GATE, RNBlocks.PETRIFIED_DOOR, RNBlocks.PETRIFIED_TRAPDOOR,
+				RNBlocks.PETRIFIED_PRESSURE_PLATE, RNBlocks.PETRIFIED_BUTTON
 		);
 	}
 

@@ -397,11 +397,6 @@ public class RNBlocks {
 			() -> new StairBlock(Blocks.QUARTZ_BRICKS.defaultBlockState(), quartz())
 	);
 
-	public static final DeferredBlock<WallBlock> QUARTZ_BRICKS_WALL = registerBlockAndItem(
-			"quartz_bricks_wall",
-			() -> new WallBlock(quartz())
-	);
-
 	public static final DeferredBlock<SlabBlock> MORION_BRICKS_SLAB = registerBlockAndItem(
 			"morion_bricks_slab",
 			() -> new SlabBlock(morion())
@@ -412,40 +407,6 @@ public class RNBlocks {
 			() -> new StairBlock(MORION_BRICKS.get().defaultBlockState(), morion())
 	);
 
-	public static final DeferredBlock<WallBlock> MORION_BRICKS_WALL = registerBlockAndItem(
-			"morion_bricks_wall",
-			() -> new WallBlock(morion())
-	);
-
-	public static final DeferredBlock<WallBlock> QUARTZ_TILES_WALL = registerBlockAndItem(
-			"quartz_tiles_wall",
-			() -> new WallBlock(quartz())
-	);
-
-	public static final DeferredBlock<WallBlock> MORION_TILES_WALL = registerBlockAndItem(
-			"morion_tiles_wall",
-			() -> new WallBlock(morion())
-	);
-
-	public static final DeferredBlock<WallBlock> QUARTZ_MOSAIC_WALL = registerBlockAndItem(
-			"quartz_mosaic_wall",
-			() -> new WallBlock(quartz())
-	);
-
-	public static final DeferredBlock<WallBlock> MORION_MOSAIC_WALL = registerBlockAndItem(
-			"morion_mosaic_wall",
-			() -> new WallBlock(morion())
-	);
-
-	public static final DeferredBlock<FlippableWallBlock> CHECKERED_TILES_WALL = registerFlippableBlockAndItem(
-			"checkered_tiles_wall",
-			() -> new FlippableWallBlock(checkered())
-	);
-
-	public static final DeferredBlock<FlippableWallBlock> CHECKERED_MOSAIC_WALL = registerFlippableBlockAndItem(
-			"checkered_mosaic_wall",
-			() -> new FlippableWallBlock(checkered())
-	);
 	public static final DeferredBlock<RedstoneAccumulatorBlock> REDSTONE_ACCUMULATOR = registerBlockAndItem(
 			"redstone_accumulator",
 			() -> new RedstoneAccumulatorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COMPARATOR))

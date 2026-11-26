@@ -304,12 +304,6 @@ public class RNItemModels extends ItemModelProvider {
 				RNBlocks.MORION_BRICKS_SLAB,
 				RNBlocks.MORION_BRICKS_STAIRS
 		);
-		wallInventory(RNBlocks.QUARTZ_BRICKS_WALL.getId().toString(), mcLoc("block/quartz_bricks"));
-		wallInventory(RNBlocks.MORION_BRICKS_WALL.getId().toString(), modLoc("block/morion/morion_bricks"));
-		wallInventory(RNBlocks.QUARTZ_TILES_WALL.getId().toString(), modLoc("block/morion/quartz_tiles"));
-		wallInventory(RNBlocks.MORION_TILES_WALL.getId().toString(), modLoc("block/morion/morion_tiles"));
-		wallInventory(RNBlocks.QUARTZ_MOSAIC_WALL.getId().toString(), modLoc("block/morion/quartz_mosaic"));
-		wallInventory(RNBlocks.MORION_MOSAIC_WALL.getId().toString(), modLoc("block/morion/morion_mosaic"));
 		flippableBlockItems();
 
 		withExistingParent(
