@@ -28,7 +28,7 @@
                 {
                   "condition": "minecraft:match_tool",
                   "predicate": {
-                    "items": "#minecraft:axes"
+                    "items": "#rubinated_nether:petrified_axes"
                   }
                 }
               ],

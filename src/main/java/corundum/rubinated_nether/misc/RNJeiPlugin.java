@@ -6,6 +6,7 @@ import corundum.rubinated_nether.content.RNCreativeTabs;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNRecipes;
 import corundum.rubinated_nether.content.recipe.JEI.BaptismRecipeCategory;
+import corundum.rubinated_nether.content.recipe.JEI.BlockSwapRecipeCategory;
 import corundum.rubinated_nether.content.recipe.JEI.FreezerRecipeCategory;
 import corundum.rubinated_nether.content.recipe.JEI.PetrificationRecipeCategory;
 import corundum.rubinated_nether.content.recipe.JEI.ResonanceRecipeCategory;
@@ -77,7 +78,9 @@ public class RNJeiPlugin implements IModPlugin {
 				new FreezerRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
 				new RuneGrindstoneCategory(registration.getJeiHelpers().getGuiHelper()),
 				new BaptismRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
-				new PetrificationRecipeCategory(registration.getJeiHelpers().getGuiHelper())
+				new PetrificationRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+				BlockSwapRecipeCategory.cracking(registration.getJeiHelpers().getGuiHelper()),
+				BlockSwapRecipeCategory.derubination(registration.getJeiHelpers().getGuiHelper())
 		);
 	}
 
@@ -105,6 +108,22 @@ public class RNJeiPlugin implements IModPlugin {
 						.filter(recipe -> recipe.getResultBlock().asItem() != Items.AIR)
 						.filter(recipe -> !PetrificationRecipeCategory.inputItems(recipe).isEmpty())
 						.filter(recipe -> seenPetrifications.add(List.of(recipe.getResultBlock().asItem(), PetrificationRecipeCategory.inputItems(recipe))))
+						.toList()
+		);
+
+		// Cracking and Derubination: block-to-block swaps applied by the Drill / Jackhammer. Skip any swap whose blocks have no item form.
+		registration.addRecipes(
+				BlockSwapRecipeCategory.CRACKING,
+				man.getAllRecipesFor(RNRecipes.CRACKING.get()).stream()
+						.map(RecipeHolder::value)
+						.filter(recipe -> recipe.getSource().asItem() != Items.AIR && recipe.getResultBlock().asItem() != Items.AIR)
+						.toList()
+		);
+		registration.addRecipes(
+				BlockSwapRecipeCategory.DERUBINATION,
+				man.getAllRecipesFor(RNRecipes.DERUBINATION.get()).stream()
+						.map(RecipeHolder::value)
+						.filter(recipe -> recipe.getSource().asItem() != Items.AIR && recipe.getResultBlock().asItem() != Items.AIR)
 						.toList()
 		);
 
@@ -146,6 +165,10 @@ public class RNJeiPlugin implements IModPlugin {
 				BaptismRecipeCategory.RECIPE_TYPE
 		);
 		registration.addRecipeCatalyst(new ItemStack(RNBlocks.SOUL_STARVED_SAND.get()), PetrificationRecipeCategory.RECIPE_TYPE);
+		for (ItemStack tool : BlockSwapRecipeCategory.tools()) {
+			registration.addRecipeCatalyst(tool, BlockSwapRecipeCategory.CRACKING);
+			registration.addRecipeCatalyst(tool, BlockSwapRecipeCategory.DERUBINATION);
+		}
 	}
 
 	@Override
@@ -165,7 +188,9 @@ public class RNJeiPlugin implements IModPlugin {
 					FreezerRecipeCategory.RECIPE_TYPE.getUid().toString(),
 					RuneGrindstoneCategory.RECIPE_TYPE.getUid().toString(),
 					BaptismRecipeCategory.RECIPE_TYPE.getUid().toString(),
-					PetrificationRecipeCategory.RECIPE_TYPE.getUid().toString()
+					PetrificationRecipeCategory.RECIPE_TYPE.getUid().toString(),
+					BlockSwapRecipeCategory.CRACKING.getUid().toString(),
+					BlockSwapRecipeCategory.DERUBINATION.getUid().toString()
 			);
 			List<String> tags = lines.stream().filter(line -> line.contains(":tag_recipes/")).toList();
 			List<String> arranged = new ArrayList<>(lines);

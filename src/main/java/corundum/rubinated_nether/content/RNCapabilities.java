@@ -1,9 +1,11 @@
 package corundum.rubinated_nether.content;
 
 import corundum.rubinated_nether.content.blocks.RunestoneBlock;
+import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.CofferItemHandler;
 import corundum.rubinated_nether.content.blocks.entities.FreezerBlockEntity;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -71,6 +73,18 @@ public class RNCapabilities {
                 Capabilities.ItemHandler.BLOCK,
                 RNBlockEntities.BRONZE_STRONGBOX.get(),
                 (strongbox, side) -> SEALED_HANDLER
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                RNBlockEntities.BRAZIER.get(),
+                BrazierBlockEntity::getItemHandler
+        );
+        // Both halves of the vase have a VaseBlockEntity; its item access already resolves the upper half to the lower one.
+        // Always use the sided wrapper (a null side behaves like UP) so the vase's nesting rules apply to every caller.
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                RNBlockEntities.BRONZE_VASE.get(),
+                (vase, side) -> new SidedInvWrapper(vase, side == null ? Direction.UP : side)
         );
         event.registerBlock(
                 Capabilities.ItemHandler.BLOCK,

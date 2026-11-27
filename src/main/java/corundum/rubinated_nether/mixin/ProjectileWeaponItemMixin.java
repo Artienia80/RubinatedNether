@@ -2,6 +2,7 @@ package corundum.rubinated_nether.mixin;
 
 import corundum.rubinated_nether.content.CrossbowRodType;
 import corundum.rubinated_nether.content.entity.CrossbowRodProjectileEntity;
+import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Unit;
@@ -28,6 +29,11 @@ public abstract class ProjectileWeaponItemMixin {
     @Inject(method = "draw", at = @At("HEAD"), cancellable = true)
     private static void rn$drawRods(ItemStack weapon, ItemStack ammo, LivingEntity shooter, CallbackInfoReturnable<List<ItemStack>> cir) {
         if (!(weapon.getItem() instanceof CrossbowItem) || CrossbowRodType.of(ammo) == null) {
+            return;
+        }
+
+        // Config off: fall through to vanilla draw(), i.e. one rod consumed and intangible copies for extra Multishot projectiles.
+        if (!RNConfig.crossbowRodMultishotConsumesAll) {
             return;
         }
 

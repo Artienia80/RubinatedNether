@@ -835,6 +835,11 @@
   "gui.rubinated_nether.jei.rune_grindstone": "Grinding",
   "gui.rubinated_nether.jei.baptism": "Baptism",
   "gui.rubinated_nether.jei.petrification": "Petrification",
+  "gui.rubinated_nether.jei.cracking": "Cracking",
+  "gui.rubinated_nether.jei.cracking.info": "Use a fuelled Drill or Jackhammer on the block, with open air above it.",
+  "gui.rubinated_nether.jei.derubination": "Derubination",
+  "gui.rubinated_nether.jei.derubination.info": "Use a fuelled Drill or Jackhammer on the block, with open air above it. Drops a Ruby Shard.",
+  "gui.rubinated_nether.jei.derubination.altar": "Enchanting at a Rubination Altar also derubinates nearby blocks.",
 
   "container.shrine_stone_coffer": "Coffer",
   "container.rubinated_shrine_stone_coffer": "Rubinated Coffer",
@@ -893,8 +898,10 @@
   "rubinated_nether.midnightconfig.category.vent": "Vent",
   "rubinated_nether.midnightconfig.category.pomegranate": "Pomegranate",
   "rubinated_nether.midnightconfig.category.petrified": "Petrified Wood",
+  "rubinated_nether.midnightconfig.category.crossbow": "Crossbow",
   "rubinated_nether.midnightconfig.category.worldgen": "World Generation",
   "rubinated_nether.midnightconfig.replaceNetherGravelWithCinder": "Replace Nether Gravel With Cinder",
+  "rubinated_nether.midnightconfig.crossbowRodMultishotConsumesAll": "Multishot Consumes One Rod Per Projectile",
   "rubinated_nether.midnightconfig.petrifiedBoatLavaMode": "Petrified Boats Sink in Water and Float on Lava",
 
   "rubinated_nether.midnightconfig.chandelierDefaultDamage": "Chandelier Default Damage Value",

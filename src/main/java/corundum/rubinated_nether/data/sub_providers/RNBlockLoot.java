@@ -9,6 +9,7 @@ import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.BronzeHeadBlock;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
@@ -404,7 +405,7 @@ public class RNBlockLoot extends BlockLootSubProvider {
 										this.applyExplosionDecay(
 												block,
 												LootItem.lootTableItem(RNItems.NETHER_MORION.get())
-														.when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.AXES)))
+														.when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(RNTags.Items.PETRIFIED_AXES)))
 														.apply(ApplyBonusCount.addOreBonusCount(registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE)))
 										)
 								)

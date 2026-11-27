@@ -74,6 +74,9 @@ public final class RNTags {
 
 		public static final TagKey<Block> PETRIFIABLE_STRIPPED_RINDS = createTag(Registries.BLOCK, "petrifiable_stripped_rinds");
 
+		/** Petrified snags and rinds, stripped or not. Deliberately kept out of minecraft:logs; the chainsaw treats these as trunks. */
+		public static final TagKey<Block> PETRIFIED_LOGS = createTag(Registries.BLOCK, "petrified_logs");
+
 
 	}
 
@@ -84,6 +87,9 @@ public final class RNTags {
 		public static final TagKey<Item> CONCRETE_POWDER = createTag(Registries.ITEM, "concrete_powder");
 
 		public static final TagKey<Item> PETRIFIED_SNAGS = createTag(Registries.ITEM, "petrified_snags");
+
+		/** Tools that harvest Petrified logs for Nether Morion: all vanilla axes plus the chainsaw. */
+		public static final TagKey<Item> PETRIFIED_AXES = createTag(Registries.ITEM, "petrified_axes");
 
 		public static final TagKey<Item> RUBIES = createTag(Registries.ITEM, "rubies");
 

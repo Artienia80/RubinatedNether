@@ -19,6 +19,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -294,6 +296,13 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 	// Replace the extractFuel() method in BrazierBlockEntity.java with this:
 
 	public ItemStack extractFuel() {
+		return extractFuel(Integer.MAX_VALUE);
+	}
+
+	/**
+	 * Extracts one Molten Ruby if a full level is available, otherwise up to {@code maxNuggets} Molten Ruby Nuggets.
+	 */
+	public ItemStack extractFuel(int maxNuggets) {
 		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
 
 		// Ruby blocks can only be extracted with buckets now
@@ -304,7 +313,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 			return new ItemStack(RNItems.MOLTEN_RUBY.get(), 1);
 		} else if (remainingFuelSeconds > 0) {
 			int secondsPerNugget = secondsPerLevel / 9;
-			int nuggetCount = remainingFuelSeconds / secondsPerNugget;
+			int nuggetCount = Math.min(remainingFuelSeconds / secondsPerNugget, maxNuggets);
 
 			if (nuggetCount > 0) {
 				int secondsToRemove = nuggetCount * secondsPerNugget;
@@ -387,30 +396,75 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 		}
 	}
 
-	@Override
-	public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
-		if (index != 0) return false;
-
-		if (!isGreatFuel(stack) && !isStandardFuel(stack) && !isSmallFuel(stack)) {
-			return false;
-		}
-
+	/**
+	 * Seconds of fuel that one unit of {@code stack} would add if the brazier currently held {@code currentSeconds},
+	 * or -1 if it is not fuel or would not fit. This is the single source of truth for insertion, shared by the
+	 * container API, the item handler capability and {@link #setItem}.
+	 * <p>
+	 * Great fuel is accepted into an empty brazier with a 5% bonus (so it may exceed the normal maximum), which the
+	 * old predicate wrongly rejected.
+	 */
+	private int secondsAccepted(ItemStack stack, int currentSeconds) {
 		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
 		int maxSeconds = secondsPerLevel * 9;
 
 		if (isGreatFuel(stack)) {
+			if (currentSeconds == 0) {
+				return (int) (maxSeconds * 1.05f);
+			}
+			return currentSeconds + maxSeconds <= maxSeconds ? maxSeconds : -1;
+		} else if (isStandardFuel(stack)) {
+			return currentSeconds + secondsPerLevel <= maxSeconds ? secondsPerLevel : -1;
+		} else if (isSmallFuel(stack)) {
+			int secondsPerNugget = secondsPerLevel / 9;
+			return currentSeconds + secondsPerNugget <= maxSeconds ? secondsPerNugget : -1;
+		}
+		return -1;
+	}
+
+	/** How many items from {@code stack} would fit right now, one after another. */
+	private int acceptableCount(ItemStack stack) {
+		int seconds = remainingFuelSeconds;
+		int count = 0;
+		while (count < stack.getCount()) {
+			int added = secondsAccepted(stack, seconds);
+			if (added < 0) break;
+			seconds += added;
+			count++;
+		}
+		return count;
+	}
+
+	/** Adds one unit of fuel without touching the stack. Hands back an empty bucket when a Molten Ruby Bucket is used. */
+	private void addOneFuelUnit(ItemStack stack) {
+		if (isGreatFuel(stack)) {
 			if (remainingFuelSeconds == 0) {
-				int bonusSeconds = (int)(secondsPerLevel * 9 * 1.05f);
-				return bonusSeconds <= maxSeconds;
+				addFuelWithBonus(9, 1.05f);
 			} else {
-				return remainingFuelSeconds + (secondsPerLevel * 9) <= maxSeconds;
+				addFuel(9);
+			}
+			// Automation cannot hand the bucket back through the container API, so drop it on top of the brazier.
+			if (stack.is(RNItems.MOLTEN_RUBY_BUCKET.get()) && level != null && !level.isClientSide) {
+				Block.popResource(level, worldPosition.above(), new ItemStack(Items.BUCKET));
 			}
 		} else if (isStandardFuel(stack)) {
-			return remainingFuelSeconds + secondsPerLevel <= maxSeconds;
+			addFuel(1);
 		} else {
-			int secondsPerNugget = secondsPerLevel / 9;
-			return remainingFuelSeconds + secondsPerNugget <= maxSeconds;
+			addFuelNuggets(1);
 		}
+	}
+
+	private void refreshLevelState() {
+		if (level == null) return;
+		BlockState state = level.getBlockState(worldPosition);
+		if (!state.hasProperty(BrazierBlock.LEVEL)) return;
+		level.setBlock(worldPosition, state.setValue(BrazierBlock.LEVEL, Math.min(9, calculateLevelFromFuel())), 3);
+		setChanged();
+	}
+
+	@Override
+	public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
+		return index == 0 && secondsAccepted(stack, remainingFuelSeconds) >= 0;
 	}
 
 	@Override
@@ -446,7 +500,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 			return ItemStack.EMPTY;
 		}
 
-		ItemStack extracted = extractFuel();
+		ItemStack extracted = extractFuel(amount);
 
 		if (!extracted.isEmpty()) {
 			int newLevel = calculateLevelFromFuel();
@@ -485,40 +539,10 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 			return;
 		}
 
-		int secondsPerLevel = RNConfig.getBrazierSecondsPerLevel();
-		int maxSeconds = secondsPerLevel * 9;
-
-		boolean added = false;
-		if (isGreatFuel(stack)) {
-			if (remainingFuelSeconds == 0) {
-				addFuelWithBonus(9, 1.05f);
-				stack.shrink(1);
-				added = true;
-			} else if (remainingFuelSeconds + (secondsPerLevel * 9) <= maxSeconds) {
-				addFuel(9);
-				stack.shrink(1);
-				added = true;
-			}
-		} else if (isStandardFuel(stack)) {
-			if (remainingFuelSeconds + secondsPerLevel <= maxSeconds) {
-				addFuel(1);
-				stack.shrink(1);
-				added = true;
-			}
-		} else if (isSmallFuel(stack)) {
-			int secondsPerNugget = secondsPerLevel / 9;
-			if (remainingFuelSeconds + secondsPerNugget <= maxSeconds) {
-				addFuelNuggets(1);
-				stack.shrink(1);
-				added = true;
-			}
-		}
-
-		if (added) {
-			int newLevel = calculateLevelFromFuel();
-			BlockState state = level.getBlockState(worldPosition);
-			level.setBlock(worldPosition, state.setValue(BrazierBlock.LEVEL, Math.min(9, newLevel)), 3);
-			setChanged();
+		if (secondsAccepted(stack, remainingFuelSeconds) >= 0) {
+			addOneFuelUnit(stack);
+			stack.shrink(1);
+			refreshLevelState();
 		}
 
 		virtualSlot = stack.isEmpty() ? ItemStack.EMPTY : stack;
@@ -585,20 +609,24 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 					return stack;
 				}
 
-				if (!canPlaceItemThroughFace(0, stack, side)) {
+				int accepted = acceptableCount(stack);
+				if (accepted <= 0) {
 					return stack;
 				}
 
 				if (!simulate) {
-					setItem(0, stack.copy());
+					for (int i = 0; i < accepted; i++) {
+						addOneFuelUnit(stack);
+					}
+					refreshLevelState();
 				}
 
-				return ItemStack.EMPTY;
+				return accepted >= stack.getCount() ? ItemStack.EMPTY : stack.copyWithCount(stack.getCount() - accepted);
 			}
 
 			@Override
 			public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
-				if (slot != 0 || side != Direction.DOWN) {
+				if (slot != 0 || amount <= 0 || side != Direction.DOWN) {
 					return ItemStack.EMPTY;
 				}
 
@@ -607,9 +635,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 				}
 
 				BlockState state = level.getBlockState(worldPosition);
-				int currentLevel = state.getValue(BrazierBlock.LEVEL);
-
-				if (currentLevel <= 0) {
+				if (state.getValue(BrazierBlock.LEVEL) <= 0) {
 					return ItemStack.EMPTY;
 				}
 
@@ -618,7 +644,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 					return new ItemStack(RNItems.MOLTEN_RUBY.get(), 1);
 				} else if (remainingFuelSeconds > 0) {
 					int secondsPerNugget = secondsPerLevel / 9;
-					int nuggetCount = remainingFuelSeconds / secondsPerNugget;
+					int nuggetCount = Math.min(remainingFuelSeconds / secondsPerNugget, amount);
 					if (nuggetCount > 0) {
 						return new ItemStack(RNItems.MOLTEN_RUBY_NUGGET.get(), nuggetCount);
 					}

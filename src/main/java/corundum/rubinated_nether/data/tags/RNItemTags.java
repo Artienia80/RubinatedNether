@@ -194,13 +194,24 @@ public class RNItemTags extends ItemTagsProvider {
 						RNItems.PHILARGYRIA_RUNE.asItem()
 				);
 
+		this.tag(RNTags.Items.PETRIFIED_AXES)
+				.addTag(ItemTags.AXES)
+				.add(RNItems.BRONZE_CHAINSAW.asItem());
+
 		this.tag(RNTags.Items.GEARBOXES).add(
 				RNBlocks.BRONZE_GEARBOX.asItem(),
 				RNBlocks.DISCOLORED_BRONZE_GEARBOX.asItem(),
 				RNBlocks.CORRODED_BRONZE_GEARBOX.asItem(),
 				RNBlocks.TARNISHED_BRONZE_GEARBOX.asItem(),
 				RNBlocks.CRYSTALLIZED_BRONZE_GEARBOX.asItem()
-		);
+		)
+		// Waxed variants are standalone items registered by registerGearbox, so they must be listed too;
+		// a waxed gearbox is functionally identical, so it should satisfy every gearbox recipe and the pocketwatch repair.
+		.addOptional(RubinatedNether.id("waxed_bronze_gearbox"))
+		.addOptional(RubinatedNether.id("waxed_discolored_bronze_gearbox"))
+		.addOptional(RubinatedNether.id("waxed_corroded_bronze_gearbox"))
+		.addOptional(RubinatedNether.id("waxed_tarnished_bronze_gearbox"))
+		.addOptional(RubinatedNether.id("waxed_crystallized_bronze_gearbox"));
 
 		this.tag(RNTags.Items.SHRINE_STONE_CANDIDATE).add(
 				Items.STONE,

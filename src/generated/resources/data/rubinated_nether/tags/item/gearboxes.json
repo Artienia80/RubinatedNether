@@ -4,6 +4,26 @@
     "rubinated_nether:discolored_bronze_gearbox",
     "rubinated_nether:corroded_bronze_gearbox",
     "rubinated_nether:tarnished_bronze_gearbox",
-    "rubinated_nether:crystallized_bronze_gearbox"
+    "rubinated_nether:crystallized_bronze_gearbox",
+    {
+      "id": "rubinated_nether:waxed_bronze_gearbox",
+      "required": false
+    },
+    {
+      "id": "rubinated_nether:waxed_discolored_bronze_gearbox",
+      "required": false
+    },
+    {
+      "id": "rubinated_nether:waxed_corroded_bronze_gearbox",
+      "required": false
+    },
+    {
+      "id": "rubinated_nether:waxed_tarnished_bronze_gearbox",
+      "required": false
+    },
+    {
+      "id": "rubinated_nether:waxed_crystallized_bronze_gearbox",
+      "required": false
+    }
   ]
 }

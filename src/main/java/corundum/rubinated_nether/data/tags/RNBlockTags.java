@@ -82,6 +82,13 @@ public class RNBlockTags extends BlockTagsProvider {
 				RNBlocks.MORION_BRICKS_SLAB.get(),
 				RNBlocks.MORION_BRICKS_STAIRS.get()
 		);
+		this.tag(RNTags.Blocks.PETRIFIED_LOGS).add(
+				RNBlocks.PETRIFIED_SNAG.get(),
+				RNBlocks.STRIPPED_PETRIFIED_SNAG.get(),
+				RNBlocks.PETRIFIED_RIND.get(),
+				RNBlocks.STRIPPED_PETRIFIED_RIND.get()
+		);
+
 		this.tag(BlockTags.MINEABLE_WITH_AXE).add(
 				RNBlocks.PETRIFIED_SNAG.get(),
 				RNBlocks.STRIPPED_PETRIFIED_SNAG.get(),

@@ -2,6 +2,7 @@ package corundum.rubinated_nether.content.items;
 
 import com.mojang.logging.LogUtils;
 import corundum.rubinated_nether.content.RNDataComponents;
+import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.module.Flywheel;
 import corundum.rubinated_nether.content.module.ToolModules;
 import net.minecraft.core.BlockPos;
@@ -46,7 +47,8 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
     /** Entity tag on every falling block the chainsaw spawns (logs, leaves, fungus caps, shroomlight, hives). */
     public static final String HEAVY_TAG = "rn_heavy_log";
 
-    private static final int MAX_BRANCH_LOGS = 128;
+    /** Upper bound on trunk/branch blocks felled by one cut, to keep a single swing from spawning unbounded entities. */
+    private static final int MAX_TREE_LOGS = 512;
 
     private static final int MAX_CANOPY_BLOCKS = 512;
 
@@ -85,7 +87,9 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
     }
 
     public static boolean isTrunk(BlockState state) {
-        return state.is(BlockTags.LOGS) || state.is(Blocks.MUSHROOM_STEM);
+        return state.is(BlockTags.LOGS)
+                || state.is(Blocks.MUSHROOM_STEM)
+                || state.is(RNTags.Blocks.PETRIFIED_LOGS);
     }
 
     public static boolean isCanopy(BlockState state) {
@@ -247,62 +251,90 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
         return super.mineBlock(stack, level, state, pos, miner);
     }
 
-    private static void fellTree(Level level, BlockPos pos) {
-        List<BlockPos> column = new ArrayList<>();
-        BlockPos.MutableBlockPos cursor = pos.above().mutable();
-        while (cursor.getY() < level.getMaxBuildHeight() && isTrunk(level.getBlockState(cursor))) {
-            column.add(cursor.immutable());
-            cursor.move(Direction.UP);
-        }
-        if (column.isEmpty()) return;
+    private static void fellTree(Level level, BlockPos cut) {
+        Set<BlockPos> connected = collectConnectedTrunks(level, cut);
+        if (connected.isEmpty()) return;
 
-        Set<BlockPos> visited = new HashSet<>(column);
-        Set<BlockPos> branches = new LinkedHashSet<>();
-        Deque<BlockPos> queue = new ArrayDeque<>(column);
-        while (!queue.isEmpty() && branches.size() < MAX_BRANCH_LOGS) {
+        // A log falls if nothing solid holds it up. Going bottom-up lets a log rely on the log beneath it falling too.
+        // NeoForge calls mineBlock() *before* it removes the block, so the cut position is still a log at this point;
+        // isOpenBelow() treats it as already gone, otherwise the log directly above the cut would look supported.
+        List<BlockPos> ordered = new ArrayList<>(connected);
+        ordered.sort(Comparator.comparingInt(BlockPos::getY));
+        Set<BlockPos> unsupported = new HashSet<>();
+        for (BlockPos p : ordered) {
+            BlockPos below = p.below();
+            if (unsupported.contains(below) || isOpen(level, below, cut)) {
+                unsupported.add(p);
+            }
+        }
+
+        // Only logs reachable from the cut through other falling logs (26 neighbours, so diagonals count) come down.
+        // A branch held on only by a log that stays standing is left alone.
+        Set<BlockPos> reached = new HashSet<>();
+        Deque<BlockPos> queue = new ArrayDeque<>();
+        reached.add(cut);
+        queue.add(cut);
+        while (!queue.isEmpty()) {
             BlockPos p = queue.poll();
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dy = -1; dy <= 1; dy++) {
                     for (int dz = -1; dz <= 1; dz++) {
                         if (dx == 0 && dy == 0 && dz == 0) continue;
                         BlockPos n = p.offset(dx, dy, dz);
-                        if (n.getY() <= pos.getY()) continue;
-                        if (visited.contains(n) || !isTrunk(level.getBlockState(n))) continue;
+                        if (unsupported.contains(n) && reached.add(n)) queue.add(n);
+                    }
+                }
+            }
+        }
+        reached.remove(cut);
 
-                        BlockPos under = n.below();
-                        if (!visited.contains(under) && isTrunk(level.getBlockState(under))) continue;
-                        visited.add(n);
-                        branches.add(n);
+        List<BlockPos> fallen = new ArrayList<>();
+        for (BlockPos p : ordered) {
+            if (reached.contains(p)) fallen.add(p);
+        }
+        if (fallen.isEmpty()) return;
+
+        if (DEBUG) {
+            LOGGER.info("[Chainsaw] cut at {}: connected={} falling={}", cut, connected.size(), fallen.size());
+        }
+
+        for (BlockPos p : fallen) {
+            spawnHeavy(level, p);
+        }
+
+        List<BlockPos> fallenCanopy = dropCanopy(level, cut, fallen);
+
+        List<BlockPos> everything = new ArrayList<>(fallen);
+        everything.addAll(fallenCanopy);
+        dropAttachments(level, cut, everything);
+    }
+
+    /**
+     * Flood-fills through the full 26-neighbourhood of every trunk block, starting at the block that was just cut,
+     * so diagonal logs are picked up as well as straight columns. Only blocks above the cut are collected.
+     */
+    private static Set<BlockPos> collectConnectedTrunks(Level level, BlockPos cut) {
+        Set<BlockPos> found = new LinkedHashSet<>();
+        Set<BlockPos> seen = new HashSet<>();
+        Deque<BlockPos> queue = new ArrayDeque<>();
+        seen.add(cut);
+        queue.add(cut);
+        while (!queue.isEmpty() && found.size() < MAX_TREE_LOGS) {
+            BlockPos p = queue.poll();
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    for (int dz = -1; dz <= 1; dz++) {
+                        if (dx == 0 && dy == 0 && dz == 0) continue;
+                        BlockPos n = p.offset(dx, dy, dz);
+                        if (n.getY() <= cut.getY() || !seen.add(n)) continue;
+                        if (!level.hasChunkAt(n) || !isTrunk(level.getBlockState(n))) continue;
+                        found.add(n);
                         queue.add(n);
                     }
                 }
             }
         }
-
-        if (DEBUG) {
-            LOGGER.info("[Chainsaw] cut at {}: trunk={} branches={}", pos, column.size(), branches.size());
-        }
-
-        for (BlockPos p : column) {
-            spawnHeavy(level, p);
-        }
-
-        List<BlockPos> fallenBranches = new ArrayList<>();
-        for (BlockPos p : branches) {
-            BlockState below = level.getBlockState(p.below());
-            if (below.isAir() || below.canBeReplaced()) {
-                spawnHeavy(level, p);
-                fallenBranches.add(p);
-            }
-        }
-
-        List<BlockPos> fallen = new ArrayList<>(column);
-        fallen.addAll(fallenBranches);
-        List<BlockPos> fallenCanopy = dropCanopy(level, pos, fallen);
-
-        List<BlockPos> everything = new ArrayList<>(fallen);
-        everything.addAll(fallenCanopy);
-        dropAttachments(level, pos, everything);
+        return found;
     }
 
     private static List<BlockPos> dropCanopy(Level level, BlockPos cut, List<BlockPos> sources) {
@@ -338,7 +370,7 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
 
         if (candidates.isEmpty()) return new ArrayList<>();
 
-        List<BlockPos> standing = findStandingTrunks(level, candidates);
+        List<BlockPos> standing = findStandingTrunks(level, candidates, cut);
 
         Set<BlockPos> owned = new LinkedHashSet<>();
         Map<Object, Integer> tally = new LinkedHashMap<>();
@@ -372,8 +404,7 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
         List<BlockPos> fallenCanopy = new ArrayList<>();
         for (BlockPos p : canopy) {
             BlockPos below = p.below();
-            BlockState belowState = level.getBlockState(below);
-            if (canopy.contains(below) || belowState.isAir() || belowState.canBeReplaced()) {
+            if (canopy.contains(below) || isOpen(level, below, cut)) {
                 spawnHeavy(level, p);
                 fallenCanopy.add(p);
             }
@@ -388,7 +419,7 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
                 BlockPos n = p.relative(dir);
                 if (n.getY() <= cut.getY() || attachments.contains(n)) continue;
                 if (!isAttachment(level.getBlockState(n))) continue;
-                if (touchesStandingTrunk(level, n)) continue;
+                if (touchesStandingTrunk(level, n, cut)) continue;
                 attachments.add(n);
             }
         }
@@ -399,18 +430,29 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
 
         for (BlockPos p : attachments) {
             BlockPos below = p.below();
-            BlockState belowState = level.getBlockState(below);
-            if (attachments.contains(below) || belowState.isAir() || belowState.canBeReplaced()) {
+            if (attachments.contains(below) || isOpen(level, below, cut)) {
                 spawnHeavy(level, p);
             }
         }
     }
 
-    private static boolean touchesStandingTrunk(Level level, BlockPos pos) {
+    private static boolean touchesStandingTrunk(Level level, BlockPos pos, BlockPos cut) {
         for (Direction dir : Direction.values()) {
-            if (isTrunk(level.getBlockState(pos.relative(dir)))) return true;
+            BlockPos n = pos.relative(dir);
+            if (n.equals(cut)) continue; // being removed right now
+            if (isTrunk(level.getBlockState(n))) return true;
         }
         return false;
+    }
+
+    /**
+     * True if nothing solid occupies {@code pos}. The block being cut counts as open: mineBlock() runs before the
+     * block is actually removed, so its state is still the log.
+     */
+    private static boolean isOpen(Level level, BlockPos pos, BlockPos cut) {
+        if (pos.equals(cut)) return true;
+        BlockState state = level.getBlockState(pos);
+        return state.isAir() || state.canBeReplaced();
     }
 
     public static boolean isAttachment(BlockState state) {
@@ -437,7 +479,7 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
         return false;
     }
 
-    private static List<BlockPos> findStandingTrunks(Level level, Set<BlockPos> around) {
+    private static List<BlockPos> findStandingTrunks(Level level, Set<BlockPos> around, BlockPos cut) {
         int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE, minZ = Integer.MAX_VALUE;
         int maxX = Integer.MIN_VALUE, maxY = Integer.MIN_VALUE, maxZ = Integer.MIN_VALUE;
         for (BlockPos p : around) {
@@ -453,7 +495,7 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
         List<BlockPos> result = new ArrayList<>();
         for (BlockPos p : BlockPos.betweenClosed(minX - margin, minY - margin, minZ - margin,
                 maxX + margin, maxY + margin, maxZ + margin)) {
-            if (level.hasChunkAt(p) && isTrunk(level.getBlockState(p))) {
+            if (!p.equals(cut) && level.hasChunkAt(p) && isTrunk(level.getBlockState(p))) {
                 result.add(p.immutable());
             }
         }

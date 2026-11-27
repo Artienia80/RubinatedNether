@@ -18,6 +18,7 @@ public class RNConfig extends MidnightConfig {
 	public static final String POCKETWATCH = "pocketwatch";
 	public static final String POMEGRANATE = "pomegranate";
 	public static final String PETRIFIED = "petrified";
+	public static final String CROSSBOW = "crossbow";
 	public static final String WORLDGEN = "worldgen";
 
 	/* -- Brazier -- */
@@ -218,6 +219,16 @@ public class RNConfig extends MidnightConfig {
 	public static int crystallizedVentRange = 3;
 
 
+
+	/* -- Crossbow -- */
+
+	/**
+	 * When true (default), a Multishot crossbow consumes one rod per projectile fired.
+	 * When false, rods follow vanilla Multishot behavior: one rod is consumed and the extra projectiles are intangible copies.
+	 */
+	@Entry(category = CROSSBOW)
+	@Synced
+	public static boolean crossbowRodMultishotConsumesAll = true;
 
 	/* -- Client -- */
 

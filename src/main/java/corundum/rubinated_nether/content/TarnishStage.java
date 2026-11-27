@@ -1,22 +1,16 @@
 package corundum.rubinated_nether.content;
 
-import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.DynamicOps;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.entity.animal.sniffer.Sniffer;
-import net.minecraft.world.level.block.Block;
 
 import java.util.function.IntFunction;
 
-public enum TarnishStage {
+public enum TarnishStage implements StringRepresentable {
     UNAFFECTED(0,"unaffected", 0.25D, 20.0, 5.0, 0.0, 1200),
     DISCOLORED(1, "discolored", 0.20D, 20.0, 10.0, 8.0, 1600),
     CORRODED(2, "corroded", 0.15D, 20.0, 15.0, 16.0, 2000),
@@ -26,17 +20,7 @@ public enum TarnishStage {
     public static final IntFunction<TarnishStage> BY_ID = ByIdMap.continuous(TarnishStage::getId, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
 
     public static final StreamCodec<ByteBuf, TarnishStage> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, TarnishStage::getId);
-    public static final Codec<TarnishStage> CODEC = new Codec<>() {
-        @Override
-        public <T> DataResult<Pair<TarnishStage, T>> decode(DynamicOps<T> ops, T input) {
-            return null;
-        }
-
-        @Override
-        public <T> DataResult<T> encode(TarnishStage input, DynamicOps<T> ops, T prefix) {
-            return null;
-        }
-    };
+    public static final Codec<TarnishStage> CODEC = StringRepresentable.fromEnum(TarnishStage::values);
 
     private final int id;
     private final String name;
@@ -80,6 +64,7 @@ public enum TarnishStage {
         return this.tarnishDuration;
     }
 
+    @Override
     public String getSerializedName() {
         return this.name;
     }
