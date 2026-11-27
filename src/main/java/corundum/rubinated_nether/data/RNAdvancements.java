@@ -13,6 +13,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
@@ -20,6 +21,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -30,6 +32,7 @@ import net.minecraft.world.item.armortrim.TrimPattern;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
@@ -207,6 +210,37 @@ public class RNAdvancements extends AdvancementProvider {
 									LocationPredicate.Builder.location()
 											.setY(MinMaxBounds.Doubles.atMost(-250314))))
 					.save(consumer, RubinatedNether.id("laser_detection"), existingFileHelper);
+
+			Holder<Structure> rubinationShrine = Holder.Reference.createStandAlone(
+					provider.lookupOrThrow(Registries.STRUCTURE),
+					ResourceKey.create(Registries.STRUCTURE, RubinatedNether.id("rubination_shrine")));
+
+			AdvancementHolder complementaryOpposites = Advancement.Builder.advancement()
+					.display(RNBlocks.SHRINE_STONE_BRICKS.get(),
+							Component.translatable("advancements.rubinated_nether.complementary_opposites.title"),
+							Component.translatable("advancements.rubinated_nether.complementary_opposites.description"),
+							RubinatedNether.id("textures/block/shrine_stone/shrine_stone_bricks.png"),
+							AdvancementType.TASK, true, false, false)
+					.addCriterion("enter_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(rubinationShrine)))
+					.save(consumer, RubinatedNether.id("complementary_opposites"), existingFileHelper);
+
+			AdvancementHolder grinding = Advancement.Builder.advancement()
+					.parent(complementaryOpposites)
+					.display(Items.GRINDSTONE,
+							Component.translatable("advancements.rubinated_nether.grinding.title"),
+							Component.translatable("advancements.rubinated_nether.grinding.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("blank_rune",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.addCriterion("runestone",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("grinding"), existingFileHelper);
 
 			AdvancementHolder enterShrine = Advancement.Builder.advancement()
 					.parent(AdvancementSubProvider.createPlaceholder("nether/root"))

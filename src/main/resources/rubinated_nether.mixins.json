@@ -13,7 +13,8 @@
     "StonecutterMenuMixin",
     "AnvilMenuMixin",
     "ProjectileWeaponItemMixin",
-    "SurfaceSystemMixin"
+    "SurfaceSystemMixin",
+    "AdvancementNodeMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -22,6 +23,7 @@
     "HumanoidArmorLayerMixin",
     "ItemRendererMixin",
     "EntityRenderDispatcherMixin",
-    "ItemInHandLayerMixin"
+    "ItemInHandLayerMixin",
+    "AdvancementWidgetMixin"
   ]
 }

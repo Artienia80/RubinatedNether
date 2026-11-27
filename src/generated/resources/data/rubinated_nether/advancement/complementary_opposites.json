@@ -1,0 +1,40 @@
+{
+  "criteria": {
+    "enter_shrine": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "rubinated_nether:rubination_shrine"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "rubinated_nether:textures/block/shrine_stone/shrine_stone_bricks.png",
+    "description": {
+      "translate": "advancements.rubinated_nether.complementary_opposites.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:shrine_stone_bricks"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.complementary_opposites.title"
+    }
+  },
+  "requirements": [
+    [
+      "enter_shrine"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
