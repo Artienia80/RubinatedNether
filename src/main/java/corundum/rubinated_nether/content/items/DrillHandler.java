@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.items;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.utils.RNAdvancementAwards;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,8 +27,11 @@ public final class DrillHandler {
     private static final class Chain {
         long startTick;
         long lastActiveTick;
+        long maxSince = -1L;
         BlockPos pos;
     }
+
+    private static final long MAX_SPEED_AWARD_TICKS = 300L * 20L;
 
     private static final Map<UUID, Chain> CHAINS = new HashMap<>();
 
@@ -114,6 +118,18 @@ public final class DrillHandler {
             if (DrillItem.getBoostLevel(held) != level) {
                 DrillItem.setBoostLevel(held, level);
             }
+
+            if (level >= DrillItem.maxBoost(held) && MechanicalFuel.hasFuel(held)) {
+                if (chain.maxSince < 0L) {
+                    chain.maxSince = now;
+                } else if (now - chain.maxSince >= MAX_SPEED_AWARD_TICKS) {
+                    RNAdvancementAwards.award(player, "drill_endurance", "drill_endurance");
+                }
+            } else {
+                chain.maxSince = -1L;
+            }
+        } else {
+            chain.maxSince = -1L;
         }
     }
 

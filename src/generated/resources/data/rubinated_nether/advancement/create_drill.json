@@ -1,0 +1,29 @@
+{
+  "criteria": {
+    "create_drill": {
+      "conditions": {
+        "recipe_id": "rubinated_nether:bronze_drill"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.create_drill.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:bronze_drill"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.create_drill.title"
+    }
+  },
+  "parent": "rubinated_nether:construct_gearbox",
+  "requirements": [
+    [
+      "create_drill"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

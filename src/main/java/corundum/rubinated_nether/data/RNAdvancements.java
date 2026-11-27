@@ -3,6 +3,11 @@ package corundum.rubinated_nether.data;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.content.RNRarity;
+import corundum.rubinated_nether.content.RNDataComponents;
+import corundum.rubinated_nether.content.items.MechanicalFuel;
+import corundum.rubinated_nether.content.items.MechanicalFuelData;
+import corundum.rubinated_nether.content.items.PocketwatchItem;
 import corundum.rubinated_nether.content.blocks.BronzeStrongboxBlock;
 import corundum.rubinated_nether.content.blocks.GearboxBlock;
 import corundum.rubinated_nether.content.items.Rubination;
@@ -20,7 +25,9 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.BlockItemStateProperties;
+import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -35,6 +42,13 @@ public class RNAdvancements extends AdvancementProvider {
 	}
 
 	public static class RNAdvancement implements AdvancementGenerator {
+		private static ItemStack glintTool(net.minecraft.world.item.Item item) {
+			ItemStack stack = new ItemStack(item);
+			stack.set(RNDataComponents.MECHANICAL_FUEL.get(), MechanicalFuelData.of(Items.AIR, 0, 1));
+			MechanicalFuel.syncRarity(stack);
+			return stack;
+		}
+
 		@SuppressWarnings("unused")
 		@Override
 		public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer, ExistingFileHelper existingFileHelper) {
@@ -96,6 +110,257 @@ public class RNAdvancements extends AdvancementProvider {
 									LocationPredicate.Builder.location()
 											.setY(MinMaxBounds.Doubles.atMost(-250314))))
 					.save(consumer, RubinatedNether.id("strongbox"), existingFileHelper);
+
+			AdvancementHolder cogwheel = Advancement.Builder.advancement()
+					.parent(strongbox)
+					.display(RNItems.COGWHEEL.get(),
+							Component.translatable("advancements.rubinated_nether.cogwheel.title"),
+							Component.translatable("advancements.rubinated_nether.cogwheel.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("cogwheel", InventoryChangeTrigger.TriggerInstance.hasItems(RNItems.COGWHEEL.get()))
+					.save(consumer, RubinatedNether.id("cogwheel"), existingFileHelper);
+
+			AdvancementHolder constructGearbox = Advancement.Builder.advancement()
+					.parent(cogwheel)
+					.display(RNBlocks.BRONZE_GEARBOX.get(),
+							Component.translatable("advancements.rubinated_nether.construct_gearbox.title"),
+							Component.translatable("advancements.rubinated_nether.construct_gearbox.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("construct_gearbox", RecipeCraftedTrigger.TriggerInstance.craftedItem(RubinatedNether.id("bronze_gearbox")))
+					.save(consumer, RubinatedNether.id("construct_gearbox"), existingFileHelper);
+
+			AdvancementHolder constructStrongbox = Advancement.Builder.advancement()
+					.parent(cogwheel)
+					.display(RNBlocks.BRONZE_STRONGBOX.get(),
+							Component.translatable("advancements.rubinated_nether.construct_strongbox.title"),
+							Component.translatable("advancements.rubinated_nether.construct_strongbox.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("construct_strongbox", RecipeCraftedTrigger.TriggerInstance.craftedItem(RubinatedNether.id("bronze_strongbox")))
+					.save(consumer, RubinatedNether.id("construct_strongbox"), existingFileHelper);
+
+			ItemStack chargedWatchIcon = new ItemStack(RNItems.POCKETWATCH.get());
+			chargedWatchIcon.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(1));
+
+			ItemStack overchargedWatchIcon = new ItemStack(RNItems.POCKETWATCH.get());
+			overchargedWatchIcon.set(DataComponents.RARITY, RNRarity.RUBINATED_NETHER_RUBY.get());
+
+			ItemStack rewindWatchIcon = new ItemStack(RNItems.POCKETWATCH.get());
+			rewindWatchIcon.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(PocketwatchItem.REWIND_MODEL_VALUE));
+
+			ItemStack brokenWatchIcon = new ItemStack(RNItems.POCKETWATCH.get());
+			brokenWatchIcon.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(PocketwatchItem.BROKEN_MODEL_VALUE));
+
+			AdvancementHolder craftPocketwatch = Advancement.Builder.advancement()
+					.parent(constructGearbox)
+					.display(RNItems.POCKETWATCH.get(),
+							Component.translatable("advancements.rubinated_nether.craft_pocketwatch.title"),
+							Component.translatable("advancements.rubinated_nether.craft_pocketwatch.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("craft_pocketwatch",
+							RecipeCraftedTrigger.TriggerInstance.craftedItem(RubinatedNether.id("pocketwatch")))
+					.save(consumer, RubinatedNether.id("craft_pocketwatch"), existingFileHelper);
+
+			AdvancementHolder chargePocketwatch = Advancement.Builder.advancement()
+					.parent(craftPocketwatch)
+					.display(chargedWatchIcon,
+							Component.translatable("advancements.rubinated_nether.charge_pocketwatch.title"),
+							Component.translatable("advancements.rubinated_nether.charge_pocketwatch.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("charge_pocketwatch",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("charge_pocketwatch"), existingFileHelper);
+
+			AdvancementHolder overchargePocketwatch = Advancement.Builder.advancement()
+					.parent(chargePocketwatch)
+					.display(overchargedWatchIcon,
+							Component.translatable("advancements.rubinated_nether.overcharge_pocketwatch.title"),
+							Component.translatable("advancements.rubinated_nether.overcharge_pocketwatch.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("overcharge_pocketwatch",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("overcharge_pocketwatch"), existingFileHelper);
+
+			AdvancementHolder escapeDeath = Advancement.Builder.advancement()
+					.parent(overchargePocketwatch)
+					.display(rewindWatchIcon,
+							Component.translatable("advancements.rubinated_nether.escape_death.title"),
+							Component.translatable("advancements.rubinated_nether.escape_death.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("escape_death",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("escape_death"), existingFileHelper);
+
+			AdvancementHolder repairPocketwatch = Advancement.Builder.advancement()
+					.parent(escapeDeath)
+					.display(brokenWatchIcon,
+							Component.translatable("advancements.rubinated_nether.repair_pocketwatch.title"),
+							Component.translatable("advancements.rubinated_nether.repair_pocketwatch.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("repair_pocketwatch",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("repair_pocketwatch"), existingFileHelper);
+
+			ItemStack drillGlintIcon = glintTool(RNItems.BRONZE_DRILL.get());
+			ItemStack jackhammerGlintIcon = glintTool(RNItems.BRONZE_JACKHAMMER.get());
+			ItemStack chainsawGlintIcon = glintTool(RNItems.BRONZE_CHAINSAW.get());
+
+			AdvancementHolder summonWave = Advancement.Builder.advancement()
+					.parent(constructGearbox)
+					.display(RNBlocks.BRONZE_GEARBOX.get(),
+							Component.translatable("advancements.rubinated_nether.summon_wave.title"),
+							Component.translatable("advancements.rubinated_nether.summon_wave.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("summon_wave",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("summon_wave"), existingFileHelper);
+
+			AdvancementHolder keyBreak = Advancement.Builder.advancement()
+					.parent(summonWave)
+					.display(RNItems.WINDING_KEY.get(),
+							Component.translatable("advancements.rubinated_nether.key_break.title"),
+							Component.translatable("advancements.rubinated_nether.key_break.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("key_break",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("key_break"), existingFileHelper);
+
+			AdvancementHolder createDrill = Advancement.Builder.advancement()
+					.parent(constructGearbox)
+					.display(RNItems.BRONZE_DRILL.get(),
+							Component.translatable("advancements.rubinated_nether.create_drill.title"),
+							Component.translatable("advancements.rubinated_nether.create_drill.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("create_drill",
+							RecipeCraftedTrigger.TriggerInstance.craftedItem(RubinatedNether.id("bronze_drill")))
+					.save(consumer, RubinatedNether.id("create_drill"), existingFileHelper);
+
+			AdvancementHolder createJackhammer = Advancement.Builder.advancement()
+					.parent(constructGearbox)
+					.display(RNItems.BRONZE_JACKHAMMER.get(),
+							Component.translatable("advancements.rubinated_nether.create_jackhammer.title"),
+							Component.translatable("advancements.rubinated_nether.create_jackhammer.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("create_jackhammer",
+							RecipeCraftedTrigger.TriggerInstance.craftedItem(RubinatedNether.id("bronze_jackhammer")))
+					.save(consumer, RubinatedNether.id("create_jackhammer"), existingFileHelper);
+
+			AdvancementHolder createChainsaw = Advancement.Builder.advancement()
+					.parent(constructGearbox)
+					.display(RNItems.BRONZE_CHAINSAW.get(),
+							Component.translatable("advancements.rubinated_nether.create_chainsaw.title"),
+							Component.translatable("advancements.rubinated_nether.create_chainsaw.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("create_chainsaw",
+							RecipeCraftedTrigger.TriggerInstance.craftedItem(RubinatedNether.id("bronze_chainsaw")))
+					.save(consumer, RubinatedNether.id("create_chainsaw"), existingFileHelper);
+
+			AdvancementHolder drillEndurance = Advancement.Builder.advancement()
+					.parent(createDrill)
+					.display(drillGlintIcon,
+							Component.translatable("advancements.rubinated_nether.drill_endurance.title"),
+							Component.translatable("advancements.rubinated_nether.drill_endurance.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("drill_endurance",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("drill_endurance"), existingFileHelper);
+
+			AdvancementHolder jackhammerObsidian = Advancement.Builder.advancement()
+					.parent(createJackhammer)
+					.display(jackhammerGlintIcon,
+							Component.translatable("advancements.rubinated_nether.jackhammer_obsidian.title"),
+							Component.translatable("advancements.rubinated_nether.jackhammer_obsidian.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("jackhammer_obsidian",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("jackhammer_obsidian"), existingFileHelper);
+
+			AdvancementHolder chainsawTimber = Advancement.Builder.advancement()
+					.parent(createChainsaw)
+					.display(chainsawGlintIcon,
+							Component.translatable("advancements.rubinated_nether.chainsaw_timber.title"),
+							Component.translatable("advancements.rubinated_nether.chainsaw_timber.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("chainsaw_timber",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("chainsaw_timber"), existingFileHelper);
+
+			AdvancementHolder addModule = Advancement.Builder.advancement()
+					.parent(chainsawTimber)
+					.display(Items.NETHERITE_SCRAP,
+							Component.translatable("advancements.rubinated_nether.add_module.title"),
+							Component.translatable("advancements.rubinated_nether.add_module.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("add_module",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("add_module"), existingFileHelper);
+
+			AdvancementHolder fuelUp = Advancement.Builder.advancement()
+					.parent(addModule)
+					.display(RNBlocks.MOLTEN_RUBY_BLOCK.get(),
+							Component.translatable("advancements.rubinated_nether.fuel_up.title"),
+							Component.translatable("advancements.rubinated_nether.fuel_up.description"),
+							null,
+							AdvancementType.TASK, true, true, false)
+					.requirements(AdvancementRequirements.Strategy.AND)
+					.addCriterion("fuel_up",
+							PlayerTrigger.TriggerInstance.located(
+									LocationPredicate.Builder.location()
+											.setY(MinMaxBounds.Doubles.atMost(-250314))))
+					.save(consumer, RubinatedNether.id("fuel_up"), existingFileHelper);
 
 			AdvancementHolder bronzeRod = Advancement.Builder.advancement()
 					.parent(witness)

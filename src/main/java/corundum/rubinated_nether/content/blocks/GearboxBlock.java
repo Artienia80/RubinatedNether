@@ -266,6 +266,9 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
                     && !serverPlayer.isSpectator()
                     && serverPlayer.distanceToSqr(center) <= WITNESS_RADIUS * WITNESS_RADIUS) {
                 RNAdvancementAwards.award(serverPlayer, "witness", "witness");
+                if (!state.getValue(NATURAL)) {
+                    RNAdvancementAwards.award(serverPlayer, "summon_wave", "summon_wave");
+                }
             }
         }
 
@@ -277,6 +280,13 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
     public void finishCooldown(ServerLevel level, BlockState state, BlockPos pos) {
         state = state.setValue(COOLING_DOWN, false);
         if (!state.getValue(NATURAL) && level.random.nextFloat() < KEY_BREAK_CHANCE) {
+            net.minecraft.world.phys.Vec3 center = net.minecraft.world.phys.Vec3.atCenterOf(pos);
+            for (ServerPlayer serverPlayer : level.players()) {
+                if (!serverPlayer.isSpectator()
+                        && serverPlayer.distanceToSqr(center) <= WITNESS_RADIUS * WITNESS_RADIUS) {
+                    RNAdvancementAwards.award(serverPlayer, "key_break", "key_break");
+                }
+            }
             breakKey(level, state, pos);
             return;
         }

@@ -1,0 +1,29 @@
+{
+  "criteria": {
+    "create_chainsaw": {
+      "conditions": {
+        "recipe_id": "rubinated_nether:bronze_chainsaw"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.create_chainsaw.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:bronze_chainsaw"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.create_chainsaw.title"
+    }
+  },
+  "parent": "rubinated_nether:construct_gearbox",
+  "requirements": [
+    [
+      "create_chainsaw"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

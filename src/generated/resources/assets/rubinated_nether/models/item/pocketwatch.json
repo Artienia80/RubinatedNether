@@ -96,6 +96,12 @@
       "predicate": {
         "minecraft:custom_model_data": 16.0
       }
+    },
+    {
+      "model": "rubinated_nether:item/pocketwatch_rewind",
+      "predicate": {
+        "minecraft:custom_model_data": 17.0
+      }
     }
   ],
   "textures": {

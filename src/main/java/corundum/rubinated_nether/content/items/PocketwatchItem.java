@@ -27,6 +27,7 @@ import java.util.List;
 public class PocketwatchItem extends Item {
 
     public static final int BROKEN_MODEL_VALUE = 16;
+    public static final int REWIND_MODEL_VALUE = 17;
 
     public PocketwatchItem(Properties properties) {
         super(properties);

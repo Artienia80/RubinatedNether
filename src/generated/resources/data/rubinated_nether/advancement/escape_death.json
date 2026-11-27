@@ -1,0 +1,46 @@
+{
+  "criteria": {
+    "escape_death": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "position": {
+                  "y": {
+                    "max": -250314.0
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.escape_death.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:pocketwatch",
+      "components": {
+        "minecraft:custom_model_data": 17
+      }
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.escape_death.title"
+    }
+  },
+  "parent": "rubinated_nether:overcharge_pocketwatch",
+  "requirements": [
+    [
+      "escape_death"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

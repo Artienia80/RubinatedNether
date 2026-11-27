@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.items.PocketwatchData;
 import corundum.rubinated_nether.content.items.PocketwatchItem;
+import corundum.rubinated_nether.utils.RNAdvancementAwards;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -51,6 +52,7 @@ public class PocketwatchDeathHandler {
                 player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
                 player.level().playSound(null, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1.0F, 0.8F);
                 net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(player, PocketwatchSavePayload.INSTANCE);
+                RNAdvancementAwards.award(player, "escape_death", "escape_death");
             } else {
                 watch.set(RNDataComponents.POCKETWATCH_DATA, PocketwatchData.EMPTY);
             }

@@ -6,9 +6,11 @@ import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNRarity;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.module.ToolModules;
+import corundum.rubinated_nether.utils.RNAdvancementAwards;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.SlotAccess;
@@ -139,6 +141,7 @@ public final class MechanicalFuel {
         if (insert(tool, target) > 0) {
             playInsert(player);
             slot.setChanged();
+            awardFullBlockLoad(tool, player);
         }
         return true;
     }
@@ -158,8 +161,18 @@ public final class MechanicalFuel {
 
         if (insert(tool, other) > 0) {
             playInsert(player);
+            awardFullBlockLoad(tool, player);
         }
         return true;
+    }
+
+    private static void awardFullBlockLoad(ItemStack tool, Player player) {
+        MechanicalFuelData data = data(tool);
+        if (player instanceof ServerPlayer serverPlayer
+                && data.itemType() == RNBlocks.MOLTEN_RUBY_BLOCK.asItem()
+                && data.count() >= 64) {
+            RNAdvancementAwards.award(serverPlayer, "fuel_up", "fuel_up");
+        }
     }
 
     public static void syncRarity(ItemStack tool) {

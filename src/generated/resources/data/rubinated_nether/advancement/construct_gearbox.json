@@ -1,0 +1,29 @@
+{
+  "criteria": {
+    "construct_gearbox": {
+      "conditions": {
+        "recipe_id": "rubinated_nether:bronze_gearbox"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.construct_gearbox.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:bronze_gearbox"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.construct_gearbox.title"
+    }
+  },
+  "parent": "rubinated_nether:cogwheel",
+  "requirements": [
+    [
+      "construct_gearbox"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

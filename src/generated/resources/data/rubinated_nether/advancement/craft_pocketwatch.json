@@ -1,0 +1,29 @@
+{
+  "criteria": {
+    "craft_pocketwatch": {
+      "conditions": {
+        "recipe_id": "rubinated_nether:pocketwatch"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.craft_pocketwatch.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:pocketwatch"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.craft_pocketwatch.title"
+    }
+  },
+  "parent": "rubinated_nether:construct_gearbox",
+  "requirements": [
+    [
+      "craft_pocketwatch"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

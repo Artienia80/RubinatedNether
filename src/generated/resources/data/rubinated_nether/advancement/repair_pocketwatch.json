@@ -1,0 +1,46 @@
+{
+  "criteria": {
+    "repair_pocketwatch": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "position": {
+                  "y": {
+                    "max": -250314.0
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.repair_pocketwatch.description"
+    },
+    "icon": {
+      "components": {
+        "minecraft:custom_model_data": 16
+      },
+      "count": 1,
+      "id": "rubinated_nether:pocketwatch"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.repair_pocketwatch.title"
+    }
+  },
+  "parent": "rubinated_nether:escape_death",
+  "requirements": [
+    [
+      "repair_pocketwatch"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

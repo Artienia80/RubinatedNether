@@ -5,7 +5,6 @@ import corundum.rubinated_nether.content.RNBlocks;
 import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.RNTags;
-import corundum.rubinated_nether.content.items.PocketwatchData;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
 import corundum.rubinated_nether.content.recipe.BaptismRecipe;
@@ -820,12 +819,6 @@ public class RNRecipeProvider extends RecipeProvider {
 				new ResonanceRecipe.TriggerData(20, 2500),
 				new ResonanceRecipe.TriggerData(20, 5000), false);
 
-
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, RNItems.POCKETWATCH.get())
-				.requires(DataComponentIngredient.of(false, RNDataComponents.POCKETWATCH_DATA.get(), PocketwatchData.BROKEN, RNItems.POCKETWATCH.get()))
-				.requires(RNBlocks.BRONZE_GEARBOX.get())
-				.unlockedBy("has_broken_pocketwatch", has(RNItems.POCKETWATCH.get()))
-				.save(recipeOutput, RubinatedNether.MODID + ":pocketwatch_repair");
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, RNItems.BRONZE_DRILL, 1)
 				.define('X', RNItems.BRONZE_SCRAP)

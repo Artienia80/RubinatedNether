@@ -1,0 +1,33 @@
+{
+  "criteria": {
+    "cogwheel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:cogwheel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.cogwheel.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:cogwheel"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.cogwheel.title"
+    }
+  },
+  "parent": "rubinated_nether:strongbox",
+  "requirements": [
+    [
+      "cogwheel"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

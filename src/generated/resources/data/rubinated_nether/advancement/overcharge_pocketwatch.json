@@ -1,0 +1,46 @@
+{
+  "criteria": {
+    "overcharge_pocketwatch": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "position": {
+                  "y": {
+                    "max": -250314.0
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.overcharge_pocketwatch.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:pocketwatch",
+      "components": {
+        "minecraft:rarity": "rubinated_nether:ruby"
+      }
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.overcharge_pocketwatch.title"
+    }
+  },
+  "parent": "rubinated_nether:charge_pocketwatch",
+  "requirements": [
+    [
+      "overcharge_pocketwatch"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

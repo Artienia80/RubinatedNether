@@ -3,6 +3,9 @@ package corundum.rubinated_nether.mixin;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.items.RuneCarvingHelper;
 import corundum.rubinated_nether.content.items.RuneItem;
+import corundum.rubinated_nether.content.module.ToolModules;
+import corundum.rubinated_nether.utils.RNAdvancementAwards;
+import net.minecraft.server.level.ServerPlayer;
 import corundum.rubinated_nether.content.items.Rubination;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.SmithingMenu;
@@ -27,6 +30,14 @@ public class SmithingMenuMixin {
         capturedRubination = templateStack.getItem() instanceof RuneItem runeItem
                 ? runeItem.getRubination()
                 : null;
+
+        ItemStack base = menu.getSlot(SmithingMenu.BASE_SLOT).getItem();
+        if (player instanceof ServerPlayer serverPlayer
+                && ToolModules.isModdable(stack)
+                && (!ToolModules.moduleIds(base).equals(ToolModules.moduleIds(stack))
+                || !ToolModules.levels(base).equals(ToolModules.levels(stack)))) {
+            RNAdvancementAwards.award(serverPlayer, "add_module", "add_module");
+        }
     }
 
     @Inject(method = "onTake", at = @At("TAIL"))

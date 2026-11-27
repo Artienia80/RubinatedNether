@@ -1,6 +1,7 @@
 package corundum.rubinated_nether.content.items;
 
 import corundum.rubinated_nether.RubinatedNether;
+import corundum.rubinated_nether.utils.RNAdvancementAwards;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.module.Flywheel;
 import net.minecraft.core.BlockPos;
@@ -12,12 +13,14 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
@@ -47,6 +50,8 @@ public final class JackhammerHandler {
     private static final Map<UUID, Map<BlockPos, Spill>> SPILL = new HashMap<>();
     private static final Map<UUID, Session> SESSIONS = new HashMap<>();
     private static final Map<UUID, Long> NEXT_HIT = new HashMap<>(); // per player, not per block
+    private static final Map<UUID, Integer> OBSIDIAN_STREAK = new HashMap<>();
+    private static final int OBSIDIAN_STREAK_GOAL = 10;
 
     private JackhammerHandler() {}
 
@@ -118,6 +123,20 @@ public final class JackhammerHandler {
         if (player.tickCount % 20 == 0) fade(player);
     }
 
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (event.isCanceled() || !(event.getPlayer() instanceof ServerPlayer player)) return;
+        UUID id = player.getUUID();
+        if (player.getMainHandItem().getItem() instanceof JackhammerItem && event.getState().is(Blocks.OBSIDIAN)) {
+            int streak = OBSIDIAN_STREAK.merge(id, 1, Integer::sum);
+            if (streak >= OBSIDIAN_STREAK_GOAL) {
+                RNAdvancementAwards.award(player, "jackhammer_obsidian", "jackhammer_obsidian");
+            }
+        } else {
+            OBSIDIAN_STREAK.remove(id);
+        }
+    }
+
     // ---------- Cleanup ----------
     @SubscribeEvent
     public static void onLogout(PlayerEvent.PlayerLoggedOutEvent event) { forget(event.getEntity()); }
@@ -133,12 +152,14 @@ public final class JackhammerHandler {
         SPILL.clear();
         SESSIONS.clear();
         NEXT_HIT.clear();
+        OBSIDIAN_STREAK.clear();
     }
 
     private static void forget(Player p) {
         SPILL.remove(p.getUUID());
         SESSIONS.remove(p.getUUID());
         NEXT_HIT.remove(p.getUUID());
+        OBSIDIAN_STREAK.remove(p.getUUID());
     }
 
     // ---------- Safety ----------

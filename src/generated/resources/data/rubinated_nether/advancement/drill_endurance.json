@@ -1,0 +1,51 @@
+{
+  "criteria": {
+    "drill_endurance": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "position": {
+                  "y": {
+                    "max": -250314.0
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.drill_endurance.description"
+    },
+    "icon": {
+      "components": {
+        "minecraft:rarity": "rubinated_nether:ruby",
+        "rubinated_nether:mechanical_fuel": {
+          "count": 0,
+          "droplets": 1,
+          "item": "minecraft:air"
+        }
+      },
+      "count": 1,
+      "id": "rubinated_nether:bronze_drill"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.drill_endurance.title"
+    }
+  },
+  "parent": "rubinated_nether:create_drill",
+  "requirements": [
+    [
+      "drill_endurance"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

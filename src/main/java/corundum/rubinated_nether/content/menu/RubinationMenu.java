@@ -7,6 +7,7 @@ import corundum.rubinated_nether.content.items.PocketwatchData;
 import corundum.rubinated_nether.content.items.PocketwatchItem;
 import corundum.rubinated_nether.content.items.Rubination;
 import corundum.rubinated_nether.content.items.RuneItem;
+import corundum.rubinated_nether.utils.RNAdvancementAwards;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.Util;
 import net.minecraft.advancements.AdvancementHolder;
@@ -200,6 +201,13 @@ public class RubinationMenu extends AbstractContainerMenu {
             }
 
             PocketwatchItem.syncModelFrame(watch, gameTime);
+
+            if (player instanceof ServerPlayer serverPlayer) {
+                RNAdvancementAwards.award(serverPlayer, "charge_pocketwatch", "charge_pocketwatch");
+                if (newAmount > RNConfig.altarFullBlessingThreshold * 60L * 20L) {
+                    RNAdvancementAwards.award(serverPlayer, "overcharge_pocketwatch", "overcharge_pocketwatch");
+                }
+            }
         }
     }
     public boolean hasEnoughRubinatedBlocks() {

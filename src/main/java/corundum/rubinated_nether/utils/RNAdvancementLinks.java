@@ -13,7 +13,14 @@ public final class RNAdvancementLinks {
 			RubinatedNether.id("blank_slate"),
 			RubinatedNether.id("witness"),
 			RubinatedNether.id("bronze_rod"),
-			RubinatedNether.id("winding_key")
+			RubinatedNether.id("winding_key"),
+			RubinatedNether.id("construct_gearbox"),
+			RubinatedNether.id("construct_strongbox"),
+			RubinatedNether.id("summon_wave"),
+			RubinatedNether.id("craft_pocketwatch"),
+			RubinatedNether.id("create_drill"),
+			RubinatedNether.id("create_jackhammer"),
+			RubinatedNether.id("create_chainsaw")
 	);
 
 	private static final Map<ResourceLocation, Integer> ORDER_INDEX = new HashMap<>();
@@ -25,7 +32,9 @@ public final class RNAdvancementLinks {
 	}
 
 	private static final Map<ResourceLocation, List<ResourceLocation>> EXTRA_PARENTS = Map.of(
-			RubinatedNether.id("offer_ritual_offering"), List.of(RubinatedNether.id("insert_rune"), RubinatedNether.id("baptise_rod"))
+			RubinatedNether.id("offer_ritual_offering"), List.of(RubinatedNether.id("insert_rune"), RubinatedNether.id("baptise_rod")),
+			RubinatedNether.id("charge_pocketwatch"), List.of(RubinatedNether.id("rubinate_item")),
+			RubinatedNether.id("add_module"), List.of(RubinatedNether.id("drill_endurance"), RubinatedNether.id("jackhammer_obsidian"))
 	);
 
 	private static final Map<ResourceLocation, ResourceLocation> ALIGNED_CHILD = Map.of(

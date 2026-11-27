@@ -5,6 +5,7 @@ import corundum.rubinated_nether.content.RNDataComponents;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.module.Flywheel;
 import corundum.rubinated_nether.content.module.ToolModules;
+import corundum.rubinated_nether.utils.RNAdvancementAwards;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -49,6 +50,8 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
 
     /** Upper bound on trunk/branch blocks felled by one cut, to keep a single swing from spawning unbounded entities. */
     private static final int MAX_TREE_LOGS = 512;
+
+    private static final int LOG_AWARD_THRESHOLD = 64;
 
     private static final int MAX_CANOPY_BLOCKS = 512;
 
@@ -246,14 +249,17 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
         }
 
         if (!level.isClientSide() && isTrunk(state) && MechanicalFuel.hasFuel(stack)) {
-            fellTree(level, pos);
+            int felled = fellTree(level, pos);
+            if (felled > LOG_AWARD_THRESHOLD && miner instanceof ServerPlayer player) {
+                RNAdvancementAwards.award(player, "chainsaw_timber", "chainsaw_timber");
+            }
         }
         return super.mineBlock(stack, level, state, pos, miner);
     }
 
-    private static void fellTree(Level level, BlockPos cut) {
+    private static int fellTree(Level level, BlockPos cut) {
         Set<BlockPos> connected = collectConnectedTrunks(level, cut);
-        if (connected.isEmpty()) return;
+        if (connected.isEmpty()) return 0;
 
         // A log falls if nothing solid holds it up. Going bottom-up lets a log rely on the log beneath it falling too.
         // NeoForge calls mineBlock() *before* it removes the block, so the cut position is still a log at this point;
@@ -292,7 +298,7 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
         for (BlockPos p : ordered) {
             if (reached.contains(p)) fallen.add(p);
         }
-        if (fallen.isEmpty()) return;
+        if (fallen.isEmpty()) return 0;
 
         if (DEBUG) {
             LOGGER.info("[Chainsaw] cut at {}: connected={} falling={}", cut, connected.size(), fallen.size());
@@ -307,6 +313,7 @@ public class ChainsawItem extends AxeItem implements MechanicalTool {
         List<BlockPos> everything = new ArrayList<>(fallen);
         everything.addAll(fallenCanopy);
         dropAttachments(level, cut, everything);
+        return fallen.size();
     }
 
     /**

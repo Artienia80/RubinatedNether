@@ -662,6 +662,14 @@ public class RNItemModels extends ItemModelProvider {
 		base.override()
 				.predicate(mcLoc("custom_model_data"), PocketwatchItem.BROKEN_MODEL_VALUE)
 				.model(brokenModel);
+
+		ItemModelBuilder rewindModel = getBuilder("pocketwatch_rewind")
+				.parent(new ModelFile.UncheckedModelFile(mcLoc("item/generated")))
+				.texture("layer0", modLoc("item/pocketwatch_rewind"));
+
+		base.override()
+				.predicate(mcLoc("custom_model_data"), PocketwatchItem.REWIND_MODEL_VALUE)
+				.model(rewindModel);
 	}
 
 

@@ -3,12 +3,15 @@ package corundum.rubinated_nether.mixin;
 import corundum.rubinated_nether.utils.RNAdvancementLinks;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementNode;
+import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.advancements.AdvancementTab;
 import net.minecraft.client.gui.screens.advancements.AdvancementWidget;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -33,7 +36,21 @@ public abstract class AdvancementWidgetMixin {
 
 	@Shadow
 	@Final
+	@Mutable
 	private int y;
+
+	@Inject(method = "<init>", at = @At("RETURN"))
+	private void rubinated_nether$alignWithChild(CallbackInfo ci) {
+		ResourceLocation target = RNAdvancementLinks.alignedChild(this.advancementNode.holder().id());
+		if (target == null) return;
+
+		for (AdvancementNode child : this.advancementNode.children()) {
+			if (!child.holder().id().equals(target)) continue;
+			float childY = child.advancement().display().map(DisplayInfo::getY).orElse(0.0F);
+			this.y = Mth.floor(childY * 27.0F);
+			return;
+		}
+	}
 
 	@Inject(method = "drawConnectivity", at = @At("TAIL"))
 	private void rubinated_nether$drawExtraParents(GuiGraphics graphics, int originX, int originY, boolean dropShadow, CallbackInfo ci) {
