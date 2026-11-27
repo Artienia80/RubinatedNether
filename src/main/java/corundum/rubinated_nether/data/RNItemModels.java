@@ -351,6 +351,7 @@ public class RNItemModels extends ItemModelProvider {
 		handheldItem(RNItems.BRONZE_JACKHAMMER, "item/bronze_jackhammer");
 		handheldItem(RNItems.BRONZE_CHAINSAW, "item/bronze_chainsaw");
 		handheldItem(RNItems.BRONZE_ROD, "item/bronze_rod");
+		handheldRodItem(RNItems.RITUAL_OFFERING, "item/ritual_offering");
 
 
 		// Basic items
@@ -370,7 +371,6 @@ public class RNItemModels extends ItemModelProvider {
 				RNItems.BRONZE_SCRAP,
 				RNItems.BRONZE_SHOT,
 				RNItems.CRYSTALLIZED_BRONZE_SHOT,
-				RNItems.RITUAL_OFFERING,
 				RNItems.COGWHEEL,
 				RNItems.WINDING_KEY,
 				RNBlocks.CRYSTALLIZED_BRONZE_BLIGHT,
@@ -546,6 +546,14 @@ public class RNItemModels extends ItemModelProvider {
 		withExistingParent(
 				item.getId().toString(),
 				mcLoc("item/handheld")
+		)
+				.texture("layer0", texture);
+	}
+
+	private void handheldRodItem(DeferredItem<?> item, String texture) {
+		withExistingParent(
+				item.getId().toString(),
+				mcLoc("item/handheld_rod")
 		)
 				.texture("layer0", texture);
 	}

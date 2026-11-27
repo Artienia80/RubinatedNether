@@ -51,7 +51,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
@@ -78,6 +77,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.neoforge.entity.PartEntity;
+import net.neoforged.neoforge.fluids.FluidType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -355,15 +355,6 @@ public class BronzeEntity extends TarnishingEntity {
     @Override
     protected void registerGoals() {
         // base
-        this.goalSelector.addGoal(0, new FloatGoal(this){
-            public boolean canUse() {
-                return !BronzeEntity.this.isInLava() &&
-                        (BronzeEntity.this.getTarnishLevel().equals(TarnishStage.UNAFFECTED) ||
-                                BronzeEntity.this.getTarnishLevel().equals(TarnishStage.DISCOLORED) ||
-                                BronzeEntity.this.getTarnishLevel().equals(TarnishStage.CRYSTALLIZED)) &&
-                        super.canUse();
-            }
-        });
         this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0, 0.0F));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -637,6 +628,11 @@ public class BronzeEntity extends TarnishingEntity {
                 super.clientTick();
             }
         };
+    }
+
+    @Override
+    public boolean canDrownInFluidType(FluidType type) {
+        return false;
     }
 
     @Override

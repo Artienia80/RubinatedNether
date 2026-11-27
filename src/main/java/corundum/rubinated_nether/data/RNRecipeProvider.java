@@ -796,6 +796,15 @@ public class RNRecipeProvider extends RecipeProvider {
 				new ResonanceRecipe.TriggerData(20, 150),
 				new ResonanceRecipe.TriggerData(20, 300), true);
 
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RNBlocks.SHRINE_STONE_COFFER, 1)
+				.define('P', RNBlocks.POLISHED_SHRINE_STONE)
+				.define('B', RNBlocks.SHRINE_STONE_BRICKS)
+				.pattern("PPP")
+				.pattern("B B")
+				.pattern("BBB")
+				.unlockedBy(getHasName(RNBlocks.SHRINE_STONE_BRICKS), has(RNBlocks.SHRINE_STONE_BRICKS))
+				.save(recipeOutput);
+
 		resonance(recipeOutput, RNBlocks.RUBINATED_SHRINE_STONE_COFFER,
 				Ingredient.of(RNBlocks.SHRINE_STONE_COFFER),
 				new ResonanceRecipe.TriggerData(20, 150),
@@ -949,6 +958,12 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern("MQ")
 				.unlockedBy(getHasName(RNBlocks.MORION_MOSAIC), has(RNBlocks.MORION_MOSAIC))
 				.save(recipeOutput);
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RNBlocks.CHECKERED_MOSAIC, 4)
+				.define('T', RNBlocks.CHECKERED_TILES)
+				.pattern("TT")
+				.pattern("TT")
+				.unlockedBy(getHasName(RNBlocks.CHECKERED_TILES), has(RNBlocks.CHECKERED_TILES))
+				.save(recipeOutput, RubinatedNether.id("checkered_mosaic_from_checkered_tiles"));
 		stairsAndSlab(recipeOutput, RNBlocks.QUARTZ_TILES, RNBlocks.QUARTZ_TILES_STAIRS, RNBlocks.QUARTZ_TILES_SLAB);
 		stairsAndSlab(recipeOutput, RNBlocks.MORION_TILES, RNBlocks.MORION_TILES_STAIRS, RNBlocks.MORION_TILES_SLAB);
 		stairsAndSlab(recipeOutput, RNBlocks.CHECKERED_TILES, RNBlocks.CHECKERED_TILES_STAIRS, RNBlocks.CHECKERED_TILES_SLAB);
@@ -979,7 +994,15 @@ public class RNRecipeProvider extends RecipeProvider {
 		);
 		stonecutterList(recipeOutput, RNBlocks.QUARTZ_MOSAIC, RNBlocks.QUARTZ_MOSAIC_STAIRS, RNBlocks.QUARTZ_MOSAIC_SLAB);
 		stonecutterList(recipeOutput, RNBlocks.MORION_MOSAIC, RNBlocks.MORION_MOSAIC_STAIRS, RNBlocks.MORION_MOSAIC_SLAB);
-		stonecutterList(recipeOutput, RNBlocks.CHECKERED_TILES, RNBlocks.CHECKERED_TILES_STAIRS, RNBlocks.CHECKERED_TILES_SLAB);
+		stonecutterList(
+				recipeOutput,
+				RNBlocks.CHECKERED_TILES,
+				RNBlocks.CHECKERED_TILES_STAIRS,
+				RNBlocks.CHECKERED_TILES_SLAB,
+				RNBlocks.CHECKERED_MOSAIC,
+				RNBlocks.CHECKERED_MOSAIC_STAIRS,
+				RNBlocks.CHECKERED_MOSAIC_SLAB
+		);
 		stonecutterList(recipeOutput, RNBlocks.CHECKERED_MOSAIC, RNBlocks.CHECKERED_MOSAIC_STAIRS, RNBlocks.CHECKERED_MOSAIC_SLAB);
 		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, RNBlocks.REDSTONE_ACCUMULATOR)
 				.define('T', Blocks.REDSTONE_TORCH)
@@ -1242,6 +1265,9 @@ public class RNRecipeProvider extends RecipeProvider {
 			gearboxRecipe(recipeOutput, waxed(gearbox), waxed(chiseled));
 			strongboxRecipe(recipeOutput, strongbox.get(), bronzeBlock.get(), grate.get());
 			strongboxRecipe(recipeOutput, waxed(strongbox), waxed(bronzeBlock), waxed(grate));
+			Supplier<? extends Block> vase = getBlockByName(prefix + "BRONZE_VASE");
+			vaseRecipe(recipeOutput, vase.get(), bronzeBlock.get());
+			vaseRecipe(recipeOutput, waxed(vase), waxed(bronzeBlock));
 		}
 	}
 
@@ -1253,6 +1279,17 @@ public class RNRecipeProvider extends RecipeProvider {
 				.pattern("CBC")
 				.pattern("CCC")
 				.unlockedBy(getHasName(RNItems.COGWHEEL), has(RNItems.COGWHEEL))
+				.save(recipeOutput);
+	}
+
+	private void vaseRecipe(RecipeOutput recipeOutput, ItemLike vase, ItemLike bronzeBlock) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, vase, 2)
+				.define('B', bronzeBlock)
+				.define('S', RNItems.BRONZE_SCRAP)
+				.pattern("S S")
+				.pattern("S S")
+				.pattern("BBB")
+				.unlockedBy(getHasName(bronzeBlock), has(bronzeBlock))
 				.save(recipeOutput);
 	}
 
