@@ -251,6 +251,15 @@ public class RunestoneBlock extends BaseEntityBlock {
 		//  ItemInteractionResult.CONSUME; // Changed from sidedSuccess
 	}
 
+	private static boolean isNearAltar(Level level, BlockPos runestonePos) {
+		for (BlockPos offset : RubinationAltarBlock.RUNESTONE_OFFSETS) {
+			if (level.getBlockState(runestonePos.subtract(offset)).is(RNBlocks.RUBINATION_ALTAR.get())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void setItemIntoRunestone(Level level, BlockPos pos, BlockState blockState, Player player, ItemStack stack) {
 		// Update the block state FIRST
 		syncRuneValue(level, pos, ((RuneItem) stack.getItem()).getRubination());
@@ -263,7 +272,7 @@ public class RunestoneBlock extends BaseEntityBlock {
 		((RunestoneBlockEntity) blockEntity).setTheItem(itemStack);
 		blockEntity.setChanged();
 
-		if (player instanceof ServerPlayer serverPlayer) {
+		if (player instanceof ServerPlayer serverPlayer && isNearAltar(level, getCorrectBlockPos(pos, blockState))) {
 			AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
 					.get(RubinatedNether.id("insert_rune"));
 

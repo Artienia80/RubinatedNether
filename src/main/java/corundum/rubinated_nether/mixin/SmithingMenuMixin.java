@@ -1,11 +1,9 @@
 package corundum.rubinated_nether.mixin;
 
-import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.items.RuneCarvingHelper;
 import corundum.rubinated_nether.content.items.RuneItem;
 import corundum.rubinated_nether.content.items.Rubination;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.SmithingMenu;
 import net.minecraft.world.item.ItemStack;
@@ -29,19 +27,6 @@ public class SmithingMenuMixin {
         capturedRubination = templateStack.getItem() instanceof RuneItem runeItem
                 ? runeItem.getRubination()
                 : null;
-
-        if (capturedRubination != null && player instanceof ServerPlayer serverPlayer) {
-            var advancementHolder = serverPlayer.server.getAdvancements()
-                    .get(RubinatedNether.id("rubinated_trim"));
-            if (advancementHolder != null) {
-                var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
-                if (!progress.isDone()) {
-                    for (String criterion : progress.getRemainingCriteria()) {
-                        serverPlayer.getAdvancements().award(advancementHolder, criterion);
-                    }
-                }
-            }
-        }
     }
 
     @Inject(method = "onTake", at = @At("TAIL"))

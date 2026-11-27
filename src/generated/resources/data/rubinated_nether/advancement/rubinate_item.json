@@ -1,5 +1,5 @@
 {
-  "parent": "rubinated_nether:insert_rune",
+  "parent": "rubinated_nether:ready",
   "criteria": {
     "impossible": {
       "conditions": {
@@ -28,7 +28,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "rubinated_nether:ruby"
+      "id": "rubinated_nether:rubination_altar"
     },
     "title": {
       "translate": "advancements.rubinated_nether.rubinate_item.title"

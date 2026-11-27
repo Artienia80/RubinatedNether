@@ -183,8 +183,6 @@ public class RubinationMenu extends AbstractContainerMenu {
         int share = durationTicks / pocketwatches.size();
         int remainder = durationTicks % pocketwatches.size();
         long gameTime = player.level().getGameTime();
-        long thresholdTicks = RNConfig.altarFullBlessingThreshold * 60L * 20L;
-        boolean reachedThreshold = false;
 
         for (int i = 0; i < pocketwatches.size(); i++) {
             ItemStack watch = pocketwatches.get(i);
@@ -202,24 +200,6 @@ public class RubinationMenu extends AbstractContainerMenu {
             }
 
             PocketwatchItem.syncModelFrame(watch, gameTime);
-
-            if (newAmount >= thresholdTicks) {
-                reachedThreshold = true;
-            }
-        }
-
-        if (reachedThreshold && player instanceof ServerPlayer serverPlayer) {
-            AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements()
-                    .get(RubinatedNether.id("divine_favor"));
-
-            if (advancementHolder != null) {
-                var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
-                if (!progress.isDone()) {
-                    for (String criterion : progress.getRemainingCriteria()) {
-                        serverPlayer.getAdvancements().award(advancementHolder, criterion);
-                    }
-                }
-            }
         }
     }
     public boolean hasEnoughRubinatedBlocks() {

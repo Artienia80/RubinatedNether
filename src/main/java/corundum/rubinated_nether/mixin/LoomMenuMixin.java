@@ -1,10 +1,8 @@
 package corundum.rubinated_nether.mixin;
 
-import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.items.RuneCarvingHelper;
 import corundum.rubinated_nether.content.items.RuneItem;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.LoomMenu;
 import net.minecraft.world.inventory.Slot;
@@ -26,19 +24,6 @@ public class LoomMenuMixin {
         Slot patternSlot = this.this$0.getPatternSlot();
         ItemStack pattern = patternSlot.getItem();
         if (pattern.getItem() instanceof RuneItem runeItem) {
-            if (player instanceof ServerPlayer serverPlayer) {
-                var advancementHolder = serverPlayer.server.getAdvancements()
-                        .get(RubinatedNether.id("rubinated_banner"));
-                if (advancementHolder != null) {
-                    var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
-                    if (!progress.isDone()) {
-                        for (String criterion : progress.getRemainingCriteria()) {
-                            serverPlayer.getAdvancements().award(advancementHolder, criterion);
-                        }
-                    }
-                }
-            }
-
             ItemStack carved = RuneCarvingHelper.withCarving(new ItemStack(RNItems.RUNE.get()), runeItem.getRubination());
             patternSlot.set(carved);
         }

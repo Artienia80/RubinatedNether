@@ -48,7 +48,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "minecraft:grindstone"
+      "id": "rubinated_nether:rune"
     },
     "title": {
       "translate": "advancements.rubinated_nether.grinding.title"

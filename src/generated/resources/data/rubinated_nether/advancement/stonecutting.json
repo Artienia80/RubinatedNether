@@ -1,7 +1,7 @@
 {
-  "parent": "rubinated_nether:obtain_bleeding_obsidian",
+  "parent": "rubinated_nether:grinding",
   "criteria": {
-    "impossible": {
+    "carved_rune": {
       "conditions": {
         "player": [
           {
@@ -24,19 +24,23 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.rubinated_nether.blood_dripping.description"
+      "translate": "advancements.rubinated_nether.stonecutting.description"
     },
     "icon": {
+      "components": {
+        "minecraft:custom_model_data": 1,
+        "rubinated_nether:rune_carving": "sloth"
+      },
       "count": 1,
-      "id": "rubinated_nether:molten_ruby_cauldron"
+      "id": "rubinated_nether:rune"
     },
     "title": {
-      "translate": "advancements.rubinated_nether.blood_dripping.title"
+      "translate": "advancements.rubinated_nether.stonecutting.title"
     }
   },
   "requirements": [
     [
-      "impossible"
+      "carved_rune"
     ]
   ],
   "sends_telemetry_event": true

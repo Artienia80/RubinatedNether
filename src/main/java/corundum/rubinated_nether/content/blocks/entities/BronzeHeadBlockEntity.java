@@ -1,6 +1,5 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
-import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNSoundEvents;
 import corundum.rubinated_nether.content.TarnishStage;
@@ -156,7 +155,6 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 			if (!cone.sees(entity.getBoundingBox(), worldPosition)) continue;
 
 			observed = true;
-			grantLaserDetectionAdvancement(entity);
 		}
 
 		return observed;
@@ -204,19 +202,6 @@ public class BronzeHeadBlockEntity extends BlockEntity implements TickableBlockE
 		observationSeconds = tag.getInt("ObservationSeconds");
 		wasObserving = tag.getBoolean("WasObserving");
 		visionPower = powerFromSeconds(observationSeconds);
-	}
-
-	private void grantLaserDetectionAdvancement(Entity entity) {
-		if (level.isClientSide || !(entity instanceof ServerPlayer serverPlayer)) return;
-		var advancementHolder = serverPlayer.server.getAdvancements().get(RubinatedNether.id("laser_detection"));
-		if (advancementHolder == null) return;
-
-		var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
-		if (!progress.isDone()) {
-			for (String criterion : progress.getRemainingCriteria()) {
-				serverPlayer.getAdvancements().award(advancementHolder, criterion);
-			}
-		}
 	}
 
 	@Override

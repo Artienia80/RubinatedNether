@@ -1,6 +1,5 @@
 package corundum.rubinated_nether.content.blocks.entities;
 
-import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.BrazierBlock;
 import corundum.rubinated_nether.content.blocks.LaserMode;
@@ -10,7 +9,6 @@ import corundum.rubinated_nether.utils.TickableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -208,22 +206,6 @@ public abstract class AbstractLaserBlockEntity extends BlockEntity implements Ti
 		return new AABB(0, 0, 0, 1, 1, 1)
 				.expandTowards(rangeVec.getX(), rangeVec.getY(), rangeVec.getZ())
 				.move(worldPosition.relative(facing));
-	}
-
-	protected void grantLaserDetectionAdvancement(Entity entity) {
-		if (entity instanceof ServerPlayer serverPlayer) {
-			var advancementHolder = serverPlayer.server.getAdvancements()
-					.get(RubinatedNether.id("laser_detection"));
-
-			if (advancementHolder != null) {
-				var progress = serverPlayer.getAdvancements().getOrStartProgress(advancementHolder);
-				if (!progress.isDone()) {
-					for (String criterion : progress.getRemainingCriteria()) {
-						serverPlayer.getAdvancements().award(advancementHolder, criterion);
-					}
-				}
-			}
-		}
 	}
 
 	public int getPowerLevel() {

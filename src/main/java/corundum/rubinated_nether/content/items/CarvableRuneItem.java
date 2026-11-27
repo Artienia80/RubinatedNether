@@ -1,13 +1,17 @@
 package corundum.rubinated_nether.content.items;
 
+import corundum.rubinated_nether.utils.RNAdvancementAwards;
 import corundum.rubinated_nether.utils.RubinatedText;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -15,6 +19,14 @@ public class CarvableRuneItem extends Item {
 
     public CarvableRuneItem(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public void onCraftedBy(ItemStack stack, Level level, Player player) {
+        super.onCraftedBy(stack, level, player);
+        if (player instanceof ServerPlayer serverPlayer && RuneCarvingHelper.isCarved(stack)) {
+            RNAdvancementAwards.award(serverPlayer, "stonecutting", "carved_rune");
+        }
     }
 
     @Override

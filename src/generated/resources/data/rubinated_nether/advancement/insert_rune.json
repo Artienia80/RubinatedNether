@@ -1,5 +1,5 @@
 {
-  "parent": "rubinated_nether:offer_ritual_offering",
+  "parent": "rubinated_nether:baptism",
   "criteria": {
     "impossible": {
       "conditions": {
@@ -28,7 +28,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "rubinated_nether:pride_rune"
+      "id": "rubinated_nether:runestone"
     },
     "title": {
       "translate": "advancements.rubinated_nether.insert_rune.title"

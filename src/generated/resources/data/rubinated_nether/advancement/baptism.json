@@ -1,7 +1,7 @@
 {
-  "parent": "rubinated_nether:max_brazier",
+  "parent": "rubinated_nether:stonecutting",
   "criteria": {
-    "impossible": {
+    "baptised_rune": {
       "conditions": {
         "player": [
           {
@@ -28,7 +28,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "rubinated_nether:ritual_offering"
+      "id": "rubinated_nether:sloth_rune"
     },
     "title": {
       "translate": "advancements.rubinated_nether.baptism.title"
@@ -36,7 +36,7 @@
   },
   "requirements": [
     [
-      "impossible"
+      "baptised_rune"
     ]
   ],
   "sends_telemetry_event": true

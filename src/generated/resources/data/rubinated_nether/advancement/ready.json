@@ -1,7 +1,7 @@
 {
-  "parent": "rubinated_nether:obtain_bronze_rod",
+  "parent": "rubinated_nether:offer_ritual_offering",
   "criteria": {
-    "impossible": {
+    "ready": {
       "conditions": {
         "player": [
           {
@@ -24,19 +24,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.rubinated_nether.max_brazier.description"
+      "translate": "advancements.rubinated_nether.ready.description"
     },
     "icon": {
       "count": 1,
-      "id": "rubinated_nether:ruby_brazier"
+      "id": "rubinated_nether:rubinated_shrine_stone_bricks"
     },
     "title": {
-      "translate": "advancements.rubinated_nether.max_brazier.title"
+      "translate": "advancements.rubinated_nether.ready.title"
     }
   },
   "requirements": [
     [
-      "impossible"
+      "ready"
     ]
   ],
   "sends_telemetry_event": true

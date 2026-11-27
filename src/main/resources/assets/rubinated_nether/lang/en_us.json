@@ -159,7 +159,6 @@
   "item.rubinated_nether.music_disc_shimmer": "Rubinated Music Disc",
   "jukebox_song.rubinated_nether.shimmer": "Soup Can - Shimmer",
 
-
   "item.rubinated_nether.music_disc_sinner": "Music Disc",
   "jukebox_song.rubinated_nether.sinner": "Soup Can - Sinner",
   "item.rubinated_nether.music_disc_sinner_music_box": "Crystallized Music Disc",
@@ -401,7 +400,6 @@
   "item.rubinated_nether.waxed_corroded_bronze_winder": "Waxed Corroded Bronze Winder",
   "item.rubinated_nether.waxed_tarnished_bronze_winder": "Waxed Tarnished Bronze Winder",
   "item.rubinated_nether.waxed_crystallized_bronze_winder": "Waxed Crystallized Bronze Winder",
-
 
   "block.rubinated_nether.crystallized_bronze_blight": "Crystallized Bronze Blight",
 
@@ -765,70 +763,22 @@
   "vase_engraving_material.rubinated_nether.ruby": "Ruby Material",
   "vase_engraving_material.rubinated_nether.molten_ruby": "Molten Ruby Material",
 
-  "advancements.rubinated_nether.obtain_bleeding_obsidian.description": "Obtain Bleeding Obsidian",
-  "advancements.rubinated_nether.obtain_bleeding_obsidian.title": "Blood For The Blood God!",
-  "advancements.rubinated_nether.blood_dripping.description": "Bleed a Bleeding Obsidian into a cauldron with a dripstone in the Nether",
-  "advancements.rubinated_nether.blood_dripping.title": "Drawing Blood",
-
-  "advancements.rubinated_nether.obtain_freezer.description": "Craft a Freezer",
-  "advancements.rubinated_nether.obtain_freezer.title": "Cold! Cold! Cold!",
-  "advancements.rubinated_nether.obtain_frosted_ice.description": "Freeze Snow or Water into Frosted Ice",
-  "advancements.rubinated_nether.obtain_frosted_ice.title": "Re-Obtainable",
-  "advancements.rubinated_nether.obtain_powder_snow.title": "Snowier Snow",
-  "advancements.rubinated_nether.obtain_powder_snow.description": "Obtain Powder Snow from freezing a Bucket of Powder Snow",
-  "advancements.rubinated_nether.obtain_dry_ice.title": "Scientifically Questionable",
-  "advancements.rubinated_nether.obtain_dry_ice.description": "Obtain the slippery Dry Ice, which can only be placed on Blue Ice",
-
-  "advancements.rubinated_nether.obtain_molten_ruby.description": "Acquire a Molten Ruby from Magma Veins",
-  "advancements.rubinated_nether.obtain_molten_ruby.title": "Hot! Hot! Hot!",
-  "advancements.rubinated_nether.obtain_ruby.description": "Acquire a Ruby from freezing a Molten Ruby",
-  "advancements.rubinated_nether.obtain_ruby.title": "Welcome back, Old Friend",
-  "advancements.rubinated_nether.obtain_ruby_glass.description": "Craft the blast-resistant Ruby Glass",
-  "advancements.rubinated_nether.obtain_ruby_glass.title": "Over 9000!",
-
-  "advancements.rubinated_nether.wear_lens.description": "Equip a pair of Ruby Lenses to see lasers",
-  "advancements.rubinated_nether.wear_lens.title": "Rose-Tinted Glasses",
-  "advancements.rubinated_nether.laser_detection.title": "I see you...",
-  "advancements.rubinated_nether.laser_detection.description": "Be Detected by a Bronze Laser or Bronze Head",
-
-  "advancements.rubinated_nether.obtain_brazier.description": "Craft a Brazier",
-  "advancements.rubinated_nether.obtain_brazier.title": "I'll Be Back",
-
   "advancements.rubinated_nether.complementary_opposites.title": "Complementary Opposites",
   "advancements.rubinated_nether.complementary_opposites.description": "Enter a Sacred Shrine",
   "advancements.rubinated_nether.grinding.title": "Grinding",
   "advancements.rubinated_nether.grinding.description": "Grind shrinestone into a blank rune and a runestone",
-  "advancements.rubinated_nether.enter_shrine.description": "Enter the Sacred Shrine",
-  "advancements.rubinated_nether.enter_shrine.title": "Don't Turn Left",
-  "advancements.rubinated_nether.bronze_rod.description": "Obtain a Bronze Rod",
-  "advancements.rubinated_nether.bronze_rod.title": "The Emperor's New Ore",
-  "advancements.rubinated_nether.max_brazier.title": "Diabolical Stew",
-  "advancements.rubinated_nether.max_brazier.description": "Fill up the Brazier completely with Molten Rubies",
+  "advancements.rubinated_nether.stonecutting.title": "Stonecutting",
+  "advancements.rubinated_nether.stonecutting.description": "Carve a rune at a Stonecutter",
   "advancements.rubinated_nether.baptism.title": "Baptism",
-  "advancements.rubinated_nether.baptism.description": "Dip a Bronze Rod into the Brazier to obtain a Ritual Offering",
-  "advancements.rubinated_nether.offer_ritual_offering.title": "Bless You!",
-  "advancements.rubinated_nether.offer_ritual_offering.description": "Offer a Ritual Offering to the Rubination Altar",
-  "advancements.rubinated_nether.insert_rune.title": "Ruby Red Runes",
-  "advancements.rubinated_nether.insert_rune.description": "Insert a Rune of Rubination into a Runestone",
-  "advancements.rubinated_nether.rubinate_item.title": "A Faustian Bargain",
-  "advancements.rubinated_nether.rubinate_item.description": "Rubinate a tool or weapon in a Rubination Altar",
-
-  "advancements.rubinated_nether.rubinated_banner.title": "Rally 'round the flag",
-  "advancements.rubinated_nether.rubinated_banner.description": "Use a Rune of Rubination as a Banner Pattern",
-  "advancements.rubinated_nether.rubinated_trim.title": "Color your Might",
-  "advancements.rubinated_nether.rubinated_trim.description": "Use a Rune of Rubination as an Armor Trim",
-
-  "advancements.rubinated_nether.divine_favor.title": "Holy Day",
-  "advancements.rubinated_nether.divine_favor.description": "Obtain the Maximum Blessing Effect",
-  "advancements.rubinated_nether.heavy_burden.title": "Heavy Burden",
-  "advancements.rubinated_nether.heavy_burden.description": "Carry All Copper and Bronze Block Variants",
-  "advancements.rubinated_nether.brighten_up.title": "Brighten Up!",
-  "advancements.rubinated_nether.brighten_up.description": "Carry at least one Bronze Lantern, Chandelier, Lamp and Bulb",
-
-  "advancements.rubinated_nether.pitfalls.title": "Pitfalls!",
-  "advancements.rubinated_nether.pitfalls.description": "Step on a Bronze Grate and Watch it Fall",
-  "advancements.rubinated_nether.springs.title": "Boing!",
-  "advancements.rubinated_nether.springs.description": "Step on a Bronze Spring and Get Launched",
+  "advancements.rubinated_nether.baptism.description": "Rubinate a Carved Rune at a filled Brazier",
+  "advancements.rubinated_nether.offer_ritual_offering.title": "Offering",
+  "advancements.rubinated_nether.offer_ritual_offering.description": "Give a Ritual Offering to the Rubination Altar",
+  "advancements.rubinated_nether.ready.title": "Ready",
+  "advancements.rubinated_nether.ready.description": "Achieve the required amount of Rubinated blocks around the Altar to Rubinate",
+  "advancements.rubinated_nether.insert_rune.title": "Insert",
+  "advancements.rubinated_nether.insert_rune.description": "Insert a Rubinated Rune into a Runestone around the Altar",
+  "advancements.rubinated_nether.rubinate_item.title": "Rubination",
+  "advancements.rubinated_nether.rubinate_item.description": "Rubinate an item in the Rubination Altar",
 
   "menu.rubinated_nether.freezer": "Freezer",
   "gui.rubinated_nether.jei.freezer": "Freezing",
@@ -854,7 +804,6 @@
   "container.bronzeVase.more": "and %s more",
   "container.bronzeVase.unknownContents": "???",
 
-
   "gui.rubinated_nether.rubination_altar.enchant": "%s",
 
   "entity.rubinated_nether.bronze_shot": "Bronze Shot",
@@ -872,7 +821,6 @@
   "effect.rubinated_nether.brazier_power": "Brazier Power",
   "effect.rubinated_nether.reaping": "Reaping",
   "effect.rubinated_nether.soul_starved": "Soul Starved",
-
 
   "death.attack.chandelier": "%1$s was embraced by a falling chandelier",
   "death.attack.chandelier.player": "%1$s was embraced by a falling chandelier whilst fighting %2$s",

@@ -3,6 +3,7 @@ package corundum.rubinated_nether.content.blocks.entities;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNParticleTypes;
 import corundum.rubinated_nether.content.RubinationConverter;
+import corundum.rubinated_nether.utils.RNAdvancementAwards;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -11,6 +12,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.level.Level;
@@ -63,6 +66,13 @@ public class RubinationAltarBlockEntity extends BlockEntity implements Nameable 
 		if (!level.hasChunksAt(pos.offset(-r, -r, -r), pos.offset(r, r, r))) return;
 
 		boolean nowReady = RubinationConverter.hasEnoughRubinatedBlocks(level, pos);
+		if (nowReady) {
+			for (ServerPlayer player : ((ServerLevel) level).players()) {
+				if (!player.isSpectator() && player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= SERVER_PLAYER_RANGE * SERVER_PLAYER_RANGE) {
+					RNAdvancementAwards.award(player, "ready", "ready");
+				}
+			}
+		}
 		if (nowReady != this.ready) {
 			this.ready = nowReady;
 			this.setChanged();

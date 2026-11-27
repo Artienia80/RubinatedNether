@@ -54,14 +54,6 @@ public class BronzeLaserBlockEntity extends AbstractLaserBlockEntity {
 					lastDistance.setValue(blockDistance);
 					// Calculate entity power based on distance
 					entityPower.set(calculatePowerLevel(blockDistance));
-
-					// Grant advancement when entity is detected AND within unobstructed range
-					if (!level.isClientSide) {
-						// Only grant if entity is closer than any block obstruction
-						if (blockRange == -1 || blockDistance < blockRange) {
-							grantLaserDetectionAdvancement(entity);
-						}
-					}
 				}
 			});
 

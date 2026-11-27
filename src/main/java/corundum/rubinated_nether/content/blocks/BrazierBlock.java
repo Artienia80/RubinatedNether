@@ -8,8 +8,10 @@ import corundum.rubinated_nether.content.RNRecipes;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.BrazierBlockEntity;
 import corundum.rubinated_nether.content.effect.BrazierPowerEffect;
+import corundum.rubinated_nether.content.items.RuneItem;
 import corundum.rubinated_nether.content.recipe.BaptismRecipe;
 import corundum.rubinated_nether.utils.BrazierTracker;
+import corundum.rubinated_nether.utils.RNAdvancementAwards;
 import corundum.rubinated_nether.utils.RNConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -257,6 +259,10 @@ public class BrazierBlock extends BaseEntityBlock {
 
                     if (!player.getInventory().add(baptised)) {
                         player.drop(baptised, false);
+                    }
+
+                    if (player instanceof ServerPlayer serverPlayer && baptised.getItem() instanceof RuneItem) {
+                        RNAdvancementAwards.award(serverPlayer, "baptism", "baptised_rune");
                     }
 
                     level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 1.2F);
