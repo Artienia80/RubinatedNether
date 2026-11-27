@@ -1,5 +1,5 @@
 {
-  "parent": "rubinated_nether:grinding",
+  "parent": "rubinated_nether:blank_slate",
   "criteria": {
     "carved_rune": {
       "conditions": {

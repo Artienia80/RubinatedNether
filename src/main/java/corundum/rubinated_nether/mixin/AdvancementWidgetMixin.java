@@ -6,14 +6,10 @@ import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.advancements.AdvancementTab;
 import net.minecraft.client.gui.screens.advancements.AdvancementWidget;
-import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -37,52 +33,7 @@ public abstract class AdvancementWidgetMixin {
 
 	@Shadow
 	@Final
-	@Mutable
 	private int y;
-
-	@Inject(method = "<init>", at = @At("RETURN"))
-	private void rubinated_nether$centerBetweenParents(CallbackInfo ci) {
-		AdvancementNode root = this.advancementNode.root();
-		float shift = rubinated_nether$shift(this.advancementNode, root);
-		if (shift != 0.0F) {
-			this.y = Mth.floor((rubinated_nether$displayY(this.advancementNode) + shift) * 27.0F);
-		}
-	}
-
-	@Unique
-	private static float rubinated_nether$shift(AdvancementNode node, AdvancementNode root) {
-		AdvancementNode parent = node.parent();
-		float inherited = parent == null ? 0.0F : rubinated_nether$shift(parent, root);
-
-		List<ResourceLocation> extraParents = RNAdvancementLinks.extraParents(node.holder().id());
-		if (extraParents.isEmpty() || parent == null) return inherited;
-
-		float sum = rubinated_nether$displayY(parent) + inherited;
-		int count = 1;
-		for (ResourceLocation id : extraParents) {
-			AdvancementNode extra = rubinated_nether$find(root, id);
-			if (extra == null) continue;
-			sum += rubinated_nether$displayY(extra) + rubinated_nether$shift(extra, root);
-			count++;
-		}
-		if (count < 2) return inherited;
-		return sum / count - rubinated_nether$displayY(node);
-	}
-
-	@Unique
-	private static float rubinated_nether$displayY(AdvancementNode node) {
-		return node.advancement().display().map(DisplayInfo::getY).orElse(0.0F);
-	}
-
-	@Unique
-	private static AdvancementNode rubinated_nether$find(AdvancementNode node, ResourceLocation id) {
-		if (node.holder().id().equals(id)) return node;
-		for (AdvancementNode child : node.children()) {
-			AdvancementNode found = rubinated_nether$find(child, id);
-			if (found != null) return found;
-		}
-		return null;
-	}
 
 	@Inject(method = "drawConnectivity", at = @At("TAIL"))
 	private void rubinated_nether$drawExtraParents(GuiGraphics graphics, int originX, int originY, boolean dropShadow, CallbackInfo ci) {
@@ -94,7 +45,7 @@ public abstract class AdvancementWidgetMixin {
 			AdvancementWidget parent = entry.getValue();
 
 			int parentCenterX = originX + parent.getX() + 13;
-			int midX = originX + parent.getX() + 26 + 4;
+			int midX = originX + this.x + 2;
 			int parentCenterY = originY + parent.getY() + 13;
 			int childCenterX = originX + this.x + 13;
 			int childCenterY = originY + this.y + 13;

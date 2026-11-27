@@ -265,6 +265,10 @@ public class BrazierBlock extends BaseEntityBlock {
                         RNAdvancementAwards.award(serverPlayer, "baptism", "baptised_rune");
                     }
 
+                    if (player instanceof ServerPlayer serverPlayer && baptised.is(RNItems.RITUAL_OFFERING.get())) {
+                        RNAdvancementAwards.award(serverPlayer, "baptise_rod", "baptised_rod");
+                    }
+
                     level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 1.2F);
 
                     return ItemInteractionResult.sidedSuccess(false);

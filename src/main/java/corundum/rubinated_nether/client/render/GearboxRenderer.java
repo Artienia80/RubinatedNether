@@ -10,6 +10,7 @@ import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.GearboxBlock;
 import corundum.rubinated_nether.content.blocks.TarnishingBronze;
 import corundum.rubinated_nether.content.blocks.entities.gearbox.GearboxBlockEntity;
+import net.minecraft.Util;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.core.Direction;
@@ -184,6 +185,12 @@ public class GearboxRenderer implements BlockEntityRenderer<GearboxBlockEntity> 
         float eased = 1.0F - (1.0F - progress) * (1.0F - progress) * (1.0F - progress);
         float notch = Math.floorMod(step, (long) GearboxBlock.STEPS_PER_TURN) + eased;
         return notch * ((float) (Math.PI * 2.0) / GearboxBlock.STEPS_PER_TURN);
+    }
+
+    public static float itemAngle() {
+        double ticks = Util.getMillis() / 50.0;
+        long whole = (long) ticks;
+        return litAngle(whole, (float) (ticks - whole));
     }
 
     private float calcAngle(BlockState state) {

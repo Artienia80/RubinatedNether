@@ -45,7 +45,8 @@ public class RuneGrindstoneHandler {
         ItemStack output = result(e.getTopItem(), e.getBottomItem());
         if (output.isEmpty()) return;
         e.setXp(0);
-        awardGrinding(e.getTopItem(), e.getBottomItem(), output.is(RNItems.RUNE.get()) ? "blank_rune" : "runestone");
+        boolean blank = output.is(RNItems.RUNE.get());
+        awardGrinding(e.getTopItem(), e.getBottomItem(), blank ? "blank_slate" : "runestone", blank ? "blank_rune" : "runestone");
         ItemStack top = e.getTopItem().copy();
         ItemStack bottom = e.getBottomItem().copy();
         if (!top.isEmpty()) top.shrink(1);
@@ -54,10 +55,10 @@ public class RuneGrindstoneHandler {
         e.setNewBottomItem(bottom);
     }
 
-    private static void awardGrinding(ItemStack top, ItemStack bottom, String criterion) {
+    private static void awardGrinding(ItemStack top, ItemStack bottom, String advancementId, String criterion) {
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         if (server == null) return;
-        var advancement = server.getAdvancements().get(RubinatedNether.id("grinding"));
+        var advancement = server.getAdvancements().get(RubinatedNether.id(advancementId));
         if (advancement == null) return;
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             if (player.containerMenu instanceof GrindstoneMenu menu

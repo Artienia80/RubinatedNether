@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockEntities;
 import corundum.rubinated_nether.content.RNItems;
+import corundum.rubinated_nether.utils.RNAdvancementAwards;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.entities.BronzeStrongboxBlockEntity;
 import corundum.rubinated_nether.content.items.WaxableBlockItem;
@@ -13,6 +14,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -141,6 +143,9 @@ public class BronzeStrongboxBlock extends ChestBlock implements TarnishingBronze
                     strongbox.setCranksRemaining(MIN_NATURAL_CRANKS + level.random.nextInt(MAX_NATURAL_CRANKS - MIN_NATURAL_CRANKS + 1));
                 }
                 strongbox.insertKey(stack);
+                if (state.getValue(NATURAL) && player instanceof ServerPlayer serverPlayer) {
+                    RNAdvancementAwards.award(serverPlayer, "strongbox", "strongbox");
+                }
                 level.setBlock(pos, state.setValue(KEY, 1), Block.UPDATE_ALL);
                 level.playSound(null, pos, SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
                 if (!player.isCreative()) {
@@ -181,6 +186,9 @@ public class BronzeStrongboxBlock extends ChestBlock implements TarnishingBronze
 
         if (state.getValue(NATURAL)) {
             strongbox.dispense((ServerLevel) level, pos, player);
+            if (player instanceof ServerPlayer serverPlayer) {
+                RNAdvancementAwards.award(serverPlayer, "strongbox", "strongbox");
+            }
             this.crank(state, (ServerLevel) level, pos, strongbox);
             return InteractionResult.CONSUME;
         }

@@ -1,0 +1,33 @@
+{
+  "criteria": {
+    "winding_key": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rubinated_nether:winding_key"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rubinated_nether.winding_key.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "rubinated_nether:winding_key"
+    },
+    "title": {
+      "translate": "advancements.rubinated_nether.winding_key.title"
+    }
+  },
+  "parent": "rubinated_nether:witness",
+  "requirements": [
+    [
+      "winding_key"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

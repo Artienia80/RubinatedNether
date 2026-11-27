@@ -5,11 +5,13 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import corundum.rubinated_nether.content.RNItems;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.entities.gearbox.GearboxBlockEntity;
+import corundum.rubinated_nether.utils.RNAdvancementAwards;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -59,6 +61,7 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
     public static final float SNAP_TICKS = 3.0F;
     public static final float KEY_BREAK_CHANCE = 0.5F;
     public static final double PLAYER_SCAN_RADIUS = 64.0;
+    public static final double WITNESS_RADIUS = 32.0;
     public static final double CRYSTALLIZED_TRIGGER_RADIUS = 16.0;
 
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -256,6 +259,15 @@ public class GearboxBlock extends TarnishingBronzeBlock implements SimpleWaterlo
         state = state.setValue(CRANK_LEVEL, 0).setValue(LIT, true);
         level.setBlock(pos, state, 3);
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS);
+
+        net.minecraft.world.phys.Vec3 center = net.minecraft.world.phys.Vec3.atCenterOf(pos);
+        for (Player player : nearbyPlayers) {
+            if (player instanceof ServerPlayer serverPlayer
+                    && !serverPlayer.isSpectator()
+                    && serverPlayer.distanceToSqr(center) <= WITNESS_RADIUS * WITNESS_RADIUS) {
+                RNAdvancementAwards.award(serverPlayer, "witness", "witness");
+            }
+        }
 
         if (level.getBlockEntity(pos) instanceof GearboxBlockEntity be) {
             be.startSpawning(totalBronzes, waveSize, waveDelaySecs * 20);

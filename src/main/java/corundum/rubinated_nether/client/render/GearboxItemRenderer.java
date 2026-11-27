@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import corundum.rubinated_nether.content.RNModelLayers;
 import corundum.rubinated_nether.content.TarnishStage;
 import corundum.rubinated_nether.content.blocks.GearboxBlock;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -37,10 +36,7 @@ public class GearboxItemRenderer extends BlockEntityWithoutLevelRenderer {
             this.renderer = new GearboxRenderer(Minecraft.getInstance().getEntityModels().bakeLayer(RNModelLayers.BRONZE_GEARBOX));
         }
         TarnishStage stage = gearbox.getAge();
-        Minecraft minecraft = Minecraft.getInstance();
-        long gameTime = minecraft.level != null ? minecraft.level.getGameTime() : Util.getMillis() / 50L;
-        float partialTick = minecraft.getTimer().getGameTimeDeltaPartialTick(false);
-        float angle = GearboxRenderer.litAngle(gameTime, partialTick);
+        float angle = GearboxRenderer.itemAngle();
         this.renderer.renderBox(poseStack, bufferSource, stage, true, angle, false, packedLight, packedOverlay);
     }
 }

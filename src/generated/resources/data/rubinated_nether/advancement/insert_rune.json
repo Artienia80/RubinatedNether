@@ -1,5 +1,5 @@
 {
-  "parent": "rubinated_nether:baptism",
+  "parent": "rubinated_nether:place_runestone",
   "criteria": {
     "impossible": {
       "conditions": {

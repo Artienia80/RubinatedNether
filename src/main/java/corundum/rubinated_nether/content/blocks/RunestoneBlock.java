@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import corundum.rubinated_nether.RubinatedNether;
 import corundum.rubinated_nether.content.RNBlockStateProperties;
 import corundum.rubinated_nether.content.RNBlocks;
+import corundum.rubinated_nether.utils.RNAdvancementAwards;
 import corundum.rubinated_nether.content.RNTags;
 import corundum.rubinated_nether.content.blocks.entities.RunestoneBlockEntity;
 import corundum.rubinated_nether.content.items.Rubination;
@@ -123,6 +124,10 @@ public class RunestoneBlock extends BaseEntityBlock {
 	@Override
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(level, pos, state, placer, stack);
+
+		if (placer instanceof ServerPlayer serverPlayer && isNearAltar(level, pos)) {
+			RNAdvancementAwards.award(serverPlayer, "place_runestone", "place_runestone");
+		}
 
 			level.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), 3);
 	}

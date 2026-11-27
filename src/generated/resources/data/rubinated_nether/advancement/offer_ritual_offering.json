@@ -1,5 +1,5 @@
 {
-  "parent": "rubinated_nether:insert_rune",
+  "parent": "rubinated_nether:baptism",
   "criteria": {
     "impossible": {
       "conditions": {

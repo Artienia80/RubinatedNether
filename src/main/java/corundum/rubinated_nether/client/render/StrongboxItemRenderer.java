@@ -58,7 +58,6 @@ public class StrongboxItemRenderer extends BlockEntityWithoutLevelRenderer {
         }
         Minecraft minecraft = Minecraft.getInstance();
         long gameTime = minecraft.level != null ? minecraft.level.getGameTime() : Util.getMillis() / 50L;
-        float partialTick = minecraft.getTimer().getGameTimeDeltaPartialTick(false);
         String name = BuiltInRegistries.BLOCK.getKey(block).getPath();
         BakedModel open = minecraft.getModelManager().getModel(ModelResourceLocation.standalone(RubinatedNether.id("block/" + name + "_open")));
         BakedModel key = minecraft.getModelManager().getModel(ModelResourceLocation.standalone(RubinatedNether.id("block/" + name + "_key_0")));
@@ -67,7 +66,7 @@ public class StrongboxItemRenderer extends BlockEntityWithoutLevelRenderer {
         itemRenderer.renderModelLists(open, ItemStack.EMPTY, packedLight, packedOverlay, poseStack, consumer);
         poseStack.pushPose();
         poseStack.translate(0.5F, 0.0F, 0.5F);
-        poseStack.mulPose(Axis.YP.rotation(GearboxRenderer.litAngle(gameTime, partialTick)));
+        poseStack.mulPose(Axis.YP.rotation(GearboxRenderer.itemAngle()));
         poseStack.translate(-0.5F, 0.0F, -0.5F);
         itemRenderer.renderModelLists(key, ItemStack.EMPTY, packedLight, packedOverlay, poseStack, consumer);
         poseStack.popPose();
