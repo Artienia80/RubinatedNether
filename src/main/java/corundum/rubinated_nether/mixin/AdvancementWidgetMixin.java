@@ -1,6 +1,9 @@
 package corundum.rubinated_nether.mixin;
 
 import corundum.rubinated_nether.utils.RNAdvancementLinks;
+import corundum.rubinated_nether.utils.RNAdvancementProcesses;
+import net.minecraft.advancements.AdvancementType;
+import net.minecraft.client.gui.screens.advancements.AdvancementWidgetType;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.DisplayInfo;
@@ -9,12 +12,10 @@ import net.minecraft.client.gui.screens.advancements.AdvancementTab;
 import net.minecraft.client.gui.screens.advancements.AdvancementWidget;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
@@ -83,5 +84,46 @@ public abstract class AdvancementWidgetMixin {
 				graphics.vLine(midX, childCenterY, parentCenterY, color);
 			}
 		}
+	}
+
+	private static final String FRAME_SPRITE = "Lnet/minecraft/client/gui/screens/advancements/AdvancementWidgetType;frameSprite(Lnet/minecraft/advancements/AdvancementType;)Lnet/minecraft/resources/ResourceLocation;";
+
+	@Redirect(method = "draw", at = @At(value = "INVOKE", target = FRAME_SPRITE))
+	private ResourceLocation rubinated_nether$drawFrame(AdvancementWidgetType widgetType, AdvancementType type) {
+		return rubinated_nether$processFrame(widgetType, type);
+	}
+
+	@Redirect(method = "drawHover", at = @At(value = "INVOKE", target = FRAME_SPRITE))
+	private ResourceLocation rubinated_nether$hoverFrame(AdvancementWidgetType widgetType, AdvancementType type) {
+		return rubinated_nether$processFrame(widgetType, type);
+	}
+
+	@Unique
+	private ResourceLocation rubinated_nether$processFrame(AdvancementWidgetType widgetType, AdvancementType type) {
+		RNAdvancementProcesses.Process process = RNAdvancementProcesses.get(this.advancementNode.holder().id());
+		if (process == null) return widgetType.frameSprite(type);
+		return widgetType == AdvancementWidgetType.OBTAINED ? process.obtainedFrame() : process.unobtainedFrame();
+	}
+
+	@Unique
+	private static final String BLIT_SPRITE = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lnet/minecraft/resources/ResourceLocation;IIII)V";
+
+	@Redirect(method = "draw", at = @At(value = "INVOKE", target = BLIT_SPRITE))
+	private void rubinated_nether$blitFrame(GuiGraphics graphics, ResourceLocation sprite, int x, int y, int width, int height) {
+		rubinated_nether$blit(graphics, sprite, x, y, width, height);
+	}
+
+	@Redirect(method = "drawHover", at = @At(value = "INVOKE", target = BLIT_SPRITE))
+	private void rubinated_nether$blitHoverFrame(GuiGraphics graphics, ResourceLocation sprite, int x, int y, int width, int height) {
+		rubinated_nether$blit(graphics, sprite, x, y, width, height);
+	}
+
+	@Unique
+	private void rubinated_nether$blit(GuiGraphics graphics, ResourceLocation sprite, int x, int y, int width, int height) {
+		RNAdvancementProcesses.Process process = RNAdvancementProcesses.get(this.advancementNode.holder().id());
+		if (process != null && (sprite.equals(process.obtainedFrame()) || sprite.equals(process.unobtainedFrame()))) {
+			width = process.frameWidth();
+		}
+		graphics.blitSprite(sprite, x, y, width, height);
 	}
 }
